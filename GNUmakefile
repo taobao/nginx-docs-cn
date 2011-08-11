@@ -3,11 +3,9 @@ OUT =		libxslt
 TEXT =		text
 ZIP =		gzip
 NGINX_ORG =	/data/jails/www/usr/local/www/nginx.org
-NGINX_NET =	/data/jails/www/usr/local/www/nginx.net
-SYSOEV_RU =	/data/jails/www/usr/local/www/sysoev.ru
 
 CP =		$(HOME)/java
- 
+RSYNC =		rsync -rtc
 
 
 define	XSLScript
@@ -34,6 +32,12 @@ define	GZIP
 		touch -r $1 $1.gz
 endef
 
+define 	JPEGNORM
+	jpegtopnm $1							\
+		| pamscale -width=150					\
+		| pnmtojpeg -quality=95 -optimize -dct=float		\
+		> $2
+endef
 
 all:		news arx 404 en ja he ru tr
 
@@ -157,29 +161,17 @@ images:									\
 		binary/books/nginx_in_practice.jpg
 
 binary/books/nginx_http_server_jp.jpg:	sources/1106030720.jpg
-	jpegtopnm sources/1106030720.jpg				\
-		| pamscale -width=150					\
-		| pnmtojpeg -quality=95 -optimize -dct=float		\
-		> binary/books/nginx_http_server_jp.jpg
+	$(call JPEGNORM, $<, $@)
 
 binary/books/nginx_1_web_server.jpg:					\
 		sources/Nginx\ 1\ Web\ Server\ Implementation\ Cookbook.jpg
-	jpegtopnm sources/Nginx\ 1\ Web\ Server\ Implementation\ Cookbook.jpg \
-		| pamscale -width=150					\
-		| pnmtojpeg -quality=95 -optimize -dct=float		\
-		> binary/books/nginx_1_web_server.jpg
+	$(call JPEGNORM, "$<", $@)
 
 binary/books/nginx_http_server.jpg:	sources/0868OS_MockupCover.jpg
-	jpegtopnm sources/0868OS_MockupCover.jpg			\
-		| pamscale -width=150					\
-		| pnmtojpeg -quality=95 -optimize -dct=float		\
-		> binary/books/nginx_http_server.jpg
+	$(call JPEGNORM, $<, $@)
 
 binary/books/nginx_in_practice.jpg:	sources/20807089-1_o.jpg
-	jpegtopnm sources/20807089-1_o.jpg				\
-		| pamscale -width=150					\
-		| pnmtojpeg -quality=95 -optimize -dct=float		\
-		> binary/books/nginx_in_practice.jpg
+	$(call JPEGNORM, $<, $@)
 
 
 .PHONY:	gzip
@@ -187,8 +179,8 @@ gzip:	rsync_gzip
 	$(MAKE) do_gzip
 
 rsync_gzip:
-	rsync -rt -c --modify-window=746496000 $(OUT)/ $(ZIP)/
-	rsync -rt -c --modify-window=746496000 $(TEXT)/ $(ZIP)/
+	$(RSYNC) $(OUT)/ $(ZIP)/
+	$(RSYNC) $(TEXT)/ $(ZIP)/
 
 do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
 		$(addsuffix .gz, $(wildcard $(ZIP)/en/*.html))		\
@@ -212,7 +204,8 @@ do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
 		$(ZIP)/ru/CHANGES.ru.gz					\
 		$(addsuffix .gz, $(wildcard $(ZIP)/ru/CHANGES.ru-?.?))	\
 
-	find gzip/ -type f -not -name '*.gz' -exec test \! -e {}.gz \; -print
+	find $(ZIP)/ -type d -name .svn -prune				\
+		-o -type f -not -name '*.gz' -exec test \! -e {}.gz \; -print
 
 
 $(ZIP)/%.gz:		$(ZIP)/%
@@ -222,11 +215,11 @@ dirs:
 	test -d $(OUT)/en/docs/http || mkdir -p $(OUT)/en/docs/http
 
 draft:	all
-	rsync -rt -c --modify-window=746496000 libxslt/ $(NGINX_ORG)/libxslt/
+	$(RSYNC) $(OUT)/ $(NGINX_ORG)/$(OUT)/
 
 copy:
-	rsync -rt -c --modify-window=746496000 $(ZIP)/ $(NGINX_ORG)/
-	rsync -rt -c --modify-window=746496000 binary/ $(NGINX_ORG)/
+	$(RSYNC) $(ZIP)/ $(NGINX_ORG)/
+	$(RSYNC) binary/ $(NGINX_ORG)/
 
 dev:	xslt/development.xslt sign
 dev:	NGINX=$(shell xsltproc xslt/development.xslt xml/versions.xml)
@@ -254,7 +247,7 @@ SITE =	nginx.org
 tarball:
 	rm -rf $(TEMP)
 	mkdir -p $(TEMP)/$(SITE)
-	cp -rp BSDmakefile GNUmakefile TODO				\
+	cp -Rp BSDmakefile GNUmakefile TODO				\
 		xml xsls xslt dtd binary				\
 	$(TEMP)/$(SITE)
 
