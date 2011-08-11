@@ -5,7 +5,7 @@ ZIP =		gzip
 NGINX_ORG =	/data/jails/www/usr/local/www/nginx.org
 
 CP =		$(HOME)/java
-RSYNC =		rsync -rtc
+RSYNC =		rsync -rc
 
 
 define	XSLScript
