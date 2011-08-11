@@ -1,0 +1,27 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="&ldquo;&nbsp;&lsquo;sys_errlist&rsquo;
+                is deprecated;
+                use &lsquo;strerror&rsquo; or &lsquo;strerror_r&rsquo;
+                instead&nbsp;&rdquo; uyarısı"
+         link="/tr/docs/sys_errlist.html"
+         lang="tr">
+
+<section>
+
+<para>
+nginx versiyon 0.7.66, 0.8.35 ve üstü için Linux kurulumu yaparken, şu uyarıları alabilirsiniz:
+
+<programlisting>
+warning: `sys_errlist' is deprecated;
+    use `strerror' or `strerror_r' instead
+warning: `sys_nerr' is deprecated;
+    use `strerror' or `strerror_r' instead
+</programlisting>
+
+Bu normal bir durum: strerror() ve strerror_r() fonksiyonları "Async-Signal-Safe" olmadığından, nginx sinyal işleyici olarak onaylı olmayan sys_errlist[] ve sys_nerr kullanmak zorundadır.
+</para>
+
+</section>
+
+</article>

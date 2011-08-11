@@ -1,0 +1,46 @@
+<!DOCTYPE digest SYSTEM "../../dtd/article.dtd">
+
+<article title="nginx: links"
+         link="/en/links.html"
+         lang="en">
+
+<section title="nginx internals">
+
+<para>
+<list>
+
+<item>
+<a href="http://www.evanmiller.org/nginx-modules-guide.html">Emiller&rsquo;s
+Guide To Nginx Module Development</a>
+</item>
+
+<item>
+<a href="http://www.evanmiller.org/nginx-modules-guide-advanced.html">Emiller&rsquo;s
+Advanced Topics In Nginx Module Development</a>
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section title="miscellanea">
+
+<para>
+<list>
+
+<item>
+<a href="http://planet.nginx.org">Planet nginx</a>
+</item>
+
+<item>
+<a href="http://php-fpm.org">php-fpm: PHP FastCGI Process Manager</a>
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

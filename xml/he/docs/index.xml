@@ -1,0 +1,44 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="תיעוד nginx"
+         link="/he/docs/"
+         lang="he">
+
+
+<section>
+
+<para>
+<list>
+
+<item>
+<a href="/he/docs/introduction.xml"/>
+</item>
+
+<item>
+<a href="/he/docs/howto.xml"/>
+</item>
+
+<!--
+
+<item>
+<a href="/he/docs/faq.xml"/>
+</item>
+
+-->
+
+</list>
+</para>
+
+<para>
+<list>
+
+<item>
+<a href="/he/docs/windows.xml"/>
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

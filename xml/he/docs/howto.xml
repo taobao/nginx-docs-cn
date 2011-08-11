@@ -1,0 +1,30 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="איך עושים ב nginx"
+         link="/he/docs/howto.html"
+         lang="he">
+
+
+<section>
+
+<para>
+<list>
+
+<!--
+
+<item>
+<a href="/he/docs/debugging_log.xml"/>
+</item>
+
+-->
+
+<item>
+<a href="/he/docs/http/converting_rewrite_rules.xml"/>
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

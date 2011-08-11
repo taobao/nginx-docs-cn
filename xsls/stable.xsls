@@ -1,0 +1,7 @@
+X:stylesheet {
+
+X:output method="text";
+
+X:template = "/versions" { !{ normalize-space(stable) } }
+
+}

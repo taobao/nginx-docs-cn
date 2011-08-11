@@ -1,0 +1,433 @@
+<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+
+<article title="Server names"
+         link="/en/docs/http/server_names.html"
+         lang="en"
+         author="Igor Sysoev"
+         editor="Brian Mercer">
+
+
+<section>
+
+<para>
+Server names are defined using the <dirname>server_name</dirname> directive
+and determine which server block is used for a given request.
+See also &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
+They may be defined using exact names, wildcard names, or regular expressions:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  *.nginx.org;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  mail.*;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  ~^(?&lt;user&gt;.+)\.nginx\.net$;
+    ...
+}
+</programlisting>
+
+The names are tested in the following order:
+
+<orderedlist>
+
+<item>
+exact names;
+</item>
+
+<item>
+wildcard names starting with an asterisk: <url>*.nginx.org</url>;
+</item>
+
+<item>
+wildcard names ending with an asterisk: <url>mail.*</url>;
+</item>
+
+<item>
+and regular expressions in the order listed in the configuration file.
+</item>
+
+</orderedlist>
+The first match stops the search.
+</para>
+
+</section>
+
+
+<section name="wildcard_names"
+        title="Wildcard names">
+
+<para>
+A wildcard name may contain an asterisk only on the name's start or end,
+and only on a dot border. The names <dirname>www.*.nginx.org</dirname>
+and <dirname>w*.nginx.org</dirname> are invalid.
+However, these names can be specified using regular expressions,
+for example, <dirname>~^www\..+\.nginx\.org$</dirname> and
+<dirname>~^w.*\.nginx\.org$</dirname>.
+An asterisk can match several name parts.
+The name <dirname>*.nginx.org</dirname> matches not only
+<url>www.nginx.org</url> but <url>www.sub.nginx.org</url> as well.
+</para>
+
+<para>
+A special wildcard in the form <dirname>.nginx.org</dirname> can be used
+to match both the exact name <dirname>nginx.org</dirname>
+and the wildcard name <dirname>*.nginx.org</dirname>.
+</para>
+
+</section>
+
+
+<section name="regex_names"
+        title="Regular expressions names">
+
+<para>
+The regular expressions used by nginx are compatible with those used
+by the Perl programming language (PCRE).
+To use a regular expression, the server name must start with the tilde
+character:
+
+<programlisting>
+server_name  ~^www\d+\.nginx\.net$;
+</programlisting>
+
+otherwise it will be treated as an exact name, or if the expression contains
+an asterisk, as a wildcard name (and most likely as an invalid one).
+Do not forget to set &ldquo;^&rdquo; and &ldquo;$&rdquo; anchors.
+They are not required syntactically, but logically.
+Also note that domain name dots should be escaped with a backslash.
+A regular expression containing the characters &ldquo;{&rdquo;
+and &ldquo;}&rdquo; should be quoted:
+
+<programlisting>
+server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.nginx\.net$";
+</programlisting>
+
+otherwise nginx will fail to start and display the error message:
+
+<programlisting>
+directive "server_name" is not terminated by ";" in ...
+</programlisting>
+
+A named regular expression capture can be used later as a variable:
+
+<programlisting>
+server {
+    server_name   ~^(www\.)?(<b>?&lt;domain&gt;</b>.+)$;
+
+    location / {
+        root   /sites/<b>$domain</b>;
+    }
+}
+</programlisting>
+
+The PCRE library supports named captures using the following syntax:
+
+<table note="yes">
+
+<tr>
+<td><code>?&lt;<i>name</i>&gt;</code></td>
+<td>Perl 5.10 compatible syntax, supported since PCRE-7.0</td>
+</tr>
+
+<tr>
+<td><code>?'<i>name</i>'</code></td>
+<td>Perl 5.10 compatible syntax, supported since PCRE-7.0</td>
+</tr>
+
+<tr>
+<td><code>?P&lt;<i>name</i>&gt;</code></td>
+<td>Python compatible syntax, supported since PCRE-4.0</td>
+</tr>
+
+</table>
+
+If nginx fails to start and displays the error message:
+
+<programlisting>
+pcre_compile() failed: unrecognized character after (?&lt; in ...
+</programlisting>
+
+this means that the PCRE library is old
+and you should try the syntax <dirname>?P&lt;<i>name</i>&gt;</dirname>.
+The captures can also be used in digital form:
+
+<programlisting>
+server {
+    server_name   ~^(www\.)?(.+)$;
+
+    location / {
+        root   /sites/<b>$2</b>;
+    }
+}
+</programlisting>
+
+However, such usage should be limited to simple cases (like the above),
+since the digital references can easily be overwritten.
+</para>
+
+
+</section>
+
+
+<section name="miscellaneous_names"
+        title="Miscellaneous names">
+
+<para>
+If you want to process requests without a &ldquo;Host&rdquo; header line
+in a server block which is not the default, you should specify an empty name:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org  "";
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+If no <dirname>server_name</dirname> is defined in a server block,
+then nginx uses the empty name as the server name.
+<note>
+nginx versions up to 0.8.48 used the <i>hostname</i> as the server name
+in this case.
+</note>
+</para>
+
+<para>
+If someone makes a request using an IP address instead of a server name,
+the request&rsquo;s &ldquo;Host&rdquo; header line will contain the IP address
+and you can handle the request using the IP address as the server name:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org
+                 www.nginx.org
+                 ""
+                 <b>192.168.1.1</b>
+                 ;
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+In catch-all server examples you may see the strange name &ldquo;_&rdquo;:
+
+<programlisting>
+server {
+    listen       80  default_server;
+    server_name  _;
+    return       444;
+}
+</programlisting>
+
+There is nothing special about this name, it is just one of a myriad
+of invalid domain names which never intersect with any real name.
+You may also use something like &ldquo;--&rdquo;, &ldquo;!@#&rdquo;, and so on.
+</para>
+
+<para>
+nginx versions up to 0.6.25 supported the special name &ldquo;*&rdquo;
+which was erroneously interpreted to be a catch-all name.
+It never functioned as a catch-all or wildcard server name.
+Instead, it supplied the functionality that is now provided
+by the <dirname>server_name_in_redirect</dirname> directive.
+The special name &ldquo;*&rdquo; is now deprecated
+and the <dirname>server_name_in_redirect</dirname> directive should be used.
+Note that there is no way to specify the catch-all name or
+the <i>default</i> server using the <dirname>server_name</dirname> directive.
+This is a property of the <dirname>listen</dirname> directive
+and not of the <dirname>server_name</dirname> directive.
+See also &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
+You can define servers listening on ports *:80 and *:8080,
+and direct that one will be the default server for port *:8080,
+while the other will be the default for port *:80:
+
+<programlisting>
+server {
+    listen       80;
+    listen       8080  default_server;
+    server_name  nginx.net;
+    ...
+}
+
+server {
+    listen       80  default_server;
+    listen       8080;
+    server_name  nginx.org;
+    ...
+}
+</programlisting>
+</para>
+
+
+</section>
+
+
+<section name="optimization"
+        title="Optimization">
+
+<para>
+Exact names and wildcard names are stored in hashes.
+The hashes are bound to the listen ports and every listen port
+may have up to three hashes: an exact names hash, a wildcard names hash
+starting with an asterisk, and a wildcard names hash ending with an asterisk.
+The sizes of the hashes are optimized at the configuration phase so that
+a name can be found with the fewest CPU cache misses.
+The exact names hash is searched first.
+If a name is not found using the exact name hash, then the wildcard names hash
+starting with an asterisk is searched.
+If the name is not found there, the wildcard names hash
+ending with an asterisk is searched.
+Searching wildcard names hashes is slower than searching exact name hash
+because names are searched by domain parts.
+Note that the special wildcard form <dirname>.nginx.org</dirname>
+is stored in a wildcard names hash and not in an exact names hash.
+Regular expressions are tested sequentially
+and therefore are the slowest method and are non-scalable.
+</para>
+
+<para>
+For these reasons, it is better to use exact names where possible.
+For example, if the most frequently requested names of a server
+are <url>nginx.org</url> and <url>www.nginx.org</url>,
+it is more efficient to define them explicitly:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org  *.nginx.org;
+    ...
+}
+</programlisting>
+
+than to use the simplified form:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  .nginx.org;
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+If you have defined a large number of server names,
+or defined unusually long server names, you may need to tune
+the <dirname>server_names_hash_max_size</dirname>
+and <dirname>server_names_hash_bucket_size</dirname> directives
+at the <i>http</i> level.
+The default value of the <dirname>server_names_hash_bucket_size</dirname>
+may be equal to 32, or 64, or another value,
+depending on your CPU cache line size.
+If the default value is 32 and you define
+&ldquo;too.long.server.name.nginx.org&rdquo; as a server name,
+then nginx will fail to start and display the error message:
+
+<programlisting>
+could not build the server_names_hash,
+you should increase server_names_hash_bucket_size: 32
+</programlisting>
+
+In this case, you should set the directive value to the next power of 2:
+
+<programlisting>
+http {
+    server_names_hash_bucket_size  64;
+    ...
+</programlisting>
+
+If you have defined a large number of server names,
+you will get another error message:
+
+<programlisting>
+could not build the server_names_hash,
+you should increase either server_names_hash_max_size: 512
+or server_names_hash_bucket_size: 32
+</programlisting>
+
+You should first try to set <dirname>server_names_hash_max_size</dirname>
+to a number close to the number of server names.
+Only if this does not help,
+or if nginx&rsquo;s start time is unacceptably long,
+should you try to increase <dirname>server_names_hash_bucket_size</dirname>.
+</para>
+
+<para>
+If a server is the only server for a listen port, then nginx will not test
+server names at all (and will not build the hashes for the listen port).
+However, there is one exception.
+If a <dirname>server_name</dirname> is a regular expression with captures,
+then nginx has to execute the expression to get the captures.
+</para>
+
+</section>
+
+
+<section name="compatibility"
+        title="Compatibility">
+
+<para>
+<list>
+
+<item>
+A default server name value is an empty name &ldquo;&rdquo; since 0.8.48.
+</item>
+
+<item>
+Named regular expression server name captures have been supported since 0.8.25.
+</item>
+
+<item>
+Regular expression server name captures have been supported since 0.7.40.
+</item>
+
+<item>
+An empty server name &ldquo;&rdquo; has been supported since 0.7.12.
+</item>
+
+<item>
+A wildcard server name or regular expression has been supported for use
+as the first server name since 0.6.25.
+</item>
+
+<item>
+Regular expression server names have been supported since 0.6.7.
+</item>
+
+<item>
+Wildcard form <url>nginx.*</url> has been supported since 0.6.0.
+</item>
+
+<item>
+The special form <url>.nginx.org</url> has been supported since 0.3.18.
+</item>
+
+<item>
+Wildcard form <url>*.nginx.org</url> has been supported since 0.1.13.
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

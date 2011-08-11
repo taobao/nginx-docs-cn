@@ -1,0 +1,150 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="nginx/Windows usage"
+         link="/en/docs/windows.html"
+         lang="en">
+
+
+<section>
+
+<para>
+nginx/Windows uses the native Win32 API (not the Cygwin emulation layer).
+Currently only the <i>select</i> method is used as a notification method,
+therefore you should not expect high performance and scalability.
+Because of this and some known issues nginx/Windows is considered
+as a <i>beta</i> version.
+There is almost full-functionality in nginx/Windows as compared
+with the Unix version,
+except XSLT filter, image filter, GeoIP module, and embedded Perl language.
+</para>
+
+<para>
+To install nginx/Windows, you should <a href="/en/download.xml">download</a>
+the latest <development_version /> development version zipped file,
+since the development branch contains all known fixes,
+especially Windows related.
+Then you should unzip the file,
+go to the nginx-<development_version /> directory, and run nginx.
+Here is an example for the drive C: root directory:
+
+<programlisting>
+cd c:\
+unzip nginx-<development_version />.zip
+cd nginx-<development_version />
+start nginx
+</programlisting>
+
+You may run the <path>tasklist</path> command line utility
+to see nginx processes:
+
+<programlisting>
+C:\nginx-<development_version />&gt;tasklist /fi "imagename eq nginx.exe"
+
+Image Name           PID Session Name     Session#    Mem Usage
+=============== ======== ============== ========== ============
+nginx.exe            652 Console                 0      2 780 K
+nginx.exe           1332 Console                 0      3 112 K
+</programlisting>
+
+One of the processes is the master process and another is the worker process.
+If nginx will not start, you should look in
+the <path>logs\error.log</path> file for the reason.
+If the log file has not been created, the reason should be reported
+in the Windows Event Log.
+If you see an error page instead of the expected page, you should also look in
+the <path>logs\error.log</path> file for the error reason.
+</para>
+
+<para>
+nginx/Windows uses the directory where it has been run as the prefix
+directory for relative paths in the configuration.
+In the example above, the prefix directory is
+<path>C:\nginx-<development_version />\</path>.
+Paths in the configuration must be set in Unix style using forward slashes:
+
+<programlisting>
+access_log   logs/site.log;
+root         C:/web/html;
+</programlisting>
+</para>
+
+<para>
+nginx/Windows runs as a standard console application, not a service,
+and it can be managed using the following commands:
+
+<table note="yes">
+
+<tr>
+<td width="20%">nginx -s stop</td>
+<td>quick exit</td>
+</tr>
+
+<tr>
+<td>nginx -s quit</td>
+<td>graceful quit</td>
+</tr>
+
+<tr>
+<td>nginx -s reload</td>
+<td>
+changing configuration,
+starting a new worker,
+quitting an old worker gracefully
+</td>
+</tr>
+
+<tr>
+<td>nginx -s reopen</td>
+<td>reopening log files</td>
+</tr>
+
+</table>
+</para>
+
+</section>
+
+<section name="known_issues"
+        title="Known issues">
+
+<list>
+
+<item>
+Although several workers can be run, only one of them actually does any work.
+</item>
+
+<item>
+A worker can handle no more than 1024 simultaneous connections.
+</item>
+
+<item>
+The cache and other modules which require shared memory support do not work
+in Windows Vista and later due to
+address space layout randomization being enabled in these Windows versions.
+</item>
+
+</list>
+
+</section>
+
+<section name="possible_future_enhancements"
+        title="Possible future enhancements">
+
+<list>
+
+<item>
+Running as a service.
+</item>
+
+<item>
+Using the I/O completion ports as notification method.
+</item>
+
+<item>
+Using multiple worker threads inside single worker process.
+</item>
+
+</list>
+
+</section>
+
+</article>

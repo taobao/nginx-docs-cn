@@ -1,0 +1,524 @@
+<!DOCTYPE news SYSTEM "../dtd/news.dtd">
+
+<news title="nginx news" link="/" lang="en">
+
+<event date="2011-08-03">
+<para>
+We are happy to announce <a href="http://trac.nginx.org">trac.nginx.org</a>.
+</para>
+
+<para>
+You will find the code browser and the bug tracker on this page.
+Please note that we would greatly appreciate if you could switch
+to this new and hopefully convenient way of submitting bug reports to us,
+along with patches to the code.
+Here is <a href="http://trac.nginx.org/nginx/wiki">a short instruction</a>.
+</para>
+
+<para>
+Thanks!
+</para>
+</event>
+
+<event date="2011-08-01">
+<para>
+<a href="/en/download.xml">nginx-1.1.0</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2011-07-26">
+<para>
+<a href="/ja/">Japanese translation of the site</a> by
+<a href="http://www.digitalcube.jp/">DigitalCube Co. Ltd.</a>
+and <a href="http://dogmap.jp/">wokamoto</a>.
+</para>
+</event>
+
+<event date="2011-07-22">
+<para>
+<a href="http://www.amazon.co.jp/%E3%83%8F%E3%82%A4%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9HTTP%E3%82%B5%E3%83%BC%E3%83%90-Nginx%E5%85%A5%E9%96%80-Clement-Nedelcu/dp/4048702270">Japanese translation</a> of
+Clément Nedelcu’s book “Nginx HTTP Server”.
+</para>
+</event>
+
+<event date="2011-07-19">
+<para>
+<a href="/en/download.xml">nginx-1.0.5</a>
+stable version,
+<a href="/en/download.xml">nginx-0.8.55</a> and
+<a href="/en/download.xml">nginx-0.7.69</a>
+legacy stable versions have been released.
+</para>
+</event>
+
+<event date="2011-07-18">
+<para>
+I have got news for you about nginx.
+</para>
+
+<para>
+Recently it became very clear for me that because of increasing
+popularity of nginx and the volume of work required to develop
+the code and doing support, I really need to put it at another level.
+</para>
+
+<para>
+So, I have decided to focus even more on nginx and established
+nginx as a company to fully dedicate myself to the project. I am not alone,
+there are a few nice people working for me on this. I am focusing
+on the development part, and to some extent on the company operations as well.
+</para>
+
+<para>
+Our primary goals are improving support and communication for our users,
+streamlining the development process, revamping the documentation,
+integrating and speeding up pending bugfixes and patches, introducing
+long-requested functionality and more.
+</para>
+
+<para>
+It should be noted that nginx will remain free, open-source software
+under 2-clause BSD license. There will be no shortage of new and
+long-awaited features too.
+</para>
+
+<para>
+Thank you very much for your ongoing support through all these years.
+Without your awareness, feedback and support nginx would not become
+that successful.
+I am really looking forward to see more people who found nginx useful.
+I am also very glad we now have a proper way of doing a lot more for you.
+</para>
+
+<para>
+Thanks!<br/>
+Igor Sysoev
+</para>
+</event>
+
+<event date="2011-06-01">
+<para>
+<a href="/en/download.xml">nginx-1.0.4</a>
+stable version has been released.
+</para>
+</event>
+
+<event date="2011-05-25">
+<para>
+<a href="/en/download.xml">nginx-1.0.3</a>
+stable version has been released.
+</para>
+</event>
+
+<event date="2011-05-23">
+<para>
+Packt has published <a href="/en/books.xml">yet another book</a> about nginx:
+“<a href="http://www.packtpub.com/nginx-1-web-server-implementation-cookbook/book">Nginx
+1 Web Server Implementation Cookbook</a>” by Dipankar Sarkar.
+</para>
+</event>
+
+<event date="2011-05-10">
+<para>
+<a href="/en/download.xml">nginx-1.0.2</a>
+stable version has been released.
+</para>
+</event>
+
+<event date="2011-05-03">
+<para>
+<a href="/en/download.xml">nginx-1.0.1</a>
+stable version has been released.
+</para>
+</event>
+
+<event date="2011-04-12">
+<para>
+<a href="http://en.wikipedia.org/wiki/Vostok_1#Launch">Here we go!</a><br/>
+<a href="/en/download.xml">nginx-1.0.0</a>
+stable version has been released.<br/>
+The repository is available at svn://svn.nginx.org.
+</para>
+
+<para>
+nginx development was started about 9 years ago.
+The first public version 0.1.0 has been released on October 4, 2004.
+Now W3Techs reports that
+<a href="http://w3techs.com/technologies/overview/web_server/all">6.8%
+of the top 1 million sites on the web</a> (according to Alexa) use nginx.
+And
+<a href="http://w3techs.com/technologies/breakdown/ws-nginx/top_level_domain">46.9%</a>
+of top Russian sites use nginx.
+</para>
+
+<para>
+Netcraft reports similar
+<a href="http://news.netcraft.com/archives/2011/04/06/april-2011-web-server-survey.html">6.52%
+nginx share of the million busiest sites in April 2011</a>.
+</para>
+
+</event>
+
+<event date="2011-04-04">
+<para>
+<a href="/en/download.xml">nginx-0.9.7</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2011-03-21">
+<para>
+<a href="/en/download.xml">nginx-0.9.6</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2011-02-21">
+<para>
+<a href="/en/download.xml">nginx-0.9.5</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2011-01-21">
+<para>
+<a href="/en/download.xml">nginx-0.9.4</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-12-14">
+<para>
+<a href="/en/download.xml">nginx-0.8.54</a>
+stable version and
+<a href="/en/download.xml">nginx-0.7.68</a>
+legacy stable version have been released.
+</para>
+</event>
+
+<event date="2010-12-13">
+<para>
+<a href="/en/download.xml">nginx-0.9.3</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-12-06">
+<para>
+<a href="/en/download.xml">nginx-0.9.2</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-11-30">
+<para>
+<a href="/en/download.xml">nginx-0.9.1</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-11-29">
+<para>
+<a href="/en/download.xml">nginx-0.9.0</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-10-18">
+<para>
+<a href="/en/download.xml">nginx-0.8.53</a>
+stable version has been released.
+</para>
+</event>
+
+<event date="2010-09-28">
+<para>
+<a href="/en/download.xml">nginx-0.8.52</a>
+stable version has been released.
+</para>
+</event>
+
+<event date="2010-09-27">
+<para>
+<a href="/en/download.xml">nginx-0.8.51</a>
+stable version has been released.
+</para>
+
+<para>
+Now the 0.8.x branch becomes a stable branch.
+The new features have appeared during 0.8 development:
+<list>
+
+<item>
+named regular expression captures,
+</item>
+
+<item>
+file AIO in FreeBSD and Linux,
+</item>
+
+<item>
+SSL CRL,
+</item>
+
+<item>
+SCGI and uwsgi modules.
+</item>
+
+</list>
+</para>
+</event>
+
+<event date="2010-09-02">
+<para>
+<a href="/en/download.xml">nginx-0.8.50</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-08-09">
+<para>
+<a href="/en/download.xml">nginx-0.8.49</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-08-03">
+<para>
+<a href="/en/download.xml">nginx-0.8.48</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-07-28">
+<para>
+<a href="/en/download.xml">nginx-0.8.47</a>
+development version has been released.
+</para>
+
+<para>
+W3Techs reports that
+<a href="http://w3techs.com/technologies/overview/web_server/all">5.1%
+of the top 1 million sites on the web</a> (according to Alexa)
+use nginx. Hence nginx is on the 3rd place after Apache (70.2%) and IIS (20.5%).
+</para>
+
+<para>
+By the way, Netcraft reports similar
+<a href="http://news.netcraft.com/archives/2010/07/16/july-2010-web-server-survey-16.html">5.21%
+nginx share of the million busiest sites in July 2010</a>.
+</para>
+
+<para>
+Another survey by BuiltWith.com.
+It&rsquo;s interesting that nginx is used rather on more loaded sites:
+<a href="http://trends.builtwith.com/Web%20Server/nginx">4.95%
+of the top 10,000 sites versus 3.14% of the top million</a> (on July 27, 2010),
+while Apache is used more on less loaded sites:
+<a href="http://trends.builtwith.com/Web-Server/Apache">63.60%
+of the top million sites versus 55.79% of the top 10,000 sites</a>.
+IIS/6.0 is more preferred on middle range sites:
+<a href="http://trends.builtwith.com/Web-Server/IIS-6">24.49%
+of the top 100,000 sites versus 20.05% of the top 10,000
+and 21.15% of the top million</a>.
+</para>
+
+<para>
+Also two <a href="/en/books.xml">books</a>
+about nginx have recently been published:
+&ldquo;<a href="http://product.dangdang.com/product.aspx?product_id=20807089">实战Nginx：取代Apache的高性能Web服务器</a>&rdquo;
+by <a href="http://blog.s135.com">张宴 (Zhang Yan)</a> in Chinese and
+&ldquo;<a href="http://www.packtpub.com/nginx-http-server-for-web-applications/book">Nginx
+HTTP Server</a>&rdquo; by
+<a href="http://cnedelcu.blogspot.com">Clément Nedelcu</a> in English.
+</para>
+</event>
+
+<event date="2010-07-19">
+<para>
+<a href="/en/download.xml">nginx-0.8.46</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-07-17">
+<para>
+Igor Sysoev will give a lecture about nginx on
+<a href="http://softwarelivre.org/fisl11/english/news">11th
+International Free Software Forum (FISL11)</a> in Porto Alegre, Brasil.
+</para>
+</event>
+
+<event date="2010-07-13">
+<para>
+<a href="/en/download.xml">nginx-0.8.45</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-07-05">
+<para>
+<a href="/en/download.xml">nginx-0.8.44</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-06-30">
+<para>
+<a href="/en/download.xml">nginx-0.8.43</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-06-21">
+<para>
+<a href="/en/download.xml">nginx-0.8.42</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-06-15">
+<para>
+<a href="/en/download.xml">nginx-0.8.41</a>
+development version and
+<a href="/en/download.xml">nginx-0.7.67</a>
+stable version have been released.
+</para>
+</event>
+
+<event date="2010-06-07">
+<para>
+<a href="/en/download.xml">nginx-0.8.40</a>
+development version and
+<a href="/en/download.xml">nginx-0.7.66</a>
+stable version have been released.
+</para>
+</event>
+
+<event date="2010-06-02">
+<para>
+The folks at <a href="http://mivzakim.net">mivzakim.net</a>
+started <a href="/he/">Hebrew translation of the site</a>.
+</para>
+</event>
+
+<event date="2010-06-01">
+<para>
+13.7% of <a href="http://www.google.com/adplanner/static/top1000/">the
+1000 most-visited sites on the web (according to Google)</a>
+report nginx in
+<a href="http://openmymind.net/top1000data.txt">the “Server”
+response header line</a>.
+46.5% report Apache,
+14.9%&mdash;IIS,
+1.3%&mdash;lighttpd.
+12.3% do not report the “Server” header line at all.
+</para>
+</event>
+
+<event date="2010-05-31">
+<para>
+<a href="/en/download.xml">nginx-0.8.39</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-05-24">
+<para>
+<a href="/en/download.xml">nginx-0.8.38</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-05-17">
+<para>
+<a href="/en/download.xml">nginx-0.8.37</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-04-30">
+<para>
+<a href="/tr/">Turkish translation of the site</a>
+by <a href="http://javam.org">Altan Tanrıverdi</a>.
+</para>
+</event>
+
+<event date="2010-04-22">
+<para>
+<a href="/en/download.xml">nginx-0.8.36</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-04-01">
+<para>
+<a href="/en/download.xml">nginx-0.8.35</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-03-03">
+<para>
+<a href="/en/download.xml">nginx-0.8.34</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2010-02-23">
+<para>
+<a href="http://royal.pingdom.com/2010/02/23/nginx-the-little-russian-web-server-taking-on-the-giants/">A
+Royal Pingdom article</a> about nginx.
+</para>
+</event>
+
+<event date="2010-02-01">
+<para>
+<a href="/en/download.xml">nginx-0.8.33</a>
+development version and
+<a href="/en/download.xml">nginx-0.7.65</a>
+stable version have been released.
+</para>
+</event>
+
+<event date="2010-01-15">
+<para>
+Three new articles written by Igor Sysoev:
+&ldquo;<a href="/en/docs/windows.xml" />&rdquo;,
+&ldquo;<a href="/en/docs/debugging_log.xml" />&rdquo;, and
+&ldquo;<a href="/en/docs/http/converting_rewrite_rules.xml" />&rdquo;.
+</para>
+</event>
+
+<event date="2010-01-11">
+<para>
+<a href="/en/download.xml">nginx-0.8.32</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2009-12-23">
+<para>
+<a href="/en/download.xml">nginx-0.8.31</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2009-12-15">
+<para>
+<a href="/en/download.xml">nginx-0.8.30</a>
+development version has been released.
+</para>
+</event>
+
+<event date="2009-12-14">
+<para>
+The new nginx.org site was launched.
+Your attention is invited to
+<a href="/en/docs/introduction.xml">three introductory articles</a>
+written by Igor Sysoev and edited by Brian Mercer.
+</para>
+</event>
+
+</news>

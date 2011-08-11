@@ -1,0 +1,222 @@
+<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+
+<article title="nginx bir talebi nasıl işler"
+         link="/tr/docs/http/request_processing.html"
+         lang="tr"
+         author="Igor Sysoev"
+         translator="Altan Tanrıverdi">
+
+<section title="Ad-tabanlı sanal sunucular">
+
+<para>
+nginx, ilk olarak hangi sunucunun talebi işleyeceğine karar verir.
+80 portunu dinleyen 3 sunucunun olduğu bir yapılandırma ile örnek verelim:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  nginx.net  www.nginx.net;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  nginx.com  www.nginx.com;
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+Bu yapılandırmada, nginx yalnızca talebin header bilgisinde bulunan &ldquo;Host&rdquo; datasını kullanarak hangi sunucunun cevap vereceğini belirliyor.
+Eğer &ldquo;Host&rdquo; datası boş ise veya herhangi bir sunucu adı ile eşleşmez ise nginx talebi varsayılan sunucuya yönlendirir.
+Yukarıdaki örnekte varsayılan sunucu ilk server ifadesi kabul edilir.
+Eğer ilk server ifadesinin varsayılan olmasını istemiyorsanız, <dirname>listen</dirname> yönergesinde <dirname>default_server</dirname> parametresini kullanabilirsiniz:
+
+<programlisting>
+server {
+    listen       80  <b>default_server</b>;
+    server_name  nginx.net  www.nginx.net;
+    ...
+}
+</programlisting>
+
+<note>
+<dirname>default_server</dirname> parametresi, versiyon 0.8.21 ile birlikte kullanılmaya başlanmıştır.
+Önceki versiyonlarda <dirname>default</dirname> parametresi kullanılmalıdır.
+</note>
+
+Not: Varsayılan sunucu, sunucu adının değil listen portunun bir özelliğidir. Daha sonra bu konuya değinilecek.
+</para>
+
+</section>
+
+
+<section name="how_to_prevent_undefined_server_names"
+        title="Tanımlanmamış sunucu adlarına gelen taleplerin işlenmesini engellemek">
+
+<para>
+Eğer tanımlanmamış &ldquo;Host&rdquo; bilgisine sahip talepleri işlemek istemiyorsanız, bu talepleri düşüren bir varsayılan sunucu tanımlayabilirsiniz:
+
+<programlisting>
+server {
+    listen       80  default_server;
+    server_name  _;
+    return       444;
+}
+</programlisting>
+
+Böylece var olmayan alan adı için &ldquo;_&rdquo; ifadesini kullanarak nginx&rsquo;in standart olmayan 444 koduna yönlendirerek bağlantıyı kapatıyoruz.
+Not: Bu sunucu için bir ad belirlemelisiniz. Aksi takdirde nginx <i>hostname</i> ifadesini kullanacaktır.
+</para>
+
+</section>
+
+
+<section name="mixed_name_ip_based_servers"
+        title="Ad ve IP bazlı karışık sanal sunucular">
+
+<para>
+Farklı adreslerde bulunan sanal sunucuların yer aldığı biraz daha karışık bir yapılandırmayı inceleyelim:
+<programlisting>
+server {
+    listen       192.168.1.1:80;
+    server_name  nginx.org  www.nginx.org;
+    ...
+}
+
+server {
+    listen       192.168.1.1:80;
+    server_name  nginx.net  www.nginx.net;
+    ...
+}
+
+server {
+    listen       192.168.1.2:80;
+    server_name  nginx.com  www.nginx.com;
+    ...
+}
+</programlisting>
+
+Bu yapılandırmada, nginx <dirname>server</dirname> bloklarında yer alan <dirname>listen</dirname> yönergelerini ilk olarak IP adresi ve port üzerinde test eder. Daha sonra, gelen taleplerin header bilgisinde yer alan &ldquo;Host&rdquo; datasını, IP ve port ile eşleşen <dirname>server</dirname> bloklarında yer alan <dirname>server_name</dirname> girdileri ile kontrol eder.
+
+Eğer sunucu bulunamazsa varsayılan sunucu tarafından işlenir. Örneğin, <url>www.nginx.com</url> için 192.168.1.1:80 adres ve portuna gelen bir talep, eğer bu adres ve port için <url>www.nginx.com</url> tanımlanmamışsa, 192.168.1.1:80&rsquo;e ait varsayılan sunucu tarafından işlenir.
+</para>
+
+<para>
+Daha önce belirtildiği gibi, varsayılan bir sunucu, bir listen portunun ve değişik listen portları için tanımlanan çeşitli varsayılan sunucuların özelliğidir:
+
+<programlisting>
+server {
+    listen        192.168.1.1:80;
+    server_name   nginx.org  www.nginx.org;
+    ...
+}
+
+server {
+    listen        192.168.1.1:80  default_server;
+    server_name   nginx.net  www.nginx.net;
+    ...
+}
+
+server {
+    listen        192.168.1.2:80  default_server;
+    server_name   nginx.com  www.nginx.com;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="simple_php_site_configuration"
+        title="Basit bir PHP sitesi yapılandırması">
+
+<para>
+nginx&rsquo;in basit bir PHP sitesi için gelen talebi işlemek için nasıl bir <i>lokasyon</i> seçtiğini inceleyelim:
+
+<programlisting>
+server {
+    listen        80;
+    server_name   nginx.org  www.nginx.org;
+    root          /data/www;
+
+    location / {
+        index     index.html  index.php;
+    }
+
+    location ~* \.(gif|jpg|png)$ {
+        expires   30d;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass   localhost:9000;
+        fastcgi_param  SCRIPT_FILENAME
+                       $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}
+</programlisting>
+</para>
+
+<para>
+nginx ilk olarak literal dizgiler (string) tarafından verilmiş en spesifik lokasyonları arar. Yukarıdaki yapılandırmada tek literal lokasyon <path>/</path> ifadesidir ve herhangi bir talep ile eşleştiğinde kullanılacak son uğraktır (resort). nginx, daha sonra yapılandırma dosyasında bulunan listelenmiş sıralardaki düzenli ifadeler tarafından verilmiş lokasyonları arar. İlk düzenli ifade eşleşmesi aramayı durdurur ve nginx bu lokasyonu kullanır. Eğer talep ile eşleşen bir düzenli ifade bulunamaz ise nginx daha önce bulduğu en spesifik lokasyonu kullanır.
+</para>
+
+<para>
+Not: Tüm tiplerde bulunan bu lokasyonlar sadece bir talebin, sorgu dizgisi olmayan URI datasını test eder. Bunun yapılmasının nedeni sorgu dizgisinde bulunan argümanların çeşitli yollarla verilebilmesidir, örneğin:
+
+<programlisting>
+/index.php?user=john&amp;page=1
+/index.php?page=1&amp;user=john
+</programlisting>
+
+Ayrıca herhangi biri, herhangi bir şeyi sorgu dizgileri ile talep edebilir:
+
+<programlisting>
+/index.php?page=1&amp;baska+bir+sey&amp;user=john
+</programlisting>
+</para>
+
+<para>
+Yukarıdaki yapılandırmada taleplerin nasıl işlendiğini inceleyelim:
+
+<list>
+
+<item>
+<para>
+Bir <path>/logo.gif</path> talebi, ilk olarak <dirname>/</dirname> literal lokasyonu, daha sonra, <dirname>\.(gif|jpg|png)$</dirname> düzenli ifadesi tarafından eşleştirilir. Bu sonraki (latter) lokasyon tarafından tutulur. <dirname>root&nbsp;/data/www</dirname> yönergesi kullanılarak, talep <path>/data/www/logo.gif</path> dosyasına eşlemlenir (mapped to) ve dosya istemciye gönderilir.
+</para>
+</item>
+
+<item>
+<para>
+Bir <path>/index.php</path> talebi de ilk olarak <dirname>/</dirname> literal lokasyonu, sonra, <dirname>\.(php)$</dirname> düzenli ifadesi tarafından eşleştirilir. Bu nedenle sonraki lokasyon tarafından tutulur ve localhost:9000&rsquo;in dinlendiği bir FastCGI sunucusuna iletilir. <dirname>fastcgi_param</dirname> yönergesi, SCRIPT_FILENAME FastCGI parametresini <path>/data/www/index.php</path> adresine yerleştirir ve FastCGI sunucusu dosyayı yürütür. $document_root değişkeni <dirname>root</dirname> yönergesinin değerine, $fastcgi_script_name değişkeni ise talebin URI değerine eşittir. Örneğin <path>/index.php</path>.
+</para>
+</item>
+
+<item>
+<para>
+Bir <path>/about.html</path> talebi yalnızca <dirname>/</dirname> literal lokasyonu tarafından eşleştirilir ve bu yüzden, bu lokasyon tarafından tutulur. <dirname>root /data/www</dirname> yönergesi kullanılarak talep, <path>/data/www/about.html</path> dosyasına eşlemlenir ve istemciye gönderilir.
+</para>
+</item>
+
+<item>
+<para>
+Bir <path>/</path> talebini tutmak daha karmaşıktır. Sadece <dirname>/</dirname> literal lokasyonu tarafından eşleştirilir ve bu yüzden bu lokasyon tarafından tutulur. Sonra <dirname>index</dirname> yönergesi parametrelerine ve <dirname>root&nbsp;/data/www</dirname> yönergesine göre bir index dosyası olup olmadığını kontrol eder. Eğer bir <path>/data/www/index.php</path> dosyası mevcut ise yönerge, <path>/index.php</path> adresine dahili bir yönlendirme yapar ve eğer talep bir istemci tarafından gönderilmiş ise nginx, lokasyonları tekrar arar. Daha önce gördüğümüz gibi, yönlendirilmiş talep en son olarak FastCGI sunucusu tarafından tutulur.
+</para>
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

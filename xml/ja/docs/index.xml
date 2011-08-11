@@ -1,0 +1,43 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="nginx ドキュメント"
+         link="/ja/docs/"
+         lang="ja">
+
+<section>
+
+<para>
+<list>
+
+<item>
+<a href="/ja/docs/introduction.xml"/>
+</item>
+
+<item>
+<a href="/ja/docs/howto.xml"/>
+</item>
+
+<item>
+<a href="/ja/docs/faq.xml"/>
+</item>
+
+</list>
+</para>
+
+<!--
+
+<para>
+<list>
+
+<item>
+<a href="/ja/docs/windows.xml"/>
+</item>
+
+</list>
+</para>
+
+-->
+
+</section>
+
+</article>

@@ -1,0 +1,26 @@
+<!DOCTYPE i18n SYSTEM "../dtd/i18n.dtd">
+
+<i18n>
+
+<text lang="en">
+<item id="author">written by</item>
+<item id="editor">edited by</item>
+<item id="translator">translated by</item>
+</text>
+
+<text lang="ja">
+<item id="author">作成:</item>
+<item id="translator">翻訳:</item>
+</text>
+
+<text lang="he">
+<item id="author">נכתב על ידי</item>
+<item id="translator">תורגם על ידי</item>
+</text>
+
+<text lang="tr">
+<item id="author">yazan:</item>
+<item id="translator">çeviren:</item>
+</text>
+
+</i18n>

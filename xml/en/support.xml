@@ -1,0 +1,71 @@
+<!DOCTYPE digest SYSTEM "../../dtd/article.dtd">
+
+<article title="nginx: support"
+         link="/en/support.html"
+         lang="en">
+
+
+<section title="Wiki">
+
+<para>
+<list>
+
+<item>
+<a href="http://wiki.nginx.org">wiki.nginx.org</a>
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section title="Mailing lists">
+
+<para>
+<list>
+
+<item>
+<a href="http://nginx.org/mailman/">nginx.org/mailman</a>,
+<a href="http://nginx.org/pipermail/nginx/">archive</a>.
+To write in the mailing lists, you must first
+<a href="http://nginx.org/mailman/listinfo/nginx">subscribe</a>
+your email address which you plan to use for posting.
+</item>
+
+<item>
+<a href="http://marc.info/?l=nginx">nginx@nginx.org MARC archive</a>
+</item>
+
+<item>
+<a href="http://dir.gmane.org/gmane.comp.web.nginx.english">nginx@nginx.org
+Gmane archive</a>
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section title="Forums">
+
+<para>
+<list>
+
+<item>
+<a href="http://forum.nginx.org">forum.nginx.org</a>
+(with mailing lists integration)
+</item>
+
+<item>
+<a href="http://www.ruby-forum.com/forum/24">Ruby Forum</a>
+(with nginx@nginx.org mailing list integration)
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

@@ -1,0 +1,22 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="nginx: faq"
+         link="/ru/docs/faq.html"
+         lang="ru">
+
+
+<section>
+
+<para>
+<list>
+
+<item>
+<a href="/ru/docs/sys_errlist.xml"/>
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

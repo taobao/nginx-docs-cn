@@ -1,0 +1,48 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="nginx: документация"
+         link="/ru/docs/"
+         lang="ru">
+
+
+<section>
+
+<para>
+<list>
+
+<!--
+
+<item>
+<a href="/ru/docs/introduction.xml"/>
+</item>
+
+<item>
+<a href="/ru/docs/howto.xml"/>
+</item>
+
+-->
+
+<item>
+<a href="/ru/docs/faq.xml"/>
+</item>
+
+</list>
+</para>
+
+<!--
+
+<para>
+<list>
+
+<item>
+<a href="/ru/docs/windows.xml"/>
+</item>
+
+</list>
+</para>
+
+-->
+
+</section>
+
+</article>

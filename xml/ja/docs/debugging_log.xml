@@ -1,0 +1,61 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="デバッギングログ"
+         link="/ja/docs/debugging_log.html"
+         lang="ja">
+
+<section>
+
+<para>
+デバッギングログを有効にするには、nginx をデバッグオプションを付けて設定する必要があります:
+
+<programlisting>
+./configure --with-debug ...
+</programlisting>
+
+次に <dirname>error_log</dirname> の <dirname>debug</dirname> レベルをセットします:
+
+<programlisting>
+error_log  /path/to/log  debug;
+</programlisting>
+
+nginx の Windows バイナリバージョンでは常にデバッグログモードがサポートされてビルドされているので、<dirname>debug</dirname> レベルをセットするだけです。
+</para>
+
+<para>
+別のレベル、例えば <i>server</i> レベルでログを定義するとそのサーバでのデバッギングログが無効になりますので注意してください:
+<programlisting>
+error_log  /path/to/log  debug;
+
+http {
+    server {
+        error_log  /path/to/log;
+        ...
+</programlisting>
+このサーバログをコメントアウトするか <dirname>debug</dirname> フラグを追加してください:
+<programlisting>
+error_log  /path/to/log  debug;
+
+http {
+    server {
+        error_log  /path/to/log  debug;
+        ...
+</programlisting>
+</para>
+
+<para>
+また、特定のアドレスだけデバッギングログを有効にすることもできます:
+
+<programlisting>
+error_log  /path/to/log;
+
+events {
+    debug_connection   192.168.1.1;
+    debug_connection   192.168.10.0/24;
+}
+</programlisting>
+</para>
+
+</section>
+
+</article>

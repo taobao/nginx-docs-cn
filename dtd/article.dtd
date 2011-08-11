@@ -1,0 +1,7 @@
+<!ELEMENT  digest       (title, article+) >
+
+<!ELEMENT  article      (para+) >
+<!ATTLIST  article      date CDATA #REQUIRED >
+
+<!ENTITY % content      SYSTEM  "content.dtd" >
+          %content;

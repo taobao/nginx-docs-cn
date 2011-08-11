@@ -1,0 +1,142 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="שימוש ב nginx במערכת ההפעלה חלונות"
+         link="/he/docs/windows.html"
+         lang="he">
+
+<section>
+
+<para>
+nginx/Windows משתמש ב API הטבעי של חלונות, Win32 API (ולא בשכבת אמולציה של Cygwin).
+נכון למועד כתיבת שורות אלה, שיטת היידוע <i>select</i> היא זו שנמצאת בשימוש,
+ולכן אין לצפות לרמת ביצועים גבוהה וליכולת גידול.
+עקב כך וגם בעקבות בעיות ידועות אחרות, nginx/Windows נחשבת כגירסת <i>בטא</i>.
+ישנה פונקציונליות כמעט מלאה ב nginx/Windows ביחס לגירסת Unix, חוץ מפילטר XSLT,
+פילטר תמונות, מודול GeoIP ושפת Perl משובצת.</para>
+
+<para>
+כדי להתקין את nginx/Windows, יש <a href="/en/download.xml">להוריד</a>
+את קובץ הזיפ של גירסת הפיתוח האחרונה <development_version />,
+כיוון שענף הפיתוח מכיל את כל התיקונים הידועים, בייחוד אלו הקשורים לחלונות.
+אחרי ההורדה, יש לפרוס את קובץ הזיפ,
+להיכנס לתיקיה nginx-<development_version />, ולהריץ את nginx.
+הנה דוגמא עבור תיקיית השורש של כונן C:
+
+<programlisting>
+cd c:\
+unzip nginx-<development_version />.zip
+cd nginx-<development_version />
+start nginx
+</programlisting>
+
+תוכלו להריץ את כלי שורת הפקודה <path>tasklist</path> כדי לראות תהליכים
+של nginx:
+
+<programlisting>
+C:\nginx-<development_version />&gt;tasklist /fi "imagename eq nginx.exe"
+
+Image Name           PID Session Name     Session#    Mem Usage
+=============== ======== ============== ========== ============
+nginx.exe            652 Console                 0      2 780 K
+nginx.exe           1332 Console                 0      3 112 K
+</programlisting>
+
+אחד מהתהליכים הוא התהליך הראשי (מנהל), והאחר הוא תהליך עובד.
+אם nginx לא מתחיל לפעול, יש לעיין בקובץ <path>logs\error.log</path> כדי לבדוק את הסיבה.
+אם קובץ הלוג לא נוצר, הסיבה צריכה להיות מדווחת ב Event Log של חלונות.
+אם הנכם מקבלים דף שגיאה במקום העמוד הרצוי, עליכם לעיין בקובץ  <path>logs\error.log</path> גם כן,
+כדי לראות מה הסיבה.
+</para>
+
+<para>
+nginx/Windows משתמש בתיקייה שממנה הוא הופעל בתור תיקיית הקידומת לכל
+הנתיבים היחסיים שבקובץ התצורה.
+בדוגמה שלעיל, תיקיית הקידומת תהיה
+<path>C:\nginx-<development_version />\</path>.
+על נתיבים בקובץ התצורה להיות בסגנון Unix בלבד, באמצעות לוכסנים קדמיים:
+
+<programlisting>
+access_log   logs/site.log;
+root         C:/web/html;
+</programlisting>
+</para>
+
+<para>
+nginx/Windows רץ כיישום קונסול סטנדרטי, ולא כשירות (service) במערכת,
+וניתן לנהלו באמצעות הפקודות הבאות:
+<table note="yes">
+
+<tr>
+<td width="20%">nginx -s stop</td>
+<td>יציאה מהירה</td>
+</tr>
+
+<tr>
+<td>nginx -s quit</td>
+<td>יציאה מסודרת</td>
+</tr>
+
+<tr>
+<td>nginx -s reload</td>
+<td>
+שינוי תצורה,
+הפעלת תהליך עובד חדש,
+סגירת תהליך עובד ישן באופן מסודר
+</td>
+</tr>
+
+<tr>
+<td>nginx -s reopen</td>
+<td>פתיחה מחדש של קובצי הלוג</td>
+</tr>
+
+</table>
+</para>
+
+</section>
+
+<section name="known_issues"
+        title="בעיות ידועות">
+
+<list>
+
+<item>
+למרות שניתן להפעיל מספר תהליכים עובדים, רק אחד מהם עושה בפועל את העבודה.
+</item>
+
+<item>
+תהליך עובד לא יכול לטפל ביותר מ 1024 חיבורים פעילים בו זמנית.
+</item>
+
+<item>
+מודול המטמון ומודולים אחרים אשר דורשים תמיכה בזיכרון משותף, לא עובדים בחלונות
+ויסטה או גירסאות מאוחרות יותר, עקב הפעלת טכניקת address space layout randomization
+המופעלת בגירסאות אלה של חלונות.
+</item>
+
+</list>
+
+</section>
+
+<section name="possible_future_enhancements"
+        title="שיפורים עתידיים אפשריים">
+
+<list>
+
+<item>
+הרצה כשירות במערכת (Service).
+</item>
+
+<item>
+שימוש ב I/O completion ports כשיטת יידוע.
+</item>
+
+<item>
+שימוש במספר נימי עובדים בתוך תהליך עובד אחד.
+</item>
+
+</list>
+
+</section>
+
+</article>

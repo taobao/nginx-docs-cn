@@ -1,0 +1,26 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="nginx howto"
+         link="/en/docs/howto.html"
+         lang="en">
+
+
+<section>
+
+<para>
+<list>
+
+<item>
+<a href="/en/docs/debugging_log.xml"/>
+</item>
+
+<item>
+<a href="/en/docs/http/converting_rewrite_rules.xml"/>
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

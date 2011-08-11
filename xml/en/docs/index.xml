@@ -1,0 +1,40 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="nginx documentation"
+         link="/en/docs/"
+         lang="en">
+
+
+<section>
+
+<para>
+<list>
+
+<item>
+<a href="/en/docs/introduction.xml"/>
+</item>
+
+<item>
+<a href="/en/docs/howto.xml"/>
+</item>
+
+<item>
+<a href="/en/docs/faq.xml"/>
+</item>
+
+</list>
+</para>
+
+<para>
+<list>
+
+<item>
+<a href="/en/docs/windows.xml"/>
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

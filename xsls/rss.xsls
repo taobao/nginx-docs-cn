@@ -1,0 +1,72 @@
+X:stylesheet
+    xmlns:date="http://exslt.org/dates-and-times"
+{
+
+X:output indent="no" encoding="utf-8";
+
+X:strip-space elements = "*";
+
+<!--
+  -- a current directory of a XSLT script is where the script is stored,
+  -- but not where XSLT processor has been started to run the script
+  -->
+X:param XML = "'../xml'";
+X:param YEAR;
+
+X:var SITE = "'http://nginx.org'";
+X:var LINK = "/news/@link";
+
+X:include href = "dirname.xslt";
+X:include href = "link.xslt";
+X:include href = "menu.xslt";
+X:include href = "content.xslt";
+
+
+X:template = "/news" {
+    <rss version="2.0">
+    <channel>
+    <title> !{@title} </title>
+    <link> !{$SITE} </link>
+    <description />
+    !! "event";
+    </channel>
+    </rss>
+}
+
+
+X:template = "event[position() &lt;= 10]" {
+
+    X:var year = { !{substring(../event[position()=1]/@date, 1, 4)} }
+    X:var y = { !{substring(@date, 1, 4)} }
+
+    X:var page = {
+        X:if "$year != $y" {
+            !{concat($y, '.html')}
+        }
+    }
+
+    <item>
+        <title>!{@date}</title>
+        <guid> !{$SITE} X:text {/} !{$page} X:text {#} !{@date} </guid>
+        <link> !{$SITE} X:text {/} !{$page} X:text {#} !{@date} </link>
+        <pubdate>
+            !{ concat(date:day-abbreviation(@date), ', ',
+                      format-number(date:day-in-month(@date), '00'), ' ',
+                      date:month-abbreviation(@date), ' ',
+                      date:year(@date),
+                      ' 00:00:00 +0300') }
+        </pubdate>
+
+        <description>
+            X:text disable-output-escaping="yes" {&lt;![CDATA[}
+            !! "para";
+            X:text disable-output-escaping="yes" {]]&gt;}
+         </description>
+    </item>
+}
+
+
+X:template = "event" { }
+
+
+}

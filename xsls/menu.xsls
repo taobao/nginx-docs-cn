@@ -1,0 +1,67 @@
+X:stylesheet {
+
+X:template = "menu/item" {
+
+    <!--
+      --  variables are not allowed in a template match predicate,
+      --  therefore, we have to use ugly "if"s instead of elegant
+      --     "menu/item[@href = $LINK]", etc.
+      -->
+
+    X:if "@href = $LINK" {
+        X:if "$YEAR and @href='/'" {
+            <a href="./"> news </a> <br/>
+        } else {
+            !{ normalize-space(text()) }<br/>
+        }
+
+    } else {
+        <a>
+        X:attribute "href" {
+
+            X:if "starts-with(@href, $DIRNAME)" {
+               X:if "substring-after(@href, $DIRNAME) = ''" {
+                  ./
+
+               } else {
+                  !{ substring-after(@href, $DIRNAME) }
+               }
+
+            } else {
+               !{ concat($ROOT, @href) }
+            }
+        }
+        !{ normalize-space(text()) }
+        </a>
+
+        X:if "@lang" { X:text { [} !{@lang} X:text {]}}
+
+        <br/>
+    }
+}
+
+
+X:template = "menu/item[@year]" {
+    X:if "$YEAR or $LINK='/'" {
+        X:if "$YEAR=@year" {
+            !{@year} <br/>
+        } else {
+            <a href="{@href}"> !{@year} </a>
+            <br/>
+        }
+    }
+}
+
+
+X:template = "menu/item[starts-with(@href, 'http://')]" {
+    <a href="{@href}"> !{ normalize-space(text()) } </a>
+    X:if "@lang" { X:text { [} !{@lang} X:text {]}}
+    <br/>
+}
+
+
+X:template = "menu/item[not(@href)]" {
+    !{ normalize-space(text()) } <br/>
+}
+
+}

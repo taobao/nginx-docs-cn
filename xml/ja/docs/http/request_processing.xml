@@ -1,0 +1,217 @@
+<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+
+<article title="nginx はどのようにリクエストを処理するか"
+         link="/ja/docs/http/request_processing.html"
+         lang="ja"
+         author="Igor Sysoev"
+         translator="DigitalCube Co. Ltd., wokamoto">
+
+<section title="名前ベースの仮想サーバ">
+
+<para>
+nginx はまず最初にどの<i>サーバ</i>がそのリクエストを処理すべきなのかを決定します。手はじめに、３つすべての仮想サーバが port *:80 で待ち受けている単純な設定から見てみましょう:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  nginx.net  www.nginx.net;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  nginx.com  www.nginx.com;
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+この設定では nginx は、（ブラウザからの）HTTP リクエストの &ldquo;Host&rdquo; ヘッダだけを考査して、そのリクエストをどのサーバに振り向けるべきかを決定します。もし &ldquo;Host&rdquo; ヘッダがどのサーバ名ともマッチしない場合、またはリクエストにこのフィールドがまったく含まれていない場合は、nginxはこのリクエストをデフォルトサーバに振り向けます。上記の設定ではデフォルトサーバは最初のもので、これは nginx の標準的なデフォルトの挙動です。設定内の最初のサーバをデフォルトサーバにしたくない場合は、<dirname>listen</dirname> ディレクティブに <dirname>default_server</dirname> パラメータを使って明示的に設定することができます:
+
+<programlisting>
+server {
+    listen       80  <b>default_server</b>;
+    server_name  nginx.net  www.nginx.net;
+    ...
+}
+</programlisting>
+
+<note>
+この <dirname>default_server</dirname> パラメータはバージョン 0.8.21 以上で利用できます。それ以前のバージョンでは代わりに <dirname>default</dirname> パラメータを使用してください。
+</note>
+
+このデフォルトサーバは <dirname>listen</dirname> ディレクティブのプロパティで、<dirname>server_name</dirname> ディレクティブのプロパティではないことに注意してください。詳細は後述します。
+</para>
+
+</section>
+
+
+<section name="how_to_prevent_undefined_server_names"
+        title="サーバ名未定義のリクエストの処理を防ぐ">
+
+<para>
+&ldquo;Host&rdquo; ヘッダが未定義のリクエストを処理させたくない場合は、リクエストを単にドロップさせるデフォルトサーバを設定できます:
+
+<programlisting>
+server {
+    listen       80  default_server;
+    server_name  _;
+    return       444;
+}
+</programlisting>
+
+ここでは存在しないドメイン名 “_” をサーバ名として選択し、接続を閉じる nginx の特別な標準外コード 444 を返します。このサーバ用にサーバ名を設定しなければならないことに注意してください。さもなければ nginx は<i>ホスト名</i>を使用します。
+</para>
+
+</section>
+
+
+<section name="mixed_name_ip_based_servers"
+        title="名前ベースとIPベースをミックスした仮想サーバ">
+
+<para>
+異なるアドレスで待ち受けている仮想サーバのより複雑な設定をみてみましょう:
+
+<programlisting>
+server {
+    listen       192.168.1.1:80;
+    server_name  nginx.org  www.nginx.org;
+    ...
+}
+
+server {
+    listen       192.168.1.1:80;
+    server_name  nginx.net  www.nginx.net;
+    ...
+}
+
+server {
+    listen       192.168.1.2:80;
+    server_name  nginx.com  www.nginx.com;
+    ...
+}
+</programlisting>
+
+この設定では、nginx はまず最初に <dirname>server</dirname> ブロックの <dirname>listen</dirname> ディレクティブに対してリクエストの IP アドレスとポートを考査します。次に、その IP アドレスとポートにマッチする <dirname>server</dirname> ブロックの <dirname>server_name</dirname> ディレクティブに対して、その HTTP リクエストの &ldquo;Host&rdquo; ヘッダを考査します。
+
+もしサーバ名が見つからなければ、そのリクエストはデフォルトサーバによって処理されます。例えば、192.168.1.1:80 ポートで受信された <url>www.nginx.com</url> へのリクエストは 192.168.1.1:80 ポートのデフォルトサーバ、つまり最初のサーバで処理されます。これはこのポートでは <url>www.nginx.com</url> は定義されていないからです。
+</para>
+
+<para>
+すでに述べたように、デフォルトサーバは <dirname>listen</dirname> ディレクティブのプロパティで、別の <dirname>listen</dirname> ディレクティブには別のデフォルトサーバが定義されています:
+
+<programlisting>
+server {
+    listen        192.168.1.1:80;
+    server_name   nginx.org  www.nginx.org;
+    ...
+}
+
+server {
+    listen        192.168.1.1:80  default_server;
+    server_name   nginx.net  www.nginx.net;
+    ...
+}
+
+server {
+    listen        192.168.1.2:80  default_server;
+    server_name   nginx.com  www.nginx.com;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="simple_php_site_configuration"
+        title="単純な PHP サイトの設定">
+
+<para>
+では、典型的で単純な PHP サイトで nginx がどのように<i>ロケーション（location）</i>を選択してリクエストを処理するのかを見てみましょう:
+
+<programlisting>
+server {
+    listen        80;
+    server_name   nginx.org  www.nginx.org;
+    root          /data/www;
+
+    location / {
+        index     index.html  index.php;
+    }
+
+    location ~* \.(gif|jpg|png)$ {
+        expires   30d;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass   localhost:9000;
+        fastcgi_param  SCRIPT_FILENAME
+                       $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}
+</programlisting>
+</para>
+
+<para>
+nginx はまず最初に、リストの順序には関係なくリテラルな文字列によって指定されているもっとも限定されたロケーションを検索します。上記の設定では唯一のリテラルなロケーションは <path>/</path> であり、したがってどのリクエストでもマッチして最終的にこのロケーションが使われます。次に nginx は、設定ファイルにリストされている順番で正規表現によって指定されているロケーションをチェックします。最初にマッチした正規表現で検索はストップし、 nginx そのロケーションを使用します。もしどの正規表現もリクエストにマッチしない場合は、nginx はその前に見つかったもっとも限定されたリテラルなロケーションを使用します。
+</para>
+
+<para>
+すべてのタイプのロケーションはクエリー部分を除いたリクエスト URI 部分のみを考査することに注意してください。これはクエリー文字列の引数がいろいろな方法で渡されることがあるためです。例えば:
+
+<programlisting>
+/index.php?user=john&amp;page=1
+/index.php?page=1&amp;user=john
+</programlisting>
+
+さらに、クエリー文字列ではどのようなリクエストでも可能だからです:
+
+<programlisting>
+/index.php?page=1&amp;something+else&amp;user=john
+</programlisting>
+</para>
+
+<para>
+では、上記の設定ではどのようにリクエストが処理されるのかを見てみましょう:
+
+<list>
+
+<item>
+<para>
+リクエスト <path>/logo.gif</path> はリテラルなロケーション <dirname>/</dirname> に最初にマッチし、次に正規表現 <dirname>\.(gif|jpg|png)$</dirname> にマッチするので、後者のロケーションによって処理されます。 このリクエストは <dirname>root&nbsp;/data/www</dirname> ディレクティブを使用してファイル <path>/data/www/logo.gif</path> にマップされ、このファイルがクライアントに送られます。
+</para>
+</item>
+
+<item>
+<para>
+リクエスト <path>/index.php</path> もまたリテラルなロケーション <dirname>/</dirname> に最初にマッチし、次に正規表現 <dirname>\.(php)$</dirname> にマッチします。したがって、このリクエストは後者のロケーションによって処理され、localhost:9000 で待ち受けている FastCGI サーバに渡されます。<dirname>fastcgi_param</dirname> ディレクティブは FastCGI のパラメータ SCRIPT_FILENAME を <path>/data/www/index.php</path> にセットし、この FastCGI サーバがこのファイルを実行します。変数 $document_root は <dirname>root</dirname> ディレクティブの値と同等で、変数 $fastcgi_script_name はリクエスト URI、例えば <path>/index.php</path> と同等です。
+</para>
+</item>
+
+<item>
+<para>
+リクエスト <path>/about.html</path> はリテラルなロケーション <dirname>/</dirname> のみにマッチします。したがってこのロケーションで処理されます。このリクエストは <dirname>root</dirname> ディレクティブのパラメータ <dirname>/data/www</dirname> を使い、ファイル <path>/data/www/about.html</path> にマップされ、クライアントに送られます。
+</para>
+</item>
+
+<item>
+<para>
+リクエスト <path>/</path> の処理はより複雑です。これはリテラルなロケーション <dirname>/</dirname> のみにマッチし、このロケーションで処理されます。ついで <dirname>index</dirname> ディレクティブがパラメータと <dirname>root</dirname> ディレクティブのパラメータ <dirname>/data/www</dirname> にしたがって index ファイルが存在するかどうかを考査します。もし <path>/data/www/index.php</path> ファイル存在すればこのディレクティブは <path>/index.php</path> への内部リダイレクトを実行し、nginx はまるでこのリクエストがクライアントに送られたかのようにこのロケーションを再び検索します。先に見たように、リダイレクトされたリクエストは最終的に FastCGI サーバで処理されます。
+</para>
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

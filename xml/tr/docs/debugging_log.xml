@@ -1,0 +1,61 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="Hata ayıklama kaydı"
+         link="/tr/docs/debugging_log.html"
+         lang="tr">
+
+<section>
+
+<para>
+Hata ayıklama kayıt işlemini olanaklı kılmak için, nginxi debug komutu ile yapılandırmalısınız:
+
+<programlisting>
+./configure --with-debug ...
+</programlisting>
+
+ve daha sonra <dirname>error_log</dirname> ile <dirname>debug</dirname> dizin yolunu belirtin:
+
+<programlisting>
+error_log  /path/to/log  debug;
+</programlisting>
+
+nginx/Windows binary versiyonu, varsayılan olarak hata ayıklama kayıt desteği ile gelir. Bu yüzden yalnızca <dirname>debug</dirname> dizin yolunu belirtmek yeterlidir.
+</para>
+
+<para>
+Not: başka düzeyde bulunan tanımlı bir kayıt (örneğin <i>server</i> üzerinde), diğer hata ayıklama kaydını etkisizleştirir:
+<programlisting>
+error_log  /path/to/log  debug;
+
+http {
+    server {
+        error_log  /path/to/log;
+        ...
+</programlisting>
+Ya bu sunucudaki kaydı yorum ifadesi ile kapatmalı ya da <dirname>debug</dirname> etiketini (flag) buraya da eklemelisiniz:
+<programlisting>
+error_log  /path/to/log  debug;
+
+http {
+    server {
+        error_log  /path/to/log  debug;
+        ...
+</programlisting>
+</para>
+
+<para>
+Hata ayıklama kayıt işlemini belirli adresler için de belirleyebilirsiniz:
+
+<programlisting>
+error_log  /path/to/log;
+
+events {
+    debug_connection   192.168.1.1;
+    debug_connection   192.168.10.0/24;
+}
+</programlisting>
+</para>
+
+</section>
+
+</article>

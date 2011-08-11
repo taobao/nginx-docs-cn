@@ -1,0 +1,148 @@
+<!DOCTYPE menus SYSTEM "../dtd/menu.dtd">
+
+<menus>
+
+<menu lang="en">
+
+<item> english </item>
+<item href="/he/"> עברית </item>
+<item href="/ja/"> 日本語 </item>
+<item href="/ru/"> русский </item>
+<item href="/tr/"> türkçe </item>
+<item />
+
+<item href="/"> news </item>
+<item href="2010.html" year="2010" />
+<item href="2009.html" year="2009" />
+<item />
+
+<item href="/en/"> about </item>
+<item href="/en/download.html"> download </item>
+<!--
+<item href="/en/getting_started.html"> getting started </item>
+-->
+<item href="/en/security_advisories.html"> security advisories </item>
+<item href="/en/docs/"> documentation </item>
+<item href="/en/docs/introduction.html"> introduction </item>
+<!--
+<item href="/en/docs/reference.html"> reference </item>
+-->
+<item href="/en/docs/howto.html"> howto </item>
+<item href="/en/docs/faq.html"> faq </item>
+<item href="http://wiki.nginx.org"> wiki </item>
+<item href="/en/links.html"> links </item>
+<item href="/en/books.html"> books </item>
+<item href="/en/support.html"> support </item>
+<!--
+<item href="/en/donation.html"> donation </item>
+-->
+
+</menu>
+
+
+<menu lang="he">
+
+<item href="/en/"> english </item>
+<item> עברית </item>
+<item href="/ja/"> 日本語 </item>
+<item href="/ru/"> русский </item>
+<item href="/tr/"> türkçe </item>
+<item />
+
+<item href="/" lang="אנגלית"> חדשות </item>
+<item />
+
+<item href="/he/"> אודות </item>
+<item href="/en/download.html" lang="אנגלית"> הורדה </item>
+<item href="/en/security_advisories.html" lang="אנגלית"> דיווחי אבטחה </item>
+<item href="/he/docs/"> תיעוד </item>
+<item href="/he/docs/introduction.html"> הקדמה </item>
+<item href="/he/docs/howto.html"> איך עושים... </item>
+<item href="/en/docs/faq.html" lang="אנגלית"> שאלות נפוצות </item>
+<item href="http://wiki.nginx.org" lang="אנגלית"> ויקי </item>
+<item href="/en/links.html" lang="אנגלית"> קישורים </item>
+<item href="/en/support.html" lang="אנגלית"> תמיכה </item>
+
+</menu>
+
+
+<menu lang="ja">
+
+<item href="/en/"> english </item>
+<item href="/he/"> עברית </item>
+<item> 日本語 </item>
+<item href="/ru/"> русский </item>
+<item href="/tr/"> türkçe </item>
+<item />
+
+<item href="/" lang="en"> ニュース </item>
+<item />
+
+<item href="/ja/"> nginx について </item>
+<item href="/en/download.html" lang="en"> ダウンロード </item>
+<item href="/en/security_advisories.html" lang="en"> セキュリティ情報 </item>
+<item href="/ja/docs/"> ドキュメント </item>
+<item href="/ja/docs/introduction.html"> 入門 </item>
+<item href="/ja/docs/howto.html"> ハウツー </item>
+<item href="/ja/docs/faq.html"> faq </item>
+<item href="/en/links.html" lang="en"> リンク </item>
+<item href="/en/books.html" lang="en"> 本 </item>
+<item href="/en/support.html" lang="en"> サポート </item>
+
+</menu>
+
+
+<menu lang="ru">
+
+<item href="/en/"> english </item>
+<item href="/he/"> עברית </item>
+<item href="/ja/"> 日本語 </item>
+<item> русский </item>
+<item href="/tr/"> türkçe </item>
+<item />
+
+<item href="/" lang="en"> новости </item>
+<item />
+
+<item href="/ru/"> об nginx </item>
+<item href="/ru/download.html"> скачать </item>
+<item href="/en/security_advisories.html" lang="en"> безопасность </item>
+<item href="/en/docs/" lang="en"> документация </item>
+<item href="/en/docs/introduction.html" lang="en"> введение </item>
+<item href="/en/docs/howto.html" lang="en"> howto </item>
+<item href="/ru/docs/faq.html"> faq </item>
+<item href="/en/links.html" lang="en"> ссылки </item>
+<item href="/en/books.html" lang="en"> книги </item>
+<item href="/ru/support.html"> поддержка </item>
+
+</menu>
+
+
+<menu lang="tr">
+
+<item href="/en/"> english </item>
+<item href="/he/"> עברית </item>
+<item href="/ja/"> 日本語 </item>
+<item href="/ru/"> русский </item>
+<item> türkçe </item>
+<item />
+
+<item href="/" lang="ing"> haberler </item>
+<item />
+
+<item href="/tr/"> hakkında </item>
+<item href="/en/download.html" lang="ing"> indir </item>
+<item href="/en/security_advisories.html" lang="ing">
+      güvenlik tavsiyeleri </item>
+<item href="/tr/docs/"> dökümantasyon </item>
+<item href="/tr/docs/introduction.html"> giriş </item>
+<item href="/tr/docs/howto.html"> kılavuz </item>
+<item href="/tr/docs/faq.html"> sss </item>
+<item href="http://wiki.nginx.org/NginxTr"> wiki </item>
+<item href="/en/links.html" lang="ing"> bağlantılar </item>
+<item href="/en/books.html" lang="ing"> kitaplar </item>
+<item href="/en/support.html" lang="ing"> destek </item>
+
+</menu>
+
+</menus>

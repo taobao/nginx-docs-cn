@@ -1,0 +1,61 @@
+X:stylesheet {
+
+X:output method="html" indent="no" encoding="utf-8";
+
+X:strip-space elements = "*";
+
+<!--
+  -- a current directory of a XSLT script is where the script is stored,
+  -- but not where XSLT processor has been started to run the script
+  -->
+X:param XML = "'../xml'";
+X:param YEAR;
+
+X:var LINK = "/article/@link";
+
+X:include href = "dirname.xslt";
+X:include href = "link.xslt";
+X:include href = "style.xslt";
+X:include href = "body.xslt";
+X:include href = "menu.xslt";
+X:include href = "content.xslt";
+
+
+X:template = "/article" {
+    <html><head>
+
+    <title> !{@title} </title>
+
+    !style ()
+
+    </head>
+
+    !body (lang="/article/@lang")
+
+    </html>
+}
+
+
+X:template = "book" {
+
+    <table><tr>
+
+    <td bgcolor="#EEEEEE">
+    <a href="{@link}">
+    <img src="{@cover}" style="padding: 2pt;" border="0"/>
+    </a>
+    </td>
+
+    <td>
+    X:text {title: } <a href="{@link}">!{@title}</a> <br/>
+    X:text {author: }
+    X:if "@site" { <a href="{@site}">!{@author}</a> } else { !{@author} } <br/>
+    X:if "@translator" { X:text {translator: } !{@translator} <br/> }
+    X:if "@publisher" { X:text {publisher: } !{@publisher} <br/> }
+    X:text {language: } !{@lang}
+    </td>
+
+    </tr></table>
+}
+
+}

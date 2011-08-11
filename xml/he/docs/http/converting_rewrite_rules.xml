@@ -1,0 +1,134 @@
+<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+
+<article title="המרת כללי rewrite"
+         link="/he/docs/http/converting_rewrite_rules.html"
+         lang="he"
+         author="Igor Sysoev"
+         translator="מבזקים.נט">
+
+<section title="הפנייה לאתר ראשי">
+
+<para>
+משתמשים שבמהלך חיי האירוח המשותף נהגו להגדיר <i>הכל</i> באמצעות
+שימוש <i>רק</i> בקובצי htaccess. של Apache, יתרגמו בדרך כלל את
+הכללים הבאים:
+
+<programlisting>
+RewriteCond  %{HTTP_HOST}  nginx.org
+RewriteRule  (.*)          http://www.nginx.org$1
+</programlisting>
+
+למשהו כזה:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  www.nginx.org  nginx.org;
+    if ($http_host = nginx.org) {
+        rewrite  (.*)  http://www.nginx.org$1;
+    }
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+צורה זו היא שגוייה, מסובכת, ולא יעילה.
+הדרך הנכונה היא להגדיר שרת נפרד עבור <url>nginx.org</url>:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org;
+    rewrite   ^  http://www.nginx.org$request_uri?;
+}
+
+server {
+    listen       80;
+    server_name  www.nginx.org;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section>
+
+<para>
+דוגמה נוספת, במקום הגיון הפוך: כל מה שהוא לא 
+<url>nginx.com</url> וגם לא <url>www.nginx.com</url>:
+
+<programlisting>
+RewriteCond  %{HTTP_HOST}  !nginx.com
+RewriteCond  %{HTTP_HOST}  !www.nginx.com
+RewriteRule  (.*)          http://www.nginx.com$1
+</programlisting>
+
+עלייך רק להגדיר את <url>nginx.com</url>, <url>www.nginx.com</url>,
+וכל דבר אחר:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org;
+    ...
+}
+
+server {
+    listen       80 default_server;
+    server_name  _;
+    rewrite   ^  http://nginx.org$request_uri?;
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="converting_mongrel_rules"
+        title="המרת כללי Mongrel">
+
+<para>
+כללי Mongrel טיפוסיים:
+
+<programlisting>
+DocumentRoot /var/www/myapp.com/current/public
+
+RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+RewriteRule ^.*$ %{DOCUMENT_ROOT}/system/maintenance.html [L]
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.*)$ $1 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.*)$ $1/index.html [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1/index.html [QSA,L]
+
+RewriteRule ^/(.*)$ balancer://mongrel_cluster%{REQUEST_URI} [P,QSA,L]
+</programlisting>
+
+יש להמיר כך
+
+<programlisting>
+location / {
+    root       /var/www/myapp.com/current/public;
+
+    try_files  /system/maintenance.html
+               $uri  $uri/index.html $uri.html
+               @mongrel;
+}
+
+location @mongrel {
+    proxy_pass  http://mongrel;
+}
+</programlisting>
+</para>
+
+</section>
+
+</article>

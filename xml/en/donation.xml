@@ -1,0 +1,25 @@
+<!DOCTYPE digest SYSTEM "../../dtd/article.dtd">
+
+<article title="nginx: donation"
+         link="/en/donation.html"
+         lang="en">
+
+<section>
+
+<para>
+If you like to donate to nginx, you can make a donation via 
+
+<note>
+PayPal: paypal@nginx.net<br/><br/>
+
+<paypal/>
+</note>
+</para>
+
+<para>
+Thank you!
+</para>
+
+</section>
+
+</article>

@@ -1,0 +1,67 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="A debugging log"
+         link="/en/docs/debugging_log.html"
+         lang="en">
+
+
+<section>
+
+<para>
+To enable a debugging log, you first should configure nginx to build with
+the debugging:
+
+<programlisting>
+./configure --with-debug ...
+</programlisting>
+
+and then set the <dirname>debug</dirname> level
+of the <dirname>error_log</dirname>:
+
+<programlisting>
+error_log  /path/to/log  debug;
+</programlisting>
+
+The nginx/Windows binary version is always built with the debugging log
+support. Therefore, you should set the <dirname>debug</dirname> level only.
+</para>
+
+<para>
+Note, that a defining log on another level, for example, on <i>server</i>
+level disables the debugging log for this server:
+<programlisting>
+error_log  /path/to/log  debug;
+
+http {
+    server {
+        error_log  /path/to/log;
+        ...
+</programlisting>
+You should either comment out this server log or add
+the <dirname>debug</dirname> flag too:
+<programlisting>
+error_log  /path/to/log  debug;
+
+http {
+    server {
+        error_log  /path/to/log  debug;
+        ...
+</programlisting>
+</para>
+
+<para>
+It is also possible to enable the debugging log only for some addresses:
+
+<programlisting>
+error_log  /path/to/log;
+
+events {
+    debug_connection   192.168.1.1;
+    debug_connection   192.168.10.0/24;
+}
+</programlisting>
+</para>
+
+</section>
+
+</article>

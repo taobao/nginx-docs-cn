@@ -1,0 +1,70 @@
+X:stylesheet {
+
+X:output method="html" indent="no" encoding="utf-8";
+
+X:strip-space elements = "*";
+
+<!--
+  -- a current directory of a XSLT script is where the script is stored,
+  -- but not where XSLT processor has been started to run the script
+  -->
+X:param XML = "'../xml'";
+X:param YEAR;
+
+X:var SITE = "'http://nginx.org'";
+X:var LINK = "/news/@link";
+
+X:include href = "dirname.xslt";
+X:include href = "link.xslt";
+X:include href = "style.xslt";
+X:include href = "body.xslt";
+X:include href = "menu.xslt";
+X:include href = "content.xslt";
+
+
+X:template = "/news" {
+    <html><head>
+
+    <link rel="alternate" type="application/rss+xml"
+          title="{@title}" href="{$SITE}/index.rss" />
+
+    <title> !{@title} X:if "$YEAR" { X:text{: } !{$YEAR} } </title>
+
+    !style ()
+
+    </head>
+
+    !body (lang="/news/@lang")
+
+    </html>
+}
+
+
+X:template = "event" {
+
+    X:var year = { !{substring(../event[position()=1]/@date, 1, 4)} }
+    X:var y = { !{substring(@date, 1, 4)} }
+
+    X:if "(not($YEAR) and ($year = $y or position() &lt; 11)) or $YEAR=$y" {
+        <table width="100%">
+
+        <tr>
+        <td valign="top" align="right" width="15%">
+            <a name="{@date}" /> !{@date} X:text {&#xA0;&#xA0;}
+        </td>
+        <td> !! "para"; </td>
+        </tr>
+
+        <tr><td colspan="2">
+        X:text disable-output-escaping="yes" {&amp;nbsp;}
+        </td></tr>
+
+        </table>
+    }
+}
+
+
+X:template = "event/para" { <p class="noindent"> !!; </p> }
+
+
+}

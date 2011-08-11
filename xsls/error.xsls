@@ -1,0 +1,51 @@
+X:stylesheet {
+
+X:output method="html" indent="no" encoding="utf-8";
+
+X:strip-space elements = "*";
+
+<!--
+  -- a current directory of a XSLT script is where the script is stored,
+  -- but not where XSLT processor has been started to run the script
+  -->
+X:param XML = "'../xml'";
+
+
+X:template = "/error" {
+    <html><head><title> !{@title} </title></head>
+
+    <style>!{ normalize-space('
+        body  { font-family:  Georgia, serif; }
+        ') }
+    </style>
+
+    <body>
+    <table width="100%">
+    <tr>
+        <td width="70%"><center><h1> !{@title} </h1></center></td>
+        <td rowspan="2" align="right" valign="top">
+            <img src="/nginx.gif" alt="nginx"/><br/>
+
+            <br/>
+            <br/>
+
+            !! "document(concat($XML, '/menu.xml'))
+                         /menus/menu[@lang = current()/@lang]/item";
+        </td>
+    </tr>
+    </table>
+    </body>
+    </html>
+}
+
+
+X:template = "menu/item" {
+    <a href="{@href}"> !{ normalize-space(text()) } </a> <br/>
+}
+
+
+X:template = "menu/item[not(@href)]" {
+    !{ normalize-space(text()) } <br/>
+}
+
+}

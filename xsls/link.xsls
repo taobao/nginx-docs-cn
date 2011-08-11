@@ -1,0 +1,60 @@
+X:stylesheet {
+
+
+<!-- {a href="/en/docs/page.xml" /} -->
+
+X:template = "a[starts-with(@href, '/')
+                and string() = ''
+                and contains(@href, '.xml')]"
+{
+    <a>
+    X:attribute "href" {
+
+        <!--
+          --  variables are not allowed in a template match predicate:
+          --     a[starts-with(@href, $DIRNAME) ... ]
+          --  therefore, we have to test this using "if"
+          -->
+
+        X:if "starts-with(@href, $DIRNAME)" {
+
+           <!-- convert to a link "docs/page.html" -->
+
+           !{ substring-after(document(concat($XML, @href))/article/@link,
+                              $DIRNAME) }
+        } else {
+
+           <!-- convert to a link "../../../en/docs/page.html" -->
+
+           !{ concat($ROOT, document(concat($XML, @href))/article/@link) }
+        }
+    }
+    !{ document(concat($XML, @href))/article/@title }
+    </a>
+}
+
+
+<!-- {a href="/en/docs/page.xml"} TEXT {/a} -->
+
+X:template = "a[starts-with(@href, '/')
+                and string()
+                and contains(@href, '.xml')]"
+{
+    <a>
+    X:attribute "href" {
+        X:if "starts-with(@href, $DIRNAME)" {
+           !{ substring-after(document(concat($XML, @href))/article/@link,
+                              $DIRNAME) }
+        } else {
+           !{ concat($ROOT, document(concat($XML, @href))/article/@link) }
+        }
+    }
+    !!;
+    </a>
+}
+
+X:template = "a" { <a href="{@href}"> !!; </a> }
+
+X:template = "img" { <img src="{@href}"> !!; </img> }
+
+}

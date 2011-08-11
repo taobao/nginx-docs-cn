@@ -1,0 +1,31 @@
+X:stylesheet {
+
+
+<!-- return a dirname of an article link -->
+
+X:var DIRNAME = { !dirname (path = "$LINK") }
+
+X:template dirname (path) {
+    X:if "contains($path, '/')" {
+        !{ substring-before($path, '/') }
+        X:text {/}
+        !dirname (path = "substring-after($path, '/')")
+    }
+}
+
+
+<!-- return a path to the root of an article link, i.e., "../../.."  -->
+
+X:var ROOT = { !root (path = { !{ substring($DIRNAME, 2) } }) }
+
+X:template root (path) {
+    X:if "contains($path, '/')" {
+        X:text {..}
+        X:if "substring-after($path, '/')" {
+            X:text {/}
+            !root (path = "substring-after($path, '/')")
+        }
+    }
+}
+
+}

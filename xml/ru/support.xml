@@ -1,0 +1,58 @@
+<!DOCTYPE digest SYSTEM "../../dtd/article.dtd">
+
+<article title="nginx: поддержка"
+         link="/ru/support.html"
+         lang="ru">
+
+
+<section title="Списки рассылок">
+
+<para>
+<list>
+
+<item>
+<a href="http://nginx.org/mailman/">nginx.org/mailman</a>,
+<a href="http://nginx.org/pipermail/nginx-ru/">архив</a>.
+Для того, чтобы писать в список, нужно сначала
+<a href="http://nginx.org/mailman/listinfo/nginx-ru">подписаться</a>.
+</item>
+
+<!--
+<item>
+<a href="http://marc.info/?l=nginx">nginx@nginx.org MARC archive</a>
+</item>
+
+<item>
+<a href="http://dir.gmane.org/gmane.comp.web.nginx.english">nginx@nginx.org
+Gmane archive</a>
+</item>
+
+-->
+
+</list>
+</para>
+
+</section>
+
+
+<section title="Форум">
+
+<para>
+<list>
+
+<item>
+<a href="http://forum.nginx.org">forum.nginx.org</a>,
+интегрированный со списками рассылок.
+Это не обычный форум, поэтому, когда вы там
+&ldquo;создаёте топик&rdquo;, этот &ldquo;топик&rdquo;
+в виде письма уходит в список рассылки, а также
+<a href="http://nginx.org/pipermail/nginx-ru/">архивируется</a>.
+Удалить &ldquo;топик&rdquo; или закрыть нельзя.
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

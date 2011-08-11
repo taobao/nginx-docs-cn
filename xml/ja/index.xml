@@ -1,0 +1,243 @@
+<!DOCTYPE article SYSTEM "../../dtd/article.dtd">
+
+<article title="nginx"
+         link="/ja/"
+         lang="ja">
+
+
+<section>
+
+<para>
+nginx [えんじんえっくす] は <a href="http://sysoev.ru/en/">Igor Sysoev</a> によって作られた HTTP とリバースプロキシのサーバで、メールプロキシサーバでもあります。<a href="http://www.rambler.ru">Rambler</a>
+(<a href="http://ramblermedia.com">RamblerMedia.com</a>) を含むロシアの多くの高負荷サイトで５年以上も動いています。Netcraft によると、nginx は <a href="http://news.netcraft.com/archives/2010/04/15/april_2010_web_server_survey.html">2010 年 4 月時点で 4.70%</a> の人気サイトでサーバーとして、もしくはプロキシとして利用されています。成功例としては <a href="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</a> や 
+<a href="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</a> があります。
+</para>
+
+<para>
+ソースコードは <a href="/LICENSE">BSD 風の 2 箇条ライセンス</a>でライセンスされています。
+</para>
+
+</section>
+
+
+<section name="basic_http_features"
+        title="基本的な HTTP 機能">
+
+<para>
+<list>
+
+<item>
+スタティックなインデックスファイルの提供、自動インデクシング、オープンなファイルディスクリプタキャッシュ
+</item>
+
+<item>
+キャッシングで高速化されたリバースプロキシ、シンプルなロードバランシングとフォールトトレランス
+</item>
+
+<item>
+リモートの FastCGI サーバのキャッシングによる高速化サポート、シンプルなロードバランシングとフォールトトレランス
+</item>
+
+<item>
+モジュールアーキテクチャ。フィルタには gzip、バイトレンジ、チャンク化されたレスポンス、XSLT、SSI、画像リサイズフィルタが含まれます。FastCGI もしくはプロキシ化されたサーバなら、単一ページ内への複数 SSI 封入が並列で処理可能。
+</item>
+
+<item>
+SSL と TLS SNI サポート。
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="other_http_features"
+        title="他の HTTP 機能">
+
+<para>
+<list>
+
+<item>
+名前ベースと IP ベースの仮想サーバ
+</item>
+
+<item>
+キープアライブとパイプライン接続のサポート
+</item>
+
+<item>
+柔軟な設定
+</item>
+
+<item>
+クライアント処理を中断させること無く再構成、オンラインアップグレード
+</item>
+
+<item>
+アクセスログフォーマット、バッファされたログ書き込み、素早いログローテーション
+</item>
+
+<item>
+3xx-5xx エラーコードのリダイレクト
+</item>
+
+<item>
+rewrite モジュール
+</item>
+
+<item>
+クライアントの IP アドレスをベースにしたアクセスコントロールと HTTP ベーシック認証
+</item>
+
+<item>
+PUT、DELETE、MKCOL、COPY、MOVE メソッド
+</item>
+
+<item>
+FLV ストリーミング
+</item>
+
+<item>
+速度制限
+</item>
+
+<item>
+同一アドレスからの同時接続もしくは同時リクエストの制限
+</item>
+
+<item>
+埋め込み perl
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="mail_proxy_server_features"
+        title="メールプロキシサーバ機能">
+
+<para>
+<list>
+
+<item>
+外部の HTTP 認証サーバを利用した IMAP/POP3 バックエンドへのユーザリダイレクト
+</item>
+
+<item>
+外部の HTTP 認証サーバと内部 SMTP バックエンドへの接続リダイレクトを利用したユーザ認証
+</item>
+
+<item>
+認証メソッド:
+
+<list>
+
+<item>
+POP3: USER/PASS, APOP, AUTH LOGIN/PLAIN/CRAM-MD5;
+</item>
+
+<item>
+IMAP: LOGIN, AUTH LOGIN/PLAIN/CRAM-MD5;
+</item>
+
+<item>
+SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
+</item>
+
+</list>
+</item>
+
+<item>
+SSL サポート
+</item>
+
+<item>
+STARTTLS と STLS のサポート
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="architecture_and_scalability"
+        title="アーキテクチャとスケーラビリティ">
+
+<para>
+<list>
+
+<item>
+一つのマスタープロセスと複数のワーカープロセス。ワーカーは非特権ユーザとして動く
+</item>
+
+<item>
+通知メソッド: kqueue (FreeBSD 4.1+)、epoll (Linux 2.6+)、rt シグナルs (Linux 2.2.19+)、/dev/poll (Solaris 7 11/99+)、イベントポート (Solaris 10)、select、poll
+</item>
+
+<item>
+EV_CLEAR, EV_DISABLE (イベントを一時的に無効にする)、 NOTE_LOWAT, EV_EOF、利用可能なデータの数、エラーコードを含む様々な kqueue 機能のサポート
+</item>
+
+<item>
+sendfile (FreeBSD 3.1+, Linux 2.2+, Mac OS X 10.5)、sendfile64 (Linux 2.4.21+)、sendfilev (Solaris 8 7/01+) のサポート
+</item>
+
+<item>
+ファイル AIO (FreeBSD 4.3+, Linux 2.6.22+)
+</item>
+
+<item>
+Accept-filters (FreeBSD 4.1+) と TCP_DEFER_ACCEPT (Linux 2.4+) のサポート
+</item>
+
+<item>
+1 万の非アクティブな HTTP キープアライブ接続は約 2.5M のメモリーを使用
+</item>
+
+<item>
+データコピーの実施は最小に保たれる
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="tested_os_and_platforms"
+        title="テスト済み OS とプラットフォーム">
+
+<para>
+<list>
+
+<item>
+FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 8 / amd64;
+</item>
+
+<item>
+Linux 2.2 &mdash; 2.6 / i386; Linux 2.6 / amd64;
+</item>
+
+<item>
+Solaris 9 / i386, sun4u; Solaris 10 / i386, amd64, sun4v;
+</item>
+
+<item>
+MacOS X / ppc, i386;
+</item>
+
+<item>
+Windows XP, Windows Server 2003.
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+</article>

@@ -1,0 +1,32 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="Сообщение &ldquo;&nbsp;&lsquo;sys_errlist&rsquo;
+                is deprecated;
+                use &lsquo;strerror&rsquo; or &lsquo;strerror_r&rsquo;
+                instead&nbsp;&rdquo;"
+         link="/ru/docs/sys_errlist.html"
+         lang="ru">
+
+
+<section>
+
+<para>
+При сборке nginx версий 0.7.66, 0.8.35 и выше на Linux
+выводится предупреждение:
+
+<programlisting>
+warning: `sys_errlist' is deprecated;
+    use `strerror' or `strerror_r' instead
+warning: `sys_nerr' is deprecated;
+    use `strerror' or `strerror_r' instead
+</programlisting>
+
+Это нормально: nginx вынужден использовать устаревшие
+sys_errlist[] и sys_nerr в обработчиках сигналов, потому
+что функции strerror() и strerror_r() не являются Async-Signal-Safe,
+и их нельзя использовать в обработчиках сигналов.
+</para>
+
+</section>
+
+</article>

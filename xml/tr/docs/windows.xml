@@ -1,0 +1,134 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="nginx/Windows kullanımı"
+         link="/tr/docs/windows.html"
+         lang="tr">
+
+<section>
+
+<para>
+nginx/Windows doğrudan Win32 API&rsquo;yi kullanır (Cygwin emülasyon tabakasını değil).
+Şu an için sadece <i>select</i> methodunu kullandığından yüksek performans ve ölçeklenebilirlik beklememelisiniz.
+Bu ve bilinen diğer nedenlerle nginx/Windows&rsquo;u <i>beta</i> versiyon olarak kabul etmek gerekir.
+Unix versiyonu ile karşılaştırıldığında, XSLT filtresi, imaj filtresi, GeoIP modülü ve gömülü Perl dili hariç tam fonklsiyoneldir.
+</para>
+
+<para>
+nginx/Windows versiyonunu yüklemek için <a href="/en/download.xml">indir</a> bağlantısından zip formatındaki <development_version /> geliştirme versiyonunu indirebilirsiniz. Geliştirme versiyonu, özellikle Windows ile ilgili en son yamaları içerir. Dosyayı indirdikten sonra açarak, nginx-<development_version /> klasörü içerisinden nginx&rsquo;i çalıştırabilirsiniz. 
+C sürücüsü için örnek. root dizini:
+
+<programlisting>
+cd c:\
+unzip nginx-<development_version />.zip
+cd nginx-<development_version />
+start nginx
+</programlisting>
+
+Ayrıca <path>tasklist</path> komutu ile nginx işlemlerini takip edebilirsiniz:
+
+<programlisting>
+C:\nginx-<development_version />&gt;tasklist /fi "imagename eq nginx.exe"
+
+Image Name           PID Session Name     Session#    Mem Usage
+=============== ======== ============== ========== ============
+nginx.exe            652 Console                 0      2 780 K
+nginx.exe           1332 Console                 0      3 112 K
+</programlisting>
+
+Bu işlemlerden biri ana, diğerleri işçi işlemleridir.
+Eğer nginx başlamazsa <path>logs\error.log</path> dosyasından nedenini öğrenebilirsiniz.
+Eğer kayıt (log) dosyası yaratılmamış ise bunun nedeni de Windows Event Log içerisinde belirtilmiştir.
+Eğer beklenen sayfa yerine hata sayfası ile karşılaşırsanız, yine <path>logs\error.log</path> dosyasını kontrol etmelisiniz.
+</para>
+
+<para>
+nginx/Windows, yapılandırmada yer alan nisbi dizin yolları için yürütüldüğü klasörü, önek klasör olarak kullanır.
+Buna örnek olarak, önek klasör şu şekildedir:
+<path>C:\nginx-<development_version />\</path>.
+Ayarlarda yer alan dizin yolları Unix-stili kesme işaretleri ile belirtilir:
+
+<programlisting>
+access_log   logs/site.log;
+root         C:/web/html;
+</programlisting>
+</para>
+
+<para>
+nginx/Windows bir servis olarak değil, standart konsol uygulaması olarak yürütülür ve aşağıdaki komutlar ile yönetilir:
+
+<table note="yes">
+
+<tr>
+<td width="20%">nginx -s stop</td>
+<td>hızlı çıkış</td>
+</tr>
+
+<tr>
+<td>nginx -s quit</td>
+<td>yavaş çıkış</td>
+</tr>
+
+<tr>
+<td>nginx -s reload</td>
+<td>
+ayarları değiştirmek,
+yeni işçi çalıştırmak,
+eski işçi işlemden yavaşça çıkmak
+</td>
+</tr>
+
+<tr>
+<td>nginx -s reopen</td>
+<td>Kayıt dosyalarını tekrar açmak</td>
+</tr>
+
+</table>
+</para>
+
+</section>
+
+<section name="known_issues"
+        title="Bilinen sorunlar">
+
+<list>
+
+<item>
+Bir çok işçi yürütülebildiği halde sadece biri iş yapabilmektedir.
+</item>
+
+<item>
+Bir işçi, 1024 eşzamanlı bağlantıdan fazlasını karşılayamamaktadır.
+</item>
+
+<item>
+Paylaşımlı hafıza desteğine ihtiyaç duyan önbellek ve diğer modüller,
+&ldquo;address space layout randomization&rdquo; etkin olduğundan,
+Windows Vista ve sonraki versiyonlarda çalışmamaktadır.
+</item>
+
+</list>
+
+</section>
+
+<section name="possible_future_enhancements"
+        title="Muhtemel geliştirmeler">
+
+<list>
+
+<item>
+Servis olarak yürütme.
+</item>
+
+<item>
+I/O completion portlarını, uyarı methodu olarak kulanmak.
+</item>
+
+<item>
+Bir işçi işleminde (worker process) çoklu thread (yürütme birimi) kullanmak.
+</item>
+
+</list>
+
+</section>
+
+</article>

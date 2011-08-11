@@ -1,0 +1,373 @@
+<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+
+<article title="HTTPS サーバの設定"
+         link="/ja/docs/http/configuring_https_servers.html"
+         lang="ja"
+         author="Igor Sysoev"
+         translator="DigitalCube Co. Ltd., wokamoto">
+
+<section>
+
+<para>
+HTTPS サーバを設定するには server ブロックで SSL プロトコルを有効にして、サーバ証明書ファイルと秘密鍵ファイルの場所を指定する必要があります:
+
+<programlisting>
+server {
+    listen               443;
+    server_name          www.nginx.com;
+    ssl                  on;
+    ssl_certificate      www.nginx.com.crt;
+    ssl_certificate_key  www.nginx.com.key;
+    ssl_protocols        SSLv3 TLSv1;
+    ssl_ciphers          HIGH:!ADH:!MD5;
+    ...
+}
+</programlisting>
+
+サーバ証明書とはドメインの所有者情報や、送信情報の暗号化に必要な公開鍵を含む電子証明書です。そのサーバに接続するすべてのクライアントに送られます。秘密鍵はサーバ証明書に含まれる公開鍵で暗号化された情報を復号するために必要な鍵で、秘匿する必要が有ります。アクセスを制限したファイルに保存するようにしてください。ただし、nginx のマスタープロセスからは読めるようにする必要があります。もうひとつの方法として、秘密鍵は証明書と同じファイルに保存することもできます:
+
+<programlisting>
+    ssl_certificate      www.nginx.com.cert;
+    ssl_certificate_key  www.nginx.com.cert;
+</programlisting>
+
+この場合もファイルのアクセス権は制限するようにします。証明書と秘密鍵がひとつのファイルに保存されていても、証明書だけがクライアントに送られます。
+</para>
+
+<para>
+SSL プロトコルの強力なバージョンと暗号に接続を制限するには、ディレクティブ <dirname>ssl_protocols</dirname> と <dirname>ssl_ciphers</dirname> を使用します。バージョン 0.8.20 以降、nginx は <dirname>ssl_protocols SSLv3 TLSv1</dirname> と <dirname>ssl_ciphers HIGH:!ADH:!MD5</dirname> をデフォルトとして使用しているので、これより古い nginx のバージョンでのみ設定してください。
+</para>
+
+</section>
+
+
+<section name="optimization" title="HTTPS サーバの最適化">
+
+<para>
+SSL の工程は CPU リソースを余計に消費します。マルチプロセッサシステムでは（利用できる CPU コアの数よりも大きい数の）複数のワーカープロセスを走らせるといいでしょう。最も CPU に負荷がかかる工程は SSL ハンドシェイクです。クライアント毎のこの工程数を最小化するには２つの方法があります。最初の方法はキープアライブ接続を有効にして、ひとつの接続経由で複数のリクエストを送るようにする方法です。二つ目の方法は SSL セッションパラメータを再利用して、並行かつ順次接続のための SSL ハンドシェイクを避ける方法です。セッションはワーカー間で共有される SSL セッションキャッシュに保持され、<dirname>ssl_session_cache</dirname> ディレクティブで設定されています。１メガバイトのキャッシュには約４０００のセッションが含まれます。キャッシュのデフォルトタイムアウトは５分です。この値は <dirname>ssl_session_timeout</dirname> ディレクティブを使用して増やすことができます。次の例は１０Mの共有セッションキャッシュをもったクアッドコアシステムに最適化された設定例です:
+
+
+<programlisting>
+<b>worker_processes  4</b>;
+
+http {
+    <b>ssl_session_cache    shared:SSL:10m</b>;
+    <b>ssl_session_timeout  10m</b>;
+
+    server {
+        listen               443;
+        server_name          www.nginx.com;
+        <b>keepalive_timeout    70</b>;
+
+        ssl                  on;
+        ssl_certificate      www.nginx.com.crt;
+        ssl_certificate_key  www.nginx.com.key;
+        ssl_protocols        SSLv3 TLSv1;
+        ssl_ciphers          HIGH:!ADH:!MD5;
+        ...
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="chains" title="SSL 連鎖証明書">
+
+<para>
+ブラウザによっては有名な認証局によって署名された証明書にエラーをだすことがあります。その一方でその証明書を他のブラウザでは問題なく受け入れることもあります。これは発行している認証局が、有名で信用されている認証局の認証基盤には含まれない特定のブラウザで配布されている中間証明書を使ったサーバ証明書に署名しているからです。このケースでは、認証局は署名されたサーバ証明書に連結されているはずの連鎖証明書のバンドルを提供しています。サーバ証明書は、かならず結合されたファイル内の連鎖証明書に存在している必要があります:
+
+<programlisting>
+$ cat www.nginx.com.crt bundle.crt > www.nginx.com.chained.crt
+</programlisting>
+
+この結合されたファイルを <dirname>ssl_certificate</dirname> ディレクティブで使われるようにします:
+
+<programlisting>
+server {
+    listen               443;
+    server_name          www.nginx.com;
+    ssl                  on;
+    ssl_certificate      www.nginx.com.chained.crt;
+    ssl_certificate_key  www.nginx.com.key;
+    ...
+}
+</programlisting>
+
+サーバ証明書とバンドルされたものが間違った順序で連結されていた場合、nginx は起動に失敗して次のエラーメッセージを表示します:
+
+<programlisting>
+SSL_CTX_use_PrivateKey_file(" ... /www.nginx.com.key") failed
+   (SSL: error:0B080074:x509 certificate routines:
+    X509_check_private_key:key values mismatch)
+</programlisting>
+
+これは、nginx がサーバ証明書ではなくバンドルされた最初の証明書で秘密鍵を使おうとするからです。
+</para>
+
+<para>
+ブラウザは通常、信頼されている認証局によって署名されている受信した中間証明書を保存します。したがって、よく使われているブラウザは要求された中間証明書をすでに保持しているかもしれませんし、連鎖バンドルなしで送られた証明書にエラーを出すかもしれません。サーバに完全な連鎖証明書を送信させるには <dirname>openssl</dirname> コマンドラインユーティリティを使うといいでしょう。例えば:
+
+<programlisting>
+$ openssl s_client -connect www.godaddy.com:443
+...
+Certificate chain
+ 0 s:/C=US/ST=Arizona/L=Scottsdale/1.3.6.1.4.1.311.60.2.1.3=US
+     /1.3.6.1.4.1.311.60.2.1.2=AZ/O=GoDaddy.com, Inc
+     /OU=MIS Department/<b>CN=www.GoDaddy.com</b>
+     /serialNumber=0796928-7/2.5.4.15=V1.0, Clause 5.(b)
+   i:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.
+     /OU=http://certificates.godaddy.com/repository
+     /CN=Go Daddy Secure Certification Authority
+     /serialNumber=07969287
+ 1 s:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.
+     /OU=http://certificates.godaddy.com/repository
+     /CN=Go Daddy Secure Certification Authority
+     /serialNumber=07969287
+   i:/C=US/O=The Go Daddy Group, Inc.
+     /OU=Go Daddy Class 2 Certification Authority
+ 2 s:/C=US/O=The Go Daddy Group, Inc.
+     /OU=Go Daddy Class 2 Certification Authority
+   i:/L=ValiCert Validation Network/O=<b>ValiCert, Inc.</b>
+     /OU=ValiCert Class 2 Policy Validation Authority
+     /CN=http://www.valicert.com//emailAddress=info@valicert.com
+...
+</programlisting>
+
+この例では、<url>www.GoDaddy.com</url> サーバ証明書 #0 の対象 (&ldquo;<i>s</i>&rdquo;) はそれ自身が証明書 #1 の対象である発行者 (&ldquo;<i>i</i>&rdquo;) によって署名されています。そして、証明書 #1はそれ自身が証明書 #2 の対象である発行者によって署名され、証明書 #2 は有名な発行者である <i>ValiCert, Inc.</i> によって署名されていて、<i>ValiCert, Inc.</i> の証明書はブラウザに組み込まれている証明書ベースに保持されています（こうして連鎖します）。
+</para>
+
+<para>
+もし証明書バンドルを追加していなければ、サーバ証明書 #0 しか見れません。
+</para>
+
+</section>
+
+
+<section name="single_http_https_server" title="単一の HTTP/HTTPS サーバ">
+
+<para>
+最初の段階から HTTP と HTTPS プロトコル用にサーバを分けて設定するのは優れた実践です。現時点では両者の機能性としては等しいかもしれませんが、将来的に大きな変更があるかもしれず、統合されたサーバの使用が問題になるかもしれません。とはいえ、HTTP と HTTPS のサーバが等しく、将来のことを考えたくないのなら、ディレクティブ <dirname>ssl on</dirname> を削除して *:443 ポートに <dirname>ssl</dirname> パラメータを追加することによって HTTP と HTTPS リクエストの両者を扱う単一のサーバを設定することができます:
+
+<programlisting>
+server {
+    listen               80;
+    listen               443  ssl;
+    server_name          www.nginx.com;
+    ssl_certificate      www.nginx.com.crt;
+    ssl_certificate_key  www.nginx.com.key;
+    ...
+}
+</programlisting>
+
+<note>
+0.8.21 以前では、nginx は <dirname>default</dirname> パラメータで待ち受けているソケットに <dirname>ssl</dirname> パラメータをセットすることしかできませんでした:
+<programlisting>
+listen  443  default  ssl;
+</programlisting>
+</note>
+</para>
+
+</section>
+
+
+<section name="name_based_https_servers" title="名前ベースの HTTPS サーバ">
+
+<para>
+単一の IP アドレスを２つ以上の HTTPS サーバで待ち受けるように設定するとよく発生する問題があります:
+
+<programlisting>
+server {
+    listen           443;
+    server_name      www.nginx.com;
+    ssl              on;
+    ssl_certificate  www.nginx.com.crt;
+    ...
+}
+
+server {
+    listen           443;
+    server_name      www.nginx.org;
+    ssl              on;
+    ssl_certificate  www.nginx.org.crt;
+    ...
+}
+</programlisting>
+
+この設定では、ブラウザはリクエストされたサーバ名に関わらずデフォルトサーバ、すなわちここでは <url>www.nginx.com</url> の証明書を受信します。これは SSL プロトコルの作用によるものです。この SSL 接続はブラウザが HTTP リクエストを送る前に確立されるので、nginx にはリクエストされたサーバ名は分かりません。したがって、デフォルトサーバの証明書を送ることしかできません。
+</para>
+
+<para>
+この問題を解決するもっとも古くてもっとも堅実な方法は、各 HTTPS サーバに別個の IP アドレスを割り当てることです:
+
+<programlisting>
+server {
+    listen           192.168.1.1:443;
+    server_name      www.nginx.com;
+    ssl              on;
+    ssl_certificate  www.nginx.com.crt;
+    ...
+}
+
+server {
+    listen           192.168.1.2:443;
+    server_name      www.nginx.org;
+    ssl              on;
+    ssl_certificate  www.nginx.org.crt;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="certificate_with_several_names"
+        title="複数サーバ名をもつ SSL 証明書">
+
+<para>
+単一の IP アドレスを複数の HTTPS サーバ間で共有する方法は他にもありますが、どれも欠点があります。ひとつは、SubjectAltName フィールドに複数サーバ名（例えば、<url>www.nginx.com</url> と <url>www.nginx.org</url>）をもつ単一の証明書を使用する方法です。しかし、SubjectAltName の長さには制限があります。
+</para>
+
+<para>
+もうひとつの方法は、例えば <url>*.nginx.org</url> のようにワイルドカード名を持った証明書を使用する方法です。この証明書は <url>www.nginx.org</url> にマッチしますが <url>nginx.org</url> や <url>www.sub.nginx.org</url> にはマッチしません。以上の二つの方法は組み合わせることもできます。証明書には、例えば <url>nginx.org</url> と <url>*.nginx.org</url> のように SubjectAltName フィールドに完全一致名とワイルドカード名を含ませることができます。
+</para>
+
+<para>
+すべてのサーバでひとつのメモリーコピーを継承するためには、複数サーバ名を持つ証明書ファイルとその秘密鍵ファイルを設定の <i>http</i> レベルに置くとよいでしょう:
+
+<programlisting>
+ssl_certificate      common.crt;
+ssl_certificate_key  common.key;
+
+server {
+    listen           443;
+    server_name      www.nginx.com;
+    ssl              on;
+    ...
+}
+
+server {
+    listen           443;
+    server_name      www.nginx.org;
+    ssl              on;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="sni" title="サーバ名指示（Server Name Indication – SNI）">
+
+<para>
+単一の IP アドレス上で複数の HTTPS サーバを動かすときのさらに包括的な解決方法として <a href="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1 Server Name Indication extension（サーバ名指示拡張）</a> (SNI, RFC3546) があります。これは、ブラウザが SSL ハンドシェイクの間にリクエストされたサーバ名を渡せるようにするもので、それによりサーバはその接続でどの証明書を使用するべきかが分かります。しかし、SNI は限られたブラウザしかサポートしていません。現時点では次のブラウザのバージョン以降のものがサポートされています:
+</para>
+
+<list>
+
+<item>
+Opera 8.0
+</item>
+
+<item>
+MSIE 7.0 (Windows Vista 以降のみ)
+</item>
+
+<item>
+Firefox 2.0 および Mozilla Platform rv:1.8.1 を使用している他のブラウザ
+</item>
+
+<item>
+Safari 3.2.1 (Windows バージョンでは Vista 以降)
+</item>
+
+<item>
+Chrome (Windows バージョンでは Vista 以降)
+</item>
+
+</list>
+
+<para>
+nginx で SNI を使用するためには、nginx バイナリがビルドされたときの OpenSSL ライブラリとランタイムで動的にリンクされるライブラリの両方でサポートされていることが必要です。OpenSSL は設定オプション <nobr>&ldquo;--enable-tlsext&rdquo;.</nobr> でビルドされていれば、バージョン 0.9.8f 以降で SNI をサポートしています。OpenSSL 0.9.8j 以降ではこのオプションはデフォルトで有効になっています。nginx が SNI サポート付きでビルドされていれば、&ldquo;-V&rdquo; スイッチとともに起動すると nginx が次のように表示します:
+
+<programlisting>
+$ nginx -V
+...
+TLS SNI support enabled
+...
+</programlisting>
+
+しかし、SNI が有効になっている nginx が SNI サポート無しの OpenSSL ライブラリに動的にリンクされている場合、nginx は次の警告を表示します:
+
+<programlisting>
+nginx was built with SNI support, however, now it is linked
+dynamically to an OpenSSL library which has no tlsext support,
+therefore SNI is not available
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="compatibility" title="Compatibility">
+
+<para>
+<list>
+
+<item>
+&ldquo;-V&rdquo; スイッチでの SNI サポートステータス表示は 0.8.21 以降と 0.7.62 でサポートされています。
+</item>
+
+<item>
+<dirname>listen</dirname> ディレクティブの <dirname>ssl</dirname> パラメータは 0.7.14 以降からサポートされています。
+</item>
+
+<item>
+SNI は 0.5.32 以降からサポートされています。
+</item>
+
+<item>
+共有 SSL セッションキャッシュは 0.5.6 以降からサポートされています。
+</item>
+
+</list>
+</para>
+
+<para>
+<list>
+
+<item>
+バージョン 0.7.65 と 0.8.19 以降のデフォルトの SSL プロトコルは SSLv3 と TLSv1 です。
+</item>
+
+<item>
+バージョン 0.7.64 と 0.8.18 以前のデフォルトの SSL プロトコルは SSLv2、SSLv3、TLSv1 です。
+</item>
+
+</list>
+</para>
+
+<para>
+<list>
+
+<item>
+バージョン 0.7.65 と 0.8.20 以降のデフォルトの SSL 暗号は <dirname>HIGH:!ADH:!MD5</dirname> です。
+</item>
+
+<item>
+バージョン  0.8.19 のデフォルトの SSL 暗号は <dirname>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</dirname> です。
+</item>
+
+<item>
+バージョン 0.7.64 と 0.8.18 以前のデフォルトの SSL 暗号は <dirname>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</dirname> です。
+</item>
+
+</list>
+</para>
+
+
+</section>
+
+
+</article>

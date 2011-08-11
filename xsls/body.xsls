@@ -1,0 +1,68 @@
+X:stylesheet {
+
+X:template body (lang) {
+
+    X:variable ALIGN = {
+        X:if "$lang = 'he'" { X:text {left} } else { X:text {right} }
+    }
+
+    <body>
+    <table width="100%">
+
+    <tr>
+        <td width="70%"><center><h3>
+            !{@title} X:if "$YEAR" { X:text{: } !{$YEAR} }
+        </h3></center></td>
+
+        <td rowspan="2" align="{$ALIGN}" valign="top">
+            <img src="/nginx.gif" alt="nginx"/><br/>
+
+            <br/>
+            <br/>
+
+            !! "document(concat($XML, '/menu.xml'))
+                         /menus/menu[@lang = $lang]/item";
+        </td>
+
+    </tr>
+
+    <tr><td valign="top">
+
+        <table width="100%"><tr><td align="{$ALIGN}">
+        X:for-each "section[@name]" {
+            <a href="#{@name}"> !{@title} </a><br/>
+        }
+        </td></tr></table>
+
+        !!;
+
+        X:if "@author" {
+            <table width="100%"><tr><td align="right">
+
+            !{document(concat($XML, '/i18n.xml'))
+                       /i18n/text[@lang = $lang]/item[@id='author']}
+            X:text { } !{@author} <br/>
+
+            X:if "@editor" {
+                !{document(concat($XML, '/i18n.xml'))
+                           /i18n/text[@lang = $lang]/item[@id='editor']}
+                X:text { } !{@editor} <br/>
+            }
+
+            X:if "@translator" {
+                !{document(concat($XML, '/i18n.xml'))
+                           /i18n/text[@lang = $lang]/item[@id='translator']}
+                X:text { } !{@translator} <br/>
+            }
+
+            </td></tr></table>
+        }
+
+    </td></tr>
+
+    </table>
+    </body>
+
+}
+
+}

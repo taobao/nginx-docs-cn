@@ -1,0 +1,39 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="nginx dökümantasyonu"
+         link="/tr/docs/"
+         lang="tr">
+
+<section>
+
+<para>
+<list>
+
+<item>
+<a href="/tr/docs/introduction.xml"/>
+</item>
+
+<item>
+<a href="/tr/docs/howto.xml"/>
+</item>
+
+<item>
+<a href="/tr/docs/faq.xml"/>
+</item>
+
+</list>
+</para>
+
+<para>
+<list>
+
+<item>
+<a href="/tr/docs/windows.xml"/>
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

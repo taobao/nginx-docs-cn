@@ -1,0 +1,266 @@
+<!DOCTYPE article SYSTEM "../../dtd/article.dtd">
+
+<article title="nginx"
+         link="/he/"
+         lang="he">
+
+
+<section>
+
+<para>
+nginx [נהגה: engine x] הוא שרת HTTP ופרוקסי הפוך, כמו גם  שרת פרוקסי לדואר,
+שנכתב על ידי <a href="http://sysoev.ru/en/">Igor Sysoev</a>.
+ הוא נמצא בשימוש כבר יותר מחמש שנים באתרים רוסיים עמוסים במיוחד, כגון 
+<a href="http://www.rambler.ru">Rambler</a>
+(ו <a href="http://ramblermedia.com">RamblerMedia.com</a>).
+לפי חברת Netcraft, השרת nginx הגיש או נתן שירות ל
+<a href="http://news.netcraft.com/archives/2010/04/15/april_2010_web_server_survey.html">4.70%
+מהאתרים העמוסים ביותר באפריל 2010</a>.
+הנה כמה סיפורי הצלחה:
+<a href="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</a>,
+<a href="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</a>.
+</para>
+
+<para>
+קוד המקור הוא בעל רשיון
+<a href="/LICENSE">2-פיסקאות דמוי רשיון BSD</a>.
+</para>
+
+</section>
+
+
+<section name="basic_http_features"
+        title="תכונות HTTP בסיסיות">
+
+<para>
+<list>
+
+<item>
+הגשת קבצים סטטיים וקובצי אינדקס, ואינדוקס אוטומטי;
+מטמון file descriptor-ים פתוחים;
+</item>
+
+<item>
+פרוקסי הפוך מואץ כולל מטמון;
+ביזור עומסים פשוט ושרידות מפני תקלות;
+</item>
+
+<item>
+תמיכה בהאצה עם מטמון של שרתי FastCGI מרוחקים;
+ביזור עומסים פשוט ושרידות מפני תקלות;
+</item>
+
+<item>
+ארכיטקטורה מודולרית. פילטרים המבצעים gzip, טווחי בתים (byte ranges),
+תשובות מסוג chunked, תמיכה ב XSLT, SSI ופילטר שינוי גודל תמונות.
+ריבוי הכללות SSI בדף בודד יכול להיות מבוצע באופן מקבילי אם הן מטופלות
+על ידי FastCGI או שרתים ש nginx הוא פרוקסי עבורם.
+</item>
+
+<item>
+תמיכה ב SSL ו TLS SNI.
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="other_http_features"
+        title="תכונות HTTP אחרות">
+
+<para>
+<list>
+
+<item>
+שרתים וירטואליים מבוססי IP ושם (הוסט);
+</item>
+
+<item>
+תמיכה ב keep-alive וב pipelining לחיבורים;
+</item>
+
+<item>
+תצורה גמישה;
+</item>
+
+<item>
+קביעת תצורה מחדש ואף שדרוג מקוון ללא כל הפרעה לעיבוד
+בקשות הלקוחות;
+</item>
+
+<item>
+פורמטים ללוג הגישה, כתיבה ללוג באמצעות חוצץ, והחלפת לוגים מהירה;
+</item>
+
+<item>
+הפנייה באמצעות קודי שגיאה 3xx-5xx;
+</item>
+
+<item>
+מודול rewrite;
+</item>
+
+<item>
+בקרת גישה המבוססת על כתובת IP של הלקוח וגם אימות מסוג HTTP Basic;
+</item>
+
+<item>
+המתודות PUT, DELETE, MKCOL, COPY ו MOVE;
+</item>
+
+<item>
+סטרימינג של FLV;
+</item>
+
+<item>
+הגבלת מהירות;
+</item>
+
+<item>
+הגבלה של מספר החיבורים בו זמנית או מספר הבקשות מכתובת אחת.
+</item>
+
+<item>
+perl משובץ.
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="mail_proxy_server_features"
+        title="תכונות פרוקסי דואר">
+
+<para>
+<list>
+
+<item>
+הפניית משתמשים לשרתי IMAP/POP3 אחוריים בהתבסס על שרת אימות HTTP חיצוני;
+</item>
+
+<item>
+אימות משתמש באמצעות שרת אימות HTTP חיצוני והפניית חיבור לשרת SMTP פנימי;
+</item>
+
+<item>
+מתודות אימות:
+
+<list>
+
+<item>
+POP3: USER/PASS, APOP, AUTH LOGIN/PLAIN/CRAM-MD5;
+</item>
+
+<item>
+IMAP: LOGIN, AUTH LOGIN/PLAIN/CRAM-MD5;
+</item>
+
+<item>
+SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
+</item>
+
+</list>
+</item>
+
+<item>
+תמיכה בהצפנת SSL;
+</item>
+
+<item>
+תמיכה ב STARTTLS ו STLS.
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="architecture_and_scalability"
+        title="ארכיטקטורה ויכולת גידול">
+
+<para>
+<list>
+
+<item>
+תהליך ראשי אחד ומספר תהליכי עובדים.
+תהליכי העובדים רצים בתור משתמש ללא הרשאות;
+</item>
+
+<item>
+שיטות יידוע: kqueue (במערכות FreeBSD 4.1 ומעלה),
+epoll (במערכות לינוקס 2.6 ומעלה), סיגנלי rt (במערכות לינוקס 2.2.19 ומעלה),
+<path>/dev/poll</path> (במערכות סולאריס 7 11/99 ומעלה), event ports (במערכות סולאריס 10),
+select, ואף poll;
+</item>
+
+<item>
+תמיכה עבור תכונות kqueue שונות כולל  EV_CLEAR ו EV_DISABLE
+(כדי לבטל אירועים זמנית), NOTE_LOWAT, EV_EOF, מספר קודי מידע ושגיאה;
+</item>
+
+<item>
+תמיכה ב sendfile (במערכות FreeBSD 3.1 ומעלה, לינוקס 2.2 ומעלה ו Mac OS X 10.5), תמיכה ב sendfile64 (לינוקס 2.4.21 ומעלה),
+ו sendfilev (סולאריס 8 7/01 ומעלה);
+</item>
+
+<item>
+File AIO (במערכות FreeBSD 4.3 ומעלה ולינוקס 2.6.22 ומעלה);
+</item>
+
+<item>
+תמיכה ב Accept-filters (במערכות FreeBSD 4.1 ומעלה) ו TCP_DEFER_ACCEPT (במערכות לינוקס 2.4 ומעלה) 
+</item>
+
+<item>
+10,000 חיבורי HTTP לא פעילים במצב keep-alive תופסים נפח זיכרון העומד על בערך 
+12.5M;
+</item>
+
+<item>
+פעולות העתקת מידע מבוצעות באופן נדיר ככל האפשר.
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="tested_os_and_platforms"
+        title="מערכות הפעלה ופלטפורמות בדוקות">
+
+<para>
+<list>
+
+<item>
+FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 8 / amd64;
+</item>
+
+<item>
+לינוקס 2.2 &mdash; 2.6 / i386; לינוקס 2.6 / amd64;
+</item>
+
+<item>
+סולאריס 9 / i386, sun4u; סולאריס 10 / i386, amd64, sun4v;
+</item>
+
+<item>
+MacOS X / ppc, i386;
+</item>
+
+<item>
+חלונות XP, חלונות סרבר 2003.
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+</article>

@@ -1,0 +1,73 @@
+<!DOCTYPE digest SYSTEM "../../dtd/article.dtd">
+
+<article title="nginx security advisories"
+         link="/en/security_advisories.html"
+         lang="en">
+
+<section>
+
+<para>
+<a href="http://sysoev.ru/pgp.txt">Igor Sysoev&rsquo;s PGP public key</a>.
+</para>
+
+<security>
+
+<item title="Vulnerabilities with invalid UTF-8 sequence on Windows"
+      severity="major"
+      cve="2010-2266"
+      good="0.8.41+, 0.7.67+"
+      vulnerable="nginx/Windows 0.7.52-0.8.40" />
+
+<item title="Vulnerabilities with Windows file default stream"
+      severity="major"
+      cve="2010-2263"
+      good="0.8.40+, 0.7.66+"
+      vulnerable="nginx/Windows 0.7.52-0.8.39" />
+
+<item title="Vulnerabilities with Windows 8.3 filename pseudonyms"
+      severity="major"
+      core="CORE-2010-0121"
+      href="http://www.coresecurity.com/content/filename-pseudonyms-vulnerabilities"
+      good="0.8.33+, 0.7.65+"
+      vulnerable="nginx/Windows 0.7.52-0.8.32" />
+
+<item title="An error log data are not sanitized"
+      severity="none"
+      cve="2009-4487"
+      good="none"
+      vulnerable="all" />
+
+<item title="The renegotiation vulnerability in SSL protocol"
+      severity="major"
+      cert="120541"
+      cve="2009-3555"
+      good="0.8.23+, 0.7.64+"
+      vulnerable="0.1.0-0.8.22"
+      patch="patch.cve-2009-3555.txt" />
+
+<item title="Directory traversal vulnerability"
+      severity="minor"
+      cve="2009-3898"
+      good="0.8.17+, 0.7.63+"
+      vulnerable="0.1.0-0.8.16" />
+
+<item title="Buffer underflow vulnerability"
+      severity="major"
+      cert="180065"
+      cve="2009-2629"
+      good="0.8.15+, 0.7.62+, 0.6.39+, 0.5.38+"
+      vulnerable="0.1.0-0.8.14"
+      patch="patch.180065.txt" />
+
+<item title="Null pointer dereference vulnerability"
+      severity="major"
+      cve="2009-3896"
+      good="0.8.14+, 0.7.62+, 0.6.39+, 0.5.38+"
+      vulnerable="0.1.0-0.8.13"
+      patch="patch.null.pointer.txt" />
+
+</security>
+
+</section>
+
+</article>

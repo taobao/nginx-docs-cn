@@ -1,0 +1,29 @@
+X:stylesheet {
+
+X:template style (lang) {
+
+    <style>!{ normalize-space('
+        html             {-webkit-text-size-adjust:none}
+        body             { font-family:  Georgia, serif; }
+        p                { text-align:   justify; }
+        p                { text-indent:  20pt; }
+        p.noindent       { text-indent:  0pt; }
+        li               { text-align:   justify; }
+        td.list          { background:   #EEEEEE; }
+        blockquote.note  { text-align:   justify; }
+        blockquote.note  { background:   #EEEEEE; border: none; }
+        blockquote.note  { padding:      10pt 10pt 10pt 10pt; }
+        ') }
+
+    X:if "$lang = 'he'" {
+        !{ normalize-space('
+        pre              { text-align:   left; direction: ltr; }
+        code             { direction:    ltr; unicode-bidi: embed;}
+        .ltr             { direction:    ltr; unicode-bidi: embed;}
+        ') }
+    }
+
+    </style>
+}
+
+}

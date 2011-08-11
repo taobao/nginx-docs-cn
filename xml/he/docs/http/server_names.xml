@@ -1,0 +1,419 @@
+<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+
+<article title="שמות שרת"
+         link="/he/docs/http/server_names.html"
+         lang="he"
+         author="Igor Sysoev"
+         translator="מבזקים.נט">
+
+<section>
+
+<para>
+שמות שרת מוגדרים על ידי המאפיין <dirname>server_name</dirname>
+והם קובעים איזה בלוק תצורת שרת מקובץ התצורה יהיה בשימוש לכל בקשה ובקשה לשרת.
+ראו גם &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
+ניתן להגדירם באמצעות שמות מדוייקים, שמות Wildcard, או באמצעות ביטויים רגולריים:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  *.nginx.org;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  mail.*;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  ~^(?&lt;user&gt;.+)\.nginx\.net$;
+    ...
+}
+</programlisting>
+
+השמות נבדקים בסדר הבא:
+
+<orderedlist>
+
+<item>
+שמות מדוייקים;
+</item>
+
+<item>
+שמות Wildcard המתחילים בכוכבית: <url>*.nginx.org</url>;
+</item>
+
+<item>
+שמות Wildcard המסתיימים בכוכבית: <url>mail.*</url>;
+</item>
+
+<item>
+ביטויים רגולריים לפי הסדר שבו הם מופיעים בקובץ התצורה.
+</item>
+
+</orderedlist>
+ההתאמה הראשונה עוצרת את החיפוש.
+</para>
+
+</section>
+
+
+<section name="wildcard_names"
+        title="שמות Wildcard">
+
+<para>
+שם wildcard יכול להכיל כוכבית רק בתחילת או בסוף השם, וחייב להיות בגבול של נקודה.
+השמות <dirname>www.*.nginx.org</dirname>
+ו <dirname>w*.nginx.org</dirname> הם שגויים.
+למרות זאת, ניתן לציין שמות כאלה באמצעות ביטויים רגולריים,
+לדוגמא, <dirname>~^www\..+\.nginx\.org$</dirname> ו
+<dirname>~^w.*\.nginx\.org$</dirname>.
+סימן הכוכבית יכול להחליף מספר חלקי שם.
+השם <dirname>*.nginx.org</dirname> מתאים לא רק ל
+<url>www.nginx.org</url> אלא גם ל <url>www.sub.nginx.org</url>.
+</para>
+
+<para>
+ניתן להשתמש ב wildcard מיוחד בצורה של <dirname>.nginx.org</dirname>
+כדי להתאים גם לשם המדוייק <dirname>nginx.org</dirname>
+וגם לשם ה wildcard הבא: <dirname>*.nginx.org</dirname>.
+</para>
+
+</section>
+
+
+<section name="regex_names"
+        title="שמות ביטויים רגולריים">
+
+<para>
+הביטויים הרגולריים ש nginx משתמש בהם, תואמים לאלה אשר נמצאים בשימוש
+בשפת פרל (PCRE).
+כדי להשתמש בביטוי רגולרי, על שם השרת להתחיל עם סימן הטילדה (~), כך:
+
+<programlisting>
+server_name  ~^www\d+\.nginx\.net$;
+</programlisting>
+
+אחרת nginx יתייחס אליו כשם מדוייק, או אם הביטוי מכיל כוכבית, כשם wildcard (וסביר
+להניח שיהיה שגוי).
+אל תשכחו להגדיר עוגני
+ &ldquo;^&rdquo; ו &ldquo;$&rdquo;.
+הם לא דרושים תחבירית, אם כי לוגית.
+כמו כן שימו לב שהנקודות של שם המתלם צריכות להיות מוברחות (escaped) על ידי לוכסן הפוך (\).
+ביטוי רגולרי המכיל את התווים &ldquo;{&rdquo;
+ו &ldquo;}&rdquo; צריך להיות במרכאות:
+
+<programlisting>
+server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.nginx\.net$";
+</programlisting>
+
+אחרת nginx יכשל בעלייה, ויציג את הודעת השגיאה הבאה:
+
+<programlisting>
+directive "server_name" is not terminated by ";" in ...
+</programlisting>
+
+ביטוי רגולרי שניתן לו שם ונלכד, ניתן לשימוש מאוחר יותר כמשתנה:
+
+<programlisting>
+server {
+    server_name   ~^(www\.)?(<b>?&lt;domain&gt;</b>.+)$;
+
+    location / {
+        root   /sites/<b>$domain</b>;
+    }
+}
+</programlisting>
+
+ספריית PCRE תומכת בלכידות מבוססות שם לפי התחביר הבא:
+
+<table note="yes">
+
+<tr>
+<td><code>?&lt;<i>name</i>&gt;</code></td>
+<td>תחביר תואם פרל 5.10, נתמך החל מ PCRE-7.0</td>
+</tr>
+
+<tr>
+<td><code>?'<i>name</i>'</code></td>
+<td>תחביר תואם פרל 5.10, נתמך החל מ PCRE-7.0</td>
+</tr>
+
+<tr>
+<td><code>?P&lt;<i>name</i>&gt;</code></td>
+<td>תחביר תואם פייתון, נתמך החל מ PCRE-4.0</td>
+</tr>
+
+</table>
+
+אם nginx נכשל בעלייה ומציג את הודעת השגיאה הבאה:
+
+<programlisting>
+pcre_compile() failed: unrecognized character after (?&lt; in ...
+</programlisting>
+
+פירוש הדבר שספריית ה PCRE היא ישנה, ועליכם לנסות את התחביר
+<dirname>?P&lt;<i>name</i>&gt;</dirname>.
+
+את הלכידה ניתן לבצע גם בצורה ספרתית:
+
+<programlisting>
+server {
+    server_name   ~^(www\.)?(.+)$;
+
+    location / {
+        root   /sites/<b>$2</b>;
+    }
+}
+</programlisting>
+
+אך יש להשתמש בצורה זו במקרים פשוטים (כמו לעיל), כיוון שהייחוסים הספרתיים
+יכולים להידרס בקלות
+</para>
+
+
+</section>
+
+
+<section name="miscellaneous_names"
+        title="שמות כלליים">
+
+<para>
+אם אף <dirname>server_name</dirname> לא מוגדר בבלוג שרת,
+אזי nginx משתמש ב <i>hostname</i> בתור שם השרת.
+</para>
+
+<para>
+אם ברצונכם לעבד בקשות בלי שורת כותר &ldquo;Host&rdquo; 
+בבלוק שרת שאינו ברירת המחדל, עליכם לציין שם ריק:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org  "";
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+אם מישהו מבצע בקשה באמצעות כתובת IP במקום שם שרת, שורת הכותר
+&ldquo;Host&rdquo; תכיל כתובת IP, ואפשר יהיה לטפל בבקשה על ידי
+שימוש בכתובת IP בשם השרת:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org
+                 www.nginx.org
+                 ""
+                 <b>192.168.1.1</b>
+                 ;
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+בדוגמאות catch-all ייתכן ותראו את השם המוזר &ldquo;_&rdquo;:
+
+<programlisting>
+server {
+    listen       80  default_server;
+    server_name  _;
+    return       444;
+}
+</programlisting>
+
+אין שום דבר מוזר בשם הזה, הוא רק אחד משלל שמות מתחם שגויים שלעולם לא
+תפגשו בהם בשם אמיתי.
+ניתן להשתמש גם ב &ldquo;--&rdquo;, &ldquo;!@#&rdquo;, וכך הלאה.
+</para>
+
+<para>
+nginx בגירסאות עד 0.6.25 תמך בשם המיוחד &ldquo;*&rdquo;
+אשר יש שפירשו אותו בטעות כשם catch-all.
+השם הזה מעולם לא תפקד כ catch-all ואף לא כשם wildcard.
+בפועל, הוא סיפק את הפונקציונליות שהיום מסופקת על ידי
+המאפיין <dirname>server_name_in_redirect</dirname>.
+השם המיוחד  &ldquo;*&rdquo; הוא כעת לא מומלץ לשימוש, ויש
+להשתמש במאפיין <dirname>server_name_in_redirect</dirname> במקומו.
+שימו לב שאין דרך לציין את שם ה catch-all או את שרת <i>ברירת המחדל</i>
+על ידי שימוש במאפיין <dirname>server_name</dirname>.
+זוהי תכונה של המאפיין <dirname>listen</dirname> ולא של המאפיין <dirname>server_name</dirname>.
+ראו גם &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
+
+באפשרותכם להגדיר שרתים המאזינים על פורטים <url>*:80</url> ו <url>*:8080</url>,
+ולהגדיר שרת אחת שהוא ברירת המחדל עבור פורט
+ <url>*:8080</url>, בעוד שהשני יהיה ברירת מחדל עבור פורט <url>*:80</url>:
+
+<programlisting>
+server {
+    listen       80;
+    listen       8080  default_server;
+    server_name  nginx.net;
+    ...
+}
+
+server {
+    listen       80  default_server;
+    listen       8080;
+    server_name  nginx.org;
+    ...
+}
+</programlisting>
+</para>
+
+
+</section>
+
+
+<section name="optimization"
+        title="ייעול">
+
+<para>
+
+שמות מדוייקים ושמות wildcard מאוחסנים בגיבוב (hash).
+הגיבובים מקושרים להאזנות לפורטים, ולכן פורט האזנה יכולים להיות
+עד שלושה גיבויים: גיבוב שם מדוייק, גיבוי שמות wildcard שמתחילים
+בכוכבית, וגיבוב שמות wildcard שמסתיימים בכוכבית.
+הגודל של הגיבובים מיועל בשלב התצורה כך שניתן יהיה למצוא שם
+עם הכי מעט פספוסי מטמון מעבד.
+גיבוב השמות המדוייקים עובר חיפוש ראשון.
+אם שם לא נמצא בגיבוב השמות המדוייק, מתחיל חיפוש בגיבוב השמות המתחילים
+בכוכבית.
+אם הוא לא נמצא גם שם, מתחיל חיפוש בגיבוב השמות המסתיימים בכוכבית.
+חיפוש בגיבובי שמות wildcard הוא איטי יותר מחיפוש שם בגיבוב השמות המדוייקים
+כיוון ששמות עוברים חיפוש על פי חלקי שם המתחם.
+שימו לב שצורת ה wildcard המיוחדת  <dirname>.nginx.org</dirname>
+שמורה גם היא בגיבוב שמות ה wildcard ולא בגיבוב השמות המדוייקים.
+ביטויים רגולריים נבדקים באופן סדרתי, ועל כן הם השיטה האיטית ביותר
+ואינם סקאלאביליים.
+</para>
+
+<para>
+בהתחשב בנסיבות אלה, הכי טוב להשתמש בשמות מדוייקים בכל מקום שהדבר אפשרי.
+לדוגמה, אם השמות הנפוצים ביותר לשרת הם <url>nginx.org</url> ו <url>www.nginx.org</url>,
+יותר יעיל להגדיר אותם באופן מפורש:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org  *.nginx.org;
+    ...
+}
+</programlisting>
+
+מאשר להשתמש בשיטה המופשטת:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  .nginx.org;
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+אם הגדרתם מספר גדול של שמות שרת, או שהגדרתם שמות שרת ארוכים מהרגיל,
+ייתכן ויהיה עליכם לכוונן את המאפיינים <dirname>server_names_hash_max_size</dirname>
+ו <dirname>server_names_hash_bucket_size</dirname> ברמת ה <i>http</i>.
+ערך ברירת המחדל של <dirname>server_names_hash_bucket_size</dirname>
+יכול להיות שווה ל 32, ל 64, או לערך אחר, בהתאם לגודל קו המטמון של המעבד שלכם.
+אם ברירת המחדל היא 32 ותגדירו 
+&ldquo;too.long.server.name.nginx.org&rdquo; בתור שם שרת,
+אזי nginx ייכשל בעלייה ויציג את הודעת השגיאה הבאה:
+
+<programlisting>
+could not build the server_names_hash,
+you should increase server_names_hash_bucket_size: 32
+</programlisting>
+
+במקרה זה, עליכם להגדיר את ערך המאפיין לחזקה הבאה של 2:
+
+<programlisting>
+http {
+    server_names_hash_bucket_size  64;
+    ...
+</programlisting>
+
+אם הגדרתם כמות גדולה של שמות שרת, אתם עלולים לקבל את הודעת השגיאה הבאה:
+
+<programlisting>
+could not build the server_names_hash,
+you should increase either server_names_hash_max_size: 512
+or server_names_hash_bucket_size: 32
+</programlisting>
+
+עליכם לנסות קודם להגדיל את <dirname>server_names_hash_max_size</dirname>
+למספר קרוב למספר השרתים.
+רק אם זה לא עזר, או שזמן העלייה של nginx הוא ארוך בצורה מוגזמת,
+נסו להגדיל את <dirname>server_names_hash_bucket_size</dirname>.
+</para>
+
+<para>
+אם שרת הוא השרת היחיד עבור פורט האזנה, אזי nginx לא יבדוק שמות שרת בכלל
+(ולא יבנה גיבובים עבור פורט ההאזנה).
+אך, יש יוצא דופן אחד.
+אם <dirname>server_name</dirname> הוא ביטוי רגולרי עם לכידות,
+nginx חייב לבצע את הביטוי כדי לקבל את מה שנלכד בהן.
+</para>
+
+</section>
+
+
+<section name="compatibility"
+        title="תאימות">
+
+<para>
+<list>
+
+<item>
+לכידת שמות בביטויים רגולריים נתמכה החל מגירסה 0.8.25.
+</item>
+
+<item>
+לכידת ביטויים רגולריים נתמכה החל מגירסה 0.7.40.
+
+</item>
+
+<item>
+שם שרת ריק &ldquo;&rdquo; נתמך החל מגירסה 0.7.12.
+</item>
+
+<item>
+שם שרת מסוג wildcard או ביטוי רגולרי נתמכו לשימוש כשם שרת ראשון החל מגירסה 0.6.25.
+</item>
+
+<item>
+שמות שרת כביטוי רגולרי נתמכו החל מגירסה 0.6.7.
+</item>
+
+<item>
+צורות Wildcard מסוג <url>nginx.*</url> נתמכו החל מגירסה 0.6.0.
+</item>
+
+<item>
+הצורה המיוחדת <url>.nginx.org</url> נתמכה החל מגירסה 0.3.18.
+</item>
+
+<item>
+הצורה <url>*.nginx.org</url> נתמכה החל מגירסה 0.1.13.
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

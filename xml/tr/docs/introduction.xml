@@ -1,0 +1,29 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="nginx - Giriş"
+         link="/tr/docs/introduction.html"
+         lang="tr">
+
+<section>
+
+<para>
+<list>
+
+<item>
+<a href="/tr/docs/http/request_processing.xml"/>
+</item>
+
+<item>
+<a href="/tr/docs/http/server_names.xml"/>
+</item>
+
+<item>
+<a href="/tr/docs/http/configuring_https_servers.xml"/>
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

@@ -1,0 +1,26 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="nginx - Kılavuz"
+         link="/tr/docs/howto.html"
+         lang="tr">
+
+
+<section>
+
+<para>
+<list>
+
+<item>
+<a href="/tr/docs/debugging_log.xml"/>
+</item>
+
+<item>
+<a href="/tr/docs/http/converting_rewrite_rules.xml"/>
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

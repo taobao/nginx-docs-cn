@@ -1,0 +1,350 @@
+<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+
+<article title="サーバ名"
+         link="/ja/docs/http/server_names.html"
+         lang="ja"
+         author="Igor Sysoev"
+         translator="DigitalCube Co. Ltd., wokamoto">
+
+<section>
+
+<para>
+サーバ名は <dirname>server_name</dirname> ディレクティブを使用して定義され、リクエストに対してどのサーバブロックが使われるかを決定します。「<a href="/ja/docs/http/request_processing.xml" />」もお読みください。これらは完全一致名、ワイルドカード名、正規表現で定義されます:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  *.nginx.org;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  mail.*;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  ~^(?&lt;user&gt;.+)\.nginx\.net$;
+    ...
+}
+</programlisting>
+
+サーバ名は次の順序で考査されます:
+
+<orderedlist>
+
+<item>
+完全一致名
+</item>
+
+<item>
+アスタリスクで始まるワイルドカード名: <url>*.nginx.org</url>
+</item>
+
+<item>
+アスタリスクで終わるワイルドカード名: <url>mail.*</url>
+</item>
+
+<item>
+設定ファイル内の順序での正規表現
+</item>
+
+</orderedlist>
+最初にマッチしたところで検索は終了します。.
+</para>
+
+</section>
+
+
+<section name="wildcard_names"
+        title="ワイルドカード名">
+
+<para>
+ワイルドカード名にはそのサーバ名の最初か最後のみ、そしてドットに隣接したところのみにアスタリスクが含まれます。サーバ名 <dirname>www.*.nginx.org</dirname> や <dirname>w*.nginx.org</dirname> は無効です。しかし、これらのサーバ名は正規表現を使用して、例えば  <dirname>~^www\..+\.nginx\.org$</dirname> や <dirname>~^w.*\.nginx\.org$</dirname> として指定することができます。アスタリスクは複数部分にマッチさせることができます。<dirname>*.nginx.org</dirname> は <url>www.nginx.org</url> だけでなく <url>www.sub.nginx.org</url> にもマッチします。
+</para>
+
+<para>
+特別なワイルドカードの形式 <dirname>.nginx.org</dirname> は、完全一致名 <dirname>nginx.org</dirname> とワイルドカード名 <dirname>*.nginx.org</dirname> の両方にマッチさせるように利用できます。
+</para>
+
+</section>
+
+
+<section name="regex_names"
+        title="正規表現名">
+
+<para>
+nginx で使用される正規表現は Perl プログラミング言語（PCRE）で使用されているものと互換性があります。正規表現を使用するには、サーバ名を必ずチルダで始めます:
+
+<programlisting>
+server_name  ~^www\d+\.nginx\.net$;
+</programlisting>
+
+チルダで始まっていないと完全一致名として、またはその正規表現にアスタリスクが含まれている場合はワイルドカード名として（そしてたいていの場合は無効なものとして）扱われてしまいます。&ldquo;^&rdquo; と &ldquo;$&rdquo; アンカーをセットし忘れないようにしてください。これらは構文的には必須ではありませんが論理的に必須です。また、ドメイン名のドットはバックスラッシュで必ずエスケープしてください。&ldquo;{&rdquo; と &ldquo;}&rdquo; 文字を含む正規表現は必ずダブルクォーテーションで囲ってください:
+
+<programlisting>
+server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.nginx\.net$";
+</programlisting>
+
+さもないと、nginx は起動に失敗し次のエラーメッセージを表示します:
+
+<programlisting>
+directive "server_name" is not terminated by ";" in ...
+</programlisting>
+
+正規表現の名前付きキャプチャは変数としてその後で使用されます:
+
+<programlisting>
+server {
+    server_name   ~^(www\.)?(<b>?&lt;domain&gt;</b>.+)$;
+
+    location / {
+        root   /sites/<b>$domain</b>;
+    }
+}
+</programlisting>
+
+PCRE ライブラリは次の構文を使用した名前付きキャプチャをサポートしています:
+
+<table note="yes">
+
+<tr>
+<td>?&lt;<i>name</i>&gt;</td>
+<td>Perl 5.10 互換構文、PCRE-7.0 よりサポート</td>
+</tr>
+
+<tr>
+<td>?'<i>name</i>'</td>
+<td>Perl 5.10 互換構文、PCRE-7.0 よりサポート</td>
+</tr>
+
+<tr>
+<td>?P&lt;<i>name</i>&gt;</td>
+<td>Python 互換構文、PCRE-4.0よりサポート</td>
+</tr>
+
+</table>
+
+nginx が起動に失敗すると次のエラーメッセージを表示します:
+
+<programlisting>
+pcre_compile() failed: unrecognized character after (?&lt; in ...
+</programlisting>
+
+これは PCRE ライブラリが古いので <dirname>?P&lt;<i>name</i>&gt;</dirname> 構文を試すように、という意味です。このキャプチャは数字形式でも使用できます:
+
+<programlisting>
+server {
+    server_name   ~^(www\.)?(.+)$;
+
+    location / {
+        root   /sites/<b>$2</b>;
+    }
+}
+</programlisting>
+
+とはいえ、数字形式は簡単に上書きすることができるため、このような使用法は（上記のような）単純なケースに限るべきです。
+</para>
+
+
+</section>
+
+
+<section name="miscellaneous_names"
+        title="その他のサーバ名">
+
+<para>
+デフォルトではないサーバブロックで &ldquo;Host&rdquo; ヘッダ無しのリクエストを処理させたい場合は、空のサーバ名を指定します:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org  "";
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+<dirname>server_name</dirname> がサーバブロックで定義されていない場合は、nginx は<i>サーバ名</i>として空の名前を使用します。
+
+</para>
+
+<note>
+nginx のバージョン 0.8.48 までは、このような場合はサーバ名としてホスト名を使用していました。
+</note>
+
+<para>
+サーバ名ではなく IP アドレスを使用したリクエストが送られてきた場合、そのリクエストの &ldquo;Host&rdquo; ヘッダには IP アドレスが含まれているので、その IP アドレスをサーバ名として利用してそのリクエストを処理できます:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org
+                 www.nginx.org
+                 ""
+                 <b>192.168.1.1</b>
+                 ;
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+すべてのサーバに適合させる例では奇妙なサーバ名 &ldquo;_&rdquo; が使われます:
+
+<programlisting>
+server {
+    listen       80  default_server;
+    server_name  _;
+    return       444;
+}
+</programlisting>
+
+このサーバ名に特別なところはありません。単にどのサーバ名とも決してマッチしない無数の無効なドメイン名のひとつです。したがって、 &ldquo;--&rdquo;、&ldquo;!@#&rdquo; なども同様な結果を得られます。
+</para>
+
+<para>
+nginx バージョン 0.6.25 までは特別なサーバ名 &ldquo;*&rdquo; をサポートしていて、これは誤ってすべてのサーバ名と一致するもの（キャッチオール名）として解釈されていました。この特別なサーバ名 &ldquo;*&rdquo;はキャッチオールまたはワイルドカードとして機能したことはありませんでした。代わりに、今は <dirname>server_name_in_redirect</dirname> ディレクティブによって提供されている機能の役を果たしていました。特別なサーバ名 &ldquo;*&rdquo; は今後廃止予定ですので、<dirname>server_name_in_redirect</dirname> ディレクティブを使うようにしてください。キャッチオール名を指定したり <dirname>server_name</dirname> ディレクティブを使用した<i>デフォルト</i>サーバを指定したりする方法はないことに注意してください。これは <dirname>listen</dirname> ディレクティブのプロパティであり、<dirname>server_name</dirname> ディレクティブのプロパティではありません。&ldquo;<a href="/ja/docs/http/request_processing.xml" />&rdquo; も参照してください。
+ポート *:80 と *:8080 で待ち受けているサーバを定義し、ひとつをポート *:8080 のデフォルトサーバへ、もうひとつをポート *:80 のデフォルトサーバへ振り向けることができます。
+
+<programlisting>
+server {
+    listen       80;
+    listen       8080  default_server;
+    server_name  nginx.net;
+    ...
+}
+
+server {
+    listen       80  default_server;
+    listen       8080;
+    server_name  nginx.org;
+    ...
+}
+</programlisting>
+</para>
+
+
+</section>
+
+
+<section name="optimization"
+        title="最適化">
+
+<para>
+完全一致名とワイルドカード名はハッシュで保存されます。このハッシュは待ち受けポートに結び付けられ、各待ち受けポートは、完全一致名のハッシュ、アスタリスクで始まるワイルドカード名のハッシュ、アスタリスクで終わるワイルドカード名のハッシュの３つまでのハッシュを持つことができます。ハッシュのサイズは構成フェーズで最適化されるので、CPU キャッシュのミスは最低でもサーバ名を見つけることができます。最初に完全一致名のハッシュが検索されます。完全一致名のハッシュを使って見つからなければ、次にアスタリスクで始まるワイルドカード名のハッシュが検索されます。さらにまだ見つからなければ、アスタリスクで終わるワイルドカード名のハッシュが検索されます。ワイルドカード名のハッシュの検索は完全一致名のハッシュの検索よりも遅くなります。これはサーバ名の検索がドメイン部分によって検索されるからです。特別なワイルドカード形式の <dirname>.nginx.org</dirname> は完全一致名のハッシュではなくワイルドカード名のハッシュで保存されます。正規表現は順番に考査されるので、これがもっとも遅い方式ですし、非スケーラブルでもあります。
+</para>
+
+<para>
+これらの理由から、可能な場合は完全一致名を利用するのがよいでしょう。例えば、もっとも頻繁にリクエストされるサーバ名が <url>nginx.org</url> と <url>www.nginx.org</url> だとすると、これらを明示的に定義するとより効率的です:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org  *.nginx.org;
+    ...
+}
+</programlisting>
+
+上記は次の単純化された形式を使用するよりも効率的です:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  .nginx.org;
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+たくさんの数のサーバ名を定義したり非常に長いサーバ名を定義したりする場合は、http レベルの <dirname>server_names_hash_max_size</dirname> と <dirname>server_names_hash_bucket_size</dirname> ディレクティブを調整する必要があるかもしれません。<dirname>server_names_hash_bucket_size</dirname> のデフォルト値は 32、もしくは 64、あるいはお使いの CPU キャッシュラインのサイズによってはその他の値になっているかもしれません。もしデフォルト値が 32 でサーバ名として &ldquo;too.long.server.name.nginx.org&rdquo; のような非常に長いサーバ名を定義している場合、nginx は起動に失敗し、次のエラーメッセージを表示させます:
+
+<programlisting>
+could not build the server_names_hash,
+you should increase server_names_hash_bucket_size: 32
+</programlisting>
+
+この場合、このディレクティブの値を次の 2 の累乗にセットします:
+
+<programlisting>
+http {
+    server_names_hash_bucket_size  64;
+    ...
+</programlisting>
+
+非常にたくさんの数のサーバ名を定義した場合は次のエラーメッセージが表示されます:
+
+<programlisting>
+could not build the server_names_hash,
+you should increase either server_names_hash_max_size: 512
+or server_names_hash_bucket_size: 32
+</programlisting>
+
+まず最初に <dirname>server_names_hash_max_size</dirname> の値を、定義するサーバ名の数に近い数に設定して試します。この設定がうまくいかない時だけ、もしくは nginx の起動時間が許容できないほど長い場合だけ <dirname>server_names_hash_bucket_size</dirname> の値を増やしてみます。
+</para>
+
+<para>
+待ち受けているポートがひとつだけでサーバもひとつだけの場合、nginx はサーバ名を考査しません（また、待ち受けポート用のハッシュも生成しません）。しかし一つ例外があります。<dirname>server_name</dirname> がキャプチャを伴った正規表現の場合、nginx はキャプチャを取得するためにこの正規表現を実行します。
+</para>
+
+</section>
+
+
+<section name="compatibility"
+        title="互換性">
+
+<para>
+<list>
+
+<item>
+0.8.48 以降、デフォルトのサーバ名の値は空の名前 &ldquo;&rdquo; です。
+</item>
+
+<item>
+正規表現サーバ名の名前付きキャプチャのサポートは 0.8.25 からです。
+</item>
+
+<item>
+正規表現サーバ名のキャプチャのサポートは 0.7.40 からです。
+</item>
+
+<item>
+空のサーバ名 &ldquo;&rdquo; のサポートは 0.7.12 からです。
+</item>
+
+<item>
+ワイルドカードサーバ名と正規表現の最初のサーバ名としての使用は0.6.25 からサポートされています。
+</item>
+
+<item>
+正規表現サーバ名のサポートは 0.6.7 からです。
+</item>
+
+<item>
+ワイルドカードの形式 <url>nginx.*</url> のサポートは 0.6.0 からです。
+</item>
+
+<item>
+特別な形式 <url>.nginx.org</url> のサポートは 0.3.18 からです。
+</item>
+
+<item>
+ワイルドカードの形式 <url>*.nginx.org</url> のサポートは 0.1.13 からです。
+</item>
+
+</list>
+</para>
+
+</section>
+
+</article>

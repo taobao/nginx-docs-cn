@@ -1,0 +1,128 @@
+<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+
+<article title="rewrite ルールのコンバート"
+         link="/ja/docs/http/converting_rewrite_rules.html"
+         lang="ja">
+
+<section title="メインサイトへのリダイレクト">
+
+<para>
+共有のホスティングで Apache の .htaccess ファイル<i>のみ</i>で<i>すべて</i>を設定してきたのなら、次のようにルールをコンバートします:
+
+<programlisting>
+RewriteCond  %{HTTP_HOST}  nginx.org
+RewriteRule  (.*)          http://www.nginx.org$1
+</programlisting>
+
+上記は下記のようになります:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  www.nginx.org  nginx.org;
+    if ($http_host = nginx.org) {
+        rewrite  (.*)  http://www.nginx.org$1;
+    }
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+これは間違っていて面倒で非効率的な方法です。正しい方法は <url>nginx.org</url> 用に別のサーバを定義します:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org;
+    rewrite   ^  http://www.nginx.org$request_uri?;
+}
+
+server {
+    listen       80;
+    server_name  www.nginx.org;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section>
+
+<para>
+別の例として、<url>nginx.com</url> 以外と <url>www.nginx.com</url> 以外のすべて、という後方ロジックの代わりの例です:
+
+<programlisting>
+RewriteCond  %{HTTP_HOST}  !nginx.com
+RewriteCond  %{HTTP_HOST}  !www.nginx.com
+RewriteRule  (.*)          http://www.nginx.com$1
+</programlisting>
+
+この場合、単に <url>nginx.com</url>、<url>www.nginx.com</url>、そしてそれ以外を定義します:
+
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org  www.nginx.org;
+    ...
+}
+
+server {
+    listen       80 default_server;
+    server_name  _;
+    rewrite   ^  http://nginx.org$request_uri?;
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="converting_mongrel_rules"
+        title="Mongrel ルールのコンバート">
+
+<para>
+典型的な Mongrel のルール:
+
+<programlisting>
+DocumentRoot /var/www/myapp.com/current/public
+
+RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+RewriteRule ^.*$ %{DOCUMENT_ROOT}/system/maintenance.html [L]
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.*)$ $1 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.*)$ $1/index.html [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1/index.html [QSA,L]
+
+RewriteRule ^/(.*)$ balancer://mongrel_cluster%{REQUEST_URI} [P,QSA,L]
+</programlisting>
+
+上記は次のようにコンバートされます
+
+<programlisting>
+location / {
+    root       /var/www/myapp.com/current/public;
+
+    try_files  /system/maintenance.html
+               $uri  $uri/index.html $uri.html
+               @mongrel;
+}
+
+location @mongrel {
+    proxy_pass  http://mongrel;
+}
+</programlisting>
+</para>
+
+</section>
+
+</article>

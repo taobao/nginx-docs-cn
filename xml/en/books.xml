@@ -1,0 +1,52 @@
+<!DOCTYPE digest SYSTEM "../../dtd/article.dtd">
+
+<article title="nginx books"
+         link="/en/books.html"
+         lang="en">
+
+
+<section>
+
+<book
+    title="ハイパフォーマンスHTTPサーバ Nginx入門 (Nginx HTTP Server)"
+    link=
+      "http://www.amazon.co.jp/%E3%83%8F%E3%82%A4%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9HTTP%E3%82%B5%E3%83%BC%E3%83%90-Nginx%E5%85%A5%E9%96%80-Clement-Nedelcu/dp/4048702270"
+    author="Clément Nedelcu"
+    site="http://cnedelcu.blogspot.com"
+    translator="長尾高弘"
+    publisher="アスキー・メディアワークス"
+    lang="日本語 (Japanese)"
+    cover="/books/nginx_http_server_jp.jpg" />
+
+<book
+    title="Nginx 1 Web Server Implementation Cookbook"
+    link=
+      "http://www.packtpub.com/nginx-1-web-server-implementation-cookbook/book"
+    author="Dipankar Sarkar"
+    site="http://www.dipankar.name"
+    publisher="Packt Publishing"
+    lang="English"
+    cover="/books/nginx_1_web_server.jpg" />
+
+<book
+    title="Nginx HTTP Server"
+    link="http://www.packtpub.com/nginx-http-server-for-web-applications/book"
+    author="Clément Nedelcu"
+    site="http://cnedelcu.blogspot.com"
+    publisher="Packt Publishing"
+    lang="English"
+    cover="/books/nginx_http_server.jpg" />
+
+<book
+    title="实战Nginx：取代Apache的高性能Web服务器
+      (nginx in Practice: A High Performance Web Server to Replace Apache)"
+    link="http://product.dangdang.com/product.aspx?product_id=20807089"
+    author="张宴 (Zhang Yan)"
+    site="http://blog.s135.com"
+    publisher="电子工业出版社 (Publishing House of Electronics Industry)"
+    lang="中文 (Chinese)"
+    cover="/books/nginx_in_practice.jpg" />
+
+</section>
+
+</article>

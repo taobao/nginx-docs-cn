@@ -1,0 +1,13 @@
+X:stylesheet {
+
+X:template = "development_version" {
+   !{ normalize-space(document(concat($XML, '/versions.xml'))
+                      /versions/development) }
+}
+
+X:template = "stable_version" {
+   !{ normalize-space(document(concat($XML, '/versions.xml'))
+                      /versions/stable) }
+}
+
+}

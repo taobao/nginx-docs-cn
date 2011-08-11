@@ -1,0 +1,35 @@
+
+	build:
+		configure
+		pitfalls
+			--with-md5/sha1=
+
+	IP-based
+	*:80 and IP-baseed
+		getsockopt()
+		optmizations
+		bind
+	Typical pitfalls
+
+	location
+
+	server_names:
+		server_name ""
+
+	HTTPS:
+		key password
+
+
+
+	memory disk / memcached
+	CGI
+	piped logs
+		tail -f access_log | program
+	htaccess
+	if
+
+
+	nginx.org:	make dump
+	mc374:		make msvc8 TAG zip copy
+	nginx.org:	make stable all gzip copy
+	sysoev.ru:	make news nginx copy

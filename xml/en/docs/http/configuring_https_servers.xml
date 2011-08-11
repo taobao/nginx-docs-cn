@@ -1,0 +1,474 @@
+<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+
+<article title="Configuring HTTPS servers"
+         link="/en/docs/http/configuring_https_servers.html"
+         lang="en"
+         author="Igor Sysoev"
+         editor="Brian Mercer">
+
+<section>
+
+<para>
+To configure an HTTPS server you must enable the SSL protocol
+in the server block, and specify the locations of the server certificate
+and private key files:
+
+<programlisting>
+server {
+    listen               443;
+    server_name          www.nginx.com;
+    ssl                  on;
+    ssl_certificate      www.nginx.com.crt;
+    ssl_certificate_key  www.nginx.com.key;
+    ssl_protocols        SSLv3 TLSv1;
+    ssl_ciphers          HIGH:!ADH:!MD5;
+    ...
+}
+</programlisting>
+
+The server certificate is a public entity.
+It is sent to every client that connects to the server.
+The private key is a secure entity and should be stored in a file with
+restricted access, however, it must be readable by nginx&rsquo;s master process.
+The private key may alternately be stored in the same file as the certificate:
+
+<programlisting>
+    ssl_certificate      www.nginx.com.cert;
+    ssl_certificate_key  www.nginx.com.cert;
+</programlisting>
+
+in which case the file access rights should also be restricted.
+Although the certificate and the key are stored in one file,
+only the certificate is sent to a client.
+</para>
+
+<para>
+The directives <dirname>ssl_protocols</dirname> and
+<dirname>ssl_ciphers</dirname> may be used to limit connections
+to strong SSL protocol versions and ciphers.
+Since version 0.8.20, nginx uses <dirname>ssl_protocols SSLv3 TLSv1</dirname>
+and <dirname>ssl_ciphers HIGH:!ADH:!MD5</dirname> by default,
+so they should only be set for earlier nginx versions.
+</para>
+
+</section>
+
+
+<section name="optimization" title="HTTPS server optimization">
+
+<para>
+SSL operations consume extra CPU resources.
+On multi-processor systems you should run several worker processes:
+no less than the number of available CPU cores.
+The most CPU-intensive operation is the SSL handshake.
+There are two ways to minimize the number of these operations per client:
+the first is by enabling keepalive connections to send several
+requests via one connection and the second is to reuse SSL session
+parameters to avoid SSL handshakes for parallel and subsequent connections.
+The sessions are stored in an SSL session cache shared between workers
+and configured by an <dirname>ssl_session_cache</dirname> directive.
+One megabyte of the cache contains about 4000 sessions.
+The default cache timeout is 5 minutes. It can be increased by using
+the <dirname>ssl_session_timeout</dirname> directive.
+Here is a sample configuration optimized for a quad core system
+with 10M shared session cache:
+
+<programlisting>
+<b>worker_processes  4</b>;
+
+http {
+    <b>ssl_session_cache    shared:SSL:10m</b>;
+    <b>ssl_session_timeout  10m</b>;
+
+    server {
+        listen               443;
+        server_name          www.nginx.com;
+        <b>keepalive_timeout    70</b>;
+
+        ssl                  on;
+        ssl_certificate      www.nginx.com.crt;
+        ssl_certificate_key  www.nginx.com.key;
+        ssl_protocols        SSLv3 TLSv1;
+        ssl_ciphers          HIGH:!ADH:!MD5;
+        ...
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="chains" title="SSL certificate chains">
+
+<para>
+Some browsers may complain about a certificate signed by a well-known
+certificate authority, while other browsers may accept the certificate
+without issues.
+This occurs because the issuing authority has signed the server certificate
+using an intermediate certificate that is not present in the certificate
+base of well-known trusted certificate authorities which is distributed
+with a particular browser.
+In this case the authority provides a bundle of chained certificates
+which should be concatenated to the signed server certificate.
+The server certificate must appear before the chained certificates
+in the combined file:
+
+<programlisting>
+$ cat www.nginx.com.crt bundle.crt > www.nginx.com.chained.crt
+</programlisting>
+
+The resulting file should be used in the <dirname>ssl_certificate</dirname>
+directive:
+
+<programlisting>
+server {
+    listen               443;
+    server_name          www.nginx.com;
+    ssl                  on;
+    ssl_certificate      www.nginx.com.chained.crt;
+    ssl_certificate_key  www.nginx.com.key;
+    ...
+}
+</programlisting>
+
+If the server certificate and the bundle have been concatenated in the wrong
+order, nginx will fail to start and will display the error message:
+
+<programlisting>
+SSL_CTX_use_PrivateKey_file(" ... /www.nginx.com.key") failed
+   (SSL: error:0B080074:x509 certificate routines:
+    X509_check_private_key:key values mismatch)
+</programlisting>
+
+because nginx has tried to use the private key with the bundle&rsquo;s
+first certificate instead of the server certificate.
+</para>
+
+<para>
+Browsers usually store intermediate certificates which they receive
+and which are signed by trusted authorities, so actively used browsers
+may already have the required intermediate certificates and
+may not complain about a certificate sent without a chained bundle.
+To ensure the server sends the complete certificate chain,
+you may use the <path>openssl</path> command line utility, for example:
+
+<programlisting>
+$ openssl s_client -connect www.godaddy.com:443
+...
+Certificate chain
+ 0 s:/C=US/ST=Arizona/L=Scottsdale/1.3.6.1.4.1.311.60.2.1.3=US
+     /1.3.6.1.4.1.311.60.2.1.2=AZ/O=GoDaddy.com, Inc
+     /OU=MIS Department/<b>CN=www.GoDaddy.com</b>
+     /serialNumber=0796928-7/2.5.4.15=V1.0, Clause 5.(b)
+   i:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.
+     /OU=http://certificates.godaddy.com/repository
+     /CN=Go Daddy Secure Certification Authority
+     /serialNumber=07969287
+ 1 s:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.
+     /OU=http://certificates.godaddy.com/repository
+     /CN=Go Daddy Secure Certification Authority
+     /serialNumber=07969287
+   i:/C=US/O=The Go Daddy Group, Inc.
+     /OU=Go Daddy Class 2 Certification Authority
+ 2 s:/C=US/O=The Go Daddy Group, Inc.
+     /OU=Go Daddy Class 2 Certification Authority
+   i:/L=ValiCert Validation Network/O=<b>ValiCert, Inc.</b>
+     /OU=ValiCert Class 2 Policy Validation Authority
+     /CN=http://www.valicert.com//emailAddress=info@valicert.com
+...
+</programlisting>
+
+In this example the subject (&ldquo;<i>s</i>&rdquo;) of the
+<url>www.GoDaddy.com</url> server certificate #0 is signed by an issuer
+(&ldquo;<i>i</i>&rdquo;) which itself is the subject of the certificate #1,
+which is signed by an issuer which itself is the subject of the certificate #2,
+which signed by the well-known issuer <i>ValiCert, Inc.</i>
+whose certificate is stored in the browsers&rsquo; built-in
+certificate base (that lay in the house that Jack built).
+</para>
+
+<para>
+If you have not added the certificates bundle, you will see only your server
+certificate #0.
+</para>
+
+</section>
+
+
+<section name="single_http_https_server" title="A single HTTP/HTTPS server">
+
+<para>
+It is good practice to configure separate servers for HTTP and HTTPS
+protocols from the very start. Although their functionalities currently
+seem equal, this may change significantly in the future
+and using a consolidated server may become problematic.
+However, if HTTP and HTTPS servers are equal,
+and you prefer not to think about the future,
+you may configure a single server that handles both HTTP and HTTPS requests
+by deleting the directive <dirname>ssl on</dirname>
+and adding the <dirname>ssl</dirname> parameter for *:443 port:
+
+<programlisting>
+server {
+    listen               80;
+    listen               443  ssl;
+    server_name          www.nginx.com;
+    ssl_certificate      www.nginx.com.crt;
+    ssl_certificate_key  www.nginx.com.key;
+    ...
+}
+</programlisting>
+
+<note>
+Prior to 0.8.21, nginx only allows the <dirname>ssl</dirname> parameter
+to be set on listen sockets with the <dirname>default</dirname> parameter:
+<programlisting>
+listen  443  default  ssl;
+</programlisting>
+</note>
+</para>
+
+</section>
+
+
+<section name="name_based_https_servers" title="Name-based HTTPS servers">
+
+<para>
+A common issue arises when configuring two or more HTTPS servers
+listening on a single IP address:
+
+<programlisting>
+server {
+    listen           443;
+    server_name      www.nginx.com;
+    ssl              on;
+    ssl_certificate  www.nginx.com.crt;
+    ...
+}
+
+server {
+    listen           443;
+    server_name      www.nginx.org;
+    ssl              on;
+    ssl_certificate  www.nginx.org.crt;
+    ...
+}
+</programlisting>
+
+With this configuration a browser receives the certificate of the default
+server, i.e., <url>www.nginx.com</url> regardless of the requested server name.
+This is caused by SSL protocol behaviour. The SSL connection is established
+before the browser sends an HTTP request and nginx does not know
+the name of the requested server. Therefore, it may only offer the certificate
+of the default server.
+</para>
+
+<para>
+The oldest and most robust method to resolve the issue
+is to assign a separate IP address for every HTTPS server:
+
+<programlisting>
+server {
+    listen           192.168.1.1:443;
+    server_name      www.nginx.com;
+    ssl              on;
+    ssl_certificate  www.nginx.com.crt;
+    ...
+}
+
+server {
+    listen           192.168.1.2:443;
+    server_name      www.nginx.org;
+    ssl              on;
+    ssl_certificate  www.nginx.org.crt;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="certificate_with_several_names"
+        title="A SSL certificate with several names">
+
+<para>
+There are other ways to share a single IP address between several
+HTTPS servers, however, all of them have drawbacks.
+One way is to use a certificate with several names in
+the SubjectAltName certificate field, for example, <url>www.nginx.com</url>
+and <url>www.nginx.org</url>.
+However, the SubjectAltName field length is limited.
+</para>
+
+<para>
+Another way is to use a certificate with a wildcard name, for example,
+<url>*.nginx.org</url>. This certificate matches
+<url>www.nginx.org</url>, but does not match <url>nginx.org</url>
+and <url>www.sub.nginx.org</url>. These two methods can also be combined.
+A certificate may contain exact and wildcard names in the SubjectAltName field,
+for example, <url>nginx.org</url> and <url>*.nginx.org</url>.
+</para>
+
+<para>
+It is better to place a certificate file with several names and
+its private key file at the <i>http</i> level of configuration
+to inherit their single memory copy in all servers:
+
+<programlisting>
+ssl_certificate      common.crt;
+ssl_certificate_key  common.key;
+
+server {
+    listen           443;
+    server_name      www.nginx.com;
+    ssl              on;
+    ...
+}
+
+server {
+    listen           443;
+    server_name      www.nginx.org;
+    ssl              on;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="sni" title="Server Name Indication">
+
+<para>
+A more generic solution for running several HTTPS servers on a single
+IP address is
+<a href="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1
+Server Name Indication extension</a> (SNI, RFC3546),
+which allows a browser to pass a requested server name during the SSL handshake
+and, therefore, the server will know which certificate it should use
+for the connection.
+However, SNI has limited browser support.
+Currently it is supported starting with the following browsers versions:
+</para>
+
+<list>
+
+<item>
+Opera 8.0;
+</item>
+
+<item>
+MSIE 7.0 (but only on Windows Vista or higher);
+</item>
+
+<item>
+Firefox 2.0 and other browsers using Mozilla Platform rv:1.8.1;
+</item>
+
+<item>
+Safari 3.2.1 (Windows version supports SNI on Vista or higher);
+</item>
+
+<item>
+and Chrome (Windows version supports SNI on Vista or higher, too).
+</item>
+
+</list>
+
+<para>
+In order to use SNI in nginx, it must be supported in both the
+OpenSSL library with which the nginx binary has been built as well as
+the library to which it is being dynamically linked at run time.
+OpenSSL supports SNI since 0.9.8f version if it was built with config option
+<nobr>&ldquo;--enable-tlsext&rdquo;.</nobr>
+Since OpenSSL 0.9.8j this option is enabled by default.
+If nginx was built with SNI support, then nginx will show this
+when run with the &ldquo;-V&rdquo; switch:
+
+<programlisting>
+$ nginx -V
+...
+TLS SNI support enabled
+...
+</programlisting>
+
+However, if the SNI-enabled nginx is linked dynamically to
+an OpenSSL library without SNI support, nginx displays the warning:
+
+<programlisting>
+nginx was built with SNI support, however, now it is linked
+dynamically to an OpenSSL library which has no tlsext support,
+therefore SNI is not available
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="compatibility" title="Compatibility">
+
+<para>
+<list>
+
+<item>
+The SNI support status has been shown by the &ldquo;-V&rdquo; switch
+since 0.8.21 and 0.7.62.
+</item>
+
+<item>
+The <dirname>ssl</dirname> parameter of the <dirname>listen</dirname>
+directive has been supported since 0.7.14.
+</item>
+
+<item>
+SNI has been supported since 0.5.32.
+</item>
+
+<item>
+The shared SSL session cache has been supported since 0.5.6.
+</item>
+
+</list>
+</para>
+
+<para>
+<list>
+
+<item>
+Version 0.7.65, 0.8.19 and later: the default SSL protocols are SSLv3 and TLSv1.
+</item>
+
+<item>
+Version 0.7.64, 0.8.18 and earlier: the default SSL protocols are SSLv2,
+SSLv3, and TLSv1.
+</item>
+
+</list>
+</para>
+
+<para>
+<list>
+
+<item>
+Version 0.7.65, 0.8.20 and later: the default SSL ciphers are
+<dirname>HIGH:!ADH:!MD5</dirname>.
+</item>
+
+<item>
+Version 0.8.19: the default SSL ciphers are
+<dirname>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</dirname>.
+</item>
+
+<item>
+Version 0.7.64, 0.8.18 and earlier: the default SSL ciphers are<br/>
+<dirname>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</dirname>.
+</item>
+
+</list>
+</para>
+
+
+</section>
+
+
+</article>
