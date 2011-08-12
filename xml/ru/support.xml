@@ -5,29 +5,14 @@
          lang="ru">
 
 
-<section title="Списки рассылок">
+<section title="Wiki">
 
 <para>
 <list>
 
 <item>
-<a href="http://nginx.org/mailman/">nginx.org/mailman</a>,
-<a href="http://nginx.org/pipermail/nginx-ru/">архив</a>.
-Для того, чтобы писать в список, нужно сначала
-<a href="http://nginx.org/mailman/listinfo/nginx-ru">подписаться</a>.
+<a href="http://wiki.nginx.org">wiki.nginx.org</a>
 </item>
-
-<!--
-<item>
-<a href="http://marc.info/?l=nginx">nginx@nginx.org MARC archive</a>
-</item>
-
-<item>
-<a href="http://dir.gmane.org/gmane.comp.web.nginx.english">nginx@nginx.org
-Gmane archive</a>
-</item>
-
--->
 
 </list>
 </para>
@@ -35,7 +20,50 @@ Gmane archive</a>
 </section>
 
 
-<section title="Форум">
+<section title="Списки рассылок">
+
+<para>
+Вы можете
+<a href="http://nginx.org/mailman/listinfo">
+просматривать</a>
+списки рассылок.
+Чтобы писать в списки, необходимо
+<a href="http://nginx.org/mailman/listinfo">
+подписаться</a>.
+</para>
+
+<para>
+<list>
+
+<item>
+список
+<a href="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</a>
+(английский),
+<a href="http://nginx.org/pipermail/nginx/">
+архив</a>,
+<a href="http://dir.gmane.org/gmane.comp.web.nginx.english">
+архив Gmane</a>,
+<a href="http://marc.info/?l=nginx">
+архив MARC</a>
+</item>
+
+<item>
+список
+<a href="http://nginx.org/mailman/listinfo/nginx-ru">nginx-ru@nginx.org</a>
+(русский),
+<a href="http://nginx.org/pipermail/nginx-ru/">
+архив</a>,
+<a href="http://dir.gmane.org/gmane.comp.web.nginx.russian">
+архив Gmane</a>
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section title="Форумы">
 
 <para>
 <list>
@@ -45,9 +73,15 @@ Gmane archive</a>
 интегрированный со списками рассылок.
 Это не обычный форум, поэтому, когда вы там
 &ldquo;создаёте топик&rdquo;, этот &ldquo;топик&rdquo;
-в виде письма уходит в список рассылки, а также
-<a href="http://nginx.org/pipermail/nginx-ru/">архивируется</a>.
-Удалить &ldquo;топик&rdquo; или закрыть нельзя.
+в виде письма уходит в список рассылки, а также архивируется.
+Удалить или закрыть &ldquo;топик&rdquo; нельзя.
+</item>
+
+<item>
+<a href="http://www.ruby-forum.com/forum/nginx">
+форум Ruby</a>,
+интегрированный со списком рассылки
+<a href="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</a>
 </item>
 
 </list>
@@ -60,6 +94,14 @@ Gmane archive</a>
 
 <para>
 <list>
+
+<item>
+Список рассылки для разработчиков
+<a href="http://nginx.org/mailman/listinfo/nginx-devel">nginx-devel@nginx.org</a>
+(английский),
+<a href="http://nginx.org/pipermail/nginx-devel/">
+архив</a>
+</item>
 
 <item>
 <a href="http://trac.nginx.org/nginx/browser">
