@@ -68,4 +68,23 @@ Gmane archive</a>
 
 </section>
 
+
+<section title="Development">
+
+<para>
+<list>
+
+<item>
+<a href="http://trac.nginx.org/nginx/browser">Browse a Source Code</a>
+</item>
+
+<item>
+<a href="http://trac.nginx.org/nginx/report">Report a Bug</a>
+</item>
+
+</list>
+</para>
+
+</section>
+
 </article>

@@ -55,4 +55,27 @@ Gmane archive</a>
 
 </section>
 
+
+<section title="Разработка">
+
+<para>
+<list>
+
+<item>
+<a href="http://trac.nginx.org/nginx/browser">
+Смотреть исходный код
+</a>
+</item>
+
+<item>
+<a href="http://trac.nginx.org/nginx/report">
+Сообщить об ошибке
+</a>
+</item>
+
+</list>
+</para>
+
+</section>
+
 </article>
