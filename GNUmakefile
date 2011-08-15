@@ -13,7 +13,7 @@ define	XSLScript
 		com.pault.StyleSheet					\
 		-x com.pault.XX -y com.pault.XX				\
 		$(1) xsls/dump.xsls					\
-	| perl -e 'undef $$/; $$_ = <>; s/(\n\n)+/\n/gs; print'	> $(2)
+	| sed 's/ *$$//;/^ *$$/N;/\n *$$/D' > $(2)
 
 	if [ ! -s $(2) ]; then rm $(2); fi; test -s $(2)
 endef
@@ -148,16 +148,20 @@ images:									\
 		binary/books/nginx_in_practice.jpg
 
 binary/books/nginx_http_server_jp.jpg:	sources/1106030720.jpg
+	mkdir -p $(dir $@)
 	$(call JPEGNORM, $<, $@)
 
 binary/books/nginx_1_web_server.jpg:					\
 		sources/Nginx\ 1\ Web\ Server\ Implementation\ Cookbook.jpg
+	mkdir -p $(dir $@)
 	$(call JPEGNORM, "$<", $@)
 
 binary/books/nginx_http_server.jpg:	sources/0868OS_MockupCover.jpg
+	mkdir -p $(dir $@)
 	$(call JPEGNORM, $<, $@)
 
 binary/books/nginx_in_practice.jpg:	sources/20807089-1_o.jpg
+	mkdir -p $(dir $@)
 	$(call JPEGNORM, $<, $@)
 
 
@@ -249,3 +253,5 @@ tarball:
 		--directory $(TEMP)					\
 		--exclude .svn						\
 		$(SITE)
+
+.DELETE_ON_ERROR:
