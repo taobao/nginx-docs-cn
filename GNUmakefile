@@ -2,14 +2,14 @@
 OUT =		libxslt
 TEXT =		text
 ZIP =		gzip
-NGINX_ORG =	/data/jails/www/usr/local/www/nginx.org
+NGINX_ORG =	/data/www/nginx.org
 
-CP =		$(HOME)/java
-RSYNC =		rsync -rc
+CP =		/data/sites/java/xsls/\*:$(HOME)/java/xsls/\*
+RSYNC =		rsync -v -rc --exclude=.svn
 
 
 define	XSLScript
-	java -cp $(CP)/xsls/saxon.jar:$(CP)/xsls/xsls.jar		\
+	java -cp $(CP)							\
 		com.pault.StyleSheet					\
 		-x com.pault.XX -y com.pault.XX				\
 		$(1) xsls/dump.xsls					\
@@ -24,12 +24,6 @@ define	XSLT
 		$(shell echo $4						\
 		| sed -e "s/\([^= ]*\)=\([^= ]*\)/--param \1 \"'\2'\"/g") \
 		$1 $2
-endef
-
-define	GZIP
-		rm -f $1.gz
-		7za a -tgzip -mx9 -mpass=15 -si -ba -bd $1.gz < $1
-		touch -r $1 $1.gz
 endef
 
 define 	JPEGNORM
@@ -108,7 +102,6 @@ xslt/news.xslt:		xsls/news.xsls					\
 		xslt/body.xslt						\
 		xslt/menu.xslt						\
 		xslt/content.xslt
-	$(call XSLScript, $<, $@)
 
 xslt/article.xslt:	xsls/article.xsls				\
 		xslt/dirname.xslt					\
@@ -119,7 +112,6 @@ xslt/article.xslt:	xsls/article.xsls				\
 		xslt/donate.xslt					\
 		xslt/content.xslt					\
 		xslt/versions.xslt
-	$(call XSLScript, $<, $@)
 
 xslt/download.xslt:	xsls/download.xsls				\
 		xslt/dirname.xslt					\
@@ -128,7 +120,6 @@ xslt/download.xslt:	xsls/download.xsls				\
 		xslt/body.xslt						\
 		xslt/menu.xslt						\
 		xslt/content.xslt
-	$(call XSLScript, $<, $@)
 
 xslt/security.xslt:	xsls/security.xsls				\
 		xslt/dirname.xslt					\
@@ -137,7 +128,6 @@ xslt/security.xslt:	xsls/security.xsls				\
 		xslt/body.xslt						\
 		xslt/menu.xslt						\
 		xslt/content.xslt
-	$(call XSLScript, $<, $@)
 
 xslt/books.xslt:	xsls/books.xsls					\
 		xslt/dirname.xslt					\
@@ -146,12 +136,9 @@ xslt/books.xslt:	xsls/books.xsls					\
 		xslt/body.xslt						\
 		xslt/menu.xslt						\
 		xslt/content.xslt
-	$(call XSLScript, $<, $@)
 
-xslt/error.xslt:	xsls/error.xsls
-	$(call XSLScript, $<, $@)
-
-xslt/%.xslt:		xsls/%.xsls
+xslt/%.xslt:		xsls/%.xsls					\
+		xsls/dump.xsls
 	$(call XSLScript, $<, $@)
 
 images:									\
@@ -209,7 +196,13 @@ do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
 
 
 $(ZIP)/%.gz:		$(ZIP)/%
-	$(call GZIP, $<)
+		rm -f $<.gz
+ifneq (, $(shell which 7za))
+		7za a -tgzip -mx9 -mpass=15 -si -ba -bd $<.gz < $<
+else
+		gzip -9cn $< > $<.gz
+endif
+		touch -r $< $<.gz
 
 dirs:
 	test -d $(OUT)/en/docs/http || mkdir -p $(OUT)/en/docs/http
