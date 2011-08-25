@@ -1,7 +1,7 @@
 <!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
 
-<article title="When I am trying to open Facebook instead I am getting
-                “Welcome to nginx!” page"
+<article title="I am trying to open Facebook and
+                instead I am getting “Welcome to nginx!” page"
          link="/en/docs/welcome_nginx_facebook.html"
          lang="en">
 
@@ -9,9 +9,9 @@
 <section>
 
 <para initial="Q:">
-I am trying to open Facebook (Yahoo!, Google, etc.) or some
+I am trying to open Facebook, Yahoo!, Google, or some
 other well known web site and instead I am getting a blank web page
-with a message referring to nginx “Welcome to nginx!” or
+with a message referring to nginx: “Welcome to nginx!” or
 “404 Not Found / nginx”.
 </para>
 
