@@ -18,6 +18,13 @@ X:template = "item/para" { <p class="noindent"> !!; </p> }
 
 X:template = "para[@align]" { <p align="{@align}"> !!; </p> }
 
+X:template = "para[@initial]" {
+    <p class="noindent">
+    <span class="initial"><b> !{@initial} X:text{&#xA0;} </b></span>
+    !!;
+    </p>
+}
+
 
 X:template = "programlisting" { <blockquote><pre> !!; </pre></blockquote> }
 

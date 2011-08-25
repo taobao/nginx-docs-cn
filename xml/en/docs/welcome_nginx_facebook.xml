@@ -8,8 +8,7 @@
 
 <section>
 
-<para>
-<b>Q:</b>
+<para initial="Q:">
 I am trying to open Facebook (Yahoo!, Google, etc.) or some
 other well known web site and instead I am getting a blank web page
 with a message referring to nginx “Welcome to nginx!” or
@@ -27,8 +26,7 @@ to Facebook (Yahoo!, Google, etc.) ?
 &nbsp;
 </para>
 
-<para>
-<b>A:</b>
+<para initial="A:">
 nginx is among the 3 most popular web servers in the world.
 It is a free open source software which is absolutely legitimate and
 has nothing to do with any kind of threatening or malicious activity per se.
