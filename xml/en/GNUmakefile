@@ -22,6 +22,7 @@ HOWTO_EN_XML =	$(foreach name, $(HOWTO_EN), xml/$(name).xml)
 HOWTO_EN_HTML =	$(foreach name, $(HOWTO_EN), $(OUT)/$(name).html)
 
 FAQ_EN =	en/docs/sys_errlist					\
+		en/docs/welcome_nginx_facebook
 
 FAQ_EN_XML =	$(foreach name, $(FAQ_EN), xml/$(name).xml)
 FAQ_EN_HTML =	$(foreach name, $(FAQ_EN), $(OUT)/$(name).html)
