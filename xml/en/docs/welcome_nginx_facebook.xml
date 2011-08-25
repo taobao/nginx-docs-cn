@@ -1,0 +1,54 @@
+<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+
+<article title="When I am trying to open Facebook instead I am getting
+                “Welcome to nginx!” page"
+         link="/en/docs/welcome_nginx_facebook.html"
+         lang="en">
+
+
+<section>
+
+<para>
+<b>Q:</b>
+I am trying to open Facebook (Yahoo!, Google, etc.) or some
+other well known web site and instead I am getting a blank web page
+with a message referring to nginx “Welcome to nginx!” or
+“404 Not Found / nginx”.
+</para>
+
+<para>
+I suspect something is wrong and there is probably a malicious attempt here
+to direct me to a rogue web page (for hacking my computer, phishing etc.).
+Why is that and what nginx has to do with my attempts to connect
+to Facebook (Yahoo!, Google, etc.) ?
+</para>
+
+<para>
+&nbsp;
+</para>
+
+<para>
+<b>A:</b>
+nginx is among the 3 most popular web servers in the world.
+It is a free open source software which is absolutely legitimate and
+has nothing to do with any kind of threatening or malicious activity per se.
+A web page saying “Welcome to nginx!” is one of the diagnostics responses
+that can be produced by a server running nginx.
+</para>
+
+<para>
+However, you are right in your assumption that something must be wrong
+with your computer or operating system setup when you are trying to access
+a well known web site and instead of a familiar page you get
+“Welcome to nginx!”. This should not happen if your computer is clean and safe.
+We recommend you to check and verify your operating system setup
+(possibly with the help of your ISP or support staff),
+but also it would be a good idea to install and run an anti-virus software
+on your computer. It may happen that some malign entity is trying
+to intercept the traffic from your computer and potentially cause
+significant harm to you and the other users on the Internet.
+</para>
+
+</section>
+
+</article>
