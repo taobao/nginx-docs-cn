@@ -8,7 +8,8 @@ X:template style (lang) {
         p                { text-align:   justify; }
         p                { text-indent:  20pt; }
         p.noindent       { text-indent:  0pt; }
-        span.initial     { font-size:    200%; float: left; padding-right: 5pt;}
+        span.initial     { font-size:    200%;
+                           float: left; padding-right: 10pt;}
         li               { text-align:   justify; }
         td.list          { background:   #EEEEEE; }
         blockquote.note  { text-align:   justify; }
