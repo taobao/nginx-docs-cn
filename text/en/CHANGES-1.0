@@ -1,5 +1,5 @@
 
-Changes with nginx 1.0.6                                         29 Jul 2011
+Changes with nginx 1.0.6                                         29 Aug 2011
 
     *) Feature: cache loader run time decrease.
 
