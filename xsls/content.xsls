@@ -1,93 +1,108 @@
 X:stylesheet {
 
-X:template = "section[@name and @title]" {
-    <a name="{@name}" /> <center><h4> !{@title} </h4></center>
-    !!;
-}
+    X:template = "section[@name and @title]" {
+	<a name="{@name}" /> <center><h4> !{@title} </h4></center>
+	!!;
+    }
 
-X:template = "section[not(@name) and @title]" {
-    <center><h4> !{@title} </h4></center>
-    !!;
-}
+    X:template = "section[not(@name) and @title]" {
+	<center><h4> !{@title} </h4></center>
+	!!;
+    }
 
-X:template = "section[not(@name) and not(@title)]" { !!; }
+    X:template = "section[not(@name) and not(@title)]" { !!; }
 
-X:template = "para" { <p> !!; </p> }
+    X:template = "para" { <p> !!; </p> }
 
-X:template = "item/para" { <p class="noindent"> !!; </p> }
+    X:template = "item/para" { <p class="noindent"> !!; </p> }
 
-X:template = "para[@align]" { <p align="{@align}"> !!; </p> }
+    X:template = "para[@align]" { <p align="{@align}"> !!; </p> }
 
-X:template = "para[child::initial]" { <p class="noindent"> !!; </p> }
+    X:template = "para[child::initial]" { <p class="noindent"> !!; </p> }
 
-X:template = "initial" { <span class="initial"><b> !!; </b></span> }
-
-
-X:template = "programlisting" { <blockquote><pre> !!; </pre></blockquote> }
-
-X:template = "para/programlisting" {
-    X:text disable-output-escaping="yes" {&lt;/p&gt; }
-    <blockquote><pre> !!; </pre></blockquote>
-    X:text disable-output-escaping="yes" {&lt;p class="noindent"&gt; }
-}
+    X:template = "initial" { <span class="initial"><b> !!; </b></span> }
 
 
-X:template = "note" { <blockquote class="note"> !!; </blockquote> }
+    X:template = "programlisting" { <blockquote><pre> !!; </pre></blockquote> }
 
-X:template = "para/note" {
-    X:text disable-output-escaping="yes" {&lt;/p&gt; }
-    <blockquote class="note"> !!; </blockquote>
-    X:text disable-output-escaping="yes" {&lt;p class="noindent"&gt; }
-}
-
-
-X:template = "list" { <ul> !!; </ul> }
-X:template = "item" { <li> !!; </li> }
+    X:template = "para/programlisting" {
+	X:text disable-output-escaping="yes" {&lt;/p&gt; }
+	<blockquote><pre> !!; </pre></blockquote>
+	X:text disable-output-escaping="yes" {&lt;p class="noindent"&gt; }
+    }
 
 
-X:template = "orderedlist" { <ol> !!; </ol> }
-X:template = "item" { <li> !!; </li> }
+    X:template = "note" { <blockquote class="note"> !!; </blockquote> }
 
-X:template = "table[@note and @width]" {
-    <blockquote><table width="{@width}"> !!; </table></blockquote>
-}
-X:template = "table[@note and not(@width)]" {
-    <blockquote><table width="100%"> !!; </table></blockquote>
-}
-X:template = "table[not(@note) and @width]" {
-    <table width="{@width}"> !!; </table>
-}
-X:template = "table" { <table width="100%"> !!; </table> }
-X:template = "tr" { <tr> !!; </tr> }
-X:template = "td[@width]" { <td width="{@width}"> !!; </td> }
-X:template = "td" { <td> !!; </td> }
+    X:template = "para/note" {
+	X:text disable-output-escaping="yes" {&lt;/p&gt; }
+	<blockquote class="note"> !!; </blockquote>
+	X:text disable-output-escaping="yes" {&lt;p class="noindent"&gt; }
+    }
 
-X:template = "header" {
-    X:text {&#8220;} !!; X:text {&#8221;}
-}
 
-X:template = "dirname[/*[@lang='he']]" {
-    <nobr><span class="ltr">
-    X:text {&#8220;} !!; X:text {&#8221;}
-    </span></nobr>
-}
+    X:template = "list" { <ul> !!; </ul> }
+    X:template = "item" { <li> !!; </li> }
 
-X:template = "dirname" { <nobr> X:text {&#8220;} !!; X:text {&#8221;} </nobr> }
 
-X:template = "url[/*[@lang='he']]" {
-    <i><span class="ltr"> !!; </span></i>
-}
+    X:template = "orderedlist" { <ol> !!; </ol> }
+    X:template = "item" { <li> !!; </li> }
 
-X:template = "url" { <i> !!;</i> }
+    X:template = "table[@note and @width]" {
+	<blockquote><table width="{@width}"> !!; </table></blockquote>
+    }
+    X:template = "table[@note and not(@width)]" {
+	<blockquote><table width="100%"> !!; </table></blockquote>
+    }
+    X:template = "table[not(@note) and @width]" {
+	<table width="{@width}"> !!; </table>
+    }
+    X:template = "table" { <table width="100%"> !!; </table> }
+    X:template = "tr" { <tr> !!; </tr> }
+    X:template = "td[@width]" { <td width="{@width}"> !!; </td> }
+    X:template = "td" { <td> !!; </td> }
 
-X:template = "path" { X:text {&#8220;} <code> !!; </code> X:text {&#8221;} }
-X:template = "code" { <code> !!; </code> }
-X:template = "i" { <i> !!; </i> }
-X:template = "b" { <b> !!; </b> }
-X:template = "nobr" { <nobr> !!; </nobr> }
-X:template = "mdash" { X:text {&#xA0;&#8212; } }
-X:template = "space" { X:text { } }
-X:template = "br" { <br/> }
+    X:template = "command" { <code> !!; </code> }
+
+    X:template = "example" { <blockquote><pre> !!; </pre></blockquote> }
+
+    X:template = "pathname" { <code> !!; </code> }
+
+    X:template = "argument" { <code><i> !!; </i></code> }
+    X:template = "parameter" { <code> !!; </code> }
+
+    X:template = "header" {
+	X:text {&#8220;} !!; X:text {&#8221;}
+    }
+
+    X:template = "http-error" {
+        X:text { error code } !{@code} X:text { (} !{@text} X:text{)}
+    }
+
+    X:template = "dirname[/*[@lang='he']]" {
+	<nobr><span class="ltr">
+	X:text {&#8220;} !!; X:text {&#8221;}
+	</span></nobr>
+    }
+
+    X:template = "dirname" {
+        <nobr> X:text {&#8220;} !!; X:text {&#8221;} </nobr>
+    }
+
+    X:template = "url[/*[@lang='he']]" {
+	<i><span class="ltr"> !!; </span></i>
+    }
+
+    X:template = "url" { <i> !!;</i> }
+
+    X:template = "path" { X:text {&#8220;} <code> !!; </code> X:text {&#8221;} }
+    X:template = "code" { <code> !!; </code> }
+    X:template = "i" { <i> !!; </i> }
+    X:template = "b" { <b> !!; </b> }
+    X:template = "nobr" { <nobr> !!; </nobr> }
+    X:template = "mdash" { X:text {&#xA0;&#8212; } }
+    X:template = "space" { X:text { } }
+    X:template = "br" { <br/> }
 
 
 }

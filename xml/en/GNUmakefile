@@ -18,6 +18,11 @@ HOWTO_EN =	en/docs/debugging_log					\
 		en/docs/http/converting_rewrite_rules			\
 		en/docs/freebsd_tuning					\
 
+REFS_EN_XML =	$(foreach name, $(REFS_EN), xml/$(name).xml)
+REFS_EN_HTML =	$(foreach name, $(REFS_EN), $(OUT)/$(name).html)
+
+REFS_EN =	en/docs/http/ngx_http_mp4_module			\
+
 HOWTO_EN_XML =	$(foreach name, $(HOWTO_EN), xml/$(name).xml)
 HOWTO_EN_HTML =	$(foreach name, $(HOWTO_EN), $(OUT)/$(name).html)
 
@@ -38,12 +43,14 @@ en:									\
 		$(OUT)/en/docs/index.html				\
 		$(DOCS_EN_HTML)						\
 		$(INTRO_EN_HTML)					\
+		$(REFS_EN_HTML)						\
 		$(HOWTO_EN_HTML)					\
 		$(FAQ_EN_HTML)						\
 
 $(OUT)/en/docs/index.html:	xml/en/docs/index.xml			\
 		$(ARTICLE_XSLT)						\
-		$(DOCS_EN_XML)
+		$(DOCS_EN_XML)						\
+		$(REFS_EN_XML)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
 $(OUT)/en/download.html:	xml/en/download.xml			\

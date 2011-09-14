@@ -46,6 +46,13 @@ ARTICLE_XSLT =	xml/menu.xml						\
 		dtd/article.dtd						\
 		dtd/content.dtd						\
 
+MODULE_XSLT =	xml/menu.xml						\
+		xml/versions.xml					\
+		xslt/module.xslt					\
+		xslt/directive.xslt					\
+		dtd/module.dtd						\
+		dtd/content.dtd						\
+
 include 	xml/en/GNUmakefile
 include 	xml/ja/GNUmakefile
 include 	xml/he/GNUmakefile
@@ -90,6 +97,11 @@ $(OUT)/404.html:	xml/404.xml					\
 	$(call XSLT, xslt/error.xslt, $<, $@)
 
 
+$(OUT)/%_module.html:		xml/%_module.xml			\
+		$(MODULE_XSLT)
+	$(call XSLT, xslt/module.xslt, $<, $@)
+
+
 $(OUT)/%.html:		xml/%.xml					\
 		$(ARTICLE_XSLT)
 	$(call XSLT, xslt/article.xslt, $<, $@)
@@ -104,6 +116,16 @@ xslt/news.xslt:		xsls/news.xsls					\
 		xslt/content.xslt
 
 xslt/article.xslt:	xsls/article.xsls				\
+		xslt/dirname.xslt					\
+		xslt/link.xslt						\
+		xslt/style.xslt						\
+		xslt/body.xslt						\
+		xslt/menu.xslt						\
+		xslt/donate.xslt					\
+		xslt/content.xslt					\
+		xslt/versions.xslt
+
+xslt/module.xslt:	xsls/module.xsls				\
 		xslt/dirname.xslt					\
 		xslt/link.xslt						\
 		xslt/style.xslt						\

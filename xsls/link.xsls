@@ -20,16 +20,19 @@ X:template = "a[starts-with(@href, '/')
 
            <!-- convert to a link "docs/page.html" -->
 
-           !{ substring-after(document(concat($XML, @href))/article/@link,
+           !{ substring-after(document(concat($XML, @href))/article/@link
+                              |document(concat($XML, @href))/module/@link,
                               $DIRNAME) }
         } else {
 
            <!-- convert to a link "../../../en/docs/page.html" -->
 
-           !{ concat($ROOT, document(concat($XML, @href))/article/@link) }
+           !{ concat($ROOT, document(concat($XML, @href))/article/@link
+                            |document(concat($XML, @href))/module/@link) }
         }
     }
-    !{ document(concat($XML, @href))/article/@title }
+    !{ document(concat($XML, @href))/article/@title
+       |document(concat($XML, @href))/module/@title }
     </a>
 }
 
@@ -43,10 +46,12 @@ X:template = "a[starts-with(@href, '/')
     <a>
     X:attribute "href" {
         X:if "starts-with(@href, $DIRNAME)" {
-           !{ substring-after(document(concat($XML, @href))/article/@link,
+           !{ substring-after(document(concat($XML, @href))/article/@link
+                              |document(concat($XML, @href))/module/@link,
                               $DIRNAME) }
         } else {
-           !{ concat($ROOT, document(concat($XML, @href))/article/@link) }
+           !{ concat($ROOT, document(concat($XML, @href))/article/@link
+                            |document(concat($XML, @href))/module/@link) }
         }
     }
     !!;
