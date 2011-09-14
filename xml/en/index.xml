@@ -114,7 +114,8 @@ The PUT, DELETE, MKCOL, COPY and MOVE methods;
 </item>
 
 <item>
-FLV streaming;
+FLV and
+<a href="/en/docs/http/ngx_http_mp4_module.xml">MP4</a> streaming;
 </item>
 
 <item>
