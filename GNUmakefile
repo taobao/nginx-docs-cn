@@ -114,16 +114,6 @@ xslt/article.xslt:	xsls/article.xsls				\
 		xslt/content.xslt					\
 		xslt/versions.xslt
 
-xslt/module.xslt:	xsls/module.xsls				\
-		xslt/dirname.xslt					\
-		xslt/link.xslt						\
-		xslt/style.xslt						\
-		xslt/body.xslt						\
-		xslt/menu.xslt						\
-		xslt/donate.xslt					\
-		xslt/content.xslt					\
-		xslt/versions.xslt
-
 xslt/download.xslt:	xsls/download.xsls				\
 		xslt/dirname.xslt					\
 		xslt/link.xslt						\
