@@ -46,13 +46,6 @@ ARTICLE_XSLT =	xml/menu.xml						\
 		dtd/article.dtd						\
 		dtd/content.dtd						\
 
-MODULE_XSLT =	xml/menu.xml						\
-		xml/versions.xml					\
-		xslt/module.xslt					\
-		xslt/directive.xslt					\
-		dtd/module.dtd						\
-		dtd/content.dtd						\
-
 include 	xml/en/GNUmakefile
 include 	xml/ja/GNUmakefile
 include 	xml/he/GNUmakefile
@@ -97,11 +90,6 @@ $(OUT)/404.html:	xml/404.xml					\
 	$(call XSLT, xslt/error.xslt, $<, $@)
 
 .SECONDARY:
-
-$(OUT)/%_module.html:		xml/%_module.xml			\
-		$(MODULE_XSLT)
-	$(call XSLT, xslt/module.xslt, $<, $@)
-
 
 $(OUT)/%.html:		xml/%.xml					\
 		$(ARTICLE_XSLT)

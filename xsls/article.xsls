@@ -12,7 +12,7 @@ X:param XML = "'../xml'";
 X:param YEAR;
 
 X:var SITE = "'http://nginx.org'";
-X:var LINK = "/article/@link";
+X:var LINK = "/article/@link | /module/@link";
 
 X:include href = "dirname.xslt";
 X:include href = "link.xslt";
@@ -20,6 +20,7 @@ X:include href = "style.xslt";
 X:include href = "body.xslt";
 X:include href = "menu.xslt";
 X:include href = "donate.xslt";
+X:include href = "directive.xslt";
 X:include href = "content.xslt";
 X:include href = "versions.xslt";
 
@@ -49,6 +50,36 @@ X:template = "/article[@lang='he']" {
     </head>
 
     !body (lang="/article/@lang")
+
+    </html>
+}
+
+
+X:template = "/module" {
+    <html><head>
+
+    <title> !{@title} </title>
+
+    !style (lang="/module/@lang")
+
+    </head>
+
+    !body (lang="/module/@lang")
+
+    </html>
+}
+
+
+X:template = "/module[@lang='he']" {
+    <html dir="rtl"><head>
+
+    <title> !{@title} </title>
+
+    !style (lang="/module/@lang")
+
+    </head>
+
+    !body (lang="/module/@lang")
 
     </html>
 }
