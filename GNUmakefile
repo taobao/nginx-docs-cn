@@ -96,6 +96,7 @@ $(OUT)/404.html:	xml/404.xml					\
 		dtd/content.dtd
 	$(call XSLT, xslt/error.xslt, $<, $@)
 
+.SECONDARY:
 
 $(OUT)/%_module.html:		xml/%_module.xml			\
 		$(MODULE_XSLT)
