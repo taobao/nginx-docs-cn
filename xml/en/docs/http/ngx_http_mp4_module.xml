@@ -2,11 +2,11 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module title="HTTP MP4 module"
+<module name="HTTP MP4 module"
         link="/en/docs/http/ngx_http_mp4_module.html"
         lang="en">
 
-<section title="Summary">
+<section name="Summary">
 
 <para>
 The module <code>ngx_http_mp4_module</code> provides pseudo-streaming
@@ -91,7 +91,7 @@ A similar pseudo-streaming support for FLV files is provided by the module
 </section>
 
 
-<section name="example" title="Usage example">
+<section id="example" name="Usage example">
 
 <para>
 <example>
@@ -106,7 +106,7 @@ location /video/ {
 </section>
 
 
-<section name="directives" title="Directives">
+<section id="directives" name="Directives">
 
 <directive name="mp4">
 <syntax>mp4</syntax>
