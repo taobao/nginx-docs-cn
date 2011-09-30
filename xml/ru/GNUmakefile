@@ -17,14 +17,13 @@ ru:									\
 		$(DOCS_RU_HTML)						\
 		$(FAQ_RU_HTML)						\
 
-$(OUT)/ru/download.html:	xml/ru/download.xml			\
-		xml/menu.xml						\
-		xslt/download.xslt					\
-		dtd/article.dtd						\
-		dtd/content.dtd
+$(OUT)/ru/download.html:						\
+		xml/ru/download.xml					\
+		$(DOWNLOAD_DEPS)
 	$(call XSLT, xslt/download.xslt, $<, $@)
 
-$(OUT)/ru/docs/faq.html:	xml/ru/docs/faq.xml			\
-		$(ARTICLE_XSLT)						\
-		$(FAQ_RU_XML)
+$(OUT)/ru/docs/faq.html:						\
+		xml/ru/docs/faq.xml					\
+		$(FAQ_RU_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)

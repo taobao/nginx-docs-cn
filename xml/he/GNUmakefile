@@ -23,17 +23,20 @@ he:									\
 		$(INTRO_HE_HTML)					\
 		$(HOWTO_HE_HTML)					\
 
-$(OUT)/he/docs/index.html:	xml/he/docs/index.xml			\
-		$(ARTICLE_XSLT)						\
-		$(DOCS_HE_XML)
+$(OUT)/he/docs/index.html:						\
+		xml/he/docs/index.xml					\
+		$(DOCS_HE_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
-$(OUT)/he/docs/introduction.html:	xml/he/docs/introduction.xml	\
-		$(ARTICLE_XSLT)						\
-		$(INTRO_HE_XML)
+$(OUT)/he/docs/introduction.html:					\
+		xml/he/docs/introduction.xml				\
+		$(INTRO_HE_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
-$(OUT)/he/docs/howto.html:	xml/he/docs/howto.xml			\
-		$(ARTICLE_XSLT)						\
-		$(HOWTO_HE_XML)
+$(OUT)/he/docs/howto.html:						\
+		xml/he/docs/howto.xml					\
+		$(HOWTO_HE_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)

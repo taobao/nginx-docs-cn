@@ -33,18 +33,81 @@ define 	JPEGNORM
 		> $2
 endef
 
+
+ARTICLE_DEPS =								\
+		xml/menu.xml						\
+		xml/versions.xml					\
+		dtd/article.dtd						\
+		dtd/content.dtd						\
+		xslt/article.xslt					\
+		xslt/dirname.xslt					\
+		xslt/link.xslt						\
+		xslt/style.xslt						\
+		xslt/body.xslt						\
+		xslt/menu.xslt						\
+		xslt/donate.xslt					\
+		xslt/directive.xslt					\
+		xslt/content.xslt					\
+		xslt/versions.xslt
+
+NEWS_DEPS =								\
+		xml/menu.xml						\
+		xml/versions.xml					\
+		dtd/news.dtd						\
+		dtd/content.dtd						\
+		xslt/news.xslt						\
+		xslt/dirname.xslt					\
+		xslt/link.xslt						\
+		xslt/style.xslt						\
+		xslt/body.xslt						\
+		xslt/menu.xslt						\
+		xslt/content.xslt
+
+DOWNLOAD_DEPS =								\
+		xml/menu.xml						\
+		xml/versions.xml					\
+		dtd/article.dtd						\
+		dtd/content.dtd						\
+		xslt/download.xslt					\
+		xslt/dirname.xslt					\
+		xslt/link.xslt						\
+		xslt/style.xslt						\
+		xslt/body.xslt						\
+		xslt/menu.xslt						\
+		xslt/content.xslt
+
+SECURITY_DEPS =								\
+		xml/menu.xml						\
+		xml/versions.xml					\
+		dtd/article.dtd						\
+		dtd/content.dtd						\
+		xslt/security.xslt					\
+		xslt/dirname.xslt					\
+		xslt/link.xslt						\
+		xslt/style.xslt						\
+		xslt/body.xslt						\
+		xslt/menu.xslt						\
+		xslt/content.xslt
+
+BOOK_DEPS =								\
+		xml/menu.xml						\
+		xml/versions.xml					\
+		dtd/article.dtd						\
+		dtd/content.dtd						\
+		xslt/books.xslt						\
+		xslt/dirname.xslt					\
+		xslt/link.xslt						\
+		xslt/style.xslt						\
+		xslt/body.xslt						\
+		xslt/menu.xslt						\
+		xslt/content.xslt
+
 all:		news arx 404 en ja he ru tr
 
 news:		$(OUT)/index.html $(OUT)/index.rss
 arx:		$(OUT)/2010.html $(OUT)/2009.html
 404:		$(OUT)/404.html
 
-
-ARTICLE_XSLT =	xml/menu.xml						\
-		xml/versions.xml					\
-		xslt/article.xslt					\
-		dtd/article.dtd						\
-		dtd/content.dtd						\
 
 include 	xml/en/GNUmakefile
 include 	xml/ja/GNUmakefile
@@ -53,92 +116,45 @@ include 	xml/ru/GNUmakefile
 include 	xml/tr/GNUmakefile
 
 
-$(OUT)/index.html:	xml/index.xml					\
-		xml/menu.xml						\
-		xslt/news.xslt						\
-		dtd/news.dtd						\
-		dtd/content.dtd
+$(OUT)/index.html:							\
+		xml/index.xml						\
+		$(NEWS_DEPS)
 	$(call XSLT, xslt/news.xslt, $<, $@)
 
-$(OUT)/index.rss:	xml/index.xml					\
+$(OUT)/index.rss:							\
+		xml/index.xml						\
+		$(NEWS_DEPS)
 		xslt/rss.xslt						\
-		dtd/article.dtd						\
-		dtd/content.dtd
 	$(call XSLT, xslt/rss.xslt, $<, $@)
 
 
-$(OUT)/2010.html:	xml/index.xml					\
-		xml/menu.xml						\
-		xslt/news.xslt						\
-		dtd/news.dtd						\
-		dtd/content.dtd
+$(OUT)/2010.html:							\
+		xml/index.xml						\
+		$(NEWS_DEPS)
 	$(call XSLT, xslt/news.xslt, $<, $@, YEAR=2010)
 
 
-$(OUT)/2009.html:	xml/index.xml					\
-		xml/menu.xml						\
-		xslt/news.xslt						\
-		dtd/news.dtd						\
-		dtd/content.dtd
+$(OUT)/2009.html:							\
+		xml/index.xml						\
+		$(NEWS_DEPS)
 	$(call XSLT, xslt/news.xslt, $<, $@, YEAR=2009)
 
-$(OUT)/404.html:	xml/404.xml					\
+$(OUT)/404.html:							\
+		xml/404.xml						\
 		xml/menu.xml						\
-		xslt/error.xslt						\
 		dtd/article.dtd						\
-		dtd/content.dtd
+		dtd/content.dtd						\
+		xslt/error.xslt
 	$(call XSLT, xslt/error.xslt, $<, $@)
 
 .SECONDARY:
 
-$(OUT)/%.html:		xml/%.xml					\
-		$(ARTICLE_XSLT)
+$(OUT)/%.html:	xml/%.xml						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
 
-xslt/news.xslt:		xsls/news.xsls					\
-		xslt/dirname.xslt					\
-		xslt/link.xslt						\
-		xslt/style.xslt						\
-		xslt/body.xslt						\
-		xslt/menu.xslt						\
-		xslt/content.xslt
-
-xslt/article.xslt:	xsls/article.xsls				\
-		xslt/dirname.xslt					\
-		xslt/link.xslt						\
-		xslt/style.xslt						\
-		xslt/body.xslt						\
-		xslt/menu.xslt						\
-		xslt/donate.xslt					\
-		xslt/content.xslt					\
-		xslt/versions.xslt
-
-xslt/download.xslt:	xsls/download.xsls				\
-		xslt/dirname.xslt					\
-		xslt/link.xslt						\
-		xslt/style.xslt						\
-		xslt/body.xslt						\
-		xslt/menu.xslt						\
-		xslt/content.xslt
-
-xslt/security.xslt:	xsls/security.xsls				\
-		xslt/dirname.xslt					\
-		xslt/link.xslt						\
-		xslt/style.xslt						\
-		xslt/body.xslt						\
-		xslt/menu.xslt						\
-		xslt/content.xslt
-
-xslt/books.xslt:	xsls/books.xsls					\
-		xslt/dirname.xslt					\
-		xslt/link.xslt						\
-		xslt/style.xslt						\
-		xslt/body.xslt						\
-		xslt/menu.xslt						\
-		xslt/content.xslt
-
-xslt/%.xslt:		xsls/%.xsls					\
+xslt/%.xslt:	xsls/%.xsls						\
 		xsls/dump.xsls
 	$(call XSLScript, $<, $@)
 

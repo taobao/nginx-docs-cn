@@ -33,17 +33,20 @@ tr:									\
 		$(HOWTO_TR_HTML)					\
 		$(FAQ_TR_HTML)						\
 
-$(OUT)/tr/docs/introduction.html:	xml/tr/docs/introduction.xml	\
-		$(ARTICLE_XSLT)						\
-		$(INTRO_TR_XML)
+$(OUT)/tr/docs/introduction.html:					\
+		xml/tr/docs/introduction.xml				\
+		$(INTRO_TR_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
-$(OUT)/tr/docs/howto.html:	xml/tr/docs/howto.xml			\
-		$(ARTICLE_XSLT)						\
-		$(HOWTO_TR_XML)
+$(OUT)/tr/docs/howto.html:						\
+		xml/tr/docs/howto.xml					\
+		$(HOWTO_TR_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
-$(OUT)/tr/docs/faq.html:	xml/tr/docs/faq.xml			\
-		$(ARTICLE_XSLT)						\
-		$(FAQ_TR_XML)
+$(OUT)/tr/docs/faq.html:						\
+		xml/tr/docs/faq.xml					\
+		$(FAQ_TR_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)

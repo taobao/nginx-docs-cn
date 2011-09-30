@@ -47,44 +47,42 @@ en:									\
 		$(HOWTO_EN_HTML)					\
 		$(FAQ_EN_HTML)						\
 
-$(OUT)/en/docs/index.html:	xml/en/docs/index.xml			\
-		$(ARTICLE_XSLT)						\
+$(OUT)/en/docs/index.html:						\
+		xml/en/docs/index.xml					\
 		$(DOCS_EN_XML)						\
-		$(REFS_EN_XML)
+		$(REFS_EN_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
-$(OUT)/en/download.html:	xml/en/download.xml			\
-		xml/menu.xml						\
-		xslt/download.xslt					\
-		dtd/article.dtd						\
-		dtd/content.dtd
+$(OUT)/en/download.html:						\
+		xml/en/download.xml					\
+		$(DOWNLOAD_DEPS)
 	$(call XSLT, xslt/download.xslt, $<, $@)
 
-$(OUT)/en/security_advisories.html:	xml/en/security_advisories.xml	\
-		xml/menu.xml						\
-		xslt/security.xslt					\
-		dtd/article.dtd						\
-		dtd/content.dtd
+$(OUT)/en/security_advisories.html:					\
+		xml/en/security_advisories.xml				\
+		$(SECURITY_DEPS)
 	$(call XSLT, xslt/security.xslt, $<, $@)
 
-$(OUT)/en/docs/introduction.html:	xml/en/docs/introduction.xml	\
-		$(ARTICLE_XSLT)						\
-		$(INTRO_EN_XML)
+$(OUT)/en/docs/introduction.html:					\
+		xml/en/docs/introduction.xml				\
+		$(INTRO_EN_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
-$(OUT)/en/docs/howto.html:	xml/en/docs/howto.xml			\
-		$(ARTICLE_XSLT)						\
-		$(HOWTO_EN_XML)
+$(OUT)/en/docs/howto.html:						\
+		xml/en/docs/howto.xml					\
+		$(HOWTO_EN_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
-$(OUT)/en/docs/faq.html:	xml/en/docs/faq.xml			\
-		$(ARTICLE_XSLT)						\
-		$(FAQ_EN_XML)
+$(OUT)/en/docs/faq.html:						\
+		xml/en/docs/faq.xml					\
+		$(FAQ_EN_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
-$(OUT)/en/books.html:	xml/en/books.xml				\
-		xml/menu.xml						\
-		xslt/books.xslt						\
-		dtd/article.dtd						\
-		dtd/content.dtd
+$(OUT)/en/books.html:							\
+		xml/en/books.xml					\
+		$(BOOK_DEPS)
 	$(call XSLT, xslt/books.xslt, $<, $@)

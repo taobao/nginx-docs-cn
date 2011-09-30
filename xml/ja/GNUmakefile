@@ -32,17 +32,20 @@ ja:									\
 		$(HOWTO_JA_HTML)					\
 		$(FAQ_JA_HTML)						\
 
-$(OUT)/ja/docs/introduction.html:	xml/ja/docs/introduction.xml	\
-		$(ARTICLE_XSLT)						\
-		$(INTRO_JA_XML)
+$(OUT)/ja/docs/introduction.html:					\
+		xml/ja/docs/introduction.xml				\
+		$(INTRO_JA_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
-$(OUT)/ja/docs/howto.html:	xml/ja/docs/howto.xml			\
-		$(ARTICLE_XSLT)						\
-		$(HOWTO_JA_XML)
+$(OUT)/ja/docs/howto.html:						\
+		xml/ja/docs/howto.xml					\
+		$(HOWTO_JA_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
-$(OUT)/ja/docs/faq.html:	xml/ja/docs/faq.xml			\
-		$(ARTICLE_XSLT)						\
-		$(FAQ_JA_XML)
+$(OUT)/ja/docs/faq.html:						\
+		xml/ja/docs/faq.xml					\
+		$(FAQ_JA_XML)						\
+		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
