@@ -123,8 +123,8 @@ $(OUT)/index.html:							\
 
 $(OUT)/index.rss:							\
 		xml/index.xml						\
-		$(NEWS_DEPS)
-		xslt/rss.xslt						\
+		$(NEWS_DEPS)						\
+		xslt/rss.xslt
 	$(call XSLT, xslt/rss.xslt, $<, $@)
 
 
