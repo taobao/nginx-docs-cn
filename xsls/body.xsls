@@ -11,7 +11,7 @@ X:template body (lang) {
 
     <tr>
         <td width="70%"><center><h3>
-            !{@title} X:if "$YEAR" { X:text{: } !{$YEAR} }
+            !{@name | @title} X:if "$YEAR" { X:text{: } !{$YEAR} }
         </h3></center></td>
 
         <td rowspan="2" align="{$ALIGN}" valign="top">
@@ -29,8 +29,14 @@ X:template body (lang) {
     <tr><td valign="top">
 
         <table width="100%"><tr><td align="{$ALIGN}">
-        X:for-each "section[@name]" {
-            <a href="#{@name}"> !{@title} </a><br/>
+        X:if "section[@id]" {
+            X:for-each "section[@id]" {
+                <a href="#{@id}"> !{@name} </a><br/>
+            }
+        } else {
+            X:for-each "section[@name]" {
+                <a href="#{@name}"> !{@title} </a><br/>
+            }
         }
         </td></tr></table>
 
