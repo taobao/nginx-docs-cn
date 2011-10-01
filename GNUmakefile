@@ -6,6 +6,7 @@ NGINX_ORG =	/data/www/nginx.org
 
 CP =		/data/sites/java/xsls/\*:$(HOME)/java/xsls/\*
 RSYNC =		rsync -v -rc --exclude=.svn
+CHMOD =		/bin/chmod -R g+w
 
 
 define	XSLScript
@@ -187,6 +188,7 @@ gzip:	rsync_gzip
 	$(MAKE) do_gzip
 
 rsync_gzip:
+	$(CHMOD) $(OUT)/
 	$(RSYNC) $(OUT)/ $(ZIP)/
 	$(RSYNC) $(TEXT)/ $(ZIP)/
 
@@ -232,6 +234,7 @@ draft:	all
 	$(RSYNC) $(OUT)/ $(NGINX_ORG)/$(OUT)/
 
 copy:
+	$(CHMOD) $(ZIP)
 	$(RSYNC) $(ZIP)/ $(NGINX_ORG)/
 	$(RSYNC) binary/ $(NGINX_ORG)/
 
