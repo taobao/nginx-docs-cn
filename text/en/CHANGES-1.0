@@ -1,4 +1,10 @@
 
+Changes with nginx 1.0.8                                         01 Oct 2011
+
+    *) Bugfix: nginx could not be built --with-http_mp4_module and without
+       --with-debug option.
+
+
 Changes with nginx 1.0.7                                         30 Sep 2011
 
     *) Change: now if total size of all ranges is greater than source
