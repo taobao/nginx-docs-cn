@@ -11,13 +11,13 @@
 nginx [engine x] is a HTTP and reverse proxy server,
 as well as a mail proxy server
 written by <a href="http://sysoev.ru/en/">Igor Sysoev</a>.
-It has been running for more than five years
+It has been running since 2004
 on many heavily loaded Russian sites including
 <a href="http://www.rambler.ru">Rambler</a>
 (<a href="http://ramblermedia.com">RamblerMedia.com</a>).
 According to Netcraft nginx served or proxied
-<a href="http://news.netcraft.com/archives/2010/04/15/april_2010_web_server_survey.html">4.70%
-busiest sites in April 2010</a>.
+<a href="http://news.netcraft.com/archives/2011/09/06/september-2011-web-server-survey.html">7.29%
+busiest sites in September 2011</a>.
 Here are some of success stories:
 <a href="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</a>,
 <a href="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</a>.
