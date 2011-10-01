@@ -36,6 +36,7 @@
 <!--
 <item href="/en/donation.html"> donation </item>
 -->
+<item href="http://www.nginx.com/"> nginx.com </item>
 
 </menu>
 
@@ -62,6 +63,7 @@
 <item href="http://wiki.nginx.org" lang="אנגלית"> ויקי </item>
 <item href="/en/links.html" lang="אנגלית"> קישורים </item>
 <item href="/en/support.html" lang="אנגלית"> תמיכה </item>
+<item href="http://www.nginx.com/"> nginx.com </item>
 
 </menu>
 
@@ -88,6 +90,7 @@
 <item href="/en/links.html" lang="en"> リンク </item>
 <item href="/en/books.html" lang="en"> 本 </item>
 <item href="/en/support.html" lang="en"> サポート </item>
+<item href="http://www.nginx.com/"> nginx.com </item>
 
 </menu>
 
@@ -114,6 +117,7 @@
 <item href="/en/links.html" lang="en"> ссылки </item>
 <item href="/en/books.html" lang="en"> книги </item>
 <item href="/ru/support.html"> поддержка </item>
+<item href="http://www.nginx.com/"> nginx.com </item>
 
 </menu>
 
@@ -142,6 +146,7 @@
 <item href="/en/links.html" lang="ing"> bağlantılar </item>
 <item href="/en/books.html" lang="ing"> kitaplar </item>
 <item href="/en/support.html" lang="ing"> destek </item>
+<item href="http://www.nginx.com/"> nginx.com </item>
 
 </menu>
 
