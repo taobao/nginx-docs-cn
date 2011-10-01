@@ -26,6 +26,12 @@ server {
 }
 </programlisting>
 
+If you are going to use non-CBC ciphers only, you can put in the following directive:
+
+<programlisting>
+    ssl_ciphers          RC4-SHA;
+</programlisting>
+
 The server certificate is a public entity.
 It is sent to every client that connects to the server.
 The private key is a secure entity and should be stored in a file with
