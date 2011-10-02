@@ -15,7 +15,9 @@ X:template body (lang) {
         </h3></center></td>
 
         <td rowspan="2" align="{$ALIGN}" valign="top">
-            <a href="http://nginx.org/"><img src="/nginx.gif" alt="nginx"/></a><br/>
+            <a href="http://nginx.org">
+            <img src="/nginx.gif" alt="nginx" border="0"/>
+            </a><br/>
 
             <br/>
             <br/>
