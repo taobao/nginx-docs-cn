@@ -89,7 +89,7 @@ http {
         ssl_certificate      www.nginx.com.crt;
         ssl_certificate_key  www.nginx.com.key;
         ssl_protocols        SSLv3 TLSv1;
-        ssl_ciphers          HIGH:!ADH:!MD5;
+        ssl_ciphers          HIGH:!aNULL:!MD5;
         ...
 </programlisting>
 </para>
