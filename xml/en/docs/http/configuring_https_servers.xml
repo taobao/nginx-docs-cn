@@ -46,8 +46,8 @@ only the certificate is sent to a client.
 The directives <dirname>ssl_protocols</dirname> and
 <dirname>ssl_ciphers</dirname> may be used to limit connections
 to strong SSL protocol versions and ciphers.
-Since version 0.8.20, nginx uses <dirname>ssl_protocols SSLv3 TLSv1</dirname>
-and <dirname>ssl_ciphers HIGH:!ADH:!MD5</dirname> by default,
+Since version 1.0.5, nginx uses <dirname>ssl_protocols SSLv3 TLSv1</dirname>
+and <dirname>ssl_ciphers HIGH:!aNULL:!MD5</dirname> by default,
 so they should only be set for earlier nginx versions.
 </para>
 
@@ -448,6 +448,11 @@ SSLv3, and TLSv1.
 
 <para>
 <list>
+
+<item>
+Version 1.0.5 and later: the default SSL ciphers are
+<dirname>HIGH:!aNULL:!MD5</dirname>.
+</item>
 
 <item>
 Version 0.7.65, 0.8.20 and later: the default SSL ciphers are
