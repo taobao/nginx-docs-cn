@@ -13,7 +13,8 @@ stable version has been released.<br/>
 <para>
 <a href="/en/download.xml">nginx-1.0.7</a>
 stable version has been released.<br/>
-New <a href="/en/docs/http/ngx_http_mp4_module.xml"/> included.
+New <a href="/en/docs/http/ngx_http_mp4_module.xml">HTTP MP4 module</a>
+included.
 </para>
 </event>
 
@@ -37,7 +38,7 @@ Support of persistent connections with upstream servers.
 <para>
 <a href="/en/download.xml">nginx-1.1.3</a>
 development version has been released.<br/>
-New <a href="/en/docs/http/ngx_http_mp4_module.xml"/>.
+New <a href="/en/docs/http/ngx_http_mp4_module.xml">HTTP MP4 module</a>.
 </para>
 </event>
 

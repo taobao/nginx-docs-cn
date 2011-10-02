@@ -46,7 +46,7 @@ X:template = "event[position() &lt;= 10]" {
     }
 
     <item>
-        <title> !! "para[1]"; </title>
+        <title> !! "para[1]//text()"; </title>
         <guid> !{$SITE} X:text {/} !{$page} X:text {#} !{@date} </guid>
         <link> !{$SITE} X:text {/} !{$page} X:text {#} !{@date} </link>
         <pubdate>
