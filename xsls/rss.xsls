@@ -46,7 +46,7 @@ X:template = "event[position() &lt;= 10]" {
     }
 
     <item>
-        <title>!{@date}</title>
+        <title> !! "para[1]"; </title>
         <guid> !{$SITE} X:text {/} !{$page} X:text {#} !{@date} </guid>
         <link> !{$SITE} X:text {/} !{$page} X:text {#} !{@date} </link>
         <pubdate>
@@ -59,6 +59,7 @@ X:template = "event[position() &lt;= 10]" {
 
         <description>
             X:text disable-output-escaping="yes" {&lt;![CDATA[}
+            !{@date}
             !! "para";
             X:text disable-output-escaping="yes" {]]&gt;}
          </description>
