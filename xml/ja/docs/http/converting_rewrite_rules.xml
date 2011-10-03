@@ -1,4 +1,4 @@
-<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article title="rewrite ルールのコンバート"
          link="/ja/docs/http/converting_rewrite_rules.html"

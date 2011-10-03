@@ -1,4 +1,4 @@
-<!DOCTYPE digest SYSTEM "../../../dtd/article.dtd">
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
 <article title="שימוש ב nginx במערכת ההפעלה חלונות"
          link="/he/docs/windows.html"

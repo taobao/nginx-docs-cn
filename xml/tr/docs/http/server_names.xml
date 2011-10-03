@@ -1,4 +1,4 @@
-<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article title="Sunucu adları"
          link="/tr/docs/http/server_names.html"

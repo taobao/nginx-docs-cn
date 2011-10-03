@@ -1,4 +1,4 @@
-<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article title="המרת כללי rewrite"
          link="/he/docs/http/converting_rewrite_rules.html"

@@ -1,4 +1,4 @@
-<!DOCTYPE digest SYSTEM "../../../../dtd/article.dtd">
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article title="How nginx processes a request"
          link="/en/docs/http/request_processing.html"
