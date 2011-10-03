@@ -223,9 +223,6 @@ else
 endif
 		touch -r $< $<.gz
 
-dirs:
-	test -d $(OUT)/en/docs/http || mkdir -p $(OUT)/en/docs/http
-
 draft:	all
 	$(RSYNC) $(OUT)/ $(NGINX_ORG)/$(OUT)/
 
