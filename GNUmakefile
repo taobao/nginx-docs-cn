@@ -129,16 +129,11 @@ $(OUT)/index.rss:							\
 	$(call XSLT, xslt/rss.xslt, $<, $@)
 
 
-$(OUT)/2010.html:							\
-		xml/index.xml						\
-		$(NEWS_DEPS)
-	$(call XSLT, xslt/news.xslt, $<, $@, YEAR=2010)
-
-
+$(OUT)/2010.html							\
 $(OUT)/2009.html:							\
 		xml/index.xml						\
 		$(NEWS_DEPS)
-	$(call XSLT, xslt/news.xslt, $<, $@, YEAR=2009)
+	$(call XSLT, xslt/news.xslt, $<, $@, YEAR=$(basename $(notdir $@)))
 
 $(OUT)/404.html:							\
 		xml/404.xml						\
