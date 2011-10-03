@@ -51,8 +51,9 @@ Otherwise, it has to read the file and prepare a new stream so that
 metadata comes before media data.
 This involves some CPU, memory, and disk I/O overhead,
 so it is a good idea to
-<a href="http://flowplayer.org/plugins/streaming/pseudostreaming.html#prepare">
-prepare an original file for pseudo-streaming</a>,
+<link
+url="http://flowplayer.org/plugins/streaming/pseudostreaming.html#prepare">
+prepare an original file for pseudo-streaming</link>,
 rather than having nginx do this on every such request.
 </para>
 
@@ -84,7 +85,7 @@ If you were using the third-party mp4 module, be sure to disable it.
 <!--
 <para>
 A similar pseudo-streaming support for FLV files is provided by the module
-<a href="/en/docs/http/ngx_http_flv_module.xml">ngx_http_flv_module</a>.
+<link doc="ngx_http_flv_module.xml">ngx_http_flv_module</link>.
 </para>
 -->
 
@@ -144,8 +145,8 @@ Sets the initial size of a memory buffer used to process MP4 files.
 <para>
 During metadata processing, a larger buffer may become necessary.
 Its size cannot exceed the specified <argument>size</argument>,
-or else nginx will return
-<http-error code="500" text="Internal Server Error"/>,
+or else nginx will return the server error
+<http-status code="500" text="Internal Server Error"/>,
 and log the following:
 <example>
 "/some/movie/file.mp4" mp4 moov atom is too large:

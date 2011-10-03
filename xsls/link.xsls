@@ -64,4 +64,6 @@ X:template = "a" { <a href="{@href}"> !!; </a> }
 
 X:template = "img" { <img src="{@href}"> !!; </img> }
 
+X:template = "link[@url]" { <a href="{@url}"> !!; </a> }
+
 }
