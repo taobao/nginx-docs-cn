@@ -19,6 +19,9 @@ define	XSLScript
 	if [ ! -s $(2) ]; then rm $(2); fi; test -s $(2)
 endef
 
+define	XMLLINT
+	xmllint --noout --valid $1
+endef
 
 define	XSLT
 	xsltproc -o $3							\
@@ -144,6 +147,11 @@ $(OUT)/404.html:							\
 	$(call XSLT, xslt/error.xslt, $<, $@)
 
 .SECONDARY:
+
+$(OUT)/%_module.html:	xml/%_module.xml				\
+		$(ARTICLE_DEPS)
+	$(call XMLLINT, $<)
+	$(call XSLT, xslt/article.xslt, $<, $@)
 
 $(OUT)/%.html:	xml/%.xml						\
 		$(ARTICLE_DEPS)
