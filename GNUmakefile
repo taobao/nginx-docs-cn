@@ -152,6 +152,7 @@ $(OUT)/%.html:	xml/%.xml						\
 
 xslt/%.xslt:	xsls/%.xsls						\
 		xsls/dump.xsls
+	mkdir -p $(dir $@)
 	$(call XSLScript, $<, $@)
 
 images:									\
