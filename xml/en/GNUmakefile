@@ -21,7 +21,8 @@ HOWTO_EN =	en/docs/debugging_log					\
 REFS_EN_XML =	$(foreach name, $(REFS_EN), xml/$(name).xml)
 REFS_EN_HTML =	$(foreach name, $(REFS_EN), $(OUT)/$(name).html)
 
-REFS_EN =	en/docs/http/ngx_http_mp4_module			\
+REFS_EN =	en/docs/http/ngx_http_core_module			\
+		en/docs/http/ngx_http_mp4_module			\
 
 HOWTO_EN_XML =	$(foreach name, $(HOWTO_EN), xml/$(name).xml)
 HOWTO_EN_HTML =	$(foreach name, $(HOWTO_EN), $(OUT)/$(name).html)

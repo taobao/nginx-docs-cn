@@ -56,6 +56,15 @@ X:stylesheet {
 	X:text disable-output-escaping="yes" {&lt;p class="noindent"&gt; }
     }
 
+    X:template = "list[@type='bullet']" { <ul> !!; </ul> }
+    X:template = "list[@type='enum']" { <ol> !!; </ol> }
+    X:template = "listitem" { <li> !!; </li> }
+    
+    X:template = "list[@type='tag']" { <dl compact=""> !!; </dl> }
+    X:template = "tag-name" { <dt> !!; </dt> }
+    X:template = "tag-desc" { <dd> !!; </dd> }
+
+    <!-- legacy list templates -->
 
     X:template = "list" { <ul> !!; </ul> }
     X:template = "item" { <li> !!; </li> }
@@ -63,6 +72,8 @@ X:stylesheet {
 
     X:template = "orderedlist" { <ol> !!; </ol> }
     X:template = "item" { <li> !!; </li> }
+
+    <!-- -->
 
     X:template = "table[@note and @width]" {
 	<blockquote><table width="{@width}"> !!; </table></blockquote>
@@ -78,7 +89,19 @@ X:stylesheet {
     X:template = "td[@width]" { <td width="{@width}"> !!; </td> }
     X:template = "td" { <td> !!; </td> }
 
+    X:template = "c-def" { <code> !!; </code> }
+
+    X:template = "c-func" { <code> !!; X:text{()} </code> }
+
     X:template = "command" { <code> !!; </code> }
+
+    X:template = "dq" {
+        X:text disable-output-escaping="yes" {&amp;ldquo;}
+        !!;
+        X:text disable-output-escaping="yes" {&amp;rdquo;}
+    }
+
+    X:template = "emphasis" { <strong> !!; </strong> }
 
     X:template = "example" { <blockquote><pre> !!; </pre></blockquote> }
 
@@ -110,6 +133,10 @@ X:stylesheet {
     }
 
     X:template = "url" { <i> !!;</i> }
+
+    X:template = "value" { <code> !!; </code> }
+
+    X:template = "var" { <code> !!; </code> }
 
     X:template = "path" { X:text {&#8220;} <code> !!; </code> X:text {&#8221;} }
     X:template = "code" { <code> !!; </code> }
