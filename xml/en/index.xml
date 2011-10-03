@@ -13,8 +13,10 @@ as well as a mail proxy server
 written by <a href="http://sysoev.ru/en/">Igor Sysoev</a>.
 It has been running since 2004
 on many heavily loaded Russian sites including
-<a href="http://www.rambler.ru">Rambler</a>
-(<a href="http://ramblermedia.com">RamblerMedia.com</a>).
+<a href="http://www.yandex.ru">Yandex</a>,
+<a href="http://www.mail.ru">Mail.Ru</a>,
+<a href="http://www.vkontakte.ru">VKontakte</a>, and
+<a href="http://www.rambler.ru">Rambler</a>.
 According to Netcraft nginx served or proxied
 <a href="http://news.netcraft.com/archives/2011/09/06/september-2011-web-server-survey.html">7.29%
 busiest sites in September 2011</a>.
@@ -244,7 +246,7 @@ Data copy operations are kept to a minimum.
 <list>
 
 <item>
-FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 8 / amd64;
+FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 9 / amd64;
 </item>
 
 <item>
