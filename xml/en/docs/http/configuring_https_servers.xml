@@ -44,12 +44,24 @@ only the certificate is sent to a client.
 
 <para>
 The directives <dirname>ssl_protocols</dirname> and
-<dirname>ssl_ciphers</dirname> may be used to limit connections
-to strong SSL protocol versions and ciphers.
+<dirname>ssl_ciphers</dirname> can be used to limit connections
+to include only the strong versions and ciphers of SSL/TLS.
 Since version 1.0.5, nginx uses <dirname>ssl_protocols SSLv3 TLSv1</dirname>
 and <dirname>ssl_ciphers HIGH:!aNULL:!MD5</dirname> by default,
-so they should only be set for earlier nginx versions.
+so configuring them explicitly only makes sense for the earlier nginx versions.
 </para>
+
+<para>
+CBC-mode ciphers might be vulnerable to a number of attacks and to
+the BEAST attack in particular (see 
+<a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3389">CVE-2011-3389</a>).
+Configuration of ciphers can be adjusted to prefer RC4-SHA as the following:
+</para>
+
+<programlisting>
+    ssl_ciphers RC4:HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+</programlisting>
 
 </section>
 
