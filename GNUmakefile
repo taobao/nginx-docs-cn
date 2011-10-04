@@ -106,18 +106,16 @@ BOOK_DEPS =								\
 		xslt/menu.xslt						\
 		xslt/content.xslt
 
-all:		news arx 404 en ja he ru tr
+LANGS =		en ja he ru tr
+
+all:		news arx 404 $(LANGS)
 
 news:		$(OUT)/index.html $(OUT)/index.rss
 arx:		$(OUT)/2010.html $(OUT)/2009.html
 404:		$(OUT)/404.html
 
 
-include 	xml/en/GNUmakefile
-include 	xml/ja/GNUmakefile
-include 	xml/he/GNUmakefile
-include 	xml/ru/GNUmakefile
-include 	xml/tr/GNUmakefile
+include 	$(foreach lang, $(LANGS), xml/$(lang)/GNUmakefile)
 
 
 $(OUT)/index.html:							\
@@ -197,20 +195,10 @@ rsync_gzip:
 	$(RSYNC) $(TEXT)/ $(ZIP)/
 
 do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
-		$(addsuffix .gz, $(wildcard $(ZIP)/en/*.html))		\
-		$(addsuffix .gz, $(wildcard $(ZIP)/en/docs/*.html))	\
-		$(addsuffix .gz, $(wildcard $(ZIP)/en/docs/http/*.html))\
-		$(addsuffix .gz, $(wildcard $(ZIP)/ja/*.html))		\
-		$(addsuffix .gz, $(wildcard $(ZIP)/ja/docs/*.html))	\
-		$(addsuffix .gz, $(wildcard $(ZIP)/ja/docs/http/*.html))\
-		$(addsuffix .gz, $(wildcard $(ZIP)/he/*.html))		\
-		$(addsuffix .gz, $(wildcard $(ZIP)/he/docs/*.html))	\
-		$(addsuffix .gz, $(wildcard $(ZIP)/he/docs/http/*.html))\
-		$(addsuffix .gz, $(wildcard $(ZIP)/ru/*.html))		\
-		$(addsuffix .gz, $(wildcard $(ZIP)/ru/docs/*.html))	\
-		$(addsuffix .gz, $(wildcard $(ZIP)/tr/*.html))		\
-		$(addsuffix .gz, $(wildcard $(ZIP)/tr/docs/*.html))	\
-		$(addsuffix .gz, $(wildcard $(ZIP)/tr/docs/http/*.html))\
+		$(addsuffix .gz,					\
+			$(foreach lang, $(LANGS),			\
+			$(foreach dir, . docs docs/http,		\
+			$(wildcard $(ZIP)/$(lang)/$(dir)/*.html))))	\
 		$(ZIP)/index.rss.gz					\
 		$(ZIP)/LICENSE.gz					\
 		$(ZIP)/en/CHANGES.gz					\
@@ -218,7 +206,7 @@ do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
 		$(ZIP)/ru/CHANGES.ru.gz					\
 		$(addsuffix .gz, $(wildcard $(ZIP)/ru/CHANGES.ru-?.?))	\
 
-	find $(ZIP)/ -type d -name .svn -prune				\
+	find $(ZIP) -type d -name .svn -prune				\
 		-o -type f -not -name '*.gz' -exec test \! -e {}.gz \; -print
 
 
