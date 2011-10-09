@@ -46,6 +46,12 @@
 <a href="/en/docs/ngx_core_module.xml" />
 </item>
 
+</list>
+</para>
+
+<para>
+<list>
+
 <item>
 <a href="/en/docs/http/ngx_http_core_module.xml" />
 </item>
