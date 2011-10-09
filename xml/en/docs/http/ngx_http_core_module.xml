@@ -151,7 +151,8 @@ with the file
 </para>
 
 <para>
-The <argument>path</argument> value can contain variables.
+The <argument>path</argument> value can contain variables
+except <var>$document_root</var> and <var>$realpath_root</var>.
 </para>
 
 <para>
@@ -251,8 +252,8 @@ variable, to save the number of copy operations involved.
 <para>
 Sets buffer size for reading client request body.
 In case request body is larger than the buffer,
-the whole body or only its part is written to a temporary file.
-<!-- ссылку на соотв. директивы про временные файлы? -->
+the whole body or only its part is written to a
+<link id="client_body_temp_path">temporary file</link>.
 By default, buffer size is equal to two memory pages.
 This is 8K on x86, other 32-bit platforms, and x86-64.
 It is usually 16K on other 64-bit platforms.
@@ -292,7 +293,7 @@ a temporary file might look like this:
 
 <directive name="client_body_timeout">
 <syntax>client_body_timeout <argument>time</argument></syntax>
-<default>client_body_timeout 60</default>
+<default>client_body_timeout 60s</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -332,7 +333,7 @@ directive.
 
 <directive name="client_header_timeout">
 <syntax>client_header_timeout <argument>time</argument></syntax>
-<default>client_header_timeout 60</default>
+<default>client_header_timeout 60s</default>
 <context>http</context>
 <context>server</context>
 
@@ -365,6 +366,8 @@ is returned.
 Please be aware that
 <link doc="/web/upload.xml">browsers cannot correctly display
 this error</link>.
+Setting <argument>size</argument> to 0 disables client
+request body size checking.
 </para>
 
 </directive>
@@ -379,6 +382,7 @@ this error</link>.
 
 <para>
 Defines a default MIME-type of a response.
+See also the <link id="types">types</link> directive.
 </para>
 
 </directive>
@@ -593,6 +597,7 @@ location /404.html {
 <para>
 Sets the maximum number of requests that can be
 made through one keep-alive connection.
+After this many requests are made, the connection is closed.
 </para>
 
 </directive>
@@ -600,10 +605,10 @@ made through one keep-alive connection.
 
 <directive name="keepalive_timeout">
 <syntax>keepalive_timeout
-        <argument>time</argument>
-        [<argument>time</argument>]
+        <argument>timeout</argument>
+        [<argument>header_timeout</argument>]
 </syntax>
-<default>keepalive_timeout 75</default>
+<default>keepalive_timeout 75s</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -629,7 +634,7 @@ MSIE will close keep-alive connection in about 60 seconds.
 
 <directive name="large_client_header_buffers">
 <syntax>large_client_header_buffers <argument>number size</argument></syntax>
-<default>large_client_header_buffers 4 4k/8k</default>
+<default>large_client_header_buffers 4 8k</default>
 <context>http</context>
 <context>server</context>
 
@@ -644,8 +649,7 @@ client error
 <http-status code="400" text="Bad Request"/>
 is returned.
 Buffers are allocated only on demand.
-By default, the buffer size is equal to one memory page size.
-It is either 4K or 8K, platform dependent.
+By default, the buffer size is equal to 8K bytes.
 If after the end of request processing a connection is transitioned
 into the keep-alive state, these buffers are freed.
 </para>
@@ -660,7 +664,24 @@ into the keep-alive state, these buffers are freed.
 
 <para>
 Limits allowed HTTP methods inside a location.
-The GET method also implies the HEAD method.
+The <argument>method</argument> argument can be one of the following:
+<value>GET</value>,
+<value>HEAD</value>,
+<value>POST</value>,
+<value>PUT</value>,
+<value>DELETE</value>,
+<value>MKCOL</value>,
+<value>COPY</value>,
+<value>MOVE</value>,
+<value>OPTIONS</value>,
+<value>PROPFIND</value>,
+<value>PROPPATCH</value>,
+<value>LOCK</value>,
+<value>UNLOCK</value>,
+or
+<value>PATCH</value>.
+Allowing the <value>GET</value> method also allows the
+<value>HEAD</value> method.
 Access to other methods can be limited using the
 <link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
 and
@@ -681,7 +702,7 @@ Please note that this will limit access to all methods
 
 <directive name="limit_rate">
 <syntax>limit_rate <argument>rate</argument></syntax>
-<default/>
+<default>limit_rate 0</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -690,11 +711,12 @@ Please note that this will limit access to all methods
 <para>
 Rate limits the transmission of a response to a client.
 The <argument>rate</argument> is specified in bytes per second.
+Value 0 (the default) disables rate limiting.
 <!--
 The smaller the rate, the more accurate will be the limitation.
 -->
 The limit is per connection, so if a single client opens 2 connections,
-an overall rate will be 2x more than specified.
+an overall rate will be 2x more than specified by this directive.
 </para>
 
 <para>
@@ -722,7 +744,7 @@ server {
 
 <directive name="limit_rate_after" appeared-in="0.8.0">
 <syntax>limit_rate_after <argument>size</argument></syntax>
-<default/>
+<default>limit_rate_after 0</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -935,10 +957,10 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
         <value>=</value> |
 	<value>~</value> |
 	<value>~*</value> |
-	<value>^~</value> |
-	<value>@</value>
+	<value>^~</value>
 	] <argument>uri</argument>
 { ... }</syntax>
+<syntax>location <value>@</value><argument>name</argument> { ... }</syntax>
 <default/>
 <context>server</context>
 <!--
@@ -1291,7 +1313,6 @@ When
 is enabled, open file descriptors
 are checked only once, and then updated right after they get changed.
 -->
-
 </para>
 
 </directive>
@@ -1299,7 +1320,7 @@ are checked only once, and then updated right after they get changed.
 
 <directive name="optimize_server_names">
 <syntax>optimize_server_names <value>on</value> | <value>off</value></syntax>
-<default>optimize_server_names on</default>
+<default>optimize_server_names off</default>
 <context>http</context>
 <context>server</context>
 
@@ -1697,7 +1718,7 @@ regular expressions
 
 <directive name="server_name_in_redirect">
 <syntax>server_name_in_redirect <value>on</value> | <value>off</value></syntax>
-<default>server_name_in_redirect on</default>
+<default>server_name_in_redirect off</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
