@@ -772,7 +772,8 @@ location /flv/ {
 <directive name="listen">
 <syntax>listen
         <argument>address</argument>[:<argument>port</argument>]
-        [<parameter>default</parameter> | <parameter>default_server</parameter>
+        [<parameter>default_server</parameter>]
+        [<parameter>setfib</parameter>=<argument>number</argument>]
         [<parameter>backlog</parameter>=<argument>number</argument>]
         [<parameter>rcvbuf</parameter>=<argument>size</argument>]
         [<parameter>sndbuf</parameter>=<argument>size</argument>]
@@ -780,11 +781,12 @@ location /flv/ {
         [<parameter>deferred</parameter>]
         [<parameter>bind</parameter>]
         [<parameter>ipv6only</parameter>=<value>on</value>|<value>off</value>]
-        [<parameter>ssl</parameter>]]
+        [<parameter>ssl</parameter>]
 </syntax>
 <syntax>listen
         <argument>port</argument>
-        [<parameter>default</parameter> | <parameter>default_server</parameter>
+        [<parameter>default_server</parameter>]
+        [<parameter>setfib</parameter>=<argument>number</argument>]
         [<parameter>backlog</parameter>=<argument>number</argument>]
         [<parameter>rcvbuf</parameter>=<argument>size</argument>]
         [<parameter>sndbuf</parameter>=<argument>size</argument>]
@@ -792,15 +794,27 @@ location /flv/ {
         [<parameter>deferred</parameter>]
         [<parameter>bind</parameter>]
         [<parameter>ipv6only</parameter>=<value>on</value>|<value>off</value>]
-        [<parameter>ssl</parameter>]]
+        [<parameter>ssl</parameter>]
+</syntax>
+<syntax>listen
+        <value>unix:</value><argument>path</argument>
+        [<parameter>default_server</parameter>]
+        [<parameter>backlog</parameter>=<argument>number</argument>]
+        [<parameter>rcvbuf</parameter>=<argument>size</argument>]
+        [<parameter>sndbuf</parameter>=<argument>size</argument>]
+        [<parameter>accept_filter</parameter>=<argument>filter</argument>]
+        [<parameter>deferred</parameter>]
+        [<parameter>bind</parameter>]
+        [<parameter>ssl</parameter>]
 </syntax>
 <default>listen *:80 | *:8000</default>
 <context>server</context>
 
 <para>
-Sets an <argument>address</argument> and a <argument>port</argument>, on which
+Sets an <argument>address</argument> and a <argument>port</argument> for IP,
+or a <argument>path</argument> for a UNIX-domain socket, on which
 the server will accept requests.
-Only one of <argument>address</argument> or <argument>port</argument> can be
+Only one of <argument>address</argument> or <argument>port</argument> may be
 specified.
 An <argument>address</argument> may also be a hostname, for example:
 <example>
@@ -815,6 +829,10 @@ IPv6 addresses (0.7.36) are specified in square brackets:
 listen [::]:8000;
 listen [fe80::1];
 </example>
+UNIX-domain sockets (0.8.21) are specified with the “<code>unix:</code>” prefix:
+<example>
+listen unix:/var/run/nginx.sock;
+</example>
 </para>
 
 <para>
@@ -827,26 +845,41 @@ if nginx runs with superuser privileges, or <code>*:8000</code> otherwise.
 </para>
 
 <para>
-The <parameter>default</parameter> parameter, if present,
+The <parameter>default_server</parameter> parameter, if present,
 will cause the server to become the default server for the specified
 <argument>address</argument>:<argument>port</argument> pair.
-If none of the directives have the <parameter>default</parameter>
+If none of the directives have the <parameter>default_server</parameter>
 parameter then the first server with the
 <argument>address</argument>:<argument>port</argument> pair will be
 the default server for this pair.
-Starting from version 0.8.21 it is possible to use the
-<parameter>default_server</parameter>
-parameter.
+<note>
+In versions prior to 0.8.21 this parameter is named simply
+<parameter>default</parameter>.
+</note>
 </para>
 
 <para>
-A <code>listen</code> directive which has the <parameter>default</parameter>
-parameter can have several additional parameters specific to system calls
+A <code>listen</code> directive
+can have several additional parameters specific to system calls
 <c-func>listen</c-func> and <c-func>bind</c-func>.
-Starting from version 0.8.21, these parameters can be specified in any
+They can be specified in any
 <code>listen</code> directive, but only once for the given
 <argument>address</argument>:<argument>port</argument> pair.
+<note>
+In versions prior to 0.8.21, they could only be
+specified in the <code>listen</code> directive with the
+<parameter>default</parameter> parameter.
+</note>
 <list type="tag">
+
+<tag-name>
+<parameter>setfib</parameter>=<argument>number</argument>
+</tag-name>
+<tag-desc>
+this parameter (0.8.44) sets the associated FIB (routing table)
+for the listening socket.
+This currently works only on FreeBSD.
+</tag-desc>
 
 <tag-name>
 <parameter>backlog</parameter>=<argument>number</argument>
