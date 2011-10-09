@@ -996,9 +996,7 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
 <syntax>location <value>@</value><argument>name</argument> { ... }</syntax>
 <default/>
 <context>server</context>
-<!--
 <context>location</context>
--->
 
 <para>
 Sets a configuration based on a request URI.
@@ -1015,6 +1013,10 @@ A search terminates on the first match, and its corresponding
 configuration is used.
 If no match with a regular expression location is found then a
 configuration of the most specific prefix location is used.
+</para>
+
+<para>
+Locations can be nested, with some exceptions mentioned below.
 </para>
 
 <para>
@@ -1041,13 +1043,16 @@ For example, if a <dq><code>/</code></dq> request happens frequently,
 defining <dq><code>location = /</code></dq> will speed up the processing
 of these requests, as search terminates right after the first
 comparison.
+Such a location cannot obviously contain nested locations.
 </para>
 
 <para>
+<note>
 In versions from 0.7.1 to 0.8.41, if a request matched the prefix
 location without the <dq><value>=</value></dq> and <dq><value>^~</value></dq>
 prefixes, the search also terminated and regular expressions were
 not checked.
+</note>
 </para>
 
 <para>
@@ -1080,6 +1085,7 @@ the <dq><code>/documents/1.jpg</code></dq> request will match configuration D.
 The <dq><value>@</value></dq> prefix defines a named location.
 Such a location is not used for a regular request processing, but instead
 used for request redirection.
+They cannot be nested, and cannot contain nested locations.
 </para>
 
 <!--
