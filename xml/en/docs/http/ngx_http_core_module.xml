@@ -1643,7 +1643,7 @@ Setting Up Virtual Servers</link> document.
 
 <directive name="server_name">
 <syntax>server_name <argument>name</argument> ...</syntax>
-<default>server_name hostname</default>
+<default>server_name ""</default>
 <context>server</context>
 
 <para>
@@ -1656,8 +1656,7 @@ server {
 </para>
 
 <para>
-The first name becomes a primary server name.
-By default, the machine's hostname is used.
+The first name becomes the primary server name.
 Server names can include an asterisk (<dq><code>*</code></dq>)
 to replace the first or last part of a name:
 <example>
@@ -1674,6 +1673,11 @@ server {
     server_name .example.com;
 }
 </example>
+</para>
+
+<para>
+If the argument equals “<var>$hostname</var>” (0.9.4), the
+machine's hostname is substituted.
 </para>
 
 <para>
@@ -1709,8 +1713,8 @@ server {
 </para>
 
 <para>
-Starting from version 0.8.25, named captures in regular expressions create
-variables that can later be used in other directives:
+Named captures in regular expressions create variables (0.8.25)
+that can later be used in other directives:
 <example>
 server {
     server_name ~^(www\.)?(?&lt;domain&gt;.+)$;
@@ -1731,7 +1735,7 @@ server {
 </para>
 
 <para>
-Starting from version 0.7.11, it is possible to specify an empty name:
+It is also possible to specify an empty server name (0.7.11):
 <example>
 server {
     server_name www.example.com "";
@@ -1739,6 +1743,10 @@ server {
 </example>
 It allows this server to process requests without the <header>Host</header>
 header, instead of the default server for the given address:port pair.
+This is the default setting.
+<note>
+Before 0.8.48, the machine's hostname was used by default.
+</note>
 </para>
 
 <para>
