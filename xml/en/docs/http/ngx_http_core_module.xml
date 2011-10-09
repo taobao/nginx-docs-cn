@@ -1528,7 +1528,8 @@ with the file
 </para>
 
 <para>
-The <argument>path</argument> value can contain variables.
+The <argument>path</argument> value can contain variables
+except <var>$document_root</var> and <var>$realpath_root</var>.
 </para>
 
 <para>
@@ -1544,10 +1545,12 @@ If a URI need to be modified, the
 <directive name="satisfy">
 <syntax>satisfy <value>all</value> | <value>any</value></syntax>
 <default>satisfy all</default>
+<context>http</context>
+<context>server</context>
 <context>location</context>
 
 <para>
-Allows access if any of the
+Allows access if <value>all</value> or <value>any</value> of the
 <link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
 or <link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>
 modules grant access.
@@ -1570,10 +1573,13 @@ location / {
 <directive name="satisfy_any">
 <syntax>satisfy_any <value>on</value> | <value>off</value></syntax>
 <default>satisfy_any off</default>
+<context>http</context>
+<context>server</context>
 <context>location</context>
 
 <para>
-This directive was renamed to the <link id="satisfy">satisfy</link> directive.
+This directive was renamed to the <link id="satisfy">satisfy any</link>
+directive.
 </para>
 
 </directive>
@@ -1604,6 +1610,7 @@ a connection is closed.
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<context>if in location</context>
 
 <para>
 Enables or disables the use of
