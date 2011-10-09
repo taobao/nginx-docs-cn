@@ -1151,7 +1151,7 @@ so it gets converted to <dq><code>/scripts/one.php</code></dq>.
 
 <para>
 Turning the compression <value>off</value> can become necessary if a URI
-contains base64-encoded names, since base64 uses the "/" character internally.
+contains base64-encoded names, since base64 uses the “/” character internally.
 However, for security considerations, it is better to avoid turning off
 the compression.
 </para>
@@ -1196,10 +1196,10 @@ Enables or disables issuing refreshes instead of redirects, for MSIE clients.
 
 
 <directive name="open_file_cache">
+<syntax>open_file_cache <value>off</value></syntax>
 <syntax>open_file_cache
 <parameter>max</parameter>=<argument>N</argument>
-[<parameter>inactive</parameter>=<argument>time</argument>] |
-<value>off</value>
+[<parameter>inactive</parameter>=<argument>time</argument>]
 </syntax>
 <default>open_file_cache off</default>
 <context>http</context>
@@ -1219,7 +1219,7 @@ directory lookups;
 </listitem>
 
 <listitem>
-file lookup errors, such as "file not found", "no read permission",
+file lookup errors, such as “file not found”, “no read permission”,
 and so on.
 Caching of errors should be enabled separately by the
 <link id="open_file_cache_errors">open_file_cache_errors</link>
@@ -1245,7 +1245,7 @@ on cache overflow the least recently used (LRU) elements get removed;
 <parameter>inactive</parameter>
 </tag-name>
 <tag-desc>
-defines a time, after which the element gets removed from the cache
+defines a time, after which an element gets removed from the cache
 if there were no accesses to it during this time;
 by default, it is 60 seconds;
 </tag-desc>
@@ -1284,7 +1284,7 @@ open_file_cache_events   on;
 <context>location</context>
 
 <para>
-Enables or disables caching of file lookup errors by the
+Enables or disables caching of file lookup errors by
 <link id="open_file_cache">open_file_cache</link>.
 </para>
 
@@ -1337,7 +1337,7 @@ after which a file descriptor will remain open in the cache.
 
 <directive name="open_file_cache_valid">
 <syntax>open_file_cache_valid <argument>time</argument></syntax>
-<default>open_file_cache_valid 60</default>
+<default>open_file_cache_valid 60s</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -1364,9 +1364,11 @@ are checked only once, and then updated right after they get changed.
 <context>server</context>
 
 <para>
-This directive is obsolete.
+This directive is made obsolete by the
+<link id="server_name_in_redirect">server_name_in_redirect</link> directive.
 </para>
 
+<!--
 <para>
 Enables or disables optimization of hostname checking in name-based
 virtual servers.
@@ -1378,6 +1380,7 @@ server name is used in redirects.
 In case redirects should use hostnames sent by clients,
 optimization needs to be disabled.
 </para>
+-->
 
 </directive>
 
@@ -1479,6 +1482,8 @@ Sets the <argument>address</argument> of a name server, for example:
 <example>
 resolver 127.0.0.1;
 </example>
+An <argument>address</argument> may also be a hostname, in which case
+the first resolved address is used.
 </para>
 
 </directive>
@@ -1576,7 +1581,7 @@ This directive was renamed to the <link id="satisfy">satisfy</link> directive.
 
 <directive name="send_timeout">
 <syntax>send_timeout <argument>time</argument></syntax>
-<default>send_timeout 60</default>
+<default>send_timeout 60s</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
