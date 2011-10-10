@@ -6,8 +6,6 @@ X:template style (lang) {
         html             {-webkit-text-size-adjust: none}
         body             { font-family:  Georgia, serif; }
         p                { text-align:   justify; }
-        p                { text-indent:  20pt; }
-        p.noindent       { text-indent:  0pt; }
         div.directive    { background:   #EEEEEE;
                            padding:      10pt 10pt 10pt 20pt; }
         span.initial     { font-size:    200%;

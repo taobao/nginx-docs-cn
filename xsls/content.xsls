@@ -30,11 +30,7 @@ X:stylesheet {
 
     X:template = "para" { <p> !!; </p> }
 
-    X:template = "item/para" { <p class="noindent"> !!; </p> }
-
     X:template = "para[@align]" { <p align="{@align}"> !!; </p> }
-
-    X:template = "para[child::initial]" { <p class="noindent"> !!; </p> }
 
     X:template = "initial" { <span class="initial"><b> !!; </b></span> }
 
@@ -44,7 +40,7 @@ X:stylesheet {
     X:template = "para/programlisting" {
 	X:text disable-output-escaping="yes" {&lt;/p&gt; }
 	<blockquote><pre> !!; </pre></blockquote>
-	X:text disable-output-escaping="yes" {&lt;p class="noindent"&gt; }
+	X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
 
@@ -53,7 +49,7 @@ X:stylesheet {
     X:template = "para/note" {
 	X:text disable-output-escaping="yes" {&lt;/p&gt; }
 	<blockquote class="note"> !!; </blockquote>
-	X:text disable-output-escaping="yes" {&lt;p class="noindent"&gt; }
+	X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
     X:template = "list[@type='bullet']" { <ul> !!; </ul> }

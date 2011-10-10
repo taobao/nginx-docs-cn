@@ -42,7 +42,7 @@ X:template = "security" { <ul> !!; </ul> }
 X:template = "security/item" {
 
     <li>
-    <p class="noindent">
+    <p>
 
     !{@title}<br/>
 

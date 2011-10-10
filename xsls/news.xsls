@@ -64,7 +64,4 @@ X:template = "event" {
 }
 
 
-X:template = "event/para" { <p class="noindent"> !!; </p> }
-
-
 }
