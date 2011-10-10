@@ -244,7 +244,7 @@ variable, to save the number of copy operations involved.
 <directive name="client_body_buffer_size">
 
 <syntax>client_body_buffer_size <argument>size</argument></syntax>
-<default>client_body_buffer_size 8k/16k</default>
+<default>client_body_buffer_size 8k|16k</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -1810,7 +1810,7 @@ For more information, please refer to
 
 <directive name="server_names_hash_bucket_size">
 <syntax>server_names_hash_bucket_size <argument>size</argument></syntax>
-<default>server_names_hash_bucket_size 32/64/128</default>
+<default>server_names_hash_bucket_size 32|64|128</default>
 <context>http</context>
 
 <para>
@@ -1865,7 +1865,7 @@ keep-alive state.
 Enables or disables the use of
 the <c-def>TCP_NOPUSH</c-def> socket option on FreeBSD
 or the <c-def>TCP_CORK</c-def> socket option on Linux.
-Opitons are enables only when <link id="sendfile">sendfile</link> is used.
+Opitons are enabled only when <link id="sendfile">sendfile</link> is used.
 Enabling the option allows to
 <list type="bullet">
 
@@ -1894,14 +1894,15 @@ send a file in full packets.
         =<argument>code</argument>
 </syntax>
 <default/>
+<context>server</context>
 <context>location</context>
 
 <para>
 Checks the existence of files in the specified order, and uses
 the first found file for request processing; the processing
-is performed in this location's context.
+is performed in the current context.
 It is possible to check the directory existence by specifying
-the slash at the end of a name, e.g. <dq><code>$uri/</code></dq>.
+a slash at the end of a name, e.g. <dq><code>$uri/</code></dq>.
 If none of the files were found, an internal redirect to the
 <argument>uri</argument> specified by the last argument is made.
 As of version 0.7.51, the last argument can also be a
@@ -2054,6 +2055,39 @@ location /download/ {
 </directive>
 
 
+<directive name="types_hash_bucket_size">
+<syntax>types_hash_bucket_size <argument>size</argument></syntax>
+<default>types_hash_bucket_size 32|64|128</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the bucket size for the types hash tables.
+Default value depends on the size of the processor's cache line.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
+<directive name="types_hash_max_size">
+<syntax>types_hash_max_size <argument>size</argument></syntax>
+<default>types_hash_max_size 1024</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the maximum <argument>size</argument> of the types hash tables.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
 <directive name="underscores_in_headers">
 <syntax>underscores_in_headers <value>on</value> | <value>off</value></syntax>
 <default>underscores_in_headers off</default>
@@ -2062,6 +2096,34 @@ location /download/ {
 
 <para>
 Enables or disables the use of underscores in client request header fields.
+</para>
+
+</directive>
+
+
+<directive name="variables_hash_bucket_size">
+<syntax>variables_hash_bucket_size <argument>size</argument></syntax>
+<default>variables_hash_bucket_size 64</default>
+<context>http</context>
+
+<para>
+Sets the bucket size for the variables hash table.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
+<directive name="variables_hash_max_size">
+<syntax>variables_hash_max_size <argument>size</argument></syntax>
+<default>variables_hash_max_size 512</default>
+<context>http</context>
+
+<para>
+Sets the maximum <argument>size</argument> of the variables hash table.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
 </para>
 
 </directive>
