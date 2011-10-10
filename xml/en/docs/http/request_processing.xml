@@ -92,24 +92,6 @@ Since version 0.8.48, this is the default setting for the
 server name, so the <code>server_name ""</code> can be omitted.
 In earlier versions, the machine's <i>hostname</i> was used as
 a default server name.
-
-<note>
-Versions prior to 0.7.11 did not support an empty server name,
-so another configuration was needed to achieve the same effect:
-
-<programlisting>
-server {
-    listen       80  default;
-    server_name  _;
-    return       444;
-}
-</programlisting>
-
-A non-existent domain name “_” is used as the server name, the server
-should be the first or marked as <code>default</code>.
-Note that the server name must be set explicitly here, otherwise nginx
-will use the <i>hostname</i>.
-</note>
 </para>
 
 </section>
