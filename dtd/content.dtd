@@ -1,3 +1,97 @@
+<!ELEMENT  section      (para | list | book | download | security | note |
+                         programlisting)* >
+<!ATTLIST  section
+           name         CDATA #IMPLIED
+           title        CDATA #IMPLIED
+>
+
+<!ELEMENT  para         (#PCDATA | a | br | list | orderedlist | note | i | b |
+                         nobr | table | url | code | dirname | path | header |
+                         programlisting | initial | development_version |
+                         stable_version )* >
+
+<!ELEMENT  a            (#PCDATA) >
+<!ATTLIST  a
+           href         CDATA #REQUIRED
+>
+
+<!ELEMENT  br           EMPTY >
+
+<!ELEMENT  i            (#PCDATA) >
+<!ELEMENT  b            (#PCDATA) >
+<!ELEMENT  dirname      (#PCDATA | i)* >
+<!ELEMENT  path         (#PCDATA | development_version | stable_version)* >
+<!ELEMENT  code         (#PCDATA | i)* >
+<!ELEMENT  header       (#PCDATA) >
+<!ELEMENT  initial      (#PCDATA) >
+<!ELEMENT  url          (#PCDATA) >
+
+<!ELEMENT  programlisting  (#PCDATA | i | b | dirname | path |
+                            development_version | stable_version)* >
+
+<!ELEMENT  nobr         (#PCDATA | i | b | dirname | path)* >
+
+<!ELEMENT  list         (item+) >
+<!ELEMENT  orderedlist  (item+) >
+<!ELEMENT  item         (#PCDATA | para | a | br | nobr | list | i | b | url |
+                         dirname | path)* >
+
+<!ELEMENT  note         (#PCDATA | para | a | br | nobr | list | i | b | url |
+                         dirname | path | programlisting | paypal)* >
+
+<!ELEMENT  table        (tr+) >
+<!ATTLIST  table
+           note         CDATA #IMPLIED
+>
+<!ELEMENT  tr           (td+) >
+<!ELEMENT  td           (#PCDATA | code | i)* >
+<!ATTLIST  td
+           width        CDATA #IMPLIED
+>
+
+<!ELEMENT  paypal       EMPTY >
+
+<!ELEMENT  development_version  EMPTY >
+<!ELEMENT  stable_version       EMPTY >
+
+<!ELEMENT  book         EMPTY >
+<!ATTLIST  book
+           title        CDATA #REQUIRED
+           link         CDATA #REQUIRED
+           author       CDATA #REQUIRED
+           site         CDATA #REQUIRED
+           publisher    CDATA #REQUIRED
+           lang         CDATA #REQUIRED
+           cover        CDATA #REQUIRED
+           translator   CDATA #IMPLIED
+>
+
+<!ELEMENT  download     (item+) >
+<!ATTLIST  download
+           last         CDATA #REQUIRED
+           changes      CDATA #REQUIRED
+>
+
+<!ATTLIST  item
+           ver          CDATA #IMPLIED
+           pgp          CDATA #IMPLIED
+           win          CDATA #IMPLIED
+>
+
+<!ELEMENT  security     (item+) >
+
+<!ATTLIST  item
+           title        CDATA #IMPLIED
+           severity     CDATA #IMPLIED
+           cve          CDATA #IMPLIED
+           good         CDATA #IMPLIED
+           vulnerable   CDATA #IMPLIED
+           patch        CDATA #IMPLIED
+           core         CDATA #IMPLIED
+           href         CDATA #IMPLIED
+           cert         CDATA #IMPLIED
+>
+
 <!ENTITY   nbsp         "&#160;">
 <!ENTITY   times        "&#215;">
 <!ENTITY   lsquo        "&#8216;">

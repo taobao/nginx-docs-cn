@@ -1,7 +1,12 @@
-<!ELEMENT  digest       (title, article+) >
-
-<!ELEMENT  article      (para+) >
-<!ATTLIST  article      date CDATA #REQUIRED >
+<!ELEMENT  article      (section+) >
+<!ATTLIST  article
+           title        CDATA #REQUIRED
+           link         CDATA #REQUIRED
+           lang         CDATA #REQUIRED
+           author       CDATA #IMPLIED
+           editor       CDATA #IMPLIED
+           translator   CDATA #IMPLIED
+>
 
 <!ENTITY % content      SYSTEM  "content.dtd" >
           %content;

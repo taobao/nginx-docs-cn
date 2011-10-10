@@ -1,0 +1,6 @@
+<!ELEMENT  error        EMPTY >
+<!ATTLIST  error
+           title        CDATA #REQUIRED
+           link         CDATA #REQUIRED
+           lang         CDATA #REQUIRED
+>

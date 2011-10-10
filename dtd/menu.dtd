@@ -1,0 +1,13 @@
+<!ELEMENT  menus        (menu+) >
+
+<!ELEMENT  menu         (item+) >
+<!ATTLIST  menu
+           lang         CDATA #REQUIRED
+>
+
+<!ELEMENT  item         (#PCDATA) >
+<!ATTLIST  item
+           href         CDATA #IMPLIED
+           lang         CDATA #IMPLIED
+           year         CDATA #IMPLIED
+>

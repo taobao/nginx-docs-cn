@@ -1,0 +1,11 @@
+<!ELEMENT  i18n         (text+) >
+
+<!ELEMENT  text         (item+) >
+<!ATTLIST  text
+           lang         CDATA #REQUIRED
+>
+
+<!ELEMENT  item         (#PCDATA) >
+<!ATTLIST  item
+           id           CDATA #REQUIRED
+>

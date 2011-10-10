@@ -1,0 +1,5 @@
+<!ELEMENT  versions     (development | stable | legacy_stable)* >
+
+<!ELEMENT  development  (#PCDATA) >
+<!ELEMENT  stable       (#PCDATA) >
+<!ELEMENT  legacy_stable  (#PCDATA) >

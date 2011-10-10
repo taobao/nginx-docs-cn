@@ -1,3 +1,5 @@
+<!DOCTYPE versions SYSTEM "../dtd/versions.dtd">
+
 <versions>
 <development> 1.1.5 </development>
 <stable> 1.0.8 </stable>

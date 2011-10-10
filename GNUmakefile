@@ -146,13 +146,9 @@ $(OUT)/404.html:							\
 
 .SECONDARY:
 
-$(OUT)/%_module.html:	xml/%_module.xml				\
-		$(ARTICLE_DEPS)
-	$(call XMLLINT, $<)
-	$(call XSLT, xslt/article.xslt, $<, $@)
-
 $(OUT)/%.html:	xml/%.xml						\
 		$(ARTICLE_DEPS)
+	$(call XMLLINT, $<)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
 
