@@ -73,22 +73,43 @@ and not of the server name. More about this later.
         title="How to prevent processing requests with undefined server names">
 
 <para>
-If you do not want to process requests with undefined &ldquo;Host&rdquo;
-header lines, you may define a default server that just drops the requests:
+If you do not want to process requests without the <header>Host</header>
+header line, you may define a server that just drops the requests:
 
 <programlisting>
 server {
-    listen       80  default_server;
+    listen       80;
+    server_name  "";
+    return       444;
+}
+</programlisting>
+
+Here, the server name is set to an empty string which will match
+requests without the <header>Host</header> header line,
+and a special nginx’s non-standard code 444
+is returned that closes the connection.
+Since version 0.8.48, this is the default setting for the
+server name, so the <code>server_name ""</code> can be omitted.
+In earlier versions, the machine's <i>hostname</i> was used as
+a default server name.
+
+<note>
+Versions prior to 0.7.11 did not support an empty server name,
+so another configuration was needed to achieve the same effect:
+
+<programlisting>
+server {
+    listen       80  default;
     server_name  _;
     return       444;
 }
 </programlisting>
 
-We have chosen the non-existent domain name &ldquo;_&rdquo;
-as the server name and returned nginx&rsquo;s special non-standard
-code 444 that closes the connection.
-Note that you should set a name for this server,
-otherwise nginx will use the <i>hostname</i>.
+A non-existent domain name “_” is used as the server name, the server
+should be the first or marked as <code>default</code>.
+Note that the server name must be set explicitly here, otherwise nginx
+will use the <i>hostname</i>.
+</note>
 </para>
 
 </section>
