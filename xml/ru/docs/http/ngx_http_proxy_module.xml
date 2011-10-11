@@ -1,0 +1,867 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_proxy_module"
+        link="/ru/docs/http/ngx_http_proxy_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_proxy_module позволяет передавать запросы другому серверу.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+location / {
+    proxy_pass        http://localhost:8000;
+    proxy_set_header  Host       $host;
+    proxy_set_header  X-Real-IP  $remote_addr;
+}
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="proxy_buffer_size">
+<syntax>proxy_buffer_size <value>размер</value></syntax>
+<default>proxy_buffer_size  4k/8k</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт размер буфера, в который будет читаться
+первая часть ответа, получаемого от проксируемого сервера.
+В этой части ответа находится, как правило, небольшой заголовок ответа.
+По умолчанию размер буфера равен размеру одного буфера в директиве
+<link id="proxy_buffers"/>, однако его можно сделать меньше.
+</para>
+
+</directive>
+
+
+<directive name="proxy_buffering">
+<syntax>proxy_buffering <value>on|off</value></syntax>
+<default>proxy_buffering  on</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает использовать буферизацию ответа проксируемого сервера.
+Если буферизация включена, то nginx принимает ответ проксируемого сервера
+как можно быстрее, сохраняя его в буфера, заданные директивами
+<link id="proxy_buffer_size"/> и <link id="proxy_buffers"/>.
+Если ответ не помещается полностью в память, то его часть записывается на диск.
+</para>
+
+<para>
+Если буферизация выключена, то ответ синхронно передаётся клиенту сразу же
+по мере его поступления. nginx не пытается считать весь ответ проксируемого
+сервера, максимальный размер данных, который nginx может принять от сервера
+задаётся директивой <link id="proxy_buffer_size"/>.
+</para>
+
+</directive>
+
+
+<directive name="proxy_buffers">
+<syntax>proxy_buffers <value>число размер</value></syntax>
+<default>proxy_buffers 8 4k/8k</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт число и размер буферов для одного соединения,
+в которые будет читаться ответ, получаемый от проксируемого сервера.
+По умолчанию размер одного буфера равен размеру страницы, в зависимости
+от платформы это или 4K, или 8K.
+</para>
+
+</directive>
+
+
+<directive name="proxy_cache">
+<syntax>proxy_cache <value>[зона|off]</value></syntax>
+<default>off</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт зону для кэширования.
+Одна и та же зона может использоваться в нескольких местах.
+Параметр "off" запрещает кэширование, унаследованное с предыдущего
+уровня конфигурации.
+</para>
+
+</directive>
+
+
+<directive name="proxy_cache_bypass">
+<syntax>proxy_cache_bypass <value>строка [...]</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт условия, при которых ответ не будет браться из кэша.
+Если значение хотя бы одной из строк переменных не пустое и не равно "0",
+то ответ не берётся из кэша:
+<example> 
+proxy_cache_bypass   $cookie_nocache  $arg_nocache$arg_comment;
+proxy_cache_bypass   $http_pragma     $http_authorization;
+</example>
+Можно использовать совместно с директивой <link id="proxy_no_cache"/>.
+</para>
+
+</directive>
+
+
+<directive name="proxy_cache_key">
+<syntax>proxy_cache_key <value>строка</value></syntax>
+<default>$scheme$proxy_host$request_uri</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт ключ для кэширования, например,
+<example> 
+proxy_cache_key  "$host$request_uri $cookie_user";
+</example>
+По умолчанию значение директивы близко к строке
+<example> 
+proxy_cache_key  $scheme$proxy_host$uri$is_args$args;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="proxy_cache_path">
+<syntax>proxy_cache_path <value>путь [levels=уровни]
+keys_zone=название:размер [inactive=время] [max_size=размер]</value></syntax>
+<default>нет</default>
+<context>http</context>
+
+<para>
+Директива задаёт путь и другие параметры кэша. Данные кэша хранятся в файлах.
+Ключом и именем файла в кэше является результат функции md5 от
+проксированного URL. Параметр levels задаёт уровни иерархии кэша,
+например, при использовании
+<example> 
+proxy_cache_path  /data/nginx/cache  levels=1:2   keys_zone=one:10m;
+</example>
+имена файлов в кэше будут такого вида:
+<example> 
+/data/nginx/cache/<emphasis>c/29</emphasis>/b7f54b2df7773722d382f4809d650<emphasis>29c</emphasis>
+</example>
+</para>
+
+<para>
+Кэшируемый ответ записывается во временный файл, а потом этот файл
+переименовывается. Начиная с версии 0.8.9, временные файлы и кэш
+могут располагаться на разных файловых системах, но нужно учитывать,
+что в этом случае вместо дешёвой операции переименовывания в пределах
+одной файловой системы файл копируется с одной файловой системы на другую.
+Поэтому лучше, если кэш будет находиться на той же файловой
+системе, что и каталог с временными файлами, задаваемый директивой
+<link id="proxy_temp_path"/> для данного location.
+</para>
+
+<para>
+Кроме того, все активные ключи и информация о данных хранятся в разделяемой
+памяти — зоне, имя и размер которой задаётся параметром keys_zone.
+Если к данным кэша не обращются в течение времени, заданного параметром
+inactive, то данные удаляются, независимо от их свежести.
+По умолчанию inactive равен 10 минутам.
+</para>
+
+<para>
+Специальный процесс "cache manager" следит за максимальным размером кэша,
+заданным параметром max_size, и при превышении его размеров удаляет
+самые невостребованные данные.
+</para>
+
+</directive>
+
+
+<directive name="proxy_cache_min_uses">
+<syntax>proxy_cache_min_uses <value>число</value></syntax>
+<default>proxy_cache_min_uses 1</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт число запросов, после которого ответ будет
+закэширован.
+</para>
+
+</directive>
+
+
+<directive name="proxy_cache_valid">
+<syntax>proxy_cache_valid <value>ответ [ответ ...] время</value>
+</syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт время кэширования для разных ответов.
+Например, директивы
+<example> 
+proxy_cache_valid  200 302  10m;
+proxy_cache_valid  404      1m;
+</example>
+задают время кэширования 10 минут для ответов 200 и 302,
+и 1 минуту для ответов 404.
+</para>
+
+<para>
+Если указано только время кэширования,
+<example> 
+proxy_cache_valid  5m;
+</example>
+то кэшируются только ответы 200, 301 и 302.
+</para>
+
+<para>
+Кроме того, может кэшировать любые ответы с помощью параметра "any":
+<example> 
+proxy_cache_valid  200 302 10m;
+proxy_cache_valid  301 1h;
+proxy_cache_valid  any 1m;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="proxy_cache_use_stale">
+<syntax>proxy_cache_use_stale <value>[error | timeout | invalid_header
+     | updating | http_500 | http_502 | http_503 | http_504 | http_404 | off]
+[...]</value></syntax>
+<default>proxy_cache_use_stale off</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, в каких случаях можно использовать
+устаревший закэшированный ответ, если при работе с проксированным
+сервером возникла ошибка. Параметры директивы совпадают с параметрами
+директивы <link id="proxy_next_upstream"/>.
+И, кроме того, есть параметр updating, которой разрешает использовать
+устаревший закэшированный ответ, если на данный момент он уже обновляется.
+</para>
+
+</directive>
+
+
+<directive name="proxy_connect_timeout">
+<syntax>proxy_connect_timeout <value>время</value></syntax>
+<default>proxy_connect_timeout 60</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут для соединения с проксированным сервером.
+Необходимо иметь в виду, что этот таймаут не может быть больше 75 секунд.
+</para>
+
+</directive>
+
+
+<directive name="proxy_hide_header">
+<syntax>proxy_hide_header <value>имя</value></syntax>
+<context>http, server, location</context>
+
+<para>
+nginx не передаёт клиенту строки заголовка "Date", "Server", "X-Pad" и
+"X-Accel-..." из ответа проксированного сервера.
+Директива proxy_hide_header задаёт дополнительные строки.
+Если же строки нужно наоброт разрешить, то нужно воспользоваться
+директивой <link id="proxy_pass_header"/>.
+</para>
+
+</directive>
+
+
+<directive name="proxy_ignore_client_abort">
+<syntax>proxy_ignore_client_abort <value>[on|off]</value></syntax>
+<default>proxy_ignore_client_abort off</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, закрывать ли соединение с проксированным сервером
+в случае, если клиент закрыл соединение, не дождавшись ответа.
+</para>
+
+</directive>
+
+
+<directive name="proxy_ignore_headers">
+<syntax>proxy_ignore_headers <value>имя [имя ...]</value></syntax>
+<context>http, server, location</context>
+
+<para>
+Директива proxy_ignore_headers запрещает обработку некоторых
+строк заголовка из ответа проксированного сервера. 
+В директиве можно указать строки "X-Accel-Redirect", "X-Accel-Expires",
+"Expires" и "Cache-Control".
+</para>
+
+</directive>
+
+
+<directive name="proxy_intercept_errors">
+<syntax>proxy_intercept_errors <value>[on|off]</value></syntax>
+<default>proxy_intercept_errors off</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, передавать ли клиенту проксированные ответы с кодом
+больше или равные 400 или же перенаправлять их на обработку nginx'у с помощью
+директивы error_page.
+</para>
+
+</directive>
+
+
+<directive name="proxy_next_upstream">
+<syntax>proxy_next_upstream <value>[error | timeout | invalid_header
+        | http_500 | http_502 | http_503 | http_504 | http_404 | off]
+[...]</value></syntax>
+<default>proxy_next_upstream error timeout</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, в каких случаях запрос будет передан следующему серверу:
+<list type="bullet">
+
+<listitem>
+error — произшла ошибка соединения с сервером, передачи ему запроса или
+чтения заголовка ответа сервера;
+</listitem>
+
+<listitem>
+timeout — произошёл таймаут во время соединения с сервером,
+передачи ему запроса или чтения заголовка ответа сервера;
+</listitem>
+
+<listitem>
+invalid_header — сервер вернул пустой или неверный ответ;
+</listitem>
+
+<listitem>
+http_500 — сервер вернул ответ с кодом 500;
+</listitem>
+
+<listitem>
+http_502 — сервер вернул ответ с кодом 502;
+</listitem>
+
+<listitem>
+http_503 — сервер вернул ответ с кодом 503;
+</listitem>
+
+<listitem>
+http_504 — сервер вернул ответ с кодом 504;
+</listitem>
+
+<listitem>
+http_404 — сервер вернул ответ с кодом 404;
+</listitem>
+
+<listitem>
+off — запрещает передачу запроса следующему серверу;
+</listitem>
+
+</list>
+</para>
+
+<para>
+Необходимо понимать, что передача запроса следующему серверу возможна
+только при условии, что клиенту ещё ничего не передавалось.
+То есть, если ошибка или таймаут возникли в середине передачи ответа,
+то исправить это уже невозможно.
+</para>
+
+</directive>
+
+
+<directive name="proxy_no_cache">
+<syntax>proxy_no_cache <value>строка [...]</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт условия, при которых ответ не будет сохраняться в кэш.
+Если значение хотя бы одной из строк переменных не пустое и не равно "0",
+то ответ не будет сохранён:
+<example> 
+proxy_no_cache   $cookie_nocache  $arg_nocache$arg_comment;
+proxy_no_cache   $http_pragma     $http_authorization;
+</example>
+Можно использовать совместно с директивой <link id="proxy_cache_bypass"/>.
+</para>
+
+</directive>
+
+
+<directive name="proxy_pass">
+<syntax>proxy_pass <value>URL</value></syntax>
+<default>нет</default>
+<context>location, if в location, limit_except</context>
+
+<para>
+Директива задаёт адрес проксируемоего сервера и URI, на который
+будет отображаться location.
+Адрес может быть указан в виде доменного имени или адреса и порта, например,
+<example>
+    proxy_pass   http://localhost:8000/uri/;
+</example>
+или в виде пути unix сокета:
+<example>
+    proxy_pass   http://unix:/tmp/backend.socket:/uri/;
+</example>
+путь указан после слова unix и заключён между двумя двоеточиями.
+</para>
+
+<para>
+Если доменное имя резолвится в несколько адресов, то все они будут
+использоваться в режиме round-robin.
+И кроме того, адрес можно задать
+<link doc="ngx_http_upstream.xml">группой серверов</link>.
+</para>
+
+<para>
+При передаче запроса серверу часть URI, соответствующая location,
+заменяется на URI, указанный в директиве proxy_pass.
+Но из этого правила есть два исключения, в которых нельзя определить
+заменяемый location:
+<list type="bullet">
+
+<listitem>
+если location задан регулярным выражением;
+</listitem>
+
+<listitem>
+если внутри проксируемого location с помощью директивы rewrite изменяется
+URI и именно с этой конфигурацией будет обрабатываться запрос (break):
+<example>
+location  /name/ {
+    rewrite      /name/([^/]+)  /users?name=$1  break;
+    proxy_pass   http://127.0.0.1;
+}
+</example>
+Для этих случаев URI передаётся без отображения.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Кроме того, можно указать, чтобы URI запроса передавалось в том же виде,
+как его прислал клиент, а не в в обработанном виде.
+Во время обработки
+<list type="bullet">
+
+<listitem>
+два и более слэшей преобразуются в один слэш: "//" — "/";
+</listitem>
+
+<listitem>
+убираются ссылки на текущий каталог: "/./" — "/";
+</listitem>
+
+<listitem>
+убираются ссылки на предыдущий каталог: "/dir/../" — "/".
+</listitem>
+
+</list>
+</para>
+
+<para>
+Если на сервер нужно передать URI в необработанном виде, то для этого
+в директиве proxy_pass нужно указать URL сервера без URI:
+<example>
+location  /some/path/ {
+    proxy_pass   http://127.0.0.1;
+}
+</example>
+</para>
+
+<para>
+Имя сервера, его порт и передаваемый URI можно также полностью задать
+в помощью переменных:
+<example>
+    proxy_pass   http://$host$uri;
+</example>
+или так:
+<example>
+    proxy_pass   $request;
+</example>
+</para>
+
+<para>
+В этом случае имя сервера ищется среди описанных
+<link doc="ngx_http_upstream.xml">групп серверов</link>
+и если не найдено, то определяется с помощью <link doc="ngx_http_core_module.xml#resolver">resolver'а</link>.
+</para>
+
+</directive>
+
+
+<directive name="proxy_pass_header">
+<syntax>proxy_pass_header <value>имя</value></syntax>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает передавать от проксируемого сервера клиенту
+запрещённые для передачи строки.
+</para>
+
+</directive>
+
+
+<directive name="proxy_redirect">
+<syntax>proxy_redirect <value>[default|off|редирект замена]</value>
+</syntax>
+<default>proxy_redirect default</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт текст, который нужно изменить в строках заголовка "Location"
+и "Refresh" в ответе проксируемого сервера. Предположим, проксируемый сервер
+вернул строку "Location: http://localhost:8000/two/some/uri/". Директива
+<example>
+    proxy_redirect   http://localhost:8000/two/   http://frontend/one/;
+</example>
+перепишет эту строку в виде "Location: http://frontend/one/some/uri/".
+</para>
+
+<para>
+В заменяемой строке можно не указывать имя сервера:
+<example>
+    proxy_redirect   http://localhost:8000/two/   /;
+</example>
+тогда будет поставлено основное имя сервера и порт, если он отличен от 80.
+</para>
+
+<para>
+Изменение по умолчанию, задаваемое параметром "default", использует
+параметры директив location и proxy_pass.
+Поэтому две нижеприведённые конфигурации одинаковы:
+<example>
+location /one/ {
+    proxy_pass       http://upstream:port/two/;
+    proxy_redirect   default;
+</example>
+
+<example>
+location /one/ {
+    proxy_pass       http://upstream:port/two/;
+    proxy_redirect   http://upstream:port/two/   /one/;
+</example>
+</para>
+
+<para>
+В заменяемой строке можно использовать переменные:
+<example>
+    proxy_redirect   http://localhost:8000/    http://$host:$server_port/;
+</example>
+</para>
+
+<para>
+Директив может быть несколько:
+<example>
+    proxy_redirect   default;
+    proxy_redirect   http://localhost:8000/    /;
+    proxy_redirect   http://www.example.com/   /;
+</example>
+</para>
+
+<para>
+Параметр "off" запрещает все директивы proxy_redirect на данном уровне:
+<example>
+    proxy_redirect   off;
+    proxy_redirect   default;
+    proxy_redirect   http://localhost:8000/    /;
+    proxy_redirect   http://www.example.com/   /;
+</example>
+</para>
+
+<para>
+С помощью этой директивы можно также добавлять имя хоста к относительным
+редиректам, выдаваемым проксируемым сервером:
+<example>
+    proxy_redirect   /   /;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="proxy_read_timeout">
+<syntax>proxy_read_timeout <value>время</value></syntax>
+<default>proxy_read_timeout 60</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут при чтении ответа проксированного сервера.
+Таймаут устанавливается не на всю передачу ответа,
+а только между двумя операциями чтения.
+Если по истечении этого времени проксируемый сервер ничего не передаст,
+то nginx закрывает соединение.
+</para>
+
+</directive>
+
+
+<directive name="proxy_redirect_errors">
+<syntax>proxy_redirect_errors <value>[on|off]</value></syntax>
+
+<para>
+Директива переименована в <link id="proxy_intercept_errors"/>.
+</para>
+
+</directive>
+
+
+<directive name="proxy_send_timeout">
+<syntax>proxy_send_timeout <value>время</value></syntax>
+<default>proxy_send_timeout 60</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут при передаче запроса проксированному серверу.
+Таймаут устанавливается не на всю передачу запроса,
+а только между двумя операциями записи.
+Если по истечении этого времени проксируемый сервер не примет новых данных,
+то nginx закрывает соединение.
+</para>
+
+</directive>
+
+
+<directive name="proxy_set_header">
+<syntax>proxy_set_header <value>заголовок значение</value></syntax>
+<default>Host и Connection</default>
+<context>http, server, location</context>
+
+<para>
+Директива позволяет переопределять или добавлять строки заголовка запроса,
+передаваемые проксируемому серверу.
+В качестве значения можно использовать текст, переменные и их комбинации.
+Директивы наследуются с предыдущего уровня при условии, что на данном
+уровне не описаны свои директивы proxy_set_header.
+По умолчанию переопределяются только две строки:
+<example>
+proxy_set_header  Host        $proxy_host;
+proxy_set_header  Connection  close;
+</example>
+</para>
+
+<para>
+Неизменённую строку заголовка запроса "Host" можно передать так:
+<example>
+proxy_set_header  Host        $http_host;
+</example>
+</para>
+
+<para>
+Однако, если эта строка отсутствует в запросе клиента, то ничего
+передаваться не будет. В этом случае лучше воспользоваться переменной
+$host, её значение равно имени сервера в строке заголовка запроса "Host"
+или же основному имени сервера, если строки нет:
+<example>
+proxy_set_header  Host        $host;
+</example>
+</para>
+
+<para>
+Кроме того, можно передать имя сервера вместе с портом проксируемого сервера:
+<example>
+proxy_set_header  Host        $host:$proxy_port;
+</example>
+</para>
+
+<para>
+Если значение строки заголовка — пустая строка, то строка вообще
+не будет передаваться проксируемому серверу:
+<example>
+proxy_set_header  Accept-Encoding  "";
+</example>
+</para>
+
+</directive>
+
+
+<directive name="proxy_ssl_session_reuse">
+<syntax>proxy_ssl_session_reuse <value>[on|off]</value></syntax>
+<default>proxy_ssl_session_reuse on</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, использовать ли повторно SSL-сессии при
+работе с проксированным сервером. Если в логах появляются ошибки
+"SSL3_GET_FINISHED:digest check failed", то можно попробовать выключить
+повторное использование сессий.
+</para>
+
+</directive>
+
+
+<directive name="proxy_store">
+<syntax>proxy_store <value>on | off | строка </value></syntax>
+<default>proxy_store off</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает сохранение на диск файлов.
+Параметр "on" сохраняет файлы в соответствии с путями, указаными в директивах
+<link doc="ngx_http_core_module.xml#alias">alias</link> или
+<link doc="ngx_http_core_module.xml#root">root</link>.
+Параметр "off" запрещает сохранение файлов.
+Кроме того, имя файла можно явно задать с помощью строки с переменными:
+<example>
+proxy_store   /data/www$original_uri;
+</example>
+</para>
+
+<para>
+Время модификации файлов выставляется согласно полученной строке
+"Last-Modified" в заголовке ответа.
+Ответ записывается во временный файл, а потом этот файл переименовывается.
+Начиная с версии 0.8.9, временный файл и постоянное место хранения ответа
+могут располагаться на разных файловых системах, но нужно учитывать,
+что в этом случае вместо дешёвой операции переименовывания в пределах
+одной файловой системы файл копируется с одной файловой системы на другую.
+Поэтому лучше, если сохраняемые файлы будут находиться на той же файловой
+системе, что и каталог с временными файлами, задаваемый директивой
+<link id="proxy_temp_path"/> для данного location.
+</para>
+
+<para>
+Директиву можно использовать для создания локальных копий статических
+неизменяемых файлов, например, так:
+<example>
+location /images/ {
+    root                    /data/www;
+    open_file_cache_errors  off;
+    error_page              404 = /fetch$uri;
+}
+
+location /fetch/ {
+    internal;
+
+    proxy_pass              http://backend/;
+    proxy_store             on;
+    proxy_store_access      user:rw  group:rw  all:r;
+    proxy_temp_path         /data/temp;
+
+    alias                   /data/www/;
+}
+</example>
+</para>
+
+<para>
+или так:
+<example>
+location /images/ {
+    root                 /data/www;
+    error_page           404 = @fetch;
+}
+
+location @fetch {
+    internal;
+
+    proxy_pass           http://backend;
+    proxy_store          on;
+    proxy_store_access   user:rw  group:rw  all:r;
+    proxy_temp_path      /data/temp;
+
+    root                 /data/www;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="proxy_store_access">
+<syntax>proxy_store_access <value>пользователи:права [пользователи:права]
+...</value></syntax>
+<default>proxy_store_access user:rw</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт права доступа для создаваемых файлов и каталогов, например,
+<example>
+proxy_store_access  user:rw  group:rw  all:r;
+</example>
+</para>
+
+<para>
+Если заданы какие-либо права для groups или all, то права для user
+указывать необязательно:
+<example>
+proxy_store_access  group:rw  all:r;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="proxy_temp_path">
+<syntax>proxy_temp_path <value>путь [ уровень1 [ уровень2 [ уровень3 ] ] ]
+</value></syntax>
+<default>proxy_temp_path proxy_temp</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт имя каталога для хранения временных файлов
+полученных от другого сервера.
+В каталоге может использоваться иерархия подкаталогов до трёх уровней.
+Например, при такой конфигурации
+<example>
+proxy_temp_path  /spool/nginx/proxy_temp 1 2;
+</example>
+имя временного будет такого вида:
+<example> 
+/spool/nginx/proxy_temp/7/45/00000123457
+</example>
+</para>
+
+</directive>
+
+</section>
+
+
+<section name="Встроенные переменные" id="variables">
+
+<para>
+В модуле ngx_http_proxy_module есть встроенные переменные,
+которые можно использовать для формирования заголовков с помощью директивы
+<link id="proxy_set_header"/>:
+<list type="bullet">
+
+<listitem>
+$proxy_host, эта переменная равна имени проксируемого хоста и порта;
+</listitem>
+
+<listitem>
+$proxy_port, эта переменная равна порту проксируемого хоста;
+</listitem>
+
+<listitem>
+$proxy_add_x_forwarded_for, эта переменная равна строке заголовка запроса
+клиента "X-Forwarded-For" и добавленной к ней через запятую переменной 
+$remote_addr. Если же строки "X-Forwarded-For" в запросе клиента нет,
+то переменная $proxy_add_x_forwarded_for равна переменной $remote_addr.
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</module>

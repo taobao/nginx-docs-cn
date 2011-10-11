@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_xslt_module"
+        link="/ru/docs/http/ngx_http_xslt_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_xslt_module — это фильтр, преобразующий XML-ответ
+с помощью одного или нескольких XSLT-шаблонов (0.7.8+).
+По умолчанию модуль не собирается, нужно разрешить его сборку
+при конфигурировании параметром <command>--with-http_xslt_module</command>.
+Для сборки и работы этого модуля нужны библиотеки
+<link url="http://www.xmlsoft.org">libxml2 и libxslt</link>.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+location / {
+    xml_entities       /site/dtd/entities.dtd;
+    xslt_stylesheet    /site/xslt/one.xslt   param=value;
+    xslt_stylesheet    /site/xslt/two.xslt;
+}
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="xml_entities">
+<syntax>xml_entities <value>путь</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт файл DTD, в котором описаны символьные сущности.
+Этот файл компилируется на стадии конфигурации.
+По техническим причинам модуль не имеет возможности
+использовать внешнее подмножество, заданное в обрабатываемом XML,
+поэтому оно игнорируется, а вместо него используется специально заданный файл.
+В этом файле не нужно описывать структуру XML, достаточно только объявления
+необходимых символьных сущностей, например:
+<example>
+&lt;!ENTITY nbsp "&amp;#xa0;"&gt;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="xslt_stylesheet">
+<syntax>xslt_stylesheet <value>шаблон [параметр ...]</value></syntax>
+<default>нет</default>
+<context>location</context>
+
+<para>
+Директива задаёт XSLT-шаблон и параметры для этого шаблона.
+Шаблон компилируется на стадии конфигурации.
+Параметры задаются в формате
+<example>
+param=value
+</example>
+</para>
+
+<para>
+Их можно задавать как по отдельности, так и группировать
+в одной строке, разделяя символом ":".
+Если же в самих параметрах встречается символ ":", то его нужно
+экранировать в виде "%3A".
+Кроме того, необходимо помнить о требовании libxslt, чтобы параметры,
+содержащие не только алфавитно-цифровые символы,
+были заключены в одинарные или двойные кавычки, например:
+<example>
+param1='http%3A//www.example.com':param2=value2
+</example>
+</para>
+
+<para>
+В описании параметров можно использовать переменные, например,
+целая строка параметров может быть взята из одной переменной:
+<example>
+location / {
+    xslt_stylesheet    /site/xslt/one.xslt
+                       $arg_xslt_params
+                       param1='$value1':param2=value2
+                       param3=value3;
+}
+</example>
+</para>
+
+<para>
+Можно указать несколько шаблонов — в этом случае они
+будут применяться последовательно в порядке их описания.
+</para>
+
+</directive>
+
+<directive name="xslt_types">
+<syntax>xslt_types <value>mime-тип [mime-тип ...]</value></syntax>
+<default>xslt_types text/xml</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает замену строк в ответах с указанными MIME-типами
+в дополнение к "text/xml".
+Если в результате преобразования выдаётся HTML-ответ, то его MIME-тип
+меняется на "text/html".
+</para>
+
+</directive>
+
+</section>
+
+</module>

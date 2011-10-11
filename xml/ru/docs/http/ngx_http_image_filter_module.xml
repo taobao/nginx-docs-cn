@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_image_filter_module"
+        link="/ru/docs/http/ngx_http_image_filter_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_image_filter_module — это фильтр для преобразования
+изображений в форматах JPEG, GIF и PNG (0.7.54+).
+По умолчанию модуль не собирается, нужно разрешить его сборку
+при конфигурировании параметром
+<command>--with-http_image_filter_module</command>.
+Для сборки и работы этого модуля нужна библиотека
+<link url="http://libgd.org">libgd</link>.
+Рекомендуется использовать самую последнию версию библиотеки,
+на текущий момент (май 2009) это версия 2.0.35.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+location /img/ {
+    proxy_pass     http://backend;
+    image_filter   resize  150 100;
+    error_page     415   = /empty;
+}
+
+location = /empty {
+    empty_gif;
+}
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="image_filter">
+<syntax>image_filter <value>(test|size|resize ширина высота|crop ширина высота)
+</value></syntax>
+<default>нет</default>
+<context>location</context>
+
+<para>
+Директива задаёт тип преобразования изображения:
+<list type="bullet">
+
+<listitem>
+test — проверка того, что ответ действительно является изображением
+в формате JPEG, GIF или PNG. В противном случае выдаётся ошибка 415.
+</listitem>
+
+<listitem>
+size — выдаёт информацию об изображении в формате JSON, например:
+<example>
+{ "img" : { "width": 100, "height": 100, "type": "gif" } }
+</example>
+В случае ошибки выдаётся
+<example>
+{}
+</example>
+</listitem>
+
+<listitem>
+resize — пропорционально уменьшает изображение до указанных размеров.
+Если нужно уменьшить только по одному измерению, то в качестве второго
+можно указать "-".
+В случае ошибки выдаётся код 415.
+</listitem>
+
+<listitem>
+crop — пропорционально уменьшает изображение до размера большой стороны
+и обрезает лишние края по другой стороне.
+Если нужно уменьшить только по одному измерению, то в качестве второго
+можно указать "-".
+В случае ошибки выдаётся код 415.
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="image_filter_buffer">
+<syntax>image_filter_buffer <value>размер</value></syntax>
+<default>image_filter_buffer 1M</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт максимальный размер буфера для чтения изображения.
+</para>
+
+</directive>
+
+
+<directive name="image_filter_jpeg_quality">
+<syntax>image_filter_jpeg_quality <value>[0..100]</value></syntax>
+<default>image_filter_jpeg_quality 75</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт коэффициент потери информации при обработке изображений
+в формате JPEG. Максимальное рекомендуемое значение — 95.
+</para>
+
+</directive>
+
+
+<directive name="image_filter_transparency">
+<syntax>image_filter_transparency <value>[on|off]</value></syntax>
+<default>image_filter_transparency on</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, сохранять ли прозрачность при обработке изображений
+в формате PNG с цветами, заданными палитрой, и формате GIF.
+Потеря прозрачности позволяет получить более качественное изображение.
+Прозрачность альфа-канала в формате PNG сохраняется всегда.
+</para>
+
+</directive>
+
+</section>
+
+</module>

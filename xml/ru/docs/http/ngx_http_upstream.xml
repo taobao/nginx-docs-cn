@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_upstream"
+        link="/ru/docs/http/ngx_http_upstream.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль позволяет описывать группы серверов,
+которые могут использоваться в директивах
+<link doc="ngx_http_proxy_module.xml#proxy_pass">proxy_pass</link>
+и <link doc="ngx_http_fastcgi_module.xml#fastcgi_pass">fastcgi_pass</link>.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+upstream  <emphasis>backend</emphasis>  {
+    server   backend1.example.com        weight=5;
+    server   backend2.example.com:8080;
+    server   unix:/tmp/backend3;
+
+    server   backup1.example.com:8080    backup;
+    server   backup2.example.com:8080    backup;
+}
+
+server {
+    location / {
+        proxy_pass  http://<emphasis>backend</emphasis>;
+    }
+}
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="ip_hash">
+<syntax>ip_hash</syntax>
+<default>нет</default>
+<context>upstream</context>
+
+<para>
+Директива задаёт метод распределения запросов по серверам на основе
+IP-адресов клиентов. В качестве ключа для хеширования используется сеть
+класса C, в которой находится адрес клиента.
+Метод гарантирует, что запросы клиента будут передаваться на один и тот же
+сервер.  Если же этот сервер будет считаться неработающим, то запросы этого
+клиента будут передаваться на другой сервер. С большой долей вероятности
+это также будет один и тот же сервер.
+</para>
+
+<para>
+Для серверов, использующих метод распределения ip_hash, нельзя задать вес.
+Если один из серверов нужно убрать на некоторое время, то для сохранения
+текущего хеширования IP-адресов клиентов этот сервер нужно пометить
+параметром down.
+</para>
+
+<para>
+Пример конфигурации:
+<example>
+upstream  backend  {
+    ip_hash;
+
+    server   backend1.example.com;
+    server   backend2.example.com;
+    server   backend3.example.com  down;
+    server   backend4.example.com;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="server">
+<syntax>server <value>название [параметры]</value></syntax>
+<default>нет</default>
+<context>upstream</context>
+
+<para>
+Директива задаёт имя и параметры сервера.
+В качестве имени можно использовать доменное имя, адрес, порт или путь
+unix-сокета. Если доменное имя резолвится в несколько адресов, то
+используются все.
+<list type="bullet">
+
+<listitem>
+weight=число — задаёт вес сервера, по умолчанию вес равен одному.
+</listitem>
+
+<listitem>
+max_fails=число — задаёт число неудачных попыток работы с сервером
+в течение времени, заданного параметром fail_timeout,
+после которых он считается неработающим также в течение времени
+заданного параметром fail_timeout.
+По умолчанию число попыток равно одной.
+Нулевое значение запрещает учёт попыток.
+Что считается неудачной попыткой, задаётся директивами
+<link doc="ngx_http_proxy_module.xml#proxy_next_upstream">proxy_next_upstream</link>
+и <link doc="ngx_http_fastcgi_module.xml#fastcgi_next_upstream">fastcgi_next_upstream</link>.
+Состояние http_404 не считается неудачной попыткой.
+</listitem>
+
+<listitem>
+fail_timeout=время — задаёт
+<list type="bullet">
+
+<listitem>
+время, в течение которого должно произойти заданное число неудачных
+попыток работы с сервером для того, чтобы сервер считался неработающим;
+</listitem>
+
+<listitem>
+и время, в течение которого сервер будет считаться неработающим.
+</listitem>
+
+</list>
+По умолчанию время равно 10 секундам.
+</listitem>
+
+<listitem>
+backup — помечает сервер как запасной сервер. На него будут
+передаваться запросы в случае, если не работают основные сервера.
+</listitem>
+
+<listitem>
+down — помечает сервер как постоянно неработающий, используется
+совместно с директивой <link id="ip_hash"/>.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Пример конфигурации:
+<example>
+upstream  backend  {
+    server   backend1.example.com       weight=5;
+    server   127.0.0.1:8080             max_fails=3  fail_timeout=30s;
+    server   unix:/tmp/backend3;
+
+    server   backup1.example.com:8080   backup;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="upstream">
+<syntax>upstream <value>название</value> { ... }</syntax>
+<default>нет</default>
+<context>http</context>
+
+<para>
+Директива описывает группу серверов.
+Сервера могут слушать на разных портах, кроме того, можно одновременно
+использовать сервера, слушающие на TCP и unix сокетах.
+</para>
+
+<para>
+Пример конфигурации:
+<example>
+upstream  backend  {
+    server   backend1.example.com    weight=5;
+    server   127.0.0.1:8080          max_fails=3  fail_timeout=30s;
+    server   unix:/tmp/backend3;
+}
+</example>
+</para>
+
+<para>
+Запросы распределяются по серверам в режиме round-robin с учётом весов серверов.
+В вышеприведённом примере каждые 7 семь запросов будут распределены так:
+5 запросов на backend1.example.com и по одному запросу на второй и третий
+сервера.
+Если при попытке работы с сервером произошла ошибка, то запрос будет
+передан следующему серверу и так до тех пор, пока не будут опробованы
+все работающие сервера. Если не удастся получить успешный ответ
+от всех серверов, то клиенту будет возвращён результат работы
+с последним сервером.
+</para>
+
+</directive>
+
+</section>
+
+
+<section name="Встроенные переменные" id="variables">
+
+<para>
+Модуль ngx_http_upstream поддерживает следующие встроенные переменные:
+<list type="bullet">
+
+<listitem>
+$upstream_addr — в переменной хранятся ip-адрес и порт сервера
+или путь к unix-сокету.
+Если при обработке запроса были сделаны обращения к нескольким серверам,
+то их адреса разделяются запятой, например,
+"192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock".
+Если произошёл внутренний редирект от одной группы серверов на другую с помощью
+"X-Accel-Redirect" или error_page, то эти группы серверов разделяются
+двоеточием, например,
+"192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock : 192.168.10.1:80, 192.168.10.2:80".
+</listitem>
+
+<listitem>
+$upstream_response_time — в переменной хранятся времена ответов серверов
+в секундах с точностью до миллисекунд.
+Несколько ответов также разделяются запятыми и двоеточиями.
+</listitem>
+
+<listitem>
+$upstream_status — в переменной хранятся коды ответов серверов.
+Несколько ответов также разделяются запятыми и двоеточиями.
+</listitem>
+
+<listitem>
+$upstream_http_... — в переменных хранятся строки заголовков ответов
+серверов, например, строка заголовка ответа "Server" доступна в переменной
+$upstream_http_server. Необходимо иметь ввиду, что запоминаются только
+строки последнего сервера.
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</module>

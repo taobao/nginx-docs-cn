@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_fastcgi_module"
+        link="/ru/docs/http/ngx_http_fastcgi_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_fastcgi_module позволяет передавать запросы
+удалённому FastCGI-серверу.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+location / {
+    fastcgi_pass   localhost:9000;
+    fastcgi_index  index.php;
+
+    fastcgi_param  SCRIPT_FILENAME  /home/www/scripts/php$fastcgi_script_name;
+    fastcgi_param  QUERY_STRING     $query_string;
+    fastcgi_param  REQUEST_METHOD   $request_method;
+    fastcgi_param  CONTENT_TYPE     $content_type;
+    fastcgi_param  CONTENT_LENGTH   $content_length;
+}
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="fastcgi_buffer_size">
+<syntax>fastcgi_buffer_size <value>размер</value></syntax>
+<default>fastcgi_buffer_size  4k/8k</default>
+<context>http, server, location</context> 
+
+<para>
+Директива задаёт размер буфера, в который будет читаться
+первая часть ответа, получаемого от FastCGI-сервера.
+В этой части ответа находится, как правило, небольшой заголовок ответа.
+По умолчанию размер буфера равен размеру одного буфера в директиве
+<link id="fastcgi_buffers"/>, однако его можно сделать меньше.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_buffers">
+<syntax>fastcgi_buffers <value>число размер</value></syntax>
+<default>fastcgi_buffers 8 4k/8k</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт число и размер буферов для одного соединения,
+в которые будет читаться ответ, получаемый от FastCGI-сервера.
+По умолчанию размер одного буфера равен размеру страницы, в зависимости
+от платформы это или 4K, или 8K.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_cache">
+<syntax>fastcgi_cache <value>[зона|off]</value></syntax>
+<default>off</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт зону для кэширования.
+Одна и та же зона может использоваться в нескольких местах.
+Параметр "off" запрещает кэширование, унаследованное с предыдущего
+уровня конфигурации.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_cache_bypass">
+<syntax>fastcgi_cache_bypass <value>строка [...]</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт условия, при которых ответ не будет браться из кэша.
+Если значение хотя бы одной из строк переменных не пустое и не равно "0",
+то ответ не берётся из кэша:
+<example> 
+fastcgi_cache_bypass   $cookie_nocache  $arg_nocache$arg_comment;
+fastcgi_cache_bypass   $http_pragma     $http_authorization;
+</example>
+Можно использовать совместно с директивой <link id="fastcgi_no_cache"/>.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_cache_key">
+<syntax>fastcgi_cache_key <value>строка</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт ключ для кэширования, например,
+<example> 
+fastcgi_cache_key  localhost:9000$request_uri;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_cache_path">
+<syntax>fastcgi_cache_path <value>путь [levels=уровни]
+keys_zone=название:размер [inactive=время] [max_size=размер]</value></syntax>
+<default>нет</default>
+<context>http</context>
+
+<para>
+Директива задаёт путь и другие параметры кэша. Данные кэша хранятся в файлах.
+Ключом и именем файла в кэше является результат функции md5 от
+проксированного URL. Параметр levels задаёт уровни иерархии кэша,
+например, при использовании
+<example> 
+fastcgi_cache_path  /data/nginx/cache  levels=1:2   keys_zone=one:10m;
+</example>
+имена файлов в кэше будут такого вида:
+<example> 
+/data/nginx/cache/<emphasis>c/29</emphasis>/b7f54b2df7773722d382f4809d650<emphasis>29c</emphasis>
+</example>
+</para>
+
+<para>
+Кэшируемый ответ записывается во временный файл, а потом этот файл
+переименовывается. Начиная с версии 0.8.9, временные файлы и кэш
+могут располагаться на разных файловых системах, но нужно учитывать,
+что в этом случае вместо дешёвой операции переименовывания в пределах
+одной файловой системы файл копируется с одной файловой системы на другую.
+Поэтому лучше, если кэш будет находиться на той же файловой
+системе, что и каталог с временными файлами, задаваемый директивой
+<link id="fastcgi_temp_path"/> для данного location.
+</para>
+
+<para>
+Кроме того, все активные ключи и информация о данных хранятся в разделяемой
+памяти — зоне, имя и размер которой задаётся параметром keys_zone.
+Если к данным кэша не обращются в течение времени, заданного параметром
+inactive, то данные удаляются, независимо от их свежести.
+По умолчанию inactive равен 10 минутам.
+</para>
+
+<para>
+Специальный процесс "cache manager" следит за максимальным размером кэша,
+заданным параметром max_size, и при превышении его размеров удаляет
+самые невостребованные данные.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_cache_min_uses">
+<syntax>fastcgi_cache_min_uses <value>число</value></syntax>
+<default>fastcgi_cache_min_uses 1</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт число запросов, после которого ответ будет
+закэширован.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_cache_valid">
+<syntax>fastcgi_cache_valid <value>ответ [ответ ...] время</value>
+</syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт время кэширования для разных ответов.
+Например, директивы
+<example> 
+fastcgi_cache_valid  200 302  10m;
+fastcgi_cache_valid  404      1m;
+</example>
+задают время кэширования 10 минут для ответов 200 и 302,
+и 1 минуту для ответов 404.
+</para>
+
+<para>
+Если указано только время кэширования,
+<example> 
+fastcgi_cache_valid  5m;
+</example>
+то кэшируются только ответы 200, 301 и 302.
+</para>
+
+<para>
+Кроме того, может кэшировать любые ответы с помощью параметра "any":
+<example> 
+fastcgi_cache_valid  200 302 10m;
+fastcgi_cache_valid  301 1h;
+fastcgi_cache_valid  any 1m;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_cache_use_stale">
+<syntax>fastcgi_cache_use_stale <value>[error | timeout | invalid_header
+     | updating | http_500 | http_503 | http_404 | off]
+[...]</value></syntax>
+<default>fastcgi_cache_use_stale off</default>
+<context>http, server, location</context>
+
+
+<para>
+Директива определяет, в каких случаях можно использовать
+устаревший закэшированный ответ, если при работе с проксированным
+сервером возникла ошибка. Параметры директивы совпадают с параметрами
+директивы <link id="fastcgi_next_upstream"/>.
+И, кроме того, есть параметр updating, которой разрешает использовать
+устаревший закэшированный ответ, если на данный момент он уже обновляется.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_connect_timeout">
+<syntax>fastcgi_connect_timeout <value>время</value></syntax>
+<default>fastcgi_connect_timeout 60</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут для соединения с FastCGI-сервером.
+Необходимо иметь в виду, что этот таймаут не может быть больше 75 секунд.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_index">
+<syntax>fastcgi_index <value>имя</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт имя файла, который при создании переменной
+$fastcgi_script_name будет добавляться после URI, если URI
+заканчивается слэшом. Например, при таких настройках
+<example>
+fastcgi_index  index.php;
+fastcgi_param  SCRIPT_FILENAME  /home/www/scripts/php$fastcgi_script_name;
+</example>
+и запросе "/page.php" параметр SCRIPT_FILENAME будет равен
+"/home/www/scripts/php/page.php",
+а при запросе "/" — "/home/www/scripts/php/index.php".
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_hide_header">
+<syntax>fastcgi_hide_header <value>имя</value></syntax>
+<context>http, server, location</context>
+
+<para>
+nginx не передаёт клиенту строки заголовка "Status" и "X-Accel-..."
+из ответа FastCGI-сервера.
+Директива fastcgi_hide_header задаёт дополнительные строки.
+Если же строки нужно наоброт разрешить, то нужно воспользоваться
+директивой <link id="fastcgi_pass_header"/>.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_ignore_client_abort">
+<syntax>fastcgi_ignore_client_abort <value>[on|off]</value></syntax>
+<default>fastcgi_ignore_client_abort off</default>
+<context>http, server, location</context>
+
+
+<para>
+Директива определяет, закрывать ли соединение с FastCGI-сервером
+в случае, если клиент закрыл соединение, не дождавшись ответа.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_ignore_headers">
+<syntax>fastcgi_ignore_headers <value>имя [имя ...]</value></syntax>
+<context>http, server, location</context>
+
+<para>
+Директива fastcgi_ignore_headers запрещает обработку некоторых
+строк заголовка из ответа FastCGI-сервера. 
+В директиве можно указать строки "X-Accel-Redirect", "X-Accel-Expires",
+"Expires" и "Cache-Control".
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_intercept_errors">
+<syntax>fastcgi_intercept_errors <value>on|off</value></syntax>
+<default>fastcgi_intercept_errors off</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, передавать ли клиенту ответы FastCGI-сервера с кодом
+больше или равные 400 или же перенаправлять их на обработку nginx'у с помощью
+директивы error_page.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_no_cache"> 
+<syntax>fastcgi_no_cache <value>строка [...]</value></syntax> 
+<default>нет</default> 
+<context>http, server, location</context> 
+ 
+<para> 
+Директива задаёт условия, при которых ответ не будет сохраняться в кэш.
+Если значение хотя бы одной из строк переменных не пустое и не равно "0",
+то ответ не будет сохранён:
+<example>
+fastcgi_no_cache   $cookie_nocache  $arg_nocache$arg_comment;
+fastcgi_no_cache   $http_pragma     $http_authorization;
+</example>
+Можно использовать совместно с директивой
+<link id="fastcgi_cache_bypass"/>.
+</para> 
+ 
+</directive>
+
+
+<directive name="fastcgi_next_upstream">
+<syntax>fastcgi_next_upstream
+<value>[error|timeout|invalid_header|http_500|http_503|http_404|off]</value>
+</syntax>
+<default>fastcgi_next_upstream error timeout</default>
+<context>http, server, location</context>
+
+
+<para>
+Директива определяет, в каких случаях запрос будет передан следующему серверу:
+<list type="bullet">
+
+<listitem>
+error — произшла ошибка соединения с сервером, передачи ему запроса или
+чтения заголовка ответа сервера;
+</listitem>
+
+<listitem>
+timeout — произошёл таймаут во время соединения с сервером,
+передачи ему запроса или чтения заголовка ответа сервера;
+</listitem>
+
+<listitem>
+invalid_header — сервер вернул пустой или неверный ответ;
+</listitem>
+
+<listitem>
+http_500 — сервер вернул ответ с кодом 500;
+</listitem>
+
+<listitem>
+http_503 — сервер вернул ответ с кодом 503;
+</listitem>
+
+<listitem>
+http_404 — сервер вернул ответ с кодом 404;
+</listitem>
+
+<listitem>
+off — запрещает передачу запроса следующему серверу;
+</listitem>
+
+</list>
+</para>
+
+<para>
+Необходимо понимать, что передача запроса следующему серверу возможна
+только при условии, что клиенту ещё ничего не передавалось.
+То есть, если ошибка или таймаут возникли в середине передачи ответа,
+то исправить это уже невозможно.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_param">
+<syntax>fastcgi_param <value>параметр значение</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт параметр, который будут передаваться FastCGI-серверу.
+В качестве значения можно использовать текст, переменные и их комбинации.
+Директивы наследуются с предыдущего уровня при условии, что на данном
+уровне не описаны свои директивы fastcgi_param.
+</para>
+
+<para>
+Ниже приведён пример минимально необходимых параметров для PHP:
+<example>
+fastcgi_param  SCRIPT_FILENAME  /home/www/scripts/php$fastcgi_script_name;
+fastcgi_param  QUERY_STRING     $query_string;
+</example>
+</para>
+
+<para>
+Параметр SCRIPT_FILENAME используется в PHP для определения имени скрипта,
+а в параметре QUERY_STRING передаются параметры запроса.
+</para>
+
+<para>
+Если скрипты обрабатывают запросы POST, то нужны ещё три параметра:
+<example>
+fastcgi_param  REQUEST_METHOD   $request_method;
+fastcgi_param  CONTENT_TYPE     $content_type;
+fastcgi_param  CONTENT_LENGTH   $content_length;
+</example>
+</para>
+
+<para>
+Если PHP был собран с параметром конфигурации
+<command>--enable-force-cgi-redirect</command>, то нужно передавать
+параметр REDIRECT_STATUS со значением "200":
+<example>
+fastcgi_param  REDIRECT_STATUS  200;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_pass">
+<syntax>fastcgi_pass <value>fastcgi-server</value></syntax>
+<default>нет</default>
+<context>location, if в location</context>
+
+<para>
+Директива задаёт адрес FastCGI-сервера.
+Адрес может быть указан в виде доменного имени или адреса и порта, например,
+<example>
+    fastcgi_pass   localhost:9000;
+</example>
+или в виде пути unix сокета:
+<example>
+    fastcgi_pass   unix:/tmp/fastcgi.socket;
+</example>
+</para>
+
+<para>
+Если доменное имя резолвится в несколько адресов, то все они будут
+использоваться в режиме round-robin.
+И кроме того, адрес может быть
+<link doc="ngx_http_upstream.xml">группой серверов</link>.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_pass_header">
+<syntax>fastcgi_pass_header <value>имя</value></syntax>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает передавать клиенту запрещённые для передачи строки.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_read_timeout">
+<syntax>fastcgi_read_timeout <value>время</value></syntax>
+<default>fastcgi_read_timeout 60</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут при чтении ответа FastCGI-сервера.
+Таймаут устанавливается не на всю передачу ответа,
+а только между двумя операциями чтения.
+Если по истечении этого времени FastCGI-сервер ничего не передаст,
+то nginx закрывает соединение.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_redirect_errors">
+<syntax>fastcgi_redirect_errors <value>on|off</value></syntax>
+
+<para>
+Директива переименована в <link id="fastcgi_intercept_errors"/>.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_send_timeout">
+<syntax>fastcgi_send_timeout <value>время</value></syntax>
+<default>fastcgi_send_timeout 60</default>
+<context>http, server, location</context>
+
+<para> 
+Директива задаёт таймаут при передаче запроса FastCGI-серверу.
+Таймаут устанавливается не на всю передачу запроса,
+а только между двумя операциями записи.
+Если по истечении этого времени FastCGI-сервер не примет новых данных,
+то nginx закрывает соединение.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_split_path_info">
+<syntax>fastcgi_split_path_info <value>regex</value></syntax>
+<default>нет</default>
+<context>location</context>
+
+<para>
+Директива задаёт регулярное выражение, выделяющее
+значение для переменной $fastcgi_path_info.
+Регулярное выражение должно иметь два выделения, из которых первое
+становиться значением переменной $fastcgi_script_name,
+а второе — значением переменной $fastcgi_path_info.
+Например, при таких настройках
+<example>
+location ~ ^(.+\.php)(.*)$ {
+    fastcgi_split_path_info         ^(.+\.php)(.*)$;
+    fastcgi_param  SCRIPT_FILENAME  /path/to/php$fastcgi_script_name;
+    fastcgi_param  PATH_INFO        $fastcgi_path_info;
+</example>
+и запросе "/show.php/article/0001" параметр SCRIPT_FILENAME будет
+равен "/path/to/php/show.php", а параметр PATH_INFO — "/article/0001".
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_store">
+<syntax>fastcgi_store <value>on | off | строка </value></syntax>
+<default>fastcgi_store off</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает сохранение на диск файлов.
+Параметр "on" сохраняет файлы в соответствии с путями, указаными в директивах
+<link doc="ngx_http_core_module.xml#alias">alias</link> или
+<link doc="ngx_http_core_module.xml#root">root</link>.
+Параметр "off" запрещает сохранение файлов.
+Кроме того, имя файла можно явно задать с помощью строки с переменными:
+<example>
+fastcgi_store   /data/www$original_uri;
+</example>
+</para>
+
+<para>
+Время модификации файлов выставляется согласно полученной строке
+"Last-Modified" в заголовке ответа.
+Ответ записывается во временный файл, а потом этот файл переименовывается.
+Начиная с версии 0.8.9, временный файл и постоянное место хранения ответа
+могут располагаться на разных файловых системах, но нужно учитывать,
+что в этом случае вместо дешёвой операции переименовывания в пределах
+одной файловой системы файл копируется с одной файловой системы на другую.
+Поэтому лучше, если сохраняемые файлы будут находиться на той же файловой
+системе, что и каталог с временными файлами, задаваемый директивой
+<link id="fastcgi_temp_path"/> для данного location.
+</para>
+
+<para>
+Директиву можно использовать для создания локальных копий статических
+неизменяемых файлов, например:
+<example>
+location /images/ {
+    root                    /data/www;
+    open_file_cache_errors  off;
+    error_page              404 = /fetch$uri;
+}
+
+location /fetch/ {
+    internal;
+
+    fastcgi_pass            backend:9000;
+    ...
+
+    fastcgi_store           on;
+    fastcgi_store_access    user:rw  group:rw  all:r;
+    fastcgi_temp_path       /data/temp;
+
+    alias                   /data/www/;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_store_access">
+<syntax>fastcgi_store_access <value>пользователи:права [пользователи:права]
+...</value></syntax>
+<default>fastcgi_store_access user:rw</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт права доступа для создаваемых файлов и каталогов, например,
+<example>
+fastcgi_store_access  user:rw  group:rw  all:r;
+</example>
+</para>
+
+<para>
+Если заданы какие-либо права для groups или all, то права для user
+указывать необязательно:
+<example>
+fastcgi_store_access  group:rw  all:r;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_temp_path">
+<syntax>fastcgi_temp_path <value>путь [ уровень1 [ уровень2 [ уровень3 ] ] ]
+</value></syntax>
+<default>fastcgi_temp_path fastcgi_temp</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт имя каталога для хранения временных файлов
+полученных от другого сервера.
+В каталоге может использоваться иерархия подкаталогов до трёх уровней.
+Например, при такой конфигурации
+<example>
+fastcgi_temp_path  /spool/nginx/fastcgi_temp 1 2;
+</example>
+имя временного будет такого вида:
+<example> 
+/spool/nginx/fastcgi_temp/7/45/00000123457
+</example>
+</para>
+
+</directive>
+
+</section>
+
+
+<section name="Параметры, передаваемые FastCGI-серверу" id="parameters">
+
+<para>
+Строки заголовка HTTP запроса передаются FastCGI-серверу в виде параметров.
+В приложениях и скриптах, запущенных в виде FastCGI-сервера,
+эти параметры обычно доступны в виде переменных среды.
+Например, строка заголовка "User-Agent" передаётся как параметр
+HTTP_USER_AGENT.
+Кроме строк заголовка HTTP запроса, можно передавать произвольные параметры
+с помощью директивы <link id="fastcgi_param"/>.
+</para>
+
+</section>
+
+
+<section name="Встроенные переменные" id="variables">
+
+<para>
+В модуле ngx_http_fastcgi_module есть встроенные переменные,
+которые можно использовать для формирования параметров с помощью директивы
+<link id="fastcgi_param"/>:
+<list type="bullet">
+
+<listitem>
+<para>
+$fastcgi_script_name, эта переменная равна URI запроса
+или же, если URI заканчивается слэшом, то — URI запроса плюс имя
+индексного файла, задаваемого директивой <link id="fastcgi_index"/>.
+Эту переменную можно использовать для задания параметра SCRIPT_FILENAME
+и PATH_TRANSLATED, используемых, в частности, для определения имени
+скрипта в PHP. Например, для запроса "/info/" и при использовании директив
+<example>
+fastcgi_index  index.php;
+fastcgi_param  SCRIPT_FILENAME  /home/www/scripts/php$fastcgi_script_name;
+</example>
+параметр SCRIPT_FILENAME будут равен "/home/www/scripts/php/info/index.php".
+</para>
+
+<para>
+При использовании директивы <link id="fastcgi_split_path_info"/>
+переменная $fastcgi_script_name равна значению первого выделения,
+задаваемого этой директивой.
+</para>
+</listitem>
+
+<listitem>
+$fastcgi_path_info, эта переменная равна значению второго выделения,
+задаваемого директивой <link id="fastcgi_split_path_info"/>.
+Эту переменную можно использовать для задания параметра PATH_INFO.
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</module>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_random_index_module"
+        link="/ru/docs/http/ngx_http_random_index_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_random_index_module выдаёт случайный файл в качестве
+индексного файла каталога. Модуль работает до модуля
+<link doc="ngx_http_index_module.xml">ngx_http_index_module</link>.
+По умолчанию модуль не собирается, нужно разрешить его сборку при
+конфигурировании параметром <command>--with-http_random_index_module</command>.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+    location  /  {
+        random_index  on;
+    }
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="random_index">
+<syntax>random_index <value>[on|off]</value></syntax>
+<default>random_index off</default>
+<context>location</context>
+
+<para>
+Директива разрешает или запрещает работу модуля.
+</para>
+
+</directive>
+
+</section>
+
+</module>

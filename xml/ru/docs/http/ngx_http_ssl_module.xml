@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_ssl_module"
+        link="/ru/docs/http/ngx_http_ssl_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_ssl_module обеспечивает работу по протоколу HTTPS.
+Поддерживается проверка сертификатов клиентов с ограничением — 
+если в файле, заданном директивой <link id="ssl_certificate"/>,
+указана цепочка сертификатов, то при проверке клиентских сертификатов
+nginx также будет использовать и сертификаты этих промежуточных CA.
+</para>
+
+<para>
+По умолчанию модуль не собирается, нужно разрешить его сборку
+при конфигурировании параметром
+<command>--with-http_ssl_module</command>.
+Для сборки и работы этого модуля нужна библиотека
+<link url="http://www.openssl.org">OpenSSL</link>.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+Для уменьшения загрузки процессора рекомендуется
+<list type="bullet">
+
+<listitem>
+установить число рабочих процессов равным числу процессоров,
+</listitem>
+
+<listitem>
+разрешить keep-alive соединения,
+</listitem>
+
+<listitem>
+включить разделяемый кэш сессий,
+</listitem>
+
+<listitem>
+выключить встроенный кэш сессий
+</listitem>
+
+<listitem>
+и, возможно, увеличить время жизни сессии (по умолчанию 5 минут):
+</listitem>
+
+</list>
+
+<example>
+<emphasis>worker_processes  2;</emphasis>
+
+http {
+
+    ...
+
+    server {
+        listen               443;
+        <emphasis>keepalive_timeout    70;</emphasis>
+
+        ssl                  on;
+        ssl_protocols        SSLv3 TLSv1;
+        ssl_ciphers          AES128-SHA:AES256-SHA:RC4-SHA:DES-CBC3-SHA:RC4-MD5;
+        ssl_certificate      /usr/local/nginx/conf/cert.pem;
+        ssl_certificate_key  /usr/local/nginx/conf/cert.key;
+        <emphasis>ssl_session_cache    shared:SSL:10m;</emphasis>
+        <emphasis>ssl_session_timeout  10m;</emphasis>
+
+        ...
+    }
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="ssl">
+<syntax>ssl <value>[on|off]</value></syntax>
+<default>ssl off</default>
+<context>http, server</context>
+
+<para>
+Директива разрешает протокол HTTPS для данного виртуального сервера.
+</para>
+
+</directive>
+
+
+<directive name="ssl_certificate">
+<syntax>ssl_certificate <value>файл</value></syntax>
+<default>нет</default>
+<context>http, server</context>
+
+<para>
+Директива указывает файл с сертификатом в формате PEM
+для данного виртуального сервера.
+Если вместе с основным сертификатом нужно указать промежуточные,
+то они должны находиться в этом же файле в следующем порядке — сначала
+основной сертификат, а затем промежуточные.
+В этом же файле может находиться секретный ключ в формате PEM.
+</para>
+
+<para>
+Нужно иметь ввиду, что из-за ограничения протокола HTTPS
+виртуальные сервера должны слушать на разных IP-адресах:
+<example>
+     server {
+         listen           192.168.1.1:443;
+         server_name      one.example.com;
+         ssl_certificate  /usr/local/nginx/conf/one.example.com.cert;
+         ...
+     }
+
+     server {
+         listen           192.168.1.2:443;
+         server_name      two.example.com;
+         ssl_certificate  /usr/local/nginx/conf/two.example.com.cert;
+         ...
+     }
+</example>
+иначе для второго сайта будет выдаваться
+<link doc="../faq.xml#name_based_vhost_ssl">сертификат
+первого сервера</link>.
+</para>
+
+</directive>
+
+
+<directive name="ssl_certificate_key">
+<syntax>ssl_certificate_key <value>файл</value></syntax>
+<default>нет</default>
+<context>http, server</context>
+
+<para>
+Директива указывает файл с секретным ключом в формате PEM
+для данного виртуального сервера.
+</para>
+
+</directive>
+
+
+<directive name="ssl_client_certificate">
+<syntax>ssl_client_certificate <value>файл</value></syntax>
+<default>нет</default>
+<context>http, server</context>
+
+<para>
+Директива указывает файл с сертификатами CA в формате PEM, используемыми для
+для проверки клиентских сертификатов.
+</para>
+
+</directive>
+
+
+<directive name="ssl_ciphers">
+<syntax>ssl_ciphers <value>шифры</value></syntax>
+<default>ssl_ciphers HIGH:!ADH:!MD5</default>
+<context>http, server</context>
+
+<para>
+Директива описывает разрешённые шифры.
+Шифры задаются в формате, поддерживаемом библиотекой
+OpenSSL, например:
+<example>
+    ssl_ciphers  ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+</example>
+</para>
+
+<para>
+Полный список можно посмотреть с помощью команды
+<command>openssl ciphers</command>.
+</para>
+
+</directive>
+
+
+<directive name="ssl_crl">
+<syntax>ssl_crl <value>файл</value></syntax>
+<default>нет</default>
+<context>http, server</context>
+
+<para>
+Директива (0.8.7) указывает файл с отозванными сертификатами (CRL)
+в формате PEM, используемыми для для проверки клиентских сертификатов.
+</para>
+
+</directive>
+
+
+<directive name="ssl_dhparam">
+<syntax>ssl_dhparam <value>файл</value></syntax>
+<default>нет</default>
+<context>http, server</context>
+
+<para>
+Директива (0.7.2) указывает файл с параметрами для шифров с обменом EDH-ключами.
+</para>
+
+</directive>
+
+
+<directive name="ssl_prefer_server_ciphers">
+<syntax>ssl_prefer_server_ciphers <value>[on|off]</value></syntax>
+<default>ssl_prefer_server_ciphers off</default>
+<context>http, server</context>
+
+<para>
+Директива указывает, чтобы при использовании протоколов SSLv3 и TLSv1
+серверные шифры были более приоритетны, чем клиентские.
+</para>
+
+</directive>
+
+
+<directive name="ssl_protocols">
+<syntax>ssl_protocols <value>[SSLv2] [SSLv3] [TLSv1]</value></syntax>
+<default>ssl_protocols SSLv3 TLSv1</default>
+<context>http, server</context>
+
+<para>
+Директива разрешает указанные протоколы.
+</para>
+
+</directive>
+
+
+<directive name="ssl_verify_client">
+<syntax>ssl_verify_client <value>on|off|optional</value></syntax>
+<default>ssl_verify_client off</default>
+<context>http, server</context>
+
+<para>
+Директива разрешает проверку клиентских сертификатов.
+Параметр optional (0.8.7+) запрашивает сертификат клиента
+и проверяет его, если он предоставлен.
+Результат проверки можно узнать в переменной $ssl_client_verify.
+</para>
+
+</directive>
+
+
+<directive name="ssl_verify_depth">
+<syntax>ssl_verify_depth <value>число</value></syntax>
+<default>ssl_verify_depth 1</default>
+<context>http, server</context>
+
+<para>
+Директива устанавливает глубину проверку в цепочке клиентских сертификатов.
+</para>
+
+</directive>
+
+
+<directive name="ssl_session_cache">
+<syntax>ssl_session_cache <value>off|none|[builtin[:размер]] [shared:название:размер]
+</value></syntax>
+<default>ssl_session_cache none</default>
+<context>http, server</context>
+
+<para>
+Директива задаёт тип и размеры кэшей для хранения параметров сессий.
+Тип кэша может быть следующим:
+<list type="bullet">
+
+<listitem>
+off — жёсткое запрещение использования кэша сессий:
+nginx явно говорит клиенту, что сессии не могут использоваться повторно.
+</listitem>
+
+<listitem>
+none — мягкое запрещение использования кэша сессий:
+nginx говорит клиенту, что сессии могут использоваться повторно, но
+на самом деле не используются.
+</listitem>
+
+<listitem>
+builtin — встроенный в OpenSSL кэш, используется в рамках только
+одного рабочего процесса. Размер кэша задаётся в сессиях.
+Если размер не задан, то он равен 20480 сессиям.
+Использование встроенного кэша может вести к фрагментации памяти.
+</listitem>
+
+<listitem>
+shared — разделяемый между всеми рабочими процессами.
+Размер кэша задаётся в байтах, в 1 мегабайт может поместиться
+около 4000 сессий.
+У каждого разделяемого кэша должно быть произвольное название.
+Кэш с одинаковым названием может использоваться в нескольких
+виртуальных серверах.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Можно использовать одновременно оба типа кэша, например:
+<example>
+ssl_session_cache  builtin:1000  shared:SSL:10m;
+</example>
+однако использование только разделяемого кэша без встроенного должно
+быть более эффективным.
+</para>
+
+</directive>
+
+
+<directive name="ssl_session_timeout">
+<syntax>ssl_session_timeout <value>время</value></syntax>
+<default>ssl_session_timeout 5m</default>
+<context>http, server</context>
+
+<para>
+Директива задаёт время, в течение которого клиент может повторно
+использовать параметры сессии, хранящейся в кэше.
+</para>
+
+</directive>
+
+</section>
+
+
+<section name="Обработка ошибок" id="errors">
+
+<para>
+Модуль ngx_http_ssl_module поддерживает несколько нестандартных кодов ошибок,
+которые можно использовать для перенаправления с помощью директивы <link doc="ngx_http_core_module.xml#error_page">error_page</link>:
+<list type="bullet">
+
+<listitem>
+495 — при проверке клиентского сертификата произошла ошибка;
+</listitem>
+
+<listitem>
+496 — клиент не предоставил требуемый сертификат;
+</listitem>
+
+<listitem>
+497 — обычный запрос был послан на порт HTTPS.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Перенаправление делается после того, как запрос полностью разобран
+и доступны такие переменные, как $request_uri, $uri, $arg и прочие.
+</para>
+
+</section>
+
+
+<section name="Встроенные переменные" id="variables">
+
+<para>
+Модуль ngx_http_ssl_module поддерживает несколько встроенных переменных:
+<list type="bullet">
+
+<listitem>
+$ssl_cipher возвращает строку используемых шифров для установленного
+SSL-соединения;
+</listitem>
+
+<listitem>
+$ssl_client_cert возвращает клиентский сертификат
+для установленного SSL-соединения в формате PEM
+перед каждой строкой которого, кроме первой, вставляется символ табуляции;
+предназачен для использования в директиве <link doc="ngx_http_proxy_module.xml#proxy_set_header">proxy_set_header</link>.
+</listitem>
+
+<listitem>
+$ssl_client_raw_cert возвращает клиентский сертификат
+для установленного SSL-соединения в формате PEM;
+</listitem>
+
+<listitem>
+$ssl_client_serial возвращает серийный номер клиентского сертификата
+для установленного SSL-соединения;
+</listitem>
+
+<listitem>
+$ssl_client_s_dn возвращает строку subject DN клиентского сертификата
+для установленного SSL-соединения;
+</listitem>
+
+<listitem>
+$ssl_client_i_dn возвращает строку issuer DN клиентского сертификата
+для установленного SSL-соединения.
+</listitem>
+
+<listitem>
+$ssl_client_verify возвращает результат проверки клиентского сертификата:
+"SUCCESS", "FAILED" и, если серфтикат не был предоставлен - "NONE".
+</listitem>
+
+<listitem>
+$ssl_protocol возвращает протокол установленного SSL-соединения;
+</listitem>
+
+<listitem>
+$ssl_session_id возвращает идентификатор сессии установленного SSL-соединения;
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</module>

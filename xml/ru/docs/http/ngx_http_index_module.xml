@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_index_module"
+        link="/ru/docs/http/ngx_http_index_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_index_module обслуживает запросы, оканчивающиеся слэшом.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+    location  /  {
+        index  index.$geo.html  index.html;
+    }
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="index">
+<syntax>index <value>файл [файл ...]</value>
+</syntax>
+<default>index index.html</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет файлы, которые будут использоваться в качестве индекса.
+В имени файла можно использовать переменные.
+Наличие файлов проверяется в порядке их перечисления.
+В конце списка может стоять файл с абсолютным путём.
+Пример использования:
+<example>
+    index  index.$geo.html  index.0.html  /index.html;
+</example>
+</para>
+
+<para>
+Необходимо иметь ввиду, что при использовании индексного файла делается
+внутренний редирект и запрос может быть обработан уже в другом location'е.
+Например, запрос "/" будет фактически обработан во втором location'е
+как "/index.html" в такой конфигурации:
+<example>
+    location  = /  {
+        index  index.html;
+    }
+
+    location  /  {
+        ...
+    }
+</example>
+</para>
+
+</directive>
+
+</section>
+
+</module>

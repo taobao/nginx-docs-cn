@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_geoip_module"
+        link="/ru/docs/http/ngx_http_geoip_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_geoip_module создаёт переменные, значения которых
+зависят от IP-адреса клиента, используя готовые базы
+<link url="http://www.maxmind.com">MaxMind</link> (0.8.6+).
+По умолчанию модуль не собирается, нужно разрешить его сборку
+при конфигурировании параметром <command>--with-http_geoip_module</command>.
+Для сборки и работы этого модуля нужна библиотека
+<link url="http://www.maxmind.com/app/c">MaxMind GeoIP</link>.
+
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+http {
+    geoip_country  GeoIP.dat;
+    geoip_city     GeoLiteCity.dat;
+    ...
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="geoip_country">
+<syntax>geoip_country <value>база</value></syntax>
+<default>нет</default>
+<context>http</context>
+
+<para>
+Директива geoip_country указывает базу для определения страны в зависимости
+от значения IP-адреса клиента.
+При использовании этой базы доступны следующие переменные:
+<list type="bullet">
+
+<listitem>
+$geoip_country_code; — двухбуквенный код страны, например, "RU", "US".
+</listitem>
+
+<listitem>
+$geoip_country_code3; — трёхбуквенный код страны, например, "RUS", "USA".
+</listitem>
+
+<listitem>
+$geoip_country_name; — название страны, например, "Russian Federation",
+"United States".
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="geoip_city">
+<syntax>geoip_city <value>база</value></syntax>
+<default>нет</default>
+<context>http</context>
+
+<para>
+Директива geoip_city указывает базу для определения страны, региона и города
+в зависимости от значения IP-адреса клиента.
+При использовании этой базы доступны следующие переменные:
+<list type="bullet">
+
+<listitem>
+$geoip_city_country_code; — двухбуквенный код страны, например, "RU", "US".
+</listitem>
+
+<listitem>
+$geoip_city_country_code3; — трёхбуквенный код страны, например,
+"RUS", "USA".
+</listitem>
+
+<listitem>
+$geoip_city_country_name; — название страны, например, "Russian Federation",
+"United States".
+</listitem>
+
+<listitem>
+$geoip_region; — название региона страны (область, край, штат,
+провинция, федеральная земля и тому подобное), например, "Moscow City", "DC".
+</listitem>
+
+<listitem>
+$geoip_city; — название города, например, "Moscow", "Washington".
+</listitem>
+
+<listitem>
+$geoip_postal_code; — почтовый индекс.
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+</section>
+
+</module>

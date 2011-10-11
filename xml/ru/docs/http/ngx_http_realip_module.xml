@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_realip_module"
+        link="/ru/docs/http/ngx_http_realip_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_realip_module позволяет менять адрес клиента
+на переданный в указанной строке заголовка.
+По умолчанию модуль не собирается, нужно разрешить его сборку
+при конфигурировании параметром <command>--with-http_realip_module</command>.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+    set_real_ip_from   192.168.1.0/24;
+    set_real_ip_from   192.168.2.1;
+    real_ip_header     X-Real-IP;
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="set_real_ip_from">
+<syntax>set_real_ip_from <value>[адрес|CIDR]</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива описывает доверенные адреса, которые передают верный адрес
+для замены.
+</para>
+
+</directive>
+
+
+<directive name="real_ip_header">
+<syntax>real_ip_header <value>имя строки[X-Real-IP|X-Forwarded-For]</value></syntax>
+<default>real_ip_header X-Real-IP</default>
+<context>http, server, location</context>
+
+<para>
+Директива указывает название строки в заголовке запроса,
+в котором передаётся адрес для замены.
+В случае строки "X-Forwarded-For" используется последний адрес в значении
+строки. Для остальных строк используется всё значение.
+</para>
+
+</directive>
+
+</section>
+
+</module>

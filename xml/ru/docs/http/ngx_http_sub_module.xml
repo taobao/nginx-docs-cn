@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_sub_module"
+        link="/ru/docs/http/ngx_http_sub_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_sub_module — это фильтр,
+изменяющий в ответе одну заданную строку на другую.
+По умолчанию модуль не собирается, нужно разрешить его сборку
+при конфигурировании параметром <command>--with-http_sub_module</command>.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+location / {
+    sub_filter        &lt;/head&gt;
+           '&lt;/head&gt;&lt;script language="javascript" src="$script"&gt;&lt;/script&gt;';
+    sub_filter_once   on;
+}
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="sub_filter">
+<syntax>sub_filter <value>строка замена</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт строку, которую нужно заменить, и строку замены.
+Заменяемая строка проверяется без учёта регистра.
+В строке замены можно использовать переменные.
+</para>
+
+</directive>
+
+
+<directive name="sub_filter_once">
+<syntax>sub_filter_once <value>on|off</value></syntax>
+<default>sub_filter_once  on</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, сколько раз нужно искать заменяемую строку — один
+раз или несколько.
+</para>
+
+</directive>
+
+
+<directive name="sub_filter_types">
+<syntax>sub_filter_types <value>mime-тип [mime-тип ...]</value></syntax>
+<default>sub_filter_types text/html</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает замену строк в ответах с указанными MIME-типами
+в дополнение к "text/html".
+</para>
+
+</directive>
+
+</section>
+
+</module>

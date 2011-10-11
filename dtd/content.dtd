@@ -3,45 +3,60 @@
 <!ATTLIST  section
            name         CDATA #IMPLIED
            title        CDATA #IMPLIED
+           id           ID #IMPLIED
 >
 
-<!ELEMENT  para         (#PCDATA | a | br | list | orderedlist | note | i | b |
-                         nobr | table | url | code | dirname | path | header |
-                         programlisting | initial | development_version |
-                         stable_version )* >
+<!ELEMENT  para         (#PCDATA | a | link | br | list | orderedlist | note |
+                         i | b | nobr | table | url | code | command |
+                         dirname | path | header | value | programlisting |
+                         initial | development_version | stable_version )* >
 
 <!ELEMENT  a            (#PCDATA) >
 <!ATTLIST  a
            href         CDATA #REQUIRED
 >
 
+<!ELEMENT  link         (#PCDATA) >
+<!ATTLIST  link
+           doc          CDATA #IMPLIED
+           id           CDATA #IMPLIED
+           url          CDATA #IMPLIED
+>
+
 <!ELEMENT  br           EMPTY >
 
 <!ELEMENT  i            (#PCDATA) >
 <!ELEMENT  b            (#PCDATA) >
+<!ELEMENT  command      (#PCDATA | value)* >
 <!ELEMENT  dirname      (#PCDATA | i)* >
 <!ELEMENT  path         (#PCDATA | development_version | stable_version)* >
 <!ELEMENT  code         (#PCDATA | i)* >
 <!ELEMENT  header       (#PCDATA) >
 <!ELEMENT  initial      (#PCDATA) >
 <!ELEMENT  url          (#PCDATA) >
+<!ELEMENT  value        (#PCDATA) >
 
 <!ELEMENT  programlisting  (#PCDATA | i | b | dirname | path |
                             development_version | stable_version)* >
 
-<!ELEMENT  nobr         (#PCDATA | i | b | dirname | path)* >
+<!ELEMENT  nobr         (#PCDATA | i | b | command | dirname | path)* >
 
-<!ELEMENT  list         (item+) >
+<!ELEMENT  list         (item+ | listitem+) >
 <!ELEMENT  orderedlist  (item+) >
 <!ELEMENT  item         (#PCDATA | para | a | br | nobr | list | i | b | url |
-                         dirname | path)* >
+                         dirname | path | command | value | programlisting)* >
+<!ELEMENT  listitem     (#PCDATA | para | a | br | nobr | list | i | b | url |
+                         dirname | path | command | value | programlisting)* >
 
-<!ELEMENT  note         (#PCDATA | para | a | br | nobr | list | i | b | url |
-                         dirname | path | programlisting | paypal)* >
+<!ELEMENT  note         (#PCDATA | para | a | br | list | orderedlist | i | b |
+                         nobr | table | url | code | command | dirname | path |
+                         header | programlisting | initial | paypal |
+                         development_version | stable_version )* >
 
 <!ELEMENT  table        (tr+) >
 <!ATTLIST  table
            note         CDATA #IMPLIED
+           width        CDATA #IMPLIED
 >
 <!ELEMENT  tr           (td+) >
 <!ELEMENT  td           (#PCDATA | code | i)* >

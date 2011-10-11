@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_gzip_static_module"
+        link="/ru/docs/http/ngx_http_gzip_static_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_gzip_static_module позволяет отдавать
+вместо обычного файла предварительно сжатый файл с таким же именем
+и с суффиксом ".gz".
+</para>
+
+<para>
+По умолчанию модуль не собирается, нужно разрешить его сборку при
+конфигурировании параметром <command>--with-http_gzip_static_module</command>.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+    gzip_static      on;
+    gzip_proxied     expired no-cache no-store private auth;
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="gzip_static">
+<syntax>gzip_static <value>on|off</value></syntax>
+<default>gzip_static off</default>
+<context>http, server, location</context>
+
+<para>
+Разрешает или запрещает проверку готового сжатого файла.
+При использовании также учитываются директивы
+<link doc="ngx_http_gzip_module.xml#gzip_http_version">gzip_http_version</link>,
+<link doc="ngx_http_gzip_module.xml#gzip_proxied">gzip_proxied</link>,
+<link doc="ngx_http_gzip_module.xml#gzip_disable">gzip_disable</link>
+и <link doc="ngx_http_gzip_module.xml#gzip_vary">gzip_vary</link>.
+</para>
+
+<para>
+Сжимать файлы можно с помощью программы gzip или совместимой с ней.
+Желательно, чтобы время модификации исходного и сжатого файлов совпадали.
+</para>
+
+</directive>
+
+</section>
+
+</module>

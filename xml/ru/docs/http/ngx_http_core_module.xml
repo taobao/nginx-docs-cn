@@ -1,0 +1,1819 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_core_module"
+        link="/ru/docs/http/ngx_http_core_module.html"
+        lang="ru">
+
+<section name="Директивы" id="directives">
+
+<directive name="aio">
+<syntax>aio <value>[on|off|sendfile]</value></syntax>
+<default>aio off</default>
+<context>http, server, location</context>
+
+<para>
+Директива (0.8.11) разрешает или запрещает использовать файловый AIO
+во FreeBSD и Linux.
+</para>
+
+<para>
+Во FreeBSD AIO можно использовать, начиная с FreeBSD 4.3 версии.
+AIO можно собрать в ядре статически
+<example>
+options VFS_AIO
+</example>
+или же подгрузить динамически
+<example>
+kldload aio
+</example>
+</para>
+
+<para>
+Во FreeBSD 5 и 6 при включении AIO статически или динамически на стадии
+загрузки ядра вся сетевая подсистема будет использовать GiantLock,
+что может негативно сказаться на производительности системы в целом.
+Эта зависимость устранена во FreeBSD-6.4 STABLE от 2009 года и во FreeBSD 7.
+Однако, начиная с FreeBSD 5.3, есть возможность включать AIO,
+не связывая сетевую подсистему GiantLock'ом — для этого модуль AIO
+нужно подгружать уже после загрузки ядра.
+В этом случае в /var/log/messages появится сообщение
+<example>
+WARNING: Network stack Giant-free, but aio requires Giant.
+Consider adding 'options NET_WITH_GIANT' or setting debug.mpsafenet=0
+</example>
+которое можно смело проигнорировать.
+<note>
+Требование использовать GiantLock в AIO связано с тем, что FreeBSD
+поддерживает асинхронные вызовы aio_read()/aio_write() для работы с сокетами.
+Но поскольку nginx использует AIO только для работы с диском, то проблем
+не возникает.
+</note>
+</para>
+
+<para>
+Для работы AIO нужно выключить sendfile:
+<example>
+location  /video/ {
+    sendfile        off;
+    aio             on;
+    output_buffers  1 64k;
+}
+</example>
+</para>
+
+<para>
+Кроме того, начиная с FreeBSD 5.2.1 и nginx-0.8.12, AIO также можно
+использовать для подгрузки данных для sendfile():
+<example>
+location  /video/ {
+    sendfile        on;
+    tcp_nopush      on;
+    aio             sendfile;
+}
+</example>
+В такой конфигурации используется флаг SF_NODISKIO и sendfile()
+не блокируется на диске, а сообщает об отсутствии данных в памяти,
+после чего nginx инициирует асинхронную подгрузку данных,
+читая только один байт. При этом ядро FreeBSD подгружает в память
+первые 128K файла, однако при последующих чтениях файл подгружается
+частями только по 16K. Изменить это можно с помощью директивы
+<link id="read_ahead">read_ahead</link>.
+</para>
+
+<para>
+В Linux AIO можно использовать, только начиная с версии ядра 2.6.22,
+и, кроме того, ещё необходимо дополнительно включать
+<link id="directio">directio</link>, иначе чтение будет блокирующимся:
+<example>
+location  /video/ {
+    aio             on;
+    directio        512;
+    output_buffers  1 128k;
+}
+</example>
+</para>
+
+<para>
+Поскольку directio в Linux можно использовать только для чтения блоков,
+выравненных по 512 байт (или 4К для XFS), то невыравненный конец файла
+будет читаться блокировано. То же относится к запросам части ответа
+byte-ranges и к запросам FLV не с начала файла: чтение невыровненных начала
+и конца ответа будет блокирующимся. sendfile выключать не нужно, так
+как при использовании directio он выключается сам.
+</para>
+
+</directive>
+
+
+<directive name="alias">
+<syntax>alias <value>путь</value></syntax>
+<default>нет</default>
+<context>location</context>
+
+<para>
+Директива задаёт замену для указанного location'а.
+Например, при такой конфигурации
+<example>
+location  /i/ {
+    alias  /data/w3/images/;
+}
+</example>
+на запрос "/i/top.gif" будет отдан файл "/data/w3/images/top.gif".
+</para>
+
+<para>
+В значении пути можно использовать переменные.
+</para>
+
+<para>
+Если директива alias используется внутри location'а, заданного
+регулярным выражением, то регулярное выражение должно содержать выделения,
+а директива alias — ссылки на эти выделения (0.7.40), например:
+<example>
+location ~ ^/users/(.+\.(?:gif|jpe?g|png))$ {
+    alias  /data/w3/images/$1;
+}
+</example>
+</para>
+
+<para>
+Если location и последняя часть значения директивы совпадают:
+<example>
+location  /images/ {
+    alias  /data/w3/images/;
+}
+</example>
+то лучше воспользоваться директивой <link id="root"/>:
+<example>
+location  /images/ {
+    root   /data/w3;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="client_body_in_file_only">
+<syntax>client_body_in_file_only <value>on|clean|off</value></syntax>
+<default>client_body_in_file_only off</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, сохранять ли всё тело запроса клиента в файл.
+Директиву можно использовать для отладки и при использовании
+переменной $request_body_file или метода <link doc="ngx_http_perl_module.xml#methods">$r-&gt;request_body_file</link>
+модуля ngx_http_perl_module.
+</para>
+
+<para>
+При использовании параметра "on" временные файлы по окончании
+обработки запроса не удаляется.
+</para>
+
+<para>
+Параметр "clean" разрешает удалять временные файлы, оставшиеся по окончании
+обработки запроса.
+</para>
+
+</directive>
+
+
+<directive name="client_body_in_single_buffer">
+<syntax>client_body_in_single_buffer <value>on|off</value></syntax>
+<default>client_body_in_single_buffer off</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, хранить ли всё тело запроса клиента в одном буфере.
+Директива рекомендуется при использовании переменной $request_body
+для уменьшения операций копирования.
+</para>
+
+</directive>
+
+
+<directive name="client_body_buffer_size">
+<syntax>client_body_buffer_size <value>размер</value></syntax>
+<default>client_body_buffer_size 8k/16k</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт размер буфера для чтения тела запроса клиента.
+Если тело запроса больше заданного буфера, то всё тело запроса или только
+его часть записывается во временный файл.
+По умолчанию размер одного буфера равен двум размерам страницы, в зависимости
+от платформы это или 8K, или 16K.
+</para>
+
+</directive>
+
+
+<directive name="client_body_temp_path">
+<syntax>client_body_temp_path <value>путь [ уровень1 [ уровень2 [ уровень3 ] ] ]
+</value></syntax>
+<default>client_body_temp_path client_body_temp</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт имя каталога для хранения временных файлов с телом запроса
+клиента.
+В каталоге может использоваться иерархия подкаталогов до трёх уровней.
+Например, при такой конфигурации
+<example>
+client_body_temp_path  /spool/nginx/client_temp 1 2;
+</example>
+имя временного будет такого вида:
+<example>
+/spool/nginx/client_temp/7/45/00000123457
+</example>
+</para>
+
+</directive>
+
+
+<directive name="client_body_timeout">
+<syntax>client_body_timeout <value>время</value></syntax>
+<default>client_body_timeout 60</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут при чтении тела запроса клиента.
+Таймаут устанавливается не на всю передачу тела запроса,
+а только между двумя операциями чтения.
+Если по истечении этого времени клиент ничего не передаст,
+то ему возвращается ошибка "Request time out" (408).
+</para>
+
+</directive>
+
+
+<directive name="client_header_buffer_size">
+<syntax>client_header_buffer_size <value>размер</value></syntax>
+<default>client_header_buffer_size 1k</default>
+<context>http, server</context>
+
+<para>
+Директива задаёт размер буфера для чтения заголовка запроса клиента.
+Для подавляющего большинства запросов вполне достаточно буфера размером в 1K.
+Однако если в запросе есть большие cookies или же запрос пришёл
+от wap-клиента, то он может не поместиться в 1K.
+Поэтому, если строка запроса или строка заголовка запроса не помещается
+полностью в этот буфер, то выделяются большие буферы, задаваемые директивой
+<link id="large_client_header_buffers"/>.
+</para>
+
+</directive>
+
+
+<directive name="client_header_timeout">
+<syntax>client_header_timeout <value>время</value></syntax>
+<default>client_header_timeout 60</default>
+<context>http, server</context>
+
+<para>
+Директива задаёт таймаут при чтении заголовка запроса клиента.
+Если по истечении этого времени клиент не передаст полностью заголовок
+запроса, то ему возвращается ошибка "Request time out" (408).
+</para>
+
+</directive>
+
+
+<directive name="client_max_body_size">
+<syntax>client_max_body_size <value>размер</value></syntax>
+<default>client_max_body_size 1m</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт максимально допустимый размер тела запроса клиента,
+указываемый в строке "Content-Length" в заголовке запроса.
+Если размер больше заданного, то клиенту возвращается ошибка
+"Request Entity Too Large" (413). Следует иметь в виду, что
+<link url="http://sysoev.ru/web/upload.html">браузеры не умеют
+корректно показывать эту ошибку</link>.
+</para>
+
+</directive>
+
+
+<directive name="default_type">
+<syntax>default_type <value>MIME-тип</value></syntax>
+<default>default_type text/plain</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт MIME-тип ответов по умолчанию.
+</para>
+
+</directive>
+
+
+<directive name="directio">
+<syntax>directio <value>[размер|off]</value></syntax>
+<default>directio off</default>
+<context>http, server, location</context>
+
+<para>
+Директива (0.7.7) разрешает использовать флаги
+O_DIRECT (FreeBSD, Linux), F_NOCACHE (Mac OS X) или функцию directio() (Solaris)
+при чтении файлов, размер которых больше либо равен указанному.
+Директива автоматически запрещает (0.7.15) использование
+<link id="sendfile">sendfile'а</link> для данного запроса.
+Рекомендуется использовать для больших файлов:
+<example>
+directio  4m;
+</example>
+или при использовании <link id="aio">aio</link> в Linux.
+</para>
+
+</directive>
+
+
+<directive name="directio_alignment">
+<syntax>directio_alignment <value>размер</value></syntax>
+<default>directio_alignment 512</default>
+<context>http, server, location</context>
+
+<para>
+Директива (0.8.11) устанавливает выравнивание для
+<link id="directio">directio</link>.
+В большинстве случае достаточно выравнивания 512 байт, однако
+при использовании XFS под Linux его нужно увеличить до 4K.
+</para>
+
+</directive>
+
+
+<directive name="error_page">
+<syntax>error_page <value>код [код ...] [=|=ответ] uri</value>
+</syntax>
+<default>нет</default>
+<context>http, server, location, if в location</context>
+
+<para>
+Директива задаёт URI, который будет показываться для указанных ошибок.
+Директивы наследуются с предыдущего уровня при условии, что на данном
+уровне не описаны свои директивы error_page.
+В URI можно использовать переменные.
+</para>
+
+<para>
+Пример использования:
+<example>
+error_page   404          /404.html;
+error_page   502 503 504  /50x.html;
+error_page   403          http://example.com/forbidden.html;
+</example>
+</para>
+
+<para>
+Кроме того, можно поменять код ответа на другой, например:
+<example>
+error_page   404  =200  /empty.gif;
+</example>
+</para>
+
+<para>
+Если ошибочный ответ обрабатывается проксированным сервером или
+FastCGI-сервером и этот сервер может вернуть разные коды ответов,
+например, 200, 302, 401 или 404, то можно выдавать возвращаемый код:
+<example>
+error_page   404  =  /404.php;
+</example>
+</para>
+
+<para>
+Если при перенаправлении не нужно менять URI, то можно перенаправить
+обработку ошибки в именованный location:
+<example>
+location / {
+    error_page   404  =  @fallback;
+}
+
+location @fallback {
+    proxy_pass   http://backend;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="if_modified_since">
+<syntax>if_modified_since <value>[off|exact|before]</value></syntax>
+<default>if_modified_since exact</default>
+<context>http, server, location</context>
+
+<para>
+Директива (0.7.24) определяет, как сравнивать время модификации ответа и
+время в заголовке запроса "If-Modified-Since":
+<list type="bullet">
+
+<listitem>
+off — не проверять заголовок запроса
+"If-Modified-Since" (0.7.34);
+</listitem>
+
+<listitem>
+exact — точно совпадение;
+</listitem>
+
+<listitem>
+before — время модификации ответа меньше или равно времени, заданному
+в заголовке запроса "If-Modified-Since".
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="internal">
+<syntax>internal</syntax>
+<default>нет</default>
+<context>location</context>
+
+<para>
+Директива указывает, что данный location может использоваться только
+для внутренних запросов.
+Для внешних запросов будет возвращаться ошибка "Not found" (404).
+Внутренними запросами являются
+<list type="bullet">
+
+<listitem>
+запросы, перенаправленные директивой error_page;
+</listitem>
+
+<listitem>
+подзапросы, формируемые командой include virtual модуля ngx_http_ssi_module;
+</listitem>
+
+<listitem>
+запросы, изменённые директивой rewrite модуля ngx_http_rewrite_module.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Пример использования:
+<example>
+error_page   404   /404.html;
+
+location  /404.html {
+    internal;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="keepalive_requests">
+<syntax>keepalive_requests <value>число</value></syntax>
+<default>keepalive_requests 100</default>
+<context>http, server, location</context>
+
+<para>
+Директива (0.8.0) задаёт максимальное число запросов, которые можно
+сделать по одному keep-alive соединению.
+</para>
+
+</directive>
+
+
+<directive name="keepalive_timeout">
+<syntax>keepalive_timeout <value>время [время]</value></syntax>
+<default>keepalive_timeout 75</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут, в течение которого keep-alive соединение
+с клиентом не будет закрыто со стороны сервера.
+Второй параметр задаёт значение в строке "Keep-Alive: timeout=время"
+в заголовке ответа. Параметры могут отличаться друг от друга.
+Строку "Keep-Alive: timeout=время" понимают Mozilla и Konqueror.
+MSIE сам закрывает keep-alive соединение примерно через 60 секунд.
+</para>
+
+</directive>
+
+
+<directive name="large_client_header_buffers">
+<syntax>large_client_header_buffers <value>число размер</value>
+</syntax>
+<default>large_client_header_buffers 4 4k/8k</default>
+<context>http, server</context>
+
+<para>
+Директива задаёт максимальное число и размер буферов для чтения
+большого заголовка запроса клиента.
+Строка запроса должна быть не больше размера одного буфера, иначе клиенту
+возвращается ошибка "Request URI too large" (414).
+Длинная строка заголовка запроса также должна быть не больше размера одного
+буфера, иначе клиенту возвращается ошибка "Bad request" (400).
+Буферы выделяются только по мере необходимости.
+По умолчанию размер одного буфера равен размеру страницы, в зависимости
+от платформы это или 4K, или 8K.
+Если по окончании обработки запроса соединение переходит в состояние
+keep-alive, то эти буферы освобождаются.
+</para>
+
+</directive>
+
+
+<directive name="limit_except">
+<syntax>limit_except <value>методы</value> { ... }</syntax>
+<default>нет</default>
+<context>location</context>
+
+<para>
+Директива ограничивает HTTP-методы, доступные внутри location.
+Метод GET также включает в себя метод HEAD.
+Для ограничения могут использоваться директивы модулей <link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
+и <link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>:
+<example>
+limit_except  GET {
+    allow  192.168.1.0/32;
+    deny   all;
+}
+</example>
+Обратите внимание, что данное ограничение будет выполняться для всех методов,
+<value>кроме</value> методов GET и HEAD.
+</para>
+
+</directive>
+
+
+<directive name="limit_rate">
+
+<syntax>limit_rate <value>скорость</value></syntax>
+<default>нет</default>
+<context>http, server, location, if в location</context>
+
+<para>
+Директива задаёт скорость передачи ответа клиенту.
+Скорость задаётся в байтах в секунду.
+
+Ограничение работает только для одного соединения, то есть,
+если клиент откроет 2 соединения, то суммарная скорость будет в 2 раза
+выше ограниченной.
+</para>
+
+<para>
+Если необходимо ограничить скорость для части клиентов на уровне сервера,
+то директива limit_rate для этого не подходит. Вместо этого следует
+задать нужную скорость переменной $limit_rate:
+<example>
+server {
+
+    if ($slow) {
+        set $limit_rate  4k;
+    }
+
+    ...
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="limit_rate_after">
+<syntax>limit_rate_after <value>размер</value></syntax>
+<default>нет</default>
+<context>http, server, location, if в location</context>
+
+<para>
+Директива (0.8.0) задаёт объём данных, после передачи которого
+начинает ограничиваться скорость передачи ответа клиенту, например:
+<example>
+location /flv/ {
+    flv;
+    limit_rate_after  500k;
+    limit_rate        50k;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="listen">
+<syntax>listen <value>адрес:порт
+        [default|default_server|
+        [backlog=число |
+         rcvbuf=размер |
+         sndbuf=размер |
+         accept_filter=фильтр |
+         deferred |
+         bind |
+         ipv6only=[on|off] |
+         ssl]]
+</value></syntax>
+<default>listen *:80 | *:8000</default>
+<context>server</context>
+
+<para>
+Директива задаёт адрес и порт, на которых сервер принимает запросы.
+Можно указать только адрес или только порт, кроме того, адрес может
+быть именем сервера, например:
+<example>
+listen  127.0.0.1:8000;
+listen  127.0.0.1;
+listen  8000;
+listen  *:8000;
+listen  localhost:8000;
+</example>
+адреса IPv6 (0.7.36) задаются в квадратных скобках:
+<example>
+listen  [::]:8000;
+listen  [fe80::1];
+</example>
+</para>
+
+<para>
+Если указан только адрес, то используется порт 80.
+</para>
+
+<para>
+Если директива не указана, то используется порт *:80, если nginx работает
+с правами пользователя root, или порт *:8000.
+</para>
+
+<para>
+Если у директивы есть параметр default, то сервер, в котором описана
+эта директива, будет сервером по умолчанию для указанной пары адрес:порт.
+Если же директив с параметром default нет, то сервером по умолчанию
+будет первый сервер, в котором описана пара адрес:порт.
+Начиная с версии 0.8.21, можно использовать параметр default_server.
+</para>
+
+<para>
+В директиве listen с параметром default можно также указать несколько
+параметров, специфичных для системных вызовов listen(2) и bind(2).
+Начиная с версии 0.8.21, эти параметры можно задать в любой директиве
+listen, но только один раз для указанной пары адрес:порт.
+<list type="bullet">
+
+<listitem>
+backlog=число — задаёт параметр backlog в вызове listen(2).
+По умолчанию backlog равен -1 для FreeBSD и 511 для всех остальных
+платформ.
+</listitem>
+
+<listitem>
+rcvbuf=размер — задаёт параметр SO_RCVBUF для слушающего сокета.
+</listitem>
+
+<listitem>
+sndbuf=размер — задаёт параметр SO_SNDBUF для слушающего сокета.
+</listitem>
+
+<listitem>
+accept_filter=фильтр — задаёт название accept-фильтра.
+Работает только на FreeBSD, можно использовать два фильтра — dataready
+и httpready.
+По сигналу -HUP accept-фильтр можно менять только в последних
+версиях FreeBSD, начиная с 6.0, 5.4-STABLE и 4.11-STABLE.
+</listitem>
+
+<listitem>
+deferred — указывает использовать отложенный accept(2) на Linux
+с помощью опции TCP_DEFER_ACCEPT.
+</listitem>
+
+<listitem>
+bind — указывает, что для данной пары адрес:порт нужно делать bind(2)
+отдельно.
+Дело в том, что если описаны несколько директив listen с одинаковым портом,
+но разными адресами и одна из директив listen слушает на всех адресах
+для данного порта (*:порт), то nginx сделает bind(2) только на *:порт.
+Необходимо учитывать, что в этом случае для определения адреса, на которой
+пришло соединение, делается системный вызов getsockname().
+Если же используются параметры backlog, rcvbuf, sndbuf, accept_filter
+или deferred, то для данной пары адрес:порт bind(2) всегда делается отдельно.
+</listitem>
+
+<listitem>
+ipv6only — параметр (0.7.42) задаёт значение параметра IPV6_V6ONLY
+для слушающего сокета.
+Установить этот параметр можно только один раз на старте.
+</listitem>
+
+<listitem>
+ssl — параметр (0.7.14) не имеет отношения к системным вызовам
+listen(2) и bind(2), а позволяет указать, что все соединения,
+принимаемые на этом порту, должны работать в режиме SSL.
+Это позволяет задать компактную конфигурацию для сервера,
+работающего сразу в двух режимах — HTTP и HTTPS.
+<example>
+listen  80;
+listen  443 default ssl;
+</example>
+</listitem>
+
+</list>
+</para>
+
+<para>
+Пример использования параметров:
+<example>
+listen  127.0.0.1 default accept_filter=dataready backlog=1024;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="location">
+<syntax>location [<value>=|~|~*|^~|@</value>] <value>/uri/</value>
+{ ... }</syntax>
+<default>нет</default>
+<context>server</context>
+
+<para>
+Директива устанавливает конфигурацию в зависимости от URI запроса.
+location можно задать обычной строкой или регулярным выражением.
+Регулярные выражения задаются префиксом "~*" — без учёта регистра
+символов, и "~" — с учётом.
+Для определения соответствия location'а и запроса
+сначала проверяются location'ы, заданные обычными строками.
+Среди них ищется максимальное совпадение.
+Затем проверяются регулярные выражения.
+В отличие от обычных строк, они не сортируются, а проверяются в порядке
+их следования в конфигурационном файле.
+Проверка регулярных выражений прекращается после первого же совпадения.
+Если совпадение с регулярным выражением не найдено, то используется
+конфигурация максимально совпавшего location'а.
+</para>
+
+<para>
+Для операционных систем, не чувствительных к регистру символов, таких
+как Mac OS X и Cygwin, проверка обычных строк делается без учёта
+регистра (0.7.7).
+Однако, сравнение ограничено только однобайтными locale'ями.
+</para>
+
+<para>
+Регулярное выражение может содержать выделения (0.7.40), которые
+могут затем использоваться в других директивах.
+</para>
+
+<para>
+Если нужно запретить проверку регулярных выражений после проверки
+обычных строк, то это можно сделать с помощью префикса "^~".
+Если у максимально совпавшего location'а есть этот префикс, то
+регулярные выражения не проверяются.
+</para>
+
+<para>
+Кроме того, с помощью префикса "=" можно задать точное совпадение
+URI и location. При совпадении поиск сразу же прекращается, так как
+дальше искать не имеет смысла. Например, если запрос "/" очень частый,
+то указав "location = /", можно ускорить обработку этого запроса,
+так как поиск location прекратится после первого же сравнения.
+</para>
+
+<para>
+В версиях с 0.7.1 по 0.8.41, если запрос точно совпал с обычным location'ом
+без префиксов "=" и "^~", то поиск тоже сразу же прекращается и
+регулярные выражения также не проверяются.
+</para>
+
+<para>
+Проиллюстрируем вышесказанное примером:
+<example>
+location  = / {
+    [ конфигурация A ]
+}
+
+location  / {
+    [ конфигурация B ]
+}
+
+location ^~ /images/ {
+    [ конфигурация C ]
+}
+
+location ~* \.(gif|jpg|jpeg)$ {
+    [ конфигурация D ]
+}
+</example>
+Для запроса "/" будет выбрана конфигурация A,
+для запроса "/documents/document.html" — конфигурация B,
+для запроса "/images/1.gif" — конфигурация C,
+для запроса "/documents/1.jpg" — конфигурация D.
+</para>
+
+<para>
+Префикс "@" задаёт именованный location. Такой location не используется
+при обычной обработке запросов, а предназначен только для перенаправления
+в него запросов.
+</para>
+
+</directive>
+
+
+<directive name="log_not_found">
+<syntax>log_not_found <value>[on|off]</value></syntax>
+<default>log_not_found on</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает записывать в error_log
+ошибки о том, что файл не найден.
+</para>
+
+</directive>
+
+
+<directive name="log_subrequest">
+<syntax>log_subrequest <value>[on|off]</value></syntax>
+<default>log_subrequest off</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает записывать в <link doc="ngx_http_log_module.xml#access_log">access_log</link>
+подзапросы.
+</para>
+
+</directive>
+
+
+<directive name="merge_slashes">
+<syntax>merge_slashes <value>[on|off]</value></syntax>
+<default>merge_slashes on</default>
+<context>http, server</context>
+
+<para>
+Директива разрешает или запрещает объединять в URI два и более слэшей в один.
+</para>
+
+<para>
+Необходимо иметь ввиду, что это объединение необходимо для корректной
+проверки location'ов и регулярных выражений.
+Например, запрос "//scripts/one.php" не попадает в
+<example>
+location /scripts/ {
+    ...
+}
+</example>
+и может быть обслужен как статический файл,
+поэтому он приводится в "/scripts/one.php".
+</para>
+
+<para>
+Выключение объединения может понадобиться, если в URI используются имена,
+закодированные методом base64, который использует символ "/".
+Но по соображениям безопасности лучше избегать выключения объединения.
+</para>
+
+<para>
+Если директива указана на уровне server в сервере по умолчанию,
+то её значение распространяется на все виртуальные сервера, слушающие
+на том же адресе и порту.
+</para>
+
+</directive>
+
+
+<directive name="msie_padding">
+<syntax>msie_padding <value>[on|off]</value></syntax>
+<default>msie_padding on</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает добавлять в ответы для MSIE
+со статусом больше 400
+комментарий для увеличения размера ответа до 512 байт.
+</para>
+
+</directive>
+
+
+<directive name="msie_refresh">
+<syntax>msie_refresh <value>[on|off]</value></syntax>
+<default>msie_refresh off</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает выдавать для MSIE refresh'ы вместо
+редиректов.
+</para>
+
+</directive>
+
+
+<directive name="open_file_cache">
+<syntax>open_file_cache <value>max=N [inactive=время]|off</value>
+</syntax>
+<default>open_file_cache off</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт кэш, в котором могут хранится
+<list type="bullet">
+
+<listitem>
+дескрипторы открытых файлов, информация об их размерах и времени модификации;
+</listitem>
+
+<listitem>
+информация о существовании каталогов;
+</listitem>
+
+<listitem>
+информация об ошибках поиска файла — нет файла, нет прав на чтение
+и тому подобное. Кэширование ошибок нужно разрешить директивой
+<link id="open_file_cache_errors"/>.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Параметры директивы:
+<list type="bullet">
+
+<listitem>
+max — задаёт максимальное число элементов в кэше;
+при переполнении кэша удаляются наиболее давно не используемые элементы (LRU);
+</listitem>
+
+<listitem>
+inactive — задаёт время, после которого элемент кэша удаляется,
+если к нему не было обращений в течение этого времени;
+по умолчанию 60 секунд;
+</listitem>
+
+<listitem>
+off — запрещает кэш.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Пример использования:
+<example>
+open_file_cache          max=1000  inactive=20s;
+open_file_cache_valid    30s;
+open_file_cache_min_uses 2;
+open_file_cache_errors   on;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="open_file_cache_errors">
+<syntax>open_file_cache_errors <value>on|off</value></syntax>
+<default>open_file_cache_errors off</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, кэшировать или нет ошибки поиска файлов в
+<link id="open_file_cache"/>.
+</para>
+
+</directive>
+
+
+<directive name="open_file_cache_min_uses">
+<syntax>open_file_cache_min_uses <value>число</value></syntax>
+<default>open_file_cache_min_uses 1</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет минимальное число использований файла в течение
+времени, заданного параметром inactive в директиве
+<link id="open_file_cache"/>, после которого дескриптор файла
+будет оставаться открытым в кэше.
+</para>
+
+</directive>
+
+
+<directive name="open_file_cache_valid">
+<syntax>open_file_cache_valid <value>время</value></syntax>
+<default>open_file_cache_valid 60</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, через какое время нужно проверять актуальность
+информации об элементе в <link id="open_file_cache"/>.
+
+</para>
+
+</directive>
+
+
+<directive name="optimize_server_names">
+<syntax>optimize_server_names <value>[on|off]</value></syntax>
+<default>optimize_server_names on</default>
+<context>http, server</context>
+
+<para>
+Устаревшая директива.
+</para>
+
+<para>
+Директива разрешает или запрещает оптимизировать проверку имени хоста
+в name-based виртуальных серверах.
+Проверка в частности влияет на имя хоста, используемого в редиректах.
+Если оптимизация разрешена и все name-based сервера, слушающие на одной
+паре адрес:порт, имеют одинаковую конфигурацию, то во время исполнения
+запроса имена не проверяются и в редиректах используется первое имя сервера.
+Если в редиректе нужно использовать имя хоста, переданное клиентом,
+то оптимизацию нужно выключить.
+</para>
+
+</directive>
+
+
+<directive name="port_in_redirect">
+<syntax>port_in_redirect <value>[on|off]</value></syntax>
+<default>port_in_redirect on</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает указывать порт в редиректах,
+выдаваемых nginx'ом.
+</para>
+
+</directive>
+
+
+<directive name="read_ahead">
+<syntax>read_ahead <value>размер</value></syntax>
+<default>read_ahead  0</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт ядру размер предчтения при работе с файлами.
+Под Линуксом используется системный вызов
+<example>
+posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL);
+</example>
+поэтому размер игнорируется.
+</para>
+
+<para>
+Под FreeBSD используется fcntl(O_READAHEAD, размер), появившийся
+во FreeBSD-9 CURRENT. Для FreeBSD 7 нужно установить
+<link url="http://sysoev.ru/freebsd/patch.readahead.txt">патч</link>.
+</para>
+
+</directive>
+
+
+<directive name="recursive_error_pages">
+<syntax>recursive_error_pages <value>[on|off]</value></syntax>
+<default>recursive_error_pages off</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает делать несколько перенаправлений через
+директиву <link id="error_page"/>.
+</para>
+
+</directive>
+
+
+<directive name="reset_timedout_connection">
+<syntax>reset_timedout_connection <value>[on|off]</value></syntax>
+<default>reset_timedout_connection off</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает сбрасывать соединение по таймауту.
+Сброс делается следующим образом — перед закрытием сокета для него
+ставится опция SO_LINGER с таймаутом 0. После чего при закрытии сокета
+клиенту отсылается пакет RST, а всё память, связанная с этим сокетом,
+освобождается. Это позволяет избежать длительного нахождения уже закрытого
+сокета в состоянии FIN_WAIT1 с заполненными буферами.
+</para>
+
+<para>
+Необходимо отметить, что соединения, находящиеся в состоянии keepalive,
+по истечении таймаута закрываются обычным образом.
+</para>
+
+</directive>
+
+
+<directive name="resolver">
+<syntax>resolver <value>адрес</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт адрес name-сервера, например:
+<example>
+    resolver   127.0.0.1;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="resolver_timeout">
+<syntax>resolver_timeout <value>время</value></syntax>
+<default>resolver_timeout 30s</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут для определения имени, например:
+<example>
+    resolver_timeout   5s;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="root">
+<syntax>root <value>путь</value></syntax>
+<default>root html</default>
+<context>http, server, location, if в location</context>
+
+<para>
+Директива задаёт корневой каталог для запросов.
+Например, при такой конфигурации
+<example>
+    location  /i/ {
+        root  /data/w3;
+    }
+</example>
+на запрос "/i/top.gif" будет отдан файл "/data/w3/i/top.gif".
+</para>
+
+<para>
+В значении пути можно использовать переменные.
+</para>
+
+<para>
+Путь к файлу формируется как простое добавление URI к значению директивы root.
+Если же необходима модификация URI, то нужно воспользоваться директивой
+<link id="alias"/>.
+</para>
+
+</directive>
+
+
+<directive name="satisfy">
+<syntax>satisfy <value>all|any</value></syntax>
+<default>satisfy all</default>
+<context>location</context>
+
+<para>
+Директива разрешает доступ при хотя бы одной успешной проверке,
+выполненной модулями <link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
+или <link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>:
+<example>
+location / {
+    satisfy  any;
+
+    allow  192.168.1.0/32;
+    deny   all;
+
+    auth_basic            "closed site";
+    auth_basic_user_file  conf/htpasswd;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="satisfy_any">
+<syntax>satisfy_any <value>on|off</value></syntax>
+<default>satisfy_any off</default>
+<context>location</context>
+
+<para>
+Директива переименована в директиву <link id="satisfy"/>.
+</para>
+
+</directive>
+
+
+<directive name="send_timeout">
+<syntax>send_timeout <value>время</value></syntax>
+<default>send_timeout 60</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут при передаче ответа клиенту.
+Таймаут устанавливается не на всю передачу ответа,
+а только между двумя операциями записями.
+Если по истечении этого времени клиент ничего не примет,
+то nginx закрывает соединение.
+</para>
+
+</directive>
+
+
+<directive name="sendfile">
+<syntax>sendfile <value>[on|off]</value></syntax>
+<default>sendfile off</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает использовать sendfile().
+</para>
+
+</directive>
+
+
+<directive name="server">
+<syntax>server { ... }</syntax>
+<default>нет</default>
+<context>http</context>
+
+<para>
+Директива задаёт конфигурацию для виртуального сервера.
+Чёткого разделения виртуальных серверов ip-based (на основании ip-адреса)
+и name-based (на основании имени, передаваемого в строке "Host"
+заголовка запроса), нет.
+Вместо этого директивами <link id="listen"/> описываются все адреса
+и порты, на которых нужно принимать соединения для этого сервера,
+и в директиве <link id="server_name"/> указываются все имена серверов.
+Пример конфигурации описан в <link doc="../virtual_hosts.xml">
+настройке виртуальных серверов</link>.
+</para>
+
+</directive>
+
+
+<directive name="server_name">
+<syntax>server_name <value>имя [...]</value></syntax>
+<default>server_name hostname</default>
+<context>server</context>
+
+<para>
+Директива задаёт имена виртуального сервера, например:
+<example>
+server {
+    server_name   example.com  www.example.com;
+}
+</example>
+</para>
+
+<para>
+Первое имя становится основным именем сервера.
+По умолчанию используется имя машины (hostname).
+В именах серверов можно использовать "*" для замены первой или последней
+части имени:
+<example>
+server {
+    server_name   example.com  *.example.com  www.example.*;
+}
+</example>
+</para>
+
+<para>
+Два первых вышеприведённых имени можно объединить в одно:
+<example>
+server {
+    server_name   .example.com;
+}
+</example>
+</para>
+
+<para>
+Кроме того, в качестве имени сервера можно использовать регулярное
+выражение, указав перед ним "~":
+<example>
+server {
+    server_name   www.example.com   ~^www\d+\.example\.com$;
+}
+</example>
+</para>
+
+<para>
+Регулярное выражение может содержать выделения (0.7.40), которые
+могут затем использоваться в других директивах:
+<example>
+server {
+    server_name   ~^(www\.)?(.+)$;
+
+    location / {
+        root  /sites/$2;
+    }
+}
+
+server {
+    server_name   _;
+
+    location / {
+        root  /sites/default;
+    }
+}
+</example>
+</para>
+
+<para>
+Начиная с 0.8.25, именованные выделения в регулярном выражении создают
+переменные, которые могут затем использоваться в других директивах:
+<example>
+server {
+    server_name   ~^(www\.)?(<emphasis>?&lt;domain&gt;</emphasis>.+)$;
+
+    location / {
+        root  /sites/<emphasis>$domain</emphasis>;
+    }
+}
+
+server {
+    server_name   _;
+
+    location / {
+        root  /sites/default;
+    }
+}
+</example>
+</para>
+
+<para>
+Начиная с 0.7.11, можно использовать пустое имя "":
+<example>
+server {
+    server_name   www.example.com   "";
+}
+</example>
+что позволяет обрабатывать запросы без строки "Host" в заголовке запроса
+в этом сервере, а не в сервере по умолчанию для данной пары адрес:порт.
+</para>
+
+<para>
+Порядок проверки имён следующий:
+<list type="bullet">
+
+<listitem>
+полные имена,
+</listitem>
+
+<listitem>
+имена с маской в начале имени — *.example.com,
+</listitem>
+
+<listitem>
+имена с маской в конце имени — mail.*,
+</listitem>
+
+<listitem>
+регулярные выражения.
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="server_name_in_redirect">
+<syntax>server_name_in_redirect <value>[on|off]</value></syntax>
+<default>server_name_in_redirect on</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает использовать в редиректах, выдаваемых
+nginx'ом, основное имя сервера, задаваемое директивой
+<link id="server_name"/>.
+Если использование основного имени запрещено, то используется имя,
+указанного в строке "Host" в заголовке запроса.
+Если же этой строки нет, то используется IP-адрес сервера.
+</para>
+
+</directive>
+
+
+<directive name="server_names_hash_max_size">
+<syntax>server_names_hash_max_size <value>число</value></syntax>
+<default>server_names_hash_max_size 512</default>
+<context>http</context>
+
+<para>
+Директива задаёт максимальный размер хэш-таблиц имён серверов.
+Подробнее смотри в <link doc="../hash.xml">описании
+настройки хэшей</link>.
+</para>
+
+</directive>
+
+
+<directive name="server_names_hash_bucket_size">
+<syntax>server_names_hash_bucket_size <value>число</value></syntax>
+<default>server_names_hash_bucket_size 32/64/128</default>
+<context>http</context>
+
+<para>
+Директива задаёт размер корзины в хэш-таблицах имён серверов.
+Значение по умолчанию зависит от размера строки кэша процессора.
+Подробнее смотри в <link doc="../hash.xml">описании
+настройки хэшей</link>.
+</para>
+
+</directive>
+
+
+<directive name="server_tokens">
+<syntax>server_tokens <value>[on|off]</value></syntax>
+<default>server_tokens on</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает выдавать версию nginx'а
+в сообщениях об ошибках и в строке заголовка ответа "Server".
+</para>
+
+</directive>
+
+
+<directive name="tcp_nodelay">
+<syntax>tcp_nodelay <value>[on|off]</value></syntax>
+<default>tcp_nodelay on</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает использовать опцию TCP_NODELAY.
+Опция включаются только при переходе соединения в состояние keep-alive.
+</para>
+
+</directive>
+
+
+<directive name="tcp_nopush">
+<syntax>tcp_nopush <value>[on|off]</value></syntax>
+<default>tcp_nopush off</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает или запрещает использовать опции
+TCP_NOPUSH во FreeBSD или TCP_CORK в Linux.
+Опции включаются только при использовании <link id="sendfile"/>.
+Включение опции позволяет
+<list type="bullet">
+
+<listitem>
+передавать заголовок ответа и начало файла в одном пакете в Linux
+и во FreeBSD 4.x;
+</listitem>
+
+<listitem>
+передавать файл в полных пакетах.
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="try_files">
+<syntax>try_files <value>файл [файл ...] (uri|=код)</value></syntax>
+<default>нет</default>
+<context>location</context>
+
+<para>
+Директива проверяет существование файлов в заданном порядке
+и использует для обработки запроса первый найденный файл, причём
+обработка делается в контексте этого же location'а.
+С помощью слэша в конце имени можно задать проверку существования
+каталога, например, так — "$uri/".
+В случае, если ни один файл не найден, то делается внутренний редирект
+на последний параметр.
+Последний параметр может быть кодом (0.7.51):
+<example>
+location / {
+    try_files      $uri  $uri/index.html  $uri.html  =404;
+}
+</example>
+</para>
+
+<para>
+Пример использования при проксировании Mongrel:
+<example>
+location / {
+    try_files      /system/maintenance.html
+                   $uri  $uri/index.html  $uri.html
+                   @mongrel;
+}
+
+location @mongrel {
+    proxy_pass     http://mongrel;
+}
+</example>
+</para>
+
+<para>
+Пример использования вместе с Drupal/FastCGI:
+<example>
+location / {
+    try_files      $uri  $uri/  @drupal;
+}
+
+location ~ \.php$ {
+    try_files      $uri  @drupal;
+
+    fastcgi_pass   ...;
+
+    fastcgi_param  SCRIPT_FILENAME  /path/to$fastcgi_script_name;
+    fastcgi_param  SCRIPT_NAME      $fastcgi_script_name;
+    fastcgi_param  QUERY_STRING     $args;
+
+    ... прочие fastcgi_param
+}
+
+location @drupal {
+    fastcgi_pass   ...;
+
+    fastcgi_param  SCRIPT_FILENAME  /path/to/index.php;
+    fastcgi_param  SCRIPT_NAME      /index.php;
+    fastcgi_param  QUERY_STRING     q=$uri&amp;$args;
+
+    ... прочие fastcgi_param
+}
+</example>
+В этом примере директива try_files
+<example>
+location / {
+    try_files      $uri  $uri/  @drupal;
+}
+</example>
+аналогична директивам
+<example>
+location / {
+    error_page     404 = @drupal;
+    log_not_found  off;
+}
+</example>
+А здесь
+<example>
+location ~ \.php$ {
+    try_files      $uri  @drupal;
+
+    fastcgi_pass   ...;
+
+    fastcgi_param  SCRIPT_FILENAME  /path/to$fastcgi_script_name;
+
+    ...
+}
+</example>
+try_files тестирует существование PHP-файла,
+прежде чем передать запрос FastCGI-серверу.
+</para>
+
+<para>
+Пример использования вместе с Wordpress и Joomla:
+<example>
+location / {
+    try_files      $uri  $uri/  @wordpress;
+}
+
+location ~ \.php$ {
+    try_files      $uri  @wordpress;
+
+    fastcgi_pass   ...;
+
+    fastcgi_param  SCRIPT_FILENAME  /path/to$fastcgi_script_name;
+    ... прочие fastcgi_param
+}
+
+location @wordpress {
+    fastcgi_pass   ...;
+
+    fastcgi_param  SCRIPT_FILENAME  /path/to/index.php;
+    ... прочие fastcgi_param
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="types">
+<syntax>types <value>{ ... }</value></syntax>
+<default>see below</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт соответствие расширения и MIME-типов ответов.
+Одному MIME-типу может соответствовать несколько расширений.
+По умолчанию используется такие соответствия:
+<example>
+types {
+    text/html    html;
+    image/gif    gif;
+    image/jpeg   jpg;
+}
+</example>
+</para>
+
+<para>
+Достаточно полная таблица соответствий входит в дистрибутив
+и находится в файле conf/mime.types.
+</para>
+
+<para>
+Для того, чтобы для определённого location'а для всех ответов выдавался
+MIME-тип "application/octet-stream", можно использовать следующее:
+<example>
+location /download/ {
+    types         { }
+    default_type  application/octet-stream;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="underscores_in_headers">
+<syntax>underscores_in_headers <value>[on|off]</value></syntax>
+<default>underscores_in_headers off</default>
+<context>http, server</context>
+
+<para>
+Директива разрешает или запрещает использование символов подчёркивания
+в строках заголовка запроса клиента.
+</para>
+
+</directive>
+
+</section>
+
+
+<section name="Встроенные переменные" id="variables">
+
+<para>
+Модуль ngx_http_core_module поддерживает встроенные переменные, имена
+которых совпадают с именами переменных в Apache.
+Прежде всего, это переменные, представляющие из себя строки заголовка
+запроса клиента, например, $http_user_agent, $http_cookie
+и тому подобное. Кроме того, есть и другие переменные:
+<list type="bullet">
+
+<listitem>
+$args, эта переменная равна аргументам в строке запроса;
+</listitem>
+
+<listitem>
+$arg_<value>name</value>, эта переменная равна аргументу <value>name</value>
+в строке запроса;
+</listitem>
+
+<listitem>
+$binary_remote_addr, эта переменная равна адресу клиента в бинарном виде,
+длина её значения всегда 4 байта;
+</listitem>
+
+<listitem>
+$content_length, эта переменная равна строке "Content-Length" в заголовке
+запроса;
+</listitem>
+
+<listitem>
+$content_type, эта переменная равна строке "Content-Type" в заголовке запроса;
+</listitem>
+
+<listitem>
+$cookie_<value>name</value>, эта переменная равна cookie <value>name</value>;
+</listitem>
+
+<listitem>
+$document_root, эта переменная равна значению директивы root для
+текущего запроса;
+</listitem>
+
+<listitem>
+$document_uri, то же самое, что и $uri;
+</listitem>
+
+<listitem>
+$host, эта переменная равна строке "Host" в заголовке запроса
+или имени сервера, на который пришёл запрос, если этой строки нет;
+</listitem>
+
+<listitem>
+$hostname, эта переменная равна имени хоста;
+</listitem>
+
+<listitem>
+$http_<value>name</value>, эта переменная равна строке <value>name</value>
+в заголовке запроса;
+</listitem>
+
+<listitem>
+$is_args, эта переменная равна "?", если в строке запроса есть аргументы,
+и пустой строке, если их нет;
+</listitem>
+
+<listitem>
+$limit_rate, эта переменная позволяет установить ограничение
+скорости соединения;
+</listitem>
+
+<listitem>
+$pid, эта переменная равна номеру рабочего процесса;
+</listitem>
+
+<listitem>
+$request_method, эта переменная равна методу запроса,
+обычно это "GET" или "POST";
+</listitem>
+
+<listitem>
+$remote_addr, эта переменная равна адресу клиента;
+</listitem>
+
+<listitem>
+$remote_port, эта переменная равна порту клиента;
+</listitem>
+
+<listitem>
+$remote_user, эта переменная равна имени пользователя, используемого
+в Basic аутентификации;
+</listitem>
+
+<listitem>
+$realpath_root, эта переменная равна значению директивы root для
+текущего запроса, при этом все символические ссылки преобразованы
+в реальные путь;
+</listitem>
+
+<listitem>
+$request_filename, эта переменная равна пути к файлу для текущего
+запроса, формируемому из директив root или alias и URI запроса;
+</listitem>
+
+<listitem>
+$request_body, эта переменная содержит тело запроса.
+Значение переменной появляется в location'ах, обрабатываемых директивами
+<link doc="ngx_http_proxy_module.xml#proxy_pass">proxy_pass</link>
+и <link doc="ngx_http_fastcgi_module.xml#fastcgi_pass">fastcgi_pass</link>.
+</listitem>
+
+<listitem>
+$request_body_file, эта переменная равна имени временного файла, в котором
+хранится тело запроса.
+По завершению работы файл необходимо удалить.
+Для того, чтобы тело запроса клиента всегда записывалось в файл, нужно
+указать <link doc="ngx_http_core_module.xml#client_body_in_file_only">client_body_in_file_only on</link>.
+При передаче имени в проксированном запросе или в запросе к FastCGI-серверу
+следует запретить передачу самого тела директивами
+"proxy_pass_request_body off" или
+"fastcgi_pass_request_body off" соответственно.
+</listitem>
+
+<listitem>
+$request_uri, эта переменная равна полному первоначальному URI вместе
+с аргументами;
+</listitem>
+
+<listitem>
+$query_string, то же самое, что и $args;
+</listitem>
+
+<listitem>
+$scheme, эта переменная равна схеме запроса — "http" или "https";
+</listitem>
+
+<listitem>
+$server_protocol, эта переменная равна протоколу запроса,
+обычно это "HTTP/1.0" или "HTTP/1.1";
+</listitem>
+
+<listitem>
+$server_addr, эта переменная равна адресу сервера, на который пришёл запрос.
+Как правило, для получения значения этой переменной делается один системный
+вызов. Для того, чтобы избежать системного вызова, нужно указывать
+адреса в директивах listen и использовать параметр bind;
+</listitem>
+
+<listitem>
+$server_name, эта переменная равна имени сервера, на который пришёл запрос;
+</listitem>
+
+<listitem>
+$server_port, эта переменная равна порту сервера, на который пришёл запрос;
+</listitem>
+
+<listitem>
+$uri, эта переменная равна текущему URI в запросе, он
+может отличаться от первоначального, например, при внутренних редиректах
+или при использовании индексных файлов.
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</module>

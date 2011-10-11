@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_flv_module"
+        link="/ru/docs/http/ngx_http_flv_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_flv_module делает специальную обработку передаваемых файлов:
+при передаче файла, начиная со смещения, указаного в аргументах
+запроса "start=XXX", добавляет FLV-заголовок перед запрашиваемым файлом.
+</para>
+
+<para>
+По умолчанию модуль не собирается, нужно разрешить его сборку
+при конфигурировании параметром <command>--with-http_flv_module</command>.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+    location ~ \.flv$ {
+        flv;
+    }
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="flv">
+<syntax>flv</syntax>
+<default>нет</default>
+<context>location</context>
+
+<para>
+Директива разрешает специальную обработку передаваемых файлов.
+</para>
+
+</directive>
+
+</section>
+
+</module>

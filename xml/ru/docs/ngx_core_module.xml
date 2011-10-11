@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../dtd/module.dtd">
+
+<module name="Глобальные директивы"
+        link="/ru/docs/ngx_core_module.html"
+        lang="ru">
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+
+user               www  www;
+worker_processes   2;
+
+error_log   /var/log/nginx-error.log  info;
+
+events {
+    use    kqueue;
+    worker_connections   2048;
+}
+
+...
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="daemon">
+<syntax>daemon <value>on|off</value></syntax>
+<default>daemon on</default>
+<context>main</context>
+
+<para>
+Директива определяет, будет ли nginx запускаться в режиме демона.
+Используется в основном для разработки.
+</para>
+
+</directive>
+
+
+<directive name="env">
+<syntax>env <value>VAR|VAR=VALUE</value></syntax>
+<default>env TZ</default>
+<context>main</context>
+
+<para>
+Директива позволяет ограничить набор переменных среды, поменять им значения
+или же создать новые переменные для следующих случаев:
+<list type="bullet">
+
+<listitem>
+наследование переменных во время <link doc="../control.xml#upgrade">обновления исполняемого файла
+на лету</link>;
+</listitem>
+
+<listitem>
+использование переменных модулем <link doc="ngx_http_perl_module.xml">ngx_http_perl_module</link>;
+</listitem>
+
+<listitem>
+использование переменных рабочими процессами.
+Однако нужно иметь в виду, что управление поведением системных библиотек
+подобным образом возможно не всегда, поскольку зачастую библиотеки используют
+переменные только во время инициализации, то есть ещё до того, как их
+можно задать с помощью данной директивы.
+Исключением из этого является вышеописанное обновление исполняемого файла
+на лету.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Если переменная TZ не описана явно, то она всегда наследуется
+и всегда доступна модулю ngx_http_perl_module.
+</para>
+
+<para>
+Пример использования:
+<example>
+env  MALLOC_OPTIONS;
+env  PERL5LIB=/data/site/modules;
+env  OPENSSL_ALLOW_PROXY_CERTS=1;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="include">
+<syntax>include <value>файл|маска</value></syntax>
+<default>нет</default>
+<context>везде</context>
+
+<para>
+Директива позволяет включить в конфигурацию другой файл.
+Файл должен содержать синтаксически законченные директивы и блоки.
+</para>
+
+<para>
+Пример использования:
+<example>
+include  mime.types;
+include  vhosts/*.conf;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="master_process">
+<syntax>master_process <value>on|off</value></syntax>
+<default>master_process on</default>
+<context>main</context>
+
+<para>
+Директива определяет, будут ли запускаться рабочие процессы.
+Используется только для разработки.
+</para>
+
+</directive>
+
+
+<directive name="pid">
+<syntax>pid <value>файл</value></syntax>
+<default>pid nginx.pid</default>
+<context>main</context>
+
+<para>
+Директива задаёт файл, в котором хранится номер основго процесса.
+</para>
+
+</directive>
+
+
+<directive name="ssl_engine">
+<syntax>ssl_engine <value>устройство</value></syntax>
+<default>нет</default>
+<context>main</context>
+
+<para>
+Директива задаёт название аппартного SSL-акселератора.
+</para>
+
+</directive>
+
+
+<directive name="user">
+<syntax>user <value>пользователь [группа]</value></syntax>
+<default>user nobody nobody</default>
+<context>main</context>
+
+<para>
+Директива задаёт пользователя и группу, с правами которого будут работать
+рабочие процессы. Если группа не задана, то используется группа, имя
+которой совпадает с именем пользователя.
+</para>
+
+</directive>
+
+
+<directive name="timer_resolution">
+<syntax>timer_resolution <value>время</value></syntax>
+<default>нет</default>
+<context>main</context>
+
+<para>
+Директива уменьшает разрешение времени в рабочих процессах, за счёт
+чего уменьшается число системных вызовов gettimeofday().
+По умолчанию gettimeofday() вызывается после каждой операции получения
+событий из ядра.
+C уменьшенным разрешением gettimeofday() вызывается только
+один раз за указанный интервал.
+</para>
+
+<para>
+Пример использования:
+<example>
+timer_resolution   100ms;
+</example>
+</para>
+
+<para>
+Внутренняя реализация интервала зависит от используемого метода:
+<list type="bullet">
+
+<listitem>
+фильтр EVFILT_TIMER при использовании kqueue;
+</listitem>
+
+<listitem>
+timer_create() при использовании eventport;
+</listitem>
+
+<listitem>
+и setitimer() во всех остальных случаяx.
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="worker_rlimit_core">
+<syntax>worker_rlimit_core <value>размер</value></syntax>
+<default>нет</default>
+<context>main</context>
+
+<para>
+Директива изменяет ограничение на размер core-файла RLIMIT_CORE
+для рабочего процесса.
+Используется для увеличения ограничения без перезапуска основного процесса.
+</para>
+
+</directive>
+
+
+<directive name="worker_rlimit_nofile">
+<syntax>worker_rlimit_nofile <value>число</value></syntax>
+<default>нет</default>
+<context>main</context>
+
+<para>
+Директива изменяет ограничение на число используемых файлов RLIMIT_NOFILE
+для рабочего процесса.
+Используется для увеличения ограничения без перезапуска основного процесса.
+</para>
+
+</directive>
+
+
+<directive name="worker_priority">
+<syntax>worker_priority <value>число</value></syntax>
+<default>worker_priority 0</default>
+<context>main</context>
+
+<para>
+Директива задаёт приоритет рабочих процессов подобно тому,
+как это делается командой <command>nice</command>:
+отрицательное число означает более высокий приоритет.
+Диапазон возможных значений, как правило, от -20 до 20.
+</para>
+
+<para>
+Пример использования:
+<example>
+worker_priority  -10;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="worker_processes">
+<syntax>worker_processes <value>число</value></syntax>
+<default>worker_processes 1</default>
+<context>main</context>
+
+<para>
+Директива задаёт число рабочих процессов.
+</para>
+
+</directive>
+
+
+<directive name="working_directory">
+<syntax>working_directory <value>путь</value></syntax>
+<default>нет</default>
+<context>main</context>
+
+<para>
+Директива задаёт каталог, который будет текущим для рабочего процесса.
+Основное применение — запись core-файла, в этом случае рабочий
+процесс должен иметь права на запись в этот каталог.
+</para>
+
+</directive>
+
+</section>
+
+</module>

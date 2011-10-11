@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_memcached_module"
+        link="/ru/docs/http/ngx_http_memcached_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_memcached_module позволяет получать ответ из сервера memcached.
+Ключ задаётся в переменной $memcached_key.
+Ответ в memcached должен быть предварительно помещён внешним по отношению
+к nginx'у способом.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+server {
+    location / {
+        set             $memcached_key   "$uri?$args";
+        memcached_pass  host:11211;
+        error_page      404 502 504 = @fallback;
+    }
+
+    location @fallback {
+        proxy_pass      http://backend;
+    }
+}
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="memcached_buffer_size">
+<syntax>memcached_buffer_size <value>размер</value></syntax>
+<default>memcached_buffer_size  4k/8k</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт размер буфера, в который будет читаться ответ,
+получаемый от cервера memcached.
+Ответ синхронно передаётся клиенту сразу же по мере его поступления.
+</para>
+
+</directive>
+
+
+<directive name="memcached_connect_timeout">
+<syntax>memcached_connect_timeout <value>время</value></syntax>
+<default>memcached_connect_timeout 60</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут для соединения с cервером memcached.
+Необходимо иметь в виду, что этот таймаут не может быть больше 75 секунд.
+</para>
+
+</directive>
+
+
+<directive name="memcached_next_upstream">
+<syntax>memcached_next_upstream
+<value>[error|timeout|invalid_response|not_found|off]</value>
+</syntax>
+<default>memcached_next_upstream error timeout</default>
+<context>http, server, location</context>
+
+<para>
+Директива определяет, в каких случаях запрос будет передан следующему
+серверу memcached:
+<list type="bullet">
+
+<listitem>
+error — произшла ошибка соединения с сервером, передачи ему запроса или
+чтения заголовка ответа сервера;
+</listitem>
+
+<listitem>
+timeout — произошёл таймаут во время соединения с сервером,
+передачи ему запроса или чтения заголовка ответа сервера;
+</listitem>
+
+<listitem>
+invalid_response — сервер вернул пустой или неверный ответ;
+</listitem>
+
+<listitem>
+not_found — сервер не нашёл ответ;
+</listitem>
+
+<listitem>
+off — запрещает передачу запроса следующему серверу;
+</listitem>
+
+</list>
+</para>
+
+<para>
+Необходимо понимать, что передача запроса следующему серверу возможна
+только при условии, что клиенту ещё ничего не передавалось.
+То есть, если ошибка или таймаут возникли в середине передачи ответа,
+то исправить это уже невозможно.
+</para>
+
+</directive>
+
+
+<directive name="memcached_pass">
+<syntax>memcached_pass <value>URL</value></syntax>
+<default>нет</default>
+<context>location, if в location, limit_except</context>
+
+<para>
+Директива задаёт адрес сервера memcached.
+Адрес может быть указан в виде доменного имени или адреса и порта:
+<example>
+    memcached_pass   localhost:11211;
+</example>
+</para>
+
+<para>
+Если доменное имя резолвится в несколько адресов, то все они будут
+использоваться в режиме round-robin.
+И кроме того, адрес может быть
+<link doc="ngx_http_upstream.xml">группой серверов</link>.
+</para>
+
+</directive>
+
+
+<directive name="memcached_read_timeout">
+<syntax>memcached_read_timeout <value>время</value></syntax>
+<default>memcached_read_timeout 60</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут при чтении ответа сервера memcached.
+Таймаут устанавливается не на всю передачу ответа,
+а только между двумя операциями чтения.
+Если по истечении этого времени сервер ничего не передаст,
+то nginx закрывает соединение.
+</para>
+
+</directive>
+
+
+<directive name="memcached_send_timeout">
+<syntax>memcached_send_timeout <value>время</value></syntax>
+<default>memcached_send_timeout 60</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт таймаут при передаче запроса серверу memcached.
+Таймаут устанавливается не на всю передачу запроса,
+а только между двумя операциями записи.
+Если по истечении этого времени сервер не примет новых данных,
+то nginx закрывает соединение.
+</para>
+
+</directive>
+
+</section>
+
+</module>

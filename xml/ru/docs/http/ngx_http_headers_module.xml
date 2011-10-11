@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_headers_module"
+        link="/ru/docs/http/ngx_http_headers_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_headers_module позволяет выдавать строки "Expires"
+и "Cache-Control" и добавлять произвольные строки в заголовке ответа.
+</para>
+
+</section>
+
+<section name="Примеры конфигурации" id="example">
+
+<para>
+<example>
+    expires     24h;
+    expires     modified +24h;
+    expires     @24h;
+    expires     0;
+    expires     -1;
+    expires     epoch;
+    add_header  Cache-Control  private;
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="add_header">
+<syntax>add_header <value>название значение</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива добавляет строку в заголовке ответа при условии, что код ответа
+равен 200, 204, 301, 302 или 304.
+В значении можно использовать переменные.
+</para>
+
+</directive>
+
+
+<directive name="expires">
+<syntax>expires <value>[modified]</value> <value>[время|epoch|max|off]</value></syntax>
+<default>expires off</default>
+<context>http, server, location</context>
+
+<para>
+Разрешает или запрещает добавлять или менять строки "Expires"
+и "Cache-Control" в заголовке ответа.
+В качестве параметра можно задать положительное или отрицательное
+<link doc="../syntax.xml">время</link>.
+</para>
+
+<para>
+Время в строке "Expires" получается как сумма текущего времени
+и времени, заданного в директиве.
+Если используется параметр "modified" (0.7.0, 0.6.32),
+то время получается как сумма
+времени модификации файла и времени, заданного в директиве.
+</para>
+
+<para>
+Кроме того, с помощью префикса "@" можно задать время суток (0.7.9, 0.6.34):
+<example>
+expires   @15h30m;
+</example>
+</para>
+
+<para>
+Параметр "epoch" означает абсолютное время 1 января 1970 года 00:00:01 GMT.
+Содержимое строки "Cache-Control" зависит от знака заданного времени:
+<list type="bullet">
+
+<listitem>
+отрицательное время — "Cache-Control: no-cache".
+</listitem>
+
+<listitem>
+положительное время или равное нулю — "Cache-Control: max-age=#",
+где "#" - это время в секундах, заданное в директиве.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Параметр "max" задаёт время 31 декабря 2037 23:55:55 GMT для строки "Expires"
+и 10 лет для строки "Cache-Control".
+</para>
+
+<para>
+Параметр "off" запрещает добавлять или менять строки "Expires"
+и "Cache-Control" в заголовке ответа.
+</para>
+
+</directive>
+
+</section>
+
+</module>

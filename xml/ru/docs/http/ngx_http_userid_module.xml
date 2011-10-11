@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_userid_module"
+        link="/ru/docs/http/ngx_http_userid_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_userid_module выдаёт сookies для идентификации клиентов.
+Для записи в лог можно использовать переменные $uid_got и $uid_set.
+Модуль совместим с модулем
+<link url="http://www.lexa.ru/programs/mod-uid.html">mod_uid</link>
+для Apache.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+    userid          on;
+    userid_name     uid;
+    userid_domain   example.com;
+    userid_path     /;
+    userid_expires  365d;
+    userid_p3p      'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="userid">
+<syntax>userid <value>[on|v1|log||off]</value></syntax>
+<default>userid off</default>
+<context>http, server, location</context>
+
+<para>
+Разрешает или запрещает выдавать cookie и записывать приходящие cookie в лог:
+<list type="bullet">
+
+<listitem>
+on — разрешает выдавать сookie версии 2
+и записывать приходящие cookie в лог;
+</listitem>
+
+<listitem>
+v1 — разрешает выдавать сookie версии 1
+и записывать приходящие cookie в лог;
+</listitem>
+
+<listitem>
+log — запрещает выдавать cookie,
+но разрешает записывать приходящие cookie в лог;
+</listitem>
+
+<listitem>
+off — запрещает выдавать cookie и записывать приходящие cookie в лог;
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="userid_domain">
+<syntax>userid_domain <value>[имя|none]</value></syntax>
+<default>userid_domain none</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт домен, для которого устанавливается cookie.
+Параметр "none" запрещает выдавать домен для cookie.
+</para>
+
+</directive>
+
+
+<directive name="userid_expires">
+<syntax>userid_expires <value>[время|max]</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт время, в течение которого браузер должен хранить cookie.
+Параметр "max" задаёт время 31 декабря 2037 года 23:55:55 GMT.
+Это максимальное время, которое понимают старые браузеры.
+</para>
+
+</directive>
+
+
+<directive name="userid_name">
+<syntax>userid_name <value>имя</value></syntax>
+<default>userid_name uid</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт имя cookie.
+</para>
+
+</directive>
+
+
+<directive name="userid_p3p">
+<syntax>userid_p3p <value>строка</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт значение для строки заголовка P3P, который будет
+выдваться вместе с cookie.
+</para>
+
+</directive>
+
+
+<directive name="userid_path">
+<syntax>userid_path <value>путь</value></syntax>
+<default>userid_path /</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт путь, для которого устанавливается cookie.
+</para>
+
+</directive>
+
+
+<directive name="userid_service">
+<syntax>userid_service <value>число</value></syntax>
+<default>userid_service IP-адрес сервера</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт номер сервиса, выдавшего cookie.
+По умолчанию для cookie первой версии используется ноль,
+а для второй — IP-адрес сервера.
+</para>
+
+</directive>
+
+</section>
+
+</module>

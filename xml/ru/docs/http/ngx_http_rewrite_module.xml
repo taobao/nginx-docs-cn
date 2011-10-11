@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_rewrite_module"
+        link="/ru/docs/http/ngx_http_rewrite_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_rewrite_module позволяет изменять URI с помощью
+регулярных выражений, делать редиректы и выбирать конфигурацию
+в зависимости от переменных. Если директивы этого модуля описаны
+на уровне сервера, то они выполняются до того, как определяется
+location для запроса. Если в выбранном location тоже есть
+директивы модуля ngx_http_rewrite_module, то они также выполняются.
+Если URI изменился в результате исполнения директив внутри location,
+то снова определяется location для уже нового URI. Этот цикл может
+повторяться до 10 раз, после чего nginx возвращает ошибку
+"Server Internal Error" (500).
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="break">
+<syntax>break</syntax>
+<default>нет</default>
+<context>server, location, if</context>
+
+<para>
+Директива завершает обработку текущего набора директив
+ngx_http_rewrite_module.
+</para>
+
+<para>
+Пример использования:
+<example>
+    if ($slow) {
+        limit_rate  10k;
+        break;
+    }
+</example>
+</para>
+
+</directive>
+
+
+<directive name="if">
+<syntax>if (<value>условие</value>) { ... }</syntax>
+<default>нет</default>
+<context>server, location</context>
+
+<para>
+Директива if проверяет истинность условия, если оно истинно,
+то выполняется указанный в фигурных скобках код и запрос обрабатывается
+в соответствии с заданной там же конфигурацией.
+Конфигурация внутри директивы if наследуется из предыдущего уровня.
+</para>
+
+<para>
+В качестве условия могут быть заданы:
+<list type="bullet">
+
+<listitem>
+имя переменной; ложными значениями переменной являются пустая строка ""
+или любая строка, начинающиеся на "0";
+</listitem>
+
+<listitem>
+сравнение переменной со строкой с помощью операторов "=" и "!=";
+</listitem>
+
+<listitem>
+проверка переменной с помощью регулярного выражения без учёта
+регистра символов — "~*" и с учётом — "~".
+В регулярных выражениях можно использовать выделения, которые затем
+доступны в виде переменных $1 — $9.
+Также можно использовать отрицательные операторы "!~" и "!~*".
+Если в регулярном выражении встречаются символы "}" или ";", то
+всё выражение нужно заключить в одинарные или двойные кавычки.
+</listitem>
+
+<listitem>
+проверка существования файла с помощью операторов "-f" и "!-f";
+</listitem>
+
+<listitem>
+проверка существования каталога с помощью операторов "-d" и "!-d";
+</listitem>
+
+<listitem>
+проверка существования файла, каталога или символической ссылки
+с помощью операторов "-e" и "!-e";
+</listitem>
+
+<listitem>
+проверка исполняемости файла с помощью операторов "-x" и "!-x".
+</listitem>
+
+</list>
+</para>
+
+<para>
+Примеры использования:
+<example>
+    if ($http_user_agent ~ MSIE) {
+        rewrite  ^(.*)$  /msie/$1  break;
+    }
+
+    if ($http_cookie ~* "id=([^;]+)(?:;|$)" ) {
+        set  $id  $1;
+    }
+
+    if ($request_method = POST ) {
+        return 405;
+    }
+
+
+    if ($slow) {
+        limit_rate  10k;
+    }
+
+    if ($invalid_referer) {
+        return   403;
+    }
+</example>
+Значение встроенной переменной $invalid_referer задаётся директивой <link doc="ngx_http_referer_module.xml#valid_referers">valid_referers</link>.
+</para>
+
+</directive>
+
+
+<directive name="return">
+<syntax>return <value>код</value></syntax>
+<default>нет</default>
+<context>server, location, if</context>
+
+<para>
+Директива return завершает исполнение кода и возвращает клиенту
+указанный код. Можно использовать следующие значения: 204, 400,
+402 — 406, 408, 410, 411, 413, 416 и 500 — 504.
+Кроме того, нестандартный код 444 закрывает соединение без передачи
+заголовка ответа.
+</para>
+
+</directive>
+
+
+<directive name="rewrite">
+<syntax>rewrite <value>regex</value> <value>замена</value>
+         <value>флаг</value>
+</syntax>
+<default>нет</default>
+<context>server, location, if</context>
+
+<para>
+Директива rewrite изменяет URI в соответствии с регулярным выражением
+и строкой замены. Директивы выполняются в порядке их следования в
+конфигурационном файле. С помощью флагов можно досрочно прекратить
+исполнение директив. Если строка замены начинается с "http://", то
+клиенту будет возвращён редирект и обработка директив также завершается.
+</para>
+
+<para>
+Флаги могут быть следующими:
+<list type="bullet">
+
+<listitem>
+last — завершает обработку текущего набора директив
+ngx_http_rewrite_module, после чего ищется соответствие URI и location;
+</listitem>
+
+<listitem>
+break — завершает обработку текущего набора директив
+ngx_http_rewrite_module;
+</listitem>
+
+<listitem>
+redirect — возвращает временный редирект с кодом 302;
+используется, если заменяющая строка не начинается с "http://";
+</listitem>
+
+<listitem>
+permanent — возвращает постоянный редирект с кодом 301.
+</listitem>
+
+</list>
+</para>
+
+<para>
+</para>
+
+<para>
+Пример использования:
+<example>
+    rewrite  ^(/download/.*)/media/(.*)\..*$  $1/mp3/$2.mp3  last;
+    rewrite  ^(/download/.*)/audio/(.*)\..*$  $1/mp3/$2.ra   last;
+    return   403;
+</example>
+</para>
+
+<para>
+Если же эти директивы поместить в location /download/, то нужно
+заменить флаг last на break, иначе nginx сделает 10 циклов и вернёт
+ошибку 500:
+<example>
+    location /download/ {
+        rewrite  ^(/download/.*)/media/(.*)\..*$  $1/mp3/$2.mp3  break;
+        rewrite  ^(/download/.*)/audio/(.*)\..*$  $1/mp3/$2.ra   break;
+        return   403;
+    }
+</example>
+</para>
+
+<para>
+Если в строке замены указаны аргументы, то предыдущие аргументы запроса
+добавляются после них. Можно отказаться от этого добавления, указав
+в конце строки замены знак вопроса:
+<example>
+    rewrite  ^/users/(.*)$  /show?user=$1?  last;
+</example>
+</para>
+
+<para>
+Если в регулярном выражении встречаются символы "}" или ";", то
+всё выражение нужно заключить в одинарные или двойные кавычки.
+</para>
+
+</directive>
+
+
+<directive name="set">
+<syntax>set <value>переменная</value> <value>значение</value>
+</syntax>
+<default>нет</default>
+<context>server, location, if</context>
+
+<para>
+Директива устанавливает значение для указанной переменной.
+В качестве значения можно использовать текст, переменные и их комбинации.
+</para>
+
+</directive>
+
+
+<directive name="uninitialized_variable_warn">
+<syntax>uninitialized_variable_warn <value>on|off</value></syntax>
+<default>uninitialized_variable_warn on</default>
+<context>http, server, location, if</context>
+
+<para>
+Директива определяет, нужно ли писать в лог предупреждение
+о неинициализированной переменной.
+</para>
+
+</directive>
+
+</section>
+
+
+<section name="Внутреннее устройство" id="internals">
+
+<para>
+Директивы модуля ngx_http_rewrite_module компилируется на стадии
+конфигурирования во внутренние коды, исполняемые во время запроса
+интерпретатором. Интерпретатор представляет из себя простую
+стековую виртуальную машину.
+</para>
+
+<para>
+Например, директивы
+<example>
+    location /download/ {
+        if ($forbidden) {
+            return   403;
+        }
+
+        if ($slow) {
+            limit_rate  10k;
+        }
+
+        rewrite  ^/(download/.*)/media/(.*)\..*$  /$1/mp3/$2.mp3  break;
+    }
+</example>
+будет скомпилированы в такие коды:
+<example>
+    переменная  $forbidden
+    проверка на ноль          
+        возврат  403
+        завершение всего кода
+    переменная  $slow
+    проверка на ноль          
+    проверка регулярного выражения
+    копирование  "/"
+    копирование  $1
+    копирование  "/mp3/"
+    копирование  $2
+    копирование  ".mp3"
+    завершение регулярного выражения
+    завершение всего кода
+</example>
+</para>
+
+<para>
+Обратите внимание, что кода для директивы limit_rate нет, поскольку
+она не имеет отношения к модулю ngx_http_rewrite_module. Для блока
+if создаётся такая же конфигурация, как и для блока location.
+Если условие истинно, то запрос получает конфигурацию, соответствующую
+блоку if, и в этой конфигурации limit_rate равен 10k.
+</para>
+
+<para>
+Директиву
+<example>
+    rewrite  ^/(download/.*)/media/(.*)\..*$  /$1/mp3/$2.mp3  break;
+</example>
+можно сделать на один код меньше, если в регулярном выражении включить
+первый слэш в скобки:
+<example>
+    rewrite  ^(<emphasis>/</emphasis>download/.*)/media/(.*)\..*$  $1/mp3/$2.mp3  break;
+</example>
+тогда её коды будут выглядеть так:
+<example>
+    проверка регулярного выражения
+    копирование  $1
+    копирование  "/mp3/"
+    копирование  $2
+    копирование  ".mp3"
+    завершение регулярного выражения
+    завершение всего кода
+</example>
+</para>
+
+</section>
+
+</module>

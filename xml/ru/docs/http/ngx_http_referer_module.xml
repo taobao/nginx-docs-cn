@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_referer_module"
+        link="/ru/docs/http/ngx_http_referer_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_referer_module позволяет блокировать доступ
+к сайту с неверными значениями строки "Referer" в заголовке запроса.
+Следует иметь в виду, что подделать запрос с нужной строкой "Referer"
+не составляет большого труда, поэтому цель использования данного модуля
+заключается не в стопроцентном блокировании подобных запросов,
+а в блокировании массового потока запросов, сделанных обычными браузерами.
+Нужно также учитывать, что обычные браузеры могут не передавать cтроку
+"Referer" даже для верных запросов.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+    valid_referers   none  blocked  server_names
+                     *.example.com  www.example.info/galleries/
+                     ~\.google\. ;
+
+    if ($invalid_referer) {
+        return   403;
+    }
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="valid_referers">
+<syntax>valid_referers
+    [none|blocked|server_names|<value>строка</value>] ...</syntax>
+<default>нет</default>
+<context>server, location</context>
+
+<para>
+Директива задаёт значения строки "Referer" в заголовке запроса, при
+которых встроенная переменная $invalid_referer будет иметь значение 0.
+</para>
+
+<para>
+Параметры могут быть следующие:
+<list type="bullet">
+
+<listitem>
+none — строка "Referer" в заголовке запроса отсутствует;
+</listitem>
+
+<listitem>
+blocked — строка "Referer" в заголовке запроса присутствует,
+но её значение удалено файрволлом или прокси-сервером; к таким строкам
+относятся строки, неначинающиеся на "http://";
+</listitem>
+
+<listitem>
+server_names — в строке "Referer" в заголовке запроса указано одно
+из имён сервера;
+</listitem>
+
+<listitem>
+произвольная строка — задаёт имя сервера и необязательное начало URI.
+В начале или конце имени сервера может быть "*".
+При проверке порт сервера в строке "Referer" игнорируется.
+</listitem>
+
+<listitem>
+регулярное выражение — в начале должен быть символ "~".
+Необходимо учитывать, что на совпадение с выражением будет проверяться
+текст, начинающийся после "http://".
+</listitem>
+
+</list>
+</para>
+
+<para>
+Пример использования:
+<example>
+    valid_referers   none  blocked  server_names
+                     *.example.com  example.*  www.example.info/galleries/
+                     ~\.google\. ;
+</example>
+</para>
+
+</directive>
+
+</section>
+
+</module>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_limit_req_module"
+        link="/ru/docs/http/ngx_http_limit_req_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_limit_req_module (0.7.21) позволяет ограничить число запросов
+для заданной сессии или, как частный случай, с одного адреса.
+Ограничение делается с помощью метода leaky bucket.
+</para>
+
+</section>
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+http {
+    limit_req_zone  $binary_remote_addr  zone=one:10m   rate=1r/s;
+
+    ...
+
+    server {
+
+        ...
+
+        location /search/ {
+            limit_req   zone=one  burst=5;
+        }
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="limit_req_zone">
+<syntax>limit_req_zone <value>$переменная zone=название:размер
+        rate=скорость</value></syntax>
+<default>нет</default>
+<context>http</context>
+
+<para>
+Директива описывает зону, в которой хранятся состояния сессий.
+Значения сессий определяется заданной переменной.
+Пример использования:
+<example>
+limit_req_zone  $binary_remote_addr  zone=one:10m   rate=1r/s;
+</example>
+</para>
+
+<para>
+В данном случае состояния сессий хранятся в зоне "one" размером 10 мегабайт
+и средняя скорость запросов для этой зоны не может более 1 запроса в секунду.
+</para>
+
+<para>
+В качестве сессии используется адрес клиента.
+Обратите внимание, что вместо переменной $remote_addr используется
+переменная $binary_remote_addr, позволяющая уменьшить размер состояния
+до 64 байт.
+В зоне размером 1 мегабайт может разместиться около 16 000 состояний
+размером 64 байта.
+</para>
+
+<para>
+Скорость задаётся в запросах в секунду.
+Если же нужна скорость меньше одного запроса в секунду,
+то она задаётся в запросах в минуту, например,
+ползапроса в секунду — это 30r/m.
+</para>
+
+</directive>
+
+<directive name="limit_req">
+<syntax>limit_req <value>zone=название burst=число [nodelay]</value>
+</syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт зону (zone) и максимально возможные всплески запросов (burst).
+Если скорость запросов превышает описанную в зоне,
+то их обработка запроса задерживается так, чтобы запросы обрабывались
+с заданной скоростью.
+Избыточные запросы задерживаются до тех пор, пока их число
+не превысит заданное число всплесков.
+В этом случае запрос завершается кодом "Service unavailable" (503).
+По умолчанию число всплесков равно нулю.
+Например, директивы
+<example>
+limit_req_zone  $binary_remote_addr  zone=one:10m   rate=1r/s;
+
+    server {
+        location /search/ {
+            limit_req   zone=one  burst=5;
+        }
+
+</example>
+позволяют в среднем не более 1 запроса в секунду
+со всплесками не более 5 запросов.
+</para>
+
+<para>
+Если же избыточные запросы в пределах лимита всплесков задерживать
+не надо, то нужно использовать параметр nodelay:
+<example>
+            limit_req   zone=one  burst=5  nodelay;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="limit_req_log_level">
+<syntax>limit_req_log_level <value>[info|notice|warn|error]</value></syntax>
+<default>limit_req_log_level  error</default>
+<context>http, server, location</context>
+
+<para>
+Директива (0.8.18) задаёт уровень логирования случаев ограничения
+числа запросов и задержек при обработке запроса.
+Задержки логируются на один уровень ниже, чем ограничения, например,
+если задан "limit_req_log_level notice", то задержки будут логироваться
+на уровне info.
+</para>
+
+</directive>
+
+</section>
+
+</module>

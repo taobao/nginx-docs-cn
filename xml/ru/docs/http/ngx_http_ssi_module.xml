@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_ssi_module"
+        link="/ru/docs/http/ngx_http_ssi_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_ssi_module — фильтр, обрабатывающий команды SSI (Server
+Side Includes) в проходящих через него ответах.
+На данный момент список поддерживаемых команд SSI неполон.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+    location / {
+        ssi  on;
+        ...
+    }
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="ssi">
+<syntax>ssi <value>[on|off]</value></syntax>
+<default>ssi off</default>
+<context>http, server, location, if в location</context>
+
+<para>
+Директива разрешает обработку команд SSI в ответах.
+</para>
+
+</directive>
+
+
+<directive name="ssi_silent_errors">
+<syntax>ssi_silent_errors <value>[on|off]</value></syntax>
+<default>ssi_silent_errors off</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает не выводить строку
+"[an error occurred while processing the directive]",
+если во время обработки SSI произошла ошибка.
+</para>
+
+</directive>
+
+
+<directive name="ssi_types">
+<syntax>ssi_types <value>mime-тип [mime-тип ...]</value></syntax>
+<default>ssi_types text/html</default>
+<context>http, server, location</context>
+
+<para>
+Разрешает обработку команд SSI в ответах с указанными MIME-типами в дополнение
+к "text/html".
+</para>
+
+</directive>
+
+</section>
+
+
+<section name="Команды SSI" id="commands">
+
+<para>
+Формат команды следующий
+<example>
+&lt;!--# команда параметр1=значение параметр2=значение ... --&gt;
+</example>
+</para>
+
+<para>
+Ниже перечислены поддерживаемые команды:
+<list type="bullet">
+
+<listitem>
+<emphasis>block</emphasis> — команда описывает блок, который можно использовать
+как заглушку в команде include.
+Внутри блока могут быть команды SSI.
+
+<list type="bullet">
+<listitem>
+<emphasis>name</emphasis> — имя блока.
+</listitem>
+</list>
+
+Пример использования:
+<example>
+&lt;!--# block name="one" --&gt;
+заглушка
+&lt;!--# endblock --&gt;
+</example>
+
+</listitem>
+
+<listitem>
+<emphasis>config</emphasis> — команда задаёт некоторые параметры при обработке SSI.
+
+<list type="bullet">
+<listitem>
+<emphasis>errmsg</emphasis> — строка, выводящаяся при ошибке во время обработки
+SSI. По умолчанию используется такая строка:
+<example>
+[an error occurred while processing the directive]
+</example>
+</listitem>
+
+<listitem>
+<emphasis>timefmt</emphasis> — строка, используемая функцией strftime(3)
+для вывода дат и времени.
+По умолчанию используется такой формат:
+<example>
+"%A, %d-%b-%Y %H:%M:%S %Z"
+</example>
+Для вывода времени в секундах подходит формат "%s".
+</listitem>
+</list>
+
+</listitem>
+
+
+<listitem>
+<emphasis>echo</emphasis> — команда выводит значение переменной.
+
+<list type="bullet">
+<listitem>
+<emphasis>var</emphasis> — имя переменной.
+</listitem>
+
+<listitem>
+<emphasis>encoding</emphasis> — способ кодирования.
+Возможны три значения — none, url и entity.
+По умолчанию используется entity.
+</listitem>
+
+<listitem>
+<emphasis>default</emphasis> — нестандартный параметр, задающий строку,
+которая выводится, если переменная не опеределена.
+По умолчанию выводится строка "none". Команда
+<example>
+&lt;!--# echo var="name" default="<emphasis>нет</emphasis>" --&gt;
+</example>
+заменяет такую последовательность команд
+<example>
+&lt;!--# if expr="$name" --&gt;&lt;!--# echo var="name" --&gt;&lt;!--#
+       else --&gt;<emphasis>нет</emphasis>&lt;!--# endif --&gt;
+</example>
+</listitem>
+</list>
+
+</listitem>
+
+
+<listitem>
+<emphasis>if</emphasis> — команда выполняет условное включение.
+Поддерживаются следующие команды:
+<example>
+&lt;!--# if expr="..." --&gt;
+...
+&lt;!--# elif expr="..." --&gt;
+...
+&lt;!--# else --&gt;
+...
+&lt;!--# endif --&gt;
+</example>
+На данный момент поддерживаются только один уровень вложенности.
+
+<list type="bullet">
+<listitem>
+<emphasis>expr</emphasis> — выражение.
+В выражении может быть проверка существования переменной:
+<example>
+&lt;!--# if expr="$name" --&gt;
+</example>
+сравнение переменной с текстом:
+<example>
+&lt;!--# if expr="$name = text" --&gt;
+&lt;!--# if expr="$name != text" --&gt;
+</example>
+или с регулярным выражением:
+<example>
+&lt;!--# if expr="$name = /text/" --&gt;
+&lt;!--# if expr="$name != /text/" --&gt;
+</example>
+Если в text встречаются переменные, то производится подстановка их значений.
+</listitem>
+</list>
+
+</listitem>
+
+
+<listitem>
+<emphasis>include</emphasis> — команда включает в ответ результат другого запроса.
+
+<list type="bullet">
+<listitem>
+<emphasis>file</emphasis> — задаёт включаемый файл, например:
+<example>
+&lt;!--# include file="footer.html" --&gt;
+</example>
+</listitem>
+
+<listitem>
+<emphasis>virtual</emphasis> — задаёт включаемый запрос, например:
+<example>
+&lt;!--# include virtual="/remote/body.php?argument=value" --&gt;
+</example>
+Несколько запросов на одной странице, обрабатываемые через прокси или FastCGI,
+работают параллельно. Если нужно последовательная обработка, то нужно
+воспользоваться параметром wait.
+</listitem>
+
+<listitem>
+<emphasis>stub</emphasis> — нестандартный параметр, задающий имя блока,
+содержимое которого будет выведено, если тело ответа на включаемый запрос
+пустое или при исполнении запроса произошла ошибка, например:
+<example>
+&lt;!--# block name="one" --&gt;&amp;nbsp;&lt;!--# endblock --&gt;
+&lt;!--# include virtual="/remote/body.php?argument=value" stub="one" --&gt;
+</example>
+при этом содержимое замещающего блока обрабатывается в контексте включаемого
+запроса.
+</listitem>
+
+<listitem>
+<emphasis>wait</emphasis> — нестандартный параметр, указывающий, нужно ли ждать
+полного исполнения данного запроса, прежде чем продолжать выполнение
+SSI, например:
+<example>
+&lt;!--# include virtual="/remote/body.php?argument=value" wait="yes" --&gt;
+</example>
+</listitem>
+
+<listitem>
+<emphasis>set</emphasis> — нестандартный параметр, указывающий, что удачный
+результат выполнения запроса нужно записать в заданную переменную,
+например:
+<example>
+&lt;!--# include virtual="/remote/body.php?argument=value" set="one" --&gt;
+</example>
+Необходимо учитывать, что в переменные можно записать только результаты
+ответов, полученные через модули
+ngx_http_proxy_module и ngx_http_memcached_module.
+</listitem>
+
+</list>
+
+</listitem>
+
+<listitem>
+<emphasis>set</emphasis> — команда присваивает значение переменной.
+
+<list type="bullet">
+<listitem>
+<emphasis>var</emphasis> — имя переменной.
+</listitem>
+
+<listitem>
+<emphasis>value</emphasis> — значение переменной. Если в присваиваемом значении
+есть переменные, то производится подстановка их значений.
+</listitem>
+</list>
+
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="Встроенные переменные" id="variables">
+
+<para>
+Модуль ngx_http_ssi_module поддерживает две встроенные переменные:
+<list type="bullet">
+
+<listitem>
+$date_local, эта переменная равна текущему времени в локальной временной зоне.
+Формат даты задаётся командой config с параметром timefmt.
+</listitem>
+
+<listitem>
+$date_gmt, эта переменная равна текущему времени в GMT.
+Формат даты задаётся командой config с параметром timefmt.
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</module>

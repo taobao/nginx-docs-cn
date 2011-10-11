@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_dav_module"
+        link="/ru/docs/http/ngx_http_dav_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_dav_module обрабатывает HTTP- и WebDAV-методы
+PUT, DELETE, MKCOL, COPY и MOVE.
+По умолчанию модуль не собирается, нужно разрешить его сборку
+при конфигурировании параметром <command>--with-http_dav_module</command>.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+    location / {
+        root                   /data/www;
+
+        client_body_temp_path  /data/client_temp;
+
+        dav_methods  PUT DELETE MKCOL COPY MOVE;
+
+        create_full_put_path   on;
+        dav_access             group:rw  all:r;
+
+        limit_except  GET {
+            allow  192.168.1.0/32;
+            deny   all;
+        }
+    }
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="dav_access">
+<syntax>dav_access <value>пользователи:права [пользователи:права] ...</value>
+</syntax>
+<default>dav_access user:rw</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт права доступа для создаваемых файлов и каталогов,
+например,
+<example>
+dav_access  user:rw  group:rw  all:r;
+</example>
+Если заданы какие-либо права для groups или all, то права для user
+указывать необязательно:
+<example>
+dav_access  group:rw  all:r;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="dav_methods">
+<syntax>dav_methods <value>[off|put|delete|mkcol|copy|move] ...</value></syntax>
+<default>dav_methods off</default>
+<context>http, server, location</context>
+
+<para>
+Директива разрешает указанные HTTP- и WebDAV-методы.
+Параметр off запрещает все методы, обарабатываемые данным модулем,
+игнорируя остальные параметры;
+</para>
+
+<para>
+Файл, загружаемый методом PUT, записывается во временный файл,
+а потом этот файл переименовывается.
+Начиная с версии 0.8.9, временный файл и его постоянное место хранения
+могут располагаться на разных файловых системах, но нужно учитывать,
+что в этом случае вместо дешёвой операции переименовывания в пределах
+одной файловой системы файл копируется с одной файловой системы на другую.
+Поэтому лучше, если сохраняемые файлы будут находиться на той же файловой
+системе, что и каталог с временными файлами, задаваемый директивой <link doc="ngx_http_core_module.xml#client_body_temp_path">client_body_temp_path</link>
+для данного location.
+</para>
+
+<para>
+При создании файла с помощью метода PUT можно задать дату модификации,
+передав её в строке заголовка "Date".
+</para>
+
+</directive>
+
+
+<directive name="create_full_put_path">
+<syntax>create_full_put_path <value>on|off</value></syntax>
+<default>create_full_put_path off</default>
+<context>http, server, location</context>
+
+<para>
+По спецификации WebDAV метод PUT может создавать файл только в
+уже существующем каталоге. Данная директива разрешает создавать
+все необходимые промежуточные каталоги.
+
+</para>
+
+</directive>
+
+
+<directive name="min_delete_depth">
+<syntax>min_delete_depth <value>число</value></syntax>
+<default>min_delete_depth 0</default>
+<context>http, server, location</context>
+
+<para>
+Данная директива разрешает методу DELETE удалять файлы
+при условии, что число элементов в пути запроса не меньше заданного.
+Например, директива
+<example>
+min_delete_depth  4;
+</example>
+разрешает удалять файлы по запросам
+<example>
+/users/00/00/name
+/users/00/00/name/pic.jpg
+/users/00/00/page.html
+</example>
+и запрещает удаление
+<example>
+/users/00/00
+</example>
+</para>
+
+</directive>
+
+</section>
+
+</module>

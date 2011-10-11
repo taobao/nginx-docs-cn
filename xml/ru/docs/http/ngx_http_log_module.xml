@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_log_module"
+        link="/ru/docs/http/ngx_http_log_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_log_module записывает логи запросов в указанном формате.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+    log_format  gzip  '$remote_addr - $remote_user [$time_local] '
+                      '"$request" $status $bytes_sent '
+                      '"$http_referer" "$http_user_agent" "$gzip_ratio"';
+
+    access_log  /spool/logs/nginx-access.log  gzip  buffer=32k;
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="access_log">
+<syntax>access_log <value>путь [формат [buffer=размер]]|off</value>
+</syntax>
+<default>access_log log/access.log combined</default>
+<context>http, server, location, if в location, limit_except</context>
+
+<para>
+Директива access_log задаёт путь, формат и размер буфера для буферизированной
+записи в лог. На одном уровне может использоваться несколько логов.
+Параметр "off" отменяет все директивы access_log для текущего уровня.
+Если формат не указан, то используется предопределённый формат "combined".
+</para>
+
+<para>
+Размер буфера должен быть не больше размера атомарной записи в дисковый файл.
+Для FreeBSD 3.0-6.0 этот размер неограничен.
+</para>
+
+<para>
+В пути файла можно использовать переменные (0.7.6+),
+но такие логи имеют некоторые ограничения:
+<list type="bullet">
+
+<listitem>
+пользователь, с правами которого работают рабочие процессы, должен
+иметь права на создание файлов в каталоге с такими логами;
+</listitem>
+
+<listitem>
+не работает буферизация;
+</listitem>
+
+<listitem>
+файл открывается для каждой записи в лог и сразу же после записи закрывается.
+Но дескрипторы часто используемых файлов могут храниться в
+<link id="open_log_file_cache"/>.
+При вращении логов нужно иметь в виду, что в течение времени, заданного
+параметром valid директивы <link id="open_log_file_cache"/>,
+запись может продолжаться в старый файл.
+</listitem>
+
+<listitem>
+при каждой записи в лог проверяется существование каталога root'а для
+запроса — если этот каталог не существует, то лог не создаётся.
+Поэтому <link doc="ngx_http_core_module.xml#root">root</link>
+и access_log нужно описывать на одном уровне:
+<example>
+server {
+    root        /spool/vhost/data/$host;
+    access_log  /spool/vhost/logs/$host;
+    ...
+</example>
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="log_format">
+<syntax>log_format <value>название строка [строка ...]</value>
+</syntax>
+<default>log_format  combined  "..." </default>
+<context>http</context>
+
+<para>
+Директива log_format описывает формат лога.
+</para>
+
+<para>
+Кроме общих переменных в формате можно использовать переменные,
+существующие только на момент записи в лог:
+<list type="bullet">
+
+<listitem>
+$body_bytes_sent, число байт, переданное клиенту за вычетом заголовка ответа,
+переменная совместима с параметром %B модуля Apache mod_log_config;
+</listitem>
+
+<listitem>
+$bytes_sent, число байт, переданное клиенту;
+</listitem>
+
+<listitem>
+$connection, номер соединения;
+</listitem>
+
+<listitem>
+$msec, время в секундах с точностью до миллисекунд на момент записи в лог;
+</listitem>
+
+<listitem>
+$pipe, "p" если запрос был pipelined;
+</listitem>
+
+<listitem>
+$request_length, длина тела запроса;
+</listitem>
+
+<listitem>
+$request_time, время обработки запроса в секундах с точностью до миллисекунд;
+</listitem>
+
+<listitem>
+$status, статус ответа;
+</listitem>
+
+<listitem>
+$time_local, локальное время в common log format.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Строки заголовка, переданные клиенту, начинаются с префикса "sent_http_",
+например, $sent_http_content_range.
+</para>
+
+<para>
+В конфигурации всегда существует предопределённый формат "combined":
+<example>
+    log_format  combined  '$remote_addr - $remote_user [$time_local] '
+                          '"$request" $status $body_bytes_sent '
+                          '"$http_referer" "$http_user_agent"';
+</example>
+</para>
+
+</directive>
+
+<directive name="open_log_file_cache">
+
+<syntax>open_log_file_cache <value>max=N [inactive=время]|off</value>
+</syntax>
+<default>open_log_file_cache off</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт кэш, в котором хранятся дескрипторы файлов часто используемых
+логов, имена которых заданы переменными.
+</para>
+
+<para>
+Параметры директивы:
+<list type="bullet">
+
+<listitem>
+max — задаёт маскимальное число дескрипторов в кэше;
+при переполнении кэша наиболее давно не используемые дескрипторы закрываются
+(LRU);
+</listitem>
+
+<listitem>
+inactive — задаёт время, после которого дескриптор кэша закрывается,
+если к нему не было обращений в течение этого времени;
+по умолчанию 10 секунд;
+</listitem>
+
+<listitem>
+min_uses — задаёт минимальное число использований файла в течение
+времени, заданного параметром inactive в директиве
+<link id="open_log_file_cache"/>, после которого дескриптор файла
+будет оставаться окрытым в кэше;
+по умолчанию 1 использование;
+</listitem>
+
+<listitem>
+valid — задаёт, через какое время нужно проверять, что файл ещё
+существует под тем же именем;
+по умолчанию 60 секунд;
+</listitem>
+
+<listitem>
+off — запрещает кэш.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Пример использования:
+<example>
+open_log_file_cache      max=1000  inactive=20s  valid=1m  min_uses=2;
+</example>
+</para>
+
+</directive>
+
+</section>
+
+</module>

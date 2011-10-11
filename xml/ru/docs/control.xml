@@ -1,0 +1,257 @@
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article title="Управление nginx"
+         link="/ru/docs/control.html"
+         lang="ru">
+
+<section>
+
+<para>
+Управлять nginx можно с помощью сигналов. Номер главного процесса по умолчанию
+записывается в файл <command>/usr/local/nginx/logs/nginx.pid</command>.
+Изменить имя этого файла можно при конфигурации сборки или же в
+<command>nginx.conf</command> директивой
+<link doc="ngx_core_module.xml#pid">pid</link>.
+Главный процесс поддерживает следующие сигналы:
+<note>
+<table>
+
+<tr><td width="20%">TERM, INT</td><td>быстрое завершение</td></tr>
+<tr><td width="20%">QUIT</td><td>плавное завершение</td></tr>
+<tr><td width="20%">HUP</td><td>изменение конфигурации,
+обновление изменившейся временной зоны (только для FreeBSD и Linux),
+запуск новых рабочих процессов с новой конфигурацией,
+плавное завершение старых рабочих процессов</td></tr>
+<tr><td width="20%">USR1</td><td>переоткрытие лог-файлов</td></tr>
+<tr><td width="20%">USR2</td><td>обновление исполняемого файла</td></tr>
+<tr><td width="20%">WINCH</td><td>плавное завершение рабочих процессов</td></tr>
+
+</table>
+</note>
+</para>
+
+<para>
+Управлять рабочими процессами по отдельности не нужно.
+Тем не менее, они тоже поддерживают некоторые сигналы:
+<note>
+<table>
+
+<tr><td width="20%">TERM, INT</td><td>быстрое завершение</td></tr>
+<tr><td width="20%">QUIT</td><td>плавное завершение</td></tr>
+<tr><td width="20%">USR1</td><td>переоткрытие лог-файлов</td></tr>
+
+</table>
+</note>
+</para>
+
+</section>
+
+
+<section name="Изменение конфигурации" id="reconfiguration">
+
+<para>
+Для того, чтобы nginx перечитал файл конфигурации, нужно послать
+главному процессу сигнал HUP. Главный процесс сначала проверяет
+синтаксическую правильность конфигурации, а затем пытается применить
+новую конфигурацию, то есть, открыть лог-файлы и новые listen сокеты.
+Если ему это не удаётся, то он откатывает изменения и продолжает работать
+со старой конфигурацией.
+Если же удаётся, то он запускает новые рабочие процессы, а старым
+шлёт сообщение о плавном выходе. Старые рабочие процессы закрывают listen
+сокеты и продолжают обслуживать старых клиентов. После обслуживания всех
+клиентов старые рабочие процессы завершаются.
+</para>
+
+<para>
+Предположим, на FreeBSD 4.x команда
+<programlisting>
+ps ax -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'
+</programlisting>
+показывает примерно такую картину:
+<programlisting>
+  PID  PPID USER    %CPU   VSZ WCHAN  COMMAND
+33126     1 root     0.0  1148 pause  nginx: master process /usr/local/nginx/sb
+33127 33126 nobody   0.0  1380 kqread nginx: worker process (nginx)
+33128 33126 nobody   0.0  1364 kqread nginx: worker process (nginx)
+33129 33126 nobody   0.0  1364 kqread nginx: worker process (nginx)
+</programlisting>
+</para>
+
+<para>
+Если послать сигнал HUP главному процессу, то картина может быть такой:
+<programlisting>
+  PID  PPID USER    %CPU   VSZ WCHAN  COMMAND
+33126     1 root     0.0  1164 pause  nginx: master process /usr/local/nginx/sb
+33129 33126 nobody   0.0  1380 kqread nginx: worker process is shutting down (n
+33134 33126 nobody   0.0  1368 kqread nginx: worker process (nginx)
+33135 33126 nobody   0.0  1368 kqread nginx: worker process (nginx)
+33136 33126 nobody   0.0  1368 kqread nginx: worker process (nginx)
+</programlisting>
+</para>
+
+<para>
+Один старый рабочий процесс 33129 всё ещё продолжает работать. По истечении
+некоторого времени он завершается:
+<programlisting>
+  PID  PPID USER    %CPU   VSZ WCHAN  COMMAND
+33126     1 root     0.0  1164 pause  nginx: master process /usr/local/nginx/sb
+33134 33126 nobody   0.0  1368 kqread nginx: worker process (nginx)
+33135 33126 nobody   0.0  1368 kqread nginx: worker process (nginx)
+33136 33126 nobody   0.0  1368 kqread nginx: worker process (nginx)
+</programlisting>
+</para>
+
+</section>
+
+
+<section name="Ротация лог-файлов" id="logs">
+
+<para>
+Лог-файлы нужно переименовать, а затем послать сигнал USR1 главному процессу.
+Он откроет заново все текущие открытые файлы и назначит им
+в качестве владельца непривилегированного пользователя, под которым
+работают рабочие процессы. После успешного открытия главный процесс
+закрывает все открытые файлы и посылает сообщение о переоткрытии файлов
+рабочим процессам.
+Они также открывают новые файлы и сразу же закрывают старые.
+В результате старые файлы практически сразу же готовы для дальнейшей
+обработки, например, их можно сжимать.
+</para>
+
+</section>
+
+
+<section name="Обновление сервера на лету" id="upgrade">
+
+<para>
+Для обновления сервера нужно записать на место старого исполняемого файла новый.
+Затем нужно послать сигнал USR2 главному процессу&mdash;он
+переименует свой файл с номером процесса в файл
+с суффиксом <command>.oldbin</command>, например, 
+<command>/usr/local/nginx/logs/nginx.pid.oldbin</command>,
+после чего запустит новый исполняемый файл, а тот в свою
+очередь&mdash;свои рабочие процессы:
+<programlisting>
+  PID  PPID USER    %CPU   VSZ WCHAN  COMMAND
+33126     1 root     0.0  1164 pause  nginx: master process /usr/local/nginx/sb
+33134 33126 nobody   0.0  1368 kqread nginx: worker process (nginx)
+33135 33126 nobody   0.0  1380 kqread nginx: worker process (nginx)
+33136 33126 nobody   0.0  1368 kqread nginx: worker process (nginx)
+36264 33126 root     0.0  1148 pause  nginx: master process /usr/local/nginx/sb
+36265 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+36266 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+36267 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+</programlisting>
+</para>
+
+<!--
+
+<para>
+Процесс с новым исполняемым файлом 36264 создаёт свой файл с номером процесса
+с суффиксом <command>.newbin</command>, например, 
+<command>/usr/local/nginx/logs/nginx.pid.newbin</command>.
+</para>
+
+-->
+
+<para>
+Теперь все рабочие процессы наравне принимают запросы.
+Если послать сигнал WINCH первому главному процессу, то он пошлёт своим
+рабочим процессам сообщение о плавном выходе, и они будут постепенно выходить:
+<programlisting>
+  PID  PPID USER    %CPU   VSZ WCHAN  COMMAND
+33126     1 root     0.0  1164 pause  nginx: master process /usr/local/nginx/sb
+33135 33126 nobody   0.0  1380 kqread nginx: worker process is shutting down (n
+36264 33126 root     0.0  1148 pause  nginx: master process /usr/local/nginx/sb
+36265 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+36266 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+36267 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+</programlisting>
+</para>
+
+<para>
+<note>
+При использовании метода rtsig новые процессы могут не принимать соединения
+даже после того, как старому главному процессу послан сигнал WINCH.
+В этом случае новому главному процессу нужно посылать сигнал USR1 до тех пор,
+пока новые процессы не начнут принимать соединения.
+</note>
+</para>
+
+<para>
+По истечении времени запросы будут обрабатывать только новые рабочие процессы:
+<programlisting>
+  PID  PPID USER    %CPU   VSZ WCHAN  COMMAND
+33126     1 root     0.0  1164 pause  nginx: master process /usr/local/nginx/sb
+36264 33126 root     0.0  1148 pause  nginx: master process /usr/local/nginx/sb
+36265 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+36266 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+36267 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+</programlisting>
+</para>
+
+<para>
+Нужно заметить, что старый процесс не закрывает свои listen сокеты и при
+необходимости ему можно сказать, чтобы он снова запустил свои рабочие процессы.
+Если работа нового исполняемого файла по каким-то причинам не устраивает,
+то можно сделать следующее:
+<list>
+
+<listitem>
+<para>
+Послать старому главному процессу сигнал HUP. Старый процесс, не перечитывая
+конфигурации, запустит новые рабочие процессы. После этого можно
+плавно завершить новые процессы, послав их главному процессу QUIT.
+</para>
+</listitem>
+
+<listitem>
+<para>
+Послать новому главному процессу сигнал TERM, он пошлёт сообщение о
+немедленном выходе рабочим процессам и все они практически сразу же завершатся.
+По выходу нового главного процесса старый запустит новые рабочие процессы.
+</para>
+</listitem>
+
+<listitem>
+<para>
+Если же новые процессы не завершаются, то нужно послать им сигнал KILL.
+По выходу нового главного процесса старый запустит свои рабочие процессы.
+</para>
+</listitem>
+
+</list>
+
+</para>
+
+<para>
+Если новый главный процесс выходит, то старый процесс убирает
+суффикс <command>.oldbin</command> из имени файла с номером процесса.
+</para>
+
+<para>
+Если же обновление прошло удачно, то старому процессу нужно послать сигнал
+QUIT, и у нас остаются только новые процессы:
+<programlisting>
+  PID  PPID USER    %CPU   VSZ WCHAN  COMMAND
+36264     1 root     0.0  1148 pause  nginx: master process /usr/local/nginx/sb
+36265 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+36266 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+36267 36264 nobody   0.0  1364 kqread nginx: worker process (nginx)
+</programlisting>
+</para>
+
+<!--
+
+<para>
+После этого остаётся только переименовать
+<command>/usr/local/nginx/logs/nginx.pid.newbin</command> в
+<command>/usr/local/nginx/logs/nginx.pid</command> и обновление можно считать
+завершённым.
+</para>
+
+-->
+
+</section>
+
+</article>

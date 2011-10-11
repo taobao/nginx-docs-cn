@@ -1,0 +1,93 @@
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article title="Методы обработки соединений"
+         link="/ru/docs/events.html"
+         lang="ru">
+
+<section>
+
+<para>
+nginx поддерживает следующие методы обработки соединений, которые
+можно задать директивой <dirname>use</dirname>:
+<list>
+
+<listitem>
+<para>
+<command>select</command>&mdash;стандартный метод.
+Модуль для поддержки этого метода собирается автоматически,
+если на платформе не обнаружено более эффективного метода.
+Можно принудительно разрешить или запретить сборку этого модуля
+с помощью параметров <command>--with-select_module</command> или
+<command>--without-select_module</command>.
+</para>
+</listitem>
+
+<listitem>
+<para>
+<command>poll</command>&mdash;стандартный метод.
+Модуль для поддержки этого метода собирается автоматически,
+если на платформе не обнаружено более эффективного метода.
+Можно принудительно разрешить или запретить сборку этого модуля
+с помощью параметров <command>--with-poll_module</command> или
+<command>--without-poll_module</command>.
+</para>
+</listitem>
+
+<listitem>
+<para>
+<command>kqueue</command>&mdash;эффективный метод, используемый
+во FreeBSD 4.1+, OpenBSD 2.9+, NetBSD 2.0 и MacOS X.
+На двух-процессорных машинах под управлением MacOS X использование
+kqueue может привести к kernel panic.
+</para>
+</listitem>
+
+<listitem>
+<para>
+<command>epoll</command>&mdash;эффективный метод, используемый
+в Linux 2.6+. В некоторых дистрибутивах, например <nobr>SuSE 8.2,</nobr>
+есть патчи для поддержки epoll ядром 2.4.
+</para>
+</listitem>
+
+<listitem>
+<para>
+<command>rtsig</command>&mdash;real time signals, эффективный метод,
+используемый в Linux 2.2.19+.
+По умолчанию в очереди может находиться не более 1024 сигналов для всей
+системы. Этого недостаточно для нагруженных серверов, поэтому нужно увеличить
+размер очереди с помощью параметра ядра
+<command>/proc/sys/kernel/rtsig-max</command>.
+Однако, начиная с Linux 2.6.6-mm2, этого параметра уже нет и для каждого
+процесса существует отдельная очередь сигналов, размер которой
+задаётся с помощью RLIMIT_SIGPENDING.
+</para>
+
+<para>
+При переполнении очереди nginx сбрасывает её и начинает обрабатывать
+соединения с помощью метода poll до тех пор, пока ситуация не нормализуется.
+</para>
+</listitem>
+
+<listitem>
+<para>
+<command>/dev/poll</command>&mdash;эффективный метод, используемый
+в Solaris 7 11/99+, HP/UX 11.22+ (eventport), IRIX 6.5.15+
+и Tru64 UNIX 5.1A+.
+</para>
+</listitem>
+
+<listitem>
+<para>
+<command>eventport</command>&mdash;event ports, эффективный метод,
+используемый в Solaris 10. Во избежания kernel panic, нужно установить <link
+url="http://sunsolve.sun.com/search/document.do?assetkey=1-26-102485-1">патч</link>.
+</para>
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</article>

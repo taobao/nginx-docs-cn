@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_browser_module"
+        link="/ru/docs/http/ngx_http_browser_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_browser_module создаёт переменные, значение которых
+зависят от строки "User-Agent" в заголовке запроса:
+<list type="bullet">
+
+<listitem>
+$modern_browser — равна значению, заданному директивой
+<link id="modern_browser_value"/>, если браузер опознан как современный;
+</listitem>
+
+<listitem>
+$ancient_browser — равна значению, заданному директивой
+<link id="ancient_browser_value"/>, если браузер опознан как устаревший;
+</listitem>
+
+<listitem>
+$msie — равна "1", если браузер опознан как MSIE любой версии;
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="Примеры конфигурации" id="example">
+
+<para>
+Выбор индексного файла:
+<example>
+    modern_browser_value  "modern.";
+
+    modern_browser   msie       5.5;
+    modern_browser   gecko      1.0.0;
+    modern_browser   opera      9.0;
+    modern_browser   safari     413;
+    modern_browser   konqueror  3.0;
+
+    index  index.${modern_browser}html index.html;
+</example>
+</para>
+
+<para>
+Редирект для старых браузеров:
+<example>
+    modern_browser   msie       5.0;
+    modern_browser   gecko      0.9.1;
+    modern_browser   opera      8.0;
+    modern_browser   safari     413;
+    modern_browser   konqueror  3.0;
+
+    modern_browser   unlisted;
+
+    ancient_browser  Links  Lynx  netscape4;
+
+    if ($ancient_browser) {
+        rewrite  ^  /ancient.html;
+    }
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="ancient_browser">
+<syntax>ancient_browser <value>строка [строка ...]</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт подстроки, при нахождении которых в строке "User-Agent",
+браузер считается устаревшим.
+Специальная строка "netscape4" соответствует регулярному
+выражению "^Mozilla/[1-4]".
+</para>
+
+</directive>
+
+
+<directive name="ancient_browser_value">
+<syntax>ancient_browser_value <value>строка</value></syntax>
+<default>ancient_browser_value 1</default>
+<context>http, server, location</context>
+    
+<para>
+Директива задаёт значение для переменных $ancient_browser.
+</para>
+
+</directive>
+
+
+<directive name="modern_browser">
+<syntax>modern_browser <value>браузер версия|unlisted</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
+Директива задаёт версию браузера, начиная с которой он считается современным.
+В качестве браузера можно задать msie, gecko (браузеры, созданные
+на основе Mozilla) opera, safari, konqueror.
+</para>
+
+<para>
+Версии можно задать в формате X, X.X, X.X.X, или X.X.X.X.
+Максимальные значения для каждого их форматов соответственно — 4000,
+4000.99, 4000.99.99, и 4000.99.99.99.
+</para>
+
+<para>
+Специальное значение "unlisted" указывает считать современным браузер,
+не описанный директивами modern_browser и <link id="ancient_browser"/>.
+В противном случае неперечисленный браузер будет считаться устаревшим.
+Если в запросе нет строки "User-Agent", то браузер считается неперечисленным.
+</para>
+
+</directive>
+
+
+<directive name="modern_browser_value">
+<syntax>modern_browser_value <value>строка</value></syntax>
+<default>modern_browser_value 1</default>
+<context>http, server, location</context>
+    
+<para>
+Директива задаёт значение для переменных $modern_browser.
+</para>
+
+</directive>
+
+</section>
+
+</module>

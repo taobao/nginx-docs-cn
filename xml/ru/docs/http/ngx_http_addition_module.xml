@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_addition_module"
+        link="/ru/docs/http/ngx_http_addition_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_addition_module — это фильтр,
+добавляющий текст до и после ответа.
+По умолчанию модуль не собирается, нужно разрешить его сборку
+при конфигурировании параметром <command>--with-http_addition_module</command>.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+    location / {
+        add_before_body   /before_action;
+        add_after_body    /after_action;
+    }
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="add_before_body">
+<syntax>add_before_body <value>uri</value></syntax>
+<default>нет</default>
+<context>location</context>
+
+<para>
+Директива добавляет перед телом ответа текст, выдаваемый в результате
+работы заданного подзапроса.
+</para>
+
+</directive>
+
+
+<directive name="add_after_body">
+<syntax>add_after_body <value>uri</value></syntax>
+<default>нет</default>
+<context>location</context>
+
+<para>
+Директива добавляет после тела ответа текст, выдаваемый в результате
+работы заданного подзапроса.
+</para>
+
+</directive>
+
+
+<directive name="addition_types">
+<syntax>addition_types <value>mime-тип [mime-тип ...]</value></syntax>
+<default>addition_types text/html</default>
+<context>http, server, location</context>
+
+<para>
+Директива (0.7.9) разрешает добавлять текст в ответах
+с указанными MIME-типами в дополнение к "text/html".
+</para>
+
+</directive> 
+
+</section>
+
+</module>

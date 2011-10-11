@@ -1,0 +1,54 @@
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article title="Установка и использование под Windows"
+         link="/ru/docs/windows.html"
+         lang="ru">
+
+<section>
+
+<para>
+nginx/Windows работает с Win32 API (не эмуляция Cygwin).
+В качестве метода обработки соединений используется select,
+поэтому не стоит ожидать высокой производительности и масштабируемости:
+пока это бета-версия.
+На данный момент доступна практически вся функциональность, что и в nginx/Unix,
+за исключением XSLT-фильтра, фильтра изображений, модуля geoip
+и встроенного perl'а.
+</para>
+
+<para>
+Распаковываем дистрибутив на диск C:, переходим в каталог
+nginx-<development_version/> и запускаем <command>nginx</command>:
+<programlisting>
+cd c:\
+unzip nginx-<development_version/>.zip
+cd nginx-<development_version/>
+start nginx
+</programlisting>
+</para>
+
+<para>
+Если nginx не запустился, нужно смотреть причины в error_log.
+Если же error_log не создался, то об этом сообщается в Event Log.
+</para>
+
+<para>
+nginx/Windows работает как обычное приложение (не сервис) и
+управляется следующим образом:
+<note>
+<table>
+
+<tr><td width="20%">nginx -s stop</td><td>быстрое завершение</td></tr>
+<tr><td width="20%">nginx -s quit</td><td>плавное завершение</td></tr>
+<tr><td width="20%">nginx -s reload</td><td>изменение конфигурации,
+запуск новых рабочих процессов с новой конфигурацией,
+плавное завершение старых рабочих процессов</td></tr>
+<tr><td width="20%">nginx -s reopen</td><td>переоткрытие лог-файлов</td></tr>
+
+</table>
+</note>
+</para>
+
+</section>
+
+</article>

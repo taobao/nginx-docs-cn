@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Директивы модуля ngx_http_perl_module"
+        link="/ru/docs/http/ngx_http_perl_module.html"
+        lang="ru">
+
+<section name="" id="summary">
+
+<para>
+Модуль ngx_http_perl_module позволяет работать со встроенным в nginx perl'ом:
+делать обработчики location и переменной и вставлять вызовы perl'а в SSI.
+По умолчанию модуль не собирается, нужно разрешить его сборку
+при конфигурировании параметром <command>--with-http_perl_module</command>.
+Для сборки необходим perl версии 5.6.1 и выше, и компилятор C, совместимый
+с тем, которым был собран perl.
+</para>
+
+</section>
+
+
+<section name="Известные проблемы" id="bugs">
+
+<para>
+Модуль экспериментальный, поэтому возможно всё.
+</para>
+
+<para>
+Для того, чтобы во время переконфигурации perl перекомпилировал
+изменённые модули, его нужно собрать с параметрами -Dusemultiplicity=yes
+или -Dusethreads=yes.
+Кроме того, чтобы во время работы perl меньше терял память, его нужно собрать
+с параметром -Dusemymalloc=no.
+Узнать значения этих параметров у уже собранного
+perl'а можно так (в примерах приведены желаемые значения параметров):
+<example>
+$perl -V:usemultiplicity
+usemultiplicity='define';
+
+$perl -V:usemymalloc
+usemymalloc='n';
+</example>
+</para>
+
+<para>
+Необходимо учитывать, что после пересборки perl'а с новыми параметрами
+-Dusemultiplicity=yes или -Dusethreads=yes
+придётся также переустановить и все бинарные perl'овые модули — они
+просто перестанут работать с новым perl'ом.
+</para>
+
+<para>
+Возможно, основной процесс, а вслед за ним и рабочие процессы,
+будет увеличиваться в размерах при каждой переконфигурации.
+Когда основной процесс вырастет до неприемлемых размеров, можно
+воспользоваться процедурой
+<link doc="../control.html#upgrade">обновления сервера на лету</link>,
+не меняя при этом сам исполняемый файл.
+</para>
+
+<para>
+Если perl'овый модуль выполняет длительную операцию, например, определяет
+адрес по имени, соединяется с другим сервером, делает запрос к базе данных,
+то на это время все остальные запросы данного рабочего процесса не будут
+обрабатываться. Поэтому рекомендуется ограничиться операциями,
+время исполнения которых короткое и предсказуемое, например, обращение
+к локальной файловой системе.
+</para>
+
+<para>
+<note>
+
+<para>
+Нижеописанные проблемы отностятся только к версиям nignx'а до 0.6.22.
+</para>
+
+<para>
+Данные, возвращаемые методами объекта запроса $r,
+имеют только текстовое значение, причём само значение хранится
+в памяти, выделяемой не perl'ом, а nginx'ом из собственных пулов.
+Это позволяет уменьшить число операций копирования в большинстве случаев,
+однако в некоторых ситуациях это приводит к ошибке,
+например, при попытке использования таких значений в численном контексте
+рабочий процесс выходит с ошибкой (FreeBSD):
+<example>
+nginx in realloc(): warning: pointer to wrong page
+Out of memory!
+Callback called exit.
+</example>
+или (Linux):
+<example>
+*** glibc detected *** realloc(): invalid pointer: ... ***
+Out of memory!
+Callback called exit.
+</example>
+Обход такой ситуации простой — нужно присвоить значение метода
+переменной, например, такой код
+<example>
+my $i = $r-&gt;variable('counter') + 1;
+</example>
+нужно заменить на
+<example>
+my $i = $r-&gt;variable('counter');
+$i++;
+</example>
+</para>
+
+<para>
+Так как строки внутри nginx'а в большинстве случаев хранятся без
+завершающего нуля, то они в таком же виде возвращаются методами
+объекта запроса $r (исключения составляют методы $r-&gt;filename
+и $r-&gt;request_body_file). Поэтому такие значения нельзя использовать
+в качестве имени файла и тому подобном.
+Обход такой же, как и предыдущей ситуации — присвоение значения
+переменной (при этом происходит копирование данных и добавление необходимого
+нуля) или же использование в выражении, например:
+<example>
+open FILE, '/path/' . $r-&gt;variable('name');
+</example>
+
+</para>
+
+</note>
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+http {
+
+    perl_modules  perl/lib;
+    perl_require  hello.pm;
+
+    perl_set  $msie6  '
+
+        sub {
+            my $r = shift;
+            my $ua = $r-&gt;header_in("User-Agent");
+
+            return "" if $ua =~ /Opera/;
+            return "1" if $ua =~ / MSIE [6-9]\.\d+/;
+            return "";
+        }
+
+    ';
+
+    server {
+        location / {
+            perl  hello::handler;
+        }
+    }
+</example>
+</para>
+
+<para>
+модуль perl/lib/hello.pm:
+<example>
+package hello;
+
+use nginx;
+
+sub handler {
+    my $r = shift;
+
+    $r-&gt;send_http_header("text/html");
+    return OK if $r-&gt;header_only;
+
+    $r-&gt;print("hello!\n&lt;br/&gt;");
+
+    if (-f $r-&gt;filename or -d _) {
+        $r-&gt;print($r-&gt;uri, " exists!\n");
+    }
+
+    return OK;
+}
+
+1;
+__END__
+
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="perl">
+<syntax>perl <value>модуль::функция|'sub { ... }'</value></syntax>
+<default>нет</default>
+<context>location, limit_except</context>
+
+<para>
+Директива устанавливает обработчик для данного location.
+</para>
+
+</directive>
+
+
+<directive name="perl_modules">
+<syntax>perl_modules <value>путь</value></syntax>
+<default>нет</default>
+<context>http</context>
+
+<para>
+Директива задаёт дополнительный путь для perl'овых модулей.
+</para>
+
+</directive>
+
+
+<directive name="perl_require">
+<syntax>perl_require <value>модуль</value></syntax>
+<default>нет</default>
+<context>http</context>
+
+<para>
+Директива задаёт имя модуля, который будет подгружаться при каждой
+переконфигурации. Директив может быть несколько.
+</para>
+
+</directive>
+
+
+<directive name="perl_set">
+<syntax>perl_set <value>$переменная</value>
+        <value>модуль::функция|'sub { ... }'</value>
+</syntax>
+<default>нет</default>
+<context>http</context>
+
+<para>
+Директива устанавливает обработчик переменной.
+</para>
+
+</directive>
+
+</section>
+
+
+<section name="Вызов perl'а из SSI" id="ssi">
+
+<para>
+Формат команды следующий:
+<example>
+&lt;!--# perl sub="модуль::функция" arg="параметр1" arg="параметр2" ...
+--&gt;
+</example>
+</para>
+
+</section>
+
+
+<section name="Методы объекта запроса $r" id="methods">
+
+<para>
+<list type="bullet">
+
+<listitem>
+<emphasis>$r-&gt;args</emphasis> — метод возвращает аргументы запроса.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;filename</emphasis> — метод возвращает имя файла,
+соответствующее URI запроса.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;has_request_body(обработчик)</emphasis> — метод возвращает 0,
+если в запросе нет тела. Если же тело запроса есть, то устанавливается
+указанный обработчик и возвращается 1.
+По окончании приёма тела nginx вызовет установленный обработчик.
+Обратите внимание, что нужно передавать ссылку на функцию обработчика.
+Пример использования:
+<example>
+package hello;
+
+use nginx;
+
+sub handler {
+    my $r = shift;
+
+    if ($r-&gt;request_method ne "POST") {
+        return DECLINED;
+    }
+
+    if ($r-&gt;has_request_body(<emphasis>\&amp;post</emphasis>)) {
+        return OK;
+    }
+
+    return HTTP_BAD_REQUEST;
+}
+
+sub <emphasis>post</emphasis> {
+    my $r = shift;
+
+    $r-&gt;send_http_header;
+
+    $r-&gt;print("request_body: \"", $r-&gt;request_body, "\"&lt;br/&gt;");
+    $r-&gt;print("request_body_file: \"", $r-&gt;request_body_file, "\"&lt;br/&gt;\n");
+
+    return OK;
+}
+
+1;
+
+__END__
+</example>
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;allow_ranges</emphasis> — метод разрешает использовать
+byte ranges при передаче ответа.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;discard_request_body</emphasis> — метод указывает nginx'у
+игнорировать тело запроса.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;header_in(строка)</emphasis> — метод возвращает значение
+заданной строки в заголовке запроса клиента.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;header_only</emphasis> — метод определяет, нужно ли передавать
+клиенту только заголовок ответа или весь ответ.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;header_out(строка, значение)</emphasis> — метод устанавливает
+значение для заданной строки в заголовке ответа.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;internal_redirect(uri)</emphasis> — метод делает внутренний
+редирект на указанный uri.
+Редирект происходит уже после завершения perl'ового обработчика.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;print(текст, ...)</emphasis> — метод передаёт клиенту данные.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;request_body</emphasis> — метод возвращает тело запроса
+клиента при условии, что тело не записано во временный файл.
+Для того, чтобы тело запроса клиента гарантировано находилось в памяти,
+нужно ограничить его размер с помощью <link doc="ngx_http_core_module.xml#client_max_body_size">client_max_body_size</link>
+и задать достаточной размер для буфера
+<link doc="ngx_http_core_module.xml#client_body_buffer_size">client_body_buffer_size</link>.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;request_body_file</emphasis> — метод возвращает имя файла,
+в котором хранится тело запроса клиента.
+По завершению работы файл необходимо удалить.
+Для того, чтобы тело запроса клиента всегда записывалось в файл, нужно
+указать <link doc="ngx_http_core_module.xml#client_body_in_file_only">client_body_in_file_only on</link>.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;request_method</emphasis> — метод возвращает HTTP метод
+запроса клиента.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;remote_addr</emphasis> — метод возвращает IP-адрес клиента.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;flush</emphasis> — метод немедленно передаёт данные клиенту.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;sendfile(имя [, смещение [, длина]])</emphasis> — метод
+передаёт клиенту содержимое указанного файла. Необязательные параметры
+указывают начальное смещение и длину передаваемых данных.
+Собственно передача данных происходит уже после завершения
+perl'ового обработчика.
+Необходимо учитывать, что при использовании
+этого метода в подзапросе и директиве <link doc="ngx_http_core_module.xml#sendfile">sendfile on</link>
+содержимое файла не будет проходить через
+<link doc="ngx_http_gzip_module.xml">gzip</link>,
+<link doc="ngx_http_ssi_module.xml">SSI</link> и
+<link doc="ngx_http_charset_module.xml">charset</link>
+фильтры.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;send_http_header(<value>тип</value>)</emphasis> — метод
+передаёт клиенту заголовок ответа.
+Необязательный параметр "тип" устанавливает значение строки "Content-Type"
+в заголовке ответа.
+Пустая строка в качестве типа запрещает строку "Content-Type".
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;status(код)</emphasis> — метод устанавливает код ответа.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;sleep(миллисекунды, обработчик)</emphasis> — метод устанавливает
+указанный обработчик и останавливает обработку запроса на заданное время.
+nginx в это время продолжает обрабатывать другие запросы.
+По истечении указанного времени nginx вызовет установленный обработчик.
+Обратите внимание, что нужно передавать ссылку на функцию обработчика.
+Для передачи данных между обработчиками следует использовать $r-&gt;variable().
+Пример использования:
+<example>
+package hello;
+
+use nginx;
+
+sub handler {
+    my $r = shift;
+
+    $r-&gt;discard_request_body;
+    $r-&gt;variable("var", "OK");
+    $r-&gt;sleep(1000, <emphasis>\&amp;next</emphasis>);
+
+    return OK;
+}
+
+sub <emphasis>next</emphasis> {
+    my $r = shift;
+
+    $r-&gt;send_http_header;
+    $r-&gt;print($r-&gt;variable("var"));
+
+    return OK;
+}
+
+1;
+
+__END__
+</example>
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;unescape(текст)</emphasis> — метод декодирует текст,
+заданный в виде %XX.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;uri</emphasis> — метод возвращает URI запроса.
+</listitem>
+
+<listitem>
+<emphasis>$r-&gt;variable(имя [, значение])</emphasis> — метод возвращает
+или устанавливает значение указанной переменной.
+Переменные локальны для каждого запроса.
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</module>

@@ -1,0 +1,64 @@
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article title="Настройка виртуальных серверов"
+         link="/ru/docs/virtual_hosts.html"
+         lang="ru">
+
+<section>
+
+<para>
+Настраивать виртуальные сервера очень просто. В каждом сервере нужно описать
+все адреса и порты, на которых нужно принимать соединения для этого сервера,
+и все имена серверов. Рассмотрим следующую конфигурацию:
+<programlisting>
+http {
+
+    server {
+        listen  192.168.10.1;
+        listen  192.168.10.1:8000;
+
+        server_name   one.example.com  www.one.example.com;
+
+        ...
+    }
+
+    server {
+        listen  192.168.10.1;
+        listen  192.168.10.2:8000;
+        listen  9000;
+
+        server_name   two.example.com  www.two.example.com
+                      three.example.com  www.three.example.com;
+
+        ...
+    }
+
+    server {
+        listen  9000;
+
+        server_name   four.example.com  www.four.example.com;
+
+        ...
+    }
+
+}
+</programlisting>
+</para>
+
+<para>
+При такой настройке запрос, пришедший на 192.168.10.1:80 с заголовком
+"Host: www.three.example.com", будет обслужен вторым сервером.
+Если в запросе нет заголовка "Host" или же в нём указано имя, неописанное
+ни в одном сервере, слушающем на адресе и порту, на которые пришёл запрос,
+то запрос будет обслужен сервером, у которого первым описаны эти адрес и порт.
+Например, все запросы без заголовка "Host", пришедшие на 9000 порт,
+будут обслужены вторым сервером (two.example.com).
+То же самое произойдёт и с запросом с заголовком "Host: www.one.example.com",
+пришедшим на 9000 порт.
+Для гибкой настройки серверов по умолчанию можно использовать параметр
+default в директиве listen.
+</para>
+
+</section>
+
+</article>
