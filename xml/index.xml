@@ -2,6 +2,14 @@
 
 <news title="nginx news" link="/" lang="en">
 
+<event date="2011-10-12">
+<para>
+NGINX, Inc.
+<a href="http://nginx.com/nginx-venture-funding.html">announces</a>
+its Series A funding.
+</para>
+</event>
+
 <event date="2011-10-05">
 <para>
 <a href="/en/download.xml">nginx-1.1.5</a>
