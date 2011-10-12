@@ -29,19 +29,47 @@
 </list>
 </para>
 
-<!--
-
 <para>
 <list>
+
+<item>
+<a href="/ru/docs/install.xml"/>
+</item>
 
 <item>
 <a href="/ru/docs/windows.xml"/>
 </item>
 
+<item>
+<a href="/ru/docs/events.xml"/>
+</item>
+
+<item>
+<a href="/ru/docs/syntax.xml"/>
+</item>
+
+<item>
+<a href="/ru/docs/example.xml"/>
+</item>
+
+<item>
+<a href="/ru/docs/switches.xml"/>
+</item>
+
+<item>
+<a href="/ru/docs/virtual_hosts.xml"/>
+</item>
+
+<item>
+<a href="/ru/docs/control.xml"/>
+</item>
+
+<item>
+<a href="/ru/docs/hash.xml"/>
+</item>
+
 </list>
 </para>
-
--->
 
 <para>
 <list>
