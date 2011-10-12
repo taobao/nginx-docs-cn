@@ -86,7 +86,8 @@ dav_access  group:rw  all:r;
 что в этом случае вместо дешёвой операции переименовывания в пределах
 одной файловой системы файл копируется с одной файловой системы на другую.
 Поэтому лучше, если сохраняемые файлы будут находиться на той же файловой
-системе, что и каталог с временными файлами, задаваемый директивой <link doc="ngx_http_core_module.xml#client_body_temp_path">client_body_temp_path</link>
+системе, что и каталог с временными файлами, задаваемый директивой
+<link doc="ngx_http_core_module.xml" id="client_body_temp_path">client_body_temp_path</link>
 для данного location.
 </para>
 

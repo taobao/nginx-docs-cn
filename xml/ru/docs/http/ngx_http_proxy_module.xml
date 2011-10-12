@@ -504,7 +504,8 @@ location  /some/path/ {
 <para>
 В этом случае имя сервера ищется среди описанных
 <link doc="ngx_http_upstream.xml">групп серверов</link>
-и если не найдено, то определяется с помощью <link doc="ngx_http_core_module.xml#resolver">resolver'а</link>.
+и если не найдено, то определяется с помощью
+<link doc="ngx_http_core_module.xml" id="resolver">resolver'а</link>.
 </para>
 
 </directive>
@@ -718,8 +719,8 @@ proxy_set_header  Accept-Encoding  "";
 <para>
 Директива разрешает сохранение на диск файлов.
 Параметр "on" сохраняет файлы в соответствии с путями, указаными в директивах
-<link doc="ngx_http_core_module.xml#alias">alias</link> или
-<link doc="ngx_http_core_module.xml#root">root</link>.
+<link doc="ngx_http_core_module.xml" id="alias">alias</link> или
+<link doc="ngx_http_core_module.xml" id="root">root</link>.
 Параметр "off" запрещает сохранение файлов.
 Кроме того, имя файла можно явно задать с помощью строки с переменными:
 <example>

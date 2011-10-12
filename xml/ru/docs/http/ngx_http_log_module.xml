@@ -76,7 +76,7 @@
 <listitem>
 при каждой записи в лог проверяется существование каталога root'а для
 запроса — если этот каталог не существует, то лог не создаётся.
-Поэтому <link doc="ngx_http_core_module.xml#root">root</link>
+Поэтому <link doc="ngx_http_core_module.xml" id="root">root</link>
 и access_log нужно описывать на одном уровне:
 <example>
 server {

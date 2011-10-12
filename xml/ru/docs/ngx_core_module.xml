@@ -55,12 +55,13 @@ events {
 <list type="bullet">
 
 <listitem>
-наследование переменных во время <link doc="../control.xml#upgrade">обновления исполняемого файла
-на лету</link>;
+наследование переменных во время
+<link doc="control.xml" id="upgrade">обновления исполняемого файла на лету</link>;
 </listitem>
 
 <listitem>
-использование переменных модулем <link doc="ngx_http_perl_module.xml">ngx_http_perl_module</link>;
+использование переменных модулем
+<link doc="http/ngx_http_perl_module.xml">ngx_http_perl_module</link>;
 </listitem>
 
 <listitem>

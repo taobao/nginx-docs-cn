@@ -164,7 +164,8 @@ location  /images/ {
 <para>
 Директива определяет, сохранять ли всё тело запроса клиента в файл.
 Директиву можно использовать для отладки и при использовании
-переменной $request_body_file или метода <link doc="ngx_http_perl_module.xml#methods">$r-&gt;request_body_file</link>
+переменной $request_body_file или метода
+<link doc="ngx_http_perl_module.xml" id="methods">$r-&gt;request_body_file</link>
 модуля ngx_http_perl_module.
 </para>
 
@@ -534,7 +535,8 @@ keep-alive, то эти буферы освобождаются.
 <para>
 Директива ограничивает HTTP-методы, доступные внутри location.
 Метод GET также включает в себя метод HEAD.
-Для ограничения могут использоваться директивы модулей <link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
+Для ограничения могут использоваться директивы модулей
+<link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
 и <link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>:
 <example>
 limit_except  GET {
@@ -838,7 +840,8 @@ location ~* \.(gif|jpg|jpeg)$ {
 <context>http, server, location</context>
 
 <para>
-Директива разрешает или запрещает записывать в <link doc="ngx_http_log_module.xml#access_log">access_log</link>
+Директива разрешает или запрещает записывать в
+<link doc="ngx_http_log_module.xml" id="access_log">access_log</link>
 подзапросы.
 </para>
 
@@ -1756,8 +1759,8 @@ $request_filename, эта переменная равна пути к файлу
 <listitem>
 $request_body, эта переменная содержит тело запроса.
 Значение переменной появляется в location'ах, обрабатываемых директивами
-<link doc="ngx_http_proxy_module.xml#proxy_pass">proxy_pass</link>
-и <link doc="ngx_http_fastcgi_module.xml#fastcgi_pass">fastcgi_pass</link>.
+<link doc="ngx_http_proxy_module.xml" id="proxy_pass">proxy_pass</link>
+и <link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass">fastcgi_pass</link>.
 </listitem>
 
 <listitem>
@@ -1765,7 +1768,7 @@ $request_body_file, эта переменная равна имени време
 хранится тело запроса.
 По завершению работы файл необходимо удалить.
 Для того, чтобы тело запроса клиента всегда записывалось в файл, нужно
-указать <link doc="ngx_http_core_module.xml#client_body_in_file_only">client_body_in_file_only on</link>.
+указать <link doc="ngx_http_core_module.xml" id="client_body_in_file_only">client_body_in_file_only on</link>.
 При передаче имени в проксированном запросе или в запросе к FastCGI-серверу
 следует запретить передачу самого тела директивами
 "proxy_pass_request_body off" или

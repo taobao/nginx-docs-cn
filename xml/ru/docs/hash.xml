@@ -19,8 +19,8 @@ nginx использует хэш-таблицы.
 hash max size.
 Для большинства хэшей есть директивы, которые позволяют менять эти параметры,
 например, для хэшей имён серверов директивы называются
-<link doc="http/ngx_http_core_module.xml#server_names_hash_max_size">server_names_hash_max_size</link>
-и <link doc="http/ngx_http_core_module.xml#server_names_hash_bucket_size">server_names_hash_bucket_size</link>.
+<link doc="http/ngx_http_core_module.xml" id="server_names_hash_max_size">server_names_hash_max_size</link>
+и <link doc="http/ngx_http_core_module.xml" id="server_names_hash_bucket_size">server_names_hash_bucket_size</link>.
 </para>
 
 <para>

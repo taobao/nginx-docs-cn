@@ -44,10 +44,10 @@
 <para>
 Разрешает или запрещает проверку готового сжатого файла.
 При использовании также учитываются директивы
-<link doc="ngx_http_gzip_module.xml#gzip_http_version">gzip_http_version</link>,
-<link doc="ngx_http_gzip_module.xml#gzip_proxied">gzip_proxied</link>,
-<link doc="ngx_http_gzip_module.xml#gzip_disable">gzip_disable</link>
-и <link doc="ngx_http_gzip_module.xml#gzip_vary">gzip_vary</link>.
+<link doc="ngx_http_gzip_module.xml" id="gzip_http_version">gzip_http_version</link>,
+<link doc="ngx_http_gzip_module.xml" id="gzip_proxied">gzip_proxied</link>,
+<link doc="ngx_http_gzip_module.xml" id="gzip_disable">gzip_disable</link>
+и <link doc="ngx_http_gzip_module.xml" id="gzip_vary">gzip_vary</link>.
 </para>
 
 <para>

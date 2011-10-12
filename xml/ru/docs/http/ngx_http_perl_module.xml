@@ -55,7 +55,7 @@ usemymalloc='n';
 будет увеличиваться в размерах при каждой переконфигурации.
 Когда основной процесс вырастет до неприемлемых размеров, можно
 воспользоваться процедурой
-<link doc="../control.html#upgrade">обновления сервера на лету</link>,
+<link doc="../control.html" id="upgrade">обновления сервера на лету</link>,
 не меняя при этом сам исполняемый файл.
 </para>
 
@@ -352,9 +352,10 @@ byte ranges при передаче ответа.
 <emphasis>$r-&gt;request_body</emphasis> — метод возвращает тело запроса
 клиента при условии, что тело не записано во временный файл.
 Для того, чтобы тело запроса клиента гарантировано находилось в памяти,
-нужно ограничить его размер с помощью <link doc="ngx_http_core_module.xml#client_max_body_size">client_max_body_size</link>
+нужно ограничить его размер с помощью
+<link doc="ngx_http_core_module.xml" id="client_max_body_size">client_max_body_size</link>
 и задать достаточной размер для буфера
-<link doc="ngx_http_core_module.xml#client_body_buffer_size">client_body_buffer_size</link>.
+<link doc="ngx_http_core_module.xml" id="client_body_buffer_size">client_body_buffer_size</link>.
 </listitem>
 
 <listitem>
@@ -362,7 +363,7 @@ byte ranges при передаче ответа.
 в котором хранится тело запроса клиента.
 По завершению работы файл необходимо удалить.
 Для того, чтобы тело запроса клиента всегда записывалось в файл, нужно
-указать <link doc="ngx_http_core_module.xml#client_body_in_file_only">client_body_in_file_only on</link>.
+указать <link doc="ngx_http_core_module.xml" id="client_body_in_file_only">client_body_in_file_only on</link>.
 </listitem>
 
 <listitem>
@@ -385,7 +386,8 @@ byte ranges при передаче ответа.
 Собственно передача данных происходит уже после завершения
 perl'ового обработчика.
 Необходимо учитывать, что при использовании
-этого метода в подзапросе и директиве <link doc="ngx_http_core_module.xml#sendfile">sendfile on</link>
+этого метода в подзапросе и директиве
+<link doc="ngx_http_core_module.xml" id="sendfile">sendfile on</link>
 содержимое файла не будет проходить через
 <link doc="ngx_http_gzip_module.xml">gzip</link>,
 <link doc="ngx_http_ssi_module.xml">SSI</link> и
