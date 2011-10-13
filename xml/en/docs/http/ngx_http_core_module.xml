@@ -2141,14 +2141,14 @@ and so on.
 It also supports other variables:
 <list type="tag">
 
-<tag-name><var>$args</var></tag-name>
-<tag-desc>
-arguments in the request line
-</tag-desc>
-
 <tag-name><var>$arg_</var><argument>name</argument></tag-name>
 <tag-desc>
 argument <argument>name</argument> in the request line
+</tag-desc>
+
+<tag-name><var>$args</var></tag-name>
+<tag-desc>
+arguments in the request line
 </tag-desc>
 
 <tag-name><var>$binary_remote_addr</var></tag-name>
@@ -2213,10 +2213,15 @@ allows for connection rate limiting
 PID of the worker process
 </tag-desc>
 
-<tag-name><var>$request_method</var></tag-name>
+<tag-name><var>$query_string</var></tag-name>
 <tag-desc>
-request method, usually
-<dq><code>GET</code></dq> or <dq><code>POST</code></dq>
+same as <var>$args</var>
+</tag-desc>
+
+<tag-name><var>$realpath_root</var></tag-name>
+<tag-desc>
+<link id="root">root</link> directive's value
+for the current request, with all symbolic links resolved to real paths
 </tag-desc>
 
 <tag-name><var>$remote_addr</var></tag-name>
@@ -2232,19 +2237,6 @@ client port
 <tag-name><var>$remote_user</var></tag-name>
 <tag-desc>
 user name supplied with the Basic authentication
-</tag-desc>
-
-<tag-name><var>$realpath_root</var></tag-name>
-<tag-desc>
-<link id="root">root</link> directive's value
-for the current request, with all symbolic links resolved to real paths
-</tag-desc>
-
-<tag-name><var>$request_filename</var></tag-name>
-<tag-desc>
-file path for the current query, based on the
-<link id="root">root</link> and <link id="alias">alias</link>
-directives, and the request URI
 </tag-desc>
 
 <tag-name><var>$request_body</var></tag-name>
@@ -2280,27 +2272,27 @@ directives, respectively.
 </para>
 </tag-desc>
 
+<tag-name><var>$request_filename</var></tag-name>
+<tag-desc>
+file path for the current query, based on the
+<link id="root">root</link> and <link id="alias">alias</link>
+directives, and the request URI
+</tag-desc>
+
+<tag-name><var>$request_method</var></tag-name>
+<tag-desc>
+request method, usually
+<dq><code>GET</code></dq> or <dq><code>POST</code></dq>
+</tag-desc>
+
 <tag-name><var>$request_uri</var></tag-name>
 <tag-desc>
 full original request URI (with arguments)
 </tag-desc>
 
-<tag-name><var>$query_string</var></tag-name>
-<tag-desc>
-same as <var>$args</var>
-</tag-desc>
-
 <tag-name><var>$scheme</var></tag-name>
 <tag-desc>
 request scheme, <dq><code>http</code></dq> or <dq><code>https</code></dq>
-</tag-desc>
-
-<tag-name><var>$server_protocol</var></tag-name>
-<tag-desc>
-request protocol, usually
-<dq><code>HTTP/1.0</code></dq>
-or
-<dq><code>HTTP/1.1</code></dq>
 </tag-desc>
 
 <tag-name><var>$server_addr</var></tag-name>
@@ -2321,6 +2313,14 @@ name of the server which accepted a request
 <tag-name><var>$server_port</var></tag-name>
 <tag-desc>
 port of the server which accepted a request
+</tag-desc>
+
+<tag-name><var>$server_protocol</var></tag-name>
+<tag-desc>
+request protocol, usually
+<dq><code>HTTP/1.0</code></dq>
+or
+<dq><code>HTTP/1.1</code></dq>
 </tag-desc>
 
 <tag-name><var>$uri</var></tag-name>
