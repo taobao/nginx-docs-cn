@@ -43,43 +43,43 @@ Here are some of success stories:
 
 <item>
 Обслуживание статических запросов,
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_index_module.html">индексных
+<a href="/ru/docs/http/ngx_http_index_module.html">индексных
 файлов</a>,
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_autoindex_module.html">автоматическое
+<a href="/ru/docs/http/ngx_http_autoindex_module.html">автоматическое
 создание списка файлов</a>,
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_core_module.html#open_file_cache">кэш
+<a href="/ru/docs/http/ngx_http_core_module.html#open_file_cache">кэш
 дескрипторов открытых файлов</a>;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_proxy_module.html">Акселерированное
+<a href="/ru/docs/http/ngx_http_proxy_module.html">Акселерированное
 проксирование с кэшированием</a>,
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_upstream.html">простое
+<a href="/ru/docs/http/ngx_http_upstream.html">простое
 распределение нагрузки и отказоустойчивость</a>;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_fastcgi_module.html">Акселерированная
+<a href="/ru/docs/http/ngx_http_fastcgi_module.html">Акселерированная
 поддержка удалённых FastCGI серверов с кэшированием</a>,
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_upstream.html">простое
+<a href="/ru/docs/http/ngx_http_upstream.html">простое
 распределение нагрузки и отказоустойчивость</a>;
 </item>
 
 <item>
 модульность, фильтры, в том числе
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_gzip_module.html">сжатие (gzip)</a>,
+<a href="/ru/docs/http/ngx_http_gzip_module.html">сжатие (gzip)</a>,
 byte-ranges (докачка),
 chunked ответы,
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_xslt_module.html">XSLT-фильтр</a>,
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_ssi_module.html">SSI-фильтр</a>,
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_image_filter_module.html">преобразование
+<a href="/ru/docs/http/ngx_http_xslt_module.html">XSLT-фильтр</a>,
+<a href="/ru/docs/http/ngx_http_ssi_module.html">SSI-фильтр</a>,
+<a href="/ru/docs/http/ngx_http_image_filter_module.html">преобразование
 изображений</a>;
 несколько подзапросов на одной странице, обрабатываемые в SSI-фильтре
 через прокси или FastCGI, выполняются параллельно.
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_ssl_module.html">поддержка SSL и
+<a href="/ru/docs/http/ngx_http_ssl_module.html">поддержка SSL и
 расширения TLS SNI</a>;
 </item>
 
@@ -96,77 +96,76 @@ chunked ответы,
 <list>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/virtual_hosts.html">Виртуальные сервера</a>,
+<a href="/ru/docs/virtual_hosts.html">Виртуальные сервера</a>,
 определяемые по ip-адресу и имени;
 </item>
 
 <item>
-Поддержка <a href="http://sysoev.ru/nginx/docs/http/ngx_http_core_module.html#keepalive_timeout">keep-alive</a>
+Поддержка <a href="/ru/docs/http/ngx_http_core_module.html#keepalive_timeout">keep-alive</a>
 и pipelined соединений;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/example.html">Гибкость конфигурации</a>
+<a href="/ru/docs/example.html">Гибкость конфигурации</a>
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/control.html#reconfiguration">Изменение настроек</a>
-и <a href="http://sysoev.ru/nginx/docs/control.html#upgrade">обновление
+<a href="/ru/docs/control.html#reconfiguration">Изменение настроек</a>
+и <a href="/ru/docs/control.html#upgrade">обновление
 исполняемого файла</a> без перерыва в обслуживании клиентов;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_log_module.html">Настройка форматов
-логов</a>,
-<a href="http://sysoev.ru/nginx/docs/control.html#logs">быстрая ротация логов</a>;
+<a href="/ru/docs/http/ngx_http_log_module.html">Настройка форматов логов</a>,
+<a href="/ru/docs/control.html#logs">быстрая ротация логов</a>;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_core_module.html#error_page">Специальные
+<a href="/ru/docs/http/ngx_http_core_module.html#error_page">Специальные
 страницы</a> для ошибок 3xx-5xx;
 </item>
 
 <item>
 rewrite-модуль:
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_rewrite_module.html">изменение URI
+<a href="/ru/docs/http/ngx_http_rewrite_module.html">изменение URI
 с помощью регулярных выражений</a>;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_rewrite_module.html#if">Выполнение
+<a href="/ru/docs/http/ngx_http_rewrite_module.html#if">Выполнение
 разных функций</a> в зависимости от
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_geo_module.html">адреса клиента</a>;
+<a href="/ru/docs/http/ngx_http_geo_module.html">адреса клиента</a>;
 </item>
 
 <item>
 Ограничение доступа в зависимости от
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_access_module.html">адреса клиента</a>
-и <a href="http://sysoev.ru/nginx/docs/http/ngx_http_auth_basic_module.html">по паролю
+<a href="/ru/docs/http/ngx_http_access_module.html">адреса клиента</a>
+и <a href="/ru/docs/http/ngx_http_auth_basic_module.html">по паролю
 (Basic аутентификация)</a>;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_dav_module.html">Методы PUT, DELETE,
+<a href="/ru/docs/http/ngx_http_dav_module.html">Методы PUT, DELETE,
 MKCOL, COPY и MOVE</a>;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_flv_module.html">FLV streaming</a>;
+<a href="/ru/docs/http/ngx_http_flv_module.html">FLV streaming</a>;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_core_module.html#limit_rate">Ограничение
+<a href="/ru/docs/http/ngx_http_core_module.html#limit_rate">Ограничение
 скорости отдачи ответов</a>;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_limit_zone_module.html">Ограничение
+<a href="/ru/docs/http/ngx_http_limit_zone_module.html">Ограничение
 числа одновременных соединений</a> и
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_limit_req_module.html">запросов</a>;
+<a href="/ru/docs/http/ngx_http_limit_req_module.html">запросов</a>;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_perl_module.html">Встроенный perl</a>;
+<a href="/ru/docs/http/ngx_http_perl_module.html">Встроенный perl</a>;
 </item>
 
 </list>
@@ -237,7 +236,7 @@ SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/events.html">Поддержка</a>
+<a href="/ru/docs/events.html">Поддержка</a>
 kqueue (FreeBSD 4.1+),
 epoll (Linux 2.6+), rt signals (Linux 2.2.19+),
 /dev/poll <nobr>(Solaris 7 11/99+),</nobr>
@@ -258,17 +257,17 @@ sendfile64 (Linux 2.4.21+) и sendfilev <nobr>(Solaris 8 7/01+);</nobr>
 
 <item>
 Поддержка
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_core_module.html#aio">файлового
+<a href="/ru/docs/http/ngx_http_core_module.html#aio">файлового
 AIO</a> (FreeBSD 4.3+, Linux 2.6.22+);
 </item>
 
 <item>
-Поддержка <a href="http://sysoev.ru/nginx/docs/http/ngx_http_core_module.html#directio">DIRECTIO</a>
+Поддержка <a href="/ru/docs/http/ngx_http_core_module.html#directio">DIRECTIO</a>
 (FreeBSD 4.4+, Linux 2.4+, Solaris 2.6+, Mac OS X);
 </item>
 
 <item>
-<a href="http://sysoev.ru/nginx/docs/http/ngx_http_core_module.html#listen">Поддержка</a>
+<a href="/ru/docs/http/ngx_http_core_module.html#listen">Поддержка</a>
 accept-фильтров (FreeBSD 4.1+) и TCP_DEFER_ACCEPT (Linux 2.4+);
 </item>
 
