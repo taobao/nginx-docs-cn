@@ -154,21 +154,6 @@ Defines the name of the hardware SSL accelerator.
 </directive>
 
 
-<directive name="user">
-<syntax>user <argument>user</argument> [<argument>group</argument>]</syntax>
-<default>user nobody nobody</default>
-<context>main</context>
-
-<para>
-Defines <argument>user</argument> and <argument>group</argument>
-credentials used by worker processes.
-If <argument>group</argument> is omitted, a group whose name equals
-that of <argument>user</argument> is used.
-</para>
-
-</directive>
-
-
 <directive name="timer_resolution">
 <syntax>timer_resolution <argument>interval</argument></syntax>
 <default/>
@@ -212,29 +197,16 @@ an <c-def>EVFILT_TIMER</c-def> filter if <value>kqueue</value> is used;
 </directive>
 
 
-<directive name="worker_rlimit_core">
-<syntax>worker_rlimit_core <argument>size</argument></syntax>
-<default/>
+<directive name="user">
+<syntax>user <argument>user</argument> [<argument>group</argument>]</syntax>
+<default>user nobody nobody</default>
 <context>main</context>
 
 <para>
-Changes the limit on the largest size of a core file
-(<c-def>RLIMIT_CORE</c-def>) for worker processes.
-Used to increase the limit without restarting the main process.
-</para>
-
-</directive>
-
-
-<directive name="worker_rlimit_nofile">
-<syntax>worker_rlimit_nofile <argument>number</argument></syntax>
-<default/>
-<context>main</context>
-
-<para>
-Changes the limit on the maximum number of open files
-(<c-def>RLIMIT_NOFILE</c-def>) for worker processes.
-Used to increase the limit without restarting the main process.
+Defines <argument>user</argument> and <argument>group</argument>
+credentials used by worker processes.
+If <argument>group</argument> is omitted, a group whose name equals
+that of <argument>user</argument> is used.
 </para>
 
 </directive>
@@ -270,6 +242,34 @@ worker_priority -10;
 
 <para>
 Defines the number of worker processes.
+</para>
+
+</directive>
+
+
+<directive name="worker_rlimit_core">
+<syntax>worker_rlimit_core <argument>size</argument></syntax>
+<default/>
+<context>main</context>
+
+<para>
+Changes the limit on the largest size of a core file
+(<c-def>RLIMIT_CORE</c-def>) for worker processes.
+Used to increase the limit without restarting the main process.
+</para>
+
+</directive>
+
+
+<directive name="worker_rlimit_nofile">
+<syntax>worker_rlimit_nofile <argument>number</argument></syntax>
+<default/>
+<context>main</context>
+
+<para>
+Changes the limit on the maximum number of open files
+(<c-def>RLIMIT_NOFILE</c-def>) for worker processes.
+Used to increase the limit without restarting the main process.
 </para>
 
 </directive>

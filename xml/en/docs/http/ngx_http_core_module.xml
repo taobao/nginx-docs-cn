@@ -187,6 +187,27 @@ location /images/ {
 </directive>
 
 
+<directive name="client_body_buffer_size">
+
+<syntax>client_body_buffer_size <argument>size</argument></syntax>
+<default>client_body_buffer_size 8k|16k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets buffer size for reading client request body.
+In case request body is larger than the buffer,
+the whole body or only its part is written to a
+<link id="client_body_temp_path">temporary file</link>.
+By default, buffer size is equal to two memory pages.
+This is 8K on x86, other 32-bit platforms, and x86-64.
+It is usually 16K on other 64-bit platforms.
+</para>
+
+</directive>
+
+
 <directive name="client_body_in_file_only">
 <syntax>client_body_in_file_only
         <value>on</value> |
@@ -236,27 +257,6 @@ in a single buffer.
 The directive is recommended when using the
 <var>$request_body</var>
 variable, to save the number of copy operations involved.
-</para>
-
-</directive>
-
-
-<directive name="client_body_buffer_size">
-
-<syntax>client_body_buffer_size <argument>size</argument></syntax>
-<default>client_body_buffer_size 8k|16k</default>
-<context>http</context>
-<context>server</context>
-<context>location</context>
-
-<para>
-Sets buffer size for reading client request body.
-In case request body is larger than the buffer,
-the whole body or only its part is written to a
-<link id="client_body_temp_path">temporary file</link>.
-By default, buffer size is equal to two memory pages.
-This is 8K on x86, other 32-bit platforms, and x86-64.
-It is usually 16K on other 64-bit platforms.
 </para>
 
 </directive>
@@ -1794,20 +1794,6 @@ If this field is not present, an IP address of the server is used.
 </directive>
 
 
-<directive name="server_names_hash_max_size">
-<syntax>server_names_hash_max_size <argument>size</argument></syntax>
-<default>server_names_hash_max_size 512</default>
-<context>http</context>
-
-<para>
-Sets the maximum <argument>size</argument> of the server names hash tables.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
-</para>
-
-</directive>
-
-
 <directive name="server_names_hash_bucket_size">
 <syntax>server_names_hash_bucket_size <argument>size</argument></syntax>
 <default>server_names_hash_bucket_size 32|64|128</default>
@@ -1816,6 +1802,20 @@ For more information, please refer to
 <para>
 Sets the bucket size for the server names hash tables.
 Default value depends on the size of the processor's cache line.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
+<directive name="server_names_hash_max_size">
+<syntax>server_names_hash_max_size <argument>size</argument></syntax>
+<default>server_names_hash_max_size 512</default>
+<context>http</context>
+
+<para>
+Sets the maximum <argument>size</argument> of the server names hash tables.
 For more information, please refer to
 <link doc="../hash.xml">Setting Up Hashes</link>.
 </para>
@@ -2136,7 +2136,7 @@ For more information, please refer to
 The module <code>ngx_http_core_module</code> supports embedded variables with
 names matching those of the Apache Server.
 First of all, these are variables representing client request header
-fields, such as, <var>$http_user_agent</var>, <var>$http_cookie</var>,
+fields, such as <var>$http_user_agent</var>, <var>$http_cookie</var>,
 and so on.
 It also supports other variables:
 <list type="tag">
