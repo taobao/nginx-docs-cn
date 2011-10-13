@@ -34,6 +34,12 @@ X:template body (lang) {
         X:if "section[@id]" {
             X:for-each "section[@id]" {
                 <a href="#{@id}"> !{@name} </a><br/>
+                X:if "@id = 'directives'" {
+                    X:for-each "directive[@name]" {
+                        <a href="#{@name}"> !{@name} </a>
+                        X:text{&#160;&#160;&#160;&#160;&#160;}<br/>
+                    }
+                }
             }
         } else {
             X:for-each "section[@name]" {
