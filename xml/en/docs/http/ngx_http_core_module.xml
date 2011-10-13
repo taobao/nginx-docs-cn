@@ -2156,6 +2156,11 @@ arguments in the request line
 client address in a binary form, value's length is always 4 bytes
 </tag-desc>
 
+<tag-name><var>$body_bytes_sent</var></tag-name>
+<tag-desc>
+number of bytes sent to a client, not counting the response header
+</tag-desc>
+
 <tag-name><var>$content_length</var></tag-name>
 <tag-desc>
 <header>Content-Length</header> request header field
@@ -2208,6 +2213,11 @@ or an empty string otherwise
 allows for connection rate limiting
 </tag-desc>
 
+<tag-name><var>$nginx_version</var></tag-name>
+<tag-desc>
+nginx version
+</tag-desc>
+
 <tag-name><var>$pid</var></tag-name>
 <tag-desc>
 PID of the worker process
@@ -2237,6 +2247,11 @@ client port
 <tag-name><var>$remote_user</var></tag-name>
 <tag-desc>
 user name supplied with the Basic authentication
+</tag-desc>
+
+<tag-name><var>$request</var></tag-name>
+<tag-desc>
+full original request line
 </tag-desc>
 
 <tag-name><var>$request_body</var></tag-name>
@@ -2293,6 +2308,11 @@ full original request URI (with arguments)
 <tag-name><var>$scheme</var></tag-name>
 <tag-desc>
 request scheme, <dq><code>http</code></dq> or <dq><code>https</code></dq>
+</tag-desc>
+
+<tag-name><var>$sent_http_</var><argument>name</argument></tag-name>
+<tag-desc>
+the <argument>name</argument> response header field
 </tag-desc>
 
 <tag-name><var>$server_addr</var></tag-name>
