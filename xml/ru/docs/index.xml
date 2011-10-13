@@ -71,6 +71,10 @@
 </list>
 </para>
 
+</section>
+
+<section name="Справочник по модулям">
+
 <para>
 <list>
 
@@ -78,23 +82,15 @@
 <a href="/ru/docs/ngx_core_module.xml" />
 </item>
 
-<item>
-<para>
-Директивы модулей http
+</list>
+</para>
 
+<para>
 <list>
 
 <item>
 <a href="/ru/docs/http/ngx_http_core_module.xml">ngx_http_core_module</a>
 </item>
-
-<!--
-
-<item>
-<a href="/ru/docs/http/ngx_http_mp4_module.xml" />
-</item>
-
--->
 
 <item>
 <a href="/ru/docs/http/ngx_http_upstream.xml">
@@ -211,6 +207,14 @@ ngx_http_map_module</a>
 ngx_http_memcached_module</a>
 </item>
 
+<!--
+
+<item>
+<a href="/ru/docs/http/ngx_http_mp4_module.xml" />
+</item>
+
+-->
+
 <item>
 <a href="/ru/docs/http/ngx_http_perl_module.xml">
 ngx_http_perl_module</a>
@@ -276,10 +280,6 @@ ngx_http_userid_module</a>
 ngx_http_xslt_module</a>
 </item>
 
-</list>
-</para>
-
-</item>
 </list>
 </para>
 
