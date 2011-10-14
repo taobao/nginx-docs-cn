@@ -53,11 +53,13 @@
 <list>
 
 <item>
-<a href="/en/docs/http/ngx_http_core_module.xml" />
+<a href="/en/docs/http/ngx_http_core_module.xml">
+ngx_http_core_module</a>
 </item>
 
 <item>
-<a href="/en/docs/http/ngx_http_mp4_module.xml" />
+<a href="/en/docs/http/ngx_http_mp4_module.xml">
+ngx_http_mp4_module</a>
 </item>
 
 </list>
