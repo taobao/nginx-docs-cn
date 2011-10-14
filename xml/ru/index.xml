@@ -150,7 +150,9 @@ MKCOL, COPY и MOVE</a>;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_flv_module.html">FLV streaming</a>;
+<a href="/ru/docs/http/ngx_http_flv_module.xml">FLV</a>
+и
+<a href="/ru/docs/http/ngx_http_mp4_module.xml">MP4</a> стриминг;
 </item>
 
 <item>

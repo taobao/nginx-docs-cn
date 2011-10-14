@@ -207,13 +207,10 @@ ngx_http_map_module</a>
 ngx_http_memcached_module</a>
 </item>
 
-<!--
-
 <item>
-<a href="/ru/docs/http/ngx_http_mp4_module.xml" />
+<a href="/ru/docs/http/ngx_http_mp4_module.xml">
+ngx_http_mp4_module</a>
 </item>
-
--->
 
 <item>
 <a href="/ru/docs/http/ngx_http_perl_module.xml">

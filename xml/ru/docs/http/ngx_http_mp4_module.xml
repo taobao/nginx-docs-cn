@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Модуль ngx_http_mp4_module"
+        link="/ru/docs/http/ngx_http_mp4_module.html"
+        lang="ru">
+
+<section name="Обзор">
+
+<para>
+Модуль <code>ngx_http_mp4_module</code> обеспечивает серверную поддержку
+псевдо-стриминга для файлов в формате H.264/AAC. Такие файлы обычно
+имеют расширения
+<pathname>.mp4</pathname>, <pathname>.m4v</pathname>
+и <pathname>.m4a</pathname>.
+</para>
+
+<para>
+Псевдо-стриминг работает в паре с совместимым Flash-плеером.
+Плеер посылает серверу HTTP-запрос с указанием точки времени старта
+в аргументе
+<parameter>start</parameter>
+строки запроса (время задаётся в секундах), а сервер в
+ответ посылает поток, у которого начальная позиция соответствует
+запрошенному времени, например:
+<example>
+http://example.com/elephants_dream.mp4?start=238.88
+</example>
+Это позволяет в любой момент времени выполнить произвольное
+позиционирование, а также начать воспроизведение с середины
+временной шкалы.
+</para>
+
+<para>
+В форматах, основанных на H.264, метаданные, необходимые для поддержки
+позиционирования, хранятся в так называемом “moov атоме.”
+Это часть файла, которая содержит индексную информацию для всего файла.
+</para>
+
+<para>
+До начала воспроизведения плееру необходимо прочитать метаданные.
+Для этого он отсылает специальный запрос с аргументом
+<parameter>start=0</parameter>.
+Многие кодирующие программы добавляют метаданные в конец файла.
+Для псевдо-стриминга это плохо: метаданные должны быть расположены
+в начале файла, иначе потребуется загрузить файл целиком, прежде
+чем начать воспроизведение. Если файл отформатирован хорошо,
+с метаданными в начале файла, nginx просто посылает в ответ
+содержимое файла. В противном случае, он вынужден будет прочитать
+файл и подготовить новый поток, в котором метаданные предшествуют
+медийным данным. Это требует дополнительного процессорного
+времени, памяти и дискового ввода/вывода, поэтому лучше
+<link
+url="http://flowplayer.org/plugins/streaming/pseudostreaming.html#prepare">
+подготовить исходный файл для псевдо-стриминга</link>,
+нежели чем заставлять nginx делать это для каждого запроса.
+</para>
+
+<para>
+Для запроса с ненулевым аргументом
+<parameter>start</parameter>
+nginx считывает из файла метаданные, готовит поток с запрошенного
+смещения, и отправляет его клиенту.
+Это тоже требует дополнительных ресурсов, как указано выше.
+</para>
+
+<para>
+Если запрос, обрабатываемый этим модулем, не содержит аргумента
+<parameter>start</parameter>,
+дополнительные ресурсы не тратятся, а файл отсылается просто как
+статический ресурс.
+Некоторые плееры также поддерживают запросы с указанием диапазона
+запрашиваемых байт (byte-range requests), для них вообще не
+требуется этот модуль.
+</para>
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<code>--with-http_mp4_module</code>.
+<note>
+Если вы ранее использовали сторонний модуль mp4, не забудьте его отключить.
+</note>
+</para>
+
+<para>
+Схожая поддержка псевдо-стриминга для FLV-файлов обеспечивается модулем
+<link doc="ngx_http_flv_module.xml">ngx_http_flv_module</link>.
+</para>
+
+</section>
+
+
+<section id="example" name="Пример конфигурации">
+
+<para>
+<example>
+location /video/ {
+    mp4;
+    mp4_buffer_size     1m;
+    mp4_max_buffer_size 5m;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Директивы">
+
+<directive name="mp4">
+<syntax>mp4</syntax>
+<default/>
+<context>location</context>
+
+<para>
+Включает в содержащем location обработку этим модулем.
+</para>
+
+</directive>
+
+
+<directive name="mp4_buffer_size">
+<syntax>mp4_buffer_size <argument>размер</argument></syntax>
+<default>mp4_buffer_size 512K</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Задаёт начальный размер буфера памяти, используемого при обработке MP4 файлов.
+</para>
+
+</directive>
+
+
+<directive name="mp4_max_buffer_size">
+<syntax>mp4_max_buffer_size <argument>размер</argument></syntax>
+<default>mp4_max_buffer_size 10M</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+В процессе обработки метаданных может понадобиться буфер большего размера.
+Его размер не может превышать указанного,
+иначе nginx возвращает серверную ошибку
+<http-status code="500" text="Internal Server Error"/>
+и протоколирует следующее:
+<example>
+"/some/movie/file.mp4" mp4 moov atom is too large:
+12583268, you may want to increase mp4_max_buffer_size
+</example>
+</para>
+
+</directive>
+
+</section>
+
+</module>

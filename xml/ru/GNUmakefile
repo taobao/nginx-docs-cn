@@ -33,6 +33,7 @@ DOCS_RU =	ru/docs/faq						\
 		ru/docs/http/ngx_http_log_module			\
 		ru/docs/http/ngx_http_map_module			\
 		ru/docs/http/ngx_http_memcached_module			\
+		ru/docs/http/ngx_http_mp4_module			\
 		ru/docs/http/ngx_http_perl_module			\
 		ru/docs/http/ngx_http_proxy_module			\
 		ru/docs/http/ngx_http_random_index_module		\
