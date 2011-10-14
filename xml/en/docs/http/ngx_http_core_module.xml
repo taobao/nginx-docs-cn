@@ -1006,7 +1006,7 @@ Regular expressions are specified by prepending them with the
 <dq><value>~</value></dq> prefix (for case-sensitive matching).
 To find a location matching a given request, nginx first checks
 locations defined using the prefix strings (prefix locations).
-Amongst them, the most specific one is searched.
+Among them, the most specific one is searched.
 Then regular expressions are checked, in the order of their appearance
 in a configuration file.
 A search terminates on the first match, and its corresponding
@@ -1865,7 +1865,7 @@ keep-alive state.
 Enables or disables the use of
 the <c-def>TCP_NOPUSH</c-def> socket option on FreeBSD
 or the <c-def>TCP_CORK</c-def> socket option on Linux.
-Opitons are enabled only when <link id="sendfile">sendfile</link> is used.
+Options are enabled only when <link id="sendfile">sendfile</link> is used.
 Enabling the option allows to
 <list type="bullet">
 
@@ -2285,6 +2285,12 @@ and
 id="fastcgi_pass_request_body">fastcgi_pass_request_body</link>
 directives, respectively.
 </para>
+</tag-desc>
+
+<tag-name><var>$request_completion</var></tag-name>
+<tag-desc>
+<dq><code>OK</code></dq> if a request has completed,
+or an empty string otherwise
 </tag-desc>
 
 <tag-name><var>$request_filename</var></tag-name>

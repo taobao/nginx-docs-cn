@@ -16,7 +16,7 @@ and <pathname>.m4a</pathname>.
 </para>
 
 <para>
-Pseudo-streaming works in alliance with conformant Flash players.
+Pseudo-streaming works in alliance with conforming Flash players.
 A player sends an HTTP request to the server with a start time
 argument in the request URI’s query string (named simply
 <parameter>start</parameter>
