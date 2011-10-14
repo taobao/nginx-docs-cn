@@ -2,7 +2,7 @@ X:stylesheet {
 
 X:template style (lang) {
 
-    <style>!{ normalize-space('
+    <style type="text/css">!{ normalize-space('
         html             {-webkit-text-size-adjust: none}
         body             { font-family:  Georgia, serif; }
         p                { text-align:   justify; }
