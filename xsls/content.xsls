@@ -101,6 +101,12 @@ X:stylesheet {
 
     X:template = "example" { <blockquote><pre> !!; </pre></blockquote> }
 
+    X:template = "para/example" {
+	X:text disable-output-escaping="yes" {&lt;/p&gt; }
+	<blockquote><pre> !!; </pre></blockquote>
+	X:text disable-output-escaping="yes" {&lt;p&gt; }
+    }
+
     X:template = "pathname" { <code> !!; </code> }
 
     X:template = "argument" { <code><i> !!; </i></code> }
