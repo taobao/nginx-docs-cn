@@ -53,10 +53,28 @@ X:stylesheet {
     }
 
     X:template = "list[@type='bullet']" { <ul> !!; </ul> }
+    X:template = "para/list[@type='bullet']" {
+	X:text disable-output-escaping="yes" {&lt;/p&gt; }
+        <ul> !!; </ul>
+	X:text disable-output-escaping="yes" {&lt;p&gt; }
+    }
+
     X:template = "list[@type='enum']" { <ol> !!; </ol> }
+    X:template = "para/list[@type='enum']" {
+	X:text disable-output-escaping="yes" {&lt;/p&gt; }
+        <ol> !!; </ol>
+	X:text disable-output-escaping="yes" {&lt;p&gt; }
+    }
+
     X:template = "listitem" { <li> !!; </li> }
     
     X:template = "list[@type='tag']" { <dl compact=""> !!; </dl> }
+    X:template = "para/list[@type='tag']" {
+	X:text disable-output-escaping="yes" {&lt;/p&gt; }
+        <dl compact=""> !!; </dl>
+	X:text disable-output-escaping="yes" {&lt;p&gt; }
+    }
+
     X:template = "tag-name" { <dt> !!; </dt> }
     X:template = "tag-desc" { <dd> !!; </dd> }
 
