@@ -10,26 +10,24 @@
 <para>
 nginx [engine x]&mdash;это HTTP-сервер и обратный прокси-сервер,
 а также почтовый прокси-сервер,
-написанный <a href="http://sysoev.ru">Игорем Сысоевым</a>.
-<!--
-It has been running for more than five years
-on many heavily loaded Russian sites including
-<a href="http://www.rambler.ru">Rambler</a>
-(<a href="http://ramblermedia.com">RamblerMedia.com</a>).
--->
+написанный <link url="http://sysoev.ru">Игорем Сысоевым</link>.
+Уже длительное время он обслуживает
+серверы многих высоконагруженных российских сайтов, таких как
+<link url="http://www.yandex.ru">Яндекс</link>,
+<link url="http://www.mail.ru">Mail.Ru</link>,
+<link url="http://vkontakte.ru">ВКонтакте</link> и
+<link url="http://www.rambler.ru">Рамблер</link>.
 Согласно статистике Netcraft nginx обслуживал или проксировал
-<a href="http://news.netcraft.com/archives/2011/10/06/october-2011-web-server-survey.html">7.84%
-самых нагруженных сайтов в октябре 2011 года</a>.
-<!--
-Here are some of success stories:
-<a href="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</a>,
-<a href="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</a>.
--->
+<link url="http://news.netcraft.com/archives/2011/10/06/october-2011-web-server-survey.html">7.84%
+самых нагруженных сайтов в октябре 2011 года</link>.
+Вот некоторые примеры успешного внедрения nginx (тексты на английском языке):
+<link url="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</link>,
+<link url="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</link>.
 </para>
 
 <para>
-Исходные тексты лицензированы под 
-<a href="/LICENSE">2-clause BSD-like license</a>.
+Исходные тексты распространяются под
+<link url="../LICENSE.ru">BSD-подобной лицензией из 2 пунктов</link>.
 </para>
 
 </section>
@@ -43,44 +41,47 @@ Here are some of success stories:
 
 <item>
 Обслуживание статических запросов,
-<a href="/ru/docs/http/ngx_http_index_module.html">индексных
-файлов</a>,
-<a href="/ru/docs/http/ngx_http_autoindex_module.html">автоматическое
-создание списка файлов</a>,
-<a href="/ru/docs/http/ngx_http_core_module.html#open_file_cache">кэш
-дескрипторов открытых файлов</a>;
+<link doc="docs/http/ngx_http_index_module.xml">индексных
+файлов</link>,
+<link doc="docs/http/ngx_http_autoindex_module.xml">автоматическое
+создание списка файлов</link>,
+<link doc="docs/http/ngx_http_core_module.xml"
+       id="open_file_cache">кэш дескрипторов открытых файлов</link>;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_proxy_module.html">Акселерированное
-проксирование с кэшированием</a>,
-<a href="/ru/docs/http/ngx_http_upstream.html">простое
-распределение нагрузки и отказоустойчивость</a>;
+<link doc="docs/http/ngx_http_proxy_module.xml">Акселерированное
+проксирование с кэшированием</link>,
+<link doc="docs/http/ngx_http_upstream.xml">простое
+распределение нагрузки и отказоустойчивость</link>;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_fastcgi_module.html">Акселерированная
-поддержка удалённых FastCGI серверов с кэшированием</a>,
-<a href="/ru/docs/http/ngx_http_upstream.html">простое
-распределение нагрузки и отказоустойчивость</a>;
+Акселерированная поддержка
+<link doc="docs/http/ngx_http_fastcgi_module.xml">FastCGI</link>,
+uwsgi, SCGI и
+<link doc="docs/http/ngx_http_memcached_module.xml">memcached</link>
+серверов с кэшированием,
+<link doc="docs/http/ngx_http_upstream.xml">простое
+распределение нагрузки и отказоустойчивость</link>;
 </item>
 
 <item>
-модульность, фильтры, в том числе
-<a href="/ru/docs/http/ngx_http_gzip_module.html">сжатие (gzip)</a>,
+Модульность, фильтры, в том числе
+<link doc="docs/http/ngx_http_gzip_module.xml">сжатие (gzip)</link>,
 byte-ranges (докачка),
 chunked ответы,
-<a href="/ru/docs/http/ngx_http_xslt_module.html">XSLT-фильтр</a>,
-<a href="/ru/docs/http/ngx_http_ssi_module.html">SSI-фильтр</a>,
-<a href="/ru/docs/http/ngx_http_image_filter_module.html">преобразование
-изображений</a>;
+<link doc="docs/http/ngx_http_xslt_module.xml">XSLT-фильтр</link>,
+<link doc="docs/http/ngx_http_ssi_module.xml">SSI-фильтр</link>,
+<link doc="docs/http/ngx_http_image_filter_module.xml">преобразование
+изображений</link>;
 несколько подзапросов на одной странице, обрабатываемые в SSI-фильтре
-через прокси или FastCGI, выполняются параллельно.
+через прокси или FastCGI, выполняются параллельно;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_ssl_module.html">поддержка SSL и
-расширения TLS SNI</a>;
+<link doc="docs/http/ngx_http_ssl_module.xml">Поддержка SSL и
+расширения TLS SNI</link>.
 </item>
 
 </list>
@@ -96,78 +97,82 @@ chunked ответы,
 <list>
 
 <item>
-<a href="/ru/docs/virtual_hosts.html">Виртуальные сервера</a>,
-определяемые по ip-адресу и имени;
+<link doc="docs/virtual_hosts.xml">Виртуальные серверы</link>,
+определяемые по IP-адресу и имени;
 </item>
 
 <item>
-Поддержка <a href="/ru/docs/http/ngx_http_core_module.html#keepalive_timeout">keep-alive</a>
+Поддержка
+<link doc="docs/http/ngx_http_core_module.xml"
+       id="keepalive_timeout">keep-alive</link>
 и pipelined соединений;
 </item>
 
 <item>
-<a href="/ru/docs/example.html">Гибкость конфигурации</a>
+<link doc="docs/example.xml">Гибкость конфигурации</link>;
 </item>
 
 <item>
-<a href="/ru/docs/control.html#reconfiguration">Изменение настроек</a>
-и <a href="/ru/docs/control.html#upgrade">обновление
-исполняемого файла</a> без перерыва в обслуживании клиентов;
+<link doc="docs/control.xml" id="reconfiguration">Изменение настроек</link>
+и <link doc="docs/control.xml" id="upgrade">обновление
+исполняемого файла</link> без перерыва в обслуживании клиентов;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_log_module.html">Настройка форматов логов</a>,
-<a href="/ru/docs/control.html#logs">быстрая ротация логов</a>;
+<link doc="docs/http/ngx_http_log_module.xml">Настройка форматов логов</link>,
+<link doc="docs/control.xml" id="logs">быстрая ротация логов</link>;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_core_module.html#error_page">Специальные
-страницы</a> для ошибок 3xx-5xx;
+<link doc="docs/http/ngx_http_core_module.xml" id="error_page">Специальные
+страницы</link> для ошибок 3xx-5xx;
 </item>
 
 <item>
 rewrite-модуль:
-<a href="/ru/docs/http/ngx_http_rewrite_module.html">изменение URI
-с помощью регулярных выражений</a>;
+<link doc="docs/http/ngx_http_rewrite_module.xml">изменение URI
+с помощью регулярных выражений</link>;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_rewrite_module.html#if">Выполнение
-разных функций</a> в зависимости от
-<a href="/ru/docs/http/ngx_http_geo_module.html">адреса клиента</a>;
+<link doc="docs/http/ngx_http_rewrite_module.xml" id="if">Выполнение
+разных функций</link> в зависимости от
+<link doc="docs/http/ngx_http_geo_module.xml">адреса клиента</link>;
 </item>
 
 <item>
 Ограничение доступа в зависимости от
-<a href="/ru/docs/http/ngx_http_access_module.html">адреса клиента</a>
-и <a href="/ru/docs/http/ngx_http_auth_basic_module.html">по паролю
-(Basic аутентификация)</a>;
+<link doc="docs/http/ngx_http_access_module.xml">адреса клиента</link>
+и <link doc="docs/http/ngx_http_auth_basic_module.xml">по паролю
+(HTTP Basic аутентификация)</link>;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_dav_module.html">Методы PUT, DELETE,
-MKCOL, COPY и MOVE</a>;
+<link doc="docs/http/ngx_http_dav_module.xml">Методы
+PUT, DELETE, MKCOL, COPY и MOVE</link>;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_flv_module.xml">FLV</a>
+<link doc="docs/http/ngx_http_flv_module.xml">FLV</link>
 и
-<a href="/ru/docs/http/ngx_http_mp4_module.xml">MP4</a> стриминг;
+<link doc="docs/http/ngx_http_mp4_module.xml">MP4</link>
+стриминг;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_core_module.html#limit_rate">Ограничение
-скорости отдачи ответов</a>;
+<link doc="docs/http/ngx_http_core_module.xml"
+       id="limit_rate">Ограничение скорости отдачи ответов</link>;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_limit_zone_module.html">Ограничение
-числа одновременных соединений</a> и
-<a href="/ru/docs/http/ngx_http_limit_req_module.html">запросов</a>;
+Ограничение числа одновременных
+<link doc="docs/http/ngx_http_limit_zone_module.xml">соединений</link> и
+<link doc="docs/http/ngx_http_limit_req_module.xml">запросов</link>
+с одного адреса;
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_perl_module.html">Встроенный perl</a>;
+<link doc="docs/http/ngx_http_perl_module.xml">Встроенный Perl</link>.
 </item>
 
 </list>
@@ -213,11 +218,11 @@ SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
 </item>
 
 <item>
-поддержка SSL;
+Поддержка SSL;
 </item>
 
 <item>
-поддержка STARTTLS и STLS.
+Поддержка STARTTLS и STLS.
 </item>
 
 </list>
@@ -233,12 +238,12 @@ SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
 <list>
 
 <item>
-Один главный процесс и несколько рабочих, рабочие процессы работают под
+Один главный и несколько рабочих процессов, рабочие процессы работают под
 непривилегированным пользователем;
 </item>
 
 <item>
-<a href="/ru/docs/events.html">Поддержка</a>
+<link doc="docs/events.xml">Поддержка</link>
 kqueue (FreeBSD 4.1+),
 epoll (Linux 2.6+), rt signals (Linux 2.2.19+),
 /dev/poll <nobr>(Solaris 7 11/99+),</nobr>
@@ -259,17 +264,18 @@ sendfile64 (Linux 2.4.21+) и sendfilev <nobr>(Solaris 8 7/01+);</nobr>
 
 <item>
 Поддержка
-<a href="/ru/docs/http/ngx_http_core_module.html#aio">файлового
-AIO</a> (FreeBSD 4.3+, Linux 2.6.22+);
+<link doc="docs/http/ngx_http_core_module.xml" id="aio">файлового
+AIO</link> (FreeBSD 4.3+, Linux 2.6.22+);
 </item>
 
 <item>
-Поддержка <a href="/ru/docs/http/ngx_http_core_module.html#directio">DIRECTIO</a>
+Поддержка
+<link doc="docs/http/ngx_http_core_module.xml" id="directio">DIRECTIO</link>
 (FreeBSD 4.4+, Linux 2.4+, Solaris 2.6+, Mac OS X);
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_core_module.html#listen">Поддержка</a>
+<link doc="docs/http/ngx_http_core_module.xml" id="listen">Поддержка</link>
 accept-фильтров (FreeBSD 4.1+) и TCP_DEFER_ACCEPT (Linux 2.4+);
 </item>
 
@@ -279,7 +285,7 @@ accept-фильтров (FreeBSD 4.1+) и TCP_DEFER_ACCEPT (Linux 2.4+);
 </item>
 
 <item>
-Минимум операций копирования данных;
+Минимум операций копирования данных.
 </item>
 
 </list>
@@ -289,13 +295,13 @@ accept-фильтров (FreeBSD 4.1+) и TCP_DEFER_ACCEPT (Linux 2.4+);
 
 
 <section name="tested_os_and_platforms"
-        title="Операционные системы и платформы">
+        title="Протестированные ОС и платформы">
 
 <para>
 <list>
 
 <item>
-FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 8 / amd64;
+FreeBSD 3 &mdash; 9 / i386; FreeBSD 5 &mdash; 9 / amd64;
 </item>
 
 <item>
@@ -307,7 +313,7 @@ Solaris 9 / i386, sun4u; Solaris 10 / i386, amd64, sun4v;
 </item>
 
 <item>
-MacOS X / ppc, i386;
+Mac OS X / ppc, i386;
 </item>
 
 <item>

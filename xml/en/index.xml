@@ -8,40 +8,41 @@
 <section>
 
 <para>
-nginx [engine x] is a HTTP and reverse proxy server,
-as well as a mail proxy server
-written by <a href="http://sysoev.ru/en/">Igor Sysoev</a>.
-It has been running since 2004
+nginx [engine x] is an HTTP and reverse proxy server,
+as well as a mail proxy server,
+written by <link url="http://sysoev.ru/en/">Igor Sysoev</link>.
+For a long time, it has been running
 on many heavily loaded Russian sites including
-<a href="http://www.yandex.ru">Yandex</a>,
-<a href="http://www.mail.ru">Mail.Ru</a>,
-<a href="http://www.vkontakte.ru">VKontakte</a>, and
-<a href="http://www.rambler.ru">Rambler</a>.
+<link url="http://www.yandex.ru">Yandex</link>,
+<link url="http://www.mail.ru">Mail.Ru</link>,
+<link url="http://vkontakte.ru">VKontakte</link>, and
+<link url="http://www.rambler.ru">Rambler</link>.
 According to Netcraft nginx served or proxied
-<a href="http://news.netcraft.com/archives/2011/10/06/october-2011-web-server-survey.html">7.84%
-busiest sites in October 2011</a>.
-Here are some of success stories:
-<a href="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</a>,
-<a href="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</a>.
+<link url="http://news.netcraft.com/archives/2011/10/06/october-2011-web-server-survey.html">7.84%
+busiest sites in October 2011</link>.
+Here are some of the success stories:
+<link url="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</link>,
+<link url="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</link>.
 </para>
 
 <para>
-The sources are licensed under
-<a href="/LICENSE">2-clause BSD-like license</a>.
+The sources are distributed under the
+<link url="../LICENSE">2-clause BSD-like license</link>.
 </para>
 
 </section>
 
 
 <section name="basic_http_features"
-        title="Basic HTTP features">
+        title="Basic HTTP server features">
 
 <para>
 <list>
 
 <item>
 Serving static and index files, and autoindexing;
-open file descriptor cache;
+<link doc="docs/http/ngx_http_core_module.xml"
+       id="open_file_cache">open file descriptor cache</link>;
 </item>
 
 <item>
@@ -50,7 +51,7 @@ simple load balancing and fault tolerance;
 </item>
 
 <item>
-Accelerated support with caching of remote FastCGI servers;
+Accelerated support with caching of FastCGI, uwsgi, SCGI, and memcached servers;
 simple load balancing and fault tolerance;
 </item>
 
@@ -59,7 +60,7 @@ Modular architecture.
 Filters include gzipping, byte ranges, chunked responses, XSLT, SSI,
 and image resizing filter.
 Multiple SSI inclusions within a single page can be processed in
-parallel if they are handled by FastCGI or proxied servers.
+parallel if they are handled by proxied or FastCGI servers;
 </item>
 
 <item>
@@ -73,7 +74,7 @@ SSL and TLS SNI support.
 
 
 <section name="other_http_features"
-        title="Other HTTP features">
+        title="Other HTTP server features">
 
 <para>
 <list>
@@ -83,7 +84,9 @@ Name-based and IP-based virtual servers;
 </item>
 
 <item>
-Keep-alive and pipelined connections support;
+<link doc="docs/http/ngx_http_core_module.xml"
+       id="keepalive_timeout">Keep-alive</link>
+and pipelined connections support;
 </item>
 
 <item>
@@ -91,20 +94,26 @@ Flexible configuration;
 </item>
 
 <item>
-Reconfiguration and online upgrade without interruption
-of the client processing;
+Reconfiguration and upgrade of an executable without interruption
+of the client servicing;
 </item>
 
 <item>
-Access log formats, bufferred log writing, and quick log rotation;
+Access log formats, buffered log writing, and fast log rotation;
 </item>
 
 <item>
-3xx-5xx error codes redirection;
+3xx-5xx error codes
+<link doc="docs/http/ngx_http_core_module.xml"
+       id="error_page">redirection</link>;
 </item>
 
 <item>
-The rewrite module;
+The rewrite module: URI changing using regular expressions;
+</item>
+
+<item>
+Executing different functions depending on the client address;
 </item>
 
 <item>
@@ -112,24 +121,27 @@ Access control based on client IP address and HTTP Basic authentication;
 </item>
 
 <item>
-The PUT, DELETE, MKCOL, COPY and MOVE methods;
+The PUT, DELETE, MKCOL, COPY, and MOVE methods;
 </item>
 
 <item>
 FLV and
-<a href="/en/docs/http/ngx_http_mp4_module.xml">MP4</a> streaming;
+<link doc="docs/http/ngx_http_mp4_module.xml">MP4</link>
+streaming;
 </item>
 
 <item>
-Speed limitation;
+<link doc="docs/http/ngx_http_core_module.xml"
+       id="limit_rate">Response rate limiting</link>;
 </item>
 
 <item>
-Limitation of simultaneous connections or requests from one address.
+Limiting the number of simultaneous connections or requests
+coming from one address;
 </item>
 
 <item>
-Embedded perl.
+Embedded Perl.
 </item>
 
 </list>
@@ -151,7 +163,7 @@ authentication server;
 
 <item>
 User authentication using an external HTTP authentication server
-and connection redirection to internal SMTP backend;
+and connection redirection to an internal SMTP backend;
 </item>
 
 <item>
@@ -195,8 +207,8 @@ STARTTLS and STLS support.
 <list>
 
 <item>
-One master process and several workers processes.
-The workers run as unprivileged user;
+One master and several worker processes;
+worker processes run under an unprivileged user;
 </item>
 
 <item>
@@ -208,21 +220,28 @@ select, and poll;
 
 <item>
 The support of the various kqueue features including EV_CLEAR, EV_DISABLE
-(to disable event temporalily), NOTE_LOWAT, EV_EOF, number of available data,
+(to temporarily disable events), NOTE_LOWAT, EV_EOF, number of available data,
 error codes;
 </item>
 
 <item>
-sendfile (FreeBSD 3.1+, Linux 2.2+, Mac OS X 10.5), sendfile64 (Linux 2.4.21+),
+sendfile (FreeBSD 3.1+, Linux 2.2+, Mac OS X 10.5+), sendfile64 (Linux 2.4.21+),
 and sendfilev (Solaris 8 7/01+) support;
 </item>
 
 <item>
-File AIO (FreeBSD 4.3+, Linux 2.6.22+);
+<link doc="docs/http/ngx_http_core_module.xml" id="aio">File AIO</link>
+(FreeBSD 4.3+, Linux 2.6.22+);
 </item>
 
 <item>
-Accept-filters (FreeBSD 4.1+) and TCP_DEFER_ACCEPT (Linux 2.4+) support;
+<link doc="docs/http/ngx_http_core_module.xml" id="directio">DIRECTIO</link>
+(FreeBSD 4.4+, Linux 2.4+, Solaris 2.6+, Mac OS X);
+</item>
+
+<item>
+Accept-filters (FreeBSD 4.1+) and TCP_DEFER_ACCEPT (Linux 2.4+)
+<link doc="docs/http/ngx_http_core_module.xml" id="listen">support</link>;
 </item>
 
 <item>
@@ -246,7 +265,7 @@ Data copy operations are kept to a minimum.
 <list>
 
 <item>
-FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 9 / amd64;
+FreeBSD 3 &mdash; 9 / i386; FreeBSD 5 &mdash; 9 / amd64;
 </item>
 
 <item>
@@ -258,7 +277,7 @@ Solaris 9 / i386, sun4u; Solaris 10 / i386, amd64, sun4v;
 </item>
 
 <item>
-MacOS X / ppc, i386;
+Mac OS X / ppc, i386;
 </item>
 
 <item>
@@ -269,6 +288,5 @@ Windows XP, Windows Server 2003.
 </para>
 
 </section>
-
 
 </article>

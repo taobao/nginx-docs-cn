@@ -197,6 +197,7 @@ do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
 			$(wildcard $(ZIP)/$(lang)/$(dir)/*.html))))	\
 		$(ZIP)/index.rss.gz					\
 		$(ZIP)/LICENSE.gz					\
+		$(ZIP)/LICENSE.ru.gz					\
 		$(ZIP)/en/CHANGES.gz					\
 		$(addsuffix .gz, $(wildcard $(ZIP)/en/CHANGES-?.?))	\
 		$(ZIP)/ru/CHANGES.ru.gz					\
