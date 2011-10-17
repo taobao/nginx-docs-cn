@@ -305,7 +305,8 @@ nginx не передаёт клиенту строки заголовка "Date
 Директива proxy_ignore_headers запрещает обработку некоторых
 строк заголовка из ответа проксированного сервера. 
 В директиве можно указать строки "X-Accel-Redirect", "X-Accel-Expires",
-"Expires" и "Cache-Control".
+"X-Accel-Limit-Rate" (1.1.6), "X-Accel-Buffering" (1.1.6),
+"X-Accel-Charset" (1.1.6), "Expires", "Cache-Control" и "Set-Cookie" (0.8.44).
 </para>
 
 </directive>

@@ -307,7 +307,8 @@ nginx не передаёт клиенту строки заголовка "Stat
 Директива fastcgi_ignore_headers запрещает обработку некоторых
 строк заголовка из ответа FastCGI-сервера. 
 В директиве можно указать строки "X-Accel-Redirect", "X-Accel-Expires",
-"Expires" и "Cache-Control".
+"X-Accel-Limit-Rate" (1.1.6), "X-Accel-Buffering" (1.1.6),
+"X-Accel-Charset" (1.1.6), "Expires", "Cache-Control" и "Set-Cookie" (0.8.44).
 </para>
 
 </directive>
