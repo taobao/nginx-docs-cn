@@ -2,6 +2,13 @@
 
 <news title="nginx news" link="/" lang="en">
 
+<event date="2011-10-17">
+<para>
+<a href="/en/download.xml">nginx-1.1.6</a>
+development version has been released.
+</para>
+</event>
+
 <event date="2011-10-12">
 <para>
 NGINX, Inc. has
