@@ -127,7 +127,7 @@ ps ax -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'
 Для обновления сервера нужно записать на место старого исполняемого файла новый.
 Затем нужно послать сигнал USR2 главному процессу&mdash;он
 переименует свой файл с номером процесса в файл
-с суффиксом <command>.oldbin</command>, например, 
+с суффиксом <command>.oldbin</command>, например,
 <command>/usr/local/nginx/logs/nginx.pid.oldbin</command>,
 после чего запустит новый исполняемый файл, а тот в свою
 очередь&mdash;свои рабочие процессы:
@@ -148,7 +148,7 @@ ps ax -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'
 
 <para>
 Процесс с новым исполняемым файлом 36264 создаёт свой файл с номером процесса
-с суффиксом <command>.newbin</command>, например, 
+с суффиксом <command>.newbin</command>, например,
 <command>/usr/local/nginx/logs/nginx.pid.newbin</command>.
 </para>
 

@@ -93,7 +93,7 @@ $msie — равна "1", если браузер опознан как MSIE л
 <syntax>ancient_browser_value <value>строка</value></syntax>
 <default>ancient_browser_value 1</default>
 <context>http, server, location</context>
-    
+
 <para>
 Директива задаёт значение для переменных $ancient_browser.
 </para>
@@ -132,7 +132,7 @@ $msie — равна "1", если браузер опознан как MSIE л
 <syntax>modern_browser_value <value>строка</value></syntax>
 <default>modern_browser_value 1</default>
 <context>http, server, location</context>
-    
+
 <para>
 Директива задаёт значение для переменных $modern_browser.
 </para>

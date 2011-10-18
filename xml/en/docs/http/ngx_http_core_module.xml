@@ -988,10 +988,10 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
 <directive name="location">
 <syntax>location [
         <value>=</value> |
-	<value>~</value> |
-	<value>~*</value> |
-	<value>^~</value>
-	] <argument>uri</argument>
+        <value>~</value> |
+        <value>~*</value> |
+        <value>^~</value>
+        ] <argument>uri</argument>
 { ... }</syntax>
 <syntax>location <value>@</value><argument>name</argument> { ... }</syntax>
 <default/>
@@ -1887,7 +1887,7 @@ send a file in full packets.
 <directive name="try_files">
 <syntax>try_files
         <argument>file</argument> ...
-	<argument>uri</argument>
+        <argument>uri</argument>
 </syntax>
 <syntax>try_files
         <argument>file</argument> ...

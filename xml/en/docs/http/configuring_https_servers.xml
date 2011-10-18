@@ -53,7 +53,7 @@ so configuring them explicitly only makes sense for the earlier nginx versions.
 
 <para>
 CBC-mode ciphers might be vulnerable to a number of attacks and to
-the BEAST attack in particular (see 
+the BEAST attack in particular (see
 <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3389">CVE-2011-3389</a>).
 Configuration of ciphers can be adjusted to prefer RC4-SHA as the following:
 

@@ -41,7 +41,7 @@ location / {
 <directive name="fastcgi_buffer_size">
 <syntax>fastcgi_buffer_size <value>размер</value></syntax>
 <default>fastcgi_buffer_size  4k/8k</default>
-<context>http, server, location</context> 
+<context>http, server, location</context>
 
 <para>
 Директива задаёт размер буфера, в который будет читаться
@@ -93,7 +93,7 @@ location / {
 Директива задаёт условия, при которых ответ не будет браться из кэша.
 Если значение хотя бы одной из строк переменных не пустое и не равно "0",
 то ответ не берётся из кэша:
-<example> 
+<example>
 fastcgi_cache_bypass   $cookie_nocache  $arg_nocache$arg_comment;
 fastcgi_cache_bypass   $http_pragma     $http_authorization;
 </example>
@@ -110,7 +110,7 @@ fastcgi_cache_bypass   $http_pragma     $http_authorization;
 
 <para>
 Директива задаёт ключ для кэширования, например,
-<example> 
+<example>
 fastcgi_cache_key  localhost:9000$request_uri;
 </example>
 </para>
@@ -129,11 +129,11 @@ keys_zone=название:размер [inactive=время] [max_size=разм
 Ключом и именем файла в кэше является результат функции md5 от
 проксированного URL. Параметр levels задаёт уровни иерархии кэша,
 например, при использовании
-<example> 
+<example>
 fastcgi_cache_path  /data/nginx/cache  levels=1:2   keys_zone=one:10m;
 </example>
 имена файлов в кэше будут такого вида:
-<example> 
+<example>
 /data/nginx/cache/<emphasis>c/29</emphasis>/b7f54b2df7773722d382f4809d650<emphasis>29c</emphasis>
 </example>
 </para>
@@ -188,7 +188,7 @@ inactive, то данные удаляются, независимо от их �
 <para>
 Директива задаёт время кэширования для разных ответов.
 Например, директивы
-<example> 
+<example>
 fastcgi_cache_valid  200 302  10m;
 fastcgi_cache_valid  404      1m;
 </example>
@@ -198,7 +198,7 @@ fastcgi_cache_valid  404      1m;
 
 <para>
 Если указано только время кэширования,
-<example> 
+<example>
 fastcgi_cache_valid  5m;
 </example>
 то кэшируются только ответы 200, 301 и 302.
@@ -206,7 +206,7 @@ fastcgi_cache_valid  5m;
 
 <para>
 Кроме того, может кэшировать любые ответы с помощью параметра "any":
-<example> 
+<example>
 fastcgi_cache_valid  200 302 10m;
 fastcgi_cache_valid  301 1h;
 fastcgi_cache_valid  any 1m;
@@ -305,7 +305,7 @@ nginx не передаёт клиенту строки заголовка "Stat
 
 <para>
 Директива fastcgi_ignore_headers запрещает обработку некоторых
-строк заголовка из ответа FastCGI-сервера. 
+строк заголовка из ответа FastCGI-сервера.
 В директиве можно указать строки "X-Accel-Redirect", "X-Accel-Expires",
 "X-Accel-Limit-Rate" (1.1.6), "X-Accel-Buffering" (1.1.6),
 "X-Accel-Charset" (1.1.6), "Expires", "Cache-Control" и "Set-Cookie" (0.8.44).
@@ -328,12 +328,12 @@ nginx не передаёт клиенту строки заголовка "Stat
 </directive>
 
 
-<directive name="fastcgi_no_cache"> 
-<syntax>fastcgi_no_cache <value>строка [...]</value></syntax> 
-<default>нет</default> 
-<context>http, server, location</context> 
- 
-<para> 
+<directive name="fastcgi_no_cache">
+<syntax>fastcgi_no_cache <value>строка [...]</value></syntax>
+<default>нет</default>
+<context>http, server, location</context>
+
+<para>
 Директива задаёт условия, при которых ответ не будет сохраняться в кэш.
 Если значение хотя бы одной из строк переменных не пустое и не равно "0",
 то ответ не будет сохранён:
@@ -343,8 +343,8 @@ fastcgi_no_cache   $http_pragma     $http_authorization;
 </example>
 Можно использовать совместно с директивой
 <link id="fastcgi_cache_bypass"/>.
-</para> 
- 
+</para>
+
 </directive>
 
 
@@ -518,7 +518,7 @@ fastcgi_param  REDIRECT_STATUS  200;
 <default>fastcgi_send_timeout 60</default>
 <context>http, server, location</context>
 
-<para> 
+<para>
 Директива задаёт таймаут при передаче запроса FastCGI-серверу.
 Таймаут устанавливается не на всю передачу запроса,
 а только между двумя операциями записи.
@@ -651,7 +651,7 @@ fastcgi_store_access  group:rw  all:r;
 fastcgi_temp_path  /spool/nginx/fastcgi_temp 1 2;
 </example>
 имя временного будет такого вида:
-<example> 
+<example>
 /spool/nginx/fastcgi_temp/7/45/00000123457
 </example>
 </para>
