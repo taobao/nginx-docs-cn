@@ -20,7 +20,7 @@
 
 <!ELEMENT   syntax      (#PCDATA | argument | code | parameter | value)* >
 
-<!ELEMENT   default     (#PCDATA | code)* >
+<!ELEMENT   default     (#PCDATA)* >
 
 <!ELEMENT   context     (#PCDATA)* >
 
