@@ -6,6 +6,11 @@
 <item id="author">written by</item>
 <item id="editor">edited by</item>
 <item id="translator">translated by</item>
+<item id="none">none</item>
+</text>
+
+<text lang="ru">
+<item id="none">нет</item>
 </text>
 
 <text lang="ja">

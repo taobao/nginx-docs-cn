@@ -45,7 +45,7 @@ IP-адресов клиентов.
 
 <directive name="allow">
 <syntax>allow <value>[адрес|CIDR|all]</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location, limit_except</context>
 
 <para>
@@ -57,7 +57,7 @@ IP-адресов клиентов.
 
 <directive name="deny">
 <syntax>deny <value>[адрес|CIDR|all]</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location, limit_except</context>
 
 <para>

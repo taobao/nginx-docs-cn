@@ -28,7 +28,7 @@ location для запроса. Если в выбранном location тоже
 
 <directive name="break">
 <syntax>break</syntax>
-<default>нет</default>
+<default/>
 <context>server, location, if</context>
 
 <para>
@@ -51,7 +51,7 @@ ngx_http_rewrite_module.
 
 <directive name="if">
 <syntax>if (<value>условие</value>) { ... }</syntax>
-<default>нет</default>
+<default/>
 <context>server, location</context>
 
 <para>
@@ -137,7 +137,7 @@ ngx_http_rewrite_module.
 
 <directive name="return">
 <syntax>return <value>код</value></syntax>
-<default>нет</default>
+<default/>
 <context>server, location, if</context>
 
 <para>
@@ -155,7 +155,7 @@ ngx_http_rewrite_module.
 <syntax>rewrite <value>regex</value> <value>замена</value>
          <value>флаг</value>
 </syntax>
-<default>нет</default>
+<default/>
 <context>server, location, if</context>
 
 <para>
@@ -237,7 +237,7 @@ permanent — возвращает постоянный редирект с к�
 <directive name="set">
 <syntax>set <value>переменная</value> <value>значение</value>
 </syntax>
-<default>нет</default>
+<default/>
 <context>server, location, if</context>
 
 <para>

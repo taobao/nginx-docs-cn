@@ -44,7 +44,7 @@
 <directive name="valid_referers">
 <syntax>valid_referers
     [none|blocked|server_names|<value>строка</value>] ...</syntax>
-<default>нет</default>
+<default/>
 <context>server, location</context>
 
 <para>

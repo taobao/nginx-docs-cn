@@ -13,6 +13,7 @@ X:param YEAR;
 
 X:var SITE = "'http://nginx.org'";
 X:var LINK = "/article/@link | /module/@link";
+X:var LANG = "/article/@lang | /module/@lang";
 
 X:include href = "dirname.xslt";
 X:include href = "link.xslt";

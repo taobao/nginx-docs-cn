@@ -103,7 +103,7 @@ location / {
 
 <directive name="proxy_cache_bypass">
 <syntax>proxy_cache_bypass <value>строка [...]</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location</context>
 
 <para>
@@ -142,7 +142,7 @@ proxy_cache_key  $scheme$proxy_host$uri$is_args$args;
 <directive name="proxy_cache_path">
 <syntax>proxy_cache_path <value>путь [levels=уровни]
 keys_zone=название:размер [inactive=время] [max_size=размер]</value></syntax>
-<default>нет</default>
+<default/>
 <context>http</context>
 
 <para>
@@ -203,7 +203,7 @@ inactive, то данные удаляются, независимо от их �
 <directive name="proxy_cache_valid">
 <syntax>proxy_cache_valid <value>ответ [ответ ...] время</value>
 </syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location</context>
 
 <para>
@@ -390,7 +390,7 @@ off — запрещает передачу запроса следующему
 
 <directive name="proxy_no_cache">
 <syntax>proxy_no_cache <value>строка [...]</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location</context>
 
 <para>
@@ -409,7 +409,7 @@ proxy_no_cache   $http_pragma     $http_authorization;
 
 <directive name="proxy_pass">
 <syntax>proxy_pass <value>URL</value></syntax>
-<default>нет</default>
+<default/>
 <context>location, if в location, limit_except</context>
 
 <para>

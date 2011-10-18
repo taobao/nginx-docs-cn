@@ -98,7 +98,7 @@ http {
 
 <directive name="ssl_certificate">
 <syntax>ssl_certificate <value>файл</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server</context>
 
 <para>
@@ -138,7 +138,7 @@ http {
 
 <directive name="ssl_certificate_key">
 <syntax>ssl_certificate_key <value>файл</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server</context>
 
 <para>
@@ -151,7 +151,7 @@ http {
 
 <directive name="ssl_client_certificate">
 <syntax>ssl_client_certificate <value>файл</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server</context>
 
 <para>
@@ -186,7 +186,7 @@ OpenSSL, например:
 
 <directive name="ssl_crl">
 <syntax>ssl_crl <value>файл</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server</context>
 
 <para>
@@ -199,7 +199,7 @@ OpenSSL, например:
 
 <directive name="ssl_dhparam">
 <syntax>ssl_dhparam <value>файл</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server</context>
 
 <para>

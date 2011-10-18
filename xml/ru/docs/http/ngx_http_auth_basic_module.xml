@@ -50,7 +50,7 @@ HTTP Basic Authentication.
 
 <directive name="auth_basic_user_file">
 <syntax>auth_basic_user_file <value>файл</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location, limit_except</context>
 
 <para>

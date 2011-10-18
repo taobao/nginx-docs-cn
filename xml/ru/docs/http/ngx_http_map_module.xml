@@ -42,7 +42,7 @@
 
 <directive name="map">
 <syntax>map <value>$переменная1 $переменная2 { ... }</value></syntax>
-<default>нет</default>
+<default/>
 <context>http</context>
 
 <para>

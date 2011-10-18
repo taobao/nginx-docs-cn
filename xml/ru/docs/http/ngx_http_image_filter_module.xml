@@ -47,7 +47,7 @@ location = /empty {
 <directive name="image_filter">
 <syntax>image_filter <value>(test|size|resize ширина высота|crop ширина высота)
 </value></syntax>
-<default>нет</default>
+<default/>
 <context>location</context>
 
 <para>

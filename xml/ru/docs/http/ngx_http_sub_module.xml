@@ -37,7 +37,7 @@ location / {
 
 <directive name="sub_filter">
 <syntax>sub_filter <value>строка замена</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location</context>
 
 <para>

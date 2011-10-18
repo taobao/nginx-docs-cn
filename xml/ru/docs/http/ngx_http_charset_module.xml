@@ -91,7 +91,7 @@ charset_map  iso-8859-5  _ { }
 
 <directive name="charset_map">
 <syntax>charset_map <value>кодировка1 кодировка2 { ... }</value></syntax>
-<default>нет</default>
+<default/>
 <context>http</context>
 
 <para>
@@ -188,7 +188,7 @@ application/x-javascript application/rss+xml.
 
 <directive name="source_charset">
 <syntax>source_charset <value>кодировка</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location, if в location</context>
 
 <para>

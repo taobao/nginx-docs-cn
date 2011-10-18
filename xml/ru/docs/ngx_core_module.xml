@@ -96,7 +96,7 @@ env  OPENSSL_ALLOW_PROXY_CERTS=1;
 
 <directive name="include">
 <syntax>include <value>файл|маска</value></syntax>
-<default>нет</default>
+<default/>
 <context>везде</context>
 
 <para>
@@ -142,7 +142,7 @@ include  vhosts/*.conf;
 
 <directive name="ssl_engine">
 <syntax>ssl_engine <value>устройство</value></syntax>
-<default>нет</default>
+<default/>
 <context>main</context>
 
 <para>
@@ -168,7 +168,7 @@ include  vhosts/*.conf;
 
 <directive name="timer_resolution">
 <syntax>timer_resolution <value>время</value></syntax>
-<default>нет</default>
+<default/>
 <context>main</context>
 
 <para>
@@ -211,7 +211,7 @@ timer_create() при использовании eventport;
 
 <directive name="worker_rlimit_core">
 <syntax>worker_rlimit_core <value>размер</value></syntax>
-<default>нет</default>
+<default/>
 <context>main</context>
 
 <para>
@@ -225,7 +225,7 @@ timer_create() при использовании eventport;
 
 <directive name="worker_rlimit_nofile">
 <syntax>worker_rlimit_nofile <value>число</value></syntax>
-<default>нет</default>
+<default/>
 <context>main</context>
 
 <para>
@@ -273,7 +273,7 @@ worker_priority  -10;
 
 <directive name="working_directory">
 <syntax>working_directory <value>путь</value></syntax>
-<default>нет</default>
+<default/>
 <context>main</context>
 
 <para>

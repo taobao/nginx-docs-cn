@@ -39,7 +39,7 @@
 
 <directive name="flv">
 <syntax>flv</syntax>
-<default>нет</default>
+<default/>
 <context>location</context>
 
 <para>

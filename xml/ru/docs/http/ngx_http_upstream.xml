@@ -46,7 +46,7 @@ server {
 
 <directive name="ip_hash">
 <syntax>ip_hash</syntax>
-<default>нет</default>
+<default/>
 <context>upstream</context>
 
 <para>
@@ -85,7 +85,7 @@ upstream  backend  {
 
 <directive name="server">
 <syntax>server <value>название [параметры]</value></syntax>
-<default>нет</default>
+<default/>
 <context>upstream</context>
 
 <para>
@@ -160,7 +160,7 @@ upstream  backend  {
 
 <directive name="upstream">
 <syntax>upstream <value>название</value> { ... }</syntax>
-<default>нет</default>
+<default/>
 <context>http</context>
 
 <para>

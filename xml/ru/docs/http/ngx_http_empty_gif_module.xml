@@ -32,7 +32,7 @@
 
 <directive name="empty_gif">
 <syntax>empty_gif</syntax>
-<default>нет</default>
+<default/>
 <context>location</context>
 
 <para>

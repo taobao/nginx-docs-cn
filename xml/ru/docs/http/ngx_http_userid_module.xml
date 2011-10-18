@@ -86,7 +86,7 @@ off — запрещает выдавать cookie и записывать пр
 
 <directive name="userid_expires">
 <syntax>userid_expires <value>[время|max]</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location</context>
 
 <para>
@@ -112,7 +112,7 @@ off — запрещает выдавать cookie и записывать пр
 
 <directive name="userid_p3p">
 <syntax>userid_p3p <value>строка</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location</context>
 
 <para>

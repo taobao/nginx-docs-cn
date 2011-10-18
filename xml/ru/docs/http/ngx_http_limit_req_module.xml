@@ -43,7 +43,7 @@ http {
 <directive name="limit_req_zone">
 <syntax>limit_req_zone <value>$переменная zone=название:размер
         rate=скорость</value></syntax>
-<default>нет</default>
+<default/>
 <context>http</context>
 
 <para>
@@ -81,7 +81,7 @@ limit_req_zone  $binary_remote_addr  zone=one:10m   rate=1r/s;
 <directive name="limit_req">
 <syntax>limit_req <value>zone=название burst=число [nodelay]</value>
 </syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location</context>
 
 <para>

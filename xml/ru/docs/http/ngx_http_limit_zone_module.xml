@@ -42,7 +42,7 @@ http {
 
 <directive name="limit_zone">
 <syntax>limit_zone <value>название $переменная размер</value></syntax>
-<default>нет</default>
+<default/>
 <context>http</context>
 
 <para>
@@ -71,7 +71,7 @@ limit_zone   one  $binary_remote_addr  10m;
 
 <directive name="limit_conn">
 <syntax>limit_conn <value>зона число</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location</context>
 
 <para>

@@ -192,7 +192,7 @@ __END__
 
 <directive name="perl">
 <syntax>perl <value>модуль::функция|'sub { ... }'</value></syntax>
-<default>нет</default>
+<default/>
 <context>location, limit_except</context>
 
 <para>
@@ -204,7 +204,7 @@ __END__
 
 <directive name="perl_modules">
 <syntax>perl_modules <value>путь</value></syntax>
-<default>нет</default>
+<default/>
 <context>http</context>
 
 <para>
@@ -216,7 +216,7 @@ __END__
 
 <directive name="perl_require">
 <syntax>perl_require <value>модуль</value></syntax>
-<default>нет</default>
+<default/>
 <context>http</context>
 
 <para>
@@ -231,7 +231,7 @@ __END__
 <syntax>perl_set <value>$переменная</value>
         <value>модуль::функция|'sub { ... }'</value>
 </syntax>
-<default>нет</default>
+<default/>
 <context>http</context>
 
 <para>

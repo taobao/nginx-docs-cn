@@ -117,7 +117,7 @@ off — запрещает передачу запроса следующему
 
 <directive name="memcached_pass">
 <syntax>memcached_pass <value>URL</value></syntax>
-<default>нет</default>
+<default/>
 <context>location, if в location, limit_except</context>
 
 <para>

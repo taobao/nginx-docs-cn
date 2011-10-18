@@ -39,7 +39,7 @@ http {
 
 <directive name="split_clients">
 <syntax>split_clients <value>$переменная1 $переменная2 { ... }</value></syntax>
-<default>нет</default>
+<default/>
 <context>http</context>
 
 <para>

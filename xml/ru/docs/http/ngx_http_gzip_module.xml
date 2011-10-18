@@ -78,7 +78,7 @@
 
 <directive name="gzip_disable">
 <syntax>gzip_disable <value>regex [regex ...]</value></syntax>
-<default>нет</default>
+<default/>
 <context>http, server, location</context>
 
 <para>

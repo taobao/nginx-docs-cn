@@ -26,7 +26,10 @@ X:stylesheet {
     X:template = "default" {
         <strong>default</strong>:
         X:if "count(text()) = 0" {
-            <strong>none</strong>
+            <strong>
+            !{document(concat($XML, '/i18n.xml'))
+                       /i18n/text[@lang = $LANG]/item[@id='none']}
+            </strong>
         } else {
             <code> !!; </code>
         }
