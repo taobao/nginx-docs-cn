@@ -5,7 +5,7 @@ ZIP =		gzip
 NGINX_ORG =	/data/www/nginx.org
 
 CP =		/data/sites/java/xsls/\*:$(HOME)/java/xsls/\*
-RSYNC =		rsync -v -rc --exclude=.svn
+RSYNC =		rsync -v -rpc --exclude=.svn
 CHMOD =		/bin/chmod -R g+w
 
 
@@ -217,6 +217,7 @@ endif
 		touch -r $< $<.gz
 
 draft:	all
+	$(CHMOD) $(OUT)/
 	$(RSYNC) $(OUT)/ $(NGINX_ORG)/$(OUT)/
 
 copy:
