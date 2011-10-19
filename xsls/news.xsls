@@ -1,6 +1,7 @@
 X:stylesheet {
 
-X:output method="html" indent="no" encoding="utf-8";
+X:output method="html" indent="no" encoding="utf-8"
+    doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN";
 
 X:strip-space elements = "*";
 

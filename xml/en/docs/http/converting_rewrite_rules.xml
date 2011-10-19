@@ -32,14 +32,14 @@ server {
 </para>
 
 <para>
-This is a wrong, cumbersome, and ineffective way. 
+This is a wrong, cumbersome, and ineffective way.
 The right way is to define a separate server for <url>nginx.org</url>:
 
 <programlisting>
 server {
     listen       80;
     server_name  nginx.org;
-    rewrite   ^  http://www.nginx.org$request_uri?;
+    return       301 http://www.nginx.org$request_uri;
 }
 
 server {
@@ -48,6 +48,14 @@ server {
     ...
 }
 </programlisting>
+
+<note>
+On versions prior to 0.9.1, redirects can be made with:
+<programlisting>
+    rewrite      ^ http://www.nginx.org$request_uri?;
+</programlisting>
+</note>
+
 </para>
 
 </section>
@@ -72,16 +80,24 @@ and &ldquo;everything else&rdquo;:
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.com  www.nginx.com;
+    server_name  nginx.com www.nginx.com;
     ...
 }
 
 server {
     listen       80 default_server;
     server_name  _;
-    rewrite   ^  http://nginx.com$request_uri?;
+    return       301 http://nginx.com$request_uri;
 }
 </programlisting>
+
+<note>
+On versions prior to 0.9.1, redirects can be made with:
+<programlisting>
+    rewrite      ^ http://nginx.com$request_uri?;
+</programlisting>
+</note>
+
 </para>
 
 </section>
