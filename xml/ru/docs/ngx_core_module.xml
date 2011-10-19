@@ -97,7 +97,7 @@ env  OPENSSL_ALLOW_PROXY_CERTS=1;
 <directive name="include">
 <syntax><value>файл|маска</value></syntax>
 <default/>
-<context>везде</context>
+<context/>
 
 <para>
 Директива позволяет включить в конфигурацию другой файл.

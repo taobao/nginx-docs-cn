@@ -4,11 +4,13 @@ X:stylesheet {
         <a name="{@name}"/>
         <!-- <center><h4> !{@name} </h4></center> -->
         <div class="directive">
+        <table cellspacing="0">
         !! "syntax";
         !! "default";
         !! "context";
+        </table>
         X:if "(@appeared-in)" {
-            <strong>appeared in version</strong>: !{@appeared-in}
+            <p>This directive appeared in version !{@appeared-in}.</p>
         }
         </div>
         !! "para";
@@ -16,9 +18,19 @@ X:stylesheet {
 
     X:template = "syntax" {
         X:if "position() = 1" {
-            <strong>syntax</strong>:
-        } else {
-            <code>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</code>
+            X:text disable-output-escaping="yes" {
+                &lt;tr valign="top"&gt;
+                &lt;td&gt;
+            }
+            <strong>
+            !{document(concat($XML, '/i18n.xml'))
+                       /i18n/text[@lang = $LANG]/item[@id='syntax']}
+            </strong>:
+            X:text disable-output-escaping="yes" {
+                &lt;/td&gt;
+                &lt;td&gt;
+            }
+            <strong>&#8203;</strong>
         }
         <code>
         !{../@name}
@@ -27,11 +39,28 @@ X:stylesheet {
         }
         </code>
         <br/>
+        X:if "position() = last()" {
+            X:text disable-output-escaping="yes" {
+                &lt;/td&gt;
+                &lt;/tr&gt;
+            }
+        }
     }
 
     X:template = "default" {
         X:if "position() = 1" {
-            <strong>default</strong>:
+            X:text disable-output-escaping="yes" {
+                &lt;tr valign="top"&gt;
+                &lt;td&gt;
+            }
+            <strong>
+            !{document(concat($XML, '/i18n.xml'))
+                       /i18n/text[@lang = $LANG]/item[@id='default']}
+            </strong>:
+            X:text disable-output-escaping="yes" {
+                &lt;/td&gt;
+                &lt;td&gt;
+            }
         }
         X:if "count(node()) = 0" {
             <strong>
@@ -39,17 +68,39 @@ X:stylesheet {
                        /i18n/text[@lang = $LANG]/item[@id='none']}
             </strong>
         } else {
+            <strong>&#8203;</strong>
             <code> !{../@name} X:text{ } !!; </code>
         }
         <br/>
+        X:if "position() = last()" {
+            X:text disable-output-escaping="yes" {
+                &lt;/td&gt;
+                &lt;/tr&gt;
+            }
+        }
     }
 
     X:template = "context" {
         X:if "position() = 1" {
-            <strong>context</strong>:
+            X:text disable-output-escaping="yes" {
+                &lt;tr valign="top"&gt;
+                &lt;td&gt;
+            }
+            <strong>
+            !{document(concat($XML, '/i18n.xml'))
+                       /i18n/text[@lang = $LANG]/item[@id='context']}
+            </strong>:
+            X:text disable-output-escaping="yes" {
+                &lt;/td&gt;
+                &lt;td&gt;
+            }
+            <strong>&#8203;</strong>
         }
-        X:if "count(text()) = 0" {
-            <strong>any</strong>
+        X:if "count(node()) = 0" {
+            <strong>
+            !{document(concat($XML, '/i18n.xml'))
+                       /i18n/text[@lang = $LANG]/item[@id='context.any']}
+            </strong>
         } else {
             <code> !!; </code>
         }
@@ -57,6 +108,10 @@ X:stylesheet {
             X:text{, }
         } else {
             <br/>
+            X:text disable-output-escaping="yes" {
+                &lt;/td&gt;
+                &lt;/tr&gt;
+            }
         }
     }
 
