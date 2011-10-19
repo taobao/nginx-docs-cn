@@ -334,7 +334,7 @@ ssl_session_cache  builtin:1000  shared:SSL:10m;
 <para>
 Модуль ngx_http_ssl_module поддерживает несколько нестандартных кодов ошибок,
 которые можно использовать для перенаправления с помощью директивы
-<link doc="ngx_http_core_module.xml" id="error_page">error_page</link>:
+<link doc="ngx_http_core_module.xml" id="error_page"/>:
 <list type="bullet">
 
 <listitem>
@@ -376,7 +376,7 @@ $ssl_client_cert возвращает клиентский сертификат
 для установленного SSL-соединения в формате PEM
 перед каждой строкой которого, кроме первой, вставляется символ табуляции;
 предназачен для использования в директиве
-<link doc="ngx_http_proxy_module.xml" id="proxy_set_header">proxy_set_header</link>.
+<link doc="ngx_http_proxy_module.xml" id="proxy_set_header"/>.
 </listitem>
 
 <listitem>

@@ -353,9 +353,9 @@ byte ranges при передаче ответа.
 клиента при условии, что тело не записано во временный файл.
 Для того, чтобы тело запроса клиента гарантировано находилось в памяти,
 нужно ограничить его размер с помощью
-<link doc="ngx_http_core_module.xml" id="client_max_body_size">client_max_body_size</link>
+<link doc="ngx_http_core_module.xml" id="client_max_body_size"/>
 и задать достаточной размер для буфера
-<link doc="ngx_http_core_module.xml" id="client_body_buffer_size">client_body_buffer_size</link>.
+<link doc="ngx_http_core_module.xml" id="client_body_buffer_size"/>.
 </listitem>
 
 <listitem>

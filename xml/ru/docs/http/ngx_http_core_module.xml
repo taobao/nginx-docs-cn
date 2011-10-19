@@ -79,13 +79,13 @@ location  /video/ {
 читая только один байт. При этом ядро FreeBSD подгружает в память
 первые 128K файла, однако при последующих чтениях файл подгружается
 частями только по 16K. Изменить это можно с помощью директивы
-<link id="read_ahead">read_ahead</link>.
+<link id="read_ahead"/>.
 </para>
 
 <para>
 В Linux AIO можно использовать, только начиная с версии ядра 2.6.22,
 и, кроме того, ещё необходимо дополнительно включать
-<link id="directio">directio</link>, иначе чтение будет блокирующимся:
+<link id="directio"/>, иначе чтение будет блокирующимся:
 <example>
 location  /video/ {
     aio             on;
@@ -327,7 +327,7 @@ O_DIRECT (FreeBSD, Linux), F_NOCACHE (Mac OS X) или функцию directio()
 <example>
 directio  4m;
 </example>
-или при использовании <link id="aio">aio</link> в Linux.
+или при использовании <link id="aio"/> в Linux.
 </para>
 
 </directive>
@@ -340,7 +340,7 @@ directio  4m;
 
 <para>
 Директива (0.8.11) устанавливает выравнивание для
-<link id="directio">directio</link>.
+<link id="directio"/>.
 В большинстве случае достаточно выравнивания 512 байт, однако
 при использовании XFS под Linux его нужно увеличить до 4K.
 </para>
@@ -841,7 +841,7 @@ location ~* \.(gif|jpg|jpeg)$ {
 
 <para>
 Директива разрешает или запрещает записывать в
-<link doc="ngx_http_log_module.xml" id="access_log">access_log</link>
+<link doc="ngx_http_log_module.xml" id="access_log"/>
 подзапросы.
 </para>
 
@@ -1757,8 +1757,8 @@ $request_filename, эта переменная равна пути к файлу
 <listitem>
 $request_body, эта переменная содержит тело запроса.
 Значение переменной появляется в location'ах, обрабатываемых директивами
-<link doc="ngx_http_proxy_module.xml" id="proxy_pass">proxy_pass</link>
-и <link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass">fastcgi_pass</link>.
+<link doc="ngx_http_proxy_module.xml" id="proxy_pass"/>
+и <link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass"/>.
 </listitem>
 
 <listitem>

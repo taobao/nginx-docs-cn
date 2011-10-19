@@ -129,7 +129,7 @@ ngx_http_rewrite_module.
     }
 </example>
 Значение встроенной переменной $invalid_referer задаётся директивой
-<link doc="ngx_http_referer_module.xml" id="valid_referers">valid_referers</link>.
+<link doc="ngx_http_referer_module.xml" id="valid_referers"/>.
 </para>
 
 </directive>

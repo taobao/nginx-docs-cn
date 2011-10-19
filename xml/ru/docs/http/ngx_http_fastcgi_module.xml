@@ -555,8 +555,8 @@ location ~ ^(.+\.php)(.*)$ {
 <para>
 Директива разрешает сохранение на диск файлов.
 Параметр "on" сохраняет файлы в соответствии с путями, указаными в директивах
-<link doc="ngx_http_core_module.xml" id="alias">alias</link> или
-<link doc="ngx_http_core_module.xml" id="root">root</link>.
+<link doc="ngx_http_core_module.xml" id="alias"/> или
+<link doc="ngx_http_core_module.xml" id="root"/>.
 Параметр "off" запрещает сохранение файлов.
 Кроме того, имя файла можно явно задать с помощью строки с переменными:
 <example>

@@ -204,7 +204,7 @@ any — разрешить сжатие для всех проксирован�
 Разрешает или запрещает выдавать в ответе строку заголовка
 "Vary: Accept-Encoding", если директивы
 <link id="gzip"/> или
-<link doc="ngx_http_gzip_static_module.xml" id="gzip_static">gzip_static</link>
+<link doc="ngx_http_gzip_static_module.xml" id="gzip_static"/>
 активны.
 </para>
 

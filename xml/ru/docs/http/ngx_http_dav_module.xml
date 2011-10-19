@@ -87,7 +87,7 @@ dav_access  group:rw  all:r;
 одной файловой системы файл копируется с одной файловой системы на другую.
 Поэтому лучше, если сохраняемые файлы будут находиться на той же файловой
 системе, что и каталог с временными файлами, задаваемый директивой
-<link doc="ngx_http_core_module.xml" id="client_body_temp_path">client_body_temp_path</link>
+<link doc="ngx_http_core_module.xml" id="client_body_temp_path"/>
 для данного location.
 </para>
 

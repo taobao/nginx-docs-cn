@@ -11,7 +11,7 @@
 записывается в файл <command>/usr/local/nginx/logs/nginx.pid</command>.
 Изменить имя этого файла можно при конфигурации сборки или же в
 <command>nginx.conf</command> директивой
-<link doc="ngx_core_module.xml" id="pid">pid</link>.
+<link doc="ngx_core_module.xml" id="pid"/>.
 Главный процесс поддерживает следующие сигналы:
 <note>
 <table>

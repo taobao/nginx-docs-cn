@@ -66,14 +66,20 @@ X:template = "img" { <img src="{@href}"> !!; </img> }
 
 X:template = "link[@url]" { <a href="{@url}"> !!; </a> }
 
-X:template = "link[@id and not(@doc)]" { <a href="#{@id}"> !!; </a> }
+X:template = "link[@id and not(@doc)]" {
+    <a href="#{@id}">
+    X:if "count(node()) != 0" { !!; } else { !{@id} }
+    </a>
+}
 
 X:template = "link[@doc and not(@id)]" {
     <a href="{substring-before(@doc, '.xml')}.html"> !!; </a>
 }
 
 X:template = "link[@id and @doc]" {
-    <a href="{substring-before(@doc, '.xml')}.html#{@id}"> !!; </a>
+    <a href="{substring-before(@doc, '.xml')}.html#{@id}">
+    X:if "count(node()) != 0" { !!; } else { !{@id} }
+    </a>
 }
 
 }

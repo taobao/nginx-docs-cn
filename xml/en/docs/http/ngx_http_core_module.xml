@@ -66,7 +66,7 @@ However, since nginx only uses AIO for disk I/O, no problems should arise.
 
 <para>
 For AIO to work,
-<link id="sendfile">sendfile</link>
+<link id="sendfile"/>
 needs to be disabled:
 <example>
 location /video/ {
@@ -94,14 +94,14 @@ memory; nginx then initiates an asynchronous data load by reading
 one byte. The FreeBSD kernel then loads the first 128K bytes
 of a file into memory, however next reads will only load data
 in 16K chunks. This can be tuned using the
-<link id="read_ahead">read_ahead</link>
+<link id="read_ahead"/>
 directive.
 </para>
 
 <para>
 On Linux, AIO is usable starting from kernel version 2.6.22;
 plus, it is also necessary to enable
-<link id="directio">directio</link>,
+<link id="directio"/>,
 otherwise reading will be blocking:
 <example>
 location /video/ {
@@ -114,7 +114,7 @@ location /video/ {
 
 <para>
 On Linux,
-<link id="directio">directio</link>
+<link id="directio"/>
 can only be used for reading blocks that are aligned on 512-byte
 boundaries (or 4K for XFS).
 Reading of unaligned file's end is still made in blocking mode.
@@ -122,9 +122,9 @@ The same holds true for byte range requests, and for FLV requests
 not from the beginning of a file: reading of unaligned data at the
 beginning and end of a file will be blocking.
 There is no need to turn off
-<link id="sendfile">sendfile</link>
+<link id="sendfile"/>
 explicitly as it is turned off automatically when
-<link id="directio">directio</link>
+<link id="directio"/>
 is used.
 </para>
 
@@ -175,7 +175,7 @@ location /images/ {
 }
 </example>
 it is better to use the
-<link id="root">root</link>
+<link id="root"/>
 directive instead:
 <example>
 location /images/ {
@@ -324,7 +324,7 @@ However, if a request includes long cookies, or comes from a WAP client,
 it may not fit into 1K.
 If a request line, or a request header field do not fit entirely into
 this buffer then larger buffers are allocated, configured by the
-<link id="large_client_header_buffers">large_client_header_buffers</link>
+<link id="large_client_header_buffers"/>
 directive.
 </para>
 
@@ -382,7 +382,7 @@ request body size checking.
 
 <para>
 Defines a default MIME-type of a response.
-See also the <link id="types">types</link> directive.
+See also the <link id="types"/> directive.
 </para>
 
 </directive>
@@ -402,13 +402,13 @@ the <c-def>F_NOCACHE</c-def> flag (Mac OS X),
 or the <c-func>directio</c-func> function (Solaris),
 when reading files that are larger than the specified <argument>size</argument>.
 It automatically disables (0.7.15) the use of
-<link id="sendfile">sendfile</link>
+<link id="sendfile"/>
 for a given request.
 It could be useful for serving large files:
 <example>
 directio 4m;
 </example>
-or when using <link id="aio">aio</link> on Linux.
+or when using <link id="aio"/> on Linux.
 </para>
 
 </directive>
@@ -423,7 +423,7 @@ or when using <link id="aio">aio</link> on Linux.
 
 <para>
 Sets an alignment for
-<link id="directio">directio</link>.
+<link id="directio"/>.
 In most cases, a 512-byte alignment is enough, however, when
 using XFS under Linux, it needs to be increased to 4K.
 </para>
@@ -553,7 +553,7 @@ Internal requests are the following:
 <list type="bullet">
 
 <listitem>
-requests redirected by the <link id="error_page">error_page</link> directive;
+requests redirected by the <link id="error_page"/> directive;
 </listitem>
 
 <listitem>
@@ -565,7 +565,7 @@ command of the module
 
 <listitem>
 requests changed by the
-<link doc="ngx_http_rewrite_module.xml" id="rewrite">rewrite</link>
+<link doc="ngx_http_rewrite_module.xml" id="rewrite"/>
 directive of the module
 <link doc="ngx_http_rewrite_module.xml">ngx_http_rewrite_module</link>.
 </listitem>
@@ -722,7 +722,7 @@ an overall rate will be 2x more than specified by this directive.
 <para>
 This directive is not applicable if one wants to rate limit
 a group of clients on the
-<link id="server">server</link>
+<link id="server"/>
 level.
 If that is the case, the desired limit can be specified in the
 <var>$limit_rate</var>
@@ -1104,7 +1104,7 @@ They cannot be nested, and cannot contain nested locations.
 
 <para>
 Enables or disables logging of errors about not found files into the
-<link doc="../ngx_core_module.xml" id="error_log">error_log</link>.
+<link doc="../ngx_core_module.xml" id="error_log"/>.
 </para>
 
 </directive>
@@ -1119,7 +1119,7 @@ Enables or disables logging of errors about not found files into the
 
 <para>
 Enables or disables logging of subrequests into the
-<link doc="ngx_http_log_module.xml" id="access_log">access_log</link>.
+<link doc="ngx_http_log_module.xml" id="access_log"/>.
 </para>
 
 </directive>
@@ -1158,7 +1158,7 @@ the compression.
 
 <para>
 If a directive is specified on the
-<link id="server">server</link>
+<link id="server"/>
 level, which is also a default server, its value will cover
 all virtual servers listening on the same address and port.
 </para>
@@ -1222,7 +1222,7 @@ directory lookups;
 file lookup errors, such as “file not found”, “no read permission”,
 and so on.
 Caching of errors should be enabled separately by the
-<link id="open_file_cache_errors">open_file_cache_errors</link>
+<link id="open_file_cache_errors"/>
 directive.
 </listitem>
 
@@ -1285,7 +1285,7 @@ open_file_cache_events   on;
 
 <para>
 Enables or disables caching of file lookup errors by
-<link id="open_file_cache">open_file_cache</link>.
+<link id="open_file_cache"/>.
 </para>
 
 </directive>
@@ -1302,10 +1302,10 @@ Enables or disables caching of file lookup errors by
 
 <para>
 Enables to use kernel events to validate
-<link id="open_file_cache">open_file_cache</link>
+<link id="open_file_cache"/>
 elements.
 This directive works with the
-<link doc="../events.xml" id="kqueue">kqueue</link>
+<link doc="../events.xml" id="kqueue"/>
 method only.
 Note that only NetBSD&nbsp;2.0+ and FreeBSD&nbsp;6.0+
 support events for arbitrary file system types.
@@ -1328,7 +1328,7 @@ file systems such as UFS or FFS.
 <para>
 Sets the minimum <argument>number</argument> of file accesses during
 the period configured by the <parameter>inactive</parameter> parameter
-of the <link id="open_file_cache">open_file_cache</link> directive,
+of the <link id="open_file_cache"/> directive,
 after which a file descriptor will remain open in the cache.
 </para>
 
@@ -1344,11 +1344,11 @@ after which a file descriptor will remain open in the cache.
 
 <para>
 Sets a time after which
-<link id="open_file_cache">open_file_cache</link>
+<link id="open_file_cache"/>
 elements should be validated.
 <!--
 When
-<link id="open_file_cache_events">open_file_cache_events</link>
+<link id="open_file_cache_events"/>
 is enabled, open file descriptors
 are checked only once, and then updated right after they get changed.
 -->
@@ -1365,7 +1365,7 @@ are checked only once, and then updated right after they get changed.
 
 <para>
 This directive is made obsolete by the
-<link id="server_name_in_redirect">server_name_in_redirect</link> directive.
+<link id="server_name_in_redirect"/> directive.
 </para>
 
 <!--
@@ -1436,7 +1436,7 @@ FreeBSD&nbsp;7 needs to be
 
 <para>
 Enables or disables doing several redirects using the
-<link id="error_page">error_page</link>
+<link id="error_page"/>
 directive.
 </para>
 
@@ -1536,7 +1536,7 @@ except <var>$document_root</var> and <var>$realpath_root</var>.
 A path to the file is constructed by merely adding a URI to the value
 of the <code>root</code> directive.
 If a URI need to be modified, the
-<link id="alias">alias</link> directive should be used.
+<link id="alias"/> directive should be used.
 </para>
 
 </directive>
@@ -1630,9 +1630,9 @@ Sets a configuration for the virtual server.
 There is no clean separation between IP-based (based on the IP address)
 and name-based (based on the <header>Host</header> request header field)
 virtual servers.
-Instead, the <link id="listen">listen</link> directives describe all
+Instead, the <link id="listen"/> directives describe all
 addresses and ports that should accept connections for a server, and the
-<link id="server_name">server_name</link> directive lists all server names.
+<link id="server_name"/> directive lists all server names.
 An example configuration is provided in the
 <link doc="../virtual_hosts.xml">
 Setting Up Virtual Servers</link> document.
@@ -1784,7 +1784,7 @@ regular expressions
 
 <para>
 Enables or disables the use of the primary server name, specified by the
-<link id="server_name">server_name</link>
+<link id="server_name"/>
 directive, in redirects issued by nginx.
 When disabled, the name from the <header>Host</header> request header field
 is used.
@@ -1865,7 +1865,7 @@ keep-alive state.
 Enables or disables the use of
 the <c-def>TCP_NOPUSH</c-def> socket option on FreeBSD
 or the <c-def>TCP_CORK</c-def> socket option on Linux.
-Options are enabled only when <link id="sendfile">sendfile</link> is used.
+Options are enabled only when <link id="sendfile"/> is used.
 Enabling the option allows to
 <list type="bullet">
 
@@ -2176,7 +2176,7 @@ the <argument>name</argument> cookie
 
 <tag-name><var>$document_root</var></tag-name>
 <tag-desc>
-<link id="root">root</link> directive's value for the current request
+<link id="root"/> directive's value for the current request
 </tag-desc>
 
 <tag-name><var>$document_uri</var></tag-name>
@@ -2228,7 +2228,7 @@ same as <var>$args</var>
 
 <tag-name><var>$realpath_root</var></tag-name>
 <tag-desc>
-<link id="root">root</link> directive's value
+<link id="root"/> directive's value
 for the current request, with all symbolic links resolved to real paths
 </tag-desc>
 
@@ -2258,9 +2258,9 @@ request body
 <para>
 The variable's value is made available in locations
 processed by the
-<link doc="ngx_http_proxy_module.xml" id="proxy_pass">proxy_pass</link>
+<link doc="ngx_http_proxy_module.xml" id="proxy_pass"/>
 and
-<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass">fastcgi_pass</link>
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass"/>
 directives.
 </para>
 </tag-desc>
@@ -2276,11 +2276,9 @@ needs be specified.
 When passing the name of a temporary file in a proxied request,
 or in a request to a FastCGI server,
 passing of the request body should be disabled by the
-<link doc="ngx_http_proxy_module.xml"
-id="proxy_pass_request_body">proxy_pass_request_body</link>
+<link doc="ngx_http_proxy_module.xml" id="proxy_pass_request_body"/>
 and
-<link doc="ngx_http_fastcgi_module.xml"
-id="fastcgi_pass_request_body">fastcgi_pass_request_body</link>
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass_request_body"/>
 directives, respectively.
 </para>
 </tag-desc>
@@ -2294,7 +2292,7 @@ or an empty string otherwise
 <tag-name><var>$request_filename</var></tag-name>
 <tag-desc>
 file path for the current query, based on the
-<link id="root">root</link> and <link id="alias">alias</link>
+<link id="root"/> and <link id="alias"/>
 directives, and the request URI
 </tag-desc>
 
@@ -2324,7 +2322,7 @@ the <argument>name</argument> response header field
 an address of the server which accepted a request
 <para>
 Computing a value of this variable usually requires one system call.
-To avoid a system call, the <link id="listen">listen</link> directives
+To avoid a system call, the <link id="listen"/> directives
 must specify addresses and use the <parameter>bind</parameter> parameter
 </para>
 </tag-desc>
