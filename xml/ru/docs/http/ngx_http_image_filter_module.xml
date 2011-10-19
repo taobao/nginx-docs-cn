@@ -45,7 +45,7 @@ location = /empty {
 <section name="Директивы" id="directives">
 
 <directive name="image_filter">
-<syntax>image_filter <value>(test|size|resize ширина высота|crop ширина высота)
+<syntax><value>(test|size|resize ширина высота|crop ширина высота)
 </value></syntax>
 <default/>
 <context>location</context>
@@ -92,8 +92,8 @@ crop — пропорционально уменьшает изображени
 
 
 <directive name="image_filter_buffer">
-<syntax>image_filter_buffer <value>размер</value></syntax>
-<default>image_filter_buffer 1M</default>
+<syntax><value>размер</value></syntax>
+<default>1M</default>
 <context>http, server, location</context>
 
 <para>
@@ -104,8 +104,8 @@ crop — пропорционально уменьшает изображени
 
 
 <directive name="image_filter_jpeg_quality">
-<syntax>image_filter_jpeg_quality <value>[0..100]</value></syntax>
-<default>image_filter_jpeg_quality 75</default>
+<syntax><value>[0..100]</value></syntax>
+<default>75</default>
 <context>http, server, location</context>
 
 <para>
@@ -117,8 +117,8 @@ crop — пропорционально уменьшает изображени
 
 
 <directive name="image_filter_transparency">
-<syntax>image_filter_transparency <value>[on|off]</value></syntax>
-<default>image_filter_transparency on</default>
+<syntax><value>[on|off]</value></syntax>
+<default>on</default>
 <context>http, server, location</context>
 
 <para>

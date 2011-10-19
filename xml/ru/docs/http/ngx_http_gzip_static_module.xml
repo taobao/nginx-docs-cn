@@ -37,8 +37,8 @@
 <section name="Директивы" id="directives">
 
 <directive name="gzip_static">
-<syntax>gzip_static <value>on|off</value></syntax>
-<default>gzip_static off</default>
+<syntax><value>on|off</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>

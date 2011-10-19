@@ -30,8 +30,8 @@ events {
 <section id="directives" name="Directives">
 
 <directive name="daemon">
-<syntax>daemon <value>on</value> | <value>off</value></syntax>
-<default>daemon on</default>
+<syntax><value>on</value> | <value>off</value></syntax>
+<default>on</default>
 <context>main</context>
 
 <para>
@@ -43,8 +43,8 @@ Mainly used during development.
 
 
 <directive name="env">
-<syntax>env <argument>VAR</argument>[=<argument>VALUE</argument>]</syntax>
-<default>env TZ</default>
+<syntax><argument>VAR</argument>[=<argument>VALUE</argument>]</syntax>
+<default>TZ</default>
 <context>main</context>
 
 <para>
@@ -95,7 +95,7 @@ env OPENSSL_ALLOW_PROXY_CERTS=1;
 </directive>
 
 <directive name="include">
-<syntax>include <argument>file</argument> | <argument>mask</argument></syntax>
+<syntax><argument>file</argument> | <argument>mask</argument></syntax>
 <default/>
 <context/>
 
@@ -118,8 +118,8 @@ include vhosts/*.conf;
 
 
 <directive name="master_process">
-<syntax>master_process <value>on</value> | <value>off</value></syntax>
-<default>master_process on</default>
+<syntax><value>on</value> | <value>off</value></syntax>
+<default>on</default>
 <context>main</context>
 
 <para>
@@ -131,8 +131,8 @@ This directive is intended for nginx developers.
 
 
 <directive name="pid">
-<syntax>pid <argument>file</argument></syntax>
-<default>pid nginx.pid</default>
+<syntax><argument>file</argument></syntax>
+<default>nginx.pid</default>
 <context>main</context>
 
 <para>
@@ -143,7 +143,7 @@ Defines a <argument>file</argument> which will store the process ID of the main 
 
 
 <directive name="ssl_engine">
-<syntax>ssl_engine <argument>device</argument></syntax>
+<syntax><argument>device</argument></syntax>
 <default/>
 <context>main</context>
 
@@ -155,7 +155,7 @@ Defines the name of the hardware SSL accelerator.
 
 
 <directive name="timer_resolution">
-<syntax>timer_resolution <argument>interval</argument></syntax>
+<syntax><argument>interval</argument></syntax>
 <default/>
 <context>main</context>
 
@@ -198,8 +198,8 @@ an <c-def>EVFILT_TIMER</c-def> filter if <value>kqueue</value> is used;
 
 
 <directive name="user">
-<syntax>user <argument>user</argument> [<argument>group</argument>]</syntax>
-<default>user nobody nobody</default>
+<syntax><argument>user</argument> [<argument>group</argument>]</syntax>
+<default>nobody nobody</default>
 <context>main</context>
 
 <para>
@@ -213,8 +213,8 @@ that of <argument>user</argument> is used.
 
 
 <directive name="worker_priority">
-<syntax>worker_priority <argument>number</argument></syntax>
-<default>worker_priority 0</default>
+<syntax><argument>number</argument></syntax>
+<default>0</default>
 <context>main</context>
 
 <para>
@@ -236,8 +236,8 @@ worker_priority -10;
 
 
 <directive name="worker_processes">
-<syntax>worker_processes <argument>number</argument></syntax>
-<default>worker_processes 1</default>
+<syntax><argument>number</argument></syntax>
+<default>1</default>
 <context>main</context>
 
 <para>
@@ -248,7 +248,7 @@ Defines the number of worker processes.
 
 
 <directive name="worker_rlimit_core">
-<syntax>worker_rlimit_core <argument>size</argument></syntax>
+<syntax><argument>size</argument></syntax>
 <default/>
 <context>main</context>
 
@@ -262,7 +262,7 @@ Used to increase the limit without restarting the main process.
 
 
 <directive name="worker_rlimit_nofile">
-<syntax>worker_rlimit_nofile <argument>number</argument></syntax>
+<syntax><argument>number</argument></syntax>
 <default/>
 <context>main</context>
 
@@ -276,7 +276,7 @@ Used to increase the limit without restarting the main process.
 
 
 <directive name="working_directory">
-<syntax>working_directory <argument>directory</argument></syntax>
+<syntax><argument>directory</argument></syntax>
 <default/>
 <context>main</context>
 

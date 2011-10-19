@@ -35,8 +35,8 @@
 <section name="Директивы" id="directives">
 
 <directive name="random_index">
-<syntax>random_index <value>[on|off]</value></syntax>
-<default>random_index off</default>
+<syntax><value>[on|off]</value></syntax>
+<default>off</default>
 <context>location</context>
 
 <para>

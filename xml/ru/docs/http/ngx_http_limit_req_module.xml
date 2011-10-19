@@ -41,7 +41,7 @@ http {
 <section name="Директивы" id="directives">
 
 <directive name="limit_req_zone">
-<syntax>limit_req_zone <value>$переменная zone=название:размер
+<syntax><value>$переменная zone=название:размер
         rate=скорость</value></syntax>
 <default/>
 <context>http</context>
@@ -79,7 +79,7 @@ limit_req_zone  $binary_remote_addr  zone=one:10m   rate=1r/s;
 </directive>
 
 <directive name="limit_req">
-<syntax>limit_req <value>zone=название burst=число [nodelay]</value>
+<syntax><value>zone=название burst=число [nodelay]</value>
 </syntax>
 <default/>
 <context>http, server, location</context>
@@ -119,8 +119,8 @@ limit_req_zone  $binary_remote_addr  zone=one:10m   rate=1r/s;
 
 
 <directive name="limit_req_log_level">
-<syntax>limit_req_log_level <value>[info|notice|warn|error]</value></syntax>
-<default>limit_req_log_level  error</default>
+<syntax><value>[info|notice|warn|error]</value></syntax>
+<default>error</default>
 <context>http, server, location</context>
 
 <para>

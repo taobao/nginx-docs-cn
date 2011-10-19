@@ -9,8 +9,8 @@
 <section name="Директивы" id="directives">
 
 <directive name="aio">
-<syntax>aio <value>[on|off|sendfile]</value></syntax>
-<default>aio off</default>
+<syntax><value>[on|off|sendfile]</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -108,7 +108,7 @@ byte-ranges и к запросам FLV не с начала файла: чтен
 
 
 <directive name="alias">
-<syntax>alias <value>путь</value></syntax>
+<syntax><value>путь</value></syntax>
 <default/>
 <context>location</context>
 
@@ -157,8 +157,8 @@ location  /images/ {
 
 
 <directive name="client_body_in_file_only">
-<syntax>client_body_in_file_only <value>on|clean|off</value></syntax>
-<default>client_body_in_file_only off</default>
+<syntax><value>on|clean|off</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -183,8 +183,8 @@ location  /images/ {
 
 
 <directive name="client_body_in_single_buffer">
-<syntax>client_body_in_single_buffer <value>on|off</value></syntax>
-<default>client_body_in_single_buffer off</default>
+<syntax><value>on|off</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -197,8 +197,8 @@ location  /images/ {
 
 
 <directive name="client_body_buffer_size">
-<syntax>client_body_buffer_size <value>размер</value></syntax>
-<default>client_body_buffer_size 8k/16k</default>
+<syntax><value>размер</value></syntax>
+<default>8k/16k</default>
 <context>http, server, location</context>
 
 <para>
@@ -213,9 +213,9 @@ location  /images/ {
 
 
 <directive name="client_body_temp_path">
-<syntax>client_body_temp_path <value>путь [ уровень1 [ уровень2 [ уровень3 ] ] ]
+<syntax><value>путь [ уровень1 [ уровень2 [ уровень3 ] ] ]
 </value></syntax>
-<default>client_body_temp_path client_body_temp</default>
+<default>client_body_temp</default>
 <context>http, server, location</context>
 
 <para>
@@ -236,8 +236,8 @@ client_body_temp_path  /spool/nginx/client_temp 1 2;
 
 
 <directive name="client_body_timeout">
-<syntax>client_body_timeout <value>время</value></syntax>
-<default>client_body_timeout 60</default>
+<syntax><value>время</value></syntax>
+<default>60</default>
 <context>http, server, location</context>
 
 <para>
@@ -252,8 +252,8 @@ client_body_temp_path  /spool/nginx/client_temp 1 2;
 
 
 <directive name="client_header_buffer_size">
-<syntax>client_header_buffer_size <value>размер</value></syntax>
-<default>client_header_buffer_size 1k</default>
+<syntax><value>размер</value></syntax>
+<default>1k</default>
 <context>http, server</context>
 
 <para>
@@ -270,8 +270,8 @@ client_body_temp_path  /spool/nginx/client_temp 1 2;
 
 
 <directive name="client_header_timeout">
-<syntax>client_header_timeout <value>время</value></syntax>
-<default>client_header_timeout 60</default>
+<syntax><value>время</value></syntax>
+<default>60</default>
 <context>http, server</context>
 
 <para>
@@ -284,8 +284,8 @@ client_body_temp_path  /spool/nginx/client_temp 1 2;
 
 
 <directive name="client_max_body_size">
-<syntax>client_max_body_size <value>размер</value></syntax>
-<default>client_max_body_size 1m</default>
+<syntax><value>размер</value></syntax>
+<default>1m</default>
 <context>http, server, location</context>
 
 <para>
@@ -301,8 +301,8 @@ client_body_temp_path  /spool/nginx/client_temp 1 2;
 
 
 <directive name="default_type">
-<syntax>default_type <value>MIME-тип</value></syntax>
-<default>default_type text/plain</default>
+<syntax><value>MIME-тип</value></syntax>
+<default>text/plain</default>
 <context>http, server, location</context>
 
 <para>
@@ -313,8 +313,8 @@ client_body_temp_path  /spool/nginx/client_temp 1 2;
 
 
 <directive name="directio">
-<syntax>directio <value>[размер|off]</value></syntax>
-<default>directio off</default>
+<syntax><value>[размер|off]</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -334,8 +334,8 @@ directio  4m;
 
 
 <directive name="directio_alignment">
-<syntax>directio_alignment <value>размер</value></syntax>
-<default>directio_alignment 512</default>
+<syntax><value>размер</value></syntax>
+<default>512</default>
 <context>http, server, location</context>
 
 <para>
@@ -349,7 +349,7 @@ directio  4m;
 
 
 <directive name="error_page">
-<syntax>error_page <value>код [код ...] [=|=ответ] uri</value>
+<syntax><value>код [код ...] [=|=ответ] uri</value>
 </syntax>
 <default/>
 <context>http, server, location, if в location</context>
@@ -404,8 +404,8 @@ location @fallback {
 
 
 <directive name="if_modified_since">
-<syntax>if_modified_since <value>[off|exact|before]</value></syntax>
-<default>if_modified_since exact</default>
+<syntax><value>[off|exact|before]</value></syntax>
+<default>exact</default>
 <context>http, server, location</context>
 
 <para>
@@ -434,7 +434,7 @@ before — время модификации ответа меньше или �
 
 
 <directive name="internal">
-<syntax>internal</syntax>
+<syntax/>
 <default/>
 <context>location</context>
 
@@ -475,8 +475,8 @@ location  /404.html {
 
 
 <directive name="keepalive_requests">
-<syntax>keepalive_requests <value>число</value></syntax>
-<default>keepalive_requests 100</default>
+<syntax><value>число</value></syntax>
+<default>100</default>
 <context>http, server, location</context>
 
 <para>
@@ -488,8 +488,8 @@ location  /404.html {
 
 
 <directive name="keepalive_timeout">
-<syntax>keepalive_timeout <value>время [время]</value></syntax>
-<default>keepalive_timeout 75</default>
+<syntax><value>время [время]</value></syntax>
+<default>75</default>
 <context>http, server, location</context>
 
 <para>
@@ -505,9 +505,9 @@ MSIE сам закрывает keep-alive соединение примерно 
 
 
 <directive name="large_client_header_buffers">
-<syntax>large_client_header_buffers <value>число размер</value>
+<syntax><value>число размер</value>
 </syntax>
-<default>large_client_header_buffers 4 4k/8k</default>
+<default>4 4k/8k</default>
 <context>http, server</context>
 
 <para>
@@ -528,7 +528,7 @@ keep-alive, то эти буферы освобождаются.
 
 
 <directive name="limit_except">
-<syntax>limit_except <value>методы</value> { ... }</syntax>
+<syntax><value>методы</value> { ... }</syntax>
 <default/>
 <context>location</context>
 
@@ -553,7 +553,7 @@ limit_except  GET {
 
 <directive name="limit_rate">
 
-<syntax>limit_rate <value>скорость</value></syntax>
+<syntax><value>скорость</value></syntax>
 <default/>
 <context>http, server, location, if в location</context>
 
@@ -586,7 +586,7 @@ server {
 
 
 <directive name="limit_rate_after">
-<syntax>limit_rate_after <value>размер</value></syntax>
+<syntax><value>размер</value></syntax>
 <default/>
 <context>http, server, location, if в location</context>
 
@@ -606,7 +606,7 @@ location /flv/ {
 
 
 <directive name="listen">
-<syntax>listen <value>адрес:порт
+<syntax><value>адрес:порт
         [default|default_server|
         [backlog=число |
          rcvbuf=размер |
@@ -617,7 +617,7 @@ location /flv/ {
          ipv6only=[on|off] |
          ssl]]
 </value></syntax>
-<default>listen *:80 | *:8000</default>
+<default>*:80 | *:8000</default>
 <context>server</context>
 
 <para>
@@ -733,7 +733,7 @@ listen  127.0.0.1 default accept_filter=dataready backlog=1024;
 
 
 <directive name="location">
-<syntax>location [<value>=|~|~*|^~|@</value>] <value>/uri/</value>
+<syntax>[<value>=|~|~*|^~|@</value>] <value>/uri/</value>
 { ... }</syntax>
 <default/>
 <context>server</context>
@@ -822,8 +822,8 @@ location ~* \.(gif|jpg|jpeg)$ {
 
 
 <directive name="log_not_found">
-<syntax>log_not_found <value>[on|off]</value></syntax>
-<default>log_not_found on</default>
+<syntax><value>[on|off]</value></syntax>
+<default>on</default>
 <context>http, server, location</context>
 
 <para>
@@ -835,8 +835,8 @@ location ~* \.(gif|jpg|jpeg)$ {
 
 
 <directive name="log_subrequest">
-<syntax>log_subrequest <value>[on|off]</value></syntax>
-<default>log_subrequest off</default>
+<syntax><value>[on|off]</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -849,8 +849,8 @@ location ~* \.(gif|jpg|jpeg)$ {
 
 
 <directive name="merge_slashes">
-<syntax>merge_slashes <value>[on|off]</value></syntax>
-<default>merge_slashes on</default>
+<syntax><value>[on|off]</value></syntax>
+<default>on</default>
 <context>http, server</context>
 
 <para>
@@ -886,8 +886,8 @@ location /scripts/ {
 
 
 <directive name="msie_padding">
-<syntax>msie_padding <value>[on|off]</value></syntax>
-<default>msie_padding on</default>
+<syntax><value>[on|off]</value></syntax>
+<default>on</default>
 <context>http, server, location</context>
 
 <para>
@@ -900,8 +900,8 @@ location /scripts/ {
 
 
 <directive name="msie_refresh">
-<syntax>msie_refresh <value>[on|off]</value></syntax>
-<default>msie_refresh off</default>
+<syntax><value>[on|off]</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -913,9 +913,9 @@ location /scripts/ {
 
 
 <directive name="open_file_cache">
-<syntax>open_file_cache <value>max=N [inactive=время]|off</value>
+<syntax><value>max=N [inactive=время]|off</value>
 </syntax>
-<default>open_file_cache off</default>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -975,8 +975,8 @@ open_file_cache_errors   on;
 
 
 <directive name="open_file_cache_errors">
-<syntax>open_file_cache_errors <value>on|off</value></syntax>
-<default>open_file_cache_errors off</default>
+<syntax><value>on|off</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -988,8 +988,8 @@ open_file_cache_errors   on;
 
 
 <directive name="open_file_cache_min_uses">
-<syntax>open_file_cache_min_uses <value>число</value></syntax>
-<default>open_file_cache_min_uses 1</default>
+<syntax><value>число</value></syntax>
+<default>1</default>
 <context>http, server, location</context>
 
 <para>
@@ -1003,8 +1003,8 @@ open_file_cache_errors   on;
 
 
 <directive name="open_file_cache_valid">
-<syntax>open_file_cache_valid <value>время</value></syntax>
-<default>open_file_cache_valid 60</default>
+<syntax><value>время</value></syntax>
+<default>60</default>
 <context>http, server, location</context>
 
 <para>
@@ -1017,8 +1017,8 @@ open_file_cache_errors   on;
 
 
 <directive name="optimize_server_names">
-<syntax>optimize_server_names <value>[on|off]</value></syntax>
-<default>optimize_server_names on</default>
+<syntax><value>[on|off]</value></syntax>
+<default>on</default>
 <context>http, server</context>
 
 <para>
@@ -1040,8 +1040,8 @@ open_file_cache_errors   on;
 
 
 <directive name="port_in_redirect">
-<syntax>port_in_redirect <value>[on|off]</value></syntax>
-<default>port_in_redirect on</default>
+<syntax><value>[on|off]</value></syntax>
+<default>on</default>
 <context>http, server, location</context>
 
 <para>
@@ -1053,8 +1053,8 @@ open_file_cache_errors   on;
 
 
 <directive name="read_ahead">
-<syntax>read_ahead <value>размер</value></syntax>
-<default>read_ahead  0</default>
+<syntax><value>размер</value></syntax>
+<default>0</default>
 <context>http, server, location</context>
 
 <para>
@@ -1076,8 +1076,8 @@ posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL);
 
 
 <directive name="recursive_error_pages">
-<syntax>recursive_error_pages <value>[on|off]</value></syntax>
-<default>recursive_error_pages off</default>
+<syntax><value>[on|off]</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -1089,8 +1089,8 @@ posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL);
 
 
 <directive name="reset_timedout_connection">
-<syntax>reset_timedout_connection <value>[on|off]</value></syntax>
-<default>reset_timedout_connection off</default>
+<syntax><value>[on|off]</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -1111,7 +1111,7 @@ posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL);
 
 
 <directive name="resolver">
-<syntax>resolver <value>адрес</value></syntax>
+<syntax><value>адрес</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -1126,8 +1126,8 @@ posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL);
 
 
 <directive name="resolver_timeout">
-<syntax>resolver_timeout <value>время</value></syntax>
-<default>resolver_timeout 30s</default>
+<syntax><value>время</value></syntax>
+<default>30s</default>
 <context>http, server, location</context>
 
 <para>
@@ -1141,8 +1141,8 @@ posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL);
 
 
 <directive name="root">
-<syntax>root <value>путь</value></syntax>
-<default>root html</default>
+<syntax><value>путь</value></syntax>
+<default>html</default>
 <context>http, server, location, if в location</context>
 
 <para>
@@ -1170,8 +1170,8 @@ posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL);
 
 
 <directive name="satisfy">
-<syntax>satisfy <value>all|any</value></syntax>
-<default>satisfy all</default>
+<syntax><value>all|any</value></syntax>
+<default>all</default>
 <context>location</context>
 
 <para>
@@ -1195,8 +1195,8 @@ location / {
 
 
 <directive name="satisfy_any">
-<syntax>satisfy_any <value>on|off</value></syntax>
-<default>satisfy_any off</default>
+<syntax><value>on|off</value></syntax>
+<default>off</default>
 <context>location</context>
 
 <para>
@@ -1207,8 +1207,8 @@ location / {
 
 
 <directive name="send_timeout">
-<syntax>send_timeout <value>время</value></syntax>
-<default>send_timeout 60</default>
+<syntax><value>время</value></syntax>
+<default>60</default>
 <context>http, server, location</context>
 
 <para>
@@ -1223,8 +1223,8 @@ location / {
 
 
 <directive name="sendfile">
-<syntax>sendfile <value>[on|off]</value></syntax>
-<default>sendfile off</default>
+<syntax><value>[on|off]</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -1235,7 +1235,7 @@ location / {
 
 
 <directive name="server">
-<syntax>server { ... }</syntax>
+<syntax>{ ... }</syntax>
 <default/>
 <context>http</context>
 
@@ -1255,8 +1255,8 @@ location / {
 
 
 <directive name="server_name">
-<syntax>server_name <value>имя [...]</value></syntax>
-<default>server_name hostname</default>
+<syntax><value>имя [...]</value></syntax>
+<default>hostname</default>
 <context>server</context>
 
 <para>
@@ -1381,8 +1381,8 @@ server {
 
 
 <directive name="server_name_in_redirect">
-<syntax>server_name_in_redirect <value>[on|off]</value></syntax>
-<default>server_name_in_redirect on</default>
+<syntax><value>[on|off]</value></syntax>
+<default>on</default>
 <context>http, server, location</context>
 
 <para>
@@ -1398,8 +1398,8 @@ nginx'ом, основное имя сервера, задаваемое дир�
 
 
 <directive name="server_names_hash_max_size">
-<syntax>server_names_hash_max_size <value>число</value></syntax>
-<default>server_names_hash_max_size 512</default>
+<syntax><value>число</value></syntax>
+<default>512</default>
 <context>http</context>
 
 <para>
@@ -1412,8 +1412,8 @@ nginx'ом, основное имя сервера, задаваемое дир�
 
 
 <directive name="server_names_hash_bucket_size">
-<syntax>server_names_hash_bucket_size <value>число</value></syntax>
-<default>server_names_hash_bucket_size 32/64/128</default>
+<syntax><value>число</value></syntax>
+<default>32/64/128</default>
 <context>http</context>
 
 <para>
@@ -1427,8 +1427,8 @@ nginx'ом, основное имя сервера, задаваемое дир�
 
 
 <directive name="server_tokens">
-<syntax>server_tokens <value>[on|off]</value></syntax>
-<default>server_tokens on</default>
+<syntax><value>[on|off]</value></syntax>
+<default>on</default>
 <context>http, server, location</context>
 
 <para>
@@ -1440,8 +1440,8 @@ nginx'ом, основное имя сервера, задаваемое дир�
 
 
 <directive name="tcp_nodelay">
-<syntax>tcp_nodelay <value>[on|off]</value></syntax>
-<default>tcp_nodelay on</default>
+<syntax><value>[on|off]</value></syntax>
+<default>on</default>
 <context>http, server, location</context>
 
 <para>
@@ -1453,8 +1453,8 @@ nginx'ом, основное имя сервера, задаваемое дир�
 
 
 <directive name="tcp_nopush">
-<syntax>tcp_nopush <value>[on|off]</value></syntax>
-<default>tcp_nopush off</default>
+<syntax><value>[on|off]</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -1480,7 +1480,7 @@ TCP_NOPUSH во FreeBSD или TCP_CORK в Linux.
 
 
 <directive name="try_files">
-<syntax>try_files <value>файл [файл ...] (uri|=код)</value></syntax>
+<syntax><value>файл [файл ...] (uri|=код)</value></syntax>
 <default/>
 <context>location</context>
 
@@ -1602,21 +1602,19 @@ location @wordpress {
 
 
 <directive name="types">
-<syntax>types <value>{ ... }</value></syntax>
-<default>see below</default>
+<syntax><value>{ ... }</value></syntax>
+<default>
+{
+    text/html  html;
+    image/gif  gif;
+    image/jpeg jpg;
+}
+</default>
 <context>http, server, location</context>
 
 <para>
 Директива задаёт соответствие расширения и MIME-типов ответов.
 Одному MIME-типу может соответствовать несколько расширений.
-По умолчанию используется такие соответствия:
-<example>
-types {
-    text/html    html;
-    image/gif    gif;
-    image/jpeg   jpg;
-}
-</example>
 </para>
 
 <para>
@@ -1639,8 +1637,8 @@ location /download/ {
 
 
 <directive name="underscores_in_headers">
-<syntax>underscores_in_headers <value>[on|off]</value></syntax>
-<default>underscores_in_headers off</default>
+<syntax><value>[on|off]</value></syntax>
+<default>off</default>
 <context>http, server</context>
 
 <para>

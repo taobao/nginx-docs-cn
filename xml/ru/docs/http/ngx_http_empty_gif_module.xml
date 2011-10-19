@@ -31,7 +31,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="empty_gif">
-<syntax>empty_gif</syntax>
+<syntax/>
 <default/>
 <context>location</context>
 

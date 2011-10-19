@@ -36,7 +36,7 @@ location / {
 <section name="Директивы" id="directives">
 
 <directive name="sub_filter">
-<syntax>sub_filter <value>строка замена</value></syntax>
+<syntax><value>строка замена</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -50,8 +50,8 @@ location / {
 
 
 <directive name="sub_filter_once">
-<syntax>sub_filter_once <value>on|off</value></syntax>
-<default>sub_filter_once  on</default>
+<syntax><value>on|off</value></syntax>
+<default>on</default>
 <context>http, server, location</context>
 
 <para>
@@ -63,8 +63,8 @@ location / {
 
 
 <directive name="sub_filter_types">
-<syntax>sub_filter_types <value>mime-тип [mime-тип ...]</value></syntax>
-<default>sub_filter_types text/html</default>
+<syntax><value>mime-тип [mime-тип ...]</value></syntax>
+<default>text/html</default>
 <context>http, server, location</context>
 
 <para>

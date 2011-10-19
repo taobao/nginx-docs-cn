@@ -42,8 +42,8 @@ server {
 <section name="Директивы" id="directives">
 
 <directive name="memcached_buffer_size">
-<syntax>memcached_buffer_size <value>размер</value></syntax>
-<default>memcached_buffer_size  4k/8k</default>
+<syntax><value>размер</value></syntax>
+<default>4k/8k</default>
 <context>http, server, location</context>
 
 <para>
@@ -56,8 +56,8 @@ server {
 
 
 <directive name="memcached_connect_timeout">
-<syntax>memcached_connect_timeout <value>время</value></syntax>
-<default>memcached_connect_timeout 60</default>
+<syntax><value>время</value></syntax>
+<default>60</default>
 <context>http, server, location</context>
 
 <para>
@@ -69,10 +69,8 @@ server {
 
 
 <directive name="memcached_next_upstream">
-<syntax>memcached_next_upstream
-<value>[error|timeout|invalid_response|not_found|off]</value>
-</syntax>
-<default>memcached_next_upstream error timeout</default>
+<syntax><value>[error|timeout|invalid_response|not_found|off]</value></syntax>
+<default>error timeout</default>
 <context>http, server, location</context>
 
 <para>
@@ -116,7 +114,7 @@ off — запрещает передачу запроса следующему
 
 
 <directive name="memcached_pass">
-<syntax>memcached_pass <value>URL</value></syntax>
+<syntax><value>URL</value></syntax>
 <default/>
 <context>location, if в location, limit_except</context>
 
@@ -139,8 +137,8 @@ off — запрещает передачу запроса следующему
 
 
 <directive name="memcached_read_timeout">
-<syntax>memcached_read_timeout <value>время</value></syntax>
-<default>memcached_read_timeout 60</default>
+<syntax><value>время</value></syntax>
+<default>60</default>
 <context>http, server, location</context>
 
 <para>
@@ -155,8 +153,8 @@ off — запрещает передачу запроса следующему
 
 
 <directive name="memcached_send_timeout">
-<syntax>memcached_send_timeout <value>время</value></syntax>
-<default>memcached_send_timeout 60</default>
+<syntax><value>время</value></syntax>
+<default>60</default>
 <context>http, server, location</context>
 
 <para>

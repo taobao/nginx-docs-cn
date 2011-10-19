@@ -39,8 +39,8 @@ location / {
 <section name="Директивы" id="directives">
 
 <directive name="fastcgi_buffer_size">
-<syntax>fastcgi_buffer_size <value>размер</value></syntax>
-<default>fastcgi_buffer_size  4k/8k</default>
+<syntax><value>размер</value></syntax>
+<default>4k/8k</default>
 <context>http, server, location</context>
 
 <para>
@@ -55,8 +55,8 @@ location / {
 
 
 <directive name="fastcgi_buffers">
-<syntax>fastcgi_buffers <value>число размер</value></syntax>
-<default>fastcgi_buffers 8 4k/8k</default>
+<syntax><value>число размер</value></syntax>
+<default>8 4k/8k</default>
 <context>http, server, location</context>
 
 <para>
@@ -70,7 +70,7 @@ location / {
 
 
 <directive name="fastcgi_cache">
-<syntax>fastcgi_cache <value>[зона|off]</value></syntax>
+<syntax><value>[зона|off]</value></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -85,7 +85,7 @@ location / {
 
 
 <directive name="fastcgi_cache_bypass">
-<syntax>fastcgi_cache_bypass <value>строка [...]</value></syntax>
+<syntax><value>строка [...]</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -104,7 +104,7 @@ fastcgi_cache_bypass   $http_pragma     $http_authorization;
 
 
 <directive name="fastcgi_cache_key">
-<syntax>fastcgi_cache_key <value>строка</value></syntax>
+<syntax><value>строка</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -119,7 +119,7 @@ fastcgi_cache_key  localhost:9000$request_uri;
 
 
 <directive name="fastcgi_cache_path">
-<syntax>fastcgi_cache_path <value>путь [levels=уровни]
+<syntax><value>путь [levels=уровни]
 keys_zone=название:размер [inactive=время] [max_size=размер]</value></syntax>
 <default/>
 <context>http</context>
@@ -167,8 +167,8 @@ inactive, то данные удаляются, независимо от их �
 
 
 <directive name="fastcgi_cache_min_uses">
-<syntax>fastcgi_cache_min_uses <value>число</value></syntax>
-<default>fastcgi_cache_min_uses 1</default>
+<syntax><value>число</value></syntax>
+<default>1</default>
 <context>http, server, location</context>
 
 <para>
@@ -180,7 +180,7 @@ inactive, то данные удаляются, независимо от их �
 
 
 <directive name="fastcgi_cache_valid">
-<syntax>fastcgi_cache_valid <value>ответ [ответ ...] время</value>
+<syntax><value>ответ [ответ ...] время</value>
 </syntax>
 <default/>
 <context>http, server, location</context>
@@ -217,10 +217,10 @@ fastcgi_cache_valid  any 1m;
 
 
 <directive name="fastcgi_cache_use_stale">
-<syntax>fastcgi_cache_use_stale <value>[error | timeout | invalid_header
+<syntax><value>[error | timeout | invalid_header
      | updating | http_500 | http_503 | http_404 | off]
 [...]</value></syntax>
-<default>fastcgi_cache_use_stale off</default>
+<default>off</default>
 <context>http, server, location</context>
 
 
@@ -237,8 +237,8 @@ fastcgi_cache_valid  any 1m;
 
 
 <directive name="fastcgi_connect_timeout">
-<syntax>fastcgi_connect_timeout <value>время</value></syntax>
-<default>fastcgi_connect_timeout 60</default>
+<syntax><value>время</value></syntax>
+<default>60</default>
 <context>http, server, location</context>
 
 <para>
@@ -250,7 +250,7 @@ fastcgi_cache_valid  any 1m;
 
 
 <directive name="fastcgi_index">
-<syntax>fastcgi_index <value>имя</value></syntax>
+<syntax><value>имя</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -271,7 +271,8 @@ fastcgi_param  SCRIPT_FILENAME  /home/www/scripts/php$fastcgi_script_name;
 
 
 <directive name="fastcgi_hide_header">
-<syntax>fastcgi_hide_header <value>имя</value></syntax>
+<syntax><value>имя</value></syntax>
+<default/>
 <context>http, server, location</context>
 
 <para>
@@ -286,8 +287,8 @@ nginx не передаёт клиенту строки заголовка "Stat
 
 
 <directive name="fastcgi_ignore_client_abort">
-<syntax>fastcgi_ignore_client_abort <value>[on|off]</value></syntax>
-<default>fastcgi_ignore_client_abort off</default>
+<syntax><value>[on|off]</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 
@@ -300,7 +301,8 @@ nginx не передаёт клиенту строки заголовка "Stat
 
 
 <directive name="fastcgi_ignore_headers">
-<syntax>fastcgi_ignore_headers <value>имя [имя ...]</value></syntax>
+<syntax><value>имя [имя ...]</value></syntax>
+<default/>
 <context>http, server, location</context>
 
 <para>
@@ -315,8 +317,8 @@ nginx не передаёт клиенту строки заголовка "Stat
 
 
 <directive name="fastcgi_intercept_errors">
-<syntax>fastcgi_intercept_errors <value>on|off</value></syntax>
-<default>fastcgi_intercept_errors off</default>
+<syntax><value>on|off</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -329,7 +331,7 @@ nginx не передаёт клиенту строки заголовка "Stat
 
 
 <directive name="fastcgi_no_cache">
-<syntax>fastcgi_no_cache <value>строка [...]</value></syntax>
+<syntax><value>строка [...]</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -349,10 +351,10 @@ fastcgi_no_cache   $http_pragma     $http_authorization;
 
 
 <directive name="fastcgi_next_upstream">
-<syntax>fastcgi_next_upstream
+<syntax>
 <value>[error|timeout|invalid_header|http_500|http_503|http_404|off]</value>
 </syntax>
-<default>fastcgi_next_upstream error timeout</default>
+<default>error timeout</default>
 <context>http, server, location</context>
 
 
@@ -404,7 +406,7 @@ off — запрещает передачу запроса следующему
 
 
 <directive name="fastcgi_param">
-<syntax>fastcgi_param <value>параметр значение</value></syntax>
+<syntax><value>параметр значение</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -450,7 +452,7 @@ fastcgi_param  REDIRECT_STATUS  200;
 
 
 <directive name="fastcgi_pass">
-<syntax>fastcgi_pass <value>fastcgi-server</value></syntax>
+<syntax><value>fastcgi-server</value></syntax>
 <default/>
 <context>location, if в location</context>
 
@@ -477,7 +479,8 @@ fastcgi_param  REDIRECT_STATUS  200;
 
 
 <directive name="fastcgi_pass_header">
-<syntax>fastcgi_pass_header <value>имя</value></syntax>
+<syntax><value>имя</value></syntax>
+<default/>
 <context>http, server, location</context>
 
 <para>
@@ -488,8 +491,8 @@ fastcgi_param  REDIRECT_STATUS  200;
 
 
 <directive name="fastcgi_read_timeout">
-<syntax>fastcgi_read_timeout <value>время</value></syntax>
-<default>fastcgi_read_timeout 60</default>
+<syntax><value>время</value></syntax>
+<default>60</default>
 <context>http, server, location</context>
 
 <para>
@@ -503,19 +506,9 @@ fastcgi_param  REDIRECT_STATUS  200;
 </directive>
 
 
-<directive name="fastcgi_redirect_errors">
-<syntax>fastcgi_redirect_errors <value>on|off</value></syntax>
-
-<para>
-Директива переименована в <link id="fastcgi_intercept_errors"/>.
-</para>
-
-</directive>
-
-
 <directive name="fastcgi_send_timeout">
-<syntax>fastcgi_send_timeout <value>время</value></syntax>
-<default>fastcgi_send_timeout 60</default>
+<syntax><value>время</value></syntax>
+<default>60</default>
 <context>http, server, location</context>
 
 <para>
@@ -530,7 +523,7 @@ fastcgi_param  REDIRECT_STATUS  200;
 
 
 <directive name="fastcgi_split_path_info">
-<syntax>fastcgi_split_path_info <value>regex</value></syntax>
+<syntax><value>regex</value></syntax>
 <default/>
 <context>location</context>
 
@@ -555,8 +548,8 @@ location ~ ^(.+\.php)(.*)$ {
 
 
 <directive name="fastcgi_store">
-<syntax>fastcgi_store <value>on | off | строка </value></syntax>
-<default>fastcgi_store off</default>
+<syntax><value>on | off | строка </value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -613,9 +606,9 @@ location /fetch/ {
 
 
 <directive name="fastcgi_store_access">
-<syntax>fastcgi_store_access <value>пользователи:права [пользователи:права]
+<syntax><value>пользователи:права [пользователи:права]
 ...</value></syntax>
-<default>fastcgi_store_access user:rw</default>
+<default>user:rw</default>
 <context>http, server, location</context>
 
 <para>
@@ -637,9 +630,9 @@ fastcgi_store_access  group:rw  all:r;
 
 
 <directive name="fastcgi_temp_path">
-<syntax>fastcgi_temp_path <value>путь [ уровень1 [ уровень2 [ уровень3 ] ] ]
+<syntax><value>путь [ уровень1 [ уровень2 [ уровень3 ] ] ]
 </value></syntax>
-<default>fastcgi_temp_path fastcgi_temp</default>
+<default>fastcgi_temp</default>
 <context>http, server, location</context>
 
 <para>

@@ -46,9 +46,9 @@ PUT, DELETE, MKCOL, COPY и MOVE.
 <section name="Директивы" id="directives">
 
 <directive name="dav_access">
-<syntax>dav_access <value>пользователи:права [пользователи:права] ...</value>
+<syntax><value>пользователи:права [пользователи:права] ...</value>
 </syntax>
-<default>dav_access user:rw</default>
+<default>user:rw</default>
 <context>http, server, location</context>
 
 <para>
@@ -68,8 +68,8 @@ dav_access  group:rw  all:r;
 
 
 <directive name="dav_methods">
-<syntax>dav_methods <value>[off|put|delete|mkcol|copy|move] ...</value></syntax>
-<default>dav_methods off</default>
+<syntax><value>[off|put|delete|mkcol|copy|move] ...</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -100,8 +100,8 @@ dav_access  group:rw  all:r;
 
 
 <directive name="create_full_put_path">
-<syntax>create_full_put_path <value>on|off</value></syntax>
-<default>create_full_put_path off</default>
+<syntax><value>on|off</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -115,8 +115,8 @@ dav_access  group:rw  all:r;
 
 
 <directive name="min_delete_depth">
-<syntax>min_delete_depth <value>число</value></syntax>
-<default>min_delete_depth 0</default>
+<syntax><value>число</value></syntax>
+<default>0</default>
 <context>http, server, location</context>
 
 <para>

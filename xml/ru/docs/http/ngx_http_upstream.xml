@@ -45,7 +45,7 @@ server {
 <section name="Директивы" id="directives">
 
 <directive name="ip_hash">
-<syntax>ip_hash</syntax>
+<syntax/>
 <default/>
 <context>upstream</context>
 
@@ -84,7 +84,7 @@ upstream  backend  {
 
 
 <directive name="server">
-<syntax>server <value>название [параметры]</value></syntax>
+<syntax><value>название [параметры]</value></syntax>
 <default/>
 <context>upstream</context>
 
@@ -159,7 +159,7 @@ upstream  backend  {
 
 
 <directive name="upstream">
-<syntax>upstream <value>название</value> { ... }</syntax>
+<syntax><value>название</value> { ... }</syntax>
 <default/>
 <context>http</context>
 

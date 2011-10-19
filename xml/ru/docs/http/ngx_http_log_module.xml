@@ -33,9 +33,9 @@
 <section name="Директивы" id="directives">
 
 <directive name="access_log">
-<syntax>access_log <value>путь [формат [buffer=размер]]|off</value>
+<syntax><value>путь [формат [buffer=размер]]|off</value>
 </syntax>
-<default>access_log log/access.log combined</default>
+<default>log/access.log combined</default>
 <context>http, server, location, if в location, limit_except</context>
 
 <para>
@@ -93,9 +93,9 @@ server {
 
 
 <directive name="log_format">
-<syntax>log_format <value>название строка [строка ...]</value>
+<syntax><value>название строка [строка ...]</value>
 </syntax>
-<default>log_format  combined  "..." </default>
+<default>combined  "..." </default>
 <context>http</context>
 
 <para>
@@ -165,9 +165,9 @@ $time_local, локальное время в common log format.
 
 <directive name="open_log_file_cache">
 
-<syntax>open_log_file_cache <value>max=N [inactive=время]|off</value>
+<syntax><value>max=N [inactive=время]|off</value>
 </syntax>
-<default>open_log_file_cache off</default>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>

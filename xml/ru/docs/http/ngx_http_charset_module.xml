@@ -50,8 +50,8 @@
 <section name="Директивы" id="directives">
 
 <directive name="charset">
-<syntax>charset <value>кодировка|off</value></syntax>
-<default>charset off</default>
+<syntax><value>кодировка|off</value></syntax>
+<default>off</default>
 <context>http, server, location, if в location</context>
 
 <para>
@@ -90,7 +90,7 @@ charset_map  iso-8859-5  _ { }
 
 
 <directive name="charset_map">
-<syntax>charset_map <value>кодировка1 кодировка2 { ... }</value></syntax>
+<syntax><value>кодировка1 кодировка2 { ... }</value></syntax>
 <default/>
 <context>http</context>
 
@@ -142,8 +142,8 @@ charset_map  koi8-r  utf-8 {
 
 
 <directive name="charset_types">
-<syntax>charset_types <value>mime-тип [mime-тип ...]</value></syntax>
-<default>charset_types text/html text/xml text/plain text/vnd.wap.wml
+<syntax><value>mime-тип [mime-тип ...]</value></syntax>
+<default>text/html text/xml text/plain text/vnd.wap.wml
 application/x-javascript application/rss+xml.
 </default>
 <context>http, server, location</context>
@@ -165,8 +165,8 @@ application/x-javascript application/rss+xml.
 
 
 <directive name="override_charset">
-<syntax>override_charset <value>on|off</value></syntax>
-<default>override_charset off</default>
+<syntax><value>on|off</value></syntax>
+<default>off</default>
 <context>http, server, location, if в location</context>
 
 <para>
@@ -187,7 +187,7 @@ application/x-javascript application/rss+xml.
 
 
 <directive name="source_charset">
-<syntax>source_charset <value>кодировка</value></syntax>
+<syntax><value>кодировка</value></syntax>
 <default/>
 <context>http, server, location, if в location</context>
 

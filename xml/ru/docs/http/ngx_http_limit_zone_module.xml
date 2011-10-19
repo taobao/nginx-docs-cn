@@ -41,7 +41,7 @@ http {
 <section name="Директивы" id="directives">
 
 <directive name="limit_zone">
-<syntax>limit_zone <value>название $переменная размер</value></syntax>
+<syntax><value>название $переменная размер</value></syntax>
 <default/>
 <context>http</context>
 
@@ -70,7 +70,7 @@ limit_zone   one  $binary_remote_addr  10m;
 
 
 <directive name="limit_conn">
-<syntax>limit_conn <value>зона число</value></syntax>
+<syntax><value>зона число</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -94,8 +94,8 @@ limit_zone   one  $binary_remote_addr  10m;
 
 
 <directive name="limit_conn_log_level">
-<syntax>limit_conn_log_level <value>[info|notice|warn|error]</value></syntax>
-<default>limit_conn_log_level  error</default>
+<syntax><value>[info|notice|warn|error]</value></syntax>
+<default>error</default>
 <context>http, server, location</context>
 
 <para>

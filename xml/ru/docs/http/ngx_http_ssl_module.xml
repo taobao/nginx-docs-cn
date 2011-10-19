@@ -85,8 +85,8 @@ http {
 <section name="Директивы" id="directives">
 
 <directive name="ssl">
-<syntax>ssl <value>[on|off]</value></syntax>
-<default>ssl off</default>
+<syntax><value>[on|off]</value></syntax>
+<default>off</default>
 <context>http, server</context>
 
 <para>
@@ -97,7 +97,7 @@ http {
 
 
 <directive name="ssl_certificate">
-<syntax>ssl_certificate <value>файл</value></syntax>
+<syntax><value>файл</value></syntax>
 <default/>
 <context>http, server</context>
 
@@ -137,7 +137,7 @@ http {
 
 
 <directive name="ssl_certificate_key">
-<syntax>ssl_certificate_key <value>файл</value></syntax>
+<syntax><value>файл</value></syntax>
 <default/>
 <context>http, server</context>
 
@@ -150,7 +150,7 @@ http {
 
 
 <directive name="ssl_client_certificate">
-<syntax>ssl_client_certificate <value>файл</value></syntax>
+<syntax><value>файл</value></syntax>
 <default/>
 <context>http, server</context>
 
@@ -163,8 +163,8 @@ http {
 
 
 <directive name="ssl_ciphers">
-<syntax>ssl_ciphers <value>шифры</value></syntax>
-<default>ssl_ciphers HIGH:!ADH:!MD5</default>
+<syntax><value>шифры</value></syntax>
+<default>HIGH:!ADH:!MD5</default>
 <context>http, server</context>
 
 <para>
@@ -185,7 +185,7 @@ OpenSSL, например:
 
 
 <directive name="ssl_crl">
-<syntax>ssl_crl <value>файл</value></syntax>
+<syntax><value>файл</value></syntax>
 <default/>
 <context>http, server</context>
 
@@ -198,7 +198,7 @@ OpenSSL, например:
 
 
 <directive name="ssl_dhparam">
-<syntax>ssl_dhparam <value>файл</value></syntax>
+<syntax><value>файл</value></syntax>
 <default/>
 <context>http, server</context>
 
@@ -210,8 +210,8 @@ OpenSSL, например:
 
 
 <directive name="ssl_prefer_server_ciphers">
-<syntax>ssl_prefer_server_ciphers <value>[on|off]</value></syntax>
-<default>ssl_prefer_server_ciphers off</default>
+<syntax><value>[on|off]</value></syntax>
+<default>off</default>
 <context>http, server</context>
 
 <para>
@@ -223,8 +223,8 @@ OpenSSL, например:
 
 
 <directive name="ssl_protocols">
-<syntax>ssl_protocols <value>[SSLv2] [SSLv3] [TLSv1]</value></syntax>
-<default>ssl_protocols SSLv3 TLSv1</default>
+<syntax><value>[SSLv2] [SSLv3] [TLSv1]</value></syntax>
+<default>SSLv3 TLSv1</default>
 <context>http, server</context>
 
 <para>
@@ -235,8 +235,8 @@ OpenSSL, например:
 
 
 <directive name="ssl_verify_client">
-<syntax>ssl_verify_client <value>on|off|optional</value></syntax>
-<default>ssl_verify_client off</default>
+<syntax><value>on|off|optional</value></syntax>
+<default>off</default>
 <context>http, server</context>
 
 <para>
@@ -250,8 +250,8 @@ OpenSSL, например:
 
 
 <directive name="ssl_verify_depth">
-<syntax>ssl_verify_depth <value>число</value></syntax>
-<default>ssl_verify_depth 1</default>
+<syntax><value>число</value></syntax>
+<default>1</default>
 <context>http, server</context>
 
 <para>
@@ -262,9 +262,9 @@ OpenSSL, например:
 
 
 <directive name="ssl_session_cache">
-<syntax>ssl_session_cache <value>off|none|[builtin[:размер]] [shared:название:размер]
+<syntax><value>off|none|[builtin[:размер]] [shared:название:размер]
 </value></syntax>
-<default>ssl_session_cache none</default>
+<default>none</default>
 <context>http, server</context>
 
 <para>
@@ -315,8 +315,8 @@ ssl_session_cache  builtin:1000  shared:SSL:10m;
 
 
 <directive name="ssl_session_timeout">
-<syntax>ssl_session_timeout <value>время</value></syntax>
-<default>ssl_session_timeout 5m</default>
+<syntax><value>время</value></syntax>
+<default>5m</default>
 <context>http, server</context>
 
 <para>

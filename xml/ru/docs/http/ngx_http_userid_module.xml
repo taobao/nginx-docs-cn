@@ -38,8 +38,8 @@
 <section name="Директивы" id="directives">
 
 <directive name="userid">
-<syntax>userid <value>[on|v1|log||off]</value></syntax>
-<default>userid off</default>
+<syntax><value>[on|v1|log||off]</value></syntax>
+<default>off</default>
 <context>http, server, location</context>
 
 <para>
@@ -72,8 +72,8 @@ off — запрещает выдавать cookie и записывать пр
 
 
 <directive name="userid_domain">
-<syntax>userid_domain <value>[имя|none]</value></syntax>
-<default>userid_domain none</default>
+<syntax><value>[имя|none]</value></syntax>
+<default>none</default>
 <context>http, server, location</context>
 
 <para>
@@ -85,7 +85,7 @@ off — запрещает выдавать cookie и записывать пр
 
 
 <directive name="userid_expires">
-<syntax>userid_expires <value>[время|max]</value></syntax>
+<syntax><value>[время|max]</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -99,8 +99,8 @@ off — запрещает выдавать cookie и записывать пр
 
 
 <directive name="userid_name">
-<syntax>userid_name <value>имя</value></syntax>
-<default>userid_name uid</default>
+<syntax><value>имя</value></syntax>
+<default>uid</default>
 <context>http, server, location</context>
 
 <para>
@@ -111,7 +111,7 @@ off — запрещает выдавать cookie и записывать пр
 
 
 <directive name="userid_p3p">
-<syntax>userid_p3p <value>строка</value></syntax>
+<syntax><value>строка</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -124,8 +124,8 @@ off — запрещает выдавать cookie и записывать пр
 
 
 <directive name="userid_path">
-<syntax>userid_path <value>путь</value></syntax>
-<default>userid_path /</default>
+<syntax><value>путь</value></syntax>
+<default>/</default>
 <context>http, server, location</context>
 
 <para>
@@ -136,8 +136,8 @@ off — запрещает выдавать cookie и записывать пр
 
 
 <directive name="userid_service">
-<syntax>userid_service <value>число</value></syntax>
-<default>userid_service IP-адрес сервера</default>
+<syntax><value>число</value></syntax>
+<default>IP-адрес сервера</default>
 <context>http, server, location</context>
 
 <para>

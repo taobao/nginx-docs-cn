@@ -191,7 +191,7 @@ __END__
 <section name="Директивы" id="directives">
 
 <directive name="perl">
-<syntax>perl <value>модуль::функция|'sub { ... }'</value></syntax>
+<syntax><value>модуль::функция|'sub { ... }'</value></syntax>
 <default/>
 <context>location, limit_except</context>
 
@@ -203,7 +203,7 @@ __END__
 
 
 <directive name="perl_modules">
-<syntax>perl_modules <value>путь</value></syntax>
+<syntax><value>путь</value></syntax>
 <default/>
 <context>http</context>
 
@@ -215,7 +215,7 @@ __END__
 
 
 <directive name="perl_require">
-<syntax>perl_require <value>модуль</value></syntax>
+<syntax><value>модуль</value></syntax>
 <default/>
 <context>http</context>
 
@@ -228,7 +228,7 @@ __END__
 
 
 <directive name="perl_set">
-<syntax>perl_set <value>$переменная</value>
+<syntax><value>$переменная</value>
         <value>модуль::функция|'sub { ... }'</value>
 </syntax>
 <default/>

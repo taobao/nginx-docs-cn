@@ -39,7 +39,7 @@ location /p/ {
 <section name="Директивы" id="directives">
 
 <directive name="secure_link_secret">
-<syntax>secure_link_secret <value>слово</value></syntax>
+<syntax><value>слово</value></syntax>
 <default/>
 <context>location</context>
 

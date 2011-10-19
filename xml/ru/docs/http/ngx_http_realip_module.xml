@@ -34,7 +34,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="set_real_ip_from">
-<syntax>set_real_ip_from <value>[адрес|CIDR]</value></syntax>
+<syntax><value>[адрес|CIDR]</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -47,8 +47,8 @@
 
 
 <directive name="real_ip_header">
-<syntax>real_ip_header <value>имя строки[X-Real-IP|X-Forwarded-For]</value></syntax>
-<default>real_ip_header X-Real-IP</default>
+<syntax><value>имя строки[X-Real-IP|X-Forwarded-For]</value></syntax>
+<default>X-Real-IP</default>
 <context>http, server, location</context>
 
 <para>

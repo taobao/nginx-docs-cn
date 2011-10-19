@@ -31,9 +31,9 @@
 <section name="Директивы" id="directives">
 
 <directive name="index">
-<syntax>index <value>файл [файл ...]</value>
+<syntax><value>файл [файл ...]</value>
 </syntax>
-<default>index index.html</default>
+<default>index.html</default>
 <context>http, server, location</context>
 
 <para>

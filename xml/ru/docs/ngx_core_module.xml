@@ -32,8 +32,8 @@ events {
 <section name="Директивы" id="directives">
 
 <directive name="daemon">
-<syntax>daemon <value>on|off</value></syntax>
-<default>daemon on</default>
+<syntax><value>on|off</value></syntax>
+<default>on</default>
 <context>main</context>
 
 <para>
@@ -45,8 +45,8 @@ events {
 
 
 <directive name="env">
-<syntax>env <value>VAR|VAR=VALUE</value></syntax>
-<default>env TZ</default>
+<syntax><value>VAR|VAR=VALUE</value></syntax>
+<default>TZ</default>
 <context>main</context>
 
 <para>
@@ -95,7 +95,7 @@ env  OPENSSL_ALLOW_PROXY_CERTS=1;
 
 
 <directive name="include">
-<syntax>include <value>файл|маска</value></syntax>
+<syntax><value>файл|маска</value></syntax>
 <default/>
 <context>везде</context>
 
@@ -116,8 +116,8 @@ include  vhosts/*.conf;
 
 
 <directive name="master_process">
-<syntax>master_process <value>on|off</value></syntax>
-<default>master_process on</default>
+<syntax><value>on|off</value></syntax>
+<default>on</default>
 <context>main</context>
 
 <para>
@@ -129,8 +129,8 @@ include  vhosts/*.conf;
 
 
 <directive name="pid">
-<syntax>pid <value>файл</value></syntax>
-<default>pid nginx.pid</default>
+<syntax><value>файл</value></syntax>
+<default>nginx.pid</default>
 <context>main</context>
 
 <para>
@@ -141,7 +141,7 @@ include  vhosts/*.conf;
 
 
 <directive name="ssl_engine">
-<syntax>ssl_engine <value>устройство</value></syntax>
+<syntax><value>устройство</value></syntax>
 <default/>
 <context>main</context>
 
@@ -153,8 +153,8 @@ include  vhosts/*.conf;
 
 
 <directive name="user">
-<syntax>user <value>пользователь [группа]</value></syntax>
-<default>user nobody nobody</default>
+<syntax><value>пользователь [группа]</value></syntax>
+<default>nobody nobody</default>
 <context>main</context>
 
 <para>
@@ -167,7 +167,7 @@ include  vhosts/*.conf;
 
 
 <directive name="timer_resolution">
-<syntax>timer_resolution <value>время</value></syntax>
+<syntax><value>время</value></syntax>
 <default/>
 <context>main</context>
 
@@ -210,7 +210,7 @@ timer_create() при использовании eventport;
 
 
 <directive name="worker_rlimit_core">
-<syntax>worker_rlimit_core <value>размер</value></syntax>
+<syntax><value>размер</value></syntax>
 <default/>
 <context>main</context>
 
@@ -224,7 +224,7 @@ timer_create() при использовании eventport;
 
 
 <directive name="worker_rlimit_nofile">
-<syntax>worker_rlimit_nofile <value>число</value></syntax>
+<syntax><value>число</value></syntax>
 <default/>
 <context>main</context>
 
@@ -238,8 +238,8 @@ timer_create() при использовании eventport;
 
 
 <directive name="worker_priority">
-<syntax>worker_priority <value>число</value></syntax>
-<default>worker_priority 0</default>
+<syntax><value>число</value></syntax>
+<default>0</default>
 <context>main</context>
 
 <para>
@@ -260,8 +260,8 @@ worker_priority  -10;
 
 
 <directive name="worker_processes">
-<syntax>worker_processes <value>число</value></syntax>
-<default>worker_processes 1</default>
+<syntax><value>число</value></syntax>
+<default>1</default>
 <context>main</context>
 
 <para>
@@ -272,7 +272,7 @@ worker_priority  -10;
 
 
 <directive name="working_directory">
-<syntax>working_directory <value>путь</value></syntax>
+<syntax><value>путь</value></syntax>
 <default/>
 <context>main</context>
 

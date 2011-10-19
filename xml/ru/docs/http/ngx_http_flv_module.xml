@@ -38,7 +38,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="flv">
-<syntax>flv</syntax>
+<syntax/>
 <default/>
 <context>location</context>
 

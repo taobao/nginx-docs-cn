@@ -33,8 +33,8 @@
 <section name="Директивы" id="directives">
 
 <directive name="auth_basic">
-<syntax>auth_basic <value>[строка|off]</value></syntax>
-<default>auth_basic off</default>
+<syntax><value>[строка|off]</value></syntax>
+<default>off</default>
 <context>http, server, location, limit_except</context>
 
 <para>
@@ -49,7 +49,7 @@ HTTP Basic Authentication.
 
 
 <directive name="auth_basic_user_file">
-<syntax>auth_basic_user_file <value>файл</value></syntax>
+<syntax><value>файл</value></syntax>
 <default/>
 <context>http, server, location, limit_except</context>
 

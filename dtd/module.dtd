@@ -12,7 +12,7 @@
             id          ID #IMPLIED
 >
 
-<!ELEMENT   directive   (syntax+, default?, context*, para+) >
+<!ELEMENT   directive   (syntax+, default+, context*, para+) >
 <!ATTLIST   directive
             name        ID #REQUIRED
             appeared-in CDATA #IMPLIED

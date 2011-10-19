@@ -39,7 +39,7 @@ http {
 <section name="Директивы" id="directives">
 
 <directive name="geoip_country">
-<syntax>geoip_country <value>база</value></syntax>
+<syntax><value>база</value></syntax>
 <default/>
 <context>http</context>
 
@@ -69,7 +69,7 @@ $geoip_country_name; — название страны, например, "Russ
 
 
 <directive name="geoip_city">
-<syntax>geoip_city <value>база</value></syntax>
+<syntax><value>база</value></syntax>
 <default/>
 <context>http</context>
 

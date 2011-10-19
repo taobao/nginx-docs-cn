@@ -41,7 +41,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="map">
-<syntax>map <value>$переменная1 $переменная2 { ... }</value></syntax>
+<syntax><value>$переменная1 $переменная2 { ... }</value></syntax>
 <default/>
 <context>http</context>
 
@@ -85,8 +85,8 @@ include — включает файл со значениями.
 
 
 <directive name="map_hash_max_size">
-<syntax>map_hash_max_size <value>число</value></syntax>
-<default>map_hash_max_size 2048</default>
+<syntax><value>число</value></syntax>
+<default>2048</default>
 <context>http</context>
 
 <para>
@@ -99,8 +99,8 @@ include — включает файл со значениями.
 
 
 <directive name="map_hash_bucket_size">
-<syntax>map_hash_bucket_size <value>число</value></syntax>
-<default>map_hash_bucket_size 32/64/128</default>
+<syntax><value>число</value></syntax>
+<default>32/64/128</default>
 <context>http</context>
 
 <para>

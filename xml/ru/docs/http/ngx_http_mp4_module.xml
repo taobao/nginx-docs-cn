@@ -110,7 +110,7 @@ location /video/ {
 <section id="directives" name="Директивы">
 
 <directive name="mp4">
-<syntax>mp4</syntax>
+<syntax/>
 <default/>
 <context>location</context>
 
@@ -122,8 +122,8 @@ location /video/ {
 
 
 <directive name="mp4_buffer_size">
-<syntax>mp4_buffer_size <argument>размер</argument></syntax>
-<default>mp4_buffer_size 512K</default>
+<syntax><argument>размер</argument></syntax>
+<default>512K</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -136,8 +136,8 @@ location /video/ {
 
 
 <directive name="mp4_max_buffer_size">
-<syntax>mp4_max_buffer_size <argument>размер</argument></syntax>
-<default>mp4_max_buffer_size 10M</default>
+<syntax><argument>размер</argument></syntax>
+<default>10M</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>

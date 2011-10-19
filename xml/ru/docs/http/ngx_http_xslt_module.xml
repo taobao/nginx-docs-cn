@@ -38,7 +38,7 @@ location / {
 <section name="Директивы" id="directives">
 
 <directive name="xml_entities">
-<syntax>xml_entities <value>путь</value></syntax>
+<syntax><value>путь</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -59,7 +59,7 @@ location / {
 
 
 <directive name="xslt_stylesheet">
-<syntax>xslt_stylesheet <value>шаблон [параметр ...]</value></syntax>
+<syntax><value>шаблон [параметр ...]</value></syntax>
 <default/>
 <context>location</context>
 
@@ -106,8 +106,8 @@ location / {
 </directive>
 
 <directive name="xslt_types">
-<syntax>xslt_types <value>mime-тип [mime-тип ...]</value></syntax>
-<default>xslt_types text/xml</default>
+<syntax><value>mime-тип [mime-тип ...]</value></syntax>
+<default>text/xml</default>
 <context>http, server, location</context>
 
 <para>

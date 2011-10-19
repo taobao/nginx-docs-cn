@@ -20,18 +20,26 @@ X:stylesheet {
         } else {
             <code>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</code>
         }
-        <code> !!; </code> <br/>
+        <code>
+        !{../@name}
+        X:if "count(node()) != 0" {
+            X:text{ } !!;
+        }
+        </code>
+        <br/>
     }
 
     X:template = "default" {
-        <strong>default</strong>:
-        X:if "count(text()) = 0" {
+        X:if "position() = 1" {
+            <strong>default</strong>:
+        }
+        X:if "count(node()) = 0" {
             <strong>
             !{document(concat($XML, '/i18n.xml'))
                        /i18n/text[@lang = $LANG]/item[@id='none']}
             </strong>
         } else {
-            <code> !!; </code>
+            <code> !{../@name} X:text{ } !!; </code>
         }
         <br/>
     }

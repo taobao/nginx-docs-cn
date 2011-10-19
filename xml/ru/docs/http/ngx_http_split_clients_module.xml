@@ -38,7 +38,7 @@ http {
 <section name="Директивы" id="directives">
 
 <directive name="split_clients">
-<syntax>split_clients <value>$переменная1 $переменная2 { ... }</value></syntax>
+<syntax><value>$переменная1 $переменная2 { ... }</value></syntax>
 <default/>
 <context>http</context>
 

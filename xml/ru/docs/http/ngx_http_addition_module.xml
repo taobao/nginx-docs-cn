@@ -35,7 +35,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="add_before_body">
-<syntax>add_before_body <value>uri</value></syntax>
+<syntax><value>uri</value></syntax>
 <default/>
 <context>location</context>
 
@@ -48,7 +48,7 @@
 
 
 <directive name="add_after_body">
-<syntax>add_after_body <value>uri</value></syntax>
+<syntax><value>uri</value></syntax>
 <default/>
 <context>location</context>
 
@@ -61,8 +61,8 @@
 
 
 <directive name="addition_types">
-<syntax>addition_types <value>mime-тип [mime-тип ...]</value></syntax>
-<default>addition_types text/html</default>
+<syntax><value>mime-тип [mime-тип ...]</value></syntax>
+<default>text/html</default>
 <context>http, server, location</context>
 
 <para>

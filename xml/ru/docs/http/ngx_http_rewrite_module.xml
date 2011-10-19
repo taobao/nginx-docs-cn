@@ -27,7 +27,7 @@ location для запроса. Если в выбранном location тоже
 <section name="Директивы" id="directives">
 
 <directive name="break">
-<syntax>break</syntax>
+<syntax/>
 <default/>
 <context>server, location, if</context>
 
@@ -50,7 +50,7 @@ ngx_http_rewrite_module.
 
 
 <directive name="if">
-<syntax>if (<value>условие</value>) { ... }</syntax>
+<syntax>(<value>условие</value>) { ... }</syntax>
 <default/>
 <context>server, location</context>
 
@@ -136,7 +136,7 @@ ngx_http_rewrite_module.
 
 
 <directive name="return">
-<syntax>return <value>код</value></syntax>
+<syntax><value>код</value></syntax>
 <default/>
 <context>server, location, if</context>
 
@@ -152,7 +152,7 @@ ngx_http_rewrite_module.
 
 
 <directive name="rewrite">
-<syntax>rewrite <value>regex</value> <value>замена</value>
+<syntax><value>regex</value> <value>замена</value>
          <value>флаг</value>
 </syntax>
 <default/>
@@ -235,7 +235,7 @@ permanent — возвращает постоянный редирект с к�
 
 
 <directive name="set">
-<syntax>set <value>переменная</value> <value>значение</value>
+<syntax><value>переменная</value> <value>значение</value>
 </syntax>
 <default/>
 <context>server, location, if</context>
@@ -249,8 +249,8 @@ permanent — возвращает постоянный редирект с к�
 
 
 <directive name="uninitialized_variable_warn">
-<syntax>uninitialized_variable_warn <value>on|off</value></syntax>
-<default>uninitialized_variable_warn on</default>
+<syntax><value>on|off</value></syntax>
+<default>on</default>
 <context>http, server, location, if</context>
 
 <para>

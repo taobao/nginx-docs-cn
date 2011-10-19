@@ -110,7 +110,7 @@ location /video/ {
 <section id="directives" name="Directives">
 
 <directive name="mp4">
-<syntax>mp4</syntax>
+<syntax/>
 <default/>
 <context>location</context>
 
@@ -122,8 +122,8 @@ Turns on module processing in a surrounding location.
 
 
 <directive name="mp4_buffer_size">
-<syntax>mp4_buffer_size <argument>size</argument></syntax>
-<default>mp4_buffer_size 512K</default>
+<syntax><argument>size</argument></syntax>
+<default>512K</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -136,8 +136,8 @@ Sets the initial size of a memory buffer used to process MP4 files.
 
 
 <directive name="mp4_max_buffer_size">
-<syntax>mp4_max_buffer_size <argument>size</argument></syntax>
-<default>mp4_max_buffer_size 10M</default>
+<syntax><argument>size</argument></syntax>
+<default>10M</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
