@@ -6,7 +6,7 @@
         link="/ru/docs/http/ngx_http_geoip_module.html"
         lang="ru">
 
-<section name="" id="summary">
+<section id="summary">
 
 <para>
 Модуль ngx_http_geoip_module создаёт переменные, значения которых

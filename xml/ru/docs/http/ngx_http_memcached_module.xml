@@ -6,7 +6,7 @@
         link="/ru/docs/http/ngx_http_memcached_module.html"
         lang="ru">
 
-<section name="" id="summary">
+<section id="summary">
 
 <para>
 Модуль ngx_http_memcached_module позволяет получать ответ из сервера memcached.

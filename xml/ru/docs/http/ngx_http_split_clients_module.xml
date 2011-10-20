@@ -6,7 +6,7 @@
         link="/ru/docs/http/ngx_http_split_clients_module.html"
         lang="ru">
 
-<section name="" id="summary">
+<section id="summary">
 
 <para>
 Модуль ngx_http_split_clients_module создаёт переменные для

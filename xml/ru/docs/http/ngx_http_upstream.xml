@@ -6,7 +6,7 @@
         link="/ru/docs/http/ngx_http_upstream.html"
         lang="ru">
 
-<section name="" id="summary">
+<section id="summary">
 
 <para>
 Модуль позволяет описывать группы серверов,

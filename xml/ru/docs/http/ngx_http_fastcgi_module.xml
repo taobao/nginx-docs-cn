@@ -6,7 +6,7 @@
         link="/ru/docs/http/ngx_http_fastcgi_module.html"
         lang="ru">
 
-<section name="" id="summary">
+<section id="summary">
 
 <para>
 Модуль ngx_http_fastcgi_module позволяет передавать запросы

@@ -6,7 +6,7 @@
         link="/ru/docs/http/ngx_http_mp4_module.html"
         lang="ru">
 
-<section name="Обзор">
+<section id="summary">
 
 <para>
 Модуль <code>ngx_http_mp4_module</code> обеспечивает серверную поддержку

@@ -6,7 +6,7 @@
         link="/en/docs/http/ngx_http_mp4_module.html"
         lang="en">
 
-<section name="Summary">
+<section id="summary">
 
 <para>
 The module <code>ngx_http_mp4_module</code> provides pseudo-streaming

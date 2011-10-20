@@ -6,7 +6,7 @@
         link="/ru/docs/http/ngx_http_perl_module.html"
         lang="ru">
 
-<section name="" id="summary">
+<section id="summary">
 
 <para>
 Модуль ngx_http_perl_module позволяет работать со встроенным в nginx perl'ом:

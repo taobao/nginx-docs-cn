@@ -5,26 +5,24 @@ X:stylesheet {
 	!!;
     }
 
-    X:template = "section[not(@id) and @name]" {
-	<center><h4> !{@name} </h4></center>
+    X:template = "section[@id and not(@name)]" {
+	<a name="{@id}" />
 	!!;
     }
 
-    X:template = "section[not(@id) and not(@name)]" { !!; }
-
     <!-- legacy section templates -->
 
-    X:template = "section[@name and @title]" {
+    X:template = "section[not(@id) and @name and @title]" {
 	<a name="{@name}" /> <center><h4> !{@title} </h4></center>
 	!!;
     }
 
-    X:template = "section[not(@name) and @title]" {
+    X:template = "section[not(@id) and not(@name) and @title]" {
 	<center><h4> !{@title} </h4></center>
 	!!;
     }
 
-    X:template = "section[not(@name) and not(@title)]" { !!; }
+    X:template = "section[not(@id) and not(@name) and not(@title)]" { !!; }
 
     <!-- -->
 

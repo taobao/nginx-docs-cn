@@ -8,8 +8,8 @@
 
 <!ELEMENT   section     (directive | para)+ >
 <!ATTLIST   section
-            name        CDATA #REQUIRED
-            id          ID #IMPLIED
+            id          ID #REQUIRED
+            name        CDATA #IMPLIED
 >
 
 <!ELEMENT   directive   (syntax+, default+, context*, para+) >
