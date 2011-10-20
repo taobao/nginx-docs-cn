@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article title="How to build nginx on the Win32 Platform with Visual C"
+         link="/en/docs/howto_build_on_win32.html"
+         lang="en">
+
+<section title="Prerequisites">
+
+<para>
+To build nginx on the Win32 platform you need:
+
+<list>
+
+<item>
+Visuial C compiler. Visual Studio 8 and 10 are known to work.
+</item>
+
+<item>
+<link url="http://www.mingw.org/wiki/MSYS">MSYS</link>.
+</item>
+
+<item>
+Perl, if you want to build openssl and nginx with ssl support. 
+For example <link url="http://www.activestate.com/activeperl">ActivePerl</link>
+or <link url="http://strawberryperl.com">Strawberry Perl</link>.
+</item>
+
+<item>
+Subversion client. Choose any from <link url="http://subversion.apache.org/packages.html#windows">list</link>
+</item>
+
+<item>
+<link url="http://www.pcre.org">PCRE</link>, <link url="http://zlib.net">zlib</link>
+and <link url="http://www.openssl.org">openssl</link> libraries sources.
+</item>
+</list>
+
+</para>
+
+</section>
+
+<section name="build_steps"
+         title="Build steps">
+
+<para>
+Ensure that paths to Perl, Subversion and MSYS bin directories are added to 
+PATH environment variable before you start build. To set Visual C environment
+run vcvarsall.bat script from Visual C directory.
+</para>
+
+<para>
+
+To build nginx:
+<list>
+
+<item>
+Start MSYS bash
+</item>
+
+<item>
+Check out nginx sources from the svn.nginx.org repository. For example:
+<programlisting>
+svn co svn://svn.nginx.org/tags/release-1.1.6 
+</programlisting>
+</item>
+
+<item>
+Create build directory and lib directory, and unpack zlib, PCRE and openssl libraries
+sources into lib directory:
+<programlisting>
+mkdir objs
+mkdir objs/lib
+cd objs/lib
+unzip ../../pcre-8.12.zip
+tar -xzf ../../zlib-1.2.5.tar.gz
+tar -xzf ../../openssl-1.0.0e.tar.gz
+</programlisting>
+</item>
+
+<item>
+Run configure script:
+<programlisting>
+auto/configure --with-cc=cl --builddir=objs --prefix= --conf-path=conf/nginx.conf \
+--pid-path=logs/nginx.pid --http-log-path=logs/access.log --error-log-path=logs/error.log \
+--sbin-path=nginx.exe --http-client-body-temp-path=temp/client_body_temp \
+--http-proxy-temp-path=temp/proxy_temp --http-fastcgi-temp-path=temp/fastcgi_temp \
+--with-cc-opt=-DFD_SETSIZE=1024 --with-pcre=objs/lib/pcre-8.12 \
+--with-zlib=objs/lib/zlib-1.2.5 --withopenssl=objs/lib/openssl-1.0.0e \
+--with-select_module --with-http_ssl_module --with-ipv6
+</programlisting>
+</item>
+
+<item>
+Run make:
+<programlisting>
+nmake -f objs/Makefile
+</programlisting>
+</item>
+
+
+</list>
+
+</para>
+
+</section>
+
+<section name="see_also"
+         title="See also">
+
+<para>
+<list>
+
+<item>
+<a href="/en/docs/windows.xml"/>
+</item>
+
+</list>
+</para>
+
+</section>
+</article>
