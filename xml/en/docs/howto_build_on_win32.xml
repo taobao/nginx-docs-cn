@@ -28,7 +28,7 @@ or <link url="http://strawberryperl.com">Strawberry Perl</link>.
 </item>
 
 <item>
-Subversion client. Choose any from <link url="http://subversion.apache.org/packages.html#windows">list</link>
+Subversion client. Choose any from the <link url="http://subversion.apache.org/packages.html#windows">list</link>
 </item>
 
 <item>
@@ -67,7 +67,7 @@ svn co svn://svn.nginx.org/tags/release-1.1.6
 </item>
 
 <item>
-Create build directory and lib directory, and unpack zlib, PCRE and openssl libraries
+Create a build directory and lib directory, and unpack zlib, PCRE and openssl libraries
 sources into lib directory:
 <programlisting>
 mkdir objs
