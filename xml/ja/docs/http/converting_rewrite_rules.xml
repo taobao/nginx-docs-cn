@@ -4,7 +4,7 @@
          link="/ja/docs/http/converting_rewrite_rules.html"
          lang="ja">
 
-<section title="メインサイトへのリダイレクト">
+<section name="メインサイトへのリダイレクト">
 
 <para>
 共有のホスティングで Apache の .htaccess ファイル<i>のみ</i>で<i>すべて</i>を設定してきたのなら、次のようにルールをコンバートします:
@@ -81,8 +81,8 @@ server {
 </section>
 
 
-<section name="converting_mongrel_rules"
-        title="Mongrel ルールのコンバート">
+<section id="converting_mongrel_rules"
+        name="Mongrel ルールのコンバート">
 
 <para>
 典型的な Mongrel のルール:

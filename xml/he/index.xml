@@ -29,8 +29,8 @@ nginx [נהגה: engine x] הוא שרת HTTP ופרוקסי הפוך, כמו ג
 </section>
 
 
-<section name="basic_http_features"
-        title="תכונות HTTP בסיסיות">
+<section id="basic_http_features"
+        name="תכונות HTTP בסיסיות">
 
 <para>
 <list>
@@ -67,8 +67,8 @@ nginx [נהגה: engine x] הוא שרת HTTP ופרוקסי הפוך, כמו ג
 </section>
 
 
-<section name="other_http_features"
-        title="תכונות HTTP אחרות">
+<section id="other_http_features"
+        name="תכונות HTTP אחרות">
 
 <para>
 <list>
@@ -132,8 +132,8 @@ perl משובץ.
 </section>
 
 
-<section name="mail_proxy_server_features"
-        title="תכונות פרוקסי דואר">
+<section id="mail_proxy_server_features"
+        name="תכונות פרוקסי דואר">
 
 <para>
 <list>
@@ -180,8 +180,8 @@ SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
 </section>
 
 
-<section name="architecture_and_scalability"
-        title="ארכיטקטורה ויכולת גידול">
+<section id="architecture_and_scalability"
+        name="ארכיטקטורה ויכולת גידול">
 
 <para>
 <list>
@@ -231,8 +231,8 @@ File AIO (במערכות FreeBSD 4.3 ומעלה ולינוקס 2.6.22 ומעלה
 </section>
 
 
-<section name="tested_os_and_platforms"
-        title="מערכות הפעלה ופלטפורמות בדוקות">
+<section id="tested_os_and_platforms"
+        name="מערכות הפעלה ופלטפורמות בדוקות">
 
 <para>
 <list>

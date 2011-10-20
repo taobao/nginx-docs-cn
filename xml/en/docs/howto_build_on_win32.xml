@@ -6,7 +6,7 @@
          link="/en/docs/howto_build_on_win32.html"
          lang="en">
 
-<section title="Prerequisites">
+<section name="Prerequisites">
 
 <para>
 To build nginx on the Microsoft Win32&reg; platform you need:
@@ -42,8 +42,8 @@ and <link url="http://www.openssl.org">OpenSSL</link> libraries sources.
 
 </section>
 
-<section name="build_steps"
-         title="Build steps">
+<section id="build_steps"
+         name="Build steps">
 
 <para>
 Ensure that paths to Perl, Subversion and MSYS bin directories are added to
@@ -107,8 +107,8 @@ nmake -f objs/Makefile
 
 </section>
 
-<section name="see_also"
-         title="See also">
+<section id="see_also"
+         name="See also">
 
 <para>
 <list>

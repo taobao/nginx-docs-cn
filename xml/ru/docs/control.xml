@@ -47,7 +47,7 @@
 </section>
 
 
-<section title="Изменение конфигурации" name="reconfiguration">
+<section id="reconfiguration" name="Изменение конфигурации">
 
 <para>
 Для того, чтобы nginx перечитал файл конфигурации, нужно послать
@@ -104,7 +104,7 @@ ps ax -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'
 </section>
 
 
-<section title="Ротация лог-файлов" name="logs">
+<section id="logs" name="Ротация лог-файлов">
 
 <para>
 Лог-файлы нужно переименовать, а затем послать сигнал USR1 главному процессу.
@@ -121,7 +121,7 @@ ps ax -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'
 </section>
 
 
-<section title="Обновление сервера на лету" name="upgrade">
+<section id="upgrade" name="Обновление сервера на лету">
 
 <para>
 Для обновления сервера нужно записать на место старого исполняемого файла новый.

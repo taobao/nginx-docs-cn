@@ -4,7 +4,7 @@
          link="/ru/download.html"
          lang="ru">
 
-<section title="Текущие версии">
+<section name="Текущие версии">
 
 <download last="5" changes="CHANGES.ru">
 
@@ -21,7 +21,7 @@
 </section>
 
 
-<section title="Стабильные версии">
+<section name="Стабильные версии">
 
 <download last="5" changes="CHANGES.ru-1.0">
 
@@ -48,7 +48,7 @@
 </section>
 
 
-<section title="Устаревшие версии">
+<section name="Устаревшие версии">
 
 <download last="1" changes="CHANGES.ru-0.8">
 

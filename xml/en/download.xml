@@ -5,7 +5,7 @@
          lang="en">
 
 
-<section title="Development versions">
+<section name="Development versions">
 
 <download last="5" changes="CHANGES">
 
@@ -22,7 +22,7 @@
 </section>
 
 
-<section title="Stable versions">
+<section name="Stable versions">
 
 <download last="5" changes="CHANGES-1.0">
 
@@ -49,7 +49,7 @@
 </section>
 
 
-<section title="Legacy versions">
+<section name="Legacy versions">
 
 <download last="1" changes="CHANGES-0.8">
 

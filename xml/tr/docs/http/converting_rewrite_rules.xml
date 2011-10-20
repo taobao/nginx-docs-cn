@@ -4,7 +4,7 @@
          link="/tr/docs/http/converting_rewrite_rules.html"
          lang="tr">
 
-<section title="Ana siteye yönlendirme">
+<section name="Ana siteye yönlendirme">
 
 <para>
 Paylaşımlı hosting kullananlar genelde her şeyi, sadece Apache&rsquo;nin .htaccess dosyalarını yapılandırarak kullanırlar. Bu dosyada bulunan kuralların çevirisine örnek olarak:
@@ -80,8 +80,8 @@ server {
 </section>
 
 
-<section name="converting_mongrel_rules"
-        title="Mongrel kurallarının çevirisi">
+<section id="converting_mongrel_rules"
+        name="Mongrel kurallarının çevirisi">
 
 <para>
 Tipik Mongrel kuralları:

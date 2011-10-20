@@ -7,7 +7,7 @@
          editor="Brian Mercer">
 
 
-<section title="Name-based virtual servers">
+<section name="Name-based virtual servers">
 
 <para>
 nginx first decides which <i>server</i> should process the request.
@@ -69,8 +69,8 @@ and not of the server name. More about this later.
 </section>
 
 
-<section name="how_to_prevent_undefined_server_names"
-        title="How to prevent processing requests with undefined server names">
+<section id="how_to_prevent_undefined_server_names"
+        name="How to prevent processing requests with undefined server names">
 
 <para>
 If you do not want to process requests without the <header>Host</header>
@@ -97,8 +97,8 @@ a default server name.
 </section>
 
 
-<section name="mixed_name_ip_based_servers"
-        title="Mixed name-based and IP-based virtual servers">
+<section id="mixed_name_ip_based_servers"
+        name="Mixed name-based and IP-based virtual servers">
 
 <para>
 Let&rsquo;s look at a more complex configuration
@@ -167,8 +167,8 @@ server {
 </section>
 
 
-<section name="simple_php_site_configuration"
-        title="A simple PHP site configuration">
+<section id="simple_php_site_configuration"
+        name="A simple PHP site configuration">
 
 <para>
 Now let&rsquo;s look at how nginx chooses a <i>location</i> to process a request

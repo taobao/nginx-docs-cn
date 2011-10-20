@@ -6,7 +6,7 @@
          author="Igor Sysoev"
          translator="DigitalCube Co. Ltd., wokamoto">
 
-<section title="名前ベースの仮想サーバ">
+<section name="名前ベースの仮想サーバ">
 
 <para>
 nginx はまず最初にどの<i>サーバ</i>がそのリクエストを処理すべきなのかを決定します。手はじめに、３つすべての仮想サーバが port *:80 で待ち受けている単純な設定から見てみましょう:
@@ -53,8 +53,8 @@ server {
 </section>
 
 
-<section name="how_to_prevent_undefined_server_names"
-        title="サーバ名未定義のリクエストの処理を防ぐ">
+<section id="how_to_prevent_undefined_server_names"
+        name="サーバ名未定義のリクエストの処理を防ぐ">
 
 <para>
 &ldquo;Host&rdquo; ヘッダが未定義のリクエストを処理させたくない場合は、リクエストを単にドロップさせるデフォルトサーバを設定できます:
@@ -73,8 +73,8 @@ server {
 </section>
 
 
-<section name="mixed_name_ip_based_servers"
-        title="名前ベースとIPベースをミックスした仮想サーバ">
+<section id="mixed_name_ip_based_servers"
+        name="名前ベースとIPベースをミックスした仮想サーバ">
 
 <para>
 異なるアドレスで待ち受けている仮想サーバのより複雑な設定をみてみましょう:
@@ -131,8 +131,8 @@ server {
 </section>
 
 
-<section name="simple_php_site_configuration"
-        title="単純な PHP サイトの設定">
+<section id="simple_php_site_configuration"
+        name="単純な PHP サイトの設定">
 
 <para>
 では、典型的で単純な PHP サイトで nginx がどのように<i>ロケーション（location）</i>を選択してリクエストを処理するのかを見てみましょう:

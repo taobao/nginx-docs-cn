@@ -6,7 +6,7 @@
          author="Igor Sysoev"
          translator="Altan Tanrıverdi">
 
-<section title="Ad-tabanlı sanal sunucular">
+<section name="Ad-tabanlı sanal sunucular">
 
 <para>
 nginx, ilk olarak hangi sunucunun talebi işleyeceğine karar verir.
@@ -58,8 +58,8 @@ Not: Varsayılan sunucu, sunucu adının değil listen portunun bir özelliğidi
 </section>
 
 
-<section name="how_to_prevent_undefined_server_names"
-        title="Tanımlanmamış sunucu adlarına gelen taleplerin işlenmesini engellemek">
+<section id="how_to_prevent_undefined_server_names"
+        name="Tanımlanmamış sunucu adlarına gelen taleplerin işlenmesini engellemek">
 
 <para>
 Eğer tanımlanmamış &ldquo;Host&rdquo; bilgisine sahip talepleri işlemek istemiyorsanız, bu talepleri düşüren bir varsayılan sunucu tanımlayabilirsiniz:
@@ -79,8 +79,8 @@ Not: Bu sunucu için bir ad belirlemelisiniz. Aksi takdirde nginx <i>hostname</i
 </section>
 
 
-<section name="mixed_name_ip_based_servers"
-        title="Ad ve IP bazlı karışık sanal sunucular">
+<section id="mixed_name_ip_based_servers"
+        name="Ad ve IP bazlı karışık sanal sunucular">
 
 <para>
 Farklı adreslerde bulunan sanal sunucuların yer aldığı biraz daha karışık bir yapılandırmayı inceleyelim:
@@ -136,8 +136,8 @@ server {
 </section>
 
 
-<section name="simple_php_site_configuration"
-        title="Basit bir PHP sitesi yapılandırması">
+<section id="simple_php_site_configuration"
+        name="Basit bir PHP sitesi yapılandırması">
 
 <para>
 nginx&rsquo;in basit bir PHP sitesi için gelen talebi işlemek için nasıl bir <i>lokasyon</i> seçtiğini inceleyelim:

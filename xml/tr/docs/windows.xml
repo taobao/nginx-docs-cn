@@ -87,8 +87,8 @@ eski işçi işlemden yavaşça çıkmak
 
 </section>
 
-<section name="known_issues"
-        title="Bilinen sorunlar">
+<section id="known_issues"
+        name="Bilinen sorunlar">
 
 <list>
 
@@ -110,8 +110,8 @@ Windows Vista ve sonraki versiyonlarda çalışmamaktadır.
 
 </section>
 
-<section name="possible_future_enhancements"
-        title="Muhtemel geliştirmeler">
+<section id="possible_future_enhancements"
+        name="Muhtemel geliştirmeler">
 
 <list>
 

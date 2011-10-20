@@ -66,7 +66,7 @@ Configuration of ciphers can be adjusted to prefer RC4-SHA as the following:
 </section>
 
 
-<section name="optimization" title="HTTPS server optimization">
+<section id="optimization" name="HTTPS server optimization">
 
 <para>
 SSL operations consume extra CPU resources.
@@ -109,7 +109,7 @@ http {
 </section>
 
 
-<section name="chains" title="SSL certificate chains">
+<section id="chains" name="SSL certificate chains">
 
 <para>
 Some browsers may complain about a certificate signed by a well-known
@@ -206,7 +206,7 @@ certificate #0.
 </section>
 
 
-<section name="single_http_https_server" title="A single HTTP/HTTPS server">
+<section id="single_http_https_server" name="A single HTTP/HTTPS server">
 
 <para>
 It is good practice to configure separate servers for HTTP and HTTPS
@@ -242,7 +242,7 @@ listen  443  default  ssl;
 </section>
 
 
-<section name="name_based_https_servers" title="Name-based HTTPS servers">
+<section id="name_based_https_servers" name="Name-based HTTPS servers">
 
 <para>
 A common issue arises when configuring two or more HTTPS servers
@@ -300,8 +300,8 @@ server {
 </section>
 
 
-<section name="certificate_with_several_names"
-        title="A SSL certificate with several names">
+<section id="certificate_with_several_names"
+        name="A SSL certificate with several names">
 
 <para>
 There are other ways to share a single IP address between several
@@ -349,7 +349,7 @@ server {
 </section>
 
 
-<section name="sni" title="Server Name Indication">
+<section id="sni" name="Server Name Indication">
 
 <para>
 A more generic solution for running several HTTPS servers on a single
@@ -417,7 +417,7 @@ therefore SNI is not available
 </section>
 
 
-<section name="compatibility" title="Compatibility">
+<section id="compatibility" name="Compatibility">
 
 <para>
 <list>

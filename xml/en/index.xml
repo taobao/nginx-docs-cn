@@ -33,8 +33,8 @@ The sources are distributed under the
 </section>
 
 
-<section name="basic_http_features"
-        title="Basic HTTP server features">
+<section id="basic_http_features"
+        name="Basic HTTP server features">
 
 <para>
 <list>
@@ -73,8 +73,8 @@ SSL and TLS SNI support.
 </section>
 
 
-<section name="other_http_features"
-        title="Other HTTP server features">
+<section id="other_http_features"
+        name="Other HTTP server features">
 
 <para>
 <list>
@@ -150,8 +150,8 @@ Embedded Perl.
 </section>
 
 
-<section name="mail_proxy_server_features"
-        title="Mail proxy server features">
+<section id="mail_proxy_server_features"
+        name="Mail proxy server features">
 
 <para>
 <list>
@@ -200,8 +200,8 @@ STARTTLS and STLS support.
 </section>
 
 
-<section name="architecture_and_scalability"
-        title="Architecture and scalability">
+<section id="architecture_and_scalability"
+        name="Architecture and scalability">
 
 <para>
 <list>
@@ -258,8 +258,8 @@ Data copy operations are kept to a minimum.
 </section>
 
 
-<section name="tested_os_and_platforms"
-        title="Tested OS and platforms">
+<section id="tested_os_and_platforms"
+        name="Tested OS and platforms">
 
 <para>
 <list>

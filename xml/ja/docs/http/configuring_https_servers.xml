@@ -41,7 +41,7 @@ SSL プロトコルの強力なバージョンと暗号に接続を制限する�
 </section>
 
 
-<section name="optimization" title="HTTPS サーバの最適化">
+<section id="optimization" name="HTTPS サーバの最適化">
 
 <para>
 SSL の工程は CPU リソースを余計に消費します。マルチプロセッサシステムでは（利用できる CPU コアの数よりも大きい数の）複数のワーカープロセスを走らせるといいでしょう。最も CPU に負荷がかかる工程は SSL ハンドシェイクです。クライアント毎のこの工程数を最小化するには２つの方法があります。最初の方法はキープアライブ接続を有効にして、ひとつの接続経由で複数のリクエストを送るようにする方法です。二つ目の方法は SSL セッションパラメータを再利用して、並行かつ順次接続のための SSL ハンドシェイクを避ける方法です。セッションはワーカー間で共有される SSL セッションキャッシュに保持され、<dirname>ssl_session_cache</dirname> ディレクティブで設定されています。１メガバイトのキャッシュには約４０００のセッションが含まれます。キャッシュのデフォルトタイムアウトは５分です。この値は <dirname>ssl_session_timeout</dirname> ディレクティブを使用して増やすことができます。次の例は１０Mの共有セッションキャッシュをもったクアッドコアシステムに最適化された設定例です:
@@ -71,7 +71,7 @@ http {
 </section>
 
 
-<section name="chains" title="SSL 連鎖証明書">
+<section id="chains" name="SSL 連鎖証明書">
 
 <para>
 ブラウザによっては有名な認証局によって署名された証明書にエラーをだすことがあります。その一方でその証明書を他のブラウザでは問題なく受け入れることもあります。これは発行している認証局が、有名で信用されている認証局の認証基盤には含まれない特定のブラウザで配布されている中間証明書を使ったサーバ証明書に署名しているからです。このケースでは、認証局は署名されたサーバ証明書に連結されているはずの連鎖証明書のバンドルを提供しています。サーバ証明書は、かならず結合されたファイル内の連鎖証明書に存在している必要があります:
@@ -143,7 +143,7 @@ Certificate chain
 </section>
 
 
-<section name="single_http_https_server" title="単一の HTTP/HTTPS サーバ">
+<section id="single_http_https_server" name="単一の HTTP/HTTPS サーバ">
 
 <para>
 最初の段階から HTTP と HTTPS プロトコル用にサーバを分けて設定するのは優れた実践です。現時点では両者の機能性としては等しいかもしれませんが、将来的に大きな変更があるかもしれず、統合されたサーバの使用が問題になるかもしれません。とはいえ、HTTP と HTTPS のサーバが等しく、将来のことを考えたくないのなら、ディレクティブ <dirname>ssl on</dirname> を削除して *:443 ポートに <dirname>ssl</dirname> パラメータを追加することによって HTTP と HTTPS リクエストの両者を扱う単一のサーバを設定することができます:
@@ -170,7 +170,7 @@ listen  443  default  ssl;
 </section>
 
 
-<section name="name_based_https_servers" title="名前ベースの HTTPS サーバ">
+<section id="name_based_https_servers" name="名前ベースの HTTPS サーバ">
 
 <para>
 単一の IP アドレスを２つ以上の HTTPS サーバで待ち受けるように設定するとよく発生する問題があります:
@@ -221,8 +221,8 @@ server {
 </section>
 
 
-<section name="certificate_with_several_names"
-        title="複数サーバ名をもつ SSL 証明書">
+<section id="certificate_with_several_names"
+        name="複数サーバ名をもつ SSL 証明書">
 
 <para>
 単一の IP アドレスを複数の HTTPS サーバ間で共有する方法は他にもありますが、どれも欠点があります。ひとつは、SubjectAltName フィールドに複数サーバ名（例えば、<url>www.nginx.com</url> と <url>www.nginx.org</url>）をもつ単一の証明書を使用する方法です。しかし、SubjectAltName の長さには制限があります。
@@ -258,7 +258,7 @@ server {
 </section>
 
 
-<section name="sni" title="サーバ名指示（Server Name Indication – SNI）">
+<section id="sni" name="サーバ名指示（Server Name Indication – SNI）">
 
 <para>
 単一の IP アドレス上で複数の HTTPS サーバを動かすときのさらに包括的な解決方法として <a href="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1 Server Name Indication extension（サーバ名指示拡張）</a> (SNI, RFC3546) があります。これは、ブラウザが SSL ハンドシェイクの間にリクエストされたサーバ名を渡せるようにするもので、それによりサーバはその接続でどの証明書を使用するべきかが分かります。しかし、SNI は限られたブラウザしかサポートしていません。現時点では次のブラウザのバージョン以降のものがサポートされています:
@@ -310,7 +310,7 @@ therefore SNI is not available
 </section>
 
 
-<section name="compatibility" title="Compatibility">
+<section id="compatibility" name="Compatibility">
 
 <para>
 <list>

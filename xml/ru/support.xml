@@ -5,7 +5,7 @@
          lang="ru">
 
 
-<section title="Wiki">
+<section name="Wiki">
 
 <para>
 <list>
@@ -20,7 +20,7 @@
 </section>
 
 
-<section title="Списки рассылок">
+<section name="Списки рассылок">
 
 <para>
 Вы можете
@@ -64,7 +64,7 @@
 </section>
 
 
-<section title="Форумы">
+<section name="Форумы">
 
 <para>
 <list>
@@ -91,7 +91,7 @@
 </section>
 
 
-<section title="Разработка">
+<section name="Разработка">
 
 <para>
 <list>

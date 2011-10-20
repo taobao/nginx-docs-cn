@@ -20,8 +20,8 @@ nginx [えんじんえっくす] は <a href="http://sysoev.ru/en/">Igor Sysoev<
 </section>
 
 
-<section name="basic_http_features"
-        title="基本的な HTTP 機能">
+<section id="basic_http_features"
+        name="基本的な HTTP 機能">
 
 <para>
 <list>
@@ -52,8 +52,8 @@ SSL と TLS SNI サポート。
 </section>
 
 
-<section name="other_http_features"
-        title="他の HTTP 機能">
+<section id="other_http_features"
+        name="他の HTTP 機能">
 
 <para>
 <list>
@@ -116,8 +116,8 @@ FLV ストリーミング
 </section>
 
 
-<section name="mail_proxy_server_features"
-        title="メールプロキシサーバ機能">
+<section id="mail_proxy_server_features"
+        name="メールプロキシサーバ機能">
 
 <para>
 <list>
@@ -164,8 +164,8 @@ STARTTLS と STLS のサポート
 </section>
 
 
-<section name="architecture_and_scalability"
-        title="アーキテクチャとスケーラビリティ">
+<section id="architecture_and_scalability"
+        name="アーキテクチャとスケーラビリティ">
 
 <para>
 <list>
@@ -208,8 +208,8 @@ Accept-filters (FreeBSD 4.1+) と TCP_DEFER_ACCEPT (Linux 2.4+) のサポート
 </section>
 
 
-<section name="tested_os_and_platforms"
-        title="テスト済み OS とプラットフォーム">
+<section id="tested_os_and_platforms"
+        name="テスト済み OS とプラットフォーム">
 
 <para>
 <list>

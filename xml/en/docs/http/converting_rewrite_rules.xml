@@ -5,7 +5,7 @@
          lang="en">
 
 
-<section title="A redirect to a main site">
+<section name="A redirect to a main site">
 
 <para>
 People who during their shared hosting life used to configure
@@ -103,8 +103,8 @@ On versions prior to 0.9.1, redirects can be made with:
 </section>
 
 
-<section name="converting_mongrel_rules"
-        title="Converting Mongrel rules">
+<section id="converting_mongrel_rules"
+        name="Converting Mongrel rules">
 
 <para>
 Typical Mongrel rules:

@@ -67,8 +67,8 @@ server {
 </section>
 
 
-<section name="wildcard_names"
-        title="שמות Wildcard">
+<section id="wildcard_names"
+        name="שמות Wildcard">
 
 <para>
 שם wildcard יכול להכיל כוכבית רק בתחילת או בסוף השם, וחייב להיות בגבול של נקודה.
@@ -91,8 +91,8 @@ server {
 </section>
 
 
-<section name="regex_names"
-        title="שמות ביטויים רגולריים">
+<section id="regex_names"
+        name="שמות ביטויים רגולריים">
 
 <para>
 הביטויים הרגולריים ש nginx משתמש בהם, תואמים לאלה אשר נמצאים בשימוש
@@ -184,8 +184,8 @@ server {
 </section>
 
 
-<section name="miscellaneous_names"
-        title="שמות כלליים">
+<section id="miscellaneous_names"
+        name="שמות כלליים">
 
 <para>
 אם אף <dirname>server_name</dirname> לא מוגדר בבלוג שרת,
@@ -277,8 +277,8 @@ server {
 </section>
 
 
-<section name="optimization"
-        title="ייעול">
+<section id="optimization"
+        name="ייעול">
 
 <para>
 
@@ -372,8 +372,8 @@ nginx חייב לבצע את הביטוי כדי לקבל את מה שנלכד �
 </section>
 
 
-<section name="compatibility"
-        title="תאימות">
+<section id="compatibility"
+        name="תאימות">
 
 <para>
 <list>

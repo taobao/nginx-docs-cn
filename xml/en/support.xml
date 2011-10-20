@@ -5,7 +5,7 @@
          lang="en">
 
 
-<section title="Wiki">
+<section name="Wiki">
 
 <para>
 <list>
@@ -20,7 +20,7 @@
 </section>
 
 
-<section title="Mailing Lists">
+<section name="Mailing Lists">
 
 <para>
 You can
@@ -62,7 +62,7 @@ Gmane archive</a>
 </section>
 
 
-<section title="Forums">
+<section name="Forums">
 
 <para>
 <list>
@@ -86,7 +86,7 @@ mailing list integration)
 </section>
 
 
-<section title="Development">
+<section name="Development">
 
 <para>
 <list>

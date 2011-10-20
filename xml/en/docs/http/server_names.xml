@@ -68,8 +68,8 @@ The first match stops the search.
 </section>
 
 
-<section name="wildcard_names"
-        title="Wildcard names">
+<section id="wildcard_names"
+        name="Wildcard names">
 
 <para>
 A wildcard name may contain an asterisk only on the name's start or end,
@@ -92,8 +92,8 @@ and the wildcard name <dirname>*.nginx.org</dirname>.
 </section>
 
 
-<section name="regex_names"
-        title="Regular expressions names">
+<section id="regex_names"
+        name="Regular expressions names">
 
 <para>
 The regular expressions used by nginx are compatible with those used
@@ -184,8 +184,8 @@ since the digital references can easily be overwritten.
 </section>
 
 
-<section name="miscellaneous_names"
-        title="Miscellaneous names">
+<section id="miscellaneous_names"
+        name="Miscellaneous names">
 
 <para>
 If you want to process requests without a &ldquo;Host&rdquo; header line
@@ -281,8 +281,8 @@ server {
 </section>
 
 
-<section name="optimization"
-        title="Optimization">
+<section id="optimization"
+        name="Optimization">
 
 <para>
 Exact names and wildcard names are stored in hashes.
@@ -382,8 +382,8 @@ then nginx has to execute the expression to get the captures.
 </section>
 
 
-<section name="compatibility"
-        title="Compatibility">
+<section id="compatibility"
+        name="Compatibility">
 
 <para>
 <list>

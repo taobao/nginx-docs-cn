@@ -6,7 +6,7 @@
          author="Igor Sysoev"
          translator="מבזקים.נט">
 
-<section title="הפנייה לאתר ראשי">
+<section name="הפנייה לאתר ראשי">
 
 <para>
 משתמשים שבמהלך חיי האירוח המשותף נהגו להגדיר <i>הכל</i> באמצעות
@@ -87,8 +87,8 @@ server {
 </section>
 
 
-<section name="converting_mongrel_rules"
-        title="המרת כללי Mongrel">
+<section id="converting_mongrel_rules"
+        name="המרת כללי Mongrel">
 
 <para>
 כללי Mongrel טיפוסיים:

@@ -103,8 +103,8 @@ quitting an old worker gracefully
 
 </section>
 
-<section name="known_issues"
-        title="Known issues">
+<section id="known_issues"
+        name="Known issues">
 
 <list>
 
@@ -126,8 +126,8 @@ address space layout randomization being enabled in these Windows versions.
 
 </section>
 
-<section name="possible_future_enhancements"
-        title="Possible future enhancements">
+<section id="possible_future_enhancements"
+        name="Possible future enhancements">
 
 <list>
 

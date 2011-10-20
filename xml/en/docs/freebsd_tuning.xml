@@ -5,7 +5,7 @@
          lang="en">
 
 
-<section title="Syncache and syncookies">
+<section name="Syncache and syncookies">
 
 <para>
 We look at how various kernel settings affect ability of the kernel
@@ -19,8 +19,8 @@ to process requests. Let&rsquo;s start with TCP/IP connection establishment.
 </section>
 
 
-<section name="listen_queues"
-        title="Listen queues">
+<section id="listen_queues"
+        name="Listen queues">
 
 <para>
 After the connection has been established it is placed in the listen queue
@@ -83,8 +83,8 @@ By default nginx uses the maximum value of FreeBSD kernel.
 </section>
 
 
-<section name="sockets_and_files"
-        title="Sockets and files">
+<section id="sockets_and_files"
+        name="Sockets and files">
 
 <para>
 [ sockets, files ]
@@ -93,8 +93,8 @@ By default nginx uses the maximum value of FreeBSD kernel.
 </section>
 
 
-<section name="socket_buffers"
-        title="Socket buffers">
+<section id="socket_buffers"
+        name="Socket buffers">
 
 <para>
 When a client sends a data, the data first is received by the kernel
@@ -144,8 +144,8 @@ therefore it does not require the large buffer sizes.
 </section>
 
 
-<section name="mbufs"
-        title="mbufs, mbuf clusters, etc.">
+<section id="mbufs"
+        name="mbufs, mbuf clusters, etc.">
 
 <para>
 Inside the kernel the buffers are stored in the form of chains of
@@ -317,8 +317,8 @@ sysctl net.inet.ip.intr_queue_maxlen=2048
 </section>
 
 
-<section name="proxying"
-        title="Proxying">
+<section id="proxying"
+        name="Proxying">
 
 
 <programlisting>
@@ -330,8 +330,8 @@ net.inet.ip.portrange.last=65535
 </section>
 
 
-<section name="finalizing_connection"
-        title="Finalizing connection">
+<section id="finalizing_connection"
+        name="Finalizing connection">
 
 <programlisting>
 net.inet.tcp.fast_finwait2_recycle=1
@@ -340,8 +340,8 @@ net.inet.tcp.fast_finwait2_recycle=1
 </section>
 
 
-<section name="i386_specific_tuning"
-        title="i386 specific tuning">
+<section id="i386_specific_tuning"
+        name="i386 specific tuning">
 
 <para>
 [ KVA, KVM, nsfbufs ]
@@ -350,8 +350,8 @@ net.inet.tcp.fast_finwait2_recycle=1
 </section>
 
 
-<section name="minor_optmizations"
-        title="Minor optimizations">
+<section id="minor_optmizations"
+        name="Minor optimizations">
 
 <para>
 

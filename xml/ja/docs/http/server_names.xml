@@ -64,8 +64,8 @@ server {
 </section>
 
 
-<section name="wildcard_names"
-        title="ワイルドカード名">
+<section id="wildcard_names"
+        name="ワイルドカード名">
 
 <para>
 ワイルドカード名にはそのサーバ名の最初か最後のみ、そしてドットに隣接したところのみにアスタリスクが含まれます。サーバ名 <dirname>www.*.nginx.org</dirname> や <dirname>w*.nginx.org</dirname> は無効です。しかし、これらのサーバ名は正規表現を使用して、例えば  <dirname>~^www\..+\.nginx\.org$</dirname> や <dirname>~^w.*\.nginx\.org$</dirname> として指定することができます。アスタリスクは複数部分にマッチさせることができます。<dirname>*.nginx.org</dirname> は <url>www.nginx.org</url> だけでなく <url>www.sub.nginx.org</url> にもマッチします。
@@ -78,8 +78,8 @@ server {
 </section>
 
 
-<section name="regex_names"
-        title="正規表現名">
+<section id="regex_names"
+        name="正規表現名">
 
 <para>
 nginx で使用される正規表現は Perl プログラミング言語（PCRE）で使用されているものと互換性があります。正規表現を使用するには、サーバ名を必ずチルダで始めます:
@@ -158,8 +158,8 @@ server {
 </section>
 
 
-<section name="miscellaneous_names"
-        title="その他のサーバ名">
+<section id="miscellaneous_names"
+        name="その他のサーバ名">
 
 <para>
 デフォルトではないサーバブロックで &ldquo;Host&rdquo; ヘッダ無しのリクエストを処理させたい場合は、空のサーバ名を指定します:
@@ -237,8 +237,8 @@ server {
 </section>
 
 
-<section name="optimization"
-        title="最適化">
+<section id="optimization"
+        name="最適化">
 
 <para>
 完全一致名とワイルドカード名はハッシュで保存されます。このハッシュは待ち受けポートに結び付けられ、各待ち受けポートは、完全一致名のハッシュ、アスタリスクで始まるワイルドカード名のハッシュ、アスタリスクで終わるワイルドカード名のハッシュの３つまでのハッシュを持つことができます。ハッシュのサイズは構成フェーズで最適化されるので、CPU キャッシュのミスは最低でもサーバ名を見つけることができます。最初に完全一致名のハッシュが検索されます。完全一致名のハッシュを使って見つからなければ、次にアスタリスクで始まるワイルドカード名のハッシュが検索されます。さらにまだ見つからなければ、アスタリスクで終わるワイルドカード名のハッシュが検索されます。ワイルドカード名のハッシュの検索は完全一致名のハッシュの検索よりも遅くなります。これはサーバ名の検索がドメイン部分によって検索されるからです。特別なワイルドカード形式の <dirname>.nginx.org</dirname> は完全一致名のハッシュではなくワイルドカード名のハッシュで保存されます。正規表現は順番に考査されるので、これがもっとも遅い方式ですし、非スケーラブルでもあります。
@@ -300,8 +300,8 @@ or server_names_hash_bucket_size: 32
 </section>
 
 
-<section name="compatibility"
-        title="互換性">
+<section id="compatibility"
+        name="互換性">
 
 <para>
 <list>

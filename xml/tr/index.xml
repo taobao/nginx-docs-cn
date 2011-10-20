@@ -24,8 +24,8 @@ Kaynak kodu, <a href="/LICENSE">2-clause BSD-like license</a> lisansı altındad
 </section>
 
 
-<section name="basic_http_features"
-        title="Temel HTTP özellikleri">
+<section id="basic_http_features"
+        name="Temel HTTP özellikleri">
 
 <para>
 <list>
@@ -61,8 +61,8 @@ SSL ve TLS SNI desteği.
 </section>
 
 
-<section name="other_http_features"
-        title="Diğer HTTP özellikleri">
+<section id="other_http_features"
+        name="Diğer HTTP özellikleri">
 
 <para>
 <list>
@@ -125,8 +125,8 @@ Gömülü perl.
 </section>
 
 
-<section name="mail_proxy_server_features"
-        title="Mail proxy sunucu özellikleri">
+<section id="mail_proxy_server_features"
+        name="Mail proxy sunucu özellikleri">
 
 <para>
 <list>
@@ -173,8 +173,8 @@ STARTTLS ve STLS desteği.
 </section>
 
 
-<section name="architecture_and_scalability"
-        title="Yapı ve ölçeklenebilirlik">
+<section id="architecture_and_scalability"
+        name="Yapı ve ölçeklenebilirlik">
 
 <para>
 <list>
@@ -224,8 +224,8 @@ Data kopyalama operasyonları minimum düzeydedir.
 </section>
 
 
-<section name="tested_os_and_platforms"
-        title="Test edilen işletim sistemleri ve platformlar">
+<section id="tested_os_and_platforms"
+        name="Test edilen işletim sistemleri ve platformlar">
 
 <para>
 <list>

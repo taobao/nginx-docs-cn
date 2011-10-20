@@ -95,8 +95,8 @@ nginx/Windows רץ כיישום קונסול סטנדרטי, ולא כשירות
 
 </section>
 
-<section name="known_issues"
-        title="בעיות ידועות">
+<section id="known_issues"
+        name="בעיות ידועות">
 
 <list>
 
@@ -118,8 +118,8 @@ nginx/Windows רץ כיישום קונסול סטנדרטי, ולא כשירות
 
 </section>
 
-<section name="possible_future_enhancements"
-        title="שיפורים עתידיים אפשריים">
+<section id="possible_future_enhancements"
+        name="שיפורים עתידיים אפשריים">
 
 <list>
 

@@ -41,7 +41,7 @@ Bu durumda dosya erişimi kısıtlanmalıdır. Aynı dosyada yer alsalar da iste
 </section>
 
 
-<section name="optimization" title="HTTPS sunucu optimizasyonu">
+<section id="optimization" name="HTTPS sunucu optimizasyonu">
 
 <para>
 SSL işlemleri ekstra işlemci (CPU) kaynakları tüketir. Çok-işlemcili sistemlerde birçok işçi işlemler yürütmelisiniz: Mevcut işlemci çekirdek sayısından az olmamalı. En yoğun işlemci-yoğun işlem SSL el sıkışmalarıdır (ÇN: SSL Handshake, kısaca sunucuda bulunan sertifikanın istemci bilgisayar tarafından onaylanması ve tekrar sunucuya bildirilmesi sürecidir). Her bir istemci için mevcut bu işlemlerin sayısını azaltmanın iki yolu vardır: İlki, keep-alive bağlantıları olanaklı kılarak bir çok talebi sadece bir bağlantı ile göndermek ve ikincisi ise SSL oturum parametrelerini tekrar kullanarak paralel ve izleyen (subsequent) bağlantılar için SSL el sıkışmalarından kaçınmaktır.
@@ -72,7 +72,7 @@ http {
 </section>
 
 
-<section name="chains" title="SSL sertifika zincirleri">
+<section id="chains" name="SSL sertifika zincirleri">
 
 <para>
 Bazı tarayıcılar popüler bir sertifika otoritesi tarafından imzalanmış sertifikaları sorunsuz kabul ederken, diğerleri sorun çıkarabilir. Bunun nedeni sertifika otoritesinin, sunucu sertifikasını, güvenilir sertifika veri tabanında yer almayan aracı bir sertifikayı kullanarak imzalamış olmasıdır. Bu durumda otorite, imzalanmış sertifikaya art arda bağlanması gereken bir dizi sertifika zinciri sunar. Bir araya geldikleri dosyada ilk önce sunucu sertifikası daha sonra zincirlenmiş sertifikalar yer almalıdır:
@@ -144,7 +144,7 @@ Eğer sertifika dizisi eklemediyseniz, yalnızca bir sunucu sertifikası görür
 </section>
 
 
-<section name="single_http_https_server" title="Tekil HTTP/HTTPS sunucusu">
+<section id="single_http_https_server" name="Tekil HTTP/HTTPS sunucusu">
 
 <para>
 En baştan HTTP ve HTTPS protokollerini ayrı yapılandırmak en iyisidir. Mevcut durumda fonksiyonellikleri aynı gözükmekle birlikte, bu gelecekte önemli bir şekilde değişebilir ve birleştirilmiş bir sunucu problemli olabilir. Ancak, eğer HTTP ve HTTPS sunucuları eşit ise ve geleceği düşünmek istemiyorsanız, <dirname>ssl on</dirname> yönergesini silerek ve *:443 portu için <dirname>ssl</dirname> parametresi ekleyerek, HTTP ve HTTPS taleplerini tutan yalnızca bir sunucu yapılandırabilirsiniz:
@@ -171,7 +171,7 @@ listen  443  default  ssl;
 </section>
 
 
-<section name="name_based_https_servers" title="Ad tabanlı HTTPS sunucuları">
+<section id="name_based_https_servers" name="Ad tabanlı HTTPS sunucuları">
 
 <para>
 Bir IP adresini dinleyen iki veya daha fazla HTTPS sunucusunu yapılandırdığınız zaman genel bir problem ortaya çıkar:
@@ -222,8 +222,8 @@ server {
 </section>
 
 
-<section name="certificate_with_several_names"
-        title="Birçok ad içeren SSL sertifikası">
+<section id="certificate_with_several_names"
+        name="Birçok ad içeren SSL sertifikası">
 
 <para>
 Bir tekil IP&rsquo;yi birçok HTTPS sunucu arasında paylaştırmanın başka yolları da vardır, ancak bunların hepsi dezavantajlara sahiptir. Bunlardan biri, birçok ad içeren bir sertifikanın, SubjectAltName sertifika alanında kullanılmasıdır. Örneğin: <url>www.nginx.com</url> ve <url>www.nginx.org</url>. Ancak SubjectAltName alan uzunluğu sınırlandırılmıştır.
@@ -259,7 +259,7 @@ server {
 </section>
 
 
-<section name="sni" title="Server Name Indication">
+<section id="sni" name="Server Name Indication">
 
 <para>
 Bir IP adresi üzerinde birçok HTTPS sunucusu yürütebilmenin en genel yollarından biri, bir SSL el sıkışması (handshake) sırasında, tarayıcının talep edilmiş bir sunucu adını iletmesine izin veren ve böylece sunucunun varsayılan bağlantı için hangi sertifikayı kullanacağını bilmesini sağlayan <a href="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1 Server Name Indication eklentisidir</a> (SNI, RFC3546). Ancak SNI, kısıtlı bir tarayıcı desteğine sahiptir. Mevcut destekleyen tarayıcılar ve versiyonları:
@@ -311,7 +311,7 @@ therefore SNI is not available
 </section>
 
 
-<section name="compatibility" title="Uygunluk">
+<section id="compatibility" name="Uygunluk">
 
 <para>
 <list>

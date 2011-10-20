@@ -1,8 +1,8 @@
 <!ELEMENT  section      (para | list | book | download | security | note |
                          programlisting)* >
 <!ATTLIST  section
-           name         ID #IMPLIED
-           title        CDATA #IMPLIED
+           id           ID #IMPLIED
+           name         CDATA #IMPLIED
 >
 
 <!ELEMENT  para         (#PCDATA | a | link | br | list | orderedlist | note |

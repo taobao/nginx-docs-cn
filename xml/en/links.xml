@@ -4,7 +4,7 @@
          link="/en/links.html"
          lang="en">
 
-<section title="nginx internals">
+<section name="nginx internals">
 
 <para>
 <list>
@@ -25,7 +25,7 @@ Advanced Topics In Nginx Module Development</a>
 </section>
 
 
-<section title="miscellanea">
+<section name="miscellanea">
 
 <para>
 <list>

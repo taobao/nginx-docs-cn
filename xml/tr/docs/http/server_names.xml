@@ -64,8 +64,8 @@ ve düzenli ifadeler (regular expressions).
 </section>
 
 
-<section name="wildcard_names"
-        title="Wildcard adlar">
+<section id="wildcard_names"
+        name="Wildcard adlar">
 
 <para>
 Bir wildcard ad ancak başlangıçta veya bitişte * ifadesini içerir ve nokta ile sınırlandırılır. <dirname>www.*.nginx.org</dirname> ve <dirname>w*.nginx.org</dirname> adları geçersizdir. Ancak bu adlar düzenli ifadeler ile geçerli hale getirilebilir, örneğin, <dirname>~^www\..+\.nginx\.org$</dirname> ve <dirname>~^w.*\.nginx\.org$</dirname>. Buradaki * bir çok eşleşmeyi tanımlayabilir. <dirname>*.nginx.org</dirname> ifadesi <url>www.nginx.org</url> ve <url>www.sub.nginx.org</url> adlarına karşılık gelebilir.
@@ -78,8 +78,8 @@ Bir wildcard ad ancak başlangıçta veya bitişte * ifadesini içerir ve nokta 
 </section>
 
 
-<section name="regex_names"
-        title="Düzenli ifade adları">
+<section id="regex_names"
+        name="Düzenli ifade adları">
 
 <para>
 nginx tarafından kullanılan düzenli ifadeler, Perl programlama dili (PCRE) tarafından kullanılanlar ile tam uyumludur.
@@ -164,8 +164,8 @@ Ancak, dijital referanslar kolaylıkla üstüne yazılabilir olduğundan, bu şe
 </section>
 
 
-<section name="miscellaneous_names"
-        title="Diğer muhtelif adlar">
+<section id="miscellaneous_names"
+        name="Diğer muhtelif adlar">
 
 <para>
 Eğer server bloğu içerisinde bir <dirname>server_name</dirname> tanımlanmamışsa nginx, sunucu adı olarak <i>hostname</i> ifadesini kullanır.
@@ -244,8 +244,8 @@ server {
 </section>
 
 
-<section name="optimization"
-        title="Optimizasyon">
+<section id="optimization"
+        name="Optimizasyon">
 
 <para>
 Gerçek ve wildcard adlar çırpılarda (hash) depolanır. Çırpılar listen portlarına bağlıdırlar ve her bir listen port 3 farklı çırpıya sahip olabilir: gerçek ad çırpısı, * ile başlayan bir wildcard adı çırpısı ve * ile biten bir wildcard adı çırpısı. Çırpıların boyutu yapılandırma aşamasında optimize edilir ve böylece bir ad en az önbellek kayıpları ile bulundurulur. İlk olarak gerçek ad çırpısı aranır. Gerçek ad çırpısı kullanan bir ad bulunmaz ise, * ile başlayan wildcard ad çırpısı aranır. Bu da bulunmaz ise, * ile biten wildcard ad çırpısı aranır. Adların alanadı parçaları ile aranması nedeniyle wildcard ad çırpıları araması, gerçek ad çırpı aramasına oranla daha yavaştır. Not: Özel <dirname>.nginx.org</dirname> wildcard formu, gerçek ad çırpısında değil, wildcard ad çırpısında saklanır. Düzenli İfadeler sırayla test edildiğinden bu en yavaş ve ölçeklenebilir olmayan yöntemdir.
@@ -308,8 +308,8 @@ Eğer bir sunucu sadece bir listen port için ise, nginx sunucu adlarını test 
 </section>
 
 
-<section name="compatibility"
-        title="Uygunluk">
+<section id="compatibility"
+        name="Uygunluk">
 
 <para>
 <list>
