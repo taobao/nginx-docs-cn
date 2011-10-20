@@ -68,7 +68,7 @@ svn co svn://svn.nginx.org/tags/release-1.1.6
 </item>
 
 <item>
-Create a build and lib directories, and unpack zlib, PCRE and openssl libraries
+Create a build and lib directories, and unpack zlib, PCRE and OpenSSL libraries
 sources into lib directory:
 <programlisting>
 mkdir objs
