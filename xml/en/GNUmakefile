@@ -17,6 +17,7 @@ INTRO_EN_HTML =	$(foreach name, $(INTRO_EN), $(OUT)/$(name).html)
 HOWTO_EN =	en/docs/debugging_log					\
 		en/docs/http/converting_rewrite_rules			\
 		en/docs/freebsd_tuning					\
+		en/docs/howto_build_on_win32				\
 
 REFS_EN_XML =	$(foreach name, $(REFS_EN), xml/$(name).xml)
 REFS_EN_HTML =	$(foreach name, $(REFS_EN), $(OUT)/$(name).html)
