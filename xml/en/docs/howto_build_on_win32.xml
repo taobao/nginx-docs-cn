@@ -14,7 +14,7 @@ To build nginx on the Win32 platform you need:
 <list>
 
 <item>
-Visuial C compiler. Visual Studio 8 and 10 are known to work.
+Visual C compiler. Visual Studio 8 and 10 are known to work.
 </item>
 
 <item>
