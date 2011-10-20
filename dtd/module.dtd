@@ -19,6 +19,9 @@
 >
 
 <!ELEMENT   syntax      (#PCDATA | argument | code | parameter | value)* >
+<!ATTLIST   syntax
+            block       (yes | no) "no"
+>
 
 <!ELEMENT   default     (#PCDATA)* >
 

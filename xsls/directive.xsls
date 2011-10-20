@@ -37,6 +37,11 @@ X:stylesheet {
         X:if "count(node()) != 0" {
             X:text{ } !!;
         }
+        X:if "@block = 'yes'" {
+            X:text{ \{ ... \}}
+        } else {
+            X:text{;}
+        }
         </code>
         <br/>
         X:if "position() = last()" {
@@ -69,7 +74,14 @@ X:stylesheet {
             </strong>
         } else {
             <strong>&#8203;</strong>
-            <code> !{../@name} X:text{ } !!; </code>
+            <code>
+            !{../@name}
+            X:if "count(../syntax[@block='yes'])" {
+                X:text{ \{} !!; X:text{\}}
+            } else {
+                X:text{ } !!; X:text{;}
+            }
+            </code>
         }
         <br/>
         X:if "position() = last()" {

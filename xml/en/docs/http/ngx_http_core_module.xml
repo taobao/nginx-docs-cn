@@ -658,7 +658,7 @@ into the keep-alive state, these buffers are freed.
 
 
 <directive name="limit_except">
-<syntax><argument>method</argument> ... { ... }</syntax>
+<syntax block="yes"><argument>method</argument> ...</syntax>
 <default/>
 <context>location</context>
 
@@ -986,14 +986,14 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
 
 
 <directive name="location">
-<syntax>[
+<syntax block="yes">[
         <value>=</value> |
         <value>~</value> |
         <value>~*</value> |
         <value>^~</value>
         ] <argument>uri</argument>
-{ ... }</syntax>
-<syntax><value>@</value><argument>name</argument> { ... }</syntax>
+</syntax>
+<syntax block="yes"><value>@</value><argument>name</argument></syntax>
 <default/>
 <context>server</context>
 <context>location</context>
@@ -1621,7 +1621,7 @@ Enables or disables the use of
 
 
 <directive name="server">
-<syntax>{ ... }</syntax>
+<syntax block="yes"/>
 <default/>
 <context>http</context>
 
@@ -2016,13 +2016,11 @@ location @wordpress {
 
 
 <directive name="types">
-<syntax>{ ... }</syntax>
+<syntax block="yes"/>
 <default>
-{
     text/html  html;
     image/gif  gif;
     image/jpeg jpg;
-}
 </default>
 <context>http</context>
 <context>server</context>

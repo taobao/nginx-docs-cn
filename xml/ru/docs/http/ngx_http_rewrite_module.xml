@@ -50,7 +50,7 @@ ngx_http_rewrite_module.
 
 
 <directive name="if">
-<syntax>(<value>условие</value>) { ... }</syntax>
+<syntax block="yes">(<value>условие</value>)</syntax>
 <default/>
 <context>server, location</context>
 

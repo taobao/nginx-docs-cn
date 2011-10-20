@@ -159,7 +159,7 @@ upstream  backend  {
 
 
 <directive name="upstream">
-<syntax><value>название</value> { ... }</syntax>
+<syntax block="yes"><value>название</value></syntax>
 <default/>
 <context>http</context>
 

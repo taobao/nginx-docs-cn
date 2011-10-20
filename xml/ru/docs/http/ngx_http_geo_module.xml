@@ -35,7 +35,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="geo">
-<syntax><value>[$адрес] $переменная { ... }</value>
+<syntax block="yes"><value>[$адрес] $переменная</value>
 </syntax>
 <default/>
 <context>http</context>

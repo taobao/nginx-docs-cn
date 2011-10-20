@@ -90,7 +90,7 @@ charset_map  iso-8859-5  _ { }
 
 
 <directive name="charset_map">
-<syntax><value>кодировка1 кодировка2 { ... }</value></syntax>
+<syntax block="yes"><value>кодировка1 кодировка2</value></syntax>
 <default/>
 <context>http</context>
 

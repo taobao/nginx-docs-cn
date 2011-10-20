@@ -528,7 +528,7 @@ keep-alive, то эти буферы освобождаются.
 
 
 <directive name="limit_except">
-<syntax><value>методы</value> { ... }</syntax>
+<syntax block="yes"><value>методы</value></syntax>
 <default/>
 <context>location</context>
 
@@ -733,8 +733,8 @@ listen  127.0.0.1 default accept_filter=dataready backlog=1024;
 
 
 <directive name="location">
-<syntax>[<value>=|~|~*|^~|@</value>] <value>/uri/</value>
-{ ... }</syntax>
+<syntax block="yes">[<value>=|~|~*|^~|@</value>] <value>/uri/</value>
+</syntax>
 <default/>
 <context>server</context>
 
@@ -1235,7 +1235,7 @@ location / {
 
 
 <directive name="server">
-<syntax>{ ... }</syntax>
+<syntax block="yes"/>
 <default/>
 <context>http</context>
 
@@ -1602,13 +1602,11 @@ location @wordpress {
 
 
 <directive name="types">
-<syntax><value>{ ... }</value></syntax>
+<syntax block="yes"/>
 <default>
-{
     text/html  html;
     image/gif  gif;
     image/jpeg jpg;
-}
 </default>
 <context>http, server, location</context>
 

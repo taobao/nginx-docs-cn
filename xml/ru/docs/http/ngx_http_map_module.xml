@@ -41,7 +41,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="map">
-<syntax><value>$переменная1 $переменная2 { ... }</value></syntax>
+<syntax block="yes"><value>$переменная1 $переменная2</value></syntax>
 <default/>
 <context>http</context>
 
