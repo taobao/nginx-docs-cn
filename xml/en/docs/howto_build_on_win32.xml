@@ -22,7 +22,7 @@ Visuial C compiler. Visual Studio 8 and 10 are known to work.
 </item>
 
 <item>
-Perl, if you want to build openssl and nginx with ssl support. 
+Perl, if you want to build openssl and nginx with ssl support.
 For example <link url="http://www.activestate.com/activeperl">ActivePerl</link>
 or <link url="http://strawberryperl.com">Strawberry Perl</link>.
 </item>
@@ -45,7 +45,7 @@ and <link url="http://www.openssl.org">openssl</link> libraries sources.
          title="Build steps">
 
 <para>
-Ensure that paths to Perl, Subversion and MSYS bin directories are added to 
+Ensure that paths to Perl, Subversion and MSYS bin directories are added to
 PATH environment variable before you start build. To set Visual C environment
 run vcvarsall.bat script from Visual C directory.
 </para>
@@ -62,7 +62,7 @@ Start MSYS bash
 <item>
 Check out nginx sources from the svn.nginx.org repository. For example:
 <programlisting>
-svn co svn://svn.nginx.org/tags/release-1.1.6 
+svn co svn://svn.nginx.org/tags/release-1.1.6
 </programlisting>
 </item>
 
