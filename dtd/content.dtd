@@ -115,3 +115,4 @@
 <!ENTITY   rdquo        "&#8221;">
 
 <!ENTITY   mdash        "&#xA0;&#8212; " >
+<!ENTITY   reg          "&#174;">
