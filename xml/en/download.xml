@@ -134,4 +134,93 @@
 
 </section>
 
+<section name="Source Repository">
+
+<para>
+<list>
+
+<item>
+Read-only subversion repository: <programlisting>svn://svn.nginx.org/nginx</programlisting>
+</item>
+
+<item>
+<link url="http://trac.nginx.org/nginx/browser">Trac Source browser</link>
+</item>
+
+</list>
+</para>
+
+</section>
+
+<section name="Prebuilt Packages">
+<para>
+For automatic updates of the prebuilt linux packages it is possible to configure yum repository
+for RHEL/CentOS or apt repository for Debian/Ubuntu.
+</para>
+
+<para>
+To setup yum repository for the linux distributions:
+<list>
+
+<item>
+<link url="http://nginx.org/packages/rhel/5/noarch/RPMS/nginx-release-rhel-5-0.el5.ngx.noarch.rpm">RHEL5</link>
+</item>
+
+<item>
+<link url="http://nginx.org/packages/rhel/6/noarch/RPMS/nginx-release-rhel-6-0.el6.ngx.noarch.rpm">RHEL6</link>
+</item>
+
+<item>
+<link url="http://nginx.org/packages/centos/5/noarch/RPMS/nginx-release-centos-5-0.el5.ngx.noarch.rpm">CentOS5</link>
+</item>
+
+<item>
+<link url="http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm">CentOS6</link>
+</item>
+</list>
+install nginx-release package containing a yum config and a nginx signing key. Then run a command:
+<programlisting>
+yum install nginx
+</programlisting>
+
+As an alternative you can add repository config manually. Create a file named nginx.repo in /etc/yum.repos.d and
+add configuration, like this:
+
+<programlisting>
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/OS/OSRELEASE/$basearch/
+gpgcheck=0
+enabled=1
+</programlisting>
+
+Replace OS with rhel or centos, depending on the distribution you are running, and OSRELEASE with 5 or 6, for 5.x and 6.x
+versions accordingly.
+
+</para>
+
+<para>
+For Debian/Ubuntu append /etc/apt/sources.list with:
+
+<programlisting>
+deb http://nginx.org/packages/debian/ squeeze nginx
+deb-src http://nginx.org/packages/debian/ squeeze nginx
+</programlisting>
+
+in case of Debian 6, or for Ubuntu 10.04 with:
+
+<programlisting>
+deb http://nginx.org/packages/ubuntu/ lucid nginx
+deb-src http://nginx.org/packages/ubuntu/ lucid nginx
+</programlisting>
+Then run commands:
+<programlisting>
+apt-get update
+apt-get install nginx
+</programlisting>
+
+</para>
+
+</section> 
+
 </article>
