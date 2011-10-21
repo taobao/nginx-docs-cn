@@ -43,10 +43,10 @@ X:template = "download/item[position() &lt;= ../@last]" {
     <tr>
         <td width="20%">
         X:if "position() = 1" {
-	    <a>
-	    X:attribute "href" { X:text{/} !{/article/@lang} X:text{/} !{../@changes} }
-	    !{../@changes}
-	    </a>
+            <a>
+            X:attribute "href" { X:text{/} !{/article/@lang} X:text{/} !{../@changes} }
+            !{../@changes}
+            </a>
         }
         </td>
 
@@ -80,12 +80,12 @@ X:template = "download/item[position() &lt;= ../@last]" {
 
             X:if "@pgp = 'yes'" {
                 X:text {&#xA0; }
-        	<a>
-        	X:attribute "href" {
+                <a>
+                X:attribute "href" {
                     X:text {/download/nginx-} !{@ver} X:text {.zip.asc}
-        	}
-        	X:text {pgp}
-        	</a>
+                }
+                X:text {pgp}
+                </a>
             }
         }
         </td>

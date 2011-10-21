@@ -1,18 +1,18 @@
 X:stylesheet {
 
     X:template = "section[@id and @name]" {
-	<a name="{@id}" /> <center><h4> !{@name} </h4></center>
-	!!;
+        <a name="{@id}" /> <center><h4> !{@name} </h4></center>
+        !!;
     }
 
     X:template = "section[@id and not(@name)]" {
-	<a name="{@id}" />
-	!!;
+        <a name="{@id}" />
+        !!;
     }
 
     X:template = "section[not(@id) and @name]" {
-	<center><h4> !{@name} </h4></center>
-	!!;
+        <center><h4> !{@name} </h4></center>
+        !!;
     }
 
     X:template = "para" { <p> !!; </p> }
@@ -25,41 +25,41 @@ X:stylesheet {
     X:template = "programlisting" { <blockquote><pre> !!; </pre></blockquote> }
 
     X:template = "para/programlisting" {
-	X:text disable-output-escaping="yes" {&lt;/p&gt; }
-	<blockquote><pre> !!; </pre></blockquote>
-	X:text disable-output-escaping="yes" {&lt;p&gt; }
+        X:text disable-output-escaping="yes" {&lt;/p&gt; }
+        <blockquote><pre> !!; </pre></blockquote>
+        X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
 
     X:template = "note" { <blockquote class="note"> !!; </blockquote> }
 
     X:template = "para/note" {
-	X:text disable-output-escaping="yes" {&lt;/p&gt; }
-	<blockquote class="note"> !!; </blockquote>
-	X:text disable-output-escaping="yes" {&lt;p&gt; }
+        X:text disable-output-escaping="yes" {&lt;/p&gt; }
+        <blockquote class="note"> !!; </blockquote>
+        X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
     X:template = "list[@type='bullet']" { <ul> !!; </ul> }
     X:template = "para/list[@type='bullet']" {
-	X:text disable-output-escaping="yes" {&lt;/p&gt; }
+        X:text disable-output-escaping="yes" {&lt;/p&gt; }
         <ul> !!; </ul>
-	X:text disable-output-escaping="yes" {&lt;p&gt; }
+        X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
     X:template = "list[@type='enum']" { <ol> !!; </ol> }
     X:template = "para/list[@type='enum']" {
-	X:text disable-output-escaping="yes" {&lt;/p&gt; }
+        X:text disable-output-escaping="yes" {&lt;/p&gt; }
         <ol> !!; </ol>
-	X:text disable-output-escaping="yes" {&lt;p&gt; }
+        X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
     X:template = "listitem" { <li> !!; </li> }
     
     X:template = "list[@type='tag']" { <dl compact=""> !!; </dl> }
     X:template = "para/list[@type='tag']" {
-	X:text disable-output-escaping="yes" {&lt;/p&gt; }
+        X:text disable-output-escaping="yes" {&lt;/p&gt; }
         <dl compact=""> !!; </dl>
-	X:text disable-output-escaping="yes" {&lt;p&gt; }
+        X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
     X:template = "tag-name" { <dt> !!; </dt> }
@@ -69,31 +69,31 @@ X:stylesheet {
 
     X:template = "list[not(@type)]" { <ul> !!; </ul> }
     X:template = "para/list[not(@type)]" {
-	X:text disable-output-escaping="yes" {&lt;/p&gt; }
-	<ul> !!; </ul>
-	X:text disable-output-escaping="yes" {&lt;p&gt; }
+        X:text disable-output-escaping="yes" {&lt;/p&gt; }
+        <ul> !!; </ul>
+        X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
     X:template = "item" { <li> !!; </li> }
 
 
     X:template = "orderedlist" { <ol> !!; </ol> }
     X:template = "para/orderedlist" {
-	X:text disable-output-escaping="yes" {&lt;/p&gt; }
-	<ol> !!; </ol>
-	X:text disable-output-escaping="yes" {&lt;p&gt; }
+        X:text disable-output-escaping="yes" {&lt;/p&gt; }
+        <ol> !!; </ol>
+        X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
     X:template = "item" { <li> !!; </li> }
 
     <!-- -->
 
     X:template = "table[@note and @width]" {
-	<blockquote><table width="{@width}"> !!; </table></blockquote>
+        <blockquote><table width="{@width}"> !!; </table></blockquote>
     }
     X:template = "table[@note and not(@width)]" {
-	<blockquote><table width="100%"> !!; </table></blockquote>
+        <blockquote><table width="100%"> !!; </table></blockquote>
     }
     X:template = "table[not(@note) and @width]" {
-	<table width="{@width}"> !!; </table>
+        <table width="{@width}"> !!; </table>
     }
     X:template = "table" { <table width="100%"> !!; </table> }
     X:template = "tr" { <tr> !!; </tr> }
@@ -117,9 +117,9 @@ X:stylesheet {
     X:template = "example" { <blockquote><pre> !!; </pre></blockquote> }
 
     X:template = "para/example" {
-	X:text disable-output-escaping="yes" {&lt;/p&gt; }
-	<blockquote><pre> !!; </pre></blockquote>
-	X:text disable-output-escaping="yes" {&lt;p&gt; }
+        X:text disable-output-escaping="yes" {&lt;/p&gt; }
+        <blockquote><pre> !!; </pre></blockquote>
+        X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
     X:template = "pathname" { <code> !!; </code> }
@@ -128,7 +128,7 @@ X:stylesheet {
     X:template = "parameter" { <code> !!; </code> }
 
     X:template = "header" {
-	X:text {&#8220;} !!; X:text {&#8221;}
+        X:text {&#8220;} !!; X:text {&#8221;}
     }
 
     X:template = "http-status" {
@@ -136,9 +136,9 @@ X:stylesheet {
     }
 
     X:template = "dirname[/*[@lang='he']]" {
-	<nobr><span class="ltr">
-	X:text {&#8220;} !!; X:text {&#8221;}
-	</span></nobr>
+        <nobr><span class="ltr">
+        X:text {&#8220;} !!; X:text {&#8221;}
+        </span></nobr>
     }
 
     X:template = "dirname" {
@@ -146,7 +146,7 @@ X:stylesheet {
     }
 
     X:template = "url[/*[@lang='he']]" {
-	<i><span class="ltr"> !!; </span></i>
+        <i><span class="ltr"> !!; </span></i>
     }
 
     X:template = "url" { <i> !!;</i> }
