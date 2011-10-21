@@ -9,13 +9,13 @@
 <section name="Prerequisites">
 
 <para>
-To build nginx on the Microsoft Win32&reg; platform you need:
+To build nginx on the <registered>Microsoft Win32</registered> platform you need:
 
 <list>
 
 <item>
-Microsoft Visual C compiler.  Microsoft Visual Studio&reg; 8 and 10 are
-known to work.
+Microsoft Visual C compiler. <registered>Microsoft Visual Studio</registered>
+8 and 10 are known to work.
 </item>
 
 <item>
@@ -23,13 +23,14 @@ known to work.
 </item>
 
 <item>
-Perl, if you want to build OpenSSL&reg; and nginx with SSL support.
+Perl, if you want to build <registered>OpenSSL</registered> and nginx with SSL support.
 For example <link url="http://www.activestate.com/activeperl">ActivePerl</link>
 or <link url="http://strawberryperl.com">Strawberry Perl</link>.
 </item>
 
 <item>
-Subversion&reg; client. Choose any from the <link url="http://subversion.apache.org/packages.html#windows">list</link>
+<registered>Subversion</registered> client. Choose any from the
+<link url="http://subversion.apache.org/packages.html#windows">list</link>
 </item>
 
 <item>
@@ -57,7 +58,7 @@ To build nginx:
 <list>
 
 <item>
-Start MSYS bash
+Start MSYS bash.
 </item>
 
 <item>
@@ -83,10 +84,12 @@ tar -xzf ../../openssl-1.0.0e.tar.gz
 <item>
 Run configure script:
 <programlisting>
-auto/configure --with-cc=cl --builddir=objs --prefix= --conf-path=conf/nginx.conf \
---pid-path=logs/nginx.pid --http-log-path=logs/access.log --error-log-path=logs/error.log \
+auto/configure --with-cc=cl --builddir=objs --prefix= \
+--conf-path=conf/nginx.conf --pid-path=logs/nginx.pid \
+--http-log-path=logs/access.log --error-log-path=logs/error.log \
 --sbin-path=nginx.exe --http-client-body-temp-path=temp/client_body_temp \
---http-proxy-temp-path=temp/proxy_temp --http-fastcgi-temp-path=temp/fastcgi_temp \
+--http-proxy-temp-path=temp/proxy_temp \
+--http-fastcgi-temp-path=temp/fastcgi_temp \
 --with-cc-opt=-DFD_SETSIZE=1024 --with-pcre=objs/lib/pcre-8.12 \
 --with-zlib=objs/lib/zlib-1.2.5 --withopenssl=objs/lib/openssl-1.0.0e \
 --with-select_module --with-http_ssl_module --with-ipv6
