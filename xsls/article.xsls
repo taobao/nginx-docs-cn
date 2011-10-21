@@ -11,7 +11,6 @@ X:strip-space elements = "*";
 X:param XML = "'../xml'"; 
 X:param YEAR;
 
-X:var SITE = "'http://nginx.org'";
 X:var LINK = "/article/@link | /module/@link";
 X:var LANG = "/article/@lang | /module/@lang";
 
@@ -31,11 +30,11 @@ X:template = "/article" {
 
     <title> !{@title} </title>
 
-    !style (lang="/article/@lang")
+    !style (lang="$LANG")
 
     </head>
 
-    !body (lang="/article/@lang")
+    !body (lang="$LANG")
 
     </html>
 }
@@ -46,11 +45,11 @@ X:template = "/article[@lang='he']" {
 
     <title> !{@title} </title>
 
-    !style (lang="/article/@lang")
+    !style (lang="$LANG")
 
     </head>
 
-    !body (lang="/article/@lang")
+    !body (lang="$LANG")
 
     </html>
 }
@@ -61,11 +60,11 @@ X:template = "/module" {
 
     <title> !{@title} </title>
 
-    !style (lang="/module/@lang")
+    !style (lang="$LANG")
 
     </head>
 
-    !body (lang="/module/@lang")
+    !body (lang="$LANG")
 
     </html>
 }
@@ -76,11 +75,11 @@ X:template = "/module[@lang='he']" {
 
     <title> !{@title} </title>
 
-    !style (lang="/module/@lang")
+    !style (lang="$LANG")
 
     </head>
 
-    !body (lang="/module/@lang")
+    !body (lang="$LANG")
 
     </html>
 }
