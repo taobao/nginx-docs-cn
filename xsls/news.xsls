@@ -26,15 +26,15 @@ X:template = "/news" {
     <html><head>
 
     <link rel="alternate" type="application/rss+xml"
-          title="{@title}" href="{$SITE}/index.rss" />
+          title="{@name}" href="{$SITE}/index.rss" />
 
-    <title> !{@title} X:if "$YEAR" { X:text{: } !{$YEAR} } </title>
+    <title> !{@name} X:if "$YEAR" { X:text{: } !{$YEAR} } </title>
 
     !style ()
 
     </head>
 
-    !body (lang="/news/@lang")
+    !body (lang="@lang")
 
     </html>
 }

@@ -1,6 +1,6 @@
 <!ELEMENT  news         (event+) >
 <!ATTLIST  news
-           title        CDATA #REQUIRED
+           name         CDATA #REQUIRED
            link         CDATA #REQUIRED
            lang         CDATA #REQUIRED
 >

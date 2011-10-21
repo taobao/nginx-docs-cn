@@ -1,6 +1,6 @@
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article title="nginx documentation"
+<article name="nginx documentation"
          link="/en/docs/"
          lang="en">
 

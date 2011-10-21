@@ -1,6 +1,6 @@
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
-<article title="המרת כללי rewrite"
+<article name="המרת כללי rewrite"
          link="/he/docs/http/converting_rewrite_rules.html"
          lang="he"
          author="Igor Sysoev"

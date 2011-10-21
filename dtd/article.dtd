@@ -1,6 +1,6 @@
 <!ELEMENT  article      (section+) >
 <!ATTLIST  article
-           title        CDATA #REQUIRED
+           name         CDATA #REQUIRED
            link         CDATA #REQUIRED
            lang         CDATA #REQUIRED
            author       CDATA #IMPLIED

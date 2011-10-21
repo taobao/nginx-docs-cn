@@ -1,6 +1,6 @@
 <!DOCTYPE article SYSTEM "../../dtd/article.dtd">
 
-<article title="nginx security advisories"
+<article name="nginx security advisories"
          link="/en/security_advisories.html"
          lang="en">
 
@@ -12,32 +12,32 @@
 
 <security>
 
-<item title="Vulnerabilities with invalid UTF-8 sequence on Windows"
+<item name="Vulnerabilities with invalid UTF-8 sequence on Windows"
       severity="major"
       cve="2010-2266"
       good="0.8.41+, 0.7.67+"
       vulnerable="nginx/Windows 0.7.52-0.8.40" />
 
-<item title="Vulnerabilities with Windows file default stream"
+<item name="Vulnerabilities with Windows file default stream"
       severity="major"
       cve="2010-2263"
       good="0.8.40+, 0.7.66+"
       vulnerable="nginx/Windows 0.7.52-0.8.39" />
 
-<item title="Vulnerabilities with Windows 8.3 filename pseudonyms"
+<item name="Vulnerabilities with Windows 8.3 filename pseudonyms"
       severity="major"
       core="CORE-2010-0121"
       href="http://www.coresecurity.com/content/filename-pseudonyms-vulnerabilities"
       good="0.8.33+, 0.7.65+"
       vulnerable="nginx/Windows 0.7.52-0.8.32" />
 
-<item title="An error log data are not sanitized"
+<item name="An error log data are not sanitized"
       severity="none"
       cve="2009-4487"
       good="none"
       vulnerable="all" />
 
-<item title="The renegotiation vulnerability in SSL protocol"
+<item name="The renegotiation vulnerability in SSL protocol"
       severity="major"
       cert="120541"
       cve="2009-3555"
@@ -45,13 +45,13 @@
       vulnerable="0.1.0-0.8.22"
       patch="patch.cve-2009-3555.txt" />
 
-<item title="Directory traversal vulnerability"
+<item name="Directory traversal vulnerability"
       severity="minor"
       cve="2009-3898"
       good="0.8.17+, 0.7.63+"
       vulnerable="0.1.0-0.8.16" />
 
-<item title="Buffer underflow vulnerability"
+<item name="Buffer underflow vulnerability"
       severity="major"
       cert="180065"
       cve="2009-2629"
@@ -59,7 +59,7 @@
       vulnerable="0.1.0-0.8.14"
       patch="patch.180065.txt" />
 
-<item title="Null pointer dereference vulnerability"
+<item name="Null pointer dereference vulnerability"
       severity="major"
       cve="2009-3896"
       good="0.8.14+, 0.7.62+, 0.6.39+, 0.5.38+"

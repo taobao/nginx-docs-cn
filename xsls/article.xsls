@@ -25,61 +25,35 @@ X:include href = "content.xslt";
 X:include href = "versions.xslt";
 
 
-X:template = "/article" {
-    <html><head>
+X:template = "/article | /module" {
+    <html>
 
-    <title> !{@title} </title>
+    <head>
 
-    !style (lang="$LANG")
+    <title> !{@name} </title>
+
+    !style (lang="@lang")
 
     </head>
 
-    !body (lang="$LANG")
+    !body (lang="@lang")
 
     </html>
 }
 
 
-X:template = "/article[@lang='he']" {
-    <html dir="rtl"><head>
+X:template = "/article[@lang='he'] | /module[@lang='he']" {
+    <html dir="rtl">
 
-    <title> !{@title} </title>
+    <head>
 
-    !style (lang="$LANG")
+    <title> !{@name} </title>
 
-    </head>
-
-    !body (lang="$LANG")
-
-    </html>
-}
-
-
-X:template = "/module" {
-    <html><head>
-
-    <title> !{@title} </title>
-
-    !style (lang="$LANG")
+    !style (lang="@lang")
 
     </head>
 
-    !body (lang="$LANG")
-
-    </html>
-}
-
-
-X:template = "/module[@lang='he']" {
-    <html dir="rtl"><head>
-
-    <title> !{@title} </title>
-
-    !style (lang="$LANG")
-
-    </head>
-
-    !body (lang="$LANG")
+    !body (lang="@lang")
 
     </html>
 }

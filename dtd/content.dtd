@@ -96,7 +96,7 @@
 <!ELEMENT  security     (item+) >
 
 <!ATTLIST  item
-           title        CDATA #IMPLIED
+           name         CDATA #IMPLIED
            severity     CDATA #IMPLIED
            cve          CDATA #IMPLIED
            good         CDATA #IMPLIED

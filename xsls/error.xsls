@@ -12,7 +12,7 @@ X:param XML = "'../xml'";
 
 
 X:template = "/error" {
-    <html><head><title> !{@title} </title>
+    <html><head><title> !{@name} </title>
 
     <style type="text/css">!{ normalize-space('
         body  { font-family:  Georgia, serif; }
@@ -23,7 +23,7 @@ X:template = "/error" {
     <body>
     <table width="100%">
     <tr>
-        <td width="70%"><center><h1> !{@title} </h1></center></td>
+        <td width="70%"><center><h1> !{@name} </h1></center></td>
         <td rowspan="2" align="right" valign="top">
             <img src="/nginx.gif" alt="nginx"/><br/>
 

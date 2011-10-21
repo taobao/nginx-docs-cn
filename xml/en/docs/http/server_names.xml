@@ -1,6 +1,6 @@
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
-<article title="Server names"
+<article name="Server names"
          link="/en/docs/http/server_names.html"
          lang="en"
          author="Igor Sysoev"

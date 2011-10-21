@@ -1,6 +1,6 @@
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article title="A message &ldquo;&nbsp;&lsquo;sys_errlist&rsquo;
+<article name="A message &ldquo;&nbsp;&lsquo;sys_errlist&rsquo;
                 is deprecated;
                 use &lsquo;strerror&rsquo; or &lsquo;strerror_r&rsquo;
                 instead&nbsp;&rdquo;"

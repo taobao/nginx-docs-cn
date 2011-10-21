@@ -1,6 +1,6 @@
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article title="Tuning FreeBSD for the highload"
+<article name="Tuning FreeBSD for the highload"
          link="/en/docs/tuning_freebsd.html"
          lang="en">
 

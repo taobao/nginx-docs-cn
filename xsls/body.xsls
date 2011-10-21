@@ -15,7 +15,7 @@ X:template body (lang) {
 
     <tr>
         <td width="70%"><center><h3>
-            !{@name | @title} X:if "$YEAR" { X:text{: } !{$YEAR} }
+            !{@name} X:if "$YEAR" { X:text{: } !{$YEAR} }
         </h3></center></td>
 
         <td rowspan="2" align="{$MENU_ALIGN}" valign="top">

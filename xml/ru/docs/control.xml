@@ -1,6 +1,6 @@
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article title="Управление nginx"
+<article name="Управление nginx"
          link="/ru/docs/control.html"
          lang="ru">
 

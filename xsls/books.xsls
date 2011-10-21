@@ -24,13 +24,13 @@ X:include href = "content.xslt";
 X:template = "/article" {
     <html><head>
 
-    <title> !{@title} </title>
+    <title> !{@name} </title>
 
     !style ()
 
     </head>
 
-    !body (lang="/article/@lang")
+    !body (lang="@lang")
 
     </html>
 }

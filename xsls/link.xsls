@@ -31,7 +31,7 @@ X:template = "a[starts-with(@href, '/')
                             |document(concat($XML, @href))/module/@link) }
         }
     }
-    !{  document(concat($XML, @href))/article/@title
+    !{  document(concat($XML, @href))/article/@name
        |document(concat($XML, @href))/module/@name }
     </a>
 }

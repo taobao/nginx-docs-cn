@@ -1,6 +1,6 @@
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article title="Параметры командной строки nginx"
+<article name="Параметры командной строки nginx"
          link="/ru/docs/switches.html"
          lang="ru">
 

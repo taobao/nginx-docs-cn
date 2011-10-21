@@ -1,6 +1,6 @@
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article title="Пример конфигурации nginx"
+<article name="Пример конфигурации nginx"
          link="/ru/docs/example.html"
          lang="ru">
 

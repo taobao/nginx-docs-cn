@@ -25,7 +25,7 @@ X:include href = "content.xslt";
 X:template = "/news" {
     <rss version="2.0">
     <channel>
-    <title> !{@title} </title>
+    <title> !{@name} </title>
     <link> !{$SITE} </link>
     <description />
     !! "event";

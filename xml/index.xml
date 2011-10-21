@@ -1,6 +1,6 @@
 <!DOCTYPE news SYSTEM "../dtd/news.dtd">
 
-<news title="nginx news" link="/" lang="en">
+<news name="nginx news" link="/" lang="en">
 
 <event date="2011-10-17">
 <para>

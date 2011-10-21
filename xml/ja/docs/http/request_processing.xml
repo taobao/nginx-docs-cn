@@ -1,6 +1,6 @@
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
-<article title="nginx はどのようにリクエストを処理するか"
+<article name="nginx はどのようにリクエストを処理するか"
          link="/ja/docs/http/request_processing.html"
          lang="ja"
          author="Igor Sysoev"

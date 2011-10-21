@@ -1,6 +1,6 @@
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
-<article title="How nginx processes a request"
+<article name="How nginx processes a request"
          link="/en/docs/http/request_processing.html"
          lang="en"
          author="Igor Sysoev"
