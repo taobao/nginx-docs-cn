@@ -26,7 +26,7 @@ X:template = "/article" {
 
     <title> !{@name} </title>
 
-    !style ()
+    !style (lang="@lang")
 
     </head>
 

@@ -30,7 +30,7 @@ X:template = "/news" {
 
     <title> !{@name} X:if "$YEAR" { X:text{: } !{$YEAR} } </title>
 
-    !style ()
+    !style (lang="@lang")
 
     </head>
 
