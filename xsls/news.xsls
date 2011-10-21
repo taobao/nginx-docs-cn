@@ -45,21 +45,25 @@ X:template = "event" {
     X:var year = { !{substring(../event[position()=1]/@date, 1, 4)} }
     X:var y = { !{substring(@date, 1, 4)} }
 
-    X:if "(not($YEAR) and ($year = $y or position() &lt; 11)) or $YEAR=$y" {
-        <table width="100%">
+    X:if "position() = 1" {
+        X:text disable-output-escaping="yes" {
+            &lt;table class="news"&gt;
+        }
+    }
 
+    X:if "(not($YEAR) and ($year = $y or position() &lt; 11)) or $YEAR=$y" {
         <tr>
-        <td valign="top" align="right" width="15%">
+        <td align="right">
             <a name="{@date}" /> !{@date} X:text {&#xA0;&#xA0;}
         </td>
         <td> !! "para"; </td>
         </tr>
+    }
 
-        <tr><td colspan="2">
-        X:text disable-output-escaping="yes" {&amp;nbsp;}
-        </td></tr>
-
-        </table>
+    X:if "position() = last()" {
+        X:text disable-output-escaping="yes" {
+            &lt;/table&gt;
+        }
     }
 }
 

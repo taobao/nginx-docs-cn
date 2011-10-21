@@ -6,6 +6,8 @@ X:template style (lang) {
         html              { -webkit-text-size-adjust: none; }
         body              { font-family:    Georgia, serif; }
         p                 { text-align:     justify; }
+        table.news p      { margin-top:     0; }
+        table.news td     { vertical-align: top; }
         div.directive     { background:     #EEEEEE;
                             padding:        10pt 10pt 10pt 20pt; }
         div.directive td  { vertical-align: baseline; }
