@@ -153,6 +153,8 @@ X:stylesheet {
 
     X:template = "value" { <code> !!; </code> }
 
+    X:template = "registered" { !!; <sup> X:text {&#174;} </sup> }
+
     X:template = "var" { <code> !!; </code> }
 
     X:template = "path" { X:text {&#8220;} <code> !!; </code> X:text {&#8221;} }

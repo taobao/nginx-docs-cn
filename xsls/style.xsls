@@ -20,6 +20,7 @@ X:template style (lang) {
                             background:     #EEEEEE;
                             border:         none;
                             padding:        10pt 10pt 10pt 10pt; }
+        sup               { font-size:      50%; }
         ') }
 
     X:if "$lang = 'he'" {

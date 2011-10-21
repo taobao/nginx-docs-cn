@@ -8,7 +8,8 @@
 <!ELEMENT  para         (#PCDATA | a | link | br | list | orderedlist | note |
                          i | b | nobr | table | url | code | command |
                          dirname | path | header | value | programlisting |
-                         initial | development_version | stable_version )* >
+                         initial | development_version | stable_version |
+                         registered)* >
 
 <!ELEMENT  a            (#PCDATA) >
 <!ATTLIST  a
@@ -34,6 +35,8 @@
 <!ELEMENT  initial      (#PCDATA) >
 <!ELEMENT  url          (#PCDATA) >
 <!ELEMENT  value        (#PCDATA) >
+
+<!ELEMENT  registered   (#PCDATA) >
 
 <!ELEMENT  programlisting  (#PCDATA | i | b | dirname | path |
                             development_version | stable_version)* >
