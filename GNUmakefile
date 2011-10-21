@@ -19,11 +19,8 @@ define	XSLScript
 	if [ ! -s $(2) ]; then rm $(2); fi; test -s $(2)
 endef
 
-define	XMLLINT
-	xmllint --noout --valid $1
-endef
-
 define	XSLT
+	xmllint --noout --valid $2
 	xsltproc -o $3							\
 		$(shell echo $4						\
 		| sed -e "s/\([^= ]*\)=\([^= ]*\)/--param \1 \"'\2'\"/g") \
@@ -148,7 +145,6 @@ $(OUT)/404.html:							\
 
 $(OUT)/%.html:	xml/%.xml						\
 		$(ARTICLE_DEPS)
-	$(call XMLLINT, $<)
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
 
