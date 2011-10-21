@@ -34,17 +34,19 @@ X:template body (lang) {
 
     <tr><td valign="top">
 
-        <table width="100%"><tr><td align="{$INDEX_ALIGN}">
-        X:for-each "section[@id and @name]" {
-            <a href="#{@id}"> !{@name} </a><br/>
-            X:if "@id = 'directives'" {
-                X:for-each "directive[@name]" {
-                    X:text{&#160;&#160;&#160;&#160;&#160;}
-                    <a href="#{@name}"> !{@name} </a><br/>
+        X:if "section[@name]" {
+            <table width="100%"><tr><td align="{$INDEX_ALIGN}">
+            X:for-each "section[@id and @name]" {
+                <a href="#{@id}"> !{@name} </a><br/>
+                X:if "@id = 'directives'" {
+                    X:for-each "directive[@name]" {
+                        X:text{&#160;&#160;&#160;&#160;&#160;}
+                        <a href="#{@name}"> !{@name} </a><br/>
+                    }
                 }
             }
+            </td></tr></table>
         }
-        </td></tr></table>
 
         !!;
 
