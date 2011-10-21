@@ -53,8 +53,8 @@ X:template = "event" {
 
     X:if "(not($YEAR) and ($year = $y or position() &lt; 11)) or $YEAR=$y" {
         <tr>
-        <td align="right" width="15%">
-            <a name="{@date}" /> !{@date} X:text {&#xA0;&#xA0;}
+        <td class="date">
+            <a name="{@date}" /> !{@date}
         </td>
         <td> !! "para"; </td>
         </tr>
