@@ -47,7 +47,7 @@
 <!ELEMENT  orderedlist  (item+) >
 <!ELEMENT  item         (#PCDATA | para | a | br | nobr | list | i | b | url |
                          dirname | path | command | value | programlisting |
-                         link)* >
+                         link | registered)* >
 <!ELEMENT  listitem     (#PCDATA | para | a | br | nobr | list | i | b | url |
                          dirname | path | command | value | programlisting)* >
 
