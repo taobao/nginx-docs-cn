@@ -472,7 +472,7 @@ fastcgi_param  REDIRECT_STATUS  200;
 Если доменное имя резолвится в несколько адресов, то все они будут
 использоваться в режиме round-robin.
 И кроме того, адрес может быть
-<link doc="ngx_http_upstream.xml">группой серверов</link>.
+<link doc="ngx_http_upstream_module.xml">группой серверов</link>.
 </para>
 
 </directive>

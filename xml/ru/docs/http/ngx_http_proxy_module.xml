@@ -432,7 +432,7 @@ proxy_no_cache   $http_pragma     $http_authorization;
 Если доменное имя резолвится в несколько адресов, то все они будут
 использоваться в режиме round-robin.
 И кроме того, адрес можно задать
-<link doc="ngx_http_upstream.xml">группой серверов</link>.
+<link doc="ngx_http_upstream_module.xml">группой серверов</link>.
 </para>
 
 <para>
@@ -506,7 +506,7 @@ location  /some/path/ {
 
 <para>
 В этом случае имя сервера ищется среди описанных
-<link doc="ngx_http_upstream.xml">групп серверов</link>
+<link doc="ngx_http_upstream_module.xml">групп серверов</link>
 и если не найдено, то определяется с помощью
 <link doc="ngx_http_core_module.xml" id="resolver">resolver'а</link>.
 </para>

@@ -52,7 +52,7 @@ nginx [engine x]&mdash;это HTTP-сервер и обратный прокси
 <item>
 <link doc="docs/http/ngx_http_proxy_module.xml">Акселерированное
 проксирование с кэшированием</link>,
-<link doc="docs/http/ngx_http_upstream.xml">простое
+<link doc="docs/http/ngx_http_upstream_module.xml">простое
 распределение нагрузки и отказоустойчивость</link>;
 </item>
 
@@ -62,7 +62,7 @@ nginx [engine x]&mdash;это HTTP-сервер и обратный прокси
 uwsgi, SCGI и
 <link doc="docs/http/ngx_http_memcached_module.xml">memcached</link>
 серверов с кэшированием,
-<link doc="docs/http/ngx_http_upstream.xml">простое
+<link doc="docs/http/ngx_http_upstream_module.xml">простое
 распределение нагрузки и отказоустойчивость</link>;
 </item>
 

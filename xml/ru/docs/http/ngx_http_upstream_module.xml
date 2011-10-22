@@ -2,8 +2,8 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_upstream"
-        link="/ru/docs/http/ngx_http_upstream.html"
+<module name="Директивы модуля ngx_http_upstream_module"
+        link="/ru/docs/http/ngx_http_upstream_module.html"
         lang="ru">
 
 <section id="summary">
@@ -200,7 +200,7 @@ upstream  backend  {
 <section name="Встроенные переменные" id="variables">
 
 <para>
-Модуль ngx_http_upstream поддерживает следующие встроенные переменные:
+Модуль ngx_http_upstream_module поддерживает следующие встроенные переменные:
 <list type="bullet">
 
 <listitem>

@@ -45,7 +45,7 @@ DOCS_RU =	ru/docs/faq						\
 		ru/docs/http/ngx_http_ssi_module			\
 		ru/docs/http/ngx_http_ssl_module			\
 		ru/docs/http/ngx_http_sub_module			\
-		ru/docs/http/ngx_http_upstream				\
+		ru/docs/http/ngx_http_upstream_module			\
 		ru/docs/http/ngx_http_userid_module			\
 		ru/docs/http/ngx_http_xslt_module			\
 
