@@ -183,8 +183,7 @@ gzip:	rsync_gzip
 
 rsync_gzip:
 	$(CHMOD) $(OUT)/
-	$(RSYNC) $(OUT)/ $(ZIP)/
-	$(RSYNC) $(TEXT)/ $(ZIP)/
+	$(RSYNC) --delete --exclude='*.gz' $(OUT)/ $(TEXT)/ $(ZIP)/
 
 do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
 		$(addsuffix .gz,					\
@@ -199,9 +198,10 @@ do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
 		$(ZIP)/ru/CHANGES.ru.gz					\
 		$(addsuffix .gz, $(wildcard $(ZIP)/ru/CHANGES.ru-?.?))	\
 
-	find $(ZIP) -type d -name .svn -prune				\
-		-o -type f -not -name '*.gz' -exec test \! -e {}.gz \; -print
+	find $(ZIP) -type f ! -name '*.gz' -exec test \! -e {}.gz \; -print
 
+	find $(ZIP) -type f -name '*.gz' | \
+	while read f ; do test -e "$${f%.gz}" || rm -fv "$$f" ; done
 
 $(ZIP)/%.gz:		$(ZIP)/%
 		rm -f $<.gz
@@ -214,12 +214,12 @@ endif
 
 draft:	all
 	$(CHMOD) $(OUT)/
-	$(RSYNC) $(OUT)/ $(NGINX_ORG)/$(OUT)/
+	$(RSYNC) --delete $(OUT)/ $(NGINX_ORG)/$(OUT)/
 
 copy:
 	$(CHMOD) $(ZIP)
-	$(RSYNC) $(ZIP)/ $(NGINX_ORG)/
-	$(RSYNC) binary/ $(NGINX_ORG)/
+	$(RSYNC) $(ZIP)/ binary/ $(NGINX_ORG)/
+	$(RSYNC) --delete $(foreach lang, $(LANGS), $(ZIP)/$(lang)) $(NGINX_ORG)/
 
 dev:	xslt/development.xslt sign
 dev:	NGINX=$(shell xsltproc xslt/development.xslt xml/versions.xml)
