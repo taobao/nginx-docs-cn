@@ -140,11 +140,11 @@
 <list>
 
 <item>
-Read-only subversion repository: <programlisting>svn://svn.nginx.org/nginx</programlisting>
+Read-only Subversion repository: <programlisting>svn://svn.nginx.org/nginx</programlisting>
 </item>
 
 <item>
-<link url="http://trac.nginx.org/nginx/browser">Trac Source browser</link>
+<link url="http://trac.nginx.org/nginx/browser">Trac source browser</link>
 </item>
 
 </list>
@@ -154,28 +154,28 @@ Read-only subversion repository: <programlisting>svn://svn.nginx.org/nginx</prog
 
 <section name="Prebuilt Packages">
 <para>
-For automatic updates of the prebuilt linux packages it is possible to configure yum repository
+For automatic updates of the prebuilt Linux packages it is possible to configure yum repository
 for RHEL/CentOS or apt repository for Debian/Ubuntu.
 </para>
 
 <para>
-To setup yum repository for the linux distributions:
+To set up yum repository for the Linux distributions:
 <list>
 
 <item>
-<link url="http://nginx.org/packages/rhel/5/noarch/RPMS/nginx-release-rhel-5-0.el5.ngx.noarch.rpm">RHEL5</link>
+<link url="http://nginx.org/packages/rhel/5/noarch/RPMS/nginx-release-rhel-5-0.el5.ngx.noarch.rpm">RHEL 5</link>
 </item>
 
 <item>
-<link url="http://nginx.org/packages/rhel/6/noarch/RPMS/nginx-release-rhel-6-0.el6.ngx.noarch.rpm">RHEL6</link>
+<link url="http://nginx.org/packages/rhel/6/noarch/RPMS/nginx-release-rhel-6-0.el6.ngx.noarch.rpm">RHEL 6</link>
 </item>
 
 <item>
-<link url="http://nginx.org/packages/centos/5/noarch/RPMS/nginx-release-centos-5-0.el5.ngx.noarch.rpm">CentOS5</link>
+<link url="http://nginx.org/packages/centos/5/noarch/RPMS/nginx-release-centos-5-0.el5.ngx.noarch.rpm">CentOS 5</link>
 </item>
 
 <item>
-<link url="http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm">CentOS6</link>
+<link url="http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm">CentOS 6</link>
 </item>
 </list>
 install nginx-release package containing a yum config and a nginx signing key. Then run a command:
@@ -183,7 +183,7 @@ install nginx-release package containing a yum config and a nginx signing key. T
 yum install nginx
 </programlisting>
 
-As an alternative you can add repository config manually. Create a file named nginx.repo in /etc/yum.repos.d and
+As an alternative, a repository config can be added manually. Create a file named nginx.repo in /etc/yum.repos.d and
 add configuration, like this:
 
 <programlisting>
@@ -221,6 +221,6 @@ apt-get install nginx
 
 </para>
 
-</section> 
+</section>
 
 </article>
