@@ -617,14 +617,14 @@ After this many requests are made, the connection is closed.
 The first argument sets a timeout during which a keep-alive
 client connection will stay open on the server side.
 The optional second argument sets a value in the
-<dq><header>Keep-Alive: timeout=<argument>time</argument></header></dq>
+<header>Keep-Alive: timeout=<argument>time</argument></header>
 response header.
 Two arguments may differ.
 </para>
 
 <para>
 The
-<dq><header>Keep-Alive: timeout=</header></dq>
+<header>Keep-Alive: timeout=</header>
 is understood by Mozilla and Konqueror.
 MSIE will close keep-alive connection in about 60 seconds.
 </para>
