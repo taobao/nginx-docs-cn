@@ -134,13 +134,15 @@
 
 </section>
 
+
 <section name="Source Repository">
 
 <para>
 <list>
 
 <item>
-Read-only Subversion repository: <programlisting>svn://svn.nginx.org/nginx</programlisting>
+Read-only Subversion repository:
+<code>svn://svn.nginx.org/nginx</code>
 </item>
 
 <item>
@@ -152,10 +154,12 @@ Read-only Subversion repository: <programlisting>svn://svn.nginx.org/nginx</prog
 
 </section>
 
+
 <section name="Prebuilt Packages">
+
 <para>
-For automatic updates of the prebuilt Linux packages it is possible to configure yum repository
-for RHEL/CentOS or apt repository for Debian/Ubuntu.
+For automatic updates of the prebuilt Linux packages it is possible to
+configure yum repository for RHEL/CentOS, or apt repository for Debian/Ubuntu.
 </para>
 
 <para>
@@ -177,15 +181,18 @@ To set up yum repository for the Linux distributions:
 <item>
 <link url="http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm">CentOS 6</link>
 </item>
+
 </list>
-install nginx-release package containing the yum config and the public key necessary to check signed rpms.
-Then run the command:
+install the <code>nginx-release</code> package containing the yum config
+and the public key necessary to check signed RPMs,
+then run the following command:
 <programlisting>
 yum install nginx
 </programlisting>
 
-As an alternative, a repository config can be added manually. Create the file named nginx.repo in /etc/yum.repos.d and
-add configuration, like this:
+As an alternative, a repository config can be added manually.
+Create the file named <pathname>/etc/yum.repos.d/nginx.repo</pathname>
+with the following contents:
 
 <programlisting>
 [nginx]
@@ -195,20 +202,23 @@ gpgcheck=0
 enabled=1
 </programlisting>
 
-Replace OS with rhel or centos, depending on the distribution you are running, and OSRELEASE with 5 or 6, for 5.x and 6.x
-versions accordingly.
-
+Replace “<code>OS</code>” with “<code>rhel</code>” or “<code>centos</code>”,
+depending on the distribution used, and “<code>OSRELEASE</code>”
+with “<code>5</code>” or “<code>6</code>”,
+for 5.x or 6.x versions, respectively.
 </para>
 
 <para>
-For Debian/Ubuntu append /etc/apt/sources.list with:
+For supported Debian/Ubuntu versions append the following contents to
+<pathname>/etc/apt/sources.list</pathname>:
 
 <programlisting>
 deb http://nginx.org/packages/debian/ squeeze nginx
 deb-src http://nginx.org/packages/debian/ squeeze nginx
 </programlisting>
 
-in case of Debian 6, or for Ubuntu 10.04 with:
+in case of Debian 6, or for Ubuntu 10.04 with
+the following contents instead:
 
 <programlisting>
 deb http://nginx.org/packages/ubuntu/ lucid nginx

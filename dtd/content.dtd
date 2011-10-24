@@ -9,7 +9,7 @@
                          i | b | nobr | table | url | code | command |
                          dirname | path | header | value | programlisting |
                          initial | development_version | stable_version |
-                         registered)* >
+                         registered | pathname)* >
 
 <!ELEMENT  a            (#PCDATA) >
 <!ATTLIST  a
@@ -30,6 +30,7 @@
 <!ELEMENT  command      (#PCDATA | value)* >
 <!ELEMENT  dirname      (#PCDATA | i)* >
 <!ELEMENT  path         (#PCDATA | development_version | stable_version)* >
+<!ELEMENT  pathname     (#PCDATA)* >
 <!ELEMENT  code         (#PCDATA | i)* >
 <!ELEMENT  header       (#PCDATA) >
 <!ELEMENT  initial      (#PCDATA) >
@@ -47,7 +48,7 @@
 <!ELEMENT  orderedlist  (item+) >
 <!ELEMENT  item         (#PCDATA | para | a | br | nobr | list | i | b | url |
                          dirname | path | command | value | programlisting |
-                         link | registered)* >
+                         link | registered | code)* >
 <!ELEMENT  listitem     (#PCDATA | para | a | br | nobr | list | i | b | url |
                          dirname | path | command | value | programlisting)* >
 
