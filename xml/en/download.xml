@@ -178,12 +178,13 @@ To set up yum repository for the Linux distributions:
 <link url="http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm">CentOS 6</link>
 </item>
 </list>
-install nginx-release package containing a yum config and a nginx signing key. Then run a command:
+install nginx-release package containing the yum config and the public key necessary to check signed rpms.
+Then run the command:
 <programlisting>
 yum install nginx
 </programlisting>
 
-As an alternative, a repository config can be added manually. Create a file named nginx.repo in /etc/yum.repos.d and
+As an alternative, a repository config can be added manually. Create the file named nginx.repo in /etc/yum.repos.d and
 add configuration, like this:
 
 <programlisting>
