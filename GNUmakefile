@@ -3,6 +3,8 @@ OUT =		libxslt
 TEXT =		text
 ZIP =		gzip
 NGINX_ORG =	/data/www/nginx.org
+UMASK =		002
+SHELL =		umask $(UMASK) && exec /bin/sh
 
 CP =		/data/sites/java/xsls/\*:$(HOME)/java/xsls/\*
 RSYNC =		rsync -v -rpc --exclude=.svn
