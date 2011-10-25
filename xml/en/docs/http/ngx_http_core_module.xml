@@ -1471,19 +1471,25 @@ closed normally.
 
 
 <directive name="resolver">
-<syntax><argument>address</argument></syntax>
+<syntax><argument>address</argument> ...</syntax>
 <default/>
 <context>http</context>
 <context>server</context>
 <context>location</context>
 
 <para>
-Sets the <argument>address</argument> of a name server, for example:
+Configures name servers used to resolve upstream server names,
+for example:
 <example>
-resolver 127.0.0.1;
+resolver 127.0.0.1 192.0.2.1;
 </example>
-An <argument>address</argument> may also be a hostname, in which case
-the first resolved address is used.
+An <argument>address</argument> argument may be specified as
+either an IPv4 address or a hostname;
+in the latter case, the first resolved IPv4 address is used.
+Name servers are queried in a round-robin fashion.
+<note>
+Before version 1.1.7, only a single name server could be configured.
+</note>
 </para>
 
 </directive>
