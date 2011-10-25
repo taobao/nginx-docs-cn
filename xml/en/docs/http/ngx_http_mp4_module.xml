@@ -81,12 +81,10 @@ If you were using the third-party mp4 module, be sure to disable it.
 </note>
 </para>
 
-<!--
 <para>
 A similar pseudo-streaming support for FLV files is provided by the module
 <link doc="ngx_http_flv_module.xml">ngx_http_flv_module</link>.
 </para>
--->
 
 </section>
 

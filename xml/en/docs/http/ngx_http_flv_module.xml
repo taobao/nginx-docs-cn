@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_flv_module"
+        link="/en/docs/http/ngx_http_flv_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The module <code>ngx_http_flv_module</code> does special processing
+of the transmitted files: when transmitting a file starting from the
+offset specified by the “<parameter>start=XXX</parameter>” arguments
+in the request line, it adds FLV header before the requested file.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<code>--with-http_flv_module</code>
+configuration parameter.
+</para>
+
+</section>
+
+
+<section name="Example Configuration" id="example">
+
+<para>
+<example>
+    location ~ \.flv$ {
+        flv;
+    }
+</example>
+</para>
+
+</section>
+
+
+<section name="Directives" id="directives">
+
+<directive name="flv">
+<syntax/>
+<default/>
+<context>location</context>
+
+<para>
+Enables special processing of the transmitted files.
+</para>
+
+</directive>
+
+</section>
+
+</module>
