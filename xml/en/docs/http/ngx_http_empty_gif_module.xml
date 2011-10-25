@@ -10,7 +10,7 @@
 
 <para>
 The module <code>ngx_http_empty_gif_module</code> emits
-one-pixel transparent GIF.
+single-pixel transparent GIF.
 </para>
 
 </section>
@@ -37,7 +37,7 @@ one-pixel transparent GIF.
 <context>location</context>
 
 <para>
-Enables emitting of one-pixel transparent GIF.
+Turns on module processing in a surrounding location.
 </para>
 
 </directive>
