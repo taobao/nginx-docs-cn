@@ -207,11 +207,7 @@ do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
 
 $(ZIP)/%.gz:		$(ZIP)/%
 		rm -f $<.gz
-ifneq (, $(shell which 7za))
-		7za a -tgzip -mx9 -mpass=15 -si -ba -bd $<.gz < $<
-else
 		gzip -9cn $< > $<.gz
-endif
 		touch -r $< $<.gz
 
 draft:	all
