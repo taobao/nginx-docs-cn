@@ -6,7 +6,6 @@
 <item id="author">written by</item>
 <item id="editor">edited by</item>
 <item id="translator">translated by</item>
-<item id="none">none</item>
 <item id="syntax">syntax</item>
 <item id="default">default</item>
 <item id="context">context</item>
@@ -14,7 +13,6 @@
 </text>
 
 <text lang="ru">
-<item id="none">нет</item>
 <item id="syntax">синтаксис</item>
 <item id="default">умолчание</item>
 <item id="context">контекст</item>

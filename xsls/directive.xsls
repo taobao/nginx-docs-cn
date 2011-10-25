@@ -67,10 +67,7 @@ X:stylesheet {
             }
         }
         X:if "count(node()) = 0" {
-            <strong>
-            !{document(concat($XML, '/i18n.xml'))
-                       /i18n/text[@lang = $LANG]/item[@id='none']}
-            </strong>
+            &#8212;
         } else {
             <pre>
             !{../@name}
