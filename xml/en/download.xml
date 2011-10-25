@@ -155,15 +155,19 @@ Read-only Subversion repository:
 </section>
 
 
-<section name="Prebuilt Packages">
+<section name="Pre-Built Packages">
 
 <para>
-For automatic updates of the prebuilt Linux packages it is possible to
-configure yum repository for RHEL/CentOS, or apt repository for Debian/Ubuntu.
+For automatic updates of the pre-built Linux packages it is possible to
+configure the yum repository for RHEL/CentOS,
+or the apt repository for Debian/Ubuntu.
 </para>
 
 <para>
-To set up yum repository for the Linux distributions:
+To set up the yum repository for the RHEL/CentOS, pick up and install
+the corresponding <code>nginx-release</code> package from the list below,
+containing the yum config and the public key necessary to check signed RPMs:
+
 <list>
 
 <item>
@@ -183,9 +187,8 @@ To set up yum repository for the Linux distributions:
 </item>
 
 </list>
-install the <code>nginx-release</code> package containing the yum config
-and the public key necessary to check signed RPMs,
-then run the following command:
+
+Then run the following command:
 <programlisting>
 yum install nginx
 </programlisting>
@@ -209,7 +212,7 @@ for 5.x or 6.x versions, respectively.
 </para>
 
 <para>
-For supported Debian/Ubuntu versions append the following contents to
+For Debian 6 append the following contents to
 <pathname>/etc/apt/sources.list</pathname>:
 
 <programlisting>
@@ -217,14 +220,24 @@ deb http://nginx.org/packages/debian/ squeeze nginx
 deb-src http://nginx.org/packages/debian/ squeeze nginx
 </programlisting>
 
-in case of Debian 6, or for Ubuntu 10.04 with
-the following contents instead:
+Then run the following commands:
+<programlisting>
+apt-get update
+apt-get install nginx
+</programlisting>
+
+</para>
+
+<para>
+For Ubuntu 10.04 append the following contents to
+<pathname>/etc/apt/sources.list</pathname>:
 
 <programlisting>
 deb http://nginx.org/packages/ubuntu/ lucid nginx
 deb-src http://nginx.org/packages/ubuntu/ lucid nginx
 </programlisting>
-Then run commands:
+
+Then run the following commands:
 <programlisting>
 apt-get update
 apt-get install nginx
