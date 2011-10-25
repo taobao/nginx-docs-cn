@@ -194,7 +194,7 @@ yum install nginx
 </programlisting>
 
 As an alternative, a repository config can be added manually.
-Create the file named <pathname>/etc/yum.repos.d/nginx.repo</pathname>
+Create the file named <path>/etc/yum.repos.d/nginx.repo</path>
 with the following contents:
 
 <programlisting>
@@ -213,7 +213,7 @@ for 5.x or 6.x versions, respectively.
 
 <para>
 For Debian 6 append the following contents to
-<pathname>/etc/apt/sources.list</pathname>:
+<path>/etc/apt/sources.list</path>:
 
 <programlisting>
 deb http://nginx.org/packages/debian/ squeeze nginx
@@ -230,7 +230,7 @@ apt-get install nginx
 
 <para>
 For Ubuntu 10.04 append the following contents to
-<pathname>/etc/apt/sources.list</pathname>:
+<path>/etc/apt/sources.list</path>:
 
 <programlisting>
 deb http://nginx.org/packages/ubuntu/ lucid nginx

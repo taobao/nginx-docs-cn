@@ -116,8 +116,6 @@ X:stylesheet {
         X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
-    X:template = "pathname" { <code> !!; </code> }
-
     X:template = "argument" { <code><i> !!; </i></code> }
     X:template = "parameter" { <code> !!; </code> }
 
@@ -151,7 +149,7 @@ X:stylesheet {
 
     X:template = "var" { <code> !!; </code> }
 
-    X:template = "path" { X:text {&#8220;} <code> !!; </code> X:text {&#8221;} }
+    X:template = "path" { <code> !!; </code> }
     X:template = "code" { <code> !!; </code> }
     X:template = "i" { <i> !!; </i> }
     X:template = "b" { <b> !!; </b> }

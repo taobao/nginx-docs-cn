@@ -161,7 +161,7 @@ and which are signed by trusted authorities, so actively used browsers
 may already have the required intermediate certificates and
 may not complain about a certificate sent without a chained bundle.
 To ensure the server sends the complete certificate chain,
-you may use the <path>openssl</path> command line utility, for example:
+you may use the <command>openssl</command> command line utility, for example:
 
 <programlisting>
 $ openssl s_client -connect www.godaddy.com:443

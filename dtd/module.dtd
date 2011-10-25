@@ -29,7 +29,7 @@
 
 <!ELEMENT   para        (#PCDATA | argument | c-def | c-func | code | command |
                          emphasis | example | header | http-status | link |
-                         list | note | parameter | pathname | value | var)* >
+                         list | note | parameter | path | value | var)* >
 
 <!ELEMENT   argument    (#PCDATA)* >
 
@@ -73,7 +73,7 @@
 
 <!ELEMENT   parameter   (#PCDATA)* >
 
-<!ELEMENT   pathname    (#PCDATA)* >
+<!ELEMENT   path        (#PCDATA)* >
 
 <!ELEMENT   value       (#PCDATA)* >
 

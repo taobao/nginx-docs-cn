@@ -34,7 +34,7 @@ cd nginx-<development_version />
 start nginx
 </programlisting>
 
-You may run the <path>tasklist</path> command line utility
+You may run the <command>tasklist</command> command line utility
 to see nginx processes:
 
 <programlisting>

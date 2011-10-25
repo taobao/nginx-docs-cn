@@ -47,7 +47,7 @@ without the penalty of running the networking subsystem under a
 Giant lock&mdash;for this to work, the AIO module needs to be loaded
 after the kernel has booted.
 In this case, the following message will appear in
-<pathname>/var/log/messages</pathname>
+<path>/var/log/messages</path>
 <example>
 WARNING: Network stack Giant-free, but aio requires Giant.
 Consider adding 'options NET_WITH_GIANT' or setting debug.mpsafenet=0
@@ -147,7 +147,7 @@ location /i/ {
 the request of
 “<code>/i/top.gif</code>” will be responded
 with the file
-<pathname>/data/w3/images/top.gif</pathname>.
+<path>/data/w3/images/top.gif</path>.
 </para>
 
 <para>
@@ -1530,7 +1530,7 @@ location /i/ {
 </example>
 “<code>/i/top.gif</code>” will be responded
 with the file
-<pathname>/data/w3/i/top.gif</pathname>.
+<path>/data/w3/i/top.gif</path>.
 </para>
 
 <para>
@@ -2039,7 +2039,7 @@ Several extensions can map to one type.
 
 <para>
 A sufficiently full mapping table is distributed with nginx in the
-<pathname>conf/mime.types</pathname> file.
+<path>conf/mime.types</path> file.
 </para>
 
 <para>

@@ -201,7 +201,7 @@ server {
 <para>
 nginx first searches for the most specific location given by literal strings
 regardless of the listed order. In the configuration above
-the only literal location is <path>/</path> and since it matches
+the only literal location is “<code>/</code>” and since it matches
 any request it will be used as a last resort.
 Then nginx checks locations given by
 regular expression in the order listed in the configuration file.
@@ -235,11 +235,11 @@ in the configuration above:
 
 <item>
 <para>
-A request <path>/logo.gif</path> is matched by the literal location
-<dirname>/</dirname> first and then by the regular expression
-<dirname>\.(gif|jpg|png)$</dirname>,
+A request “<code>/logo.gif</code>” is matched by the literal location
+“<code>/</code>” first and then by the regular expression
+“<code>\.(gif|jpg|png)$</code>”,
 therefore, it is handled by the latter location.
-Using the directive <dirname>root&nbsp;/data/www</dirname> the request
+Using the directive “<code>root&nbsp;/data/www</code>” the request
 is mapped to a file <path>/data/www/logo.gif</path>, and the file
 is sent to the client.
 </para>
@@ -247,25 +247,25 @@ is sent to the client.
 
 <item>
 <para>
-A request <path>/index.php</path> is also matched by the literal location
-<dirname>/</dirname> first and then by the regular expression
-<dirname>\.(php)$</dirname>. Therefore, it is handled by the latter location
+A request “<code>/index.php</code>” is also matched by the literal location
+“<code>/</code>” first and then by the regular expression
+“<code>\.(php)$</code>”. Therefore, it is handled by the latter location
 and the request is passed to a FastCGI server listening on localhost:9000.
 The <dirname>fastcgi_param</dirname> directive sets the FastCGI parameter
-SCRIPT_FILENAME to <path>/data/www/index.php</path>,
+SCRIPT_FILENAME to “<code>/data/www/index.php</code>”,
 and the FastCGI server executes the file.
 The variable $document_root is equal to
 the value of the <dirname>root</dirname> directive and
 the variable $fastcgi_script_name is equal to the request URI,
-i.e. <path>/index.php</path>.
+i.e. “<code>/index.php</code>”.
 </para>
 </item>
 
 <item>
 <para>
-A request <path>/about.html</path> is matched by the literal location
-<dirname>/</dirname> only, therefore, it is handled in this location.
-Using the directive <dirname>root /data/www</dirname> the request is mapped
+A request “<code>/about.html</code>” is matched by the literal location
+“<code>/</code>” only, therefore, it is handled in this location.
+Using the directive “<code>root /data/www</code>” the request is mapped
 to the file <path>/data/www/about.html</path>, and the file is sent
 to the client.
 </para>
@@ -273,14 +273,14 @@ to the client.
 
 <item>
 <para>
-Handling a request <path>/</path> is more complex.
-It is matched by the literal location <dirname>/</dirname> only,
+Handling a request “<code>/</code>” is more complex.
+It is matched by the literal location “<code>/</code>” only,
 therefore, it is handled by this location.
 Then the <dirname>index</dirname> directive tests for the existence
 of an index file according to its parameters and
-the <dirname>root&nbsp;/data/www</dirname> directive.
+the “<code>root&nbsp;/data/www</code>” directive.
 If a file <path>/data/www/index.php</path> exists,
-then the directive does an internal redirect to <path>/index.php</path>, and
+then the directive does an internal redirect to “<code>/index.php</code>”, and
 nginx searches the locations again as if the request had been sent by a client.
 As we saw before, the redirected request will eventually be handled
 by the FastCGI server.

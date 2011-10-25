@@ -26,7 +26,7 @@ to process requests. Let&rsquo;s start with TCP/IP connection establishment.
 After the connection has been established it is placed in the listen queue
 of the listen socket.
 To see the current listen queues state, you may run the command
-<path>netstat -Lan</path>:
+“<command>netstat -Lan</command>”:
 
 <programlisting>
 Current listen queue sizes (qlen/incqlen/maxqlen)
@@ -164,7 +164,7 @@ The page size jumbo clusters are usually used for sending only,
 while the mbuf clusters are used for both sending and receiving.
 
 To see the current usage of the mbufs and clusters and their limits,
-you may run the command <nobr><path>netstat -m</path>.</nobr>
+you may run the command <nobr>“<command>netstat -m</command>”.</nobr>
 Here is a sample from FreeBSD 7.2/amd64 with the default settings:
 
 <programlisting>
@@ -239,7 +239,7 @@ and memory usage by using the cached file pages.
 
 <para>
 And again, the amd64 sendfile implementation is the best:
-the zeros in the <nobr><path>netstat -m</path></nobr> output
+the zeros in the <nobr>“<code>netstat -m</code>”</nobr> output
 <programlisting>
 ...
 <b>0/0/0</b> sfbufs in use (current/peak/max)

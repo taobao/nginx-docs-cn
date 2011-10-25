@@ -12,8 +12,7 @@
 Модуль <code>ngx_http_mp4_module</code> обеспечивает серверную поддержку
 псевдо-стриминга для файлов в формате H.264/AAC. Такие файлы обычно
 имеют расширения
-<pathname>.mp4</pathname>, <pathname>.m4v</pathname>
-и <pathname>.m4a</pathname>.
+<path>.mp4</path>, <path>.m4v</path> и <path>.m4a</path>.
 </para>
 
 <para>
