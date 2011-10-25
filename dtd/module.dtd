@@ -28,7 +28,7 @@
 <!ELEMENT   context     (#PCDATA)* >
 
 <!ELEMENT   para        (#PCDATA | argument | c-def | c-func | code | command |
-                         dq | emphasis | example | header | http-status | link |
+                         emphasis | example | header | http-status | link |
                          list | note | parameter | pathname | value | var)* >
 
 <!ELEMENT   argument    (#PCDATA)* >
@@ -40,8 +40,6 @@
 <!ELEMENT   code        (#PCDATA | value)* >
 
 <!ELEMENT   command     (#PCDATA)* >
-
-<!ELEMENT   dq          ANY >
 
 <!ELEMENT   emphasis    (#PCDATA | value)* >
 
@@ -83,7 +81,3 @@
 
 <!ENTITY    nbsp        "&#xA0;" >
 <!ENTITY    mdash       "&nbsp;- " >
-<!ENTITY    lsquo       "&#8216;">
-<!ENTITY    rsquo       "&#8217;">
-<!ENTITY    ldquo       "&#8220;">
-<!ENTITY    rdquo       "&#8221;">

@@ -106,12 +106,6 @@ X:stylesheet {
 
     X:template = "command" { <code> !!; </code> }
 
-    X:template = "dq" {
-        X:text disable-output-escaping="yes" {&amp;ldquo;}
-        !!;
-        X:text disable-output-escaping="yes" {&amp;rdquo;}
-    }
-
     X:template = "emphasis" { <strong> !!; </strong> }
 
     X:template = "example" { <blockquote><pre> !!; </pre></blockquote> }

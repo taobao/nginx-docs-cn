@@ -145,9 +145,9 @@ location /i/ {
 }
 </example>
 the request of
-<dq><code>/i/top.gif</code></dq> will be responded
+“<code>/i/top.gif</code>” will be responded
 with the file
-<dq><pathname>/data/w3/images/top.gif</pathname></dq>.
+<pathname>/data/w3/images/top.gif</pathname>.
 </para>
 
 <para>
@@ -1002,8 +1002,8 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
 Sets a configuration based on a request URI.
 A location can either be defined by a prefix string, or by a regular expression.
 Regular expressions are specified by prepending them with the
-<dq><value>~*</value></dq> prefix (for case-insensitive matching), or with the
-<dq><value>~</value></dq> prefix (for case-sensitive matching).
+“<value>~*</value>” prefix (for case-insensitive matching), or with the
+“<value>~</value>” prefix (for case-sensitive matching).
 To find a location matching a given request, nginx first checks
 locations defined using the prefix strings (prefix locations).
 Among them, the most specific one is searched.
@@ -1031,16 +1031,16 @@ be used in other directives.
 </para>
 
 <para>
-If the most specific prefix location has the <dq><value>^~</value></dq> prefix
+If the most specific prefix location has the “<value>^~</value>” prefix
 then regular expressions are not checked.
 </para>
 
 <para>
-Also, using the <dq><value>=</value></dq> prefix it is possible to define
+Also, using the “<value>=</value>” prefix it is possible to define
 an exact match of URI and location.
 If an exact match is found, the search terminates.
-For example, if a <dq><code>/</code></dq> request happens frequently,
-defining <dq><code>location = /</code></dq> will speed up the processing
+For example, if a “<code>/</code>” request happens frequently,
+defining “<code>location = /</code>” will speed up the processing
 of these requests, as search terminates right after the first
 comparison.
 Such a location cannot obviously contain nested locations.
@@ -1049,7 +1049,7 @@ Such a location cannot obviously contain nested locations.
 <para>
 <note>
 In versions from 0.7.1 to 0.8.41, if a request matched the prefix
-location without the <dq><value>=</value></dq> and <dq><value>^~</value></dq>
+location without the “<value>=</value>” and “<value>^~</value>”
 prefixes, the search also terminated and regular expressions were
 not checked.
 </note>
@@ -1074,15 +1074,15 @@ location ~* \.(gif|jpg|jpeg)$ {
     [ configuration D ]
 }
 </example>
-The <dq><code>/</code></dq> request will match configuration A,
-the <dq><code>/documents/document.html</code></dq> request will match
+The “<code>/</code>” request will match configuration A,
+the “<code>/documents/document.html</code>” request will match
 configuration B,
-the <dq><code>/images/1.gif</code></dq> request will match configuration C, and
-the <dq><code>/documents/1.jpg</code></dq> request will match configuration D.
+the “<code>/images/1.gif</code>” request will match configuration C, and
+the “<code>/documents/1.jpg</code>” request will match configuration D.
 </para>
 
 <para>
-The <dq><value>@</value></dq> prefix defines a named location.
+The “<value>@</value>” prefix defines a named location.
 Such a location is not used for a regular request processing, but instead
 used for request redirection.
 They cannot be nested, and cannot contain nested locations.
@@ -1139,14 +1139,14 @@ in a URI into a single slash.
 <para>
 Note that compression is essential for the correct prefix string
 and regular expressions location matching.
-Without it, the <dq><code>//scripts/one.php</code></dq> request would not match
+Without it, the “<code>//scripts/one.php</code>” request would not match
 <example>
 location /scripts/ {
     ...
 }
 </example>
 and might be processed as a static file,
-so it gets converted to <dq><code>/scripts/one.php</code></dq>.
+so it gets converted to “<code>/scripts/one.php</code>”.
 </para>
 
 <para>
@@ -1528,9 +1528,9 @@ location /i/ {
     root /data/w3;
 }
 </example>
-<dq><code>/i/top.gif</code></dq> will be responded
+“<code>/i/top.gif</code>” will be responded
 with the file
-<dq><pathname>/data/w3/i/top.gif</pathname></dq>.
+<pathname>/data/w3/i/top.gif</pathname>.
 </para>
 
 <para>
@@ -1663,7 +1663,7 @@ server {
 
 <para>
 The first name becomes the primary server name.
-Server names can include an asterisk (<dq><code>*</code></dq>)
+Server names can include an asterisk (“<code>*</code>”)
 to replace the first or last part of a name:
 <example>
 server {
@@ -1688,7 +1688,7 @@ machine's hostname is substituted.
 
 <para>
 It is also possible to use regular expressions in server names,
-prepending the name with a tilde (<dq><code>~</code></dq>):
+prepending the name with a tilde (“<code>~</code>”):
 <example>
 server {
     server_name www.example.com ~^www\d+\.example\.com$;
@@ -1764,11 +1764,11 @@ full names
 </listitem>
 
 <listitem>
-names with the prefix mask, e.g. <dq><code>*.example.com</code></dq>
+names with the prefix mask, e.g. “<code>*.example.com</code>”
 </listitem>
 
 <listitem>
-names with the suffix mask, e.g. <dq><code>mail.*</code></dq>
+names with the suffix mask, e.g. “<code>mail.*</code>”
 </listitem>
 
 <listitem>
@@ -1908,7 +1908,7 @@ Checks the existence of files in the specified order, and uses
 the first found file for request processing; the processing
 is performed in the current context.
 It is possible to check the directory existence by specifying
-a slash at the end of a name, e.g. <dq><code>$uri/</code></dq>.
+a slash at the end of a name, e.g. “<code>$uri/</code>”.
 If none of the files were found, an internal redirect to the
 <argument>uri</argument> specified by the last argument is made.
 As of version 0.7.51, the last argument can also be a
@@ -2044,7 +2044,7 @@ A sufficiently full mapping table is distributed with nginx in the
 
 <para>
 To make a particular location emit the
-<dq><code>application/octet-stream</code></dq>
+“<code>application/octet-stream</code>”
 MIME type for all requests, try the following:
 <example>
 location /download/ {
@@ -2206,7 +2206,7 @@ the <argument>name</argument> request header field
 
 <tag-name><var>$is_args</var></tag-name>
 <tag-desc>
-<dq><code>?</code></dq> if a request line has arguments,
+“<code>?</code>” if a request line has arguments,
 or an empty string otherwise
 </tag-desc>
 
@@ -2289,7 +2289,7 @@ directives, respectively.
 
 <tag-name><var>$request_completion</var></tag-name>
 <tag-desc>
-<dq><code>OK</code></dq> if a request has completed,
+“<code>OK</code>” if a request has completed,
 or an empty string otherwise
 </tag-desc>
 
@@ -2303,7 +2303,7 @@ directives, and the request URI
 <tag-name><var>$request_method</var></tag-name>
 <tag-desc>
 request method, usually
-<dq><code>GET</code></dq> or <dq><code>POST</code></dq>
+“<code>GET</code>” or “<code>POST</code>”
 </tag-desc>
 
 <tag-name><var>$request_uri</var></tag-name>
@@ -2313,7 +2313,7 @@ full original request URI (with arguments)
 
 <tag-name><var>$scheme</var></tag-name>
 <tag-desc>
-request scheme, <dq><code>http</code></dq> or <dq><code>https</code></dq>
+request scheme, “<code>http</code>” or “<code>https</code>”
 </tag-desc>
 
 <tag-name><var>$sent_http_</var><argument>name</argument></tag-name>
@@ -2344,9 +2344,9 @@ port of the server which accepted a request
 <tag-name><var>$server_protocol</var></tag-name>
 <tag-desc>
 request protocol, usually
-<dq><code>HTTP/1.0</code></dq>
+“<code>HTTP/1.0</code>”
 or
-<dq><code>HTTP/1.1</code></dq>
+“<code>HTTP/1.1</code>”
 </tag-desc>
 
 <tag-name><var>$uri</var></tag-name>
