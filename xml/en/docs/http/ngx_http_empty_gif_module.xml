@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_empty_gif_module"
+        link="/en/docs/http/ngx_http_empty_gif_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The module <code>ngx_http_empty_gif_module</code> emits
+one-pixel transparent GIF.
+</para>
+
+</section>
+
+
+<section name="Example Configuration" id="example">
+
+<para>
+<example>
+    location = /_.gif {
+        empty_gif;
+    }
+</example>
+</para>
+
+</section>
+
+
+<section name="Directives" id="directives">
+
+<directive name="empty_gif">
+<syntax/>
+<default/>
+<context>location</context>
+
+<para>
+Enables emitting of one-pixel transparent GIF.
+</para>
+
+</directive>
+
+</section>
+
+</module>

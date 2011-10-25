@@ -24,6 +24,7 @@ REFS_EN_HTML =	$(foreach name, $(REFS_EN), $(OUT)/$(name).html)
 
 REFS_EN =	en/docs/ngx_core_module					\
 		en/docs/http/ngx_http_core_module			\
+		en/docs/http/ngx_http_empty_gif_module			\
 		en/docs/http/ngx_http_mp4_module			\
 
 HOWTO_EN_XML =	$(foreach name, $(HOWTO_EN), xml/$(name).xml)
