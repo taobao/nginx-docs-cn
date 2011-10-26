@@ -1,0 +1,57 @@
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="What is the right way to do a trailing slash
+               redirect for the requests without a
+               trailing slash in the URI?"
+         link="/en/docs/faq_trailing_slash_redirect.html"
+         lang="en">
+
+<section>
+
+<para>
+<initial>Q:</initial>
+What is the right way to do a trailing slash redirect for the
+requests without a trailing slash in the URI?
+</para>
+
+<para>
+<initial>A:</initial>
+If the URI refers to a static file or a directory then nginx
+will do the redirect automatically. If it's not a static
+content and REQUEST_URI should be proxied to the backends,
+the following configuration will work:
+</para>
+
+<para>
+<example>
+location ~* /[^/\.]+$ {
+    rewrite ^(.*)$ http://$http_host$1/ permanent;
+}
+</example>
+</para>
+
+<para>
+However, a better way of doing that would be separating
+static content and proxying:
+</para>
+
+<para>
+<example>
+location / {
+    index index.php;
+    try_files $uri $uri/ /index.php?$args;
+}
+
+location ~ (?<URL>^.*/[^/.]+$) {
+    return 301 http://$host$url/$is_args$args;
+}
+
+location ~ \.php$ {
+    ...
+}
+</example>
+</para>
+
+</section>
+
+</article>
