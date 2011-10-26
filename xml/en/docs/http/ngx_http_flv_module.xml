@@ -9,10 +9,15 @@
 <section id="summary">
 
 <para>
-The module <code>ngx_http_flv_module</code> does special processing
-of the transmitted files: when transmitting a file starting from the
-offset specified by the “<parameter>start=XXX</parameter>” arguments
-in the request line, it adds FLV header before the requested file.
+The module <code>ngx_http_flv_module</code> provides pseudo-streaming
+server-side support for Flash Video (FLV) files.
+</para>
+
+<para>
+It handles requests with the <parameter>start</parameter> argument in
+the request URI’s query string specially, by sending back the contents
+of a file starting from the requested byte offset, and with the FLV
+header prepended.
 </para>
 
 <para>
@@ -45,7 +50,7 @@ configuration parameter.
 <context>location</context>
 
 <para>
-Enables special processing of the transmitted files.
+Turns on module processing in a surrounding location.
 </para>
 
 </directive>
