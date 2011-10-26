@@ -538,6 +538,22 @@ request header.
 </directive>
 
 
+<directive name="ignore_invalid_headers">
+<syntax><value>on</value> | <value>off</value></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Controls whether headers with invalid names should be ignored.
+Valid header names consist of letters, digits, hyphens, and possibly
+underscores (as controlled by the <link id="underscores_in_headers"/>
+directive).
+</para>
+
+</directive>
+
+
 <directive name="internal">
 <syntax/>
 <default/>
