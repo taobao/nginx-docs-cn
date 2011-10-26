@@ -26,7 +26,9 @@ REFS_EN =	en/docs/ngx_core_module					\
 		en/docs/http/ngx_http_core_module			\
 		en/docs/http/ngx_http_empty_gif_module			\
 		en/docs/http/ngx_http_flv_module			\
+		en/docs/http/ngx_http_index_module			\
 		en/docs/http/ngx_http_mp4_module			\
+		en/docs/http/ngx_http_random_index_module		\
 
 HOWTO_EN_XML =	$(foreach name, $(HOWTO_EN), xml/$(name).xml)
 HOWTO_EN_HTML =	$(foreach name, $(HOWTO_EN), $(OUT)/$(name).html)

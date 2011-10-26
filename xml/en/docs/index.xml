@@ -68,8 +68,18 @@ ngx_http_flv_module</a>
 </item>
 
 <item>
+<a href="/en/docs/http/ngx_http_index_module.xml">
+ngx_http_index_module</a>
+</item>
+
+<item>
 <a href="/en/docs/http/ngx_http_mp4_module.xml">
 ngx_http_mp4_module</a>
+</item>
+
+<item>
+<a href="/en/docs/http/ngx_http_random_index_module.xml">
+ngx_http_random_index_module</a>
 </item>
 
 </list>
