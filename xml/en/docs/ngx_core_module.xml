@@ -42,6 +42,53 @@ Mainly used during development.
 </directive>
 
 
+<directive name="error_log">
+<syntax>
+<argument>file</argument>
+[<value>debug</value> |
+<value>info</value> |
+<value>notice</value> |
+<value>warn</value> |
+<value>error</value> |
+<value>crit</value> |
+<value>alert</value> |
+<value>emerg</value>]
+</syntax>
+<default>logs/error.log error</default>
+<context>main</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Configures logging.
+</para>
+
+<para>
+The first argument defines a file that will store the log.
+<!--
+If filename is not absolute, it is prefixed with the prefix path.
+-->
+</para>
+
+<para>
+The second argument determines the level of logging.
+Log levels above are listed in the order of increasing severity.
+Setting a certain log level will cause all messages of
+the specified and more severe log levels to be logged.
+For example, the default level <value>error</value> will
+cause <value>error</value>, <value>crit</value>,
+<value>alert</value>, and <value>emerg</value> messages
+to be logged.
+<note>
+For <value>debug</value> logging to work, nginx needs to
+be configured with <code>--with-debug</code>.
+</note>
+</para>
+
+</directive>
+
+
 <directive name="env">
 <syntax><argument>VAR</argument>[=<argument>VALUE</argument>]</syntax>
 <default>TZ</default>
