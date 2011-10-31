@@ -2058,7 +2058,15 @@ location @wordpress {
 
 <para>
 Maps file name extensions to MIME types of responses.
-Several extensions can map to one type.
+Extensions are case-insensitive.
+Several extensions can map to one type, for example:
+<example>
+types {
+    application/octet-stream bin exe dll;
+    application/octet-stream deb;
+    application/octet-stream dmg;
+}
+</example>
 </para>
 
 <para>
