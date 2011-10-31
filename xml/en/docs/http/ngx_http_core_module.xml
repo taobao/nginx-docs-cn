@@ -1412,6 +1412,10 @@ optimization needs to be disabled.
 Enables or disables specifying the port in redirects issued by nginx.
 </para>
 
+<para>
+See also the <link id="server_name_in_redirect"/> directive.
+</para>
+
 </directive>
 
 
@@ -1811,6 +1815,10 @@ directive, in redirects issued by nginx.
 When disabled, the name from the <header>Host</header> request header field
 is used.
 If this field is not present, an IP address of the server is used.
+</para>
+
+<para>
+See also the <link id="port_in_redirect"/> directive.
 </para>
 
 </directive>
