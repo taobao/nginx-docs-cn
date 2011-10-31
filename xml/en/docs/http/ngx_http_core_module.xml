@@ -373,6 +373,21 @@ request body size checking.
 </directive>
 
 
+<directive name="connection_pool_size">
+<syntax><argument>size</argument></syntax>
+<default>256</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Allows to fine tune per-connection memory allocations.
+This directive has minimal impact on performance,
+and should not generally be used.
+</para>
+
+</directive>
+
+
 <directive name="default_type">
 <syntax><argument>mime-type</argument></syntax>
 <default>text/plain</default>
@@ -1510,6 +1525,21 @@ Name servers are queried in a round-robin fashion.
 <note>
 Before version 1.1.7, only a single name server could be configured.
 </note>
+</para>
+
+</directive>
+
+
+<directive name="request_pool_size">
+<syntax><argument>size</argument></syntax>
+<default>4k</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Allows to fine tune per-request memory allocations.
+This directive has minimal impact on performance,
+and should not generally be used.
 </para>
 
 </directive>
