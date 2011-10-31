@@ -187,6 +187,22 @@ location /images/ {
 </directive>
 
 
+<directive name="chunked_transfer_encoding">
+<syntax><value>on</value> | <value>off</value></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Allows disabling chunked transfer encoding in HTTP/1.1.
+It may come in handy when using a software failing to support
+chunked encoding though the standard requires it.
+</para>
+
+</directive>
+
+
 <directive name="client_body_buffer_size">
 
 <syntax><argument>size</argument></syntax>
