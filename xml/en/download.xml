@@ -7,7 +7,7 @@
 
 <section name="Development versions">
 
-<download last="5" changes="CHANGES">
+<download last="1" changes="CHANGES">
 
 <item ver="1.1.7" pgp="yes" win="yes" />
 <item ver="1.1.6" pgp="yes" win="yes" />
@@ -25,8 +25,9 @@
 
 <section name="Stable versions">
 
-<download last="5" changes="CHANGES-1.0">
+<download last="1" changes="CHANGES-1.0">
 
+<item ver="1.0.9" pgp="yes" win="yes" />
 <item ver="1.0.8" pgp="yes" win="yes" />
 <item ver="1.0.7" pgp="yes" win="yes" />
 <item ver="1.0.6" pgp="yes" win="yes" />

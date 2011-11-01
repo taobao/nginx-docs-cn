@@ -6,7 +6,7 @@
 
 <section name="Текущие версии">
 
-<download last="5" changes="CHANGES.ru">
+<download last="1" changes="CHANGES.ru">
 
 <item ver="1.1.7" pgp="yes" win="yes" />
 <item ver="1.1.6" pgp="yes" win="yes" />
@@ -24,8 +24,9 @@
 
 <section name="Стабильные версии">
 
-<download last="5" changes="CHANGES.ru-1.0">
+<download last="1" changes="CHANGES.ru-1.0">
 
+<item ver="1.0.9" pgp="yes" win="yes" />
 <item ver="1.0.8" pgp="yes" win="yes" />
 <item ver="1.0.7" pgp="yes" win="yes" />
 <item ver="1.0.6" pgp="yes" win="yes" />
