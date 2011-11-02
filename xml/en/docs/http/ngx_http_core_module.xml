@@ -1494,6 +1494,21 @@ directive.
 </directive>
 
 
+<directive name="request_pool_size">
+<syntax><argument>size</argument></syntax>
+<default>4k</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Allows to fine tune per-request memory allocations.
+This directive has minimal impact on performance,
+and should not generally be used.
+</para>
+
+</directive>
+
+
 <directive name="reset_timedout_connection">
 <syntax>
         <value>on</value> | <value>off</value></syntax>
@@ -1541,21 +1556,6 @@ Name servers are queried in a round-robin fashion.
 <note>
 Before version 1.1.7, only a single name server could be configured.
 </note>
-</para>
-
-</directive>
-
-
-<directive name="request_pool_size">
-<syntax><argument>size</argument></syntax>
-<default>4k</default>
-<context>http</context>
-<context>server</context>
-
-<para>
-Allows to fine tune per-request memory allocations.
-This directive has minimal impact on performance,
-and should not generally be used.
 </para>
 
 </directive>
