@@ -7,7 +7,7 @@ X:template style (lang) {
         body              { font-family:    Georgia, serif; }
         p                 { text-align:     justify; }
         table.news p      { margin-top:     0; }
-        table.news td     { vertical-align: top; }
+        table.news td     { vertical-align: baseline; }
         table.news .date  { text-align:     right;
                             padding-right:  0.5em;
                             white-space:    nowrap; }
