@@ -22,17 +22,18 @@ X:stylesheet {
                 &lt;tr&gt;
                 &lt;td&gt;
             }
-            <strong>
             !{document(concat($XML, '/i18n.xml'))
                        /i18n/text[@lang = $LANG]/item[@id='syntax']}
-            </strong>:
+            X:text{:}
             X:text disable-output-escaping="yes" {
                 &lt;/td&gt;
                 &lt;td&gt;
             }
         }
         <code>
+        <strong>
         !{../@name}
+        </strong>
         X:if "count(node()) != 0" {
             X:text{ } !!;
         }
@@ -57,10 +58,9 @@ X:stylesheet {
                 &lt;tr&gt;
                 &lt;td&gt;
             }
-            <strong>
             !{document(concat($XML, '/i18n.xml'))
                        /i18n/text[@lang = $LANG]/item[@id='default']}
-            </strong>:
+            X:text{:}
             X:text disable-output-escaping="yes" {
                 &lt;/td&gt;
                 &lt;td&gt;
@@ -92,23 +92,22 @@ X:stylesheet {
                 &lt;tr&gt;
                 &lt;td&gt;
             }
-            <strong>
             !{document(concat($XML, '/i18n.xml'))
                        /i18n/text[@lang = $LANG]/item[@id='context']}
-            </strong>:
+            X:text{:}
             X:text disable-output-escaping="yes" {
                 &lt;/td&gt;
                 &lt;td&gt;
             }
         }
+        <code>
         X:if "count(node()) = 0" {
-            <strong>
             !{document(concat($XML, '/i18n.xml'))
                        /i18n/text[@lang = $LANG]/item[@id='context.any']}
-            </strong>
         } else {
-            <code> !!; </code>
+            !!;
         }
+        </code>
         X:if "position() != last()" {
             X:text{, }
         } else {
