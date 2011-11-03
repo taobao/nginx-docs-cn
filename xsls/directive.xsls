@@ -9,9 +9,7 @@ X:stylesheet {
         !! "default";
         !! "context";
         </table>
-        X:if "(@appeared-in)" {
-            <p>This directive appeared in version !{@appeared-in}.</p>
-        }
+        !! "appeared-in";
         </div>
         !! "para";
     }
@@ -119,4 +117,31 @@ X:stylesheet {
         }
     }
 
+    X:template = "appeared-in" {
+        X:if "last() = 1" {
+            <p>This directive appeared in version !!;.</p>
+        } else {
+            X:choose {
+                X:when "position() = 1" {
+                    X:text disable-output-escaping="yes" {
+                        &lt;p&gt;
+                    }
+                    This directive appeared in versions !!;
+                    X:if "last() > 2" {
+                        X:text{, }
+                    }
+                }
+                X:when "position() != last()" {
+                    !!;
+                    X:text{, }
+                }
+                X:otherwise {
+                    and !!;.
+                    X:text disable-output-escaping="yes" {
+                        &lt;/p&gt;
+                    }
+                }
+            }
+        }
+    }
 }

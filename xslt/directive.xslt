@@ -18,12 +18,7 @@
 
          </table>
 
-         <xsl:if test="(@appeared-in)">
-
-            <p>This directive appeared in version
-               <xsl:value-of select="@appeared-in"/>.
-            </p>
-         </xsl:if>
+         <xsl:apply-templates select="appeared-in"/>
 
       </div>
 
@@ -195,6 +190,45 @@
                 &lt;/td&gt;
                 &lt;/tr&gt;
             </xsl:text>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
+
+   <xsl:template match="appeared-in">
+      <xsl:choose>
+
+         <xsl:when test="last() = 1">
+
+            <p>This directive appeared in version
+               <xsl:apply-templates/>.
+            </p>
+         </xsl:when>
+
+         <xsl:otherwise>
+
+            <xsl:choose>
+               <xsl:when test="position() = 1">
+                  <xsl:text disable-output-escaping="yes">
+                        &lt;p&gt;
+                    </xsl:text>
+                    This directive appeared in versions
+                  <xsl:apply-templates/>
+                  <xsl:if test="last() &gt; 2">
+                     <xsl:text>, </xsl:text>
+                  </xsl:if>
+               </xsl:when>
+               <xsl:when test="position() != last()">
+                  <xsl:apply-templates/>
+                  <xsl:text>, </xsl:text>
+               </xsl:when>
+               <xsl:otherwise>
+                    and
+                  <xsl:apply-templates/>.
+                  <xsl:text disable-output-escaping="yes">
+                        &lt;/p&gt;
+                    </xsl:text>
+               </xsl:otherwise>
+            </xsl:choose>
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>

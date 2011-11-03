@@ -8,7 +8,7 @@
 
 <section id="directives" name="Directives">
 
-<directive name="aio" appeared-in="0.8.11">
+<directive name="aio">
 <syntax>
         <value>on</value> |
         <value>off</value> |
@@ -18,6 +18,7 @@
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>0.8.11</appeared-in>
 
 <para>
 Enables or disables the use of asynchronous file I/O (AIO)
@@ -419,12 +420,13 @@ See also the <link id="types"/> directive.
 </directive>
 
 
-<directive name="directio" appeared-in="0.7.7">
+<directive name="directio">
 <syntax><argument>size</argument> | <value>off</value></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>0.7.7</appeared-in>
 
 <para>
 Enables the use of
@@ -445,12 +447,13 @@ or when using <link id="aio"/> on Linux.
 </directive>
 
 
-<directive name="directio_alignment" appeared-in="0.8.11">
+<directive name="directio_alignment">
 <syntax><argument>size</argument></syntax>
 <default>512</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>0.8.11</appeared-in>
 
 <para>
 Sets an alignment for
@@ -526,7 +529,7 @@ location @fallback {
 </directive>
 
 
-<directive name="if_modified_since" appeared-in="0.7.24">
+<directive name="if_modified_since">
 <syntax>
         <value>off</value> |
         <value>exact</value> |
@@ -536,6 +539,7 @@ location @fallback {
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>0.7.24</appeared-in>
 
 <para>
 Specifies how to compare modification time of a response
@@ -634,12 +638,13 @@ location /404.html {
 </directive>
 
 
-<directive name="keepalive_requests" appeared-in="0.8.0">
+<directive name="keepalive_requests">
 <syntax><argument>number</argument></syntax>
 <default>100</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>0.8.0</appeared-in>
 
 <para>
 Sets the maximum number of requests that can be
@@ -789,13 +794,14 @@ server {
 </directive>
 
 
-<directive name="limit_rate_after" appeared-in="0.8.0">
+<directive name="limit_rate_after">
 <syntax><argument>size</argument></syntax>
 <default>0</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
 <context>if in location</context>
+<appeared-in>0.8.0</appeared-in>
 
 <para>
 Sets the initial amount after which the further transmission

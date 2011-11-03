@@ -12,10 +12,9 @@
             name        CDATA #IMPLIED
 >
 
-<!ELEMENT   directive   (syntax+, default+, context*, para+) >
+<!ELEMENT   directive   (syntax+, default+, context*, appeared-in*, para+) >
 <!ATTLIST   directive
             name        ID #REQUIRED
-            appeared-in CDATA #IMPLIED
 >
 
 <!ELEMENT   syntax      (#PCDATA | argument | code | parameter | value)* >
@@ -26,6 +25,8 @@
 <!ELEMENT   default     (#PCDATA)* >
 
 <!ELEMENT   context     (#PCDATA)* >
+
+<!ELEMENT   appeared-in (#PCDATA)* >
 
 <!ELEMENT   para        (#PCDATA | argument | c-def | c-func | code | command |
                          emphasis | example | header | http-status | link |
