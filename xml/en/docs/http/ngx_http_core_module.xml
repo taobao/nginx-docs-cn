@@ -822,6 +822,77 @@ location /flv/ {
 </directive>
 
 
+<directive name="lingering_close">
+<syntax><value>off</value> | <value>on</value> | <value>always</value></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.0</appeared-in>
+<appeared-in>1.0.6</appeared-in>
+
+<para>
+Controls how nginx closes client connections.
+</para>
+
+<para>
+The default value “<value>on</value>” instructs nginx to
+<link id="lingering_timeout">wait for</link> and
+<link id="lingering_time">process</link> additional data from a client
+before fully closing a connection, but only
+if heuristics suggests that a client may be sending more data.
+</para>
+
+<para>
+The value “<value>always</value>” will cause nginx to unconditionally
+wait for and process additional client data.
+</para>
+
+<para>
+The value “<value>off</value>” tells nginx to never wait for
+more data and close the connection immediately.
+This breaks the protocol and should not be used under normal circumstances.
+</para>
+
+</directive>
+
+
+<directive name="lingering_time">
+<syntax><argument>time</argument></syntax>
+<default>30s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+When <link id="lingering_close"/> is in effect,
+this directive specifies a maximum time during which nginx
+will process (read and ignore) additional data coming from a client.
+After that, the connection is closed, even if there are more data.
+</para>
+
+</directive>
+
+
+<directive name="lingering_timeout">
+<syntax><argument>time</argument></syntax>
+<default>5s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+When <link id="lingering_close"/> is in effect, this directive specifies
+a maximum waiting time for more client data to arrive.
+If data are not received during this time, the connection is closed.
+Otherwise, data are read and ignored, then nginx waits again for more data.
+The “wait-read-ignore” cycle is repeated, but no longer than specified by the
+<link id="lingering_time"/> directive.
+</para>
+
+</directive>
+
+
 <directive name="listen">
 <syntax>
         <argument>address</argument>[:<argument>port</argument>]
