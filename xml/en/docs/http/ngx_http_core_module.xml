@@ -1249,6 +1249,24 @@ Enables or disables logging of subrequests into the
 </directive>
 
 
+<directive name="max_ranges">
+<syntax><argument>number</argument></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Limits the maximum allowed number of ranges in byte-range requests.
+Requests that exceed the limit are processed as if there were no
+byte ranges specified.
+By default, there is no limit.
+The value of zero disables the byte-range support completely.
+</para>
+
+</directive>
+
+
 <directive name="merge_slashes">
 <syntax><value>on</value> | <value>off</value></syntax>
 <default>on</default>
@@ -1527,6 +1545,22 @@ See also the <link id="server_name_in_redirect"/> directive.
 </directive>
 
 
+<directive name="postpone_output">
+<syntax><argument>size</argument></syntax>
+<default>1460</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+If possible, the output of client data will be postponed until
+nginx has at least <argument>size</argument> bytes of data to send.
+Value of zero disables postponing.
+</para>
+
+</directive>
+
+
 <directive name="read_ahead">
 <syntax><argument>size</argument></syntax>
 <default>0</default>
@@ -1764,6 +1798,23 @@ a connection is closed.
 <para>
 Enables or disables the use of
 <c-func>sendfile</c-func>.
+</para>
+
+</directive>
+
+
+<directive name="sendfile_max_chunk">
+
+<syntax><argument>size</argument></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+When set to a non-zero value, limits the amount of data that can be
+transferred in a single <c-func>sendfile</c-func> call.
+Without the limit, one fast connection may seize the worker process.
 </para>
 
 </directive>
