@@ -2054,9 +2054,10 @@ send a file in full packets.
 Checks the existence of files in the specified order, and uses
 the first found file for request processing; the processing
 is performed in the current context.
-A path to the file is a concatenation of the prefix (as controlled by the
-<link id="root"/> and <link id="alias"/> directives) and the
-<argument>file</argument> argument.
+A path to the file is constructed from the
+<argument>file</argument> argument
+according to the
+<link id="root"/> and <link id="alias"/> directives.
 It is possible to check the directory existence by specifying
 a slash at the end of a name, e.g. “<code>$uri/</code>”.
 If none of the files were found, an internal redirect to the
