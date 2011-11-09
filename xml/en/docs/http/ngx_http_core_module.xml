@@ -638,6 +638,28 @@ location /404.html {
 </directive>
 
 
+<directive name="keepalive_disable">
+<syntax><value>none</value> | <argument>browser</argument> ...</syntax>
+<default>msie6 safari</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Disables keep-alive connections with misbehaving browsers.
+The <argument>browser</argument> arguments specify which
+browsers will be affected.
+The value <value>msie6</value> disables keep-alive connections
+with some old versions of MSIE, after seeing a POST request.
+The value <value>safari</value> disables keep-alive connections
+with Safari browsers.
+The value <value>none</value> enables keep-alive connections
+with all browsers.
+</para>
+
+</directive>
+
+
 <directive name="keepalive_requests">
 <syntax><argument>number</argument></syntax>
 <default>100</default>
@@ -1763,6 +1785,29 @@ location / {
 <para>
 This directive was renamed to the <link id="satisfy">satisfy any</link>
 directive.
+</para>
+
+</directive>
+
+
+<directive name="send_lowat">
+<syntax><argument>size</argument></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+If set to a non-zero value, nginx will try to minimize the number
+of send operations on client sockets by using either
+<c-def>NOTE_LOWAT</c-def> flag of
+<link doc="../events.xml" id="kqueue"/>,
+or the <c-def>SO_SNDLOWAT</c-def> socket option,
+with the specified <argument>size</argument>.
+</para>
+
+<para>
+This directive is ignored on Linux, Solaris, and Windows.
 </para>
 
 </directive>
