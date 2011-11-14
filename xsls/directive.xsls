@@ -119,24 +119,39 @@ X:stylesheet {
 
     X:template = "appeared-in" {
         X:if "last() = 1" {
-            <p>This directive appeared in version !!;.</p>
+            <p>
+            !{document(concat($XML, '/i18n.xml'))
+                       /i18n/text[@lang = $LANG]/item
+                       [@id='directive.version']}
+            X:text{ }
+            !!;.
+            </p>
         } else {
             X:choose {
                 X:when "position() = 1" {
                     X:text disable-output-escaping="yes" {
                         &lt;p&gt;
                     }
-                    This directive appeared in versions !!;
+                    !{document(concat($XML, '/i18n.xml'))
+                               /i18n/text[@lang = $LANG]/item
+                               [@id='directive.versions']}
+                    X:text{ }
+                    !!;
                     X:if "last() > 2" {
-                        X:text{, }
+                        X:text{,}
                     }
+                    X:text{ }
                 }
                 X:when "position() != last()" {
                     !!;
                     X:text{, }
                 }
                 X:otherwise {
-                    and !!;.
+                    !{document(concat($XML, '/i18n.xml'))
+                               /i18n/text[@lang = $LANG]/item
+                               [@id='and']}
+                    X:text{ }
+                    !!;.
                     X:text disable-output-escaping="yes" {
                         &lt;/p&gt;
                     }

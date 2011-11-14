@@ -3,6 +3,7 @@
 <i18n>
 
 <text lang="en">
+<item id="and">and</item>
 <item id="author">written by</item>
 <item id="editor">edited by</item>
 <item id="translator">translated by</item>
@@ -10,13 +11,18 @@
 <item id="default">default</item>
 <item id="context">context</item>
 <item id="context.any">any</item>
+<item id="directive.version">This directive appeared in version</item>
+<item id="directive.versions">This directive appeared in versions</item>
 </text>
 
 <text lang="ru">
+<item id="and">и</item>
 <item id="syntax">синтаксис</item>
 <item id="default">умолчание</item>
 <item id="context">контекст</item>
 <item id="context.any">любой</item>
+<item id="directive.version">Эта директива появилась в версии</item>
+<item id="directive.versions">Эта директива появилась в версиях</item>
 </text>
 
 <text lang="ja">

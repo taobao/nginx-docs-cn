@@ -199,8 +199,14 @@
 
          <xsl:when test="last() = 1">
 
-            <p>This directive appeared in version
+            <p>
+
+               <xsl:value-of select="document(concat($XML, '/i18n.xml'))                        /i18n/text[@lang = $LANG]/item                        [@id='directive.version']"/>
+
+               <xsl:text> </xsl:text>
+
                <xsl:apply-templates/>.
+
             </p>
          </xsl:when>
 
@@ -211,18 +217,21 @@
                   <xsl:text disable-output-escaping="yes">
                         &lt;p&gt;
                     </xsl:text>
-                    This directive appeared in versions
+                  <xsl:value-of select="document(concat($XML, '/i18n.xml'))                                /i18n/text[@lang = $LANG]/item                                [@id='directive.versions']"/>
+                  <xsl:text> </xsl:text>
                   <xsl:apply-templates/>
                   <xsl:if test="last() &gt; 2">
-                     <xsl:text>, </xsl:text>
+                     <xsl:text>,</xsl:text>
                   </xsl:if>
+                  <xsl:text> </xsl:text>
                </xsl:when>
                <xsl:when test="position() != last()">
                   <xsl:apply-templates/>
                   <xsl:text>, </xsl:text>
                </xsl:when>
                <xsl:otherwise>
-                    and
+                  <xsl:value-of select="document(concat($XML, '/i18n.xml'))                                /i18n/text[@lang = $LANG]/item                                [@id='and']"/>
+                  <xsl:text> </xsl:text>
                   <xsl:apply-templates/>.
                   <xsl:text disable-output-escaping="yes">
                         &lt;/p&gt;
