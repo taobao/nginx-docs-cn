@@ -2,108 +2,17 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_limit_zone_module"
+<module name="Модуль ngx_http_limit_zone_module"
         link="/ru/docs/http/ngx_http_limit_zone_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_limit_zone_module позволяет ограничить число одновременных
-соединений для заданной сессии или, как частный случай, с одного адреса.
+В версии 1.1.8 модуль <code>ngx_http_limit_zone_module</code>
+был переименован в модуль
+<link doc="ngx_http_limit_conn_module.xml">ngx_http_limit_conn_module</link>.
 </para>
-
-</section>
-
-
-<section name="Пример конфигурации" id="example">
-
-<para>
-<example>
-http {
-    limit_zone   one  $binary_remote_addr  10m;
-
-    ...
-
-    server {
-
-        ...
-
-        location /download/ {
-            limit_conn   one  1;
-        }
-</example>
-</para>
-
-</section>
-
-
-<section name="Директивы" id="directives">
-
-<directive name="limit_zone">
-<syntax><value>название $переменная размер</value></syntax>
-<default/>
-<context>http</context>
-
-<para>
-Директива описывает зону, в которой хранятся состояния сессий.
-Значения сессий определяется заданной переменной.
-Пример использования:
-<example>
-limit_zone   one  $binary_remote_addr  10m;
-</example>
-</para>
-
-<para>
-В качестве сессии используется адрес клиента.
-Обратите внимание, что вместо переменной $remote_addr используется
-переменная $binary_remote_addr.
-Длина значений переменной $remote_addr может быть от 7 до 15 байт,
-поэтому размер состоянии равен 32 или 64 байтам.
-Длина всех значений переменной $binary_remote_addr всегда 4 байта
-и размер состояния всегда 32 байта.
-В зоне размером 1 мегабайт может разместиться около 32 000 состояний
-размером 32 байта.
-</para>
-
-</directive>
-
-
-<directive name="limit_conn">
-<syntax><value>зона число</value></syntax>
-<default/>
-<context>http, server, location</context>
-
-<para>
-Директива задаёт максимальное число одновременных соединений для одной сессии.
-При превышении этого числа запрос завершается кодом "Service unavailable" (503).
-Например, директивы
-<example>
-limit_zone   one  $binary_remote_addr  10m;
-
-    server {
-        location /download/ {
-            limit_conn   one  1;
-        }
-
-</example>
-позволяют не более одного одновременного соединения с одного адреса.
-</para>
-
-</directive>
-
-
-<directive name="limit_conn_log_level">
-<syntax><value>[info|notice|warn|error]</value></syntax>
-<default>error</default>
-<context>http, server, location</context>
-
-<para>
-Директива (0.8.18) задаёт уровень логирования случаев ограничения
-числа соединений.
-</para>
-
-</directive>
 
 </section>
 

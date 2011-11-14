@@ -68,6 +68,16 @@ ngx_http_flv_module</a>
 </item>
 
 <item>
+<a href="/en/docs/http/ngx_http_limit_conn_module.xml">
+ngx_http_limit_conn_module</a>
+</item>
+
+<item>
+<a href="/en/docs/http/ngx_http_limit_req_module.xml">
+ngx_http_limit_req_module</a>
+</item>
+
+<item>
 <a href="/en/docs/http/ngx_http_index_module.xml">
 ngx_http_index_module</a>
 </item>

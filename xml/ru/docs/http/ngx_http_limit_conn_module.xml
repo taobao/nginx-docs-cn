@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Модуль ngx_http_limit_conn_module"
+        link="/ru/docs/http/ngx_http_limit_conn_module.html"
+        lang="ru">
+
+<section id="summary">
+
+<para>
+Модуль <code>ngx_http_limit_conn_module</code> позволяет ограничить
+число соединений по заданному ключу или,
+как частный случай, число соединений с одного IP-адреса.
+</para>
+
+<para>
+Ограничиваются не любые соединения, а лишь те, в которых имеются
+запросы, обрабатываемые сервером, и заголовок запроса уже прочитан.
+</para>
+
+</section>
+
+
+<section name="Пример конфигурации" id="example">
+
+<para>
+<example>
+http {
+    limit_conn_zone $binary_remote_addr zone=addr:10m;
+
+    ...
+
+    server {
+
+        ...
+
+        location /download/ {
+            limit_conn addr 1;
+        }
+</example>
+</para>
+
+</section>
+
+
+<section name="Директивы" id="directives">
+
+<directive name="limit_conn">
+<syntax><argument>зона число</argument></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Директива задаёт максимально допустимое число соединений
+для одного значения ключа.
+При превышении этого числа в ответ на запрос сервер вернёт ошибку
+<http-status code="503" text="Service Temporarily Unavailable"/>.
+Например, директивы
+<example>
+limit_conn_zone $binary_remote_addr zone=addr:10m;
+
+    server {
+        location /download/ {
+            limit_conn addr 1;
+        }
+</example>
+разрешают одновременно обрабатывать не более одного соединения с одного
+IP-адреса.
+</para>
+
+<para>
+Допустимо одновременное указание нескольких директив <code>limit_conn</code>,
+при этом будет срабатывать любое из ограничений.
+</para>
+
+<para>
+Директивы наследуются с предыдущего уровня при условии, что на данном уровне
+не описаны свои директивы <code>limit_conn</code>.
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_log_level">
+<syntax>
+<value>info</value> |
+<value>notice</value> |
+<value>warn</value> |
+<value>error</value>
+</syntax>
+<default>error</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.8.18</appeared-in>
+
+<para>
+Директива задаёт желаемый уровень записи в лог случаев ограничения
+числа соединений.
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_zone">
+<syntax>
+    <argument>$переменная </argument>
+    <parameter>zone</parameter>=<argument>название</argument>:<argument>размер</argument>
+</syntax>
+<default/>
+<context>http</context>
+
+<para>
+Директива задаёт параметры зоны, которая хранит состояние
+для разных значений ключа.
+Состояние в частности хранит текущее число соединений.
+Ключом является значение заданной переменной.
+Пример использования:
+<example>
+limit_conn_zone $binary_remote_addr zone=addr:10m;
+</example>
+Здесь в качестве ключа используется IP-адрес клиента.
+Обратите внимание, что вместо переменной <var>$remote_addr</var>
+использована переменная <var>$binary_remote_addr</var>.
+Длина значения переменной <var>$remote_addr</var> может колебаться
+от 7 до 15 байт, при этом размер хранимого состояния составляет
+либо 32, либо 64 байта на 32-битных платформах, и всегда 64
+байта на 64-битных.
+Длина значения переменной <var>$binary_remote_addr</var> всегда
+равна 4 байтам, при этом размер состояния всегда равен 32 байтам
+на 32-битных платформах и 64 байтам на 64-битных.
+В зоне размером 1 мегабайт может разместиться около 32 тысяч состояний
+размером 32 байта, или 16 тысяч состояний размером 64 байта.
+При переполнении зоны в ответ на последующие запросы сервер будет
+возвращать ошибку
+<http-status code="503" text="Service Temporarily Unavailable"/>.
+</para>
+
+</directive>
+
+<directive name="limit_zone">
+<syntax><argument>$переменная название размер</argument></syntax>
+<default/>
+<context>http</context>
+
+<para>
+Эта директива устарела в версии 1.1.8, вместо неё следует
+использовать директиву <link id="limit_conn_zone"/>.
+</para>
+
+</directive>
+
+</section>
+
+</module>

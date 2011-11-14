@@ -28,6 +28,7 @@ DOCS_RU =	ru/docs/faq						\
 		ru/docs/http/ngx_http_headers_module			\
 		ru/docs/http/ngx_http_image_filter_module		\
 		ru/docs/http/ngx_http_index_module			\
+		ru/docs/http/ngx_http_limit_conn_module			\
 		ru/docs/http/ngx_http_limit_req_module			\
 		ru/docs/http/ngx_http_limit_zone_module			\
 		ru/docs/http/ngx_http_log_module			\

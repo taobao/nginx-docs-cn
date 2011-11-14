@@ -137,7 +137,10 @@ streaming;
 </item>
 
 <item>
-Limiting the number of simultaneous connections or requests
+Limiting the number of simultaneous
+<link doc="docs/http/ngx_http_limit_conn_module.xml">connections</link>
+or
+<link doc="docs/http/ngx_http_limit_req_module.xml">requests</link>
 coming from one address;
 </item>
 

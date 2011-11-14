@@ -183,8 +183,8 @@ ngx_http_index_module</a>
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_limit_zone_module.xml">
-ngx_http_limit_zone_module</a>
+<a href="/ru/docs/http/ngx_http_limit_conn_module.xml">
+ngx_http_limit_conn_module</a>
 </item>
 
 <item>

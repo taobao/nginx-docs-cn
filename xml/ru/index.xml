@@ -166,7 +166,7 @@ PUT, DELETE, MKCOL, COPY и MOVE</link>;
 
 <item>
 Ограничение числа одновременных
-<link doc="docs/http/ngx_http_limit_zone_module.xml">соединений</link> и
+<link doc="docs/http/ngx_http_limit_conn_module.xml">соединений</link> и
 <link doc="docs/http/ngx_http_limit_req_module.xml">запросов</link>
 с одного адреса;
 </item>

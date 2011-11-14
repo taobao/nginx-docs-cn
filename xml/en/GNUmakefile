@@ -27,6 +27,8 @@ REFS_EN =	en/docs/ngx_core_module					\
 		en/docs/http/ngx_http_empty_gif_module			\
 		en/docs/http/ngx_http_flv_module			\
 		en/docs/http/ngx_http_index_module			\
+		en/docs/http/ngx_http_limit_conn_module			\
+		en/docs/http/ngx_http_limit_req_module			\
 		en/docs/http/ngx_http_mp4_module			\
 		en/docs/http/ngx_http_random_index_module		\
 
