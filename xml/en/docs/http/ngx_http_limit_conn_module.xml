@@ -149,7 +149,13 @@ to all further requests.
 
 <para>
 This directive is made obsolete in version 1.1.8,
-the <link id="limit_conn_zone"/> directive should be used instead.
+an equivalent <link id="limit_conn_zone"/> directive
+with a changed syntax should be used instead:
+<note>
+<code>limit_conn_zone </code>
+<argument>$variable </argument>
+<parameter>zone</parameter>=<argument>name</argument>:<argument>size</argument>;
+</note>
 </para>
 
 </directive>

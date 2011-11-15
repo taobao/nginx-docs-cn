@@ -148,7 +148,13 @@ limit_conn_zone $binary_remote_addr zone=addr:10m;
 
 <para>
 Эта директива устарела в версии 1.1.8, вместо неё следует
-использовать директиву <link id="limit_conn_zone"/>.
+использовать аналогичную директиву <link id="limit_conn_zone"/>
+с изменённым синтаксисом:
+<note>
+<code>limit_conn_zone </code>
+<argument>$переменная </argument>
+<parameter>zone</parameter>=<argument>название</argument>:<argument>размер</argument>;
+</note>
 </para>
 
 </directive>
