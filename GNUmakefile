@@ -202,7 +202,7 @@ do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
 	find $(ZIP) -type f ! -name '*.gz' -exec test \! -e {}.gz \; -print
 
 	find $(ZIP) -type f -name '*.gz' | \
-	while read f ; do test -e "$${f%.gz}" || rm -fv "$$f" ; done
+		while read f ; do test -e "$${f%.gz}" || rm -fv "$$f" ; done
 
 $(ZIP)/%.gz:		$(ZIP)/%
 		rm -f $<.gz
@@ -213,10 +213,15 @@ draft:	all
 	$(CHMOD) $(OUT)/
 	$(RSYNC) --delete $(OUT)/ $(NGINX_ORG)/$(OUT)/
 
+.PHONY:	binary
+binary:
+	$(RSYNC) binary/ $(NGINX_ORG)/
+
 copy:
 	$(CHMOD) $(ZIP)
 	$(RSYNC) $(ZIP)/ binary/ $(NGINX_ORG)/
-	$(RSYNC) --delete $(foreach lang, $(LANGS), $(ZIP)/$(lang)) $(NGINX_ORG)/
+	$(RSYNC) --delete $(foreach lang, $(LANGS), $(ZIP)/$(lang))	\
+		$(NGINX_ORG)/
 
 dev:	xslt/development.xslt sign
 dev:	NGINX=$(shell xsltproc xslt/development.xslt xml/versions.xml)
