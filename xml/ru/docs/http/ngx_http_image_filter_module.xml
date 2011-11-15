@@ -99,7 +99,7 @@ location = /empty {
 <value>90</value>|<value>180</value>|<value>270</value>
 </tag-name>
 <tag-desc>
-поворачивает изображение по часовой стрелке на указанное число градусов.
+поворачивает изображение против часовой стрелки на указанное число градусов.
 </tag-desc>
 
 <tag-name><parameter>resize </parameter>
