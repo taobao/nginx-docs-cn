@@ -1670,7 +1670,10 @@ closed normally.
 
 
 <directive name="resolver">
-<syntax><argument>address</argument> ...</syntax>
+<syntax>
+<argument>address</argument> ...
+[<parameter>valid</parameter>=<argument>time</argument>]
+</syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -1688,6 +1691,15 @@ in the latter case, the first resolved IPv4 address is used.
 Name servers are queried in a round-robin fashion.
 <note>
 Before version 1.1.7, only a single name server could be configured.
+</note>
+By default, nginx caches answers using the TTL value of a response.
+An optional <parameter>valid</parameter> parameter allows to override it:
+<example>
+resolver 127.0.0.1 192.0.2.1 valid=30s;
+</example>
+<note>
+Before version 1.1.9, tuning of caching time was not possible,
+and nginx always cached answers for the duration of 5 minutes.
 </note>
 </para>
 
