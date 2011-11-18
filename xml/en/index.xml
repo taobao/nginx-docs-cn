@@ -94,12 +94,14 @@ Flexible configuration;
 </item>
 
 <item>
-Reconfiguration and upgrade of an executable without interruption
-of the client servicing;
+<link doc="docs/control.xml" id="reconfiguration">Reconfiguration</link>
+and <link doc="docs/control.xml" id="upgrade">upgrade of an
+executable</link> without interruption of the client servicing;
 </item>
 
 <item>
-Access log formats, buffered log writing, and fast log rotation;
+Access log formats, buffered log writing, and
+<link doc="docs/control.xml" id="logs">fast log rotation</link>;
 </item>
 
 <item>

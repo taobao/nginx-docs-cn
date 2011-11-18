@@ -1,8 +1,9 @@
 
-DOCS_EN =	en/docs/windows						\
+DOCS_EN =	en/docs/control						\
 		en/docs/introduction					\
 		en/docs/howto						\
 		en/docs/faq						\
+		en/docs/windows						\
 
 DOCS_EN_XML =	$(foreach name, $(DOCS_EN), xml/$(name).xml)
 DOCS_EN_HTML =	$(foreach name, $(DOCS_EN), $(OUT)/$(name).html)
