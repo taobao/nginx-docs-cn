@@ -7,7 +7,7 @@ SHELL =		./umasked.sh
 
 CP =		/data/sites/java/xsls/\*:$(HOME)/java/xsls/\*
 RSYNC =		rsync -v -rpc --exclude=.svn
-CHMOD =		/bin/chmod -R g+w
+CHMOD =		/bin/chmod -R g=u
 
 
 define	XSLScript
@@ -183,7 +183,7 @@ gzip:	rsync_gzip
 	$(MAKE) do_gzip
 
 rsync_gzip:
-	$(CHMOD) $(OUT)/
+	$(CHMOD) $(OUT) $(TEXT)
 	$(RSYNC) --delete --exclude='*.gz' $(OUT)/ $(TEXT)/ $(ZIP)/
 
 do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
@@ -210,15 +210,16 @@ $(ZIP)/%.gz:		$(ZIP)/%
 		touch -r $< $<.gz
 
 draft:	all
-	$(CHMOD) $(OUT)/
+	$(CHMOD) $(OUT)
 	$(RSYNC) --delete $(OUT)/ $(NGINX_ORG)/$(OUT)/
 
 .PHONY:	binary
 binary:
+	$(CHMOD) binary
 	$(RSYNC) binary/ $(NGINX_ORG)/
 
 copy:
-	$(CHMOD) $(ZIP)
+	$(CHMOD) $(ZIP) binary
 	$(RSYNC) $(ZIP)/ binary/ $(NGINX_ORG)/
 	$(RSYNC) --delete $(foreach lang, $(LANGS), $(ZIP)/$(lang))	\
 		$(NGINX_ORG)/
