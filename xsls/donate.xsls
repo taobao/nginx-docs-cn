@@ -4,7 +4,7 @@ X:template = "paypal" {
 
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
         <input name="cmd" value="_donations" type="hidden" />
-        <input name="business" value="paypal@nginx.net" type="hidden" />
+        <input name="business" value="paypal@nginx.org" type="hidden" />
         <input name="lc" value="US" type="hidden" />
         <input name="currency_code" value="USD" type="hidden" />
 
