@@ -1,0 +1,59 @@
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
+
+<article name="How can nginx copyright be acknowledged
+               when using nginx as part of a proprietary
+               software distibution?"
+         link="/en/docs/faq/license_copyright.html"
+         lang="en">
+
+<section>
+
+<para>
+<initial>Q:</initial>
+I'd like to use nginx distribution as part of my proprietary
+software package. How can nginx copyright be acknowledged
+when using nginx as part of a proprietary software distibution?
+</para>
+
+<para>
+&nbsp;
+</para>
+
+<para>
+<initial>A:</initial>
+The section of text below should be added to your license descriptions.
+Also, if your build of nginx includes any of the following 3rd party
+products: zlib, PCRE, OpenSSL &#8212; it's worth including their
+copyright acknowledgements and disclaimers as well.
+</para>
+
+<programlisting>
+This product contains software provided by Nginx, Inc. and its contributors.
+
+Copyright (c) 2002-2011, Igor Sysoev. All rights reserved.
+Copyright (c) 2011, Nginx, Inc. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are
+permitted provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY NGINX, INC. AND CONTRIBUTORS AS IS AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL NGINX, INC. OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+</programlisting>
+
+</section>
+
+</article>
