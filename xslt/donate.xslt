@@ -7,7 +7,7 @@
 
          <input name="cmd" value="_donations" type="hidden"/>
 
-         <input name="business" value="paypal@nginx.net" type="hidden"/>
+         <input name="business" value="paypal@nginx.org" type="hidden"/>
 
          <input name="lc" value="US" type="hidden"/>
 
