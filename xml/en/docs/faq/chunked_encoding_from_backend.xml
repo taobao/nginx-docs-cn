@@ -29,9 +29,9 @@ returns something framed in decimal numbers like
 
 <para>
 <initial>A:</initial>
-Your backend violates HTTP/1.0 specification (see
+Your backend violates HTTP specification (see
 <a href="http://tools.ietf.org/html/rfc2616#section-3.6">RFC 2616,
-"3.6 Transfer Codings"</a>
+"3.6 Transfer Codings"</a>).
 The "chunked" transfer-codings must not be used with HTTP/1.0.
 You'd need to either fix your backend application or upgrade
 to nginx version 1.1.4 and newer, where an additional code

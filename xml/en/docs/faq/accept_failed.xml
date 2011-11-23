@@ -1,8 +1,8 @@
-<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article name="What does the following error mean:
-                accept() failed (53: Software caused connection abort)
-                while accepting new connection on 0.0.0.0:80 ?"
+               accept() failed (53: Software caused connection abort)
+               while accepting new connection on 0.0.0.0:80?"
          link="/en/docs/faq/accept_failed.html"
          lang="en">
 
@@ -24,10 +24,10 @@ connection on 0.0.0.0:80"?
 Such errors stem from the connections that the clients managed
 to close before nginx was able to process them. For instance, this can
 happen in a situation when the user didn't wait for a page
-heavily populated with graphics to load fully, and clicked on
-a different link. In this case user's browser would close all of
-the prior connections which aren't longer necessary. It is a non-critical
-error.
+heavily populated with images to load fully, and clicked on a
+different link. In this case user's browser would close all of
+the prior connections which aren't longer necessary.
+It is a non-critical error.
 </para>
 
 </section>
