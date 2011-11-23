@@ -24,6 +24,11 @@ when using nginx as part of a proprietary software distibution?
 The text below should be added to your license conditions,
 followed by the text of the applicable 2-clause BSD license described
 <a href="http://nginx.org/LICENSE">here</a>.
+
+<programlisting>
+This product contains software provided by Nginx, Inc. and its contributors.
+</programlisting>
+
 </para>
 
 <para>
@@ -31,10 +36,6 @@ Also, if your build of nginx includes any of the following 3rd party
 products: zlib, PCRE, OpenSSL &#8212; it's worth including their
 copyright acknowledgements and disclaimers as well.
 </para>
-
-<programlisting>
-This product contains software provided by Nginx, Inc. and its contributors.
-</programlisting>
 
 </section>
 

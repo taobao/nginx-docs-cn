@@ -21,7 +21,7 @@ in a production environment?
 <para>
 <initial>A:</initial>
 First of all, both "daemon on|off" and "master_process on|off" directives were
-intended to be used primarily for nginx code develpment.
+intended to be used primarily for nginx code development.
 </para>
 
 <para>
@@ -35,7 +35,7 @@ option with "daemon off".
 In a development environment, using "master_process off", nginx can run in
 the foreground without the master process and can be terminated simply
 with ^C (SIGINT). This is somewhat similar to running Apache with
-an 'X' commandline option. However you should NEVER run nginx in production
+an 'X' command-line option. However you should NEVER run nginx in production
 with "master_process off".
 </para>
 

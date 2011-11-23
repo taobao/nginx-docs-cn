@@ -12,7 +12,7 @@
 My backend server appears to send HTTP/1.0 responses using
 chunked encoding but nginx doesn't handle it correctly.
 For instance, I'm using nginx as a frontend to my node.js
-application and instead of pure JSON from backend nginx
+application and instead of pure JSON from backend, nginx
 returns something framed in decimal numbers like
 
 <programlisting>

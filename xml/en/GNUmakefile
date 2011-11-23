@@ -37,7 +37,12 @@ HOWTO_EN_XML =	$(foreach name, $(HOWTO_EN), xml/$(name).xml)
 HOWTO_EN_HTML =	$(foreach name, $(HOWTO_EN), $(OUT)/$(name).html)
 
 FAQ_EN =	en/docs/sys_errlist					\
-		en/docs/welcome_nginx_facebook
+		en/docs/welcome_nginx_facebook				\
+		en/docs/faq/accept_failed				\
+		en/docs/faq/daemon_master_process_off			\
+		en/docs/faq/variables_in_config				\
+		en/docs/faq/chunked_encoding_from_backend		\
+		en/docs/faq/license_copyright
 
 FAQ_EN_XML =	$(foreach name, $(FAQ_EN), xml/$(name).xml)
 FAQ_EN_HTML =	$(foreach name, $(FAQ_EN), $(OUT)/$(name).html)
