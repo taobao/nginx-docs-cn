@@ -34,6 +34,7 @@
 location /img/ {
     proxy_pass   http://backend;
     image_filter resize 150 100;
+    image_filter rotate 90;
     error_page   415 = /empty;
 }
 
@@ -53,7 +54,7 @@ location = /empty {
     <syntax><parameter>test</parameter></syntax>
     <syntax><parameter>size</parameter></syntax>
     <syntax><parameter>rotate </parameter>
-        <value>90</value>|<value>180</value>|<value>270</value>
+        <value>90</value> | <value>180</value> | <value>270</value>
     </syntax>
     <syntax>
         <parameter>resize </parameter>
@@ -100,6 +101,9 @@ location = /empty {
 </tag-name>
 <tag-desc>
 поворачивает изображение против часовой стрелки на указанное число градусов.
+В значении аргумента допустимо использование переменных.
+Можно использовать как отдельно, так и совместно с преобразованиями
+<parameter>resize</parameter> и <parameter>crop</parameter>.
 </tag-desc>
 
 <tag-name><parameter>resize </parameter>
@@ -111,6 +115,9 @@ location = /empty {
 можно указать “<code>-</code>”.
 В случае ошибки сервер возвращает код
 <http-status code="415" text="Unsupported Media Type"/>.
+В значениях аргументов допустимо использование переменных.
+При использовании совместно с <parameter>rotate</parameter>,
+поворот изображения происходит после уменьшения размеров изображения.
 </tag-desc>
 
 <tag-name><parameter>crop </parameter>
@@ -123,6 +130,9 @@ location = /empty {
 можно указать “<code>-</code>”.
 В случае ошибки сервер возвращает код
 <http-status code="415" text="Unsupported Media Type"/>.
+В значениях аргументов допустимо использование переменных.
+При использовании совместно с <parameter>rotate</parameter>,
+поворот изображения происходит до уменьшения размеров изображения.
 </tag-desc>
 
 </list>
@@ -158,6 +168,7 @@ location = /empty {
 Директива задаёт коэффициент потери информации при обработке изображений
 в формате JPEG.
 Максимальное рекомендуемое значение — 95.
+В значении аргумента допустимо использование переменных.
 </para>
 
 </directive>
@@ -174,6 +185,7 @@ location = /empty {
 Повышает резкость итогового изображения.
 Процент резкости может быть больше 100.
 Значение 0 отключает повышение резкости.
+В значении аргумента допустимо использование переменных.
 </para>
 
 </directive>
