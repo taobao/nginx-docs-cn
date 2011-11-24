@@ -1,7 +1,7 @@
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
-<article name="Can I run nginx with daemon off or
-               master_process off settings
+<article name="Can I run nginx with &ldquo;daemon off&rdquo; or
+               &ldquo;master_process off&rdquo; settings
                in a production environment?"
          link="/en/docs/faq/daemon_master_process_off.html"
          lang="en">
