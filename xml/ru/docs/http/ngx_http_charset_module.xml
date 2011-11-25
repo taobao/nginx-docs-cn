@@ -144,7 +144,7 @@ charset_map  koi8-r  utf-8 {
 <directive name="charset_types">
 <syntax><value>mime-тип [mime-тип ...]</value></syntax>
 <default>text/html text/xml text/plain text/vnd.wap.wml
-application/x-javascript application/rss+xml.
+application/x-javascript application/rss+xml
 </default>
 <context>http, server, location</context>
 
