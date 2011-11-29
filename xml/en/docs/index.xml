@@ -77,6 +77,11 @@ ngx_http_image_filter_module</a>
 </item>
 
 <item>
+<a href="/en/docs/http/ngx_http_index_module.xml">
+ngx_http_index_module</a>
+</item>
+
+<item>
 <a href="/en/docs/http/ngx_http_limit_conn_module.xml">
 ngx_http_limit_conn_module</a>
 </item>
@@ -84,11 +89,6 @@ ngx_http_limit_conn_module</a>
 <item>
 <a href="/en/docs/http/ngx_http_limit_req_module.xml">
 ngx_http_limit_req_module</a>
-</item>
-
-<item>
-<a href="/en/docs/http/ngx_http_index_module.xml">
-ngx_http_index_module</a>
 </item>
 
 <item>
