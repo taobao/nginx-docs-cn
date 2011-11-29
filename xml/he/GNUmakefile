@@ -1,42 +1,37 @@
+LANG =		he
 
-DOCS_HE =	he/docs/windows						\
-		he/docs/introduction					\
-		he/docs/howto						\
+DOCS =									\
+		introduction						\
+		howto							\
+		windows							\
 
-DOCS_HE_XML =	$(foreach name, $(DOCS_HE), xml/$(name).xml)
-DOCS_HE_HTML =	$(foreach name, $(DOCS_HE), $(OUT)/$(name).html)
+DOCS_XML =	$(foreach name, $(DOCS), xml/$(LANG)/docs/$(name).xml)
+DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(LANG)/docs/$(name).html)
 
-INTRO_HE =	he/docs/http/server_names				\
+INTRO =									\
+		http/server_names					\
 
-INTRO_HE_XML =	$(foreach name, $(INTRO_HE), xml/$(name).xml)
-INTRO_HE_HTML =	$(foreach name, $(INTRO_HE), $(OUT)/$(name).html)
+INTRO_XML =	$(foreach name, $(INTRO), xml/$(LANG)/docs/$(name).xml)
+INTRO_HTML =	$(foreach name, $(INTRO), $(OUT)/$(LANG)/docs/$(name).html)
 
-HOWTO_HE =	he/docs/http/converting_rewrite_rules			\
+HOWTO =									\
+		http/converting_rewrite_rules				\
 
-HOWTO_HE_XML =	$(foreach name, $(HOWTO_HE), xml/$(name).xml)
-HOWTO_HE_HTML =	$(foreach name, $(HOWTO_HE), $(OUT)/$(name).html)
+HOWTO_XML =	$(foreach name, $(HOWTO), xml/$(LANG)/docs/$(name).xml)
+HOWTO_HTML =	$(foreach name, $(HOWTO), $(OUT)/$(LANG)/docs/$(name).html)
 
-he:									\
-		$(OUT)/he/index.html					\
-		$(OUT)/he/docs/index.html				\
-		$(DOCS_HE_HTML)						\
-		$(INTRO_HE_HTML)					\
-		$(HOWTO_HE_HTML)					\
+$(LANG):								\
+		$(OUT)/$(LANG)/index.html				\
+		$(OUT)/$(LANG)/docs/index.html				\
+		$(DOCS_HTML)						\
+		$(INTRO_HTML)						\
+		$(HOWTO_HTML)						\
 
-$(OUT)/he/docs/index.html:						\
-		xml/he/docs/index.xml					\
-		$(DOCS_HE_XML)						\
-		$(ARTICLE_DEPS)
-	$(call XSLT, xslt/article.xslt, $<, $@)
+$(OUT)/$(LANG)/docs/index.html:						\
+		$(DOCS_XML)						\
 
-$(OUT)/he/docs/introduction.html:					\
-		xml/he/docs/introduction.xml				\
-		$(INTRO_HE_XML)						\
-		$(ARTICLE_DEPS)
-	$(call XSLT, xslt/article.xslt, $<, $@)
+$(OUT)/$(LANG)/docs/introduction.html:					\
+		$(INTRO_XML)						\
 
-$(OUT)/he/docs/howto.html:						\
-		xml/he/docs/howto.xml					\
-		$(HOWTO_HE_XML)						\
-		$(ARTICLE_DEPS)
-	$(call XSLT, xslt/article.xslt, $<, $@)
+$(OUT)/$(LANG)/docs/howto.html:						\
+		$(HOWTO_XML)						\

@@ -1,104 +1,98 @@
+LANG =		en
 
-DOCS_EN =	en/docs/control						\
-		en/docs/introduction					\
-		en/docs/howto						\
-		en/docs/faq						\
-		en/docs/windows						\
+DOCS =									\
+		introduction						\
+		howto							\
+		faq							\
+		windows							\
+		control							\
 
-DOCS_EN_XML =	$(foreach name, $(DOCS_EN), xml/$(name).xml)
-DOCS_EN_HTML =	$(foreach name, $(DOCS_EN), $(OUT)/$(name).html)
+DOCS_XML =	$(foreach name, $(DOCS), xml/$(LANG)/docs/$(name).xml)
+DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(LANG)/docs/$(name).html)
 
-INTRO_EN =	en/docs/http/request_processing				\
-		en/docs/http/configuring_https_servers			\
-		en/docs/http/server_names				\
+INTRO =									\
+		http/request_processing					\
+		http/server_names					\
+		http/configuring_https_servers				\
 
-INTRO_EN_XML =	$(foreach name, $(INTRO_EN), xml/$(name).xml)
-INTRO_EN_HTML =	$(foreach name, $(INTRO_EN), $(OUT)/$(name).html)
+INTRO_XML =	$(foreach name, $(INTRO), xml/$(LANG)/docs/$(name).xml)
+INTRO_HTML =	$(foreach name, $(INTRO), $(OUT)/$(LANG)/docs/$(name).html)
 
-HOWTO_EN =	en/docs/debugging_log					\
-		en/docs/http/converting_rewrite_rules			\
-		en/docs/freebsd_tuning					\
-		en/docs/howto_build_on_win32				\
+HOWTO =									\
+		debugging_log						\
+		http/converting_rewrite_rules				\
+		howto_build_on_win32					\
+		freebsd_tuning						\
 
-REFS_EN_XML =	$(foreach name, $(REFS_EN), xml/$(name).xml)
-REFS_EN_HTML =	$(foreach name, $(REFS_EN), $(OUT)/$(name).html)
+HOWTO_XML =	$(foreach name, $(HOWTO), xml/$(LANG)/docs/$(name).xml)
+HOWTO_HTML =	$(foreach name, $(HOWTO), $(OUT)/$(LANG)/docs/$(name).html)
 
-REFS_EN =	en/docs/ngx_core_module					\
-		en/docs/http/ngx_http_core_module			\
-		en/docs/http/ngx_http_empty_gif_module			\
-		en/docs/http/ngx_http_flv_module			\
-		en/docs/http/ngx_http_index_module			\
-		en/docs/http/ngx_http_image_filter_module		\
-		en/docs/http/ngx_http_limit_conn_module			\
-		en/docs/http/ngx_http_limit_req_module			\
-		en/docs/http/ngx_http_mp4_module			\
-		en/docs/http/ngx_http_random_index_module		\
+FAQ =									\
+		welcome_nginx_facebook					\
+		faq/license_copyright					\
+		faq/accept_failed					\
+		faq/variables_in_config					\
+		faq/daemon_master_process_off				\
+		faq/chunked_encoding_from_backend			\
+		sys_errlist						\
 
-HOWTO_EN_XML =	$(foreach name, $(HOWTO_EN), xml/$(name).xml)
-HOWTO_EN_HTML =	$(foreach name, $(HOWTO_EN), $(OUT)/$(name).html)
+FAQ_XML =	$(foreach name, $(FAQ), xml/$(LANG)/docs/$(name).xml)
+FAQ_HTML =	$(foreach name, $(FAQ), $(OUT)/$(LANG)/docs/$(name).html)
 
-FAQ_EN =	en/docs/sys_errlist					\
-		en/docs/welcome_nginx_facebook				\
-		en/docs/faq/accept_failed				\
-		en/docs/faq/daemon_master_process_off			\
-		en/docs/faq/variables_in_config				\
-		en/docs/faq/chunked_encoding_from_backend		\
-		en/docs/faq/license_copyright
+REFS =									\
+		ngx_core_module						\
+		http/ngx_http_core_module				\
+		http/ngx_http_empty_gif_module				\
+		http/ngx_http_flv_module				\
+		http/ngx_http_image_filter_module			\
+		http/ngx_http_index_module				\
+		http/ngx_http_limit_conn_module				\
+		http/ngx_http_limit_req_module				\
+		http/ngx_http_mp4_module				\
+		http/ngx_http_random_index_module			\
 
-FAQ_EN_XML =	$(foreach name, $(FAQ_EN), xml/$(name).xml)
-FAQ_EN_HTML =	$(foreach name, $(FAQ_EN), $(OUT)/$(name).html)
+REFS_XML =	$(foreach name, $(REFS), xml/$(LANG)/docs/$(name).xml)
+REFS_HTML =	$(foreach name, $(REFS), $(OUT)/$(LANG)/docs/$(name).html)
 
-en:									\
-		$(OUT)/en/index.html					\
-		$(OUT)/en/download.html					\
-		$(OUT)/en/security_advisories.html			\
-		$(OUT)/en/books.html					\
-		$(OUT)/en/links.html					\
-		$(OUT)/en/support.html					\
-		$(OUT)/en/donation.html					\
-		$(OUT)/en/docs/index.html				\
-		$(DOCS_EN_HTML)						\
-		$(INTRO_EN_HTML)					\
-		$(REFS_EN_HTML)						\
-		$(HOWTO_EN_HTML)					\
-		$(FAQ_EN_HTML)						\
+$(LANG):								\
+		$(OUT)/$(LANG)/index.html				\
+		$(OUT)/$(LANG)/download.html				\
+		$(OUT)/$(LANG)/security_advisories.html			\
+		$(OUT)/$(LANG)/docs/index.html				\
+		$(DOCS_HTML)						\
+		$(REFS_HTML)						\
+		$(INTRO_HTML)						\
+		$(HOWTO_HTML)						\
+		$(FAQ_HTML)						\
+		$(OUT)/$(LANG)/links.html				\
+		$(OUT)/$(LANG)/books.html				\
+		$(OUT)/$(LANG)/support.html				\
+		$(OUT)/$(LANG)/donation.html				\
 
-$(OUT)/en/docs/index.html:						\
-		xml/en/docs/index.xml					\
-		$(DOCS_EN_XML)						\
-		$(REFS_EN_XML)						\
-		$(ARTICLE_DEPS)
-	$(call XSLT, xslt/article.xslt, $<, $@)
-
-$(OUT)/en/download.html:						\
-		xml/en/download.xml					\
+$(OUT)/$(LANG)/download.html:						\
+		xml/$(LANG)/download.xml				\
 		$(DOWNLOAD_DEPS)
 	$(call XSLT, xslt/download.xslt, $<, $@)
 
-$(OUT)/en/security_advisories.html:					\
-		xml/en/security_advisories.xml				\
+$(OUT)/$(LANG)/security_advisories.html:				\
+		xml/$(LANG)/security_advisories.xml			\
 		$(SECURITY_DEPS)
 	$(call XSLT, xslt/security.xslt, $<, $@)
 
-$(OUT)/en/docs/introduction.html:					\
-		xml/en/docs/introduction.xml				\
-		$(INTRO_EN_XML)						\
-		$(ARTICLE_DEPS)
-	$(call XSLT, xslt/article.xslt, $<, $@)
+$(OUT)/$(LANG)/docs/index.html:						\
+		$(DOCS_XML)						\
+		$(REFS_XML)						\
 
-$(OUT)/en/docs/howto.html:						\
-		xml/en/docs/howto.xml					\
-		$(HOWTO_EN_XML)						\
-		$(ARTICLE_DEPS)
-	$(call XSLT, xslt/article.xslt, $<, $@)
+$(OUT)/$(LANG)/docs/introduction.html:					\
+		$(INTRO_XML)						\
 
-$(OUT)/en/docs/faq.html:						\
-		xml/en/docs/faq.xml					\
-		$(FAQ_EN_XML)						\
-		$(ARTICLE_DEPS)
-	$(call XSLT, xslt/article.xslt, $<, $@)
+$(OUT)/$(LANG)/docs/howto.html:						\
+		$(HOWTO_XML)						\
 
-$(OUT)/en/books.html:							\
-		xml/en/books.xml					\
+$(OUT)/$(LANG)/docs/faq.html:						\
+		$(FAQ_XML)						\
+
+$(OUT)/$(LANG)/books.html:						\
+		xml/$(LANG)/books.xml					\
 		$(BOOK_DEPS)
 	$(call XSLT, xslt/books.xslt, $<, $@)
