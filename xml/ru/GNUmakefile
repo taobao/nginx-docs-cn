@@ -1,4 +1,4 @@
-LANG =		ru
+DOC_LANG =	ru
 
 DOCS =									\
 		howto							\
@@ -13,20 +13,20 @@ DOCS =									\
 		control							\
 		hash							\
 
-DOCS_XML =	$(foreach name, $(DOCS), xml/$(LANG)/docs/$(name).xml)
-DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(LANG)/docs/$(name).html)
+DOCS_XML =	$(foreach name, $(DOCS), xml/$(DOC_LANG)/docs/$(name).xml)
+DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 
 HOWTO =									\
 		debugging_log						\
 
-HOWTO_XML =	$(foreach name, $(HOWTO), xml/$(LANG)/docs/$(name).xml)
-HOWTO_HTML =	$(foreach name, $(HOWTO), $(OUT)/$(LANG)/docs/$(name).html)
+HOWTO_XML =	$(foreach name, $(HOWTO), xml/$(DOC_LANG)/docs/$(name).xml)
+HOWTO_HTML =	$(foreach name, $(HOWTO), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 
 FAQ =									\
 		sys_errlist						\
 
-FAQ_XML =	$(foreach name, $(FAQ), xml/$(LANG)/docs/$(name).xml)
-FAQ_HTML =	$(foreach name, $(FAQ), $(OUT)/$(LANG)/docs/$(name).html)
+FAQ_XML =	$(foreach name, $(FAQ), xml/$(DOC_LANG)/docs/$(name).xml)
+FAQ_HTML =	$(foreach name, $(FAQ), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 
 REFS =									\
 		ngx_core_module						\
@@ -70,26 +70,26 @@ REFS =									\
 		http/ngx_http_userid_module				\
 		http/ngx_http_xslt_module				\
 
-REFS_XML =	$(foreach name, $(REFS), xml/$(LANG)/docs/$(name).xml)
-REFS_HTML =	$(foreach name, $(REFS), $(OUT)/$(LANG)/docs/$(name).html)
+REFS_XML =	$(foreach name, $(REFS), xml/$(DOC_LANG)/docs/$(name).xml)
+REFS_HTML =	$(foreach name, $(REFS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 
-$(LANG):								\
-		$(OUT)/$(LANG)/index.html				\
-		$(OUT)/$(LANG)/download.html				\
-		$(OUT)/$(LANG)/support.html				\
-		$(OUT)/$(LANG)/docs/index.html				\
+$(DOC_LANG):								\
+		$(OUT)/$(DOC_LANG)/index.html				\
+		$(OUT)/$(DOC_LANG)/download.html			\
+		$(OUT)/$(DOC_LANG)/support.html				\
+		$(OUT)/$(DOC_LANG)/docs/index.html			\
 		$(DOCS_HTML)						\
 		$(REFS_HTML)						\
 		$(HOWTO_HTML)						\
 		$(FAQ_HTML)						\
 
-$(OUT)/$(LANG)/download.html:						\
-		xml/$(LANG)/download.xml				\
+$(OUT)/$(DOC_LANG)/download.html:					\
+		xml/$(DOC_LANG)/download.xml				\
 		$(DOWNLOAD_DEPS)
 	$(call XSLT, xslt/download.xslt, $<, $@)
 
-$(OUT)/$(LANG)/docs/howto.html:						\
+$(OUT)/$(DOC_LANG)/docs/howto.html:					\
 		$(HOWTO_XML)						\
 
-$(OUT)/$(LANG)/docs/faq.html:						\
+$(OUT)/$(DOC_LANG)/docs/faq.html:					\
 		$(FAQ_XML)						\
