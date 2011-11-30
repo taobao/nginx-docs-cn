@@ -8,56 +8,60 @@
 <section>
 
 <para>
-To enable a debugging log, you first should configure nginx to build with
-the debugging:
+To enable a debugging log, nginx needs to be configured to support
+debugging during the build:
 
 <programlisting>
 ./configure --with-debug ...
 </programlisting>
 
-and then set the <dirname>debug</dirname> level
-of the <dirname>error_log</dirname>:
+Then the <value>debug</value> level should be set with the
+<link doc="ngx_core_module.xml" id="error_log"/> directive:
 
 <programlisting>
-error_log  /path/to/log  debug;
+error_log /path/to/log debug;
 </programlisting>
 
-The nginx/Windows binary version is always built with the debugging log
-support. Therefore, you should set the <dirname>debug</dirname> level only.
+The nginx binary version for Windows is always built with the debugging log
+support, so only setting the <value>debug</value> level will suffice.
 </para>
 
 <para>
-Note, that a defining log on another level, for example, on <i>server</i>
+Note that redefining the log without also specifying the <value>debug</value>
+level will disable the debugging log.
+In the example below, redefining the log on the
+<link doc="http/ngx_http_core_module.xml" id="server"/>
 level disables the debugging log for this server:
 <programlisting>
-error_log  /path/to/log  debug;
+error_log /path/to/log debug;
 
 http {
     server {
-        error_log  /path/to/log;
+        error_log /path/to/log;
         ...
 </programlisting>
-You should either comment out this server log or add
-the <dirname>debug</dirname> flag too:
+To avoid this, either the line redefining the log should be
+commented out, or the <value>debug</value> level specification should
+also be added:
 <programlisting>
-error_log  /path/to/log  debug;
+error_log /path/to/log debug;
 
 http {
     server {
-        error_log  /path/to/log  debug;
+        error_log /path/to/log debug;
         ...
 </programlisting>
 </para>
 
 <para>
-It is also possible to enable the debugging log only for some addresses:
+It is also possible to enable the debugging log for selected addresses only:
 
 <programlisting>
-error_log  /path/to/log;
+error_log /path/to/log;
 
 events {
-    debug_connection   192.168.1.1;
-    debug_connection   192.168.10.0/24;
+    debug_connection 192.168.1.1;
+    debug_connection 192.168.10.0/24;
 }
 </programlisting>
 </para>
