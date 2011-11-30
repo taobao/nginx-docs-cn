@@ -1,0 +1,32 @@
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="nginx howto"
+         link="/ru/docs/howto.html"
+         lang="ru">
+
+
+<section>
+
+<para>
+<list>
+
+<item>
+<a href="/ru/docs/debugging_log.xml"/>
+</item>
+
+<!--
+<item>
+<a href="/ru/docs/http/converting_rewrite_rules.xml"/>
+</item>
+
+<item>
+<a href="/ru/docs/howto_build_on_win32.xml"/>
+</item>
+-->
+
+</list>
+</para>
+
+</section>
+
+</article>

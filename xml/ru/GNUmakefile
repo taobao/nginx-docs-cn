@@ -1,6 +1,7 @@
 LANG =		ru
 
 DOCS =									\
+		howto							\
 		faq							\
 		install							\
 		windows							\
@@ -14,6 +15,12 @@ DOCS =									\
 
 DOCS_XML =	$(foreach name, $(DOCS), xml/$(LANG)/docs/$(name).xml)
 DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(LANG)/docs/$(name).html)
+
+HOWTO =									\
+		debugging_log						\
+
+HOWTO_XML =	$(foreach name, $(HOWTO), xml/$(LANG)/docs/$(name).xml)
+HOWTO_HTML =	$(foreach name, $(HOWTO), $(OUT)/$(LANG)/docs/$(name).html)
 
 FAQ =									\
 		sys_errlist						\
@@ -73,12 +80,16 @@ $(LANG):								\
 		$(OUT)/$(LANG)/docs/index.html				\
 		$(DOCS_HTML)						\
 		$(REFS_HTML)						\
+		$(HOWTO_HTML)						\
 		$(FAQ_HTML)						\
 
 $(OUT)/$(LANG)/download.html:						\
 		xml/$(LANG)/download.xml				\
 		$(DOWNLOAD_DEPS)
 	$(call XSLT, xslt/download.xslt, $<, $@)
+
+$(OUT)/$(LANG)/docs/howto.html:						\
+		$(HOWTO_XML)						\
 
 $(OUT)/$(LANG)/docs/faq.html:						\
 		$(FAQ_XML)						\
