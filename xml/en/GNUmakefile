@@ -6,6 +6,7 @@ DOCS =									\
 		faq							\
 		windows							\
 		control							\
+		hash							\
 
 DOCS_XML =	$(foreach name, $(DOCS), xml/$(LANG)/docs/$(name).xml)
 DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(LANG)/docs/$(name).html)
