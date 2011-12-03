@@ -5,13 +5,19 @@
 
       <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 
-         <input type="hidden" name="cmd" value="_s-xclick"/>
+         <input name="cmd" value="_donations" type="hidden"/>
 
-         <input type="hidden" name="hosted_button_id" value="MP2TU6UL6JACC"/>
+         <input name="business" value="paypal@nginx.net" type="hidden"/>
 
-         <input type="image" border="0" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="PayPal - The safer, easier way to pay online!"/>
+         <input name="lc" value="US" type="hidden"/>
 
-         <img src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" alt="" border="0" width="1" height="1"/>
+         <input name="currency_code" value="USD" type="hidden"/>
+
+         <input name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest" type="hidden"/>
+
+         <input name="submit" src="x-click-but04.gif" type="image" border="0" alt="PayPal - The safer, easier way to pay online!"/>
+
+         <img src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" boroder="0" alt=""/>
 
       </form>
    </xsl:template>
