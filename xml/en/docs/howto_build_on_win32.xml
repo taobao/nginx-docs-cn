@@ -91,7 +91,7 @@ auto/configure --with-cc=cl --builddir=objs --prefix= \
 --http-proxy-temp-path=temp/proxy_temp \
 --http-fastcgi-temp-path=temp/fastcgi_temp \
 --with-cc-opt=-DFD_SETSIZE=1024 --with-pcre=objs/lib/pcre-8.12 \
---with-zlib=objs/lib/zlib-1.2.5 --withopenssl=objs/lib/openssl-1.0.0e \
+--with-zlib=objs/lib/zlib-1.2.5 --with-openssl=objs/lib/openssl-1.0.0e \
 --with-select_module --with-http_ssl_module --with-ipv6
 </programlisting>
 </item>
