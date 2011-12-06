@@ -1,0 +1,268 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_log_module"
+        link="/en/docs/http/ngx_http_log_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <code>ngx_http_log_module</code> module writes request logs
+in the specified format.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+    log_format gzip '$remote_addr - $remote_user [$time_local] '
+                    '"$request" $status $bytes_sent '
+                    '"$http_referer" "$http_user_agent" "$gzip_ratio"';
+
+    access_log /spool/logs/nginx-access.log gzip buffer=32k;
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="access_log">
+<syntax>
+  <argument>path</argument>
+  [<argument>format</argument>
+  [<parameter>buffer</parameter>=<argument>size</argument>]]</syntax>
+<syntax><value>off</value></syntax>
+<default>log/access.log combined</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if in location</context>
+<context>limit_except</context>
+
+<para>
+Sets the path, format, and buffer size for the buffered log writes.
+Several logs can be specified on the same level.
+The special value <value>off</value> cancels all <code>access_log</code>
+directives on the current level.
+If format is not specified then the predefined format
+“<code>combined</code>” is used.
+</para>
+
+<para>
+The buffer size must not exceed the size of the atomic write to a disk file.
+For FreeBSD 3.0-6.0 this size is unlimited.
+</para>
+
+<para>
+The file path can contain variables (0.7.6+),
+but such logs have some constraints:
+<list type="bullet">
+
+<listitem>
+the <link doc="../ngx_core_module.xml" id="user"/>
+whose credentials are used by worker processes should
+have permissions to create files in a directory with
+such logs;
+</listitem>
+
+<listitem>
+buffered writes do not work;
+</listitem>
+
+<listitem>
+a file is opened and closed for each log write.
+However, since the descriptors of frequently used files can be stored
+in a <link id="open_log_file_cache">cache</link>, writes during the
+time specified by the <parameter>valid</parameter> parameter of the
+<link id="open_log_file_cache"/> directive can continue to be made
+to the old file.
+</listitem>
+
+<listitem>
+during each log write the existence of the request’s
+<link doc="ngx_http_core_module.xml" id="root">root directory</link>
+is checked, and if it does not exist the log is not
+created.
+It is thus a good idea to specify both
+<link doc="ngx_http_core_module.xml" id="root"/>
+and <code>access_log</code> on the same level:
+<example>
+server {
+    root       /spool/vhost/data/$host;
+    access_log /spool/vhost/logs/$host;
+    ...
+</example>
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="log_format">
+<syntax>
+<argument>name string ...</argument>
+</syntax>
+<default>combined "..."</default>
+<context>http</context>
+
+<para>
+Specifies format of a log.
+</para>
+
+<para>
+The log format can contain common variables, and variables that
+exist only at the time of a log write:
+<list type="tag">
+
+<tag-name><var>$body_bytes_sent</var></tag-name>
+<tag-desc>
+the number of bytes sent to a client not counting the response header;
+this variable is compatible with the “<code>%B</code>” parameter of the
+<code>mod_log_config</code>
+Apache module
+</tag-desc>
+
+<tag-name><var>$bytes_sent</var></tag-name>
+<tag-desc>
+the number of bytes sent to a client
+</tag-desc>
+
+<tag-name><var>$connection</var></tag-name>
+<tag-desc>
+connection serial number
+</tag-desc>
+
+<tag-name><var>$msec</var></tag-name>
+<tag-desc>
+time in seconds with a milliseconds resolution at the time of log write
+</tag-desc>
+
+<tag-name><var>$pipe</var></tag-name>
+<tag-desc>
+“<code>p</code>” if request was pipelined, “<code>.</code>” otherwise
+</tag-desc>
+
+<tag-name><var>$request_length</var></tag-name>
+<tag-desc>
+request length (including request line, header, and request body)
+</tag-desc>
+
+<tag-name><var>$request_time</var></tag-name>
+<tag-desc>
+request processing time in seconds with a milliseconds resolution;
+time elapsed since first bytes were read from the client till
+last bytes were sent to client and logging happened
+</tag-desc>
+
+<tag-name><var>$status</var></tag-name>
+<tag-desc>
+response status
+</tag-desc>
+
+<tag-name><var>$time_iso8601</var></tag-name>
+<tag-desc>
+local time in the ISO 8601 standard format
+</tag-desc>
+
+<tag-name><var>$time_local</var></tag-name>
+<tag-desc>
+local time in the Common Log Format
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+Header lines sent to a client have the prefix
+“<code>sent_http_</code>”, for example,
+<var>$sent_http_content_range</var>.
+</para>
+
+<para>
+The configuration always includes the predefined format
+“<code>combined</code>”:
+<example>
+    log_format combined '$remote_addr - $remote_user [$time_local] '
+                        '"$request" $status $body_bytes_sent '
+                        '"$http_referer" "$http_user_agent"';
+</example>
+</para>
+
+</directive>
+
+<directive name="open_log_file_cache">
+
+<syntax>
+<parameter>max</parameter>=<argument>N</argument>
+[<parameter>inactive</parameter>=<argument>time</argument>]
+[<parameter>min_uses</parameter>=<argument>N</argument>]
+[<parameter>valid</parameter>=<argument>time</argument>]</syntax>
+<syntax><value>off</value></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Defines a cache that stores file descriptors of frequently used logs
+whose names contain variables.
+The directive has the following parameters:
+<list type="tag">
+
+<tag-name><parameter>max</parameter></tag-name>
+<tag-desc>
+sets a maximum number of descriptors in a cache;
+if cache becomes full the least recently used (LRU)
+descriptors are closed
+</tag-desc>
+
+<tag-name><parameter>inactive</parameter></tag-name>
+<tag-desc>
+sets a time after which the cached descriptor is closed
+if there were no access during this time;
+by default, 10 seconds
+</tag-desc>
+
+<tag-name><parameter>min_uses</parameter></tag-name>
+<tag-desc>
+sets a minimum number of file uses during the time
+defined by the <parameter>inactive</parameter> parameter
+after which the descriptor will stay open in a cache;
+by default, 1
+</tag-desc>
+
+<tag-name><parameter>valid</parameter></tag-name>
+<tag-desc>
+sets a time after which it should be checked that the file
+still exists with the same name; by default, 60 seconds
+</tag-desc>
+
+<tag-name><value>off</value></tag-name>
+<tag-desc>
+disables caching
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+Example usage:
+<example>
+open_log_file_cache max=1000 inactive=20s valid=1m min_uses=2;
+</example>
+</para>
+
+</directive>
+
+</section>
+
+</module>

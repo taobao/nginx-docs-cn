@@ -49,6 +49,7 @@ REFS =									\
 		http/ngx_http_index_module				\
 		http/ngx_http_limit_conn_module				\
 		http/ngx_http_limit_req_module				\
+		http/ngx_http_log_module				\
 		http/ngx_http_mp4_module				\
 		http/ngx_http_random_index_module			\
 

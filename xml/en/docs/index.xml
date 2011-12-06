@@ -92,6 +92,11 @@ ngx_http_limit_req_module</a>
 </item>
 
 <item>
+<a href="/en/docs/http/ngx_http_log_module.xml">
+ngx_http_log_module</a>
+</item>
+
+<item>
 <a href="/en/docs/http/ngx_http_mp4_module.xml">
 ngx_http_mp4_module</a>
 </item>

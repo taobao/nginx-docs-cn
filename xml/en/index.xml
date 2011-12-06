@@ -101,7 +101,10 @@ executable</link> without interruption of the client servicing;
 </item>
 
 <item>
-Access log formats, buffered log writing, and
+<link doc="docs/http/ngx_http_log_module.xml" id="log_format">Access
+log formats</link>,
+<link doc="docs/http/ngx_http_log_module.xml" id="access_log">buffered
+log writing</link>, and
 <link doc="docs/control.xml" id="logs">fast log rotation</link>;
 </item>
 

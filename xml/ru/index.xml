@@ -119,7 +119,10 @@ chunked ответы,
 </item>
 
 <item>
-<link doc="docs/http/ngx_http_log_module.xml">Настройка форматов логов</link>,
+<link doc="docs/http/ngx_http_log_module.xml" id="log_format">Настройка
+форматов логов</link>,
+<link doc="docs/http/ngx_http_log_module.xml" id="access_log">буферизованная
+запись в лог</link>,
 <link doc="docs/control.xml" id="logs">быстрая ротация логов</link>;
 </item>
 
