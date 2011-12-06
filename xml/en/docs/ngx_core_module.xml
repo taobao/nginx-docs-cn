@@ -291,6 +291,14 @@ worker_priority -10;
 Defines the number of worker processes.
 </para>
 
+<para>
+The optimal value depends on many factors including (but not
+limited to) the number of CPU cores, the number of hard disk
+drives that store data, and load pattern.
+When in doubt, setting it to the number of available CPU cores
+would be a good start.
+</para>
+
 </directive>
 
 
