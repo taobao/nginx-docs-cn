@@ -928,7 +928,7 @@ The “wait-read-ignore” cycle is repeated, but no longer than specified by th
         [<parameter>bind</parameter>]
         [<parameter>ipv6only</parameter>=<value>on</value>|<value>off</value>]
         [<parameter>ssl</parameter>]
-</syntax>
+        [<parameter>so_keepalive</parameter>=<value>on</value>|<value>off</value>|[<argument>keepidle</argument>]:[<argument>keepintvl</argument>]:[<argument>keepcnt</argument>]]</syntax>
 <syntax>
         <argument>port</argument>
         [<parameter>default_server</parameter>]
@@ -941,7 +941,7 @@ The “wait-read-ignore” cycle is repeated, but no longer than specified by th
         [<parameter>bind</parameter>]
         [<parameter>ipv6only</parameter>=<value>on</value>|<value>off</value>]
         [<parameter>ssl</parameter>]
-</syntax>
+        [<parameter>so_keepalive</parameter>=<value>on</value>|<value>off</value>|[<argument>keepidle</argument>]:[<argument>keepintvl</argument>]:[<argument>keepcnt</argument>]]</syntax>
 <syntax>
         <value>unix:</value><argument>path</argument>
         [<parameter>default_server</parameter>]
@@ -952,7 +952,7 @@ The “wait-read-ignore” cycle is repeated, but no longer than specified by th
         [<parameter>deferred</parameter>]
         [<parameter>bind</parameter>]
         [<parameter>ssl</parameter>]
-</syntax>
+        [<parameter>so_keepalive</parameter>=<value>on</value>|<value>off</value>|[<argument>keepidle</argument>]:[<argument>keepintvl</argument>]:[<argument>keepcnt</argument>]]</syntax>
 <default>*:80 | *:8000</default>
 <context>server</context>
 
@@ -1087,8 +1087,9 @@ It should be noted that in this case a <c-func>getsockname</c-func>
 system call will be made to determine an address that accepted a
 connection.
 If parameters <parameter>backlog</parameter>, <parameter>rcvbuf</parameter>,
-<parameter>sndbuf</parameter>, <parameter>accept_filter</parameter>, or
-<parameter>deferred</parameter> are used then for a given
+<parameter>sndbuf</parameter>, <parameter>accept_filter</parameter>,
+<parameter>deferred</parameter>, or <parameter>so_keepalive</parameter>
+are used then for a given
 <argument>address</argument>:<argument>port</argument> pair
 a separate <c-func>bind</c-func> call will always be made.
 </tag-desc>
@@ -1116,6 +1117,33 @@ in both HTTP and HTTPS modes simultaneously.
 listen 80;
 listen 443 default ssl;
 </example>
+</tag-desc>
+
+<tag-name>
+<parameter>so_keepalive</parameter>=<value>on</value>|<value>off</value>|[<argument>keepidle</argument>]:[<argument>keepintvl</argument>]:[<argument>keepcnt</argument>]
+</tag-name>
+<tag-desc>
+this parameter (1.1.11) configures the “TCP keepalive” behavior
+for the listening socket.
+If this parameter is omitted then the system default setting will be
+in effect for the socket.
+If set to the value “<value>on</value>”, the <c-def>SO_KEEPALIVE</c-def>
+socket option is turned on for the socket.
+If set to the value “<value>off</value>”, the <c-def>SO_KEEPALIVE</c-def>
+socket option is turned off for the socket.
+Some operating systems support tuning TCP keepalive parameters on a per-socket
+basis using the <c-def>TCP_KEEPIDLE</c-def>, <c-def>TCP_KEEPINTVL</c-def>,
+and <c-def>TCP_KEEPCNT</c-def> socket options.
+On such systems (currently, Linux 2.4+ and NetBSD 5+) they can be configured
+using the <argument>keepidle</argument>, <argument>keepintvl</argument>, and
+<argument>keepcnt</argument> arguments.
+One or two arguments may be omitted, in which case the system default setting
+for the corresponding socket option will be in effect.
+For example,
+<example>so_keepalive=30m::10</example>
+will set idle timeout (<c-def>TCP_KEEPIDLE</c-def>) to 30 minutes,
+leave probe interval (<c-def>TCP_KEEPINTVL</c-def>) at its system default,
+and set probes count (<c-def>TCP_KEEPCNT</c-def>) to 10 probes.
 </tag-desc>
 
 </list>
