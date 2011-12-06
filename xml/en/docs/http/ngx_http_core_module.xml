@@ -2405,6 +2405,9 @@ For more information, please refer to
 
 <para>
 Enables or disables the use of underscores in client request header fields.
+When disabled, request header fields whose names contain underscores are
+marked as invalid and are subject to the <link id="ignore_invalid_headers"/>
+directive.
 </para>
 
 </directive>
