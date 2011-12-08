@@ -157,7 +157,7 @@ to all further requests.
 </directive>
 
 <directive name="limit_zone">
-<syntax><argument>$variable name size</argument></syntax>
+<syntax><argument>name $variable size</argument></syntax>
 <default/>
 <context>http</context>
 

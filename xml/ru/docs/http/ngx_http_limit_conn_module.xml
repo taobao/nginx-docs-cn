@@ -156,7 +156,7 @@ limit_conn_zone $binary_remote_addr zone=addr:10m;
 </directive>
 
 <directive name="limit_zone">
-<syntax><argument>$переменная название размер</argument></syntax>
+<syntax><argument>название $переменная размер</argument></syntax>
 <default/>
 <context>http</context>
 
