@@ -29,13 +29,12 @@
 -->
 <item href="/en/docs/howto.html"> howto </item>
 <item href="/en/docs/faq.html"> faq </item>
+<item href="http://trac.nginx.org/nginx"> trac </item>
 <item href="http://wiki.nginx.org"> wiki </item>
 <item href="/en/links.html"> links </item>
 <item href="/en/books.html"> books </item>
 <item href="/en/support.html"> support </item>
-<!--
 <item href="/en/donation.html"> donation </item>
--->
 <item href="http://www.nginx.com/"> nginx.com </item>
 
 </menu>
@@ -114,9 +113,12 @@
 <item href="/en/docs/introduction.html" lang="en"> введение </item>
 <item href="/ru/docs/howto.html"> howto </item>
 <item href="/ru/docs/faq.html"> faq </item>
+<item href="http://trac.nginx.org/trac"> trac </item>
+<item href="http://wiki.nginx.org/"> wiki </item>
 <item href="/en/links.html" lang="en"> ссылки </item>
 <item href="/en/books.html" lang="en"> книги </item>
 <item href="/ru/support.html"> поддержка </item>
+<item href="/en/donation.html" lang="en"> пожертвования </item>
 <item href="http://www.nginx.com/"> nginx.com </item>
 
 </menu>

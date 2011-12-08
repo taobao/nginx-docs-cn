@@ -4,7 +4,7 @@ X:template = "paypal" {
 
    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
         <input type="hidden" name="cmd" value="_s-xclick" />
-        <input type="hidden" name="hosted_button_id" value="MP2TU6UL6JACC" />
+        <input type="hidden" name="hosted_button_id" value="ZJK5JR3ZSBUFC" />
 
         <input type="image" border="0" name="submit"
 	       src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
