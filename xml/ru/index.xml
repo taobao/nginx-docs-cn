@@ -18,8 +18,8 @@ nginx [engine x]&mdash;это HTTP-сервер и обратный прокси
 <link url="http://vkontakte.ru">ВКонтакте</link> и
 <link url="http://www.rambler.ru">Рамблер</link>.
 Согласно статистике Netcraft nginx обслуживал или проксировал
-<link url="http://news.netcraft.com/archives/2011/11/07/november-2011-web-server-survey.html">8.01%
-самых нагруженных сайтов в ноябре 2011 года</link>.
+<link url="http://news.netcraft.com/archives/2011/12/09/december-2011-web-server-survey.html">8.21%
+самых нагруженных сайтов в декабре 2011 года</link>.
 Вот некоторые примеры успешного внедрения nginx (тексты на английском языке):
 <link url="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</link>,
 <link url="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</link>.
