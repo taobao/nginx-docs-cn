@@ -433,7 +433,8 @@ Enables the use of
 the <c-def>O_DIRECT</c-def> flag (FreeBSD, Linux),
 the <c-def>F_NOCACHE</c-def> flag (Mac OS X),
 or the <c-func>directio</c-func> function (Solaris),
-when reading files that are larger than the specified <argument>size</argument>.
+when reading files that are larger than or equal to
+the specified <argument>size</argument>.
 It automatically disables (0.7.15) the use of
 <link id="sendfile"/>
 for a given request.
