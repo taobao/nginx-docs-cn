@@ -528,69 +528,102 @@ location  /some/path/ {
 
 
 <directive name="proxy_redirect">
-<syntax><value>[default|off|редирект замена]</value>
+<syntax>
+    <value>default</value> |
+    <value>off</value> |
+    <argument>редирект замена</argument>
 </syntax>
 <default>default</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт текст, который нужно изменить в строках заголовка "Location"
-и "Refresh" в ответе проксируемого сервера. Предположим, проксируемый сервер
-вернул строку "Location: http://localhost:8000/two/some/uri/". Директива
+Директива задаёт текст, который нужно изменить в строках заголовка
+<header>Location</header> и <header>Refresh</header> в ответе
+проксируемого сервера.
+Предположим, проксируемый сервер вернул строку
+<header>Location: http://localhost:8000/two/some/uri/</header>.
+Директива
 <example>
-    proxy_redirect   http://localhost:8000/two/   http://frontend/one/;
+    proxy_redirect http://localhost:8000/two/ http://frontend/one/;
 </example>
-перепишет эту строку в виде "Location: http://frontend/one/some/uri/".
+перепишет эту строку в виде
+<header>Location: http://frontend/one/some/uri/</header>.
 </para>
 
 <para>
 В заменяемой строке можно не указывать имя сервера:
 <example>
-    proxy_redirect   http://localhost:8000/two/   /;
+    proxy_redirect http://localhost:8000/two/ /;
 </example>
-тогда будет поставлено основное имя сервера и порт, если он отличен от 80.
+тогда будет подставлено основное имя сервера и порт, если он отличен от 80.
 </para>
 
 <para>
-Изменение по умолчанию, задаваемое параметром "default", использует
-параметры директив location и proxy_pass.
+Изменение по умолчанию, задаваемое значением <value>default</value>, использует
+параметры директив <link doc="ngx_http_core_module.xml" id="location"/> и
+<link id="proxy_pass"/>.
 Поэтому две нижеприведённые конфигурации одинаковы:
 <example>
 location /one/ {
-    proxy_pass       http://upstream:port/two/;
-    proxy_redirect   default;
+    proxy_pass     http://upstream:port/two/;
+    proxy_redirect default;
 </example>
 
 <example>
 location /one/ {
-    proxy_pass       http://upstream:port/two/;
-    proxy_redirect   http://upstream:port/two/   /one/;
+    proxy_pass     http://upstream:port/two/;
+    proxy_redirect http://upstream:port/two/ /one/;
 </example>
+Значение <value>default</value> недопустимо, если в <link id="proxy_pass"/>
+используются переменные.
 </para>
 
 <para>
 В заменяемой строке можно использовать переменные:
 <example>
-    proxy_redirect   http://localhost:8000/    http://$host:$server_port/;
+    proxy_redirect http://localhost:8000/ http://$host:$server_port/;
+</example>
+</para>
+
+<para>
+В редиректе тоже можно использовать (1.1.11) переменные:
+<example>
+    proxy_redirect http://$proxy_host:8000/ /;
+</example>
+</para>
+
+<para>
+Директиву также можно задать (1.1.11) при помощи регулярных выражений.
+При этом <argument>редирект</argument> должен начинаться либо с символа
+“<code>~</code>”, если при сравнении следует учитывать регистр символов,
+либо с символов “<code>~*</code>”, если регистр символов учитывать не нужно.
+Регулярное выражение может содержать именованные и позиционные выделения,
+а <argument>замена</argument> на них ссылаться:
+<example>
+    proxy_redirect ~^(http://[^:]+):\d+(/.+)$ $1$2;
+    proxy_redirect ~*/user/([^/]+)/(.+)$      http://$1.example.com/$2;
 </example>
 </para>
 
 <para>
 Директив может быть несколько:
 <example>
-    proxy_redirect   default;
-    proxy_redirect   http://localhost:8000/    /;
-    proxy_redirect   http://www.example.com/   /;
+    proxy_redirect default;
+    proxy_redirect http://localhost:8000/  /;
+    proxy_redirect http://www.example.com/ /;
 </example>
 </para>
 
 <para>
-Параметр "off" запрещает все директивы proxy_redirect на данном уровне:
+Значение <value>off</value> запрещает все директивы <code>proxy_redirect</code>
+на данном уровне:
 <example>
-    proxy_redirect   off;
-    proxy_redirect   default;
-    proxy_redirect   http://localhost:8000/    /;
-    proxy_redirect   http://www.example.com/   /;
+    proxy_redirect off;
+    proxy_redirect default;
+    proxy_redirect http://localhost:8000/  /;
+    proxy_redirect http://www.example.com/ /;
 </example>
 </para>
 
@@ -598,7 +631,7 @@ location /one/ {
 С помощью этой директивы можно также добавлять имя хоста к относительным
 редиректам, выдаваемым проксируемым сервером:
 <example>
-    proxy_redirect   /   /;
+    proxy_redirect / /;
 </example>
 </para>
 
