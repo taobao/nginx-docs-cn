@@ -381,8 +381,8 @@ If it exceeds the configured value, the client error
 <http-status code="413" text="Request Entity Too Large"/>
 is returned.
 Please be aware that
-<link doc="/web/upload.xml">browsers cannot correctly display
-this error</link>.
+<!--link doc="/web/upload.xml"-->browsers cannot correctly display
+this error<!--/link-->.
 Setting <argument>size</argument> to 0 disables client
 request body size checking.
 </para>
