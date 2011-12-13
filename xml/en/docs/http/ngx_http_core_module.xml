@@ -618,8 +618,7 @@ command of the module
 <listitem>
 requests changed by the
 <link doc="ngx_http_rewrite_module.xml" id="rewrite"/>
-directive of the module
-<link doc="ngx_http_rewrite_module.xml">ngx_http_rewrite_module</link>.
+directive.
 </listitem>
 
 </list>
