@@ -545,14 +545,14 @@ location @fallback {
 Specifies how to compare modification time of a response
 with the time in the
 <header>If-Modified-Since</header>
-request header:
+request header field:
 
 <list type="tag">
 
 <tag-name><value>off</value></tag-name>
 <tag-desc>
 the
-<header>If-Modified-Since</header> request header is ignored (0.7.34);
+<header>If-Modified-Since</header> request header field is ignored (0.7.34);
 </tag-desc>
 
 <tag-name><value>exact</value></tag-name>
@@ -564,7 +564,7 @@ exact match;
 <tag-desc>
 modification time of a response is
 less than or equal to the time in the <header>If-Modified-Since</header>
-request header.
+request header field.
 </tag-desc>
 
 </list>
@@ -580,8 +580,8 @@ request header.
 <context>server</context>
 
 <para>
-Controls whether headers with invalid names should be ignored.
-Valid header names consist of letters, digits, hyphens, and possibly
+Controls whether header fields with invalid names should be ignored.
+Valid names consist of English letters, digits, hyphens, and possibly
 underscores (as controlled by the <link id="underscores_in_headers"/>
 directive).
 </para>
@@ -692,14 +692,14 @@ The first argument sets a timeout during which a keep-alive
 client connection will stay open on the server side.
 The optional second argument sets a value in the
 <header>Keep-Alive: timeout=<argument>time</argument></header>
-response header.
+response header field.
 Two arguments may differ.
 </para>
 
 <para>
 The
-<header>Keep-Alive: timeout=</header>
-is understood by Mozilla and Konqueror.
+<header>Keep-Alive: timeout=<argument>time</argument></header>
+header field is understood by Mozilla and Konqueror.
 MSIE will close keep-alive connection in about 60 seconds.
 </para>
 
@@ -714,7 +714,7 @@ MSIE will close keep-alive connection in about 60 seconds.
 
 <para>
 Sets the maximum <argument>number</argument> and <argument>size</argument> of
-buffers used when reading large client request headers.
+buffers used when reading large client request header.
 A request line cannot exceed the size of one buffer, or the client error
 <http-status code="414" text="Request-URI Too Large"/>
 is returned.
@@ -2027,7 +2027,7 @@ server {
 }
 </example>
 It allows this server to process requests without the <header>Host</header>
-header, instead of the default server for the given address:port pair.
+header field, instead of the default server for the given address:port pair.
 This is the default setting.
 <note>
 Before 0.8.48, the machine's hostname was used by default.
