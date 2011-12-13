@@ -406,7 +406,10 @@ off — запрещает передачу запроса следующему
 
 
 <directive name="fastcgi_param">
-<syntax><value>параметр значение</value></syntax>
+<syntax>
+    <argument>параметр значение</argument>
+    [<parameter>if_not_empty</parameter>]
+</syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -414,7 +417,7 @@ off — запрещает передачу запроса следующему
 Директива задаёт параметр, который будут передаваться FastCGI-серверу.
 В качестве значения можно использовать текст, переменные и их комбинации.
 Директивы наследуются с предыдущего уровня при условии, что на данном
-уровне не описаны свои директивы fastcgi_param.
+уровне не описаны свои директивы <code>fastcgi_param</code>.
 </para>
 
 <para>
@@ -445,6 +448,14 @@ fastcgi_param  CONTENT_LENGTH   $content_length;
 параметр REDIRECT_STATUS со значением "200":
 <example>
 fastcgi_param  REDIRECT_STATUS  200;
+</example>
+</para>
+
+<para>
+Если директива указана с флагом <parameter>if_not_empty</parameter> (1.1.11),
+то такой параметр с пустым значением передаваться на сервер не будет:
+<example>
+fastcgi_param  HTTPS            $https if_not_empty;
 </example>
 </para>
 
