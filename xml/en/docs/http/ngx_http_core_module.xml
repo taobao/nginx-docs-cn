@@ -2514,6 +2514,13 @@ host name
 the <argument>name</argument> request header field
 </tag-desc>
 
+<tag-name><var>$https</var></tag-name>
+<tag-desc>
+“<code>on</code>”
+if connection operates in SSL mode,
+or an empty string otherwise
+</tag-desc>
+
 <tag-name><var>$is_args</var></tag-name>
 <tag-desc>
 “<code>?</code>” if a request line has arguments,
