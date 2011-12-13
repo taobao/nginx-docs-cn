@@ -1076,9 +1076,9 @@ using the <c-def>TCP_DEFER_ACCEPT</c-def> option.
 <parameter>bind</parameter>
 </tag-name>
 <tag-desc>
-specifies to make a separate <c-func>bind</c-func> call for a given
+instructs to make a separate <c-func>bind</c-func> call for a given
 <argument>address</argument>:<argument>port</argument> pair.
-This is because nginx will only <c-func>bind</c-func> to
+This is because nginx will <c-func>bind</c-func> only to
 <code>*</code>:<argument>port</argument>
 if there are several <code>listen</code> directives with
 the same port but different addresses, and one of the
