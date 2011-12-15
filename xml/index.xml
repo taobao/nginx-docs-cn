@@ -2,6 +2,13 @@
 
 <news name="nginx news" link="/" lang="en">
 
+<event date="2011-12-15">
+<para>
+<a href="/en/download.xml">nginx-1.0.11</a>
+stable version has been released.<br/>
+</para>
+</event>
+
 <event date="2011-12-12">
 <para>
 <a href="/en/download.xml">nginx-1.1.11</a>
