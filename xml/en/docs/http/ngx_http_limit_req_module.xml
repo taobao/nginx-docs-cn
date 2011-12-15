@@ -9,7 +9,8 @@
 <section id="summary">
 
 <para>
-The module ngx_http_limit_req_module (0.7.21) allow to limit the number
+The <code>ngx_http_limit_req_module</code> module (0.7.21) allows
+to limit the number
 of requests per defined key, in particular, the number of requests
 from a single IP address.
 The limitation is done using the “leaky bucket” method.
