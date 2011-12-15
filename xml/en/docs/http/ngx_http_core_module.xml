@@ -1183,9 +1183,9 @@ locations defined using the prefix strings (prefix locations).
 Among them, the most specific one is searched.
 Then regular expressions are checked, in the order of their appearance
 in a configuration file.
-A search terminates on the first match, and its corresponding
-configuration is used.
-If no match with a regular expression location is found then a
+A search of regular expressions terminates on the first match,
+and the corresponding configuration is used.
+If no match with a regular expression is found then a
 configuration of the most specific prefix location is used.
 </para>
 
@@ -1195,7 +1195,7 @@ Locations can be nested, with some exceptions mentioned below.
 
 <para>
 For case-insensitive operating systems such as Mac OS X and Cygwin,
-the string matching ignores a case (0.7.7).
+matching with prefix strings ignores a case (0.7.7).
 However, comparison is limited to one-byte locales.
 </para>
 
