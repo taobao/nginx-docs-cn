@@ -1343,7 +1343,8 @@ so it gets converted to “<code>/scripts/one.php</code>”.
 
 <para>
 Turning the compression <value>off</value> can become necessary if a URI
-contains base64-encoded names, since base64 uses the “/” character internally.
+contains base64-encoded names, since base64 uses the “<code>/</code>”
+character internally.
 However, for security considerations, it is better to avoid turning off
 the compression.
 </para>
@@ -1413,9 +1414,11 @@ directory lookups;
 <listitem>
 file lookup errors, such as “file not found”, “no read permission”,
 and so on.
+<note>
 Caching of errors should be enabled separately by the
 <link id="open_file_cache_errors"/>
 directive.
+</note>
 </listitem>
 
 </list>
@@ -1799,6 +1802,10 @@ Allows access if <value>all</value> or <value>any</value> of the
 <link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
 or <link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>
 modules grant access.
+</para>
+
+<para>
+Example:
 <example>
 location / {
     satisfy any;
@@ -2597,9 +2604,11 @@ needs be specified.
 When passing the name of a temporary file in a proxied request,
 or in a request to a FastCGI server,
 passing of the request body should be disabled by the
-<link doc="ngx_http_proxy_module.xml" id="proxy_pass_request_body"/>
+<link doc="ngx_http_proxy_module.xml" id="proxy_pass_request_body">
+proxy_pass_request_body off</link>
 and
-<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass_request_body"/>
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass_request_body">
+fastcgi_pass_request_body off</link>
 directives, respectively.
 </para>
 </tag-desc>
@@ -2613,7 +2622,7 @@ or an empty string otherwise
 <tag-name><var>$request_filename</var></tag-name>
 <tag-desc>
 file path for the current query, based on the
-<link id="root"/> and <link id="alias"/>
+<link id="root"/> or <link id="alias"/>
 directives, and the request URI
 </tag-desc>
 
@@ -2644,7 +2653,7 @@ an address of the server which accepted a request
 <para>
 Computing a value of this variable usually requires one system call.
 To avoid a system call, the <link id="listen"/> directives
-must specify addresses and use the <parameter>bind</parameter> parameter
+must specify addresses and use the <parameter>bind</parameter> parameter.
 </para>
 </tag-desc>
 
