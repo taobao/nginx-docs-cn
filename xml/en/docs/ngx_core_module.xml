@@ -82,7 +82,7 @@ cause <value>error</value>, <value>crit</value>,
 to be logged.
 <note>
 For <value>debug</value> logging to work, nginx needs to
-be configured with <code>--with-debug</code>.
+be built with <code>--with-debug</code>.
 </note>
 </para>
 
@@ -90,7 +90,7 @@ be configured with <code>--with-debug</code>.
 
 
 <directive name="env">
-<syntax><argument>VAR</argument>[=<argument>VALUE</argument>]</syntax>
+<syntax><argument>variable</argument>[=<argument>value</argument>]</syntax>
 <default>TZ</default>
 <context>main</context>
 
@@ -140,6 +140,7 @@ env OPENSSL_ALLOW_PROXY_CERTS=1;
 </para>
 
 </directive>
+
 
 <directive name="include">
 <syntax><argument>file</argument> | <argument>mask</argument></syntax>
