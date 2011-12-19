@@ -582,7 +582,7 @@ request header field.
 
 <para>
 Controls whether header fields with invalid names should be ignored.
-Valid names consist of English letters, digits, hyphens, and possibly
+Valid names are composed of English letters, digits, hyphens, and possibly
 underscores (as controlled by the <link id="underscores_in_headers"/>
 directive).
 </para>
@@ -650,7 +650,7 @@ Disables keep-alive connections with misbehaving browsers.
 The <argument>browser</argument> arguments specify which
 browsers will be affected.
 The value <value>msie6</value> disables keep-alive connections
-with some old versions of MSIE, after seeing a POST request.
+with old versions of MSIE, after seeing a POST request.
 The value <value>safari</value> disables keep-alive connections
 with Safari browsers.
 The value <value>none</value> enables keep-alive connections
