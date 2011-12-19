@@ -22,6 +22,7 @@
 <item href="/en/getting_started.html"> getting started </item>
 -->
 <item href="/en/security_advisories.html"> security advisories </item>
+<item href="/en/pgp_keys.html"> PGP public keys </item>
 <item href="/en/docs/"> documentation </item>
 <item href="/en/docs/introduction.html"> introduction </item>
 <!--
@@ -109,6 +110,7 @@
 <item href="/ru/"> об nginx </item>
 <item href="/ru/download.html"> скачать </item>
 <item href="/en/security_advisories.html" lang="en"> безопасность </item>
+<item href="/en/pgp_keys.html" lang="en"> PGP ключи </item>
 <item href="/ru/docs/"> документация </item>
 <item href="/en/docs/introduction.html" lang="en"> введение </item>
 <item href="/ru/docs/howto.html"> howto </item>

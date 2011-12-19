@@ -7,8 +7,7 @@
 <section>
 
 <para>
-<a href="http://sysoev.ru/pgp.txt">Igor Sysoev&rsquo;s PGP public key</a>.<br/>
-<a href="http://mdounin.ru/files/pgp.txt">Maxim Dounin&rsquo;s PGP public key</a>.
+<link doc="en/pgp_keys.xml">PGP public keys</link>
 </para>
 
 <security>

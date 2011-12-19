@@ -60,6 +60,7 @@ $(DOC_LANG):								\
 		$(OUT)/$(DOC_LANG)/index.html				\
 		$(OUT)/$(DOC_LANG)/download.html			\
 		$(OUT)/$(DOC_LANG)/security_advisories.html		\
+		$(OUT)/$(DOC_LANG)/pgp_keys.html		\
 		$(OUT)/$(DOC_LANG)/docs/index.html			\
 		$(DOCS_HTML)						\
 		$(REFS_HTML)						\
@@ -80,6 +81,11 @@ $(OUT)/$(DOC_LANG)/security_advisories.html:				\
 		xml/$(DOC_LANG)/security_advisories.xml			\
 		$(SECURITY_DEPS)
 	$(call XSLT, xslt/security.xslt, $<, $@)
+
+$(OUT)/$(DOC_LANG)/pgp_keys.html:				\
+		xml/$(DOC_LANG)/pgp_keys.xml			\
+		$(PGP_DEPS)
+	$(call XSLT, xslt/article.xslt, $<, $@)
 
 $(OUT)/$(DOC_LANG)/docs/index.html:					\
 		$(DOCS_XML)						\
