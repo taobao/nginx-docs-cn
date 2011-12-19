@@ -88,6 +88,10 @@ $(OUT)/$(DOC_LANG)/download.html:					\
 		$(DOWNLOAD_DEPS)
 	$(call XSLT, xslt/download.xslt, $<, $@)
 
+$(OUT)/$(DOC_LANG)/docs/index.html:					\
+		$(DOCS_XML)						\
+		$(REFS_XML)						\
+
 $(OUT)/$(DOC_LANG)/docs/howto.html:					\
 		$(HOWTO_XML)						\
 
