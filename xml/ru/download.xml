@@ -141,4 +141,117 @@
 
 </section>
 
+<section name="Исходный код">
+
+<para>
+<list>
+
+<item>
+Репозиторий Subversion, доступный только для чтения:
+<code>svn://svn.nginx.org/nginx</code>
+</item>
+
+<item>
+<link url="http://trac.nginx.org/nginx/browser">Исходный код в Trac</link>
+</item>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="Пакеты для Linux">
+
+<para>
+Автоматическое обновление пакетов для Linux требует, в случае дистрибутива
+RHEL/CentOS, настройки репозитория yum, либо, если дистрибутив
+Debian/Ubuntu - репозитория apt.
+</para>
+
+<para>
+Для настройки репозитория yum необходимо загрузить и установить пакет
+<code>nginx-release</code>. В нем находятся конфигурационный файл
+для yum и открытые PGP ключи, необходимые для проверки подписи RPM-пакетов.
+Выберите из списка соответствующую версию дистрибутива и после окончания загрузки
+установите пакет <code>nginx-release</code>.
+
+<list>
+
+<item>
+<link url="http://nginx.org/packages/rhel/5/noarch/RPMS/nginx-release-rhel-5-0.el5.ngx.noarch.rpm">RHEL 5</link>
+</item>
+
+<item>
+<link url="http://nginx.org/packages/rhel/6/noarch/RPMS/nginx-release-rhel-6-0.el6.ngx.noarch.rpm">RHEL 6</link>
+</item>
+
+<item>
+<link url="http://nginx.org/packages/centos/5/noarch/RPMS/nginx-release-centos-5-0.el5.ngx.noarch.rpm">CentOS 5</link>
+</item>
+
+<item>
+<link url="http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm">CentOS 6</link>
+</item>
+
+</list>
+
+Затем запустите команду:
+<programlisting>
+yum install nginx
+</programlisting>
+
+Также можно добавить конфигурационный файл yum без установки
+<code>nginx-release</code>. Создайте файл 
+<path>/etc/yum.repos.d/nginx.repo</path> и добавьте в него:
+
+<programlisting>
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/OS/OSRELEASE/$basearch/
+gpgcheck=0
+enabled=1
+</programlisting>
+
+Замените <code>OS</code> на <code>rhel</code> или <code>centos</code>,
+в зависимости от используемого дистрибутива, и <code>OSRELEASE</code>
+на <code>5</code> или <code>6</code>, для 5.x и 6.x версий, соответственно.
+</para>
+
+<para>
+В случае Debian 6 добавьте в конец файла
+<path>/etc/apt/sources.list</path> следующее:
+
+<programlisting>
+deb http://nginx.org/packages/debian/ squeeze nginx
+deb-src http://nginx.org/packages/debian/ squeeze nginx
+</programlisting>
+
+Затем запустите команды:
+<programlisting>
+apt-get update
+apt-get install nginx
+</programlisting>
+
+</para>
+
+<para>
+Для Ubuntu 10.04 добавьте в конец файла
+<path>/etc/apt/sources.list</path>:
+
+<programlisting>
+deb http://nginx.org/packages/ubuntu/ lucid nginx
+deb-src http://nginx.org/packages/ubuntu/ lucid nginx
+</programlisting>
+
+И запустите команды:
+<programlisting>
+apt-get update
+apt-get install nginx
+</programlisting>
+
+</para>
+
+</section>
+
 </article>
