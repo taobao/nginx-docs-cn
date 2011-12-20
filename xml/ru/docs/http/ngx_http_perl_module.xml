@@ -339,8 +339,8 @@ byte ranges при передаче ответа.
 </listitem>
 
 <listitem>
-<emphasis>$r-&gt;internal_redirect(uri)</emphasis> — метод делает внутренний
-редирект на указанный uri.
+<emphasis>$r-&gt;internal_redirect(uri)</emphasis> — метод делает внутреннее
+перенаправление на указанный uri.
 Редирект происходит уже после завершения perl'ового обработчика.
 </listitem>
 
