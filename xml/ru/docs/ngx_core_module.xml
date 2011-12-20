@@ -2,24 +2,22 @@
 
 <!DOCTYPE module SYSTEM "../../../dtd/module.dtd">
 
-<module name="Глобальные директивы"
+<module name="Основная функциональность"
         link="/ru/docs/ngx_core_module.html"
         lang="ru">
 
-
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
+user www www;
+worker_processes 2;
 
-user               www  www;
-worker_processes   2;
-
-error_log   /var/log/nginx-error.log  info;
+error_log /var/log/nginx-error.log info;
 
 events {
-    use    kqueue;
-    worker_connections   2048;
+    use kqueue;
+    worker_connections 2048;
 }
 
 ...
@@ -29,29 +27,76 @@ events {
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="daemon">
-<syntax><value>on|off</value></syntax>
+<syntax><value>on</value> | <value>off</value></syntax>
 <default>on</default>
 <context>main</context>
 
 <para>
-Директива определяет, будет ли nginx запускаться в режиме демона.
+Определяет, будет ли nginx запускаться в режиме демона.
 Используется в основном для разработки.
 </para>
 
 </directive>
 
 
+<directive name="error_log">
+<syntax>
+<argument>файл</argument>
+[<value>debug</value> |
+<value>info</value> |
+<value>notice</value> |
+<value>warn</value> |
+<value>error</value> |
+<value>crit</value> |
+<value>alert</value> |
+<value>emerg</value>]
+</syntax>
+<default>logs/error.log error</default>
+<context>main</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Конфигурирует запись в лог.
+</para>
+
+<para>
+Первый аргумент задаёт файл, который будет хранить лог.
+<!--
+Если имя файла не абсолютное, к нему добавляется в начало путь префикса.
+-->
+</para>
+
+<para>
+Второй аргумент определяет уровень лога.
+Уровни лога, указанные выше, перечислены в порядке возрастания их серьёзности.
+При установке определённого уровня в лог попадают все сообщения
+указанного и более серьёзных уровней.
+Например, при стандартном уровне <value>error</value> в лог попадают
+сообщения уровней <value>error</value>, <value>crit</value>,
+<value>alert</value> и <value>emerg</value>.
+
+<note>
+Для работы уровня лога <value>debug</value> необходимо сконфигурировать
+nginx с <code>--with-debug</code>.
+</note>
+</para>
+
+</directive>
+
+
 <directive name="env">
-<syntax><value>VAR|VAR=VALUE</value></syntax>
+<syntax><argument>переменная</argument>[=<argument>значение</argument>]</syntax>
 <default>TZ</default>
 <context>main</context>
 
 <para>
-Директива позволяет ограничить набор переменных среды, поменять им значения
-или же создать новые переменные для следующих случаев:
+Позволяет ограничить набор переменных окружения, поменять им значения
+или же создать новые переменные окружения для следующих случаев:
 <list type="bullet">
 
 <listitem>
@@ -70,8 +115,8 @@ events {
 подобным образом возможно не всегда, поскольку зачастую библиотеки используют
 переменные только во время инициализации, то есть ещё до того, как их
 можно задать с помощью данной директивы.
-Исключением из этого является вышеописанное обновление исполняемого файла
-на лету.
+Исключением из этого является вышеописанное
+<link doc="control.xml" id="upgrade">обновление исполняемого файла на лету</link>.
 </listitem>
 
 </list>
@@ -79,15 +124,16 @@ events {
 
 <para>
 Если переменная TZ не описана явно, то она всегда наследуется
-и всегда доступна модулю ngx_http_perl_module.
+и всегда доступна модулю
+<link doc="http/ngx_http_perl_module.xml">ngx_http_perl_module</link>.
 </para>
 
 <para>
 Пример использования:
 <example>
-env  MALLOC_OPTIONS;
-env  PERL5LIB=/data/site/modules;
-env  OPENSSL_ALLOW_PROXY_CERTS=1;
+env MALLOC_OPTIONS;
+env PERL5LIB=/data/site/modules;
+env OPENSSL_ALLOW_PROXY_CERTS=1;
 </example>
 </para>
 
@@ -95,20 +141,21 @@ env  OPENSSL_ALLOW_PROXY_CERTS=1;
 
 
 <directive name="include">
-<syntax><value>файл|маска</value></syntax>
+<syntax><argument>файл</argument> | <argument>маска</argument></syntax>
 <default/>
 <context/>
 
 <para>
-Директива позволяет включить в конфигурацию другой файл.
-Файл должен содержать синтаксически законченные директивы и блоки.
+Включает в конфигурацию другой <argument>файл</argument> или файлы,
+подходящие под заданную маску.
+Включаемые файлы должны содержать синтаксически верные директивы и блоки.
 </para>
 
 <para>
 Пример использования:
 <example>
-include  mime.types;
-include  vhosts/*.conf;
+include mime.types;
+include vhosts/*.conf;
 </example>
 </para>
 
@@ -116,74 +163,60 @@ include  vhosts/*.conf;
 
 
 <directive name="master_process">
-<syntax><value>on|off</value></syntax>
+<syntax><value>on</value> | <value>off</value></syntax>
 <default>on</default>
 <context>main</context>
 
 <para>
-Директива определяет, будут ли запускаться рабочие процессы.
-Используется только для разработки.
+Определяет, будут ли запускаться рабочие процессы.
+Эта директива предназначена для разработчиков nginx.
 </para>
 
 </directive>
 
 
 <directive name="pid">
-<syntax><value>файл</value></syntax>
+<syntax><argument>файл</argument></syntax>
 <default>nginx.pid</default>
 <context>main</context>
 
 <para>
-Директива задаёт файл, в котором хранится номер основго процесса.
+Задаёт <argument>файл</argument>, в котором хранится номер (PID) основного процесса.
 </para>
 
 </directive>
 
 
 <directive name="ssl_engine">
-<syntax><value>устройство</value></syntax>
+<syntax><argument>устройство</argument></syntax>
 <default/>
 <context>main</context>
 
 <para>
-Директива задаёт название аппартного SSL-акселератора.
-</para>
-
-</directive>
-
-
-<directive name="user">
-<syntax><value>пользователь [группа]</value></syntax>
-<default>nobody nobody</default>
-<context>main</context>
-
-<para>
-Директива задаёт пользователя и группу, с правами которого будут работать
-рабочие процессы. Если группа не задана, то используется группа, имя
-которой совпадает с именем пользователя.
+Задаёт название аппаратного SSL-акселератора.
 </para>
 
 </directive>
 
 
 <directive name="timer_resolution">
-<syntax><value>время</value></syntax>
+<syntax><argument>интервал</argument></syntax>
 <default/>
 <context>main</context>
 
 <para>
-Директива уменьшает разрешение времени в рабочих процессах, за счёт
-чего уменьшается число системных вызовов gettimeofday().
-По умолчанию gettimeofday() вызывается после каждой операции получения
-событий из ядра.
-C уменьшенным разрешением gettimeofday() вызывается только
-один раз за указанный интервал.
+Уменьшает разрешение таймеров времени в рабочих процессах, за счёт
+чего уменьшается число системных вызовов <c-func>gettimeofday</c-func>.
+По умолчанию <c-func>gettimeofday</c-func> вызывается после каждой
+операции получения событий из ядра.
+C уменьшенным разрешением <c-func>gettimeofday</c-func> вызывается только
+один раз за указанный <argument>интервал</argument>.
 </para>
 
 <para>
 Пример использования:
 <example>
-timer_resolution   100ms;
+timer_resolution 100ms;
 </example>
 </para>
 
@@ -192,15 +225,15 @@ timer_resolution   100ms;
 <list type="bullet">
 
 <listitem>
-фильтр EVFILT_TIMER при использовании kqueue;
+фильтр <c-def>EVFILT_TIMER</c-def> при использовании <value>kqueue</value>;
 </listitem>
 
 <listitem>
-timer_create() при использовании eventport;
+<c-func>timer_create</c-func> при использовании <value>eventport</value>;
 </listitem>
 
 <listitem>
-и setitimer() во всех остальных случаяx.
+и <c-func>setitimer</c-func> во всех остальных случаях.
 </listitem>
 
 </list>
@@ -209,50 +242,38 @@ timer_create() при использовании eventport;
 </directive>
 
 
-<directive name="worker_rlimit_core">
-<syntax><value>размер</value></syntax>
-<default/>
+<directive name="user">
+<syntax><argument>пользователь</argument> [<argument>группа</argument>]</syntax>
+<default>nobody nobody</default>
 <context>main</context>
 
 <para>
-Директива изменяет ограничение на размер core-файла RLIMIT_CORE
-для рабочего процесса.
-Используется для увеличения ограничения без перезапуска основного процесса.
-</para>
-
-</directive>
-
-
-<directive name="worker_rlimit_nofile">
-<syntax><value>число</value></syntax>
-<default/>
-<context>main</context>
-
-<para>
-Директива изменяет ограничение на число используемых файлов RLIMIT_NOFILE
-для рабочего процесса.
-Используется для увеличения ограничения без перезапуска основного процесса.
+Задаёт пользователя и группу, с правами которого будут работать
+рабочие процессы.
+Если <argument>группа</argument> не задана, то используется группа, имя
+которой совпадает с именем пользователя.
 </para>
 
 </directive>
 
 
 <directive name="worker_priority">
-<syntax><value>число</value></syntax>
+<syntax><argument>число</argument></syntax>
 <default>0</default>
 <context>main</context>
 
 <para>
-Директива задаёт приоритет рабочих процессов подобно тому,
-как это делается командой <command>nice</command>:
-отрицательное число означает более высокий приоритет.
-Диапазон возможных значений, как правило, от -20 до 20.
+Задаёт приоритет планирования рабочих процессов подобно тому,
+как это делается командой <command>nice</command>: отрицательное
+<argument>число</argument>
+означает более высокий приоритет.
+Диапазон возможных значений, как правило, варьируется от -20 до 20.
 </para>
 
 <para>
 Пример использования:
 <example>
-worker_priority  -10;
+worker_priority -10;
 </example>
 </para>
 
@@ -260,24 +281,60 @@ worker_priority  -10;
 
 
 <directive name="worker_processes">
-<syntax><value>число</value></syntax>
+<syntax><argument>число</argument></syntax>
 <default>1</default>
 <context>main</context>
 
 <para>
-Директива задаёт число рабочих процессов.
+Задаёт число рабочих процессов.
+</para>
+
+<para>
+Оптимальное значение зависит от множества факторов, включая
+(но не ограничиваясь ими) число процессорных ядер, число
+жёстких дисков с данными и картину нагрузок.
+Если затрудняетесь в выборе правильного значения, можно начать
+с установки его равным числу процессорных ядер.
+</para>
+
+</directive>
+
+
+<directive name="worker_rlimit_core">
+<syntax><argument>размер</argument></syntax>
+<default/>
+<context>main</context>
+
+<para>
+Изменяет ограничение на наибольший размер core-файла
+(<c-def>RLIMIT_CORE</c-def>) для рабочих процессов.
+Используется для увеличения ограничения без перезапуска основного процесса.
+</para>
+
+</directive>
+
+
+<directive name="worker_rlimit_nofile">
+<syntax><argument>число</argument></syntax>
+<default/>
+<context>main</context>
+
+<para>
+Изменяет ограничение на максимальное число открытых файлов
+(<c-def>RLIMIT_NOFILE</c-def>) для рабочих процессов.
+Используется для увеличения ограничения без перезапуска основного процесса.
 </para>
 
 </directive>
 
 
 <directive name="working_directory">
-<syntax><value>путь</value></syntax>
+<syntax><argument>каталог</argument></syntax>
 <default/>
 <context>main</context>
 
 <para>
-Директива задаёт каталог, который будет текущим для рабочего процесса.
+Задаёт каталог, который будет текущим для рабочего процесса.
 Основное применение — запись core-файла, в этом случае рабочий
 процесс должен иметь права на запись в этот каталог.
 </para>
