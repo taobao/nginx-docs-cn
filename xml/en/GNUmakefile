@@ -82,11 +82,6 @@ $(OUT)/$(DOC_LANG)/security_advisories.html:				\
 		$(SECURITY_DEPS)
 	$(call XSLT, xslt/security.xslt, $<, $@)
 
-$(OUT)/$(DOC_LANG)/pgp_keys.html:				\
-		xml/$(DOC_LANG)/pgp_keys.xml			\
-		$(PGP_DEPS)
-	$(call XSLT, xslt/article.xslt, $<, $@)
-
 $(OUT)/$(DOC_LANG)/docs/index.html:					\
 		$(DOCS_XML)						\
 		$(REFS_XML)						\
