@@ -339,7 +339,7 @@ Used to increase the limit without restarting the main process.
 <para>
 Defines a current working directory for a worker process.
 It is primarily used when writing a core-file, in which case
-a working process should have write permission for the
+a worker process should have write permission for the
 specified directory.
 </para>
 
