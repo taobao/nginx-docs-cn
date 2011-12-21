@@ -4,6 +4,7 @@ DOCS =									\
 		introduction						\
 		howto							\
 		faq							\
+		install							\
 		windows							\
 		control							\
 		hash							\
