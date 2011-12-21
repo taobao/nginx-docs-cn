@@ -9,7 +9,7 @@
                          i | b | nobr | table | url | code | command |
                          dirname | path | header | value | programlisting |
                          initial | development_version | stable_version |
-                         registered)* >
+                         registered | c-func)* >
 
 <!ELEMENT  a            (#PCDATA) >
 <!ATTLIST  a
@@ -37,6 +37,7 @@
 <!ELEMENT  value        (#PCDATA) >
 
 <!ELEMENT  registered   (#PCDATA) >
+<!ELEMENT  c-func       (#PCDATA)* >
 
 <!ELEMENT  programlisting  (#PCDATA | i | b | dirname | path |
                             development_version | stable_version)* >
