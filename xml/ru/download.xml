@@ -4,7 +4,8 @@
          link="/ru/download.html"
          lang="ru">
 
-<section name="Текущие версии">
+
+<section name="Разрабатываемая версия">
 
 <download last="1" changes="CHANGES.ru">
 
@@ -26,7 +27,7 @@
 </section>
 
 
-<section name="Стабильные версии">
+<section name="Стабильная версия">
 
 <download last="1" changes="CHANGES.ru-1.0">
 
@@ -141,6 +142,7 @@
 
 </section>
 
+
 <section name="Исходный код">
 
 <para>
@@ -161,20 +163,17 @@
 </section>
 
 
-<section name="Пакеты для Linux">
+<section name="Готовые пакеты для Linux">
 
 <para>
-Автоматическое обновление пакетов для Linux требует, в случае дистрибутива
-RHEL/CentOS, настройки репозитория yum, либо, если дистрибутив
-Debian/Ubuntu - репозитория apt.
+Чтобы включить автоматическое обновление пакетов для Linux,
+настройте репозиторий yum для дистрибутивов RHEL/CentOS,
+или репозиторий apt для дистрибутивов Debian/Ubuntu.
 </para>
 
 <para>
-Для настройки репозитория yum необходимо загрузить и установить пакет
-<code>nginx-release</code>. В нем находятся конфигурационный файл
-для yum и открытые PGP ключи, необходимые для проверки подписи RPM-пакетов.
-Выберите из списка соответствующую версию дистрибутива и после окончания загрузки
-установите пакет <code>nginx-release</code>.
+Для настройки репозитория yum для RHEL/CentOS выберите из списка
+соответствующий пакет <code>nginx-release</code>:
 
 <list>
 
@@ -196,14 +195,17 @@ Debian/Ubuntu - репозитория apt.
 
 </list>
 
-Затем запустите команду:
+Пакет содержит конфигурационный файл для yum и публичный PGP-ключ,
+необходимый для проверки подлинности подписи RPM-пакетов.
+Загрузите и установите его, затем выполните команду:
 <programlisting>
 yum install nginx
 </programlisting>
 
-Также можно добавить конфигурационный файл yum без установки
-<code>nginx-release</code>. Создайте файл 
-<path>/etc/yum.repos.d/nginx.repo</path> и добавьте в него:
+Кроме того, конфигурацию репозитория можно добавить вручную
+без установки пакета <code>nginx-release</code>.
+Создайте файл с именем <path>/etc/yum.repos.d/nginx.repo</path>
+и таким содержимым:
 
 <programlisting>
 [nginx]
@@ -213,13 +215,14 @@ gpgcheck=0
 enabled=1
 </programlisting>
 
-Замените <code>OS</code> на <code>rhel</code> или <code>centos</code>,
-в зависимости от используемого дистрибутива, и <code>OSRELEASE</code>
-на <code>5</code> или <code>6</code>, для 5.x и 6.x версий, соответственно.
+Замените “<code>OS</code>” на “<code>rhel</code>” или <code>centos</code>,
+в зависимости от используемого дистрибутива, а “<code>OSRELEASE</code>”
+на “<code>5</code>” или “<code>6</code>”,
+для, соответственно, 5.x или 6.x версий.
 </para>
 
 <para>
-В случае Debian 6 добавьте в конец файла
+Для Debian 6 добавьте в конец файла
 <path>/etc/apt/sources.list</path> следующее:
 
 <programlisting>
@@ -227,7 +230,7 @@ deb http://nginx.org/packages/debian/ squeeze nginx
 deb-src http://nginx.org/packages/debian/ squeeze nginx
 </programlisting>
 
-Затем запустите команды:
+Затем выполните команды:
 <programlisting>
 apt-get update
 apt-get install nginx
@@ -237,14 +240,14 @@ apt-get install nginx
 
 <para>
 Для Ubuntu 10.04 добавьте в конец файла
-<path>/etc/apt/sources.list</path>:
+<path>/etc/apt/sources.list</path> следующее:
 
 <programlisting>
 deb http://nginx.org/packages/ubuntu/ lucid nginx
 deb-src http://nginx.org/packages/ubuntu/ lucid nginx
 </programlisting>
 
-И запустите команды:
+Затем выполните команды:
 <programlisting>
 apt-get update
 apt-get install nginx

@@ -5,7 +5,7 @@
          lang="en">
 
 
-<section name="Development versions">
+<section name="Development version">
 
 <download last="1" changes="CHANGES">
 
@@ -27,7 +27,7 @@
 </section>
 
 
-<section name="Stable versions">
+<section name="Stable version">
 
 <download last="1" changes="CHANGES-1.0">
 
@@ -143,7 +143,7 @@
 </section>
 
 
-<section name="Source Repository">
+<section name="Source Code">
 
 <para>
 <list>
@@ -163,18 +163,17 @@ Read-only Subversion repository:
 </section>
 
 
-<section name="Pre-Built Packages">
+<section name="Pre-Built Linux Packages">
 
 <para>
-For automatic updates of the pre-built Linux packages it is possible to
-configure the yum repository for RHEL/CentOS,
-or the apt repository for Debian/Ubuntu.
+To enable automatic updates of Linux packages
+set up the yum repository for the RHEL/CentOS distributions,
+or the apt repository for the Debian/Ubuntu distributions.
 </para>
 
 <para>
-To set up the yum repository for the RHEL/CentOS, pick up and install
-the corresponding <code>nginx-release</code> package from the list below,
-containing the yum config and the public key necessary to check signed RPMs:
+To set up the yum repository for RHEL/CentOS, choose the corresponding
+<code>nginx-release</code> package from the list:
 
 <list>
 
@@ -196,12 +195,15 @@ containing the yum config and the public key necessary to check signed RPMs:
 
 </list>
 
-Then run the following command:
+The package contains the yum configuration file
+and the public PGP key necessary to authenticate signed RPMs.
+Download and install it, then run the command:
 <programlisting>
 yum install nginx
 </programlisting>
 
-As an alternative, a repository config can be added manually.
+Alternatively, a repository configuration can be added manually
+without installing the <code>nginx-release</code> package.
 Create the file named <path>/etc/yum.repos.d/nginx.repo</path>
 with the following contents:
 
@@ -220,15 +222,15 @@ for 5.x or 6.x versions, respectively.
 </para>
 
 <para>
-For Debian 6 append the following contents to
-<path>/etc/apt/sources.list</path>:
+For Debian 6 append the following to the end of the
+<path>/etc/apt/sources.list</path> file:
 
 <programlisting>
 deb http://nginx.org/packages/debian/ squeeze nginx
 deb-src http://nginx.org/packages/debian/ squeeze nginx
 </programlisting>
 
-Then run the following commands:
+Then run the commands:
 <programlisting>
 apt-get update
 apt-get install nginx
@@ -237,15 +239,15 @@ apt-get install nginx
 </para>
 
 <para>
-For Ubuntu 10.04 append the following contents to
-<path>/etc/apt/sources.list</path>:
+For Ubuntu 10.04 append the following to the end of the
+<path>/etc/apt/sources.list</path> file:
 
 <programlisting>
 deb http://nginx.org/packages/ubuntu/ lucid nginx
 deb-src http://nginx.org/packages/ubuntu/ lucid nginx
 </programlisting>
 
-Then run the following commands:
+Then run the commands:
 <programlisting>
 apt-get update
 apt-get install nginx
