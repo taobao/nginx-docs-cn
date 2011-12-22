@@ -2,7 +2,7 @@ X:stylesheet {
 
 X:output method="html" version="4.0" indent="no" encoding="utf-8";
 
-X:strip-space elements = "*";
+X:strip-space elements = "article section";
 
 <!--
   -- a current directory of a XSLT script is where the script is stored,
