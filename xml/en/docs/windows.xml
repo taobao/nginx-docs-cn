@@ -1,44 +1,44 @@
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article name="nginx/Windows usage"
+<article name="nginx for Windows"
          link="/en/docs/windows.html"
          lang="en">
-
 
 <section>
 
 <para>
-nginx/Windows uses the native Win32 API (not the Cygwin emulation layer).
-Currently only the <i>select</i> method is used as a notification method,
-therefore you should not expect high performance and scalability.
-Because of this and some known issues nginx/Windows is considered
-as a <i>beta</i> version.
-There is almost full-functionality in nginx/Windows as compared
-with the Unix version,
-except XSLT filter, image filter, GeoIP module, and embedded Perl language.
+Version of nginx for Windows uses the native Win32 API (not the Cygwin emulation
+layer).
+Only the <c-func>select</c-func> request processing method is currently used,
+so high performance and scalability should not be expected.
+Due to this and some other known issues version of nginx for Windows
+is considered to be a <i>beta</i> version.
+At this time, it provides almost the same functionality as a UNIX version
+of nginx except for
+XSLT filter, image filter, GeoIP module, and embedded Perl language.
 </para>
 
 <para>
-To install nginx/Windows, you should <a href="/en/download.xml">download</a>
-the latest <development_version /> development version zipped file,
-since the development branch contains all known fixes,
-especially Windows related.
-Then you should unzip the file,
-go to the nginx-<development_version /> directory, and run nginx.
+To install nginx/Windows, <link doc="../download.xml">download</link>
+the latest development version distribution (<development_version/>),
+since the development branch of nginx contains all known fixes.
+Then unpack the distribution, go to the
+nginx-<development_version/>
+directory, and run <command>nginx</command>.
 Here is an example for the drive C: root directory:
 
 <programlisting>
 cd c:\
-unzip nginx-<development_version />.zip
-cd nginx-<development_version />
+unzip nginx-<development_version/>.zip
+cd nginx-<development_version/>
 start nginx
 </programlisting>
 
-You may run the <command>tasklist</command> command line utility
+Run the <command>tasklist</command> command-line utility
 to see nginx processes:
 
 <programlisting>
-C:\nginx-<development_version />&gt;tasklist /fi "imagename eq nginx.exe"
+C:\nginx-<development_version/>&gt;tasklist /fi "imagename eq nginx.exe"
 
 Image Name           PID Session Name     Session#    Mem Usage
 =============== ======== ============== ========== ============
@@ -47,20 +47,21 @@ nginx.exe           1332 Console                 0      3 112 K
 </programlisting>
 
 One of the processes is the master process and another is the worker process.
-If nginx will not start, you should look in
-the <path>logs\error.log</path> file for the reason.
-If the log file has not been created, the reason should be reported
+If nginx does not start, look for the reason in
+the error log file <path>logs\error.log</path>.
+If the log file has not been created, the reason for this should be reported
 in the Windows Event Log.
-If you see an error page instead of the expected page, you should also look in
-the <path>logs\error.log</path> file for the error reason.
+If an error page is displayed instead of the expected page, also look
+for the reason in the <path>logs\error.log</path> file.
 </para>
 
 <para>
 nginx/Windows uses the directory where it has been run as the prefix
-directory for relative paths in the configuration.
-In the example above, the prefix directory is
-<path>C:\nginx-<development_version />\</path>.
-Paths in the configuration must be set in Unix style using forward slashes:
+for relative paths in the configuration.
+In the example above, the prefix is
+<path>C:\nginx-<development_version/>\</path>.
+Paths in a configuration file must be specified in UNIX-style using
+forward slashes:
 
 <programlisting>
 access_log   logs/site.log;
@@ -69,33 +70,33 @@ root         C:/web/html;
 </para>
 
 <para>
-nginx/Windows runs as a standard console application, not a service,
+nginx/Windows runs as a standard console application (not a service),
 and it can be managed using the following commands:
 
 <table note="yes">
 
 <tr>
 <td width="20%">nginx -s stop</td>
-<td>quick exit</td>
+<td>fast shutdown</td>
 </tr>
 
 <tr>
 <td>nginx -s quit</td>
-<td>graceful quit</td>
+<td>graceful shutdown</td>
 </tr>
 
 <tr>
 <td>nginx -s reload</td>
 <td>
 changing configuration,
-starting a new worker,
-quitting an old worker gracefully
+starting new worker processes with a new configuration,
+graceful shutdown of old worker processes
 </td>
 </tr>
 
 <tr>
 <td>nginx -s reopen</td>
-<td>reopening log files</td>
+<td>re-opening log files</td>
 </tr>
 
 </table>
@@ -109,7 +110,8 @@ quitting an old worker gracefully
 <list>
 
 <item>
-Although several workers can be run, only one of them actually does any work.
+Although several workers can be started, only one of them
+actually does any work.
 </item>
 
 <item>
@@ -118,7 +120,7 @@ A worker can handle no more than 1024 simultaneous connections.
 
 <item>
 The cache and other modules which require shared memory support do not work
-in Windows Vista and later due to
+on Windows Vista and later versions due to
 address space layout randomization being enabled in these Windows versions.
 </item>
 
@@ -136,11 +138,11 @@ Running as a service.
 </item>
 
 <item>
-Using the I/O completion ports as notification method.
+Using the I/O completion ports as a request processing method.
 </item>
 
 <item>
-Using multiple worker threads inside single worker process.
+Using multiple worker threads inside a single worker process.
 </item>
 
 </list>
