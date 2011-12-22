@@ -3,7 +3,7 @@
 
    <xsl:output indent="no" version="4.0" encoding="utf-8" method="html"/>
 
-   <xsl:strip-space elements="*"/>
+   <xsl:strip-space elements="article section"/>
 
    <xsl:param select="'../xml'" name="XML"/>
 
