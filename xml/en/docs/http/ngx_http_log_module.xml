@@ -109,8 +109,8 @@ server {
 
 <directive name="log_format">
 <syntax>
-<argument>name string ...</argument>
-</syntax>
+    <argument>name</argument>
+    <argument>string</argument> ...</syntax>
 <default>combined "..."</default>
 <context>http</context>
 

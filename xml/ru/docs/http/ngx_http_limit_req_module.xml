@@ -45,8 +45,7 @@ http {
 <syntax>
     <parameter>zone</parameter>=<argument>название</argument>
     [<parameter>burst</parameter>=<argument>число</argument>]
-    [<parameter>nodelay</parameter>]
-</syntax>
+    [<parameter>nodelay</parameter>]</syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -92,8 +91,7 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 <value>info</value> |
 <value>notice</value> |
 <value>warn</value> |
-<value>error</value>
-</syntax>
+<value>error</value></syntax>
 <default>error</default>
 <context>http</context>
 <context>server</context>
@@ -113,10 +111,9 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
 <directive name="limit_req_zone">
 <syntax>
-    <argument>$переменная </argument>
-    <parameter>zone</parameter>=<argument>название</argument>:<argument>размер </argument>
-    <parameter>rate</parameter>=<argument>скорость</argument>
-</syntax>
+    <argument>$переменная</argument>
+    <parameter>zone</parameter>=<argument>название</argument>:<argument>размер</argument>
+    <parameter>rate</parameter>=<argument>скорость</argument></syntax>
 <default/>
 <context>http</context>
 

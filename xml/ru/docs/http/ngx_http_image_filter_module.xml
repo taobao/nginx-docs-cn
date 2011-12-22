@@ -54,17 +54,16 @@ location = /empty {
     <syntax><parameter>off</parameter></syntax>
     <syntax><parameter>test</parameter></syntax>
     <syntax><parameter>size</parameter></syntax>
-    <syntax><parameter>rotate </parameter>
-        <value>90</value> | <value>180</value> | <value>270</value>
-    </syntax>
+    <syntax><parameter>rotate</parameter>
+        <value>90</value> | <value>180</value> | <value>270</value></syntax>
     <syntax>
-        <parameter>resize </parameter>
-        <argument>ширина высота</argument>
-    </syntax>
+        <parameter>resize</parameter>
+        <argument>ширина</argument>
+        <argument>высота</argument></syntax>
     <syntax>
-        <parameter>crop </parameter>
-        <argument>ширина высота</argument>
-    </syntax>
+        <parameter>crop</parameter>
+        <argument>ширина</argument>
+        <argument>высота</argument></syntax>
 <default/>
 <context>location</context>
 
@@ -97,7 +96,7 @@ location = /empty {
 </example>
 </tag-desc>
 
-<tag-name><parameter>rotate </parameter>
+<tag-name><parameter>rotate</parameter>
 <value>90</value>|<value>180</value>|<value>270</value>
 </tag-name>
 <tag-desc>
@@ -107,8 +106,9 @@ location = /empty {
 <parameter>resize</parameter> и <parameter>crop</parameter>.
 </tag-desc>
 
-<tag-name><parameter>resize </parameter>
-<argument>ширина высота</argument>
+<tag-name><parameter>resize</parameter>
+<argument>ширина</argument>
+<argument>высота</argument>
 </tag-name>
 <tag-desc>
 пропорционально уменьшает изображение до указанных размеров.
@@ -122,8 +122,9 @@ location = /empty {
 уменьшения размеров изображения.
 </tag-desc>
 
-<tag-name><parameter>crop </parameter>
-<argument>ширина высота</argument>
+<tag-name><parameter>crop</parameter>
+<argument>ширина</argument>
+<argument>высота</argument>
 </tag-name>
 <tag-desc>
 пропорционально уменьшает изображение до размера большей стороны

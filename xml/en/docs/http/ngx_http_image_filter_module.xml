@@ -54,17 +54,16 @@ location = /empty {
     <syntax><parameter>off</parameter></syntax>
     <syntax><parameter>test</parameter></syntax>
     <syntax><parameter>size</parameter></syntax>
-    <syntax><parameter>rotate </parameter>
-        <value>90</value> | <value>180</value> | <value>270</value>
-    </syntax>
+    <syntax><parameter>rotate</parameter>
+        <value>90</value> | <value>180</value> | <value>270</value></syntax>
     <syntax>
-        <parameter>resize </parameter>
-        <argument>width height</argument>
-    </syntax>
+        <parameter>resize</parameter>
+        <argument>width</argument>
+        <argument>height</argument></syntax>
     <syntax>
-        <parameter>crop </parameter>
-        <argument>width height</argument>
-    </syntax>
+        <parameter>crop</parameter>
+        <argument>width</argument>
+        <argument>height</argument></syntax>
 <default/>
 <context>location</context>
 
@@ -97,7 +96,7 @@ In case of an error, the following is output:
 </example>
 </tag-desc>
 
-<tag-name><parameter>rotate </parameter>
+<tag-name><parameter>rotate</parameter>
 <value>90</value>|<value>180</value>|<value>270</value>
 </tag-name>
 <tag-desc>
@@ -107,8 +106,9 @@ Can be used either alone, or along with the
 <parameter>resize</parameter> and <parameter>crop</parameter> transformations.
 </tag-desc>
 
-<tag-name><parameter>resize </parameter>
-<argument>width height</argument>
+<tag-name><parameter>resize</parameter>
+<argument>width</argument>
+<argument>height</argument>
 </tag-name>
 <tag-desc>
 proportionally reduces an image to the specified sizes.
@@ -121,8 +121,9 @@ When used along with the <parameter>rotate</parameter> parameter,
 the rotation happens <emphasis>after</emphasis> reduction.
 </tag-desc>
 
-<tag-name><parameter>crop </parameter>
-<argument>width height</argument>
+<tag-name><parameter>crop</parameter>
+<argument>width</argument>
+<argument>height</argument>
 </tag-name>
 <tag-desc>
 proportionally reduces an image to the size of the largest side

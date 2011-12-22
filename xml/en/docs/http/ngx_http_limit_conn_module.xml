@@ -48,7 +48,7 @@ http {
 <section id="directives" name="Directives">
 
 <directive name="limit_conn">
-<syntax><argument>zone number</argument></syntax>
+<syntax><argument>zone</argument> <argument>number</argument></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -105,8 +105,7 @@ directives on the current level.
 <value>info</value> |
 <value>notice</value> |
 <value>warn</value> |
-<value>error</value>
-</syntax>
+<value>error</value></syntax>
 <default>error</default>
 <context>http</context>
 <context>server</context>
@@ -123,9 +122,8 @@ limits the number of connections.
 
 <directive name="limit_conn_zone">
 <syntax>
-    <argument>$variable </argument>
-    <parameter>zone</parameter>=<argument>name</argument>:<argument>size</argument>
-</syntax>
+    <argument>$variable</argument>
+    <parameter>zone</parameter>=<argument>name</argument>:<argument>size</argument></syntax>
 <default/>
 <context>http</context>
 
@@ -157,7 +155,10 @@ to all further requests.
 </directive>
 
 <directive name="limit_zone">
-<syntax><argument>name $variable size</argument></syntax>
+<syntax>
+    <argument>name</argument>
+    <argument>$variable</argument>
+    <argument>size</argument></syntax>
 <default/>
 <context>http</context>
 
@@ -166,8 +167,8 @@ This directive is made obsolete in version 1.1.8,
 an equivalent <link id="limit_conn_zone"/> directive
 with a changed syntax should be used instead:
 <note>
-<code>limit_conn_zone </code>
-<argument>$variable </argument>
+<code>limit_conn_zone</code>
+<argument>$variable</argument>
 <parameter>zone</parameter>=<argument>name</argument>:<argument>size</argument>;
 </note>
 </para>

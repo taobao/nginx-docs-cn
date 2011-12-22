@@ -47,7 +47,7 @@ http {
 <section name="Директивы" id="directives">
 
 <directive name="limit_conn">
-<syntax><argument>зона число</argument></syntax>
+<syntax><argument>зона</argument> <argument>число</argument></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -103,8 +103,7 @@ IP-адреса.
 <value>info</value> |
 <value>notice</value> |
 <value>warn</value> |
-<value>error</value>
-</syntax>
+<value>error</value></syntax>
 <default>error</default>
 <context>http</context>
 <context>server</context>
@@ -121,9 +120,8 @@ IP-адреса.
 
 <directive name="limit_conn_zone">
 <syntax>
-    <argument>$переменная </argument>
-    <parameter>zone</parameter>=<argument>название</argument>:<argument>размер</argument>
-</syntax>
+    <argument>$переменная</argument>
+    <parameter>zone</parameter>=<argument>название</argument>:<argument>размер</argument></syntax>
 <default/>
 <context>http</context>
 
@@ -156,7 +154,10 @@ limit_conn_zone $binary_remote_addr zone=addr:10m;
 </directive>
 
 <directive name="limit_zone">
-<syntax><argument>название $переменная размер</argument></syntax>
+<syntax>
+    <argument>название</argument>
+    <argument>$переменная</argument>
+    <argument>размер</argument></syntax>
 <default/>
 <context>http</context>
 
@@ -165,8 +166,8 @@ limit_conn_zone $binary_remote_addr zone=addr:10m;
 использовать аналогичную директиву <link id="limit_conn_zone"/>
 с изменённым синтаксисом:
 <note>
-<code>limit_conn_zone </code>
-<argument>$переменная </argument>
+<code>limit_conn_zone</code>
+<argument>$переменная</argument>
 <parameter>zone</parameter>=<argument>название</argument>:<argument>размер</argument>;
 </note>
 </para>

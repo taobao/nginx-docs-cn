@@ -12,8 +12,7 @@
 <syntax>
         <value>on</value> |
         <value>off</value> |
-        <value>sendfile</value>
-</syntax>
+        <value>sendfile</value></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -229,8 +228,7 @@ It is usually 16K on other 64-bit platforms.
 <syntax>
         <value>on</value> |
         <value>clean</value> |
-        <value>off</value>
-</syntax>
+        <value>off</value></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -261,8 +259,7 @@ left after request processing to be removed.
 
 
 <directive name="client_body_in_single_buffer">
-<syntax><value>on</value> | <value>off</value>
-</syntax>
+<syntax><value>on</value> | <value>off</value></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -284,8 +281,7 @@ variable, to save the number of copy operations involved.
         <argument>path</argument>
         [<argument>level1</argument>
         [<argument>level2</argument>
-        [<argument>level3</argument>]]]
-</syntax>
+        [<argument>level3</argument>]]]</syntax>
 <default>client_body_temp</default>
 <context>http</context>
 <context>server</context>
@@ -470,8 +466,7 @@ using XFS under Linux, it needs to be increased to 4K.
 <syntax>
         <argument>code</argument> ...
         [<value>=</value>[<argument>response</argument>]]
-        <argument>uri</argument>
-</syntax>
+        <argument>uri</argument></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -534,8 +529,7 @@ location @fallback {
 <syntax>
         <value>off</value> |
         <value>exact</value> |
-        <value>before</value>
-</syntax>
+        <value>before</value></syntax>
 <default>exact</default>
 <context>http</context>
 <context>server</context>
@@ -680,8 +674,7 @@ After this many requests are made, the connection is closed.
 <directive name="keepalive_timeout">
 <syntax>
         <argument>timeout</argument>
-        [<argument>header_timeout</argument>]
-</syntax>
+        [<argument>header_timeout</argument>]</syntax>
 <default>75s</default>
 <context>http</context>
 <context>server</context>
@@ -707,7 +700,7 @@ MSIE will close keep-alive connection in about 60 seconds.
 
 
 <directive name="large_client_header_buffers">
-<syntax><argument>number size</argument></syntax>
+<syntax><argument>number</argument> <argument>size</argument></syntax>
 <default>4 8k</default>
 <context>http</context>
 <context>server</context>
@@ -1165,8 +1158,7 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
         <value>~</value> |
         <value>~*</value> |
         <value>^~</value>
-        ] <argument>uri</argument>
-</syntax>
+        ] <argument>uri</argument></syntax>
 <syntax block="yes"><value>@</value><argument>name</argument></syntax>
 <default/>
 <context>server</context>
@@ -1392,8 +1384,7 @@ Enables or disables issuing refreshes instead of redirects, for MSIE clients.
 <syntax><value>off</value></syntax>
 <syntax>
 <parameter>max</parameter>=<argument>N</argument>
-[<parameter>inactive</parameter>=<argument>time</argument>]
-</syntax>
+[<parameter>inactive</parameter>=<argument>time</argument>]</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1461,8 +1452,7 @@ Example:
 open_file_cache          max=1000 inactive=20s;
 open_file_cache_valid    30s;
 open_file_cache_min_uses 2;
-open_file_cache_errors   on;
-<!--
+open_file_cache_errors   on;<!--
 open_file_cache_events   on;
 -->
 </example>
@@ -1703,8 +1693,7 @@ closed normally.
 <directive name="resolver">
 <syntax>
 <argument>address</argument> ...
-[<parameter>valid</parameter>=<argument>time</argument>]
-</syntax>
+[<parameter>valid</parameter>=<argument>time</argument>]</syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -2183,12 +2172,10 @@ send a file in full packets.
 <directive name="try_files">
 <syntax>
         <argument>file</argument> ...
-        <argument>uri</argument>
-</syntax>
+        <argument>uri</argument></syntax>
 <syntax>
         <argument>file</argument> ...
-        =<argument>code</argument>
-</syntax>
+        =<argument>code</argument></syntax>
 <default/>
 <context>server</context>
 <context>location</context>

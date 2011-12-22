@@ -47,8 +47,7 @@ http {
 <syntax>
     <parameter>zone</parameter>=<argument>name</argument>
     [<parameter>burst</parameter>=<argument>number</argument>]
-    [<parameter>nodelay</parameter>]
-</syntax>
+    [<parameter>nodelay</parameter>]</syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -94,8 +93,7 @@ desired, the parameter <parameter>nodelay</parameter> should be used:
 <value>info</value> |
 <value>notice</value> |
 <value>warn</value> |
-<value>error</value>
-</syntax>
+<value>error</value></syntax>
 <default>error</default>
 <context>http</context>
 <context>server</context>
@@ -115,10 +113,9 @@ delays are logged with the <value>info</value> level.
 
 <directive name="limit_req_zone">
 <syntax>
-    <argument>$variable </argument>
-    <parameter>zone</parameter>=<argument>name</argument>:<argument>size </argument>
-    <parameter>rate</parameter>=<argument>rate</argument>
-</syntax>
+    <argument>$variable</argument>
+    <parameter>zone</parameter>=<argument>name</argument>:<argument>size</argument>
+    <parameter>rate</parameter>=<argument>rate</argument></syntax>
 <default/>
 <context>http</context>
 

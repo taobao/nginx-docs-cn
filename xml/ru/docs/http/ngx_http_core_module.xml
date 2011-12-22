@@ -12,8 +12,7 @@
 <syntax>
         <value>on</value> |
         <value>off</value> |
-        <value>sendfile</value>
-</syntax>
+        <value>sendfile</value></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -226,8 +225,7 @@ chunked encoding, несмотря на требования стандарта.
 <syntax>
         <value>on</value> |
         <value>clean</value> |
-        <value>off</value>
-</syntax>
+        <value>off</value></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -257,8 +255,7 @@ chunked encoding, несмотря на требования стандарта.
 
 
 <directive name="client_body_in_single_buffer">
-<syntax><value>on</value> | <value>off</value>
-</syntax>
+<syntax><value>on</value> | <value>off</value></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -279,8 +276,7 @@ chunked encoding, несмотря на требования стандарта.
         <argument>путь</argument>
         [<argument>уровень1</argument>
         [<argument>уровень2</argument>
-        [<argument>уровень3</argument>]]]
-</syntax>
+        [<argument>уровень3</argument>]]]</syntax>
 <default>client_body_temp</default>
 <context>http</context>
 <context>server</context>
@@ -461,8 +457,7 @@ directio 4m;
 <syntax>
         <argument>код</argument> ...
         [<value>=</value>[<argument>ответ</argument>]]
-        <argument>uri</argument>
-</syntax>
+        <argument>uri</argument></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -523,8 +518,7 @@ location @fallback {
 <syntax>
         <value>off</value> |
         <value>exact</value> |
-        <value>before</value>
-</syntax>
+        <value>before</value></syntax>
 <default>exact</default>
 <context>http</context>
 <context>server</context>
@@ -668,8 +662,7 @@ location /404.html {
 <directive name="keepalive_timeout">
 <syntax>
         <argument>таймаут</argument>
-        [<argument>заголовок_таймаута</argument>]
-</syntax>
+        [<argument>заголовок_таймаута</argument>]</syntax>
 <default>75s</default>
 <context>http</context>
 <context>server</context>
@@ -695,7 +688,7 @@ MSIE сам закрывает keep-alive соединение примерно 
 
 
 <directive name="large_client_header_buffers">
-<syntax><argument>число размер</argument></syntax>
+<syntax><argument>число</argument> <argument>размер</argument></syntax>
 <default>4 8k</default>
 <context>http</context>
 <context>server</context>
@@ -1153,8 +1146,7 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
         <value>~</value> |
         <value>~*</value> |
         <value>^~</value>
-        ] <argument>uri</argument>
-</syntax>
+        ] <argument>uri</argument></syntax>
 <syntax block="yes"><value>@</value><argument>имя</argument></syntax>
 <default/>
 <context>server</context>
@@ -1383,8 +1375,7 @@ location /scripts/ {
 <syntax><value>off</value></syntax>
 <syntax>
 <parameter>max</parameter>=<argument>N</argument>
-[<parameter>inactive</parameter>=<argument>время</argument>]
-</syntax>
+[<parameter>inactive</parameter>=<argument>время</argument>]</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1690,8 +1681,7 @@ open_file_cache_events   on;
 <directive name="resolver">
 <syntax>
 <argument>адрес</argument> ...
-[<parameter>valid</parameter>=<argument>время</argument>]
-</syntax>
+[<parameter>valid</parameter>=<argument>время</argument>]</syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -2170,12 +2160,10 @@ server {
 <directive name="try_files">
 <syntax>
         <argument>файл</argument> ...
-        <argument>uri</argument>
-</syntax>
+        <argument>uri</argument></syntax>
 <syntax>
         <argument>файл</argument> ...
-        =<argument>код</argument>
-</syntax>
+        =<argument>код</argument></syntax>
 <default/>
 <context>server</context>
 <context>location</context>

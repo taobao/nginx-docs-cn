@@ -52,8 +52,7 @@ events {
 <value>error</value> |
 <value>crit</value> |
 <value>alert</value> |
-<value>emerg</value>]
-</syntax>
+<value>emerg</value>]</syntax>
 <default>logs/error.log error</default>
 <context>main</context>
 <context>http</context>
