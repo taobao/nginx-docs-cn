@@ -9,14 +9,14 @@
 <section id="summary">
 
 <para>
-Модуль <code>ngx_http_image_filter_module</code> — это фильтр для преобразования
-изображений в форматах JPEG, GIF и PNG (0.7.54+).
+Модуль <literal>ngx_http_image_filter_module</literal> — это фильтр
+для преобразования изображений в форматах JPEG, GIF и PNG (0.7.54+).
 </para>
 
 <para>
 По умолчанию этот модуль не собирается, его сборку необходимо
 разрешить с помощью конфигурационного параметра
-<code>--with-http_image_filter_module</code>.
+<literal>--with-http_image_filter_module</literal>.
 <note>
 Для сборки и работы этого модуля необходима библиотека
 <link url="http://libgd.org">libgd</link>.
@@ -51,19 +51,19 @@ location = /empty {
 <section name="Директивы" id="directives">
 
 <directive name="image_filter">
-    <syntax><parameter>off</parameter></syntax>
-    <syntax><parameter>test</parameter></syntax>
-    <syntax><parameter>size</parameter></syntax>
-    <syntax><parameter>rotate</parameter>
-        <value>90</value> | <value>180</value> | <value>270</value></syntax>
+    <syntax><literal>off</literal></syntax>
+    <syntax><literal>test</literal></syntax>
+    <syntax><literal>size</literal></syntax>
+    <syntax><literal>rotate</literal>
+        <literal>90</literal> | <literal>180</literal> | <literal>270</literal></syntax>
     <syntax>
-        <parameter>resize</parameter>
-        <argument>ширина</argument>
-        <argument>высота</argument></syntax>
+        <literal>resize</literal>
+        <value>ширина</value>
+        <value>высота</value></syntax>
     <syntax>
-        <parameter>crop</parameter>
-        <argument>ширина</argument>
-        <argument>высота</argument></syntax>
+        <literal>crop</literal>
+        <value>ширина</value>
+        <value>высота</value></syntax>
 <default/>
 <context>location</context>
 
@@ -71,12 +71,12 @@ location = /empty {
 Задаёт тип преобразования изображения:
 <list type="tag">
 
-<tag-name><parameter>off</parameter></tag-name>
+<tag-name><literal>off</literal></tag-name>
 <tag-desc>
 отключает обработку данным модулем во вложенном location.
 </tag-desc>
 
-<tag-name><parameter>test</parameter></tag-name>
+<tag-name><literal>test</literal></tag-name>
 <tag-desc>
 проверяет, что ответ действительно является изображением
 в формате JPEG, GIF или PNG.
@@ -84,7 +84,7 @@ location = /empty {
 <http-status code="415" text="Unsupported Media Type"/>.
 </tag-desc>
 
-<tag-name><parameter>size</parameter></tag-name>
+<tag-name><literal>size</literal></tag-name>
 <tag-desc>
 выдаёт информацию об изображении в формате JSON, например:
 <example>
@@ -96,45 +96,45 @@ location = /empty {
 </example>
 </tag-desc>
 
-<tag-name><parameter>rotate</parameter>
-<value>90</value>|<value>180</value>|<value>270</value>
+<tag-name><literal>rotate</literal>
+<literal>90</literal>|<literal>180</literal>|<literal>270</literal>
 </tag-name>
 <tag-desc>
 поворачивает изображение против часовой стрелки на указанное число градусов.
-В значении аргумента допустимо использование переменных.
+В значении параметра допустимо использование переменных.
 Можно использовать как отдельно, так и совместно с преобразованиями
-<parameter>resize</parameter> и <parameter>crop</parameter>.
+<literal>resize</literal> и <literal>crop</literal>.
 </tag-desc>
 
-<tag-name><parameter>resize</parameter>
-<argument>ширина</argument>
-<argument>высота</argument>
+<tag-name><literal>resize</literal>
+<value>ширина</value>
+<value>высота</value>
 </tag-name>
 <tag-desc>
 пропорционально уменьшает изображение до указанных размеров.
 Если требуется уменьшить только по одному измерению, то в качестве второго
-можно указать “<code>-</code>”.
+можно указать “<literal>-</literal>”.
 В случае ошибки сервер возвращает код
 <http-status code="415" text="Unsupported Media Type"/>.
-В значениях аргументов допустимо использование переменных.
-При использовании совместно с <parameter>rotate</parameter>,
+В значениях параметров допустимо использование переменных.
+При использовании совместно с <literal>rotate</literal>,
 поворот изображения происходит <emphasis>после</emphasis>
 уменьшения размеров изображения.
 </tag-desc>
 
-<tag-name><parameter>crop</parameter>
-<argument>ширина</argument>
-<argument>высота</argument>
+<tag-name><literal>crop</literal>
+<value>ширина</value>
+<value>высота</value>
 </tag-name>
 <tag-desc>
 пропорционально уменьшает изображение до размера большей стороны
 и обрезает лишние края по другой стороне.
 Если требуется уменьшить только по одному измерению, то в качестве второго
-можно указать “<code>-</code>”.
+можно указать “<literal>-</literal>”.
 В случае ошибки сервер возвращает код
 <http-status code="415" text="Unsupported Media Type"/>.
-В значениях аргументов допустимо использование переменных.
-При использовании совместно с <parameter>rotate</parameter>,
+В значениях параметров допустимо использование переменных.
+При использовании совместно с <literal>rotate</literal>,
 поворот изображения происходит <emphasis>до</emphasis>
 уменьшения размеров изображения.
 </tag-desc>
@@ -162,25 +162,26 @@ location = /empty {
 
 
 <directive name="image_filter_jpeg_quality">
-<syntax><value>1..100</value></syntax>
+<syntax><value>качество</value></syntax>
 <default>75</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
 
 <para>
-Задаёт желаемое качество преобразованного изображения в формате JPEG.
+Задаёт желаемое <value>качество</value> преобразованного изображения в формате JPEG.
+Допустимые значения находятся в диапазоне 1..100.
 Меньшим значениям обычно соответствует худшее качество изображения
 и меньший объём передаваемых данных.
 Максимальное рекомендуемое значение — 95.
-В значении аргумента допустимо использование переменных.
+В значении параметра допустимо использование переменных.
 </para>
 
 </directive>
 
 
 <directive name="image_filter_sharpen">
-<syntax><argument>процент</argument></syntax>
+<syntax><value>процент</value></syntax>
 <default>0</default>
 <context>http</context>
 <context>server</context>
@@ -190,14 +191,14 @@ location = /empty {
 Повышает резкость итогового изображения.
 Процент резкости может быть больше 100.
 Значение 0 отключает повышение резкости.
-В значении аргумента допустимо использование переменных.
+В значении параметра допустимо использование переменных.
 </para>
 
 </directive>
 
 
 <directive name="image_filter_transparency">
-<syntax><value>on</value>|<value>off</value></syntax>
+<syntax><literal>on</literal>|<literal>off</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>

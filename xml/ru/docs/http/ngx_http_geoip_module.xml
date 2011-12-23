@@ -13,7 +13,7 @@
 зависят от IP-адреса клиента, используя готовые базы
 <link url="http://www.maxmind.com">MaxMind</link> (0.8.6+).
 По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром <command>--with-http_geoip_module</command>.
+при конфигурировании параметром <literal>--with-http_geoip_module</literal>.
 Для сборки и работы этого модуля нужна библиотека
 <link url="http://www.maxmind.com/app/c">MaxMind GeoIP</link>.
 

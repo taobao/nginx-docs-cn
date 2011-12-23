@@ -30,7 +30,7 @@ events {
 <section id="directives" name="Директивы">
 
 <directive name="daemon">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>main</context>
 
@@ -44,15 +44,15 @@ events {
 
 <directive name="error_log">
 <syntax>
-<argument>файл</argument>
-[<value>debug</value> |
-<value>info</value> |
-<value>notice</value> |
-<value>warn</value> |
-<value>error</value> |
-<value>crit</value> |
-<value>alert</value> |
-<value>emerg</value>]</syntax>
+<value>файл</value>
+[<literal>debug</literal> |
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal> |
+<literal>crit</literal> |
+<literal>alert</literal> |
+<literal>emerg</literal>]</syntax>
 <default>logs/error.log error</default>
 <context>main</context>
 <context>http</context>
@@ -64,24 +64,24 @@ events {
 </para>
 
 <para>
-Первый аргумент задаёт файл, который будет хранить лог.
+Первый параметр задаёт файл, который будет хранить лог.
 <!--
 Если имя файла не абсолютное, к нему добавляется в начало путь префикса.
 -->
 </para>
 
 <para>
-Второй аргумент определяет уровень лога.
+Второй параметр определяет уровень лога.
 Уровни лога, указанные выше, перечислены в порядке возрастания их серьёзности.
 При установке определённого уровня в лог попадают все сообщения
 указанного и более серьёзных уровней.
-Например, при стандартном уровне <value>error</value> в лог попадают
-сообщения уровней <value>error</value>, <value>crit</value>,
-<value>alert</value> и <value>emerg</value>.
+Например, при стандартном уровне <literal>error</literal> в лог попадают
+сообщения уровней <literal>error</literal>, <literal>crit</literal>,
+<literal>alert</literal> и <literal>emerg</literal>.
 
 <note>
-Для работы уровня лога <value>debug</value> необходимо сконфигурировать
-nginx с <code>--with-debug</code>.
+Для работы уровня лога <literal>debug</literal> необходимо сконфигурировать
+nginx с <literal>--with-debug</literal>.
 </note>
 </para>
 
@@ -89,7 +89,7 @@ nginx с <code>--with-debug</code>.
 
 
 <directive name="env">
-<syntax><argument>переменная</argument>[=<argument>значение</argument>]</syntax>
+<syntax><value>переменная</value>[=<value>значение</value>]</syntax>
 <default>TZ</default>
 <context>main</context>
 
@@ -140,12 +140,12 @@ env OPENSSL_ALLOW_PROXY_CERTS=1;
 
 
 <directive name="include">
-<syntax><argument>файл</argument> | <argument>маска</argument></syntax>
+<syntax><value>файл</value> | <value>маска</value></syntax>
 <default/>
 <context/>
 
 <para>
-Включает в конфигурацию другой <argument>файл</argument> или файлы,
+Включает в конфигурацию другой <value>файл</value> или файлы,
 подходящие под заданную маску.
 Включаемые файлы должны содержать синтаксически верные директивы и блоки.
 </para>
@@ -162,7 +162,7 @@ include vhosts/*.conf;
 
 
 <directive name="master_process">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>main</context>
 
@@ -175,19 +175,19 @@ include vhosts/*.conf;
 
 
 <directive name="pid">
-<syntax><argument>файл</argument></syntax>
+<syntax><value>файл</value></syntax>
 <default>nginx.pid</default>
 <context>main</context>
 
 <para>
-Задаёт <argument>файл</argument>, в котором хранится номер (PID) основного процесса.
+Задаёт <value>файл</value>, в котором будет храниться номер (PID) основного процесса.
 </para>
 
 </directive>
 
 
 <directive name="ssl_engine">
-<syntax><argument>устройство</argument></syntax>
+<syntax><value>устройство</value></syntax>
 <default/>
 <context>main</context>
 
@@ -199,7 +199,7 @@ include vhosts/*.conf;
 
 
 <directive name="timer_resolution">
-<syntax><argument>интервал</argument></syntax>
+<syntax><value>интервал</value></syntax>
 <default/>
 <context>main</context>
 
@@ -209,7 +209,7 @@ include vhosts/*.conf;
 По умолчанию <c-func>gettimeofday</c-func> вызывается после каждой
 операции получения событий из ядра.
 C уменьшенным разрешением <c-func>gettimeofday</c-func> вызывается только
-один раз за указанный <argument>интервал</argument>.
+один раз за указанный <value>интервал</value>.
 </para>
 
 <para>
@@ -224,11 +224,11 @@ timer_resolution 100ms;
 <list type="bullet">
 
 <listitem>
-фильтр <c-def>EVFILT_TIMER</c-def> при использовании <value>kqueue</value>;
+фильтр <c-def>EVFILT_TIMER</c-def> при использовании <literal>kqueue</literal>;
 </listitem>
 
 <listitem>
-<c-func>timer_create</c-func> при использовании <value>eventport</value>;
+<c-func>timer_create</c-func> при использовании <literal>eventport</literal>;
 </listitem>
 
 <listitem>
@@ -242,14 +242,14 @@ timer_resolution 100ms;
 
 
 <directive name="user">
-<syntax><argument>пользователь</argument> [<argument>группа</argument>]</syntax>
+<syntax><value>пользователь</value> [<value>группа</value>]</syntax>
 <default>nobody nobody</default>
 <context>main</context>
 
 <para>
 Задаёт пользователя и группу, с правами которого будут работать
 рабочие процессы.
-Если <argument>группа</argument> не задана, то используется группа, имя
+Если <value>группа</value> не задана, то используется группа, имя
 которой совпадает с именем пользователя.
 </para>
 
@@ -257,14 +257,14 @@ timer_resolution 100ms;
 
 
 <directive name="worker_priority">
-<syntax><argument>число</argument></syntax>
+<syntax><value>число</value></syntax>
 <default>0</default>
 <context>main</context>
 
 <para>
 Задаёт приоритет планирования рабочих процессов подобно тому,
 как это делается командой <command>nice</command>: отрицательное
-<argument>число</argument>
+<value>число</value>
 означает более высокий приоритет.
 Диапазон возможных значений, как правило, варьируется от -20 до 20.
 </para>
@@ -280,7 +280,7 @@ worker_priority -10;
 
 
 <directive name="worker_processes">
-<syntax><argument>число</argument></syntax>
+<syntax><value>число</value></syntax>
 <default>1</default>
 <context>main</context>
 
@@ -300,7 +300,7 @@ worker_priority -10;
 
 
 <directive name="worker_rlimit_core">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default/>
 <context>main</context>
 
@@ -314,7 +314,7 @@ worker_priority -10;
 
 
 <directive name="worker_rlimit_nofile">
-<syntax><argument>число</argument></syntax>
+<syntax><value>число</value></syntax>
 <default/>
 <context>main</context>
 
@@ -328,7 +328,7 @@ worker_priority -10;
 
 
 <directive name="working_directory">
-<syntax><argument>каталог</argument></syntax>
+<syntax><value>каталог</value></syntax>
 <default/>
 <context>main</context>
 

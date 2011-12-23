@@ -49,7 +49,7 @@ location / {
 
 
 <directive name="proxy_buffering">
-<syntax><value>on|off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http, server, location</context>
 
@@ -72,7 +72,7 @@ location / {
 
 
 <directive name="proxy_buffers">
-<syntax><value>число размер</value></syntax>
+<syntax><value>число</value> <value>размер</value></syntax>
 <default>8 4k/8k</default>
 <context>http, server, location</context>
 
@@ -87,7 +87,7 @@ location / {
 
 
 <directive name="proxy_cache">
-<syntax><value>[зона|off]</value></syntax>
+<syntax><value>зона</value> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -102,7 +102,7 @@ location / {
 
 
 <directive name="proxy_cache_bypass">
-<syntax><value>строка [...]</value></syntax>
+<syntax><value>строка</value> ...</syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -140,8 +140,12 @@ proxy_cache_key  $scheme$proxy_host$uri$is_args$args;
 
 
 <directive name="proxy_cache_path">
-<syntax><value>путь [levels=уровни]
-keys_zone=название:размер [inactive=время] [max_size=размер]</value></syntax>
+<syntax>
+  <value>путь</value>
+  [<literal>levels</literal>=<value>уровни</value>]
+  <literal>keys_zone</literal>=<value>название</value>:<value>размер</value>
+  [<literal>inactive</literal>=<value>время</value>]
+  [<literal>max_size</literal>=<value>размер</value>]</syntax>
 <default/>
 <context>http</context>
 
@@ -201,8 +205,7 @@ inactive, то данные удаляются, независимо от их �
 
 
 <directive name="proxy_cache_valid">
-<syntax><value>ответ [ответ ...] время</value>
-</syntax>
+<syntax><value>ответ</value> ... <value>время</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -238,9 +241,18 @@ proxy_cache_valid  any 1m;
 
 
 <directive name="proxy_cache_use_stale">
-<syntax><value>[error | timeout | invalid_header
-     | updating | http_500 | http_502 | http_503 | http_504 | http_404 | off]
-[...]</value></syntax>
+<syntax>
+  <literal>error</literal> |
+  <literal>timeout</literal> |
+  <literal>invalid_header</literal> |
+  <literal>updating</literal> |
+  <literal>http_500</literal> |
+  <literal>http_502</literal> |
+  <literal>http_503</literal> |
+  <literal>http_504</literal> |
+  <literal>http_404</literal> |
+  <literal>off</literal>
+  ...</syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -286,7 +298,7 @@ nginx не передаёт клиенту строки заголовка "Date
 
 
 <directive name="proxy_ignore_client_abort">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -299,7 +311,7 @@ nginx не передаёт клиенту строки заголовка "Date
 
 
 <directive name="proxy_ignore_headers">
-<syntax><value>имя [имя ...]</value></syntax>
+<syntax><value>имя</value> ...</syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -315,7 +327,7 @@ nginx не передаёт клиенту строки заголовка "Date
 
 
 <directive name="proxy_intercept_errors">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -329,9 +341,17 @@ nginx не передаёт клиенту строки заголовка "Date
 
 
 <directive name="proxy_next_upstream">
-<syntax><value>[error | timeout | invalid_header
-        | http_500 | http_502 | http_503 | http_504 | http_404 | off]
-[...]</value></syntax>
+<syntax>
+  <literal>error</literal> |
+  <literal>timeout</literal> |
+  <literal>invalid_header</literal> |
+  <literal>http_500</literal> |
+  <literal>http_502</literal> |
+  <literal>http_503</literal> |
+  <literal>http_504</literal> |
+  <literal>http_404</literal> |
+  <literal>off</literal>
+  ...</syntax>
 <default>error timeout</default>
 <context>http, server, location</context>
 
@@ -391,7 +411,7 @@ off — запрещает передачу запроса следующему
 
 
 <directive name="proxy_no_cache">
-<syntax><value>строка [...]</value></syntax>
+<syntax><value>строка</value> ...</syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -529,10 +549,9 @@ location  /some/path/ {
 
 <directive name="proxy_redirect">
 <syntax>
-    <value>default</value> |
-    <value>off</value> |
-    <argument>перенаправление замена</argument>
-</syntax>
+  <literal>default</literal> |
+  <literal>off</literal> |
+  <value>перенаправление</value> <value>замена</value></syntax>
 <default>default</default>
 <context>http</context>
 <context>server</context>
@@ -561,7 +580,7 @@ location  /some/path/ {
 </para>
 
 <para>
-Изменение по умолчанию, задаваемое значением <value>default</value>, использует
+Изменение по умолчанию, задаваемое значением <literal>default</literal>, использует
 параметры директив <link doc="ngx_http_core_module.xml" id="location"/> и
 <link id="proxy_pass"/>.
 Поэтому две нижеприведённые конфигурации одинаковы:
@@ -576,7 +595,7 @@ location /one/ {
     proxy_pass     http://upstream:port/two/;
     proxy_redirect http://upstream:port/two/ /one/;
 </example>
-Значение <value>default</value> недопустимо, если в <link id="proxy_pass"/>
+Значение <literal>default</literal> недопустимо, если в <link id="proxy_pass"/>
 используются переменные.
 </para>
 
@@ -596,11 +615,12 @@ location /one/ {
 
 <para>
 Директиву также можно задать (1.1.11) при помощи регулярных выражений.
-При этом <argument>перенаправление</argument> должен начинаться либо с символа
-“<code>~</code>”, если при сравнении следует учитывать регистр символов,
-либо с символов “<code>~*</code>”, если регистр символов учитывать не нужно.
+При этом <value>перенаправление</value> должно начинаться либо с символа
+“<literal>~</literal>”, если при сравнении следует учитывать регистр символов,
+либо с символов “<literal>~*</literal>”, если регистр символов учитывать
+не нужно.
 Регулярное выражение может содержать именованные и позиционные выделения,
-а <argument>замена</argument> на них ссылаться:
+а <value>замена</value> ссылаться на них:
 <example>
     proxy_redirect ~^(http://[^:]+):\d+(/.+)$ $1$2;
     proxy_redirect ~*/user/([^/]+)/(.+)$      http://$1.example.com/$2;
@@ -617,7 +637,8 @@ location /one/ {
 </para>
 
 <para>
-Значение <value>off</value> запрещает все директивы <code>proxy_redirect</code>
+Значение <literal>off</literal> запрещает все директивы
+<literal>proxy_redirect</literal>
 на данном уровне:
 <example>
     proxy_redirect off;
@@ -671,7 +692,7 @@ location /one/ {
 
 
 <directive name="proxy_set_header">
-<syntax><value>заголовок значение</value></syntax>
+<syntax><value>заголовок</value> <value>значение</value></syntax>
 <default>Host $proxy_host</default>
 <default>Connection close</default>
 <context>http, server, location</context>
@@ -725,7 +746,7 @@ proxy_set_header  Accept-Encoding  "";
 
 
 <directive name="proxy_ssl_session_reuse">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http, server, location</context>
 
@@ -740,7 +761,7 @@ proxy_set_header  Accept-Encoding  "";
 
 
 <directive name="proxy_store">
-<syntax><value>on | off | строка </value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal> | <value>строка</value></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -817,8 +838,7 @@ location @fetch {
 
 
 <directive name="proxy_store_access">
-<syntax><value>пользователи:права [пользователи:права]
-...</value></syntax>
+<syntax><value>пользователи</value>:<value>права</value> ...</syntax>
 <default>user:rw</default>
 <context>http, server, location</context>
 
@@ -841,8 +861,7 @@ proxy_store_access  group:rw  all:r;
 
 
 <directive name="proxy_temp_path">
-<syntax><value>путь [ уровень1 [ уровень2 [ уровень3 ] ] ]
-</value></syntax>
+<syntax><value>путь</value> [<value>уровень1</value> [<value>уровень2</value> [<value>уровень3</value>]]]</syntax>
 <default>proxy_temp</default>
 <context>http, server, location</context>
 

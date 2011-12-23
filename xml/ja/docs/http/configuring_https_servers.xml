@@ -35,7 +35,7 @@ server {
 </para>
 
 <para>
-SSL プロトコルの強力なバージョンと暗号に接続を制限するには、ディレクティブ <dirname>ssl_protocols</dirname> と <dirname>ssl_ciphers</dirname> を使用します。バージョン 0.8.20 以降、nginx は <dirname>ssl_protocols SSLv3 TLSv1</dirname> と <dirname>ssl_ciphers HIGH:!ADH:!MD5</dirname> をデフォルトとして使用しているので、これより古い nginx のバージョンでのみ設定してください。
+SSL プロトコルの強力なバージョンと暗号に接続を制限するには、ディレクティブ <literal>ssl_protocols</literal> と <literal>ssl_ciphers</literal> を使用します。バージョン 0.8.20 以降、nginx は <literal>ssl_protocols SSLv3 TLSv1</literal> と <literal>ssl_ciphers HIGH:!ADH:!MD5</literal> をデフォルトとして使用しているので、これより古い nginx のバージョンでのみ設定してください。
 </para>
 
 </section>
@@ -44,7 +44,7 @@ SSL プロトコルの強力なバージョンと暗号に接続を制限する�
 <section id="optimization" name="HTTPS サーバの最適化">
 
 <para>
-SSL の工程は CPU リソースを余計に消費します。マルチプロセッサシステムでは（利用できる CPU コアの数よりも大きい数の）複数のワーカープロセスを走らせるといいでしょう。最も CPU に負荷がかかる工程は SSL ハンドシェイクです。クライアント毎のこの工程数を最小化するには２つの方法があります。最初の方法はキープアライブ接続を有効にして、ひとつの接続経由で複数のリクエストを送るようにする方法です。二つ目の方法は SSL セッションパラメータを再利用して、並行かつ順次接続のための SSL ハンドシェイクを避ける方法です。セッションはワーカー間で共有される SSL セッションキャッシュに保持され、<dirname>ssl_session_cache</dirname> ディレクティブで設定されています。１メガバイトのキャッシュには約４０００のセッションが含まれます。キャッシュのデフォルトタイムアウトは５分です。この値は <dirname>ssl_session_timeout</dirname> ディレクティブを使用して増やすことができます。次の例は１０Mの共有セッションキャッシュをもったクアッドコアシステムに最適化された設定例です:
+SSL の工程は CPU リソースを余計に消費します。マルチプロセッサシステムでは（利用できる CPU コアの数よりも大きい数の）複数のワーカープロセスを走らせるといいでしょう。最も CPU に負荷がかかる工程は SSL ハンドシェイクです。クライアント毎のこの工程数を最小化するには２つの方法があります。最初の方法はキープアライブ接続を有効にして、ひとつの接続経由で複数のリクエストを送るようにする方法です。二つ目の方法は SSL セッションパラメータを再利用して、並行かつ順次接続のための SSL ハンドシェイクを避ける方法です。セッションはワーカー間で共有される SSL セッションキャッシュに保持され、<literal>ssl_session_cache</literal> ディレクティブで設定されています。１メガバイトのキャッシュには約４０００のセッションが含まれます。キャッシュのデフォルトタイムアウトは５分です。この値は <literal>ssl_session_timeout</literal> ディレクティブを使用して増やすことができます。次の例は１０Mの共有セッションキャッシュをもったクアッドコアシステムに最適化された設定例です:
 
 
 <programlisting>
@@ -80,7 +80,7 @@ http {
 $ cat www.nginx.com.crt bundle.crt > www.nginx.com.chained.crt
 </programlisting>
 
-この結合されたファイルを <dirname>ssl_certificate</dirname> ディレクティブで使われるようにします:
+この結合されたファイルを <literal>ssl_certificate</literal> ディレクティブで使われるようにします:
 
 <programlisting>
 server {
@@ -105,7 +105,7 @@ SSL_CTX_use_PrivateKey_file(" ... /www.nginx.com.key") failed
 </para>
 
 <para>
-ブラウザは通常、信頼されている認証局によって署名されている受信した中間証明書を保存します。したがって、よく使われているブラウザは要求された中間証明書をすでに保持しているかもしれませんし、連鎖バンドルなしで送られた証明書にエラーを出すかもしれません。サーバに完全な連鎖証明書を送信させるには <dirname>openssl</dirname> コマンドラインユーティリティを使うといいでしょう。例えば:
+ブラウザは通常、信頼されている認証局によって署名されている受信した中間証明書を保存します。したがって、よく使われているブラウザは要求された中間証明書をすでに保持しているかもしれませんし、連鎖バンドルなしで送られた証明書にエラーを出すかもしれません。サーバに完全な連鎖証明書を送信させるには <literal>openssl</literal> コマンドラインユーティリティを使うといいでしょう。例えば:
 
 <programlisting>
 $ openssl s_client -connect www.godaddy.com:443
@@ -146,7 +146,7 @@ Certificate chain
 <section id="single_http_https_server" name="単一の HTTP/HTTPS サーバ">
 
 <para>
-最初の段階から HTTP と HTTPS プロトコル用にサーバを分けて設定するのは優れた実践です。現時点では両者の機能性としては等しいかもしれませんが、将来的に大きな変更があるかもしれず、統合されたサーバの使用が問題になるかもしれません。とはいえ、HTTP と HTTPS のサーバが等しく、将来のことを考えたくないのなら、ディレクティブ <dirname>ssl on</dirname> を削除して *:443 ポートに <dirname>ssl</dirname> パラメータを追加することによって HTTP と HTTPS リクエストの両者を扱う単一のサーバを設定することができます:
+最初の段階から HTTP と HTTPS プロトコル用にサーバを分けて設定するのは優れた実践です。現時点では両者の機能性としては等しいかもしれませんが、将来的に大きな変更があるかもしれず、統合されたサーバの使用が問題になるかもしれません。とはいえ、HTTP と HTTPS のサーバが等しく、将来のことを考えたくないのなら、ディレクティブ <literal>ssl on</literal> を削除して *:443 ポートに <literal>ssl</literal> パラメータを追加することによって HTTP と HTTPS リクエストの両者を扱う単一のサーバを設定することができます:
 
 <programlisting>
 server {
@@ -160,7 +160,7 @@ server {
 </programlisting>
 
 <note>
-0.8.21 以前では、nginx は <dirname>default</dirname> パラメータで待ち受けているソケットに <dirname>ssl</dirname> パラメータをセットすることしかできませんでした:
+0.8.21 以前では、nginx は <literal>default</literal> パラメータで待ち受けているソケットに <literal>ssl</literal> パラメータをセットすることしかできませんでした:
 <programlisting>
 listen  443  default  ssl;
 </programlisting>
@@ -320,7 +320,7 @@ therefore SNI is not available
 </item>
 
 <item>
-<dirname>listen</dirname> ディレクティブの <dirname>ssl</dirname> パラメータは 0.7.14 以降からサポートされています。
+<literal>listen</literal> ディレクティブの <literal>ssl</literal> パラメータは 0.7.14 以降からサポートされています。
 </item>
 
 <item>
@@ -352,15 +352,15 @@ SNI は 0.5.32 以降からサポートされています。
 <list>
 
 <item>
-バージョン 0.7.65 と 0.8.20 以降のデフォルトの SSL 暗号は <dirname>HIGH:!ADH:!MD5</dirname> です。
+バージョン 0.7.65 と 0.8.20 以降のデフォルトの SSL 暗号は <literal>HIGH:!ADH:!MD5</literal> です。
 </item>
 
 <item>
-バージョン  0.8.19 のデフォルトの SSL 暗号は <dirname>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</dirname> です。
+バージョン  0.8.19 のデフォルトの SSL 暗号は <literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</literal> です。
 </item>
 
 <item>
-バージョン 0.7.64 と 0.8.18 以前のデフォルトの SSL 暗号は <dirname>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</dirname> です。
+バージョン 0.7.64 と 0.8.18 以前のデフォルトの SSL 暗号は <literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</literal> です。
 </item>
 
 </list>

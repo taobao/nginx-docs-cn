@@ -42,7 +42,12 @@
 <section name="Директивы" id="directives">
 
 <directive name="valid_referers">
-<syntax>[none|blocked|server_names|<value>строка</value>] ...</syntax>
+<syntax>
+  <literal>none</literal> | 
+  <literal>blocked</literal> |
+  <literal>server_names</literal> |
+  <value>строка</value>
+  ...</syntax>
 <default/>
 <context>server, location</context>
 

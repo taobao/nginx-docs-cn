@@ -10,7 +10,9 @@
 <section>
 
 <para>
-Server names are defined using the <dirname>server_name</dirname> directive
+Server names are defined using the
+<link doc="ngx_http_core_module.xml" id="server_name"/>
+directive
 and determine which server block is used for a given request.
 See also &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
 They may be defined using exact names, wildcard names, or regular expressions:
@@ -73,20 +75,20 @@ The first match stops the search.
 
 <para>
 A wildcard name may contain an asterisk only on the name's start or end,
-and only on a dot border. The names <dirname>www.*.nginx.org</dirname>
-and <dirname>w*.nginx.org</dirname> are invalid.
+and only on a dot border. The names “<literal>www.*.nginx.org</literal>”
+and “<literal>w*.nginx.org</literal>” are invalid.
 However, these names can be specified using regular expressions,
-for example, <dirname>~^www\..+\.nginx\.org$</dirname> and
-<dirname>~^w.*\.nginx\.org$</dirname>.
+for example, “<literal>~^www\..+\.nginx\.org$</literal>” and
+“<literal>~^w.*\.nginx\.org$</literal>”.
 An asterisk can match several name parts.
-The name <dirname>*.nginx.org</dirname> matches not only
+The name “<literal>*.nginx.org</literal>” matches not only
 <url>www.nginx.org</url> but <url>www.sub.nginx.org</url> as well.
 </para>
 
 <para>
-A special wildcard in the form <dirname>.nginx.org</dirname> can be used
-to match both the exact name <dirname>nginx.org</dirname>
-and the wildcard name <dirname>*.nginx.org</dirname>.
+A special wildcard in the form “<literal>.nginx.org</literal>” can be used
+to match both the exact name “<literal>nginx.org</literal>”
+and the wildcard name “<literal>*.nginx.org</literal>”.
 </para>
 
 </section>
@@ -140,17 +142,17 @@ The PCRE library supports named captures using the following syntax:
 <table note="yes">
 
 <tr>
-<td><code>?&lt;<i>name</i>&gt;</code></td>
+<td><literal>?&lt;<value>name</value>&gt;</literal></td>
 <td>Perl 5.10 compatible syntax, supported since PCRE-7.0</td>
 </tr>
 
 <tr>
-<td><code>?'<i>name</i>'</code></td>
+<td><literal>?'<value>name</value>'</literal></td>
 <td>Perl 5.10 compatible syntax, supported since PCRE-7.0</td>
 </tr>
 
 <tr>
-<td><code>?P&lt;<i>name</i>&gt;</code></td>
+<td><literal>?P&lt;<value>name</value>&gt;</literal></td>
 <td>Python compatible syntax, supported since PCRE-4.0</td>
 </tr>
 
@@ -163,7 +165,7 @@ pcre_compile() failed: unrecognized character after (?&lt; in ...
 </programlisting>
 
 this means that the PCRE library is old
-and you should try the syntax <dirname>?P&lt;<i>name</i>&gt;</dirname>.
+and you should try the syntax “<literal>?P&lt;<value>name</value>&gt;</literal>”.
 The captures can also be used in digital form:
 
 <programlisting>
@@ -201,7 +203,9 @@ server {
 </para>
 
 <para>
-If no <dirname>server_name</dirname> is defined in a server block,
+If no
+<link doc="ngx_http_core_module.xml" id="server_name"/>
+is defined in a server block,
 then nginx uses the empty name as the server name.
 <note>
 nginx versions up to 0.8.48 used the <i>hostname</i> as the server name
@@ -248,13 +252,23 @@ nginx versions up to 0.6.25 supported the special name &ldquo;*&rdquo;
 which was erroneously interpreted to be a catch-all name.
 It never functioned as a catch-all or wildcard server name.
 Instead, it supplied the functionality that is now provided
-by the <dirname>server_name_in_redirect</dirname> directive.
+by the
+<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/>
+directive.
 The special name &ldquo;*&rdquo; is now deprecated
-and the <dirname>server_name_in_redirect</dirname> directive should be used.
+and the
+<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/>
+directive should be used.
 Note that there is no way to specify the catch-all name or
-the <i>default</i> server using the <dirname>server_name</dirname> directive.
-This is a property of the <dirname>listen</dirname> directive
-and not of the <dirname>server_name</dirname> directive.
+the <i>default</i> server using the
+<link doc="ngx_http_core_module.xml" id="server_name"/>
+directive.
+This is a property of the
+<link doc="ngx_http_core_module.xml" id="listen"/>
+directive
+and not of the
+<link doc="ngx_http_core_module.xml" id="server_name"/>
+directive.
 See also &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
 You can define servers listening on ports *:80 and *:8080,
 and direct that one will be the default server for port *:8080,
@@ -298,7 +312,7 @@ If the name is not found there, the wildcard names hash
 ending with an asterisk is searched.
 Searching wildcard names hashes is slower than searching exact name hash
 because names are searched by domain parts.
-Note that the special wildcard form <dirname>.nginx.org</dirname>
+Note that the special wildcard form “<literal>.nginx.org</literal>”
 is stored in a wildcard names hash and not in an exact names hash.
 Regular expressions are tested sequentially
 and therefore are the slowest method and are non-scalable.
@@ -332,10 +346,11 @@ server {
 <para>
 If you have defined a large number of server names,
 or defined unusually long server names, you may need to tune
-the <dirname>server_names_hash_max_size</dirname>
-and <dirname>server_names_hash_bucket_size</dirname> directives
-at the <i>http</i> level.
-The default value of the <dirname>server_names_hash_bucket_size</dirname>
+the <link doc="ngx_http_core_module.xml" id="server_names_hash_max_size"/>
+and <link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>
+directives at the <i>http</i> level.
+The default value of the
+<link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>
 may be equal to 32, or 64, or another value,
 depending on your CPU cache line size.
 If the default value is 32 and you define
@@ -364,18 +379,22 @@ you should increase either server_names_hash_max_size: 512
 or server_names_hash_bucket_size: 32
 </programlisting>
 
-You should first try to set <dirname>server_names_hash_max_size</dirname>
+You should first try to set
+<link doc="ngx_http_core_module.xml" id="server_names_hash_max_size"/>
 to a number close to the number of server names.
 Only if this does not help,
 or if nginx&rsquo;s start time is unacceptably long,
-should you try to increase <dirname>server_names_hash_bucket_size</dirname>.
+should you try to increase
+<link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>.
 </para>
 
 <para>
 If a server is the only server for a listen port, then nginx will not test
 server names at all (and will not build the hashes for the listen port).
 However, there is one exception.
-If a <dirname>server_name</dirname> is a regular expression with captures,
+If a
+<link doc="ngx_http_core_module.xml" id="server_name"/>
+is a regular expression with captures,
 then nginx has to execute the expression to get the captures.
 </para>
 

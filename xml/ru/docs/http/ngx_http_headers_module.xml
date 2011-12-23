@@ -35,7 +35,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="add_header">
-<syntax><value>название значение</value></syntax>
+<syntax><value>название</value> <value>значение</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -49,7 +49,11 @@
 
 
 <directive name="expires">
-<syntax><value>[modified]</value> <value>[время|epoch|max|off]</value></syntax>
+<syntax>[<literal>modified</literal>] <value>время</value></syntax>
+<syntax>
+  <literal>epoch</literal> |
+  <literal>max</literal> |
+  <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 

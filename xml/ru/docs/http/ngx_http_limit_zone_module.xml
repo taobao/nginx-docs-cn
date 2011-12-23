@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-В версии 1.1.8 модуль <code>ngx_http_limit_zone_module</code>
+В версии 1.1.8 модуль <literal>ngx_http_limit_zone_module</literal>
 был переименован в модуль
 <link doc="ngx_http_limit_conn_module.xml">ngx_http_limit_conn_module</link>.
 </para>

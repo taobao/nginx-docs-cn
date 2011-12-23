@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-Модуль <code>ngx_http_limit_conn_module</code> позволяет ограничить
+Модуль <literal>ngx_http_limit_conn_module</literal> позволяет ограничить
 число соединений по заданному ключу или,
 как частный случай, число соединений с одного IP-адреса.
 </para>
@@ -47,7 +47,7 @@ http {
 <section name="Директивы" id="directives">
 
 <directive name="limit_conn">
-<syntax><argument>зона</argument> <argument>число</argument></syntax>
+<syntax><value>зона</value> <value>число</value></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -72,7 +72,8 @@ IP-адреса.
 </para>
 
 <para>
-Допустимо одновременное указание нескольких директив <code>limit_conn</code>,
+Допустимо одновременное указание нескольких директив
+<literal>limit_conn</literal>,
 при этом будет срабатывать любое из ограничений.
 Например, следующая конфигурация ограничивает число соединений с сервером
 с одного клиентского IP-адреса и в то же время ограничивает общее число
@@ -92,7 +93,7 @@ IP-адреса.
 
 <para>
 Директивы наследуются с предыдущего уровня при условии, что на данном уровне
-не описаны свои директивы <code>limit_conn</code>.
+не описаны свои директивы <literal>limit_conn</literal>.
 </para>
 
 </directive>
@@ -100,10 +101,10 @@ IP-адреса.
 
 <directive name="limit_conn_log_level">
 <syntax>
-<value>info</value> |
-<value>notice</value> |
-<value>warn</value> |
-<value>error</value></syntax>
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal></syntax>
 <default>error</default>
 <context>http</context>
 <context>server</context>
@@ -120,8 +121,8 @@ IP-адреса.
 
 <directive name="limit_conn_zone">
 <syntax>
-    <argument>$переменная</argument>
-    <parameter>zone</parameter>=<argument>название</argument>:<argument>размер</argument></syntax>
+    <value>$переменная</value>
+    <literal>zone</literal>=<value>название</value>:<value>размер</value></syntax>
 <default/>
 <context>http</context>
 
@@ -155,9 +156,9 @@ limit_conn_zone $binary_remote_addr zone=addr:10m;
 
 <directive name="limit_zone">
 <syntax>
-    <argument>название</argument>
-    <argument>$переменная</argument>
-    <argument>размер</argument></syntax>
+    <value>название</value>
+    <value>$переменная</value>
+    <value>размер</value></syntax>
 <default/>
 <context>http</context>
 
@@ -166,9 +167,9 @@ limit_conn_zone $binary_remote_addr zone=addr:10m;
 использовать аналогичную директиву <link id="limit_conn_zone"/>
 с изменённым синтаксисом:
 <note>
-<code>limit_conn_zone</code>
-<argument>$переменная</argument>
-<parameter>zone</parameter>=<argument>название</argument>:<argument>размер</argument>;
+<literal>limit_conn_zone</literal>
+<value>$переменная</value>
+<literal>zone</literal>=<value>название</value>:<value>размер</value>;
 </note>
 </para>
 

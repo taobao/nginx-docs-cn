@@ -37,7 +37,7 @@ server {
 Bu yapılandırmada, nginx yalnızca talebin header bilgisinde bulunan &ldquo;Host&rdquo; datasını kullanarak hangi sunucunun cevap vereceğini belirliyor.
 Eğer &ldquo;Host&rdquo; datası boş ise veya herhangi bir sunucu adı ile eşleşmez ise nginx talebi varsayılan sunucuya yönlendirir.
 Yukarıdaki örnekte varsayılan sunucu ilk server ifadesi kabul edilir.
-Eğer ilk server ifadesinin varsayılan olmasını istemiyorsanız, <dirname>listen</dirname> yönergesinde <dirname>default_server</dirname> parametresini kullanabilirsiniz:
+Eğer ilk server ifadesinin varsayılan olmasını istemiyorsanız, <literal>listen</literal> yönergesinde <literal>default_server</literal> parametresini kullanabilirsiniz:
 
 <programlisting>
 server {
@@ -48,8 +48,8 @@ server {
 </programlisting>
 
 <note>
-<dirname>default_server</dirname> parametresi, versiyon 0.8.21 ile birlikte kullanılmaya başlanmıştır.
-Önceki versiyonlarda <dirname>default</dirname> parametresi kullanılmalıdır.
+<literal>default_server</literal> parametresi, versiyon 0.8.21 ile birlikte kullanılmaya başlanmıştır.
+Önceki versiyonlarda <literal>default</literal> parametresi kullanılmalıdır.
 </note>
 
 Not: Varsayılan sunucu, sunucu adının değil listen portunun bir özelliğidir. Daha sonra bu konuya değinilecek.
@@ -104,7 +104,7 @@ server {
 }
 </programlisting>
 
-Bu yapılandırmada, nginx <dirname>server</dirname> bloklarında yer alan <dirname>listen</dirname> yönergelerini ilk olarak IP adresi ve port üzerinde test eder. Daha sonra, gelen taleplerin header bilgisinde yer alan &ldquo;Host&rdquo; datasını, IP ve port ile eşleşen <dirname>server</dirname> bloklarında yer alan <dirname>server_name</dirname> girdileri ile kontrol eder.
+Bu yapılandırmada, nginx <literal>server</literal> bloklarında yer alan <literal>listen</literal> yönergelerini ilk olarak IP adresi ve port üzerinde test eder. Daha sonra, gelen taleplerin header bilgisinde yer alan &ldquo;Host&rdquo; datasını, IP ve port ile eşleşen <literal>server</literal> bloklarında yer alan <literal>server_name</literal> girdileri ile kontrol eder.
 
 Eğer sunucu bulunamazsa varsayılan sunucu tarafından işlenir. Örneğin, <url>www.nginx.com</url> için 192.168.1.1:80 adres ve portuna gelen bir talep, eğer bu adres ve port için <url>www.nginx.com</url> tanımlanmamışsa, 192.168.1.1:80&rsquo;e ait varsayılan sunucu tarafından işlenir.
 </para>
@@ -192,25 +192,25 @@ Yukarıdaki yapılandırmada taleplerin nasıl işlendiğini inceleyelim:
 
 <item>
 <para>
-Bir <path>/logo.gif</path> talebi, ilk olarak <dirname>/</dirname> literal lokasyonu, daha sonra, <dirname>\.(gif|jpg|png)$</dirname> düzenli ifadesi tarafından eşleştirilir. Bu sonraki (latter) lokasyon tarafından tutulur. <dirname>root&nbsp;/data/www</dirname> yönergesi kullanılarak, talep <path>/data/www/logo.gif</path> dosyasına eşlemlenir (mapped to) ve dosya istemciye gönderilir.
+Bir <path>/logo.gif</path> talebi, ilk olarak <literal>/</literal> literal lokasyonu, daha sonra, <literal>\.(gif|jpg|png)$</literal> düzenli ifadesi tarafından eşleştirilir. Bu sonraki (latter) lokasyon tarafından tutulur. <literal>root&nbsp;/data/www</literal> yönergesi kullanılarak, talep <path>/data/www/logo.gif</path> dosyasına eşlemlenir (mapped to) ve dosya istemciye gönderilir.
 </para>
 </item>
 
 <item>
 <para>
-Bir <path>/index.php</path> talebi de ilk olarak <dirname>/</dirname> literal lokasyonu, sonra, <dirname>\.(php)$</dirname> düzenli ifadesi tarafından eşleştirilir. Bu nedenle sonraki lokasyon tarafından tutulur ve localhost:9000&rsquo;in dinlendiği bir FastCGI sunucusuna iletilir. <dirname>fastcgi_param</dirname> yönergesi, SCRIPT_FILENAME FastCGI parametresini <path>/data/www/index.php</path> adresine yerleştirir ve FastCGI sunucusu dosyayı yürütür. $document_root değişkeni <dirname>root</dirname> yönergesinin değerine, $fastcgi_script_name değişkeni ise talebin URI değerine eşittir. Örneğin <path>/index.php</path>.
+Bir <path>/index.php</path> talebi de ilk olarak <literal>/</literal> literal lokasyonu, sonra, <literal>\.(php)$</literal> düzenli ifadesi tarafından eşleştirilir. Bu nedenle sonraki lokasyon tarafından tutulur ve localhost:9000&rsquo;in dinlendiği bir FastCGI sunucusuna iletilir. <literal>fastcgi_param</literal> yönergesi, SCRIPT_FILENAME FastCGI parametresini <path>/data/www/index.php</path> adresine yerleştirir ve FastCGI sunucusu dosyayı yürütür. $document_root değişkeni <literal>root</literal> yönergesinin değerine, $fastcgi_script_name değişkeni ise talebin URI değerine eşittir. Örneğin <path>/index.php</path>.
 </para>
 </item>
 
 <item>
 <para>
-Bir <path>/about.html</path> talebi yalnızca <dirname>/</dirname> literal lokasyonu tarafından eşleştirilir ve bu yüzden, bu lokasyon tarafından tutulur. <dirname>root /data/www</dirname> yönergesi kullanılarak talep, <path>/data/www/about.html</path> dosyasına eşlemlenir ve istemciye gönderilir.
+Bir <path>/about.html</path> talebi yalnızca <literal>/</literal> literal lokasyonu tarafından eşleştirilir ve bu yüzden, bu lokasyon tarafından tutulur. <literal>root /data/www</literal> yönergesi kullanılarak talep, <path>/data/www/about.html</path> dosyasına eşlemlenir ve istemciye gönderilir.
 </para>
 </item>
 
 <item>
 <para>
-Bir <path>/</path> talebini tutmak daha karmaşıktır. Sadece <dirname>/</dirname> literal lokasyonu tarafından eşleştirilir ve bu yüzden bu lokasyon tarafından tutulur. Sonra <dirname>index</dirname> yönergesi parametrelerine ve <dirname>root&nbsp;/data/www</dirname> yönergesine göre bir index dosyası olup olmadığını kontrol eder. Eğer bir <path>/data/www/index.php</path> dosyası mevcut ise yönerge, <path>/index.php</path> adresine dahili bir yönlendirme yapar ve eğer talep bir istemci tarafından gönderilmiş ise nginx, lokasyonları tekrar arar. Daha önce gördüğümüz gibi, yönlendirilmiş talep en son olarak FastCGI sunucusu tarafından tutulur.
+Bir <path>/</path> talebini tutmak daha karmaşıktır. Sadece <literal>/</literal> literal lokasyonu tarafından eşleştirilir ve bu yüzden bu lokasyon tarafından tutulur. Sonra <literal>index</literal> yönergesi parametrelerine ve <literal>root&nbsp;/data/www</literal> yönergesine göre bir index dosyası olup olmadığını kontrol eder. Eğer bir <path>/data/www/index.php</path> dosyası mevcut ise yönerge, <path>/index.php</path> adresine dahili bir yönlendirme yapar ve eğer talep bir istemci tarafından gönderilmiş ise nginx, lokasyonları tekrar arar. Daha önce gördüğümüz gibi, yönlendirilmiş talep en son olarak FastCGI sunucusu tarafından tutulur.
 </para>
 </item>
 

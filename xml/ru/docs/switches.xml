@@ -11,13 +11,13 @@ nginx поддерживает следующие параметры:
 <list>
 
 <listitem>
-<command>-c &lt;<value>файл</value>&gt;</command>&mdash;указывает
-использовать конфигурационный файл &lt;<value>файл</value>&gt; вместо файла
+<literal>-c <value>файл</value></literal>&mdash;указывает
+использовать конфигурационный файл <value>файл</value> вместо файла
 по умолчанию.
 </listitem>
 
 <listitem>
-<command>-g</command>&mdash;задаёт глобальные директивы конфигурации,
+<literal>-g</literal>&mdash;задаёт глобальные директивы конфигурации,
 например,
 <programlisting>
 nginx -g "pid /var/run/nginx.pid; worker_processes `sysctl -n hw.ncpu`;"
@@ -25,17 +25,17 @@ nginx -g "pid /var/run/nginx.pid; worker_processes `sysctl -n hw.ncpu`;"
 </listitem>
 
 <listitem>
-<command>-t</command>&mdash;тестировать конфигурацию. nginx проверяет
+<literal>-t</literal>&mdash;тестировать конфигурацию. nginx проверяет
 синтаксическую правильность конфигурации, а затем пытается открыть файлы,
 описанные в конфигурации.
 </listitem>
 
 <listitem>
-<command>-v</command>&mdash;показать версию nginx.
+<literal>-v</literal>&mdash;показать версию nginx.
 </listitem>
 
 <listitem>
-<command>-V</command>&mdash;показать версию nginx, версию компилятора
+<literal>-V</literal>&mdash;показать версию nginx, версию компилятора
 и параметры конфигурации сборки.
 </listitem>
 

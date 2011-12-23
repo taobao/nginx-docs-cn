@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-The module <code>ngx_http_mp4_module</code> provides pseudo-streaming
+The module <literal>ngx_http_mp4_module</literal> provides pseudo-streaming
 server-side support for H.264/AAC files typically having filename extensions
 <path>.mp4</path>, <path>.m4v</path>, and <path>.m4a</path>.
 </para>
@@ -18,7 +18,7 @@ server-side support for H.264/AAC files typically having filename extensions
 Pseudo-streaming works in alliance with conforming Flash players.
 A player sends an HTTP request to the server with a start time
 argument in the request URI’s query string (named simply
-<parameter>start</parameter>
+<literal>start</literal>
 and specified in seconds), and the server responds with a stream
 so that its start position corresponds to the requested time,
 for example:
@@ -39,7 +39,7 @@ whole file.
 <para>
 To start playback, a player first needs to read metadata.
 This is done by sending a special request with the
-<parameter>start=0</parameter>
+<literal>start=0</literal>
 argument.  Many encoding software will insert the metadata at
 the end of the file.  This is bad for pseudo-streaming:
 the metadata needs to be located at the beginning of the file,
@@ -58,7 +58,7 @@ rather than having nginx do this on every such request.
 
 <para>
 For a matching request with a non-zero
-<parameter>start</parameter>
+<literal>start</literal>
 argument, nginx will read metadata from the file, prepare the
 stream starting from the requested offset, and send it to a client.
 This has the same overhead as described above.
@@ -66,7 +66,7 @@ This has the same overhead as described above.
 
 <para>
 If a matching request does not include the
-<parameter>start</parameter>
+<literal>start</literal>
 argument, there is no overhead, and the file is just sent as a static resource.
 Some players also support byte-range requests, and thus do not require
 this module at all.
@@ -74,7 +74,7 @@ this module at all.
 
 <para>
 This module is not built by default, it should be enabled with the
-<code>--with-http_mp4_module</code>
+<literal>--with-http_mp4_module</literal>
 configuration parameter.
 <note>
 If you were using the third-party mp4 module, be sure to disable it.
@@ -119,7 +119,7 @@ Turns on module processing in a surrounding location.
 
 
 <directive name="mp4_buffer_size">
-<syntax><argument>size</argument></syntax>
+<syntax><value>size</value></syntax>
 <default>512K</default>
 <context>http</context>
 <context>server</context>
@@ -133,7 +133,7 @@ Sets the initial size of a memory buffer used to process MP4 files.
 
 
 <directive name="mp4_max_buffer_size">
-<syntax><argument>size</argument></syntax>
+<syntax><value>size</value></syntax>
 <default>10M</default>
 <context>http</context>
 <context>server</context>
@@ -141,7 +141,7 @@ Sets the initial size of a memory buffer used to process MP4 files.
 
 <para>
 During metadata processing, a larger buffer may become necessary.
-Its size cannot exceed the specified <argument>size</argument>,
+Its size cannot exceed the specified <value>size</value>,
 or else nginx will return the server error
 <http-status code="500" text="Internal Server Error"/>,
 and log the following:

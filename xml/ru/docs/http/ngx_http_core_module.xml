@@ -10,9 +10,9 @@
 
 <directive name="aio">
 <syntax>
-        <value>on</value> |
-        <value>off</value> |
-        <value>sendfile</value></syntax>
+        <literal>on</literal> |
+        <literal>off</literal> |
+        <literal>sendfile</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -130,7 +130,7 @@ location /video/ {
 
 
 <directive name="alias">
-<syntax><argument>путь</argument></syntax>
+<syntax><value>путь</value></syntax>
 <default/>
 <context>location</context>
 
@@ -143,19 +143,19 @@ location /i/ {
 }
 </example>
 на запрос
-“<code>/i/top.gif</code>” будет отдан файл
+“<literal>/i/top.gif</literal>” будет отдан файл
 <path>/data/w3/images/top.gif</path>.
 </para>
 
 <para>
-В значении аргумента <argument>путь</argument> можно использовать переменные,
+В значении параметра <value>путь</value> можно использовать переменные,
 кроме <var>$document_root</var> и <var>$realpath_root</var>.
 </para>
 
 <para>
-Если <code>alias</code> используется внутри location'а, заданного
+Если <literal>alias</literal> используется внутри location'а, заданного
 регулярным выражением, то регулярное выражение должно содержать
-выделения, а сам <code>alias</code> — ссылки на эти выделения
+выделения, а сам <literal>alias</literal> — ссылки на эти выделения
 (0.7.40), например:
 <example>
 location ~ ^/users/(.+\.(?:gif|jpe?g|png))$ {
@@ -184,7 +184,7 @@ location /images/ {
 
 
 <directive name="chunked_transfer_encoding">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>
@@ -202,7 +202,7 @@ chunked encoding, несмотря на требования стандарта.
 
 <directive name="client_body_buffer_size">
 
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>8k|16k</default>
 <context>http</context>
 <context>server</context>
@@ -223,9 +223,9 @@ chunked encoding, несмотря на требования стандарта.
 
 <directive name="client_body_in_file_only">
 <syntax>
-        <value>on</value> |
-        <value>clean</value> |
-        <value>off</value></syntax>
+        <literal>on</literal> |
+        <literal>clean</literal> |
+        <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -242,12 +242,12 @@ chunked encoding, несмотря на требования стандарта.
 </para>
 
 <para>
-При установке значения <value>on</value> временные файлы
+При установке значения <literal>on</literal> временные файлы
 по окончании обработки запроса не удаляются.
 </para>
 
 <para>
-Значение <value>clean</value> разрешает удалять временные файлы,
+Значение <literal>clean</literal> разрешает удалять временные файлы,
 оставшиеся по окончании обработки запроса.
 </para>
 
@@ -255,7 +255,7 @@ chunked encoding, несмотря на требования стандарта.
 
 
 <directive name="client_body_in_single_buffer">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -273,10 +273,10 @@ chunked encoding, несмотря на требования стандарта.
 
 <directive name="client_body_temp_path">
 <syntax>
-        <argument>путь</argument>
-        [<argument>уровень1</argument>
-        [<argument>уровень2</argument>
-        [<argument>уровень3</argument>]]]</syntax>
+        <value>путь</value>
+        [<value>уровень1</value>
+        [<value>уровень2</value>
+        [<value>уровень3</value>]]]</syntax>
 <default>client_body_temp</default>
 <context>http</context>
 <context>server</context>
@@ -299,7 +299,7 @@ client_body_temp_path /spool/nginx/client_temp 1 2;
 
 
 <directive name="client_body_timeout">
-<syntax><argument>время</argument></syntax>
+<syntax><value>время</value></syntax>
 <default>60s</default>
 <context>http</context>
 <context>server</context>
@@ -318,7 +318,7 @@ client_body_temp_path /spool/nginx/client_temp 1 2;
 
 
 <directive name="client_header_buffer_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>1k</default>
 <context>http</context>
 <context>server</context>
@@ -338,7 +338,7 @@ client_body_temp_path /spool/nginx/client_temp 1 2;
 
 
 <directive name="client_header_timeout">
-<syntax><argument>время</argument></syntax>
+<syntax><value>время</value></syntax>
 <default>60s</default>
 <context>http</context>
 <context>server</context>
@@ -354,7 +354,7 @@ client_body_temp_path /spool/nginx/client_temp 1 2;
 
 
 <directive name="client_max_body_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>1m</default>
 <context>http</context>
 <context>server</context>
@@ -370,7 +370,7 @@ client_body_temp_path /spool/nginx/client_temp 1 2;
 Следует иметь в виду, что
 <!--link doc="/web/upload.xml"-->браузеры не умеют корректно показывать
 эту ошибку<!--/link-->.
-Установка аргумента <argument>размер</argument> в 0 отключает
+Установка параметра <value>размер</value> в 0 отключает
 проверку размера тела запроса клиента.
 </para>
 
@@ -378,7 +378,7 @@ client_body_temp_path /spool/nginx/client_temp 1 2;
 
 
 <directive name="connection_pool_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>256</default>
 <context>http</context>
 <context>server</context>
@@ -394,7 +394,7 @@ client_body_temp_path /spool/nginx/client_temp 1 2;
 
 
 <directive name="default_type">
-<syntax><argument>mime-тип</argument></syntax>
+<syntax><value>mime-тип</value></syntax>
 <default>text/plain</default>
 <context>http</context>
 <context>server</context>
@@ -409,7 +409,7 @@ client_body_temp_path /spool/nginx/client_temp 1 2;
 
 
 <directive name="directio">
-<syntax><argument>размер</argument> | <value>off</value></syntax>
+<syntax><value>размер</value> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -436,7 +436,7 @@ directio 4m;
 
 
 <directive name="directio_alignment">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>512</default>
 <context>http</context>
 <context>server</context>
@@ -455,9 +455,9 @@ directio 4m;
 
 <directive name="error_page">
 <syntax>
-        <argument>код</argument> ...
-        [<value>=</value>[<argument>ответ</argument>]]
-        <argument>uri</argument></syntax>
+        <value>код</value> ...
+        [<literal>=</literal>[<value>ответ</value>]]
+        <value>uri</value></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -466,9 +466,9 @@ directio 4m;
 
 <para>
 Задаёт URI, который будет показываться для указанных ошибок.
-Директивы <code>error_page</code> наследуются с предыдущего уровня при условии,
-что на данном уровне не описаны свои директивы
-<code>error_page</code>.
+Директивы <literal>error_page</literal> наследуются с предыдущего уровня
+при условии, что на данном уровне не описаны свои директивы
+<literal>error_page</literal>.
 В значении URI можно использовать переменные.
 </para>
 
@@ -516,9 +516,9 @@ location @fallback {
 
 <directive name="if_modified_since">
 <syntax>
-        <value>off</value> |
-        <value>exact</value> |
-        <value>before</value></syntax>
+        <literal>off</literal> |
+        <literal>exact</literal> |
+        <literal>before</literal></syntax>
 <default>exact</default>
 <context>http</context>
 <context>server</context>
@@ -533,18 +533,18 @@ location @fallback {
 
 <list type="tag">
 
-<tag-name><value>off</value></tag-name>
+<tag-name><literal>off</literal></tag-name>
 <tag-desc>
 не проверять поле
 <header>If-Modified-Since</header> заголовка запроса (0.7.34);
 </tag-desc>
 
-<tag-name><value>exact</value></tag-name>
+<tag-name><literal>exact</literal></tag-name>
 <tag-desc>
 точное совпадение;
 </tag-desc>
 
-<tag-name><value>before</value></tag-name>
+<tag-name><literal>before</literal></tag-name>
 <tag-desc>
 время модификации ответа меньше или равно времени, заданному в поле
 <header>If-Modified-Since</header> заголовка запроса.
@@ -557,7 +557,7 @@ location @fallback {
 
 
 <directive name="ignore_invalid_headers">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>
@@ -591,7 +591,7 @@ location @fallback {
 
 <listitem>
 подзапросы, формируемые командой
-<command>include virtual</command>
+“<command>include virtual</command>”
 модуля
 <link doc="ngx_http_ssi_module.xml">ngx_http_ssi_module</link>;
 ngx_http_ssi_module;
@@ -620,7 +620,7 @@ location /404.html {
 
 
 <directive name="keepalive_disable">
-<syntax><value>none</value> | <argument>браузер</argument> ...</syntax>
+<syntax><literal>none</literal> | <value>браузер</value> ...</syntax>
 <default>msie6 safari</default>
 <context>http</context>
 <context>server</context>
@@ -628,13 +628,13 @@ location /404.html {
 
 <para>
 Запрещает keep-alive соединения с некорректно ведущими себя браузерами.
-Аргументы <argument>браузер</argument> указывают, на какие браузеры это
+Параметры <value>браузер</value> указывают, на какие браузеры это
 распространяется.
-Значение <value>msie6</value> запрещает keep-alive соединения
+Значение <literal>msie6</literal> запрещает keep-alive соединения
 со старыми версиями MSIE после получения запроса POST.
-Значение <value>safari</value> запрещает keep-alive соединения
+Значение <literal>safari</literal> запрещает keep-alive соединения
 с браузерами Safari.
-Значение <value>none</value> разрешает keep-alive соединения
+Значение <literal>none</literal> разрешает keep-alive соединения
 со всеми браузерами.
 </para>
 
@@ -642,7 +642,7 @@ location /404.html {
 
 
 <directive name="keepalive_requests">
-<syntax><argument>число</argument></syntax>
+<syntax><value>число</value></syntax>
 <default>100</default>
 <context>http</context>
 <context>server</context>
@@ -661,25 +661,25 @@ location /404.html {
 
 <directive name="keepalive_timeout">
 <syntax>
-        <argument>таймаут</argument>
-        [<argument>заголовок_таймаута</argument>]</syntax>
+        <value>таймаут</value>
+        [<value>заголовок_таймаута</value>]</syntax>
 <default>75s</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
 
 <para>
-Первый аргумент задаёт таймаут, в течение которого keep-alive
+Первый параметр задаёт таймаут, в течение которого keep-alive
 соединение с клиентом не будет закрыто со стороны сервера.
 Второй необязательный параметр задаёт значение в поле
-<header>Keep-Alive: timeout=<argument>время</argument></header>
+<header>Keep-Alive: timeout=<value>время</value></header>
 заголовка ответа.
-Два аргумента могут отличаться друг от друга.
+Два параметра могут отличаться друг от друга.
 </para>
 
 <para>
 Поле
-<header>Keep-Alive: timeout=<argument>время</argument></header>
+<header>Keep-Alive: timeout=<value>время</value></header>
 заголовка понимают Mozilla и Konqueror.
 MSIE сам закрывает keep-alive соединение примерно через 60 секунд.
 </para>
@@ -688,13 +688,13 @@ MSIE сам закрывает keep-alive соединение примерно 
 
 
 <directive name="large_client_header_buffers">
-<syntax><argument>число</argument> <argument>размер</argument></syntax>
+<syntax><value>число</value> <value>размер</value></syntax>
 <default>4 8k</default>
 <context>http</context>
 <context>server</context>
 
 <para>
-Задаёт максимальное <argument>число</argument> и <argument>размер</argument>
+Задаёт максимальное <value>число</value> и <value>размер</value>
 буферов для чтения большого заголовка запроса клиента.
 Строка запроса не должна превышать размера одного буфера, иначе клиенту
 возвращается ошибка
@@ -712,30 +712,30 @@ keep-alive, эти буферы освобождаются.
 
 
 <directive name="limit_except">
-<syntax block="yes"><argument>метод</argument> ...</syntax>
+<syntax block="yes"><value>метод</value> ...</syntax>
 <default/>
 <context>location</context>
 
 <para>
 Ограничивает HTTP-методы, доступные внутри location.
-Аргумент <argument>метод</argument> может быть одним из
-<value>GET</value>,
-<value>HEAD</value>,
-<value>POST</value>,
-<value>PUT</value>,
-<value>DELETE</value>,
-<value>MKCOL</value>,
-<value>COPY</value>,
-<value>MOVE</value>,
-<value>OPTIONS</value>,
-<value>PROPFIND</value>,
-<value>PROPPATCH</value>,
-<value>LOCK</value>,
-<value>UNLOCK</value>
+Параметр <value>метод</value> может быть одним из
+<literal>GET</literal>,
+<literal>HEAD</literal>,
+<literal>POST</literal>,
+<literal>PUT</literal>,
+<literal>DELETE</literal>,
+<literal>MKCOL</literal>,
+<literal>COPY</literal>,
+<literal>MOVE</literal>,
+<literal>OPTIONS</literal>,
+<literal>PROPFIND</literal>,
+<literal>PROPPATCH</literal>,
+<literal>LOCK</literal>,
+<literal>UNLOCK</literal>
 или
-<value>PATCH</value>.
-Если разрешён метод <value>GET</value>, то метод
-<value>HEAD</value> также будет разрешён.
+<literal>PATCH</literal>.
+Если разрешён метод <literal>GET</literal>, то метод
+<literal>HEAD</literal> также будет разрешён.
 Доступ к остальным методам может быть ограничен при помощи директив модулей
 <link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
 и
@@ -754,7 +754,7 @@ limit_except GET {
 
 
 <directive name="limit_rate">
-<syntax><argument>скорость</argument></syntax>
+<syntax><value>скорость</value></syntax>
 <default>0</default>
 <context>http</context>
 <context>server</context>
@@ -775,7 +775,7 @@ limit_except GET {
 
 <para>
 Если необходимо ограничить скорость для части клиентов на уровне
-<link id="server">сервера</link>, то директива <code>limit_rate</code>
+<link id="server">сервера</link>, то директива <literal>limit_rate</literal>
 для этого не подходит.
 Вместо этого следует задать желаемое ограничение скорости в переменной
 <var>$limit_rate</var>:
@@ -795,7 +795,7 @@ server {
 
 
 <directive name="limit_rate_after">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>0</default>
 <context>http</context>
 <context>server</context>
@@ -823,7 +823,10 @@ location /flv/ {
 
 
 <directive name="lingering_close">
-<syntax><value>off</value> | <value>on</value> | <value>always</value></syntax>
+<syntax>
+  <literal>off</literal> |
+  <literal>on</literal> |
+  <literal>always</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>
@@ -836,7 +839,7 @@ location /flv/ {
 </para>
 
 <para>
-Со значение по умолчанию “<value>on</value>” nginx будет
+Со значением по умолчанию “<literal>on</literal>” nginx будет
 <link id="lingering_timeout">ждать</link> и
 <link id="lingering_time">обрабатывать</link> дополнительные данные,
 поступающие от клиента, перед полным закрытием соединения, но только
@@ -844,12 +847,12 @@ location /flv/ {
 </para>
 
 <para>
-Со значением “<value>always</value>” nginx всегда будет
+Со значением “<literal>always</literal>” nginx всегда будет
 ждать и обрабатывать дополнительные данные, поступающие от клиента.
 </para>
 
 <para>
-Со значением “<value>off</value>” nginx не будет ждать поступления
+Со значением “<literal>off</literal>” nginx не будет ждать поступления
 дополнительных данных и сразу же закроет соединение.
 Это нарушает протокол, поэтому не следует это использовать без нужды.
 </para>
@@ -858,7 +861,7 @@ location /flv/ {
 
 
 <directive name="lingering_time">
-<syntax><argument>время</argument></syntax>
+<syntax><value>время</value></syntax>
 <default>30s</default>
 <context>http</context>
 <context>server</context>
@@ -877,7 +880,7 @@ location /flv/ {
 
 
 <directive name="lingering_timeout">
-<syntax><argument>время</argument></syntax>
+<syntax><value>время</value></syntax>
 <default>5s</default>
 <context>http</context>
 <context>server</context>
@@ -897,52 +900,52 @@ location /flv/ {
 
 <directive name="listen">
 <syntax>
-        <argument>адрес</argument>[:<argument>порт</argument>]
-        [<parameter>default_server</parameter>]
-        [<parameter>setfib</parameter>=<argument>число</argument>]
-        [<parameter>backlog</parameter>=<argument>число</argument>]
-        [<parameter>rcvbuf</parameter>=<argument>размер</argument>]
-        [<parameter>sndbuf</parameter>=<argument>размер</argument>]
-        [<parameter>accept_filter</parameter>=<argument>фильтр</argument>]
-        [<parameter>deferred</parameter>]
-        [<parameter>bind</parameter>]
-        [<parameter>ipv6only</parameter>=<value>on</value>|<value>off</value>]
-        [<parameter>ssl</parameter>]
-        [<parameter>so_keepalive</parameter>=<value>on</value>|<value>off</value>|[<argument>keepidle</argument>]:[<argument>keepintvl</argument>]:[<argument>keepcnt</argument>]]</syntax>
+        <value>адрес</value>[:<value>порт</value>]
+        [<literal>default_server</literal>]
+        [<literal>setfib</literal>=<value>число</value>]
+        [<literal>backlog</literal>=<value>число</value>]
+        [<literal>rcvbuf</literal>=<value>размер</value>]
+        [<literal>sndbuf</literal>=<value>размер</value>]
+        [<literal>accept_filter</literal>=<value>фильтр</value>]
+        [<literal>deferred</literal>]
+        [<literal>bind</literal>]
+        [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
+        [<literal>ssl</literal>]
+        [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
 <syntax>
-        <argument>порт</argument>
-        [<parameter>default_server</parameter>]
-        [<parameter>setfib</parameter>=<argument>число</argument>]
-        [<parameter>backlog</parameter>=<argument>число</argument>]
-        [<parameter>rcvbuf</parameter>=<argument>размер</argument>]
-        [<parameter>sndbuf</parameter>=<argument>размер</argument>]
-        [<parameter>accept_filter</parameter>=<argument>фильтр</argument>]
-        [<parameter>deferred</parameter>]
-        [<parameter>bind</parameter>]
-        [<parameter>ipv6only</parameter>=<value>on</value>|<value>off</value>]
-        [<parameter>ssl</parameter>]
-        [<parameter>so_keepalive</parameter>=<value>on</value>|<value>off</value>|[<argument>keepidle</argument>]:[<argument>keepintvl</argument>]:[<argument>keepcnt</argument>]]</syntax>
+        <value>порт</value>
+        [<literal>default_server</literal>]
+        [<literal>setfib</literal>=<value>число</value>]
+        [<literal>backlog</literal>=<value>число</value>]
+        [<literal>rcvbuf</literal>=<value>размер</value>]
+        [<literal>sndbuf</literal>=<value>размер</value>]
+        [<literal>accept_filter</literal>=<value>фильтр</value>]
+        [<literal>deferred</literal>]
+        [<literal>bind</literal>]
+        [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
+        [<literal>ssl</literal>]
+        [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
 <syntax>
-        <value>unix:</value><argument>путь</argument>
-        [<parameter>default_server</parameter>]
-        [<parameter>backlog</parameter>=<argument>число</argument>]
-        [<parameter>rcvbuf</parameter>=<argument>размер</argument>]
-        [<parameter>sndbuf</parameter>=<argument>размер</argument>]
-        [<parameter>accept_filter</parameter>=<argument>фильтр</argument>]
-        [<parameter>deferred</parameter>]
-        [<parameter>bind</parameter>]
-        [<parameter>ssl</parameter>]
-        [<parameter>so_keepalive</parameter>=<value>on</value>|<value>off</value>|[<argument>keepidle</argument>]:[<argument>keepintvl</argument>]:[<argument>keepcnt</argument>]]</syntax>
+        <literal>unix:</literal><value>путь</value>
+        [<literal>default_server</literal>]
+        [<literal>backlog</literal>=<value>число</value>]
+        [<literal>rcvbuf</literal>=<value>размер</value>]
+        [<literal>sndbuf</literal>=<value>размер</value>]
+        [<literal>accept_filter</literal>=<value>фильтр</value>]
+        [<literal>deferred</literal>]
+        [<literal>bind</literal>]
+        [<literal>ssl</literal>]
+        [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
 <default>*:80 | *:8000</default>
 <context>server</context>
 
 <para>
-Задаёт <argument>адрес</argument> и <argument>порт</argument> для IP
-или <argument>путь</argument> для UNIX-сокета,
+Задаёт <value>адрес</value> и <value>порт</value> для IP
+или <value>путь</value> для UNIX-сокета,
 на которых сервер будет принимать запросы.
-Можно указать только <argument>адрес</argument>
-или только <argument>порт</argument>.
-Кроме того, <argument>адрес</argument> может быть именем хоста, например:
+Можно указать только <value>адрес</value>
+или только <value>порт</value>.
+Кроме того, <value>адрес</value> может быть именем хоста, например:
 <example>
 listen 127.0.0.1:8000;
 listen 127.0.0.1;
@@ -955,51 +958,51 @@ IPv6-адреса (0.7.36) задаются в квадратных скобка
 listen [::]:8000;
 listen [fe80::1];
 </example>
-UNIX-сокеты (0.8.21) задаются при помощи префикса “<code>unix:</code>”:
+UNIX-сокеты (0.8.21) задаются при помощи префикса “<literal>unix:</literal>”:
 <example>
 listen unix:/var/run/nginx.sock;
 </example>
 </para>
 
 <para>
-Если указан только <argument>адрес</argument>, то используется порт 80.
+Если указан только <value>адрес</value>, то используется порт 80.
 </para>
 
 <para>
-Если директива не указана, то используется либо <code>*:80</code>
+Если директива не указана, то используется либо <literal>*:80</literal>
 (если nginx работает с привилегиями суперпользователя),
-либо <code>*:8000</code>.
+либо <literal>*:8000</literal>.
 </para>
 
 <para>
-Если у директивы есть параметр <parameter>default_server</parameter>, то сервер,
+Если у директивы есть параметр <literal>default_server</literal>, то сервер,
 в котором описана эта директива, будет сервером по умолчанию для указанной пары
-<argument>адрес</argument>:<argument>порт</argument>.
-Если же директив с параметром <parameter>default_server</parameter> нет, то
+<value>адрес</value>:<value>порт</value>.
+Если же директив с параметром <literal>default_server</literal> нет, то
 сервером по умолчанию будет первый сервер, в котором описана пара
-<argument>адрес</argument>:<argument>порт</argument>.
+<value>адрес</value>:<value>порт</value>.
 адрес:порт.
 <note>
 До версии 0.8.21 этот параметр назывался просто
-<parameter>default</parameter>.
+<literal>default</literal>.
 </note>
 </para>
 
 <para>
-В директиве <code>listen</code> можно также указать несколько
+В директиве <literal>listen</literal> можно также указать несколько
 дополнительных параметров, специфичных для системных вызовов
 <c-func>listen</c-func> и <c-func>bind</c-func>.
-Эти параметры можно задать в любой директиве <code>listen</code>,
+Эти параметры можно задать в любой директиве <literal>listen</literal>,
 но только один раз для указанной пары
-<argument>адрес</argument>:<argument>порт</argument>.
+<value>адрес</value>:<value>порт</value>.
 <note>
 До версии 0.8.21 их можно было указывать лишь в директиве
-<code>listen</code> с параметром <parameter>default</parameter>.
+<literal>listen</literal> с параметром <literal>default</literal>.
 </note>
 <list type="tag">
 
 <tag-name>
-<parameter>setfib</parameter>=<argument>число</argument>
+<literal>setfib</literal>=<value>число</value>
 </tag-name>
 <tag-desc>
 этот параметр (0.8.44) задаёт для слушающего сокета соответствующую
@@ -1008,42 +1011,42 @@ listen unix:/var/run/nginx.sock;
 </tag-desc>
 
 <tag-name>
-<parameter>backlog</parameter>=<argument>число</argument>
+<literal>backlog</literal>=<value>число</value>
 </tag-name>
 <tag-desc>
-задаёт параметр <parameter>backlog</parameter> в вызове
+задаёт параметр <literal>backlog</literal> в вызове
 <c-func>listen</c-func>.
-По умолчанию <parameter>backlog</parameter> равен -1 для FreeBSD
+По умолчанию <literal>backlog</literal> равен -1 для FreeBSD
 и 511 для других платформ.
 </tag-desc>
 
 <tag-name>
-<parameter>rcvbuf</parameter>=<argument>размер</argument>
+<literal>rcvbuf</literal>=<value>размер</value>
 </tag-name>
 <tag-desc>
 задаёт параметр <c-def>SO_RCVBUF</c-def> для слушающего сокета
 </tag-desc>
 
 <tag-name>
-<parameter>sndbuf</parameter>=<argument>размер</argument>
+<literal>sndbuf</literal>=<value>размер</value>
 </tag-name>
 <tag-desc>
 задаёт параметр <c-def>SO_SNDBUF</c-def> для слушающего сокета
 </tag-desc>
 
 <tag-name>
-<parameter>accept_filter</parameter>=<argument>фильтр</argument>
+<literal>accept_filter</literal>=<value>фильтр</value>
 </tag-name>
 <tag-desc>
 задаёт название accept-фильтра.
 Работает только на FreeBSD, можно использовать два фильтра —
-<value>dataready</value> и <value>httpready</value>.
+<literal>dataready</literal> и <literal>httpready</literal>.
 По сигналу <c-def>SIGHUP</c-def> accept-фильтр можно менять только в
 последних версиях FreeBSD, начиная с 6.0, 5.4-STABLE и 4.11-STABLE.
 </tag-desc>
 
 <tag-name>
-<parameter>deferred</parameter>
+<literal>deferred</literal>
 </tag-name>
 <tag-desc>
 указывает использовать отложенный <c-func>accept</c-func> на Linux
@@ -1051,29 +1054,29 @@ listen unix:/var/run/nginx.sock;
 </tag-desc>
 
 <tag-name>
-<parameter>bind</parameter>
+<literal>bind</literal>
 </tag-name>
 <tag-desc>
 указывает, что для данной пары
-<argument>адрес</argument>:<argument>порт</argument> нужно делать
+<value>адрес</value>:<value>порт</value> нужно делать
 <c-func>bind</c-func> отдельно.
-Дело в том, что если описаны несколько директив <code>listen</code>
+Дело в том, что если описаны несколько директив <literal>listen</literal>
 с одинаковым портом, но разными адресами и одна из директив
-<code>listen</code> слушает на всех адресах для данного порта
-(<code>*</code>:<argument>порт</argument>, то nginx сделает
-<c-func>bind</c-func> только на <code>*</code>:<argument>порт</argument>.
+<literal>listen</literal> слушает на всех адресах для данного порта
+(<literal>*:</literal><value>порт</value>, то nginx сделает
+<c-func>bind</c-func> только на <literal>*:</literal><value>порт</value>.
 Необходимо заметить, что в этом случае для определения адреса, на которой
 пришло соединение, делается системный вызов <c-func>getsockname</c-func>.
-Если же используются параметры <parameter>backlog</parameter>,
-<parameter>rcvbuf</parameter>, <parameter>sndbuf</parameter>,
-<parameter>accept_filter</parameter>, <parameter>deferred</parameter>
-или <parameter>so_keepalive</parameter>, то для данной пары
-<argument>адрес</argument>:<argument>порт</argument> всегда делается
+Если же используются параметры <literal>backlog</literal>,
+<literal>rcvbuf</literal>, <literal>sndbuf</literal>,
+<literal>accept_filter</literal>, <literal>deferred</literal>
+или <literal>so_keepalive</literal>, то для данной пары
+<value>адрес</value>:<value>порт</value> всегда делается
 отдельный вызов <c-func>bind</c-func>.
 </tag-desc>
 
 <tag-name>
-<parameter>ipv6only</parameter>=<value>on</value>|<value>off</value>
+<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>
 </tag-name>
 <tag-desc>
 параметр (0.7.42) задаёт значение параметра <c-def>IPV6_V6ONLY</c-def>
@@ -1082,7 +1085,7 @@ listen unix:/var/run/nginx.sock;
 </tag-desc>
 
 <tag-name>
-<parameter>ssl</parameter>
+<literal>ssl</literal>
 </tag-name>
 <tag-desc>
 этот параметр (0.7.14) не имеет отношения к системным вызовам
@@ -1098,25 +1101,25 @@ listen 443 default ssl;
 </tag-desc>
 
 <tag-name>
-<parameter>so_keepalive</parameter>=<value>on</value>|<value>off</value>|[<argument>keepidle</argument>]:[<argument>keepintvl</argument>]:[<argument>keepcnt</argument>]
+<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]
 </tag-name>
 <tag-desc>
 этот параметр (1.1.11) конфигурирует для слушающего сокета
 поведение “TCP keepalive”.
 Если этот параметр опущен, то для сокета будут действовать
 стандартные системные настройки.
-Если он установлен в значение “<value>on</value>”, то для сокета
+Если он установлен в значение “<literal>on</literal>”, то для сокета
 включается опция <c-def>SO_KEEPALIVE</c-def>.
-Если он установлен в значение “<value>off</value>”, то для сокета
+Если он установлен в значение “<literal>off</literal>”, то для сокета
 опция <c-def>SO_KEEPALIVE</c-def> выключается.
 Некоторые операционные системы поддерживают настройку параметров
 “TCP keepalive” на уровне сокета посредством опций
 <c-def>TCP_KEEPIDLE</c-def>, <c-def>TCP_KEEPINTVL</c-def> и
 <c-def>TCP_KEEPCNT</c-def>.
 На таких системах (в настоящий момент это Linux 2.4+ и NetBSD 5+)
-их можно сконфигурировать с помощью аргументов <argument>keepidle</argument>,
-<argument>keepintvl</argument> и <argument>keepcnt</argument>.
-Один или два аргумента могут быть опущены, в таком случае для
+их можно сконфигурировать с помощью параметров <value>keepidle</value>,
+<value>keepintvl</value> и <value>keepcnt</value>.
+Один или два параметра могут быть опущены, в таком случае для
 соответствующей опции сокета будут действовать стандартные
 системные настройки.
 Например,
@@ -1142,12 +1145,12 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
 
 <directive name="location">
 <syntax block="yes">[
-        <value>=</value> |
-        <value>~</value> |
-        <value>~*</value> |
-        <value>^~</value>
-        ] <argument>uri</argument></syntax>
-<syntax block="yes"><value>@</value><argument>имя</argument></syntax>
+        <literal>=</literal> |
+        <literal>~</literal> |
+        <literal>~*</literal> |
+        <literal>^~</literal>
+        ] <value>uri</value></syntax>
+<syntax block="yes"><literal>@</literal><value>имя</value></syntax>
 <default/>
 <context>server</context>
 <context>location</context>
@@ -1155,9 +1158,9 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
 <para>
 Устанавливает конфигурацию в зависимости от URI запроса.
 location можно задать префиксной строкой или регулярным выражением.
-Регулярные выражения задаются либо с префиксом “<value>~*</value>”
+Регулярные выражения задаются либо с префиксом “<literal>~*</literal>”
 (для поиска совпадения без учёта регистра символов),
-либо с префиксом “<value>~</value>” (с учётом регистра).
+либо с префиксом “<literal>~</literal>” (с учётом регистра).
 Чтобы найти location, соответствующий запросу, вначале проверяются
 location'ы, заданные префиксными строками (префиксные location'ы).
 Среди них ищется максимальное совпадение.
@@ -1188,15 +1191,15 @@ location'ы могут быть вложенными, с некоторыми и
 
 <para>
 Если у максимального совпавшего префиксного location'а указан префикс
-“<value>^~</value>”, то регулярные выражения не проверяются.
+“<literal>^~</literal>”, то регулярные выражения не проверяются.
 </para>
 
 <para>
-Кроме того, с помощью префикса “<value>=</value>” можно задать точное
+Кроме того, с помощью префикса “<literal>=</literal>” можно задать точное
 совпадение URI и location.
 При точном совпадении поиск сразу же прекращается.
-Например, если запрос “<code>/</code>” случается часто, то
-указав “<code>location = /</code>”, можно ускорить обработку
+Например, если запрос “<literal>/</literal>” случается часто, то
+указав “<literal>location = /</literal>”, можно ускорить обработку
 этих запросов, так как поиск прекратится после первого же сравнения.
 Очевидно, что такой location не может иметь вложенные location'ы.
 </para>
@@ -1204,7 +1207,7 @@ location'ы могут быть вложенными, с некоторыми и
 <para>
 <note>
 В версиях с 0.7.1 по 0.8.41, если запрос точно совпал с префиксным
-location'ом без префиксов “<value>=</value>” и “<value>^~</value>”,
+location'ом без префиксов “<literal>=</literal>” и “<literal>^~</literal>”,
 то поиск тоже сразу же прекращается и регулярные выражения также
 не проверяются.
 </note>
@@ -1229,14 +1232,14 @@ location ~* \.(gif|jpg|jpeg)$ {
     [ конфигурация Г ]
 }
 </example>
-Для запроса “<code>/</code>” будет выбрана конфигурация А,
-для запроса “<code>/documents/document.html</code>” — конфигурация Б,
-для запроса “<code>/images/1.gif</code>” — конфигурация В,
-а для запроса “<code>/documents/1.jpg</code>” — конфигурация Г.
+Для запроса “<literal>/</literal>” будет выбрана конфигурация А,
+для запроса “<literal>/documents/document.html</literal>” — конфигурация Б,
+для запроса “<literal>/images/1.gif</literal>” — конфигурация В,
+а для запроса “<literal>/documents/1.jpg</literal>” — конфигурация Г.
 </para>
 
 <para>
-Префикс “<value>@</value>” задаёт именованный location.
+Префикс “<literal>@</literal>” задаёт именованный location.
 Такой location не используется при обычной обработке запросов, а
 предназначен только для перенаправления в него запросов.
 Такие location'ы не могут быть вложенными и не могут содержать
@@ -1251,7 +1254,7 @@ location ~* \.(gif|jpg|jpeg)$ {
 
 
 <directive name="log_not_found">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>
@@ -1267,7 +1270,7 @@ location ~* \.(gif|jpg|jpeg)$ {
 
 
 <directive name="log_subrequest">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1283,7 +1286,7 @@ location ~* \.(gif|jpg|jpeg)$ {
 
 
 <directive name="max_ranges">
-<syntax><argument>число</argument></syntax>
+<syntax><value>число</value></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -1302,32 +1305,33 @@ location ~* \.(gif|jpg|jpeg)$ {
 
 
 <directive name="merge_slashes">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>
 
 <para>
 Разрешает или запрещает преобразование URI путём замены двух и более подряд
-идущих слэшей (“<code>/</code>”) в один.
+идущих слэшей (“<literal>/</literal>”) в один.
 </para>
 
 <para>
 Необходимо иметь ввиду, что это преобразование необходимо для корректной
 проверки префиксных строк и регулярных выражений.
-Если его не делать, то запрос “<code>//scripts/one.php</code>” не попадёт в
+Если его не делать, то запрос “<literal>//scripts/one.php</literal>” не попадёт в
 <example>
 location /scripts/ {
     ...
 }
 </example>
 и может быть обслужен как статический файл.
-Поэтому он преобразуется к виду “<code>/scripts/one.php</code>”.
+Поэтому он преобразуется к виду “<literal>/scripts/one.php</literal>”.
 </para>
 
 <para>
 Запрет преобразования может понадобиться, если в URI используются имена,
-закодированные методом base64, в котором задействован символ “<code>/</code>”.
+закодированные методом base64, в котором задействован символ
+“<literal>/</literal>”.
 Однако по соображениям безопасности лучше избегать отключения преобразования.
 </para>
 
@@ -1342,7 +1346,7 @@ location /scripts/ {
 
 
 <directive name="msie_padding">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>
@@ -1357,7 +1361,7 @@ location /scripts/ {
 
 
 <directive name="msie_refresh">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1372,10 +1376,10 @@ location /scripts/ {
 
 
 <directive name="open_file_cache">
-<syntax><value>off</value></syntax>
+<syntax><literal>off</literal></syntax>
 <syntax>
-<parameter>max</parameter>=<argument>N</argument>
-[<parameter>inactive</parameter>=<argument>время</argument>]</syntax>
+<literal>max</literal>=<value>N</value>
+[<literal>inactive</literal>=<value>время</value>]</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1410,7 +1414,7 @@ location /scripts/ {
 <list type="tag">
 
 <tag-name>
-<parameter>max</parameter>
+<literal>max</literal>
 </tag-name>
 <tag-desc>
 задаёт максимальное число элементов в кэше;
@@ -1418,7 +1422,7 @@ location /scripts/ {
 </tag-desc>
 
 <tag-name>
-<parameter>inactive</parameter>
+<literal>inactive</literal>
 </tag-name>
 <tag-desc>
 задаёт время, после которого элемент кэша удаляется, если к нему
@@ -1426,7 +1430,7 @@ location /scripts/ {
 </tag-desc>
 
 <tag-name>
-<value>off</value>
+<literal>off</literal>
 </tag-name>
 <tag-desc>
 запрещает кэш.
@@ -1452,7 +1456,7 @@ open_file_cache_events   on;
 
 
 <directive name="open_file_cache_errors">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1469,7 +1473,7 @@ open_file_cache_events   on;
 <!--
 
 <directive name="open_file_cache_events">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1492,15 +1496,15 @@ open_file_cache_events   on;
 
 
 <directive name="open_file_cache_min_uses">
-<syntax><argument>число</argument></syntax>
+<syntax><value>число</value></syntax>
 <default>1</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
 
 <para>
-Задаёт минимальное <argument>число</argument> обращений к файлу
-в течение времени, заданного параметром <parameter>inactive</parameter>
+Задаёт минимальное <value>число</value> обращений к файлу
+в течение времени, заданного параметром <literal>inactive</literal>
 директивы <link id="open_file_cache"/>, после которого дескриптор
 файла будет оставаться открытым в кэше.
 </para>
@@ -1509,7 +1513,7 @@ open_file_cache_events   on;
 
 
 <directive name="open_file_cache_valid">
-<syntax><argument>время</argument></syntax>
+<syntax><value>время</value></syntax>
 <default>60s</default>
 <context>http</context>
 <context>server</context>
@@ -1531,7 +1535,7 @@ open_file_cache_events   on;
 
 
 <directive name="optimize_server_names">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1558,7 +1562,7 @@ open_file_cache_events   on;
 
 
 <directive name="port_in_redirect">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>
@@ -1576,7 +1580,7 @@ open_file_cache_events   on;
 
 
 <directive name="postpone_output">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>1460</default>
 <context>http</context>
 <context>server</context>
@@ -1592,7 +1596,7 @@ open_file_cache_events   on;
 
 
 <directive name="read_ahead">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>0</default>
 <context>http</context>
 <context>server</context>
@@ -1604,13 +1608,14 @@ open_file_cache_events   on;
 
 <para>
 На Linux используется системный вызов
-<code>posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL)</code>,
-поэтому аргумент <argument>размер</argument> там игнорируется.
+<literal>posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL)</literal>,
+поэтому параметр <value>размер</value> там игнорируется.
 </para>
 
 <para>
 На FreeBSD используется системный вызов
-<code>fcntl(O_READAHEAD,</code><argument>размер</argument><code>)</code>,
+<literal>fcntl(O_READAHEAD,
+</literal><value>размер</value><literal>)</literal>,
 появившийся во FreeBSD&nbsp;9.0-CURRENT.
 Для FreeBSD&nbsp;7 необходимо установить
 <link url="http://sysoev.ru/freebsd/patch.readahead.txt">патч</link>.
@@ -1620,7 +1625,7 @@ open_file_cache_events   on;
 
 
 <directive name="recursive_error_pages">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1635,7 +1640,7 @@ open_file_cache_events   on;
 
 
 <directive name="request_pool_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>4k</default>
 <context>http</context>
 <context>server</context>
@@ -1652,7 +1657,7 @@ open_file_cache_events   on;
 
 <directive name="reset_timedout_connection">
 <syntax>
-        <value>on</value> | <value>off</value></syntax>
+        <literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1680,8 +1685,8 @@ open_file_cache_events   on;
 
 <directive name="resolver">
 <syntax>
-<argument>адрес</argument> ...
-[<parameter>valid</parameter>=<argument>время</argument>]</syntax>
+<value>адрес</value> ...
+[<literal>valid</literal>=<value>время</value>]</syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -1693,7 +1698,7 @@ open_file_cache_events   on;
 <example>
 resolver 127.0.0.1 192.0.2.1;
 </example>
-Аргумент <argument>адрес</argument> может быть задан либо
+Параметр <value>адрес</value> может быть задан либо
 IPv4-адресом, либо именем хоста;
 во втором случае используется первый полученный IPv4-адрес.
 Серверы DNS опрашиваются циклически.
@@ -1701,7 +1706,7 @@ IPv4-адресом, либо именем хоста;
 До версии 1.1.7 можно было задать лишь один DNS-сервер.
 </note>
 По умолчанию nginx кэширует ответы, используя значение TTL из ответа.
-Необязательный параметр <parameter>valid</parameter> позволяет это
+Необязательный параметр <literal>valid</literal> позволяет это
 переопределить:
 <example>
 resolver 127.0.0.1 192.0.2.1 valid=30s;
@@ -1716,7 +1721,7 @@ resolver 127.0.0.1 192.0.2.1 valid=30s;
 
 
 <directive name="resolver_timeout">
-<syntax><argument>время</argument></syntax>
+<syntax><value>время</value></syntax>
 <default>30s</default>
 <context>http</context>
 <context>server</context>
@@ -1733,7 +1738,7 @@ resolver_timeout 5s;
 
 
 <directive name="root">
-<syntax><argument>путь</argument></syntax>
+<syntax><value>путь</value></syntax>
 <default>html</default>
 <context>http</context>
 <context>server</context>
@@ -1748,18 +1753,18 @@ location /i/ {
     root /data/w3;
 }
 </example>
-в ответ на запрос “<code>/i/top.gif</code>” будет отдан файл
+в ответ на запрос “<literal>/i/top.gif</literal>” будет отдан файл
 <path>/data/w3/i/top.gif</path>.
 </para>
 
 <para>
-В значении аргумента <argument>путь</argument> можно использовать переменные,
+В значении параметра <value>путь</value> можно использовать переменные,
 кроме <var>$document_root</var> и <var>$realpath_root</var>.
 </para>
 
 <para>
 Путь к файлу формируется путём простого добавления URI к значению директивы
-<code>root</code>.
+<literal>root</literal>.
 Если же URI необходимо поменять, следует воспользоваться директивой
 <link id="alias"/>.
 </para>
@@ -1768,15 +1773,15 @@ location /i/ {
 
 
 <directive name="satisfy">
-<syntax><value>all</value> | <value>any</value></syntax>
+<syntax><literal>all</literal> | <literal>any</literal></syntax>
 <default>all</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
 
 <para>
-Разрешает доступ, если оба (<value>all</value>)
-или хотя бы один (<value>any</value>) из модулей
+Разрешает доступ, если оба (<literal>all</literal>)
+или хотя бы один (<literal>any</literal>) из модулей
 <link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
 и <link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>
 разрешают доступ.
@@ -1801,7 +1806,7 @@ location / {
 
 
 <directive name="satisfy_any">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1816,7 +1821,7 @@ location / {
 
 
 <directive name="send_lowat">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>0</default>
 <context>http</context>
 <context>server</context>
@@ -1839,7 +1844,7 @@ location / {
 
 
 <directive name="send_timeout">
-<syntax><argument>время</argument></syntax>
+<syntax><value>время</value></syntax>
 <default>60s</default>
 <context>http</context>
 <context>server</context>
@@ -1858,7 +1863,7 @@ location / {
 
 <directive name="sendfile">
 
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -1875,7 +1880,7 @@ location / {
 
 <directive name="sendfile_max_chunk">
 
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>0</default>
 <context>http</context>
 <context>server</context>
@@ -1912,7 +1917,7 @@ location / {
 
 
 <directive name="server_name">
-<syntax><argument>имя</argument> ...</syntax>
+<syntax><value>имя</value> ...</syntax>
 <default>""</default>
 <context>server</context>
 
@@ -1927,7 +1932,7 @@ server {
 
 <para>
 Первое имя становится основным именем сервера.
-В именах серверов можно использовать звёздочку (“<code>*</code>”)
+В именах серверов можно использовать звёздочку (“<literal>*</literal>”)
 для замены первой или последней части имени:
 <example>
 server {
@@ -1946,13 +1951,13 @@ server {
 </para>
 
 <para>
-Если аргумент равен “<var>$hostname</var>” (0.9.4), то
+Если параметр равен “<var>$hostname</var>” (0.9.4), то
 подставляется имя хоста (hostname) машины.
 </para>
 
 <para>
 В качестве имени сервера можно также использовать регулярное выражение,
-указав перед ним тильду (“<code>~</code>”):
+указав перед ним тильду (“<literal>~</literal>”):
 <example>
 server {
     server_name www.example.com ~^www\d+\.example\.com$;
@@ -2028,11 +2033,11 @@ server {
 </listitem>
 
 <listitem>
-имена с маской в начале имени, например “<code>*.example.com</code>”
+имена с маской в начале имени, например “<literal>*.example.com</literal>”
 </listitem>
 
 <listitem>
-имена с маской в конце имени, например “<code>mail.*</code>”
+имена с маской в конце имени, например “<literal>mail.*</literal>”
 </listitem>
 
 <listitem>
@@ -2046,7 +2051,7 @@ server {
 
 
 <directive name="server_name_in_redirect">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -2069,7 +2074,7 @@ server {
 
 
 <directive name="server_names_hash_bucket_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>32|64|128</default>
 <context>http</context>
 
@@ -2084,12 +2089,12 @@ server {
 
 
 <directive name="server_names_hash_max_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>512</default>
 <context>http</context>
 
 <para>
-Задаёт максимальный <argument>размер</argument> хэш-таблиц имён серверов.
+Задаёт максимальный <value>размер</value> хэш-таблиц имён серверов.
 Подробнее смотрите в документе по
 <link doc="../hash.xml">настройке хэшей</link>.
 </para>
@@ -2098,7 +2103,7 @@ server {
 
 
 <directive name="server_tokens">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>
@@ -2113,7 +2118,7 @@ server {
 
 
 <directive name="tcp_nodelay">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>
@@ -2128,7 +2133,7 @@ server {
 
 
 <directive name="tcp_nopush">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -2159,11 +2164,11 @@ server {
 
 <directive name="try_files">
 <syntax>
-        <argument>файл</argument> ...
-        <argument>uri</argument></syntax>
+        <value>файл</value> ...
+        <value>uri</value></syntax>
 <syntax>
-        <argument>файл</argument> ...
-        =<argument>код</argument></syntax>
+        <value>файл</value> ...
+        =<value>код</value></syntax>
 <default/>
 <context>server</context>
 <context>location</context>
@@ -2172,13 +2177,13 @@ server {
 Проверяет существование файлов в заданном порядке и использует
 для обработки запроса первый найденный файл, причём обработка
 делается в контексте этого же location'а.
-Путь к файлу строится из аргумента <argument>файл</argument>
+Путь к файлу строится из параметра <value>файл</value>
 в соответствии с директивами
 <link id="root"/> и <link id="alias"/>.
 С помощью слэша в конце имени можно проверить существование каталога,
-например, “<code>$uri/</code>”.
+например, “<literal>$uri/</literal>”.
 В случае, если ни один файл не найден, то делается внутреннее
-перенаправление на <argument>uri</argument>, заданный последним аргументом.
+перенаправление на <value>uri</value>, заданный последним параметром.
 Например:
 <example>
 location /images/ {
@@ -2189,9 +2194,9 @@ location = /images/default.gif {
     expires 30s;
 }
 </example>
-Последний аргумент может также указывать на именованный location,
+Последний параметр может также указывать на именованный location,
 смотрите примеры ниже.
-С версии 0.7.51 последний аргумент может также быть кодом:
+С версии 0.7.51 последний параметр может также быть кодом:
 <example>
 location / {
     try_files $uri $uri/index.html $uri.html =404;
@@ -2243,7 +2248,7 @@ location @drupal {
     ... прочие fastcgi_param
 }
 </example>
-В следующем примере директива <code>try_files</code>
+В следующем примере директива <literal>try_files</literal>
 <example>
 location / {
     try_files $uri $uri/ @drupal;
@@ -2268,7 +2273,7 @@ location ~ \.php$ {
     ...
 }
 </example>
-<code>try_files</code> проверяет существование PHP-файла,
+<literal>try_files</literal> проверяет существование PHP-файла,
 прежде чем передать запрос FastCGI-серверу.
 </para>
 
@@ -2331,7 +2336,7 @@ types {
 
 <para>
 Для того, чтобы для определённого location'а для всех ответов
-выдавался MIME-тип “<code>application/octet-stream</code>”,
+выдавался MIME-тип “<literal>application/octet-stream</literal>”,
 можно использовать следующее:
 <example>
 location /download/ {
@@ -2345,7 +2350,7 @@ location /download/ {
 
 
 <directive name="types_hash_bucket_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>32|64|128</default>
 <context>http</context>
 <context>server</context>
@@ -2362,14 +2367,14 @@ location /download/ {
 
 
 <directive name="types_hash_max_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>1024</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
 
 <para>
-Задаёт максимальный <argument>размер</argument> хэш-таблиц типов.
+Задаёт максимальный <value>размер</value> хэш-таблиц типов.
 Подробнее смотрите в документе по
 <link doc="../hash.xml">настройке хэшей</link>.
 </para>
@@ -2378,7 +2383,7 @@ location /download/ {
 
 
 <directive name="underscores_in_headers">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -2395,7 +2400,7 @@ location /download/ {
 
 
 <directive name="variables_hash_bucket_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>64</default>
 <context>http</context>
 
@@ -2409,12 +2414,12 @@ location /download/ {
 
 
 <directive name="variables_hash_max_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>512</default>
 <context>http</context>
 
 <para>
-Задаёт максимальный <argument>размер</argument> хэш-таблицы переменных.
+Задаёт максимальный <value>размер</value> хэш-таблицы переменных.
 Подробнее смотрите в документе по
 <link doc="../hash.xml">настройке хэшей</link>.
 </para>
@@ -2426,7 +2431,7 @@ location /download/ {
 <section id="variables" name="Встроенные переменные">
 
 <para>
-Модуль <code>ngx_http_core_module</code> поддерживает встроенные переменные,
+Модуль <literal>ngx_http_core_module</literal> поддерживает встроенные переменные,
 имена которых совпадают с именами переменных веб-сервера Apache.
 Прежде всего, это переменные, представляющие из себя поля заголовка
 запроса клиента, такие как <var>$http_user_agent</var>, <var>$http_cookie</var>
@@ -2434,9 +2439,9 @@ location /download/ {
 Кроме того, есть и другие переменные:
 <list type="tag">
 
-<tag-name><var>$arg_</var><argument>имя</argument></tag-name>
+<tag-name><var>$arg_</var><value>имя</value></tag-name>
 <tag-desc>
-аргумент <argument>имя</argument> в строке запроса
+аргумент <value>имя</value> в строке запроса
 </tag-desc>
 
 <tag-name><var>$args</var></tag-name>
@@ -2464,9 +2469,9 @@ location /download/ {
 поле <header>Content-Type</header> заголовка запроса
 </tag-desc>
 
-<tag-name><var>$cookie_</var><argument>имя</argument></tag-name>
+<tag-name><var>$cookie_</var><value>имя</value></tag-name>
 <tag-desc>
-cookie <argument>имя</argument>
+cookie <value>имя</value>
 </tag-desc>
 
 <tag-name><var>$document_root</var></tag-name>
@@ -2490,21 +2495,21 @@ cookie <argument>имя</argument>
 имя хоста
 </tag-desc>
 
-<tag-name><var>$http_</var><argument>имя</argument></tag-name>
+<tag-name><var>$http_</var><value>имя</value></tag-name>
 <tag-desc>
-поле <argument>имя</argument> заголовка запроса
+поле <value>имя</value> заголовка запроса
 </tag-desc>
 
 <tag-name><var>$https</var></tag-name>
 <tag-desc>
-“<code>on</code>”
+“<literal>on</literal>”
 если соединение работает в режиме SSL,
 либо пустая строка
 </tag-desc>
 
 <tag-name><var>$is_args</var></tag-name>
 <tag-desc>
-“<code>?</code>”, если в строке запроса есть аргументы,
+“<literal>?</literal>”, если в строке запроса есть аргументы,
 и пустая строка, если их нет
 </tag-desc>
 
@@ -2588,7 +2593,7 @@ fastcgi_pass_request_body off</link>
 
 <tag-name><var>$request_completion</var></tag-name>
 <tag-desc>
-“<code>OK</code>” если запрос завершился,
+“<literal>OK</literal>” если запрос завершился,
 либо пустая строка
 </tag-desc>
 
@@ -2601,7 +2606,7 @@ fastcgi_pass_request_body off</link>
 <tag-name><var>$request_method</var></tag-name>
 <tag-desc>
 метод запроса, обычно
-“<code>GET</code>” или “<code>POST</code>”
+“<literal>GET</literal>” или “<literal>POST</literal>”
 </tag-desc>
 
 <tag-name><var>$request_uri</var></tag-name>
@@ -2611,12 +2616,12 @@ fastcgi_pass_request_body off</link>
 
 <tag-name><var>$scheme</var></tag-name>
 <tag-desc>
-схема запроса, “<code>http</code>” или “<code>https</code>”
+схема запроса, “<literal>http</literal>” или “<literal>https</literal>”
 </tag-desc>
 
-<tag-name><var>$sent_http_</var><argument>имя</argument></tag-name>
+<tag-name><var>$sent_http_</var><value>имя</value></tag-name>
 <tag-desc>
-поле <argument>имя</argument> заголовка ответа
+поле <value>имя</value> заголовка ответа
 </tag-desc>
 
 <tag-name><var>$server_addr</var></tag-name>
@@ -2625,7 +2630,7 @@ fastcgi_pass_request_body off</link>
 <para>
 Получение значения этой переменной обычно требует одного системного вызова.
 Чтобы избежать системного вызова, в директивах <link id="listen"/>
-следует указывать адреса и использовать параметр <parameter>bind</parameter>.
+следует указывать адреса и использовать параметр <literal>bind</literal>.
 </para>
 </tag-desc>
 
@@ -2642,9 +2647,9 @@ fastcgi_pass_request_body off</link>
 <tag-name><var>$server_protocol</var></tag-name>
 <tag-desc>
 протокол сервера, обычно
-“<code>HTTP/1.0</code>”
+“<literal>HTTP/1.0</literal>”
 или
-“<code>HTTP/1.1</code>”
+“<literal>HTTP/1.1</literal>”
 </tag-desc>
 
 <tag-name><var>$uri</var></tag-name>

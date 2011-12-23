@@ -19,7 +19,7 @@ nginx также будет использовать и сертификаты �
 <para>
 По умолчанию модуль не собирается, нужно разрешить его сборку
 при конфигурировании параметром
-<command>--with-http_ssl_module</command>.
+<literal>--with-http_ssl_module</literal>.
 Для сборки и работы этого модуля нужна библиотека
 <link url="http://www.openssl.org">OpenSSL</link>.
 </para>
@@ -85,7 +85,7 @@ http {
 <section name="Директивы" id="directives">
 
 <directive name="ssl">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server</context>
 
@@ -178,7 +178,7 @@ OpenSSL, например:
 
 <para>
 Полный список можно посмотреть с помощью команды
-<command>openssl ciphers</command>.
+“<command>openssl ciphers</command>”.
 </para>
 
 </directive>
@@ -210,7 +210,7 @@ OpenSSL, например:
 
 
 <directive name="ssl_prefer_server_ciphers">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server</context>
 
@@ -223,7 +223,7 @@ OpenSSL, например:
 
 
 <directive name="ssl_protocols">
-<syntax><value>[SSLv2] [SSLv3] [TLSv1]</value></syntax>
+<syntax>[<literal>SSLv2</literal>] [<literal>SSLv3</literal>] [<literal>TLSv1</literal>]</syntax>
 <default>SSLv3 TLSv1</default>
 <context>http, server</context>
 
@@ -235,7 +235,7 @@ OpenSSL, например:
 
 
 <directive name="ssl_verify_client">
-<syntax><value>on|off|optional</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal> | <literal>optional</literal></syntax>
 <default>off</default>
 <context>http, server</context>
 
@@ -262,8 +262,11 @@ OpenSSL, например:
 
 
 <directive name="ssl_session_cache">
-<syntax><value>off|none|[builtin[:размер]] [shared:название:размер]
-</value></syntax>
+<syntax>
+  <literal>off</literal> |
+  <literal>none</literal> |
+  [<literal>builtin</literal>[:<value>размер</value>]]
+  [<literal>shared</literal>:<value>название</value>:<value>размер</value>]</syntax>
 <default>none</default>
 <context>http, server</context>
 

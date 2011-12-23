@@ -50,7 +50,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="charset">
-<syntax><value>кодировка|off</value></syntax>
+<syntax><value>кодировка</value> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location, if в location</context>
 
@@ -90,7 +90,7 @@ charset_map  iso-8859-5  _ { }
 
 
 <directive name="charset_map">
-<syntax block="yes"><value>кодировка1 кодировка2</value></syntax>
+<syntax block="yes"><value>кодировка1</value> <value>кодировка2</value></syntax>
 <default/>
 <context>http</context>
 
@@ -142,10 +142,9 @@ charset_map  koi8-r  utf-8 {
 
 
 <directive name="charset_types">
-<syntax><value>mime-тип [mime-тип ...]</value></syntax>
+<syntax><value>mime-тип</value> ...</syntax>
 <default>text/html text/xml text/plain text/vnd.wap.wml
-application/x-javascript application/rss+xml
-</default>
+application/x-javascript application/rss+xml</default>
 <context>http, server, location</context>
 
 <para>
@@ -165,7 +164,7 @@ application/x-javascript application/rss+xml
 
 
 <directive name="override_charset">
-<syntax><value>on|off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location, if в location</context>
 

@@ -30,7 +30,7 @@ events {
 <section id="directives" name="Directives">
 
 <directive name="daemon">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>main</context>
 
@@ -44,15 +44,15 @@ Mainly used during development.
 
 <directive name="error_log">
 <syntax>
-<argument>file</argument>
-[<value>debug</value> |
-<value>info</value> |
-<value>notice</value> |
-<value>warn</value> |
-<value>error</value> |
-<value>crit</value> |
-<value>alert</value> |
-<value>emerg</value>]</syntax>
+<value>file</value>
+[<literal>debug</literal> |
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal> |
+<literal>crit</literal> |
+<literal>alert</literal> |
+<literal>emerg</literal>]</syntax>
 <default>logs/error.log error</default>
 <context>main</context>
 <context>http</context>
@@ -64,24 +64,24 @@ Configures logging.
 </para>
 
 <para>
-The first argument defines a file that will store the log.
+The first parameter defines a file that will store the log.
 <!--
 If filename is not absolute, it is prefixed with the prefix path.
 -->
 </para>
 
 <para>
-The second argument determines the level of logging.
+The second parameter determines the level of logging.
 Log levels above are listed in the order of increasing severity.
 Setting a certain log level will cause all messages of
 the specified and more severe log levels to be logged.
-For example, the default level <value>error</value> will
-cause <value>error</value>, <value>crit</value>,
-<value>alert</value>, and <value>emerg</value> messages
+For example, the default level <literal>error</literal> will
+cause <literal>error</literal>, <literal>crit</literal>,
+<literal>alert</literal>, and <literal>emerg</literal> messages
 to be logged.
 <note>
-For <value>debug</value> logging to work, nginx needs to
-be built with <code>--with-debug</code>.
+For <literal>debug</literal> logging to work, nginx needs to
+be built with <literal>--with-debug</literal>.
 </note>
 </para>
 
@@ -89,7 +89,7 @@ be built with <code>--with-debug</code>.
 
 
 <directive name="env">
-<syntax><argument>variable</argument>[=<argument>value</argument>]</syntax>
+<syntax><value>variable</value>[=<value>value</value>]</syntax>
 <default>TZ</default>
 <context>main</context>
 
@@ -142,13 +142,13 @@ env OPENSSL_ALLOW_PROXY_CERTS=1;
 
 
 <directive name="include">
-<syntax><argument>file</argument> | <argument>mask</argument></syntax>
+<syntax><value>file</value> | <value>mask</value></syntax>
 <default/>
 <context/>
 
 <para>
-Includes another <argument>file</argument>, or files matching the
-specified <argument>mask</argument>, into configuration.
+Includes another <value>file</value>, or files matching the
+specified <value>mask</value>, into configuration.
 Included files should consist of
 syntactically correct directives and blocks.
 </para>
@@ -165,7 +165,7 @@ include vhosts/*.conf;
 
 
 <directive name="master_process">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>main</context>
 
@@ -178,19 +178,19 @@ This directive is intended for nginx developers.
 
 
 <directive name="pid">
-<syntax><argument>file</argument></syntax>
+<syntax><value>file</value></syntax>
 <default>nginx.pid</default>
 <context>main</context>
 
 <para>
-Defines a <argument>file</argument> which will store the process ID of the main process.
+Defines a <value>file</value> that will store the process ID of the main process.
 </para>
 
 </directive>
 
 
 <directive name="ssl_engine">
-<syntax><argument>device</argument></syntax>
+<syntax><value>device</value></syntax>
 <default/>
 <context>main</context>
 
@@ -202,7 +202,7 @@ Defines the name of the hardware SSL accelerator.
 
 
 <directive name="timer_resolution">
-<syntax><argument>interval</argument></syntax>
+<syntax><value>interval</value></syntax>
 <default/>
 <context>main</context>
 
@@ -212,7 +212,7 @@ number of <c-func>gettimeofday</c-func> system calls made.
 By default, <c-func>gettimeofday</c-func> is called each time
 on receiving a kernel event.
 With reduced resolution, <c-func>gettimeofday</c-func> is only
-called once per specified <argument>interval</argument>.
+called once per specified <value>interval</value>.
 </para>
 
 <para>
@@ -227,11 +227,11 @@ An internal implementation of interval depends on the method used:
 <list type="bullet">
 
 <listitem>
-an <c-def>EVFILT_TIMER</c-def> filter if <value>kqueue</value> is used;
+an <c-def>EVFILT_TIMER</c-def> filter if <literal>kqueue</literal> is used;
 </listitem>
 
 <listitem>
-<c-func>timer_create</c-func> if <value>eventport</value> is used;
+<c-func>timer_create</c-func> if <literal>eventport</literal> is used;
 </listitem>
 
 <listitem>
@@ -245,29 +245,29 @@ an <c-def>EVFILT_TIMER</c-def> filter if <value>kqueue</value> is used;
 
 
 <directive name="user">
-<syntax><argument>user</argument> [<argument>group</argument>]</syntax>
+<syntax><value>user</value> [<value>group</value>]</syntax>
 <default>nobody nobody</default>
 <context>main</context>
 
 <para>
-Defines <argument>user</argument> and <argument>group</argument>
+Defines <value>user</value> and <value>group</value>
 credentials used by worker processes.
-If <argument>group</argument> is omitted, a group whose name equals
-that of <argument>user</argument> is used.
+If <value>group</value> is omitted, a group whose name equals
+that of <value>user</value> is used.
 </para>
 
 </directive>
 
 
 <directive name="worker_priority">
-<syntax><argument>number</argument></syntax>
+<syntax><value>number</value></syntax>
 <default>0</default>
 <context>main</context>
 
 <para>
 Defines a scheduling priority for worker processes like is
 done by the <command>nice</command> command: a negative
-<argument>number</argument>
+<value>number</value>
 means higher priority.
 Allowed range normally varies from -20 to 20.
 </para>
@@ -283,7 +283,7 @@ worker_priority -10;
 
 
 <directive name="worker_processes">
-<syntax><argument>number</argument></syntax>
+<syntax><value>number</value></syntax>
 <default>1</default>
 <context>main</context>
 
@@ -303,7 +303,7 @@ would be a good start.
 
 
 <directive name="worker_rlimit_core">
-<syntax><argument>size</argument></syntax>
+<syntax><value>size</value></syntax>
 <default/>
 <context>main</context>
 
@@ -317,7 +317,7 @@ Used to increase the limit without restarting the main process.
 
 
 <directive name="worker_rlimit_nofile">
-<syntax><argument>number</argument></syntax>
+<syntax><value>number</value></syntax>
 <default/>
 <context>main</context>
 
@@ -331,7 +331,7 @@ Used to increase the limit without restarting the main process.
 
 
 <directive name="working_directory">
-<syntax><argument>directory</argument></syntax>
+<syntax><value>directory</value></syntax>
 <default/>
 <context>main</context>
 

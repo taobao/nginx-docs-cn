@@ -43,11 +43,12 @@ only the certificate is sent to a client.
 </para>
 
 <para>
-The directives <dirname>ssl_protocols</dirname> and
-<dirname>ssl_ciphers</dirname> can be used to limit connections
+The directives <link doc="ngx_http_ssl_module.xml" id="ssl_protocols"/> and
+<link doc="ngx_http_ssl_module.xml" id="ssl_ciphers"/>
+can be used to limit connections
 to include only the strong versions and ciphers of SSL/TLS.
-Since version 1.0.5, nginx uses <dirname>ssl_protocols SSLv3 TLSv1</dirname>
-and <dirname>ssl_ciphers HIGH:!aNULL:!MD5</dirname> by default,
+Since version 1.0.5, nginx uses “<literal>ssl_protocols SSLv3 TLSv1</literal>”
+and “<literal>ssl_ciphers HIGH:!aNULL:!MD5</literal>” by default,
 so configuring them explicitly only makes sense for the earlier nginx versions.
 </para>
 
@@ -78,10 +79,14 @@ the first is by enabling keepalive connections to send several
 requests via one connection and the second is to reuse SSL session
 parameters to avoid SSL handshakes for parallel and subsequent connections.
 The sessions are stored in an SSL session cache shared between workers
-and configured by an <dirname>ssl_session_cache</dirname> directive.
+and configured by the
+<link doc="ngx_http_ssl_module.xml" id="ssl_session_cache"/>
+directive.
 One megabyte of the cache contains about 4000 sessions.
-The default cache timeout is 5 minutes. It can be increased by using
-the <dirname>ssl_session_timeout</dirname> directive.
+The default cache timeout is 5 minutes.
+It can be increased by using the
+<link doc="ngx_http_ssl_module.xml" id="ssl_session_timeout"/>
+directive.
 Here is a sample configuration optimized for a quad core system
 with 10M shared session cache:
 
@@ -128,7 +133,8 @@ in the combined file:
 $ cat www.nginx.com.crt bundle.crt > www.nginx.com.chained.crt
 </programlisting>
 
-The resulting file should be used in the <dirname>ssl_certificate</dirname>
+The resulting file should be used in the
+<link doc="ngx_http_ssl_module.xml" id="ssl_certificate"/>
 directive:
 
 <programlisting>
@@ -216,8 +222,8 @@ and using a consolidated server may become problematic.
 However, if HTTP and HTTPS servers are equal,
 and you prefer not to think about the future,
 you may configure a single server that handles both HTTP and HTTPS requests
-by deleting the directive <dirname>ssl on</dirname>
-and adding the <dirname>ssl</dirname> parameter for *:443 port:
+by deleting the directive “<literal>ssl on</literal>”
+and adding the <literal>ssl</literal> parameter for *:443 port:
 
 <programlisting>
 server {
@@ -231,8 +237,8 @@ server {
 </programlisting>
 
 <note>
-Prior to 0.8.21, nginx only allows the <dirname>ssl</dirname> parameter
-to be set on listen sockets with the <dirname>default</dirname> parameter:
+Prior to 0.8.21, nginx only allows the <literal>ssl</literal> parameter
+to be set on listen sockets with the <literal>default</literal> parameter:
 <programlisting>
 listen  443  default  ssl;
 </programlisting>
@@ -428,7 +434,8 @@ since 0.8.21 and 0.7.62.
 </item>
 
 <item>
-The <dirname>ssl</dirname> parameter of the <dirname>listen</dirname>
+The <literal>ssl</literal> parameter of the
+<link doc="ngx_http_core_module.xml" id="listen"/>
 directive has been supported since 0.7.14.
 </item>
 
@@ -463,22 +470,22 @@ SSLv3, and TLSv1.
 
 <item>
 Version 1.0.5 and later: the default SSL ciphers are
-<dirname>HIGH:!aNULL:!MD5</dirname>.
+“<literal>HIGH:!aNULL:!MD5</literal>”.
 </item>
 
 <item>
 Version 0.7.65, 0.8.20 and later: the default SSL ciphers are
-<dirname>HIGH:!ADH:!MD5</dirname>.
+“<literal>HIGH:!ADH:!MD5</literal>”.
 </item>
 
 <item>
 Version 0.8.19: the default SSL ciphers are
-<dirname>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</dirname>.
+“<literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</literal>”.
 </item>
 
 <item>
 Version 0.7.64, 0.8.18 and earlier: the default SSL ciphers are<br/>
-<dirname>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</dirname>.
+“<literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</literal>”.
 </item>
 
 </list>

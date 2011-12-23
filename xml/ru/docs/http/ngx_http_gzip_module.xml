@@ -37,7 +37,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="gzip">
-<syntax><value>on|off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location, if в location</context>
 
@@ -49,7 +49,7 @@
 
 
 <directive name="gzip_buffers">
-<syntax><value>число размер</value></syntax>
+<syntax><value>число</value> <value>размер</value></syntax>
 <default>32 4k/16 8k</default>
 <context>http, server, location</context>
 
@@ -65,19 +65,20 @@
 
 <directive name="gzip_comp_level">
 
-<syntax><value>1..9</value></syntax>
+<syntax><value>степень</value></syntax>
 <default>1</default>
 <context>http, server, location</context>
 
 <para>
-Устанавливает уровень сжатия ответа методом gzip.
+Устанавливает <value>степень</value> сжатия ответа методом gzip.
+Допустимые значения находятся в диапазоне 1..9.
 </para>
 
 </directive>
 
 
 <directive name="gzip_disable">
-<syntax><value>regex [regex ...]</value></syntax>
+<syntax><value>regex</value> ...</syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -110,7 +111,7 @@
 
 
 <directive name="gzip_http_version">
-<syntax><value>1.0|1.1</value></syntax>
+<syntax><literal>1.0</literal> | <literal>1.1</literal></syntax>
 <default>1.1</default>
 <context>http, server, location</context>
 
@@ -122,7 +123,17 @@
 
 
 <directive name="gzip_proxied">
-<syntax><value>[off|expired|no-cache|no-store|private|no_last_modified|no_etag|auth|any] ...</value></syntax>
+<syntax>
+  <literal>off</literal> |
+  <literal>expired</literal> |
+  <literal>no-cache</literal> |
+  <literal>no-store</literal> |
+  <literal>private</literal> |
+  <literal>no_last_modified</literal> |
+  <literal>no_etag</literal> |
+  <literal>auth</literal> |
+  <literal>any</literal>
+  ...</syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -183,7 +194,7 @@ any — разрешить сжатие для всех проксирован�
 
 
 <directive name="gzip_types">
-<syntax><value>mime-тип [mime-тип ...]</value></syntax>
+<syntax><value>mime-тип</value> ...</syntax>
 <default>text/html</default>
 <context>http, server, location</context>
 
@@ -196,7 +207,7 @@ any — разрешить сжатие для всех проксирован�
 
 
 <directive name="gzip_vary">
-<syntax><value>on|off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 

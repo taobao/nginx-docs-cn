@@ -75,7 +75,7 @@ $msie — равна "1", если браузер опознан как MSIE л
 <section name="Директивы" id="directives">
 
 <directive name="ancient_browser">
-<syntax><value>строка [строка ...]</value></syntax>
+<syntax><value>строка</value> ...</syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -102,7 +102,8 @@ $msie — равна "1", если браузер опознан как MSIE л
 
 
 <directive name="modern_browser">
-<syntax><value>браузер версия|unlisted</value></syntax>
+<syntax><value>браузер</value> <value>версия</value></syntax>
+<syntax><literal>unlisted</literal></syntax>
 <default/>
 <context>http, server, location</context>
 

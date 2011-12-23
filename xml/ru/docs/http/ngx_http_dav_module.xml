@@ -12,7 +12,7 @@
 Модуль ngx_http_dav_module обрабатывает HTTP- и WebDAV-методы
 PUT, DELETE, MKCOL, COPY и MOVE.
 По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром <command>--with-http_dav_module</command>.
+при конфигурировании параметром <literal>--with-http_dav_module</literal>.
 </para>
 
 </section>
@@ -46,8 +46,7 @@ PUT, DELETE, MKCOL, COPY и MOVE.
 <section name="Директивы" id="directives">
 
 <directive name="dav_access">
-<syntax><value>пользователи:права [пользователи:права] ...</value>
-</syntax>
+<syntax><value>пользователи</value><literal>:</literal><value>права</value> ...</syntax>
 <default>user:rw</default>
 <context>http, server, location</context>
 
@@ -68,7 +67,10 @@ dav_access  group:rw  all:r;
 
 
 <directive name="dav_methods">
-<syntax><value>[off|put|delete|mkcol|copy|move] ...</value></syntax>
+<syntax>
+  <literal>off</literal> | <literal>put</literal> | <literal>delete</literal> |
+  <literal>mkcol</literal> | <literal>copy</literal> | <literal>move</literal>
+  ...</syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -100,7 +102,7 @@ dav_access  group:rw  all:r;
 
 
 <directive name="create_full_put_path">
-<syntax><value>on|off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 

@@ -116,8 +116,7 @@ X:stylesheet {
         X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
-    X:template = "argument" { <code><i> !!; </i></code> }
-    X:template = "parameter" { <code> !!; </code> }
+    X:template = "literal" { <code> !!; </code> }
 
     X:template = "header" {
         X:text {&#8220;} !!; X:text {&#8221;}
@@ -127,30 +126,19 @@ X:stylesheet {
         !{@code} X:text { (} !{@text} X:text{)}
     }
 
-    X:template = "dirname[/*[@lang='he']]" {
-        <nobr><span class="ltr">
-        X:text {&#8220;} !!; X:text {&#8221;}
-        </span></nobr>
-    }
-
-    X:template = "dirname" {
-        <nobr> X:text {&#8220;} !!; X:text {&#8221;} </nobr>
-    }
-
     X:template = "url[/*[@lang='he']]" {
         <i><span class="ltr"> !!; </span></i>
     }
 
     X:template = "url" { <i> !!;</i> }
 
-    X:template = "value" { <code> !!; </code> }
+    X:template = "value" { <code><i> !!; </i></code> }
 
     X:template = "registered" { !!; <sup> X:text {&#174;} </sup> }
 
     X:template = "var" { <code> !!; </code> }
 
     X:template = "path" { <code> !!; </code> }
-    X:template = "code" { <code> !!; </code> }
     X:template = "i" { <i> !!; </i> }
     X:template = "b" { <b> !!; </b> }
     X:template = "nobr" { <nobr> !!; </nobr> }

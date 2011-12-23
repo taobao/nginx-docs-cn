@@ -100,10 +100,10 @@ By default nginx uses the maximum value of FreeBSD kernel.
 When a client sends a data, the data first is received by the kernel
 which places the data in the socket receiving buffer.
 Then an application such as the web server
-may call <code>recv()</code> or <code>read()</code> system calls
+may call <c-func>recv</c-func> or <c-func>read</c-func> system calls
 to get the data from the buffer.
 When the application wants to send a data, it calls
-<code>send()</code> or <code>write()</code>
+<c-func>send</c-func> or <c-func>write</c-func>
 system calls to place the data in the socket sending buffer.
 Then the kernel manages to send the data from the buffer to the client.
 In modern FreeBSD versions the default sizes of the socket receiving
@@ -239,7 +239,7 @@ and memory usage by using the cached file pages.
 
 <para>
 And again, the amd64 sendfile implementation is the best:
-the zeros in the <nobr>“<code>netstat -m</code>”</nobr> output
+the zeros in the <nobr>“<literal>netstat -m</literal>”</nobr> output
 <programlisting>
 ...
 <b>0/0/0</b> sfbufs in use (current/peak/max)

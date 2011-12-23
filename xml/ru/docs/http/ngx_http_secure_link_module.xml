@@ -13,7 +13,7 @@
 правильность запрашиваемой ссылки (0.7.18+).
 По умолчанию модуль не собирается, нужно разрешить его сборку
 при конфигурировании параметром
-<command>--with-http_secure_link_module</command>.
+<literal>--with-http_secure_link_module</literal>.
 </para>
 
 </section>

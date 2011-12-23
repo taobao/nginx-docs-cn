@@ -9,7 +9,7 @@
 <section>
 
 <para>
-サーバ名は <dirname>server_name</dirname> ディレクティブを使用して定義され、リクエストに対してどのサーバブロックが使われるかを決定します。「<a href="/ja/docs/http/request_processing.xml" />」もお読みください。これらは完全一致名、ワイルドカード名、正規表現で定義されます:
+サーバ名は <literal>server_name</literal> ディレクティブを使用して定義され、リクエストに対してどのサーバブロックが使われるかを決定します。「<a href="/ja/docs/http/request_processing.xml" />」もお読みください。これらは完全一致名、ワイルドカード名、正規表現で定義されます:
 
 <programlisting>
 server {
@@ -68,11 +68,11 @@ server {
         name="ワイルドカード名">
 
 <para>
-ワイルドカード名にはそのサーバ名の最初か最後のみ、そしてドットに隣接したところのみにアスタリスクが含まれます。サーバ名 <dirname>www.*.nginx.org</dirname> や <dirname>w*.nginx.org</dirname> は無効です。しかし、これらのサーバ名は正規表現を使用して、例えば  <dirname>~^www\..+\.nginx\.org$</dirname> や <dirname>~^w.*\.nginx\.org$</dirname> として指定することができます。アスタリスクは複数部分にマッチさせることができます。<dirname>*.nginx.org</dirname> は <url>www.nginx.org</url> だけでなく <url>www.sub.nginx.org</url> にもマッチします。
+ワイルドカード名にはそのサーバ名の最初か最後のみ、そしてドットに隣接したところのみにアスタリスクが含まれます。サーバ名 <literal>www.*.nginx.org</literal> や <literal>w*.nginx.org</literal> は無効です。しかし、これらのサーバ名は正規表現を使用して、例えば  <literal>~^www\..+\.nginx\.org$</literal> や <literal>~^w.*\.nginx\.org$</literal> として指定することができます。アスタリスクは複数部分にマッチさせることができます。<literal>*.nginx.org</literal> は <url>www.nginx.org</url> だけでなく <url>www.sub.nginx.org</url> にもマッチします。
 </para>
 
 <para>
-特別なワイルドカードの形式 <dirname>.nginx.org</dirname> は、完全一致名 <dirname>nginx.org</dirname> とワイルドカード名 <dirname>*.nginx.org</dirname> の両方にマッチさせるように利用できます。
+特別なワイルドカードの形式 <literal>.nginx.org</literal> は、完全一致名 <literal>nginx.org</literal> とワイルドカード名 <literal>*.nginx.org</literal> の両方にマッチさせるように利用できます。
 </para>
 
 </section>
@@ -139,7 +139,7 @@ nginx が起動に失敗すると次のエラーメッセージを表示しま�
 pcre_compile() failed: unrecognized character after (?&lt; in ...
 </programlisting>
 
-これは PCRE ライブラリが古いので <dirname>?P&lt;<i>name</i>&gt;</dirname> 構文を試すように、という意味です。このキャプチャは数字形式でも使用できます:
+これは PCRE ライブラリが古いので <literal>?P&lt;<value>name</value>&gt;</literal> 構文を試すように、という意味です。このキャプチャは数字形式でも使用できます:
 
 <programlisting>
 server {
@@ -174,7 +174,7 @@ server {
 </para>
 
 <para>
-<dirname>server_name</dirname> がサーバブロックで定義されていない場合は、nginx は<i>サーバ名</i>として空の名前を使用します。
+<literal>server_name</literal> がサーバブロックで定義されていない場合は、nginx は<i>サーバ名</i>として空の名前を使用します。
 
 </para>
 
@@ -213,7 +213,7 @@ server {
 </para>
 
 <para>
-nginx バージョン 0.6.25 までは特別なサーバ名 &ldquo;*&rdquo; をサポートしていて、これは誤ってすべてのサーバ名と一致するもの（キャッチオール名）として解釈されていました。この特別なサーバ名 &ldquo;*&rdquo;はキャッチオールまたはワイルドカードとして機能したことはありませんでした。代わりに、今は <dirname>server_name_in_redirect</dirname> ディレクティブによって提供されている機能の役を果たしていました。特別なサーバ名 &ldquo;*&rdquo; は今後廃止予定ですので、<dirname>server_name_in_redirect</dirname> ディレクティブを使うようにしてください。キャッチオール名を指定したり <dirname>server_name</dirname> ディレクティブを使用した<i>デフォルト</i>サーバを指定したりする方法はないことに注意してください。これは <dirname>listen</dirname> ディレクティブのプロパティであり、<dirname>server_name</dirname> ディレクティブのプロパティではありません。&ldquo;<a href="/ja/docs/http/request_processing.xml" />&rdquo; も参照してください。
+nginx バージョン 0.6.25 までは特別なサーバ名 &ldquo;*&rdquo; をサポートしていて、これは誤ってすべてのサーバ名と一致するもの（キャッチオール名）として解釈されていました。この特別なサーバ名 &ldquo;*&rdquo;はキャッチオールまたはワイルドカードとして機能したことはありませんでした。代わりに、今は <literal>server_name_in_redirect</literal> ディレクティブによって提供されている機能の役を果たしていました。特別なサーバ名 &ldquo;*&rdquo; は今後廃止予定ですので、<literal>server_name_in_redirect</literal> ディレクティブを使うようにしてください。キャッチオール名を指定したり <literal>server_name</literal> ディレクティブを使用した<i>デフォルト</i>サーバを指定したりする方法はないことに注意してください。これは <literal>listen</literal> ディレクティブのプロパティであり、<literal>server_name</literal> ディレクティブのプロパティではありません。&ldquo;<a href="/ja/docs/http/request_processing.xml" />&rdquo; も参照してください。
 ポート *:80 と *:8080 で待ち受けているサーバを定義し、ひとつをポート *:8080 のデフォルトサーバへ、もうひとつをポート *:80 のデフォルトサーバへ振り向けることができます。
 
 <programlisting>
@@ -241,7 +241,7 @@ server {
         name="最適化">
 
 <para>
-完全一致名とワイルドカード名はハッシュで保存されます。このハッシュは待ち受けポートに結び付けられ、各待ち受けポートは、完全一致名のハッシュ、アスタリスクで始まるワイルドカード名のハッシュ、アスタリスクで終わるワイルドカード名のハッシュの３つまでのハッシュを持つことができます。ハッシュのサイズは構成フェーズで最適化されるので、CPU キャッシュのミスは最低でもサーバ名を見つけることができます。最初に完全一致名のハッシュが検索されます。完全一致名のハッシュを使って見つからなければ、次にアスタリスクで始まるワイルドカード名のハッシュが検索されます。さらにまだ見つからなければ、アスタリスクで終わるワイルドカード名のハッシュが検索されます。ワイルドカード名のハッシュの検索は完全一致名のハッシュの検索よりも遅くなります。これはサーバ名の検索がドメイン部分によって検索されるからです。特別なワイルドカード形式の <dirname>.nginx.org</dirname> は完全一致名のハッシュではなくワイルドカード名のハッシュで保存されます。正規表現は順番に考査されるので、これがもっとも遅い方式ですし、非スケーラブルでもあります。
+完全一致名とワイルドカード名はハッシュで保存されます。このハッシュは待ち受けポートに結び付けられ、各待ち受けポートは、完全一致名のハッシュ、アスタリスクで始まるワイルドカード名のハッシュ、アスタリスクで終わるワイルドカード名のハッシュの３つまでのハッシュを持つことができます。ハッシュのサイズは構成フェーズで最適化されるので、CPU キャッシュのミスは最低でもサーバ名を見つけることができます。最初に完全一致名のハッシュが検索されます。完全一致名のハッシュを使って見つからなければ、次にアスタリスクで始まるワイルドカード名のハッシュが検索されます。さらにまだ見つからなければ、アスタリスクで終わるワイルドカード名のハッシュが検索されます。ワイルドカード名のハッシュの検索は完全一致名のハッシュの検索よりも遅くなります。これはサーバ名の検索がドメイン部分によって検索されるからです。特別なワイルドカード形式の <literal>.nginx.org</literal> は完全一致名のハッシュではなくワイルドカード名のハッシュで保存されます。正規表現は順番に考査されるので、これがもっとも遅い方式ですし、非スケーラブルでもあります。
 </para>
 
 <para>
@@ -267,7 +267,7 @@ server {
 </para>
 
 <para>
-たくさんの数のサーバ名を定義したり非常に長いサーバ名を定義したりする場合は、http レベルの <dirname>server_names_hash_max_size</dirname> と <dirname>server_names_hash_bucket_size</dirname> ディレクティブを調整する必要があるかもしれません。<dirname>server_names_hash_bucket_size</dirname> のデフォルト値は 32、もしくは 64、あるいはお使いの CPU キャッシュラインのサイズによってはその他の値になっているかもしれません。もしデフォルト値が 32 でサーバ名として &ldquo;too.long.server.name.nginx.org&rdquo; のような非常に長いサーバ名を定義している場合、nginx は起動に失敗し、次のエラーメッセージを表示させます:
+たくさんの数のサーバ名を定義したり非常に長いサーバ名を定義したりする場合は、http レベルの <literal>server_names_hash_max_size</literal> と <literal>server_names_hash_bucket_size</literal> ディレクティブを調整する必要があるかもしれません。<literal>server_names_hash_bucket_size</literal> のデフォルト値は 32、もしくは 64、あるいはお使いの CPU キャッシュラインのサイズによってはその他の値になっているかもしれません。もしデフォルト値が 32 でサーバ名として &ldquo;too.long.server.name.nginx.org&rdquo; のような非常に長いサーバ名を定義している場合、nginx は起動に失敗し、次のエラーメッセージを表示させます:
 
 <programlisting>
 could not build the server_names_hash,
@@ -290,11 +290,11 @@ you should increase either server_names_hash_max_size: 512
 or server_names_hash_bucket_size: 32
 </programlisting>
 
-まず最初に <dirname>server_names_hash_max_size</dirname> の値を、定義するサーバ名の数に近い数に設定して試します。この設定がうまくいかない時だけ、もしくは nginx の起動時間が許容できないほど長い場合だけ <dirname>server_names_hash_bucket_size</dirname> の値を増やしてみます。
+まず最初に <literal>server_names_hash_max_size</literal> の値を、定義するサーバ名の数に近い数に設定して試します。この設定がうまくいかない時だけ、もしくは nginx の起動時間が許容できないほど長い場合だけ <literal>server_names_hash_bucket_size</literal> の値を増やしてみます。
 </para>
 
 <para>
-待ち受けているポートがひとつだけでサーバもひとつだけの場合、nginx はサーバ名を考査しません（また、待ち受けポート用のハッシュも生成しません）。しかし一つ例外があります。<dirname>server_name</dirname> がキャプチャを伴った正規表現の場合、nginx はキャプチャを取得するためにこの正規表現を実行します。
+待ち受けているポートがひとつだけでサーバもひとつだけの場合、nginx はサーバ名を考査しません（また、待ち受けポート用のハッシュも生成しません）。しかし一つ例外があります。<literal>server_name</literal> がキャプチャを伴った正規表現の場合、nginx はキャプチャを取得するためにこの正規表現を実行します。
 </para>
 
 </section>

@@ -33,7 +33,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="autoindex">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -45,7 +45,7 @@
 
 
 <directive name="autoindex_exact_size">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http, server, location</context>
 
@@ -60,7 +60,7 @@
 
 
 <directive name="autoindex_localtime">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 

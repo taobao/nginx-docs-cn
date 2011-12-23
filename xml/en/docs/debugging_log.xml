@@ -15,7 +15,7 @@ debugging during the build:
 ./configure --with-debug ...
 </programlisting>
 
-Then the <value>debug</value> level should be set with the
+Then the <literal>debug</literal> level should be set with the
 <link doc="ngx_core_module.xml" id="error_log"/> directive:
 
 <programlisting>
@@ -23,11 +23,12 @@ error_log /path/to/log debug;
 </programlisting>
 
 The nginx binary version for Windows is always built with the debugging log
-support, so only setting the <value>debug</value> level will suffice.
+support, so only setting the <literal>debug</literal> level will suffice.
 </para>
 
 <para>
-Note that redefining the log without also specifying the <value>debug</value>
+Note that redefining the log without also specifying the
+<literal>debug</literal>
 level will disable the debugging log.
 In the example below, redefining the log on the
 <link doc="http/ngx_http_core_module.xml" id="server"/>
@@ -41,7 +42,7 @@ http {
         ...
 </programlisting>
 To avoid this, either the line redefining the log should be
-commented out, or the <value>debug</value> level specification should
+commented out, or the <literal>debug</literal> level specification should
 also be added:
 <programlisting>
 error_log /path/to/log debug;

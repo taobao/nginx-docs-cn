@@ -9,7 +9,7 @@
 <section>
 
 <para>
-שמות שרת מוגדרים על ידי המאפיין <dirname>server_name</dirname>
+שמות שרת מוגדרים על ידי המאפיין <literal>server_name</literal>
 והם קובעים איזה בלוק תצורת שרת מקובץ התצורה יהיה בשימוש לכל בקשה ובקשה לשרת.
 ראו גם &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
 ניתן להגדירם באמצעות שמות מדוייקים, שמות Wildcard, או באמצעות ביטויים רגולריים:
@@ -72,20 +72,20 @@ server {
 
 <para>
 שם wildcard יכול להכיל כוכבית רק בתחילת או בסוף השם, וחייב להיות בגבול של נקודה.
-השמות <dirname>www.*.nginx.org</dirname>
-ו <dirname>w*.nginx.org</dirname> הם שגויים.
+השמות <literal>www.*.nginx.org</literal>
+ו <literal>w*.nginx.org</literal> הם שגויים.
 למרות זאת, ניתן לציין שמות כאלה באמצעות ביטויים רגולריים,
-לדוגמא, <dirname>~^www\..+\.nginx\.org$</dirname> ו
-<dirname>~^w.*\.nginx\.org$</dirname>.
+לדוגמא, <literal>~^www\..+\.nginx\.org$</literal> ו
+<literal>~^w.*\.nginx\.org$</literal>.
 סימן הכוכבית יכול להחליף מספר חלקי שם.
-השם <dirname>*.nginx.org</dirname> מתאים לא רק ל
+השם <literal>*.nginx.org</literal> מתאים לא רק ל
 <url>www.nginx.org</url> אלא גם ל <url>www.sub.nginx.org</url>.
 </para>
 
 <para>
-ניתן להשתמש ב wildcard מיוחד בצורה של <dirname>.nginx.org</dirname>
-כדי להתאים גם לשם המדוייק <dirname>nginx.org</dirname>
-וגם לשם ה wildcard הבא: <dirname>*.nginx.org</dirname>.
+ניתן להשתמש ב wildcard מיוחד בצורה של <literal>.nginx.org</literal>
+כדי להתאים גם לשם המדוייק <literal>nginx.org</literal>
+וגם לשם ה wildcard הבא: <literal>*.nginx.org</literal>.
 </para>
 
 </section>
@@ -139,17 +139,17 @@ server {
 <table note="yes">
 
 <tr>
-<td><code>?&lt;<i>name</i>&gt;</code></td>
+<td><literal>?&lt;<value>name</value>&gt;</literal></td>
 <td>תחביר תואם פרל 5.10, נתמך החל מ PCRE-7.0</td>
 </tr>
 
 <tr>
-<td><code>?'<i>name</i>'</code></td>
+<td><literal>?'<value>name</value>'</literal></td>
 <td>תחביר תואם פרל 5.10, נתמך החל מ PCRE-7.0</td>
 </tr>
 
 <tr>
-<td><code>?P&lt;<i>name</i>&gt;</code></td>
+<td><literal>?P&lt;<value>name</value>&gt;</literal></td>
 <td>תחביר תואם פייתון, נתמך החל מ PCRE-4.0</td>
 </tr>
 
@@ -162,7 +162,7 @@ pcre_compile() failed: unrecognized character after (?&lt; in ...
 </programlisting>
 
 פירוש הדבר שספריית ה PCRE היא ישנה, ועליכם לנסות את התחביר
-<dirname>?P&lt;<i>name</i>&gt;</dirname>.
+<literal>?P&lt;<value>name</value>&gt;</literal>.
 
 את הלכידה ניתן לבצע גם בצורה ספרתית:
 
@@ -188,7 +188,7 @@ server {
         name="שמות כלליים">
 
 <para>
-אם אף <dirname>server_name</dirname> לא מוגדר בבלוג שרת,
+אם אף <literal>server_name</literal> לא מוגדר בבלוג שרת,
 אזי nginx משתמש ב <i>hostname</i> בתור שם השרת.
 </para>
 
@@ -244,12 +244,12 @@ nginx בגירסאות עד 0.6.25 תמך בשם המיוחד &ldquo;*&rdquo;
 אשר יש שפירשו אותו בטעות כשם catch-all.
 השם הזה מעולם לא תפקד כ catch-all ואף לא כשם wildcard.
 בפועל, הוא סיפק את הפונקציונליות שהיום מסופקת על ידי
-המאפיין <dirname>server_name_in_redirect</dirname>.
+המאפיין <literal>server_name_in_redirect</literal>.
 השם המיוחד  &ldquo;*&rdquo; הוא כעת לא מומלץ לשימוש, ויש
-להשתמש במאפיין <dirname>server_name_in_redirect</dirname> במקומו.
+להשתמש במאפיין <literal>server_name_in_redirect</literal> במקומו.
 שימו לב שאין דרך לציין את שם ה catch-all או את שרת <i>ברירת המחדל</i>
-על ידי שימוש במאפיין <dirname>server_name</dirname>.
-זוהי תכונה של המאפיין <dirname>listen</dirname> ולא של המאפיין <dirname>server_name</dirname>.
+על ידי שימוש במאפיין <literal>server_name</literal>.
+זוהי תכונה של המאפיין <literal>listen</literal> ולא של המאפיין <literal>server_name</literal>.
 ראו גם &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
 
 באפשרותכם להגדיר שרתים המאזינים על פורטים <url>*:80</url> ו <url>*:8080</url>,
@@ -294,7 +294,7 @@ server {
 אם הוא לא נמצא גם שם, מתחיל חיפוש בגיבוב השמות המסתיימים בכוכבית.
 חיפוש בגיבובי שמות wildcard הוא איטי יותר מחיפוש שם בגיבוב השמות המדוייקים
 כיוון ששמות עוברים חיפוש על פי חלקי שם המתחם.
-שימו לב שצורת ה wildcard המיוחדת  <dirname>.nginx.org</dirname>
+שימו לב שצורת ה wildcard המיוחדת  <literal>.nginx.org</literal>
 שמורה גם היא בגיבוב שמות ה wildcard ולא בגיבוב השמות המדוייקים.
 ביטויים רגולריים נבדקים באופן סדרתי, ועל כן הם השיטה האיטית ביותר
 ואינם סקאלאביליים.
@@ -326,9 +326,9 @@ server {
 
 <para>
 אם הגדרתם מספר גדול של שמות שרת, או שהגדרתם שמות שרת ארוכים מהרגיל,
-ייתכן ויהיה עליכם לכוונן את המאפיינים <dirname>server_names_hash_max_size</dirname>
-ו <dirname>server_names_hash_bucket_size</dirname> ברמת ה <i>http</i>.
-ערך ברירת המחדל של <dirname>server_names_hash_bucket_size</dirname>
+ייתכן ויהיה עליכם לכוונן את המאפיינים <literal>server_names_hash_max_size</literal>
+ו <literal>server_names_hash_bucket_size</literal> ברמת ה <i>http</i>.
+ערך ברירת המחדל של <literal>server_names_hash_bucket_size</literal>
 יכול להיות שווה ל 32, ל 64, או לערך אחר, בהתאם לגודל קו המטמון של המעבד שלכם.
 אם ברירת המחדל היא 32 ותגדירו 
 &ldquo;too.long.server.name.nginx.org&rdquo; בתור שם שרת,
@@ -355,17 +355,17 @@ you should increase either server_names_hash_max_size: 512
 or server_names_hash_bucket_size: 32
 </programlisting>
 
-עליכם לנסות קודם להגדיל את <dirname>server_names_hash_max_size</dirname>
+עליכם לנסות קודם להגדיל את <literal>server_names_hash_max_size</literal>
 למספר קרוב למספר השרתים.
 רק אם זה לא עזר, או שזמן העלייה של nginx הוא ארוך בצורה מוגזמת,
-נסו להגדיל את <dirname>server_names_hash_bucket_size</dirname>.
+נסו להגדיל את <literal>server_names_hash_bucket_size</literal>.
 </para>
 
 <para>
 אם שרת הוא השרת היחיד עבור פורט האזנה, אזי nginx לא יבדוק שמות שרת בכלל
 (ולא יבנה גיבובים עבור פורט ההאזנה).
 אך, יש יוצא דופן אחד.
-אם <dirname>server_name</dirname> הוא ביטוי רגולרי עם לכידות,
+אם <literal>server_name</literal> הוא ביטוי רגולרי עם לכידות,
 nginx חייב לבצע את הביטוי כדי לקבל את מה שנלכד בהן.
 </para>
 

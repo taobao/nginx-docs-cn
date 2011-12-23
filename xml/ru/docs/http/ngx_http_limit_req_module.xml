@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-Модуль <code>ngx_http_limit_req_module</code> (0.7.21) позволяет
+Модуль <literal>ngx_http_limit_req_module</literal> (0.7.21) позволяет
 ограничить число запросов
 по заданному ключу или, как частный случай, число запросов с одного IP-адреса.
 Ограничение делается с помощью метода “leaky bucket”.
@@ -43,9 +43,9 @@ http {
 
 <directive name="limit_req">
 <syntax>
-    <parameter>zone</parameter>=<argument>название</argument>
-    [<parameter>burst</parameter>=<argument>число</argument>]
-    [<parameter>nodelay</parameter>]</syntax>
+    <literal>zone</literal>=<value>название</value>
+    [<literal>burst</literal>=<value>число</value>]
+    [<literal>nodelay</literal>]</syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -77,7 +77,7 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
 <para>
 Если же избыточные запросы в пределах лимита всплесков задерживать
-не требуется, то следует использовать параметр <parameter>nodelay</parameter>:
+не требуется, то следует использовать параметр <literal>nodelay</literal>:
 <example>
             limit_req zone=one burst=5 nodelay;
 </example>
@@ -88,10 +88,10 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
 <directive name="limit_req_log_level">
 <syntax>
-<value>info</value> |
-<value>notice</value> |
-<value>warn</value> |
-<value>error</value></syntax>
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal></syntax>
 <default>error</default>
 <context>http</context>
 <context>server</context>
@@ -102,8 +102,8 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 Директива задаёт желаемый уровень записи в лог случаев ограничения
 числа запросов и задержек при обработке запроса.
 Задержки записываются в лог с уровнем на единицу меньшим, чем ограничения,
-например, если указано <command>limit_req_log_level notice</command>,
-то задержки будут записываться в лог на уровне <value>info</value>.
+например, если указано “<literal>limit_req_log_level notice</literal>”,
+то задержки будут записываться в лог на уровне <literal>info</literal>.
 </para>
 
 </directive>
@@ -111,9 +111,9 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
 <directive name="limit_req_zone">
 <syntax>
-    <argument>$переменная</argument>
-    <parameter>zone</parameter>=<argument>название</argument>:<argument>размер</argument>
-    <parameter>rate</parameter>=<argument>скорость</argument></syntax>
+    <value>$переменная</value>
+    <literal>zone</literal>=<value>название</value>:<value>размер</value>
+    <literal>rate</literal>=<value>скорость</value></syntax>
 <default/>
 <context>http</context>
 

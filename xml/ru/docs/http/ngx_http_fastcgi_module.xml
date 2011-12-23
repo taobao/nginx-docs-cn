@@ -55,7 +55,7 @@ location / {
 
 
 <directive name="fastcgi_buffers">
-<syntax><value>число размер</value></syntax>
+<syntax><value>число</value> <value>размер</value></syntax>
 <default>8 4k/8k</default>
 <context>http, server, location</context>
 
@@ -70,7 +70,7 @@ location / {
 
 
 <directive name="fastcgi_cache">
-<syntax><value>[зона|off]</value></syntax>
+<syntax><value>зона</value> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -85,7 +85,7 @@ location / {
 
 
 <directive name="fastcgi_cache_bypass">
-<syntax><value>строка [...]</value></syntax>
+<syntax><value>строка</value> ...</syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -119,8 +119,12 @@ fastcgi_cache_key  localhost:9000$request_uri;
 
 
 <directive name="fastcgi_cache_path">
-<syntax><value>путь [levels=уровни]
-keys_zone=название:размер [inactive=время] [max_size=размер]</value></syntax>
+<syntax>
+  <value>путь</value>
+  [<literal>levels</literal>=<value>уровни</value>]
+  <literal>keys_zone</literal>=<value>название</value>:<value>размер</value>
+  [<literal>inactive</literal>=<value>время</value>]
+  [<literal>max_size</literal>=<value>размер</value>]</syntax>
 <default/>
 <context>http</context>
 
@@ -180,7 +184,7 @@ inactive, то данные удаляются, независимо от их �
 
 
 <directive name="fastcgi_cache_valid">
-<syntax><value>ответ [ответ ...] время</value>
+<syntax><value>ответ</value> ... <value>время</value>
 </syntax>
 <default/>
 <context>http, server, location</context>
@@ -217,9 +221,16 @@ fastcgi_cache_valid  any 1m;
 
 
 <directive name="fastcgi_cache_use_stale">
-<syntax><value>[error | timeout | invalid_header
-     | updating | http_500 | http_503 | http_404 | off]
-[...]</value></syntax>
+<syntax>
+  <literal>error</literal> |
+  <literal>timeout</literal> |
+  <literal>invalid_header</literal> |
+  <literal>updating</literal> |
+  <literal>http_500</literal> |
+  <literal>http_503</literal> |
+  <literal>http_404</literal> |
+  <literal>off</literal>
+  ...</syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -287,7 +298,7 @@ nginx не передаёт клиенту строки заголовка "Stat
 
 
 <directive name="fastcgi_ignore_client_abort">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -301,7 +312,7 @@ nginx не передаёт клиенту строки заголовка "Stat
 
 
 <directive name="fastcgi_ignore_headers">
-<syntax><value>имя [имя ...]</value></syntax>
+<syntax><value>имя</value> ...</syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -317,7 +328,7 @@ nginx не передаёт клиенту строки заголовка "Stat
 
 
 <directive name="fastcgi_intercept_errors">
-<syntax><value>on|off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -331,7 +342,7 @@ nginx не передаёт клиенту строки заголовка "Stat
 
 
 <directive name="fastcgi_no_cache">
-<syntax><value>строка [...]</value></syntax>
+<syntax><value>строка</value> ...</syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -352,8 +363,14 @@ fastcgi_no_cache   $http_pragma     $http_authorization;
 
 <directive name="fastcgi_next_upstream">
 <syntax>
-<value>[error|timeout|invalid_header|http_500|http_503|http_404|off]</value>
-</syntax>
+  <literal>error</literal> |
+  <literal>timeout</literal> |
+  <literal>invalid_header</literal> |
+  <literal>http_500</literal> |
+  <literal>http_503</literal> |
+  <literal>http_404</literal> |
+  <literal>off</literal>
+  ...</syntax>
 <default>error timeout</default>
 <context>http, server, location</context>
 
@@ -407,9 +424,8 @@ off — запрещает передачу запроса следующему
 
 <directive name="fastcgi_param">
 <syntax>
-    <argument>параметр значение</argument>
-    [<parameter>if_not_empty</parameter>]
-</syntax>
+    <value>параметр</value> <value>значение</value>
+    [<literal>if_not_empty</literal>]</syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -417,7 +433,7 @@ off — запрещает передачу запроса следующему
 Директива задаёт параметр, который будут передаваться FastCGI-серверу.
 В качестве значения можно использовать текст, переменные и их комбинации.
 Директивы наследуются с предыдущего уровня при условии, что на данном
-уровне не описаны свои директивы <code>fastcgi_param</code>.
+уровне не описаны свои директивы <literal>fastcgi_param</literal>.
 </para>
 
 <para>
@@ -444,7 +460,7 @@ fastcgi_param  CONTENT_LENGTH   $content_length;
 
 <para>
 Если PHP был собран с параметром конфигурации
-<command>--enable-force-cgi-redirect</command>, то нужно передавать
+<literal>--enable-force-cgi-redirect</literal>, то нужно передавать
 параметр REDIRECT_STATUS со значением "200":
 <example>
 fastcgi_param  REDIRECT_STATUS  200;
@@ -452,7 +468,7 @@ fastcgi_param  REDIRECT_STATUS  200;
 </para>
 
 <para>
-Если директива указана с флагом <parameter>if_not_empty</parameter> (1.1.11),
+Если директива указана с флагом <literal>if_not_empty</literal> (1.1.11),
 то такой параметр с пустым значением передаваться на сервер не будет:
 <example>
 fastcgi_param  HTTPS            $https if_not_empty;
@@ -559,7 +575,10 @@ location ~ ^(.+\.php)(.*)$ {
 
 
 <directive name="fastcgi_store">
-<syntax><value>on | off | строка </value></syntax>
+<syntax>
+  <literal>on</literal> |
+  <literal>off</literal> |
+  <value>строка</value></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -617,8 +636,7 @@ location /fetch/ {
 
 
 <directive name="fastcgi_store_access">
-<syntax><value>пользователи:права [пользователи:права]
-...</value></syntax>
+<syntax><value>пользователи</value>:<value>права</value> ...</syntax>
 <default>user:rw</default>
 <context>http, server, location</context>
 
@@ -641,8 +659,7 @@ fastcgi_store_access  group:rw  all:r;
 
 
 <directive name="fastcgi_temp_path">
-<syntax><value>путь [ уровень1 [ уровень2 [ уровень3 ] ] ]
-</value></syntax>
+<syntax><value>путь</value> [<value>уровень1</value> [<value>уровень2</value> [<value>уровень3</value>]]]</syntax>
 <default>fastcgi_temp</default>
 <context>http, server, location</context>
 

@@ -17,7 +17,7 @@
             name        ID #REQUIRED
 >
 
-<!ELEMENT   syntax      (#PCDATA | argument | code | parameter | value)* >
+<!ELEMENT   syntax      (#PCDATA | literal | value)* >
 <!ATTLIST   syntax
             block       (yes | no) "no"
 >
@@ -28,17 +28,13 @@
 
 <!ELEMENT   appeared-in (#PCDATA)* >
 
-<!ELEMENT   para        (#PCDATA | argument | c-def | c-func | code | command |
+<!ELEMENT   para        (#PCDATA | c-def | c-func | command |
                          emphasis | example | header | http-status | link |
-                         list | note | parameter | path | value | var)* >
-
-<!ELEMENT   argument    (#PCDATA)* >
+                         list | literal | note | path | value | var)* >
 
 <!ELEMENT   c-def       (#PCDATA)* >
 
 <!ELEMENT   c-func      (#PCDATA)* >
-
-<!ELEMENT   code        (#PCDATA | value)* >
 
 <!ELEMENT   command     (#PCDATA)* >
 
@@ -46,7 +42,7 @@
 
 <!ELEMENT   example     (#PCDATA | value | emphasis)* >
 
-<!ELEMENT   header      (#PCDATA | argument)* >
+<!ELEMENT   header      (#PCDATA | value)* >
 
 <!ELEMENT   http-status EMPTY >
 <!ATTLIST   http-status
@@ -70,9 +66,9 @@
 <!ELEMENT   tag-name    ANY >
 <!ELEMENT   tag-desc    ANY >
 
-<!ELEMENT   note        ANY >
+<!ELEMENT   literal     (#PCDATA)* >
 
-<!ELEMENT   parameter   (#PCDATA)* >
+<!ELEMENT   note        ANY >
 
 <!ELEMENT   path        (#PCDATA)* >
 

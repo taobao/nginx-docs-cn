@@ -12,7 +12,7 @@
 Модуль ngx_http_addition_module — это фильтр,
 добавляющий текст до и после ответа.
 По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром <command>--with-http_addition_module</command>.
+при конфигурировании параметром <literal>--with-http_addition_module</literal>.
 </para>
 
 </section>
@@ -61,7 +61,7 @@
 
 
 <directive name="addition_types">
-<syntax><value>mime-тип [mime-тип ...]</value></syntax>
+<syntax><value>mime-тип</value> ...</syntax>
 <default>text/html</default>
 <context>http, server, location</context>
 

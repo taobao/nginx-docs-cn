@@ -9,8 +9,8 @@
 <section id="summary">
 
 <para>
-The module <code>ngx_http_index_module</code> processes requests
-ending with the slash character (‘<code>/</code>’).
+The module <literal>ngx_http_index_module</literal> processes requests
+ending with the slash character (‘<literal>/</literal>’).
 </para>
 
 </section>
@@ -32,7 +32,7 @@ ending with the slash character (‘<code>/</code>’).
 <section name="Directives" id="directives">
 
 <directive name="index">
-<syntax><argument>file</argument>...</syntax>
+<syntax><value>file</value> ...</syntax>
 <default>index.html</default>
 <context>http</context>
 <context>server</context>
@@ -40,7 +40,7 @@ ending with the slash character (‘<code>/</code>’).
 
 <para>
 Defines files that will be used as an index.
-The <argument>file</argument> name can contain variables.
+The <value>file</value> name can contain variables.
 Files are checked in the specified order.
 The last element of the list can be a file with an absolute path.
 Example:
@@ -62,8 +62,8 @@ For example, with the following configuration:
         ...
     }
 </example>
-a request of “<code>/</code>” will actually be processed in the
-second location as “<code>/index.html</code>”.
+a request of “<literal>/</literal>” will actually be processed in the
+second location as “<literal>/index.html</literal>”.
 </para>
 
 </directive>

@@ -34,7 +34,7 @@ Side Includes) в проходящих через него ответах.
 <section name="Директивы" id="directives">
 
 <directive name="ssi">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location, if в location</context>
 
@@ -46,7 +46,7 @@ Side Includes) в проходящих через него ответах.
 
 
 <directive name="ssi_silent_errors">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -60,7 +60,7 @@ Side Includes) в проходящих через него ответах.
 
 
 <directive name="ssi_types">
-<syntax><value>mime-тип [mime-тип ...]</value></syntax>
+<syntax><value>mime-тип</value> ...</syntax>
 <default>text/html</default>
 <context>http, server, location</context>
 

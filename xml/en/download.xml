@@ -150,7 +150,7 @@
 
 <item>
 Read-only Subversion repository:
-<code>svn://svn.nginx.org/nginx</code>
+<literal>svn://svn.nginx.org/nginx</literal>
 </item>
 
 <item>
@@ -173,7 +173,7 @@ or the apt repository for the Debian/Ubuntu distributions.
 
 <para>
 To set up the yum repository for RHEL/CentOS, choose the corresponding
-<code>nginx-release</code> package from the list:
+<literal>nginx-release</literal> package from the list:
 
 <list>
 
@@ -203,7 +203,7 @@ yum install nginx
 </programlisting>
 
 Alternatively, a repository configuration can be added manually
-without installing the <code>nginx-release</code> package.
+without installing the <literal>nginx-release</literal> package.
 Create the file named <path>/etc/yum.repos.d/nginx.repo</path>
 with the following contents:
 
@@ -215,9 +215,10 @@ gpgcheck=0
 enabled=1
 </programlisting>
 
-Replace “<code>OS</code>” with “<code>rhel</code>” or “<code>centos</code>”,
-depending on the distribution used, and “<code>OSRELEASE</code>”
-with “<code>5</code>” or “<code>6</code>”,
+Replace “<literal>OS</literal>” with “<literal>rhel</literal>” or
+“<literal>centos</literal>”,
+depending on the distribution used, and “<literal>OSRELEASE</literal>”
+with “<literal>5</literal>” or “<literal>6</literal>”,
 for 5.x or 6.x versions, respectively.
 </para>
 

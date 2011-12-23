@@ -84,7 +84,7 @@ upstream  backend  {
 
 
 <directive name="server">
-<syntax><value>название [параметры]</value></syntax>
+<syntax><value>название</value> [<value>параметры</value>]</syntax>
 <default/>
 <context>upstream</context>
 

@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-Модуль <code>ngx_http_log_module</code> записывает логи запросов
+Модуль <literal>ngx_http_log_module</literal> записывает логи запросов
 в указанном формате.
 </para>
 
@@ -35,10 +35,10 @@
 
 <directive name="access_log">
 <syntax>
-  <argument>путь</argument>
-  [<argument>формат</argument>
-  [<parameter>buffer</parameter>=<argument>размер</argument>]]</syntax>
-<syntax><value>off</value></syntax>
+  <value>путь</value>
+  [<value>формат</value>
+  [<literal>buffer</literal>=<value>размер</value>]]</syntax>
+<syntax><literal>off</literal></syntax>
 <default>log/access.log combined</default>
 <context>http</context>
 <context>server</context>
@@ -49,10 +49,10 @@
 <para>
 Задаёт путь, формат и размер буфера для буферизованной записи в лог.
 На одном уровне может использоваться несколько логов.
-Специальное значение <value>off</value> отменяет все директивы
-<code>access_log</code> для текущего уровня.
+Специальное значение <literal>off</literal> отменяет все директивы
+<literal>access_log</literal> для текущего уровня.
 Если формат не указан, то используется предопределённый формат
-“<code>combined</code>”.
+“<literal>combined</literal>”.
 </para>
 
 <para>
@@ -80,7 +80,7 @@
 Следует однако иметь в виду, что поскольку дескрипторы часто используемых файлов
 могут храниться в <link id="open_log_file_cache">кэше</link>,
 то при вращении логов в течение времени, заданного параметром
-<parameter>valid</parameter> директивы <link id="open_log_file_cache"/>,
+<literal>valid</literal> директивы <link id="open_log_file_cache"/>,
 запись может продолжаться в старый файл.
 </listitem>
 
@@ -89,7 +89,7 @@
 <link doc="ngx_http_core_module.xml" id="root">корневого каталога</link>
 для запроса — если этот каталог не существует, то лог не создаётся.
 Поэтому <link doc="ngx_http_core_module.xml" id="root"/>
-и <code>access_log</code> нужно описывать на одном уровне:
+и <literal>access_log</literal> нужно описывать на одном уровне:
 <example>
 server {
     root       /spool/vhost/data/$host;
@@ -106,8 +106,8 @@ server {
 
 <directive name="log_format">
 <syntax>
-    <argument>название</argument>
-    <argument>строка</argument> ...</syntax>
+    <value>название</value>
+    <value>строка</value> ...</syntax>
 <default>combined "..."</default>
 <context>http</context>
 
@@ -123,8 +123,8 @@ server {
 <tag-name><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
 число байт, переданных клиенту, за вычетом заголовка ответа;
-переменная совместима с параметром “<code>%B</code>” модуля Apache
-<code>mod_log_config</code>
+переменная совместима с параметром “<literal>%B</literal>” модуля Apache
+<literal>mod_log_config</literal>
 </tag-desc>
 
 <tag-name><var>$bytes_sent</var></tag-name>
@@ -144,7 +144,7 @@ server {
 
 <tag-name><var>$pipe</var></tag-name>
 <tag-desc>
-“<code>p</code>” если запрос был pipelined, иначе “<code>.</code>”
+“<literal>p</literal>” если запрос был pipelined, иначе “<literal>.</literal>”
 </tag-desc>
 
 <tag-name><var>$request_length</var></tag-name>
@@ -179,13 +179,13 @@ server {
 
 <para>
 Строки заголовка, переданные клиенту, начинаются с префикса
-“<code>sent_http_</code>”, например,
+“<literal>sent_http_</literal>”, например,
 <var>$sent_http_content_range</var>.
 </para>
 
 <para>
 В конфигурации всегда существует предопределённый формат
-“<code>combined</code>”:
+“<literal>combined</literal>”:
 <example>
     log_format combined '$remote_addr - $remote_user [$time_local] '
                         '"$request" $status $body_bytes_sent '
@@ -198,11 +198,11 @@ server {
 <directive name="open_log_file_cache">
 
 <syntax>
-<parameter>max</parameter>=<argument>N</argument>
-[<parameter>inactive</parameter>=<argument>время</argument>]
-[<parameter>min_uses</parameter>=<argument>N</argument>]
-[<parameter>valid</parameter>=<argument>время</argument>]</syntax>
-<syntax><value>off</value></syntax>
+<literal>max</literal>=<value>N</value>
+[<literal>inactive</literal>=<value>время</value>]
+[<literal>min_uses</literal>=<value>N</value>]
+[<literal>valid</literal>=<value>время</value>]</syntax>
+<syntax><literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -214,36 +214,36 @@ server {
 Параметры директивы:
 <list type="tag">
 
-<tag-name><parameter>max</parameter></tag-name>
+<tag-name><literal>max</literal></tag-name>
 <tag-desc>
 задаёт максимальное число дескрипторов в кэше;
 при переполнении кэша наиболее давно не используемые (LRU)
 дескрипторы закрываются
 </tag-desc>
 
-<tag-name><parameter>inactive</parameter></tag-name>
+<tag-name><literal>inactive</literal></tag-name>
 <tag-desc>
 задаёт время, после которого закэшированный дескриптор закрывается,
 если к нему не было обращений в течение этого времени;
 по умолчанию 10 секунд
 </tag-desc>
 
-<tag-name><parameter>min_uses</parameter></tag-name>
+<tag-name><literal>min_uses</literal></tag-name>
 <tag-desc>
 задаёт минимальное число использований файла в течение
-времени, заданного параметром <parameter>inactive</parameter>,
+времени, заданного параметром <literal>inactive</literal>,
 после которого дескриптор файла будет оставаться открытым в кэше;
 по умолчанию 1
 </tag-desc>
 
-<tag-name><parameter>valid</parameter></tag-name>
+<tag-name><literal>valid</literal></tag-name>
 <tag-desc>
 задаёт, через какое время нужно проверять, что файл ещё
 существует под тем же именем;
 по умолчанию 60 секунд
 </tag-desc>
 
-<tag-name><value>off</value></tag-name>
+<tag-name><literal>off</literal></tag-name>
 <tag-desc>
 запрещает кэш
 </tag-desc>

@@ -13,13 +13,13 @@ Hata ayıklama kayıt işlemini olanaklı kılmak için, nginxi debug komutu ile
 ./configure --with-debug ...
 </programlisting>
 
-ve daha sonra <dirname>error_log</dirname> ile <dirname>debug</dirname> dizin yolunu belirtin:
+ve daha sonra <literal>error_log</literal> ile <literal>debug</literal> dizin yolunu belirtin:
 
 <programlisting>
 error_log  /path/to/log  debug;
 </programlisting>
 
-nginx/Windows binary versiyonu, varsayılan olarak hata ayıklama kayıt desteği ile gelir. Bu yüzden yalnızca <dirname>debug</dirname> dizin yolunu belirtmek yeterlidir.
+nginx/Windows binary versiyonu, varsayılan olarak hata ayıklama kayıt desteği ile gelir. Bu yüzden yalnızca <literal>debug</literal> dizin yolunu belirtmek yeterlidir.
 </para>
 
 <para>
@@ -32,7 +32,7 @@ http {
         error_log  /path/to/log;
         ...
 </programlisting>
-Ya bu sunucudaki kaydı yorum ifadesi ile kapatmalı ya da <dirname>debug</dirname> etiketini (flag) buraya da eklemelisiniz:
+Ya bu sunucudaki kaydı yorum ifadesi ile kapatmalı ya da <literal>debug</literal> etiketini (flag) buraya da eklemelisiniz:
 <programlisting>
 error_log  /path/to/log  debug;
 

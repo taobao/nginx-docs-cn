@@ -12,7 +12,7 @@
 Модуль ngx_http_xslt_module — это фильтр, преобразующий XML-ответ
 с помощью одного или нескольких XSLT-шаблонов (0.7.8+).
 По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром <command>--with-http_xslt_module</command>.
+при конфигурировании параметром <literal>--with-http_xslt_module</literal>.
 Для сборки и работы этого модуля нужны библиотеки
 <link url="http://www.xmlsoft.org">libxml2 и libxslt</link>.
 </para>
@@ -59,7 +59,7 @@ location / {
 
 
 <directive name="xslt_stylesheet">
-<syntax><value>шаблон [параметр ...]</value></syntax>
+<syntax><value>шаблон</value> [<value>параметр</value> ...]</syntax>
 <default/>
 <context>location</context>
 
@@ -106,7 +106,7 @@ location / {
 </directive>
 
 <directive name="xslt_types">
-<syntax><value>mime-тип [mime-тип ...]</value></syntax>
+<syntax><value>mime-тип</value> ...</syntax>
 <default>text/xml</default>
 <context>http, server, location</context>
 

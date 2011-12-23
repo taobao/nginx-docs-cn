@@ -33,7 +33,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="auth_basic">
-<syntax><value>[строка|off]</value></syntax>
+<syntax><value>строка</value> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location, limit_except</context>
 

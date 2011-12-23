@@ -13,7 +13,7 @@
 индексного файла каталога. Модуль работает до модуля
 <link doc="ngx_http_index_module.xml">ngx_http_index_module</link>.
 По умолчанию модуль не собирается, нужно разрешить его сборку при
-конфигурировании параметром <command>--with-http_random_index_module</command>.
+конфигурировании параметром <literal>--with-http_random_index_module</literal>.
 </para>
 
 </section>
@@ -35,7 +35,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="random_index">
-<syntax><value>[on|off]</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>location</context>
 

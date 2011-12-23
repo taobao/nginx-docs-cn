@@ -16,7 +16,7 @@
 
 <para>
 По умолчанию модуль не собирается, нужно разрешить его сборку при
-конфигурировании параметром <command>--with-http_gzip_static_module</command>.
+конфигурировании параметром <literal>--with-http_gzip_static_module</literal>.
 </para>
 
 </section>
@@ -37,7 +37,7 @@
 <section name="Директивы" id="directives">
 
 <directive name="gzip_static">
-<syntax><value>on|off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 

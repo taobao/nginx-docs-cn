@@ -35,7 +35,7 @@ Bu durumda dosya erişimi kısıtlanmalıdır. Aynı dosyada yer alsalar da iste
 </para>
 
 <para>
-<dirname>ssl_protocols</dirname> ve <dirname>ssl_ciphers</dirname> yönergeleri, güçlü SSL protokol ve şifrelere (cipher) yapılan bağlantılara limit koymak için kullanılır. Versiyon 0.8.20 ile birlikte nginx, <dirname>ssl_protocols SSLv3 TLSv1</dirname> ve <dirname>ssl_ciphers HIGH:!ADH:!MD5</dirname> yönergelerini varsayılan olarak kullanır, bu nedenle sadece daha önceki versiyonlarda yapılandırmaya eklenmelidir.
+<literal>ssl_protocols</literal> ve <literal>ssl_ciphers</literal> yönergeleri, güçlü SSL protokol ve şifrelere (cipher) yapılan bağlantılara limit koymak için kullanılır. Versiyon 0.8.20 ile birlikte nginx, <literal>ssl_protocols SSLv3 TLSv1</literal> ve <literal>ssl_ciphers HIGH:!ADH:!MD5</literal> yönergelerini varsayılan olarak kullanır, bu nedenle sadece daha önceki versiyonlarda yapılandırmaya eklenmelidir.
 </para>
 
 </section>
@@ -46,7 +46,7 @@ Bu durumda dosya erişimi kısıtlanmalıdır. Aynı dosyada yer alsalar da iste
 <para>
 SSL işlemleri ekstra işlemci (CPU) kaynakları tüketir. Çok-işlemcili sistemlerde birçok işçi işlemler yürütmelisiniz: Mevcut işlemci çekirdek sayısından az olmamalı. En yoğun işlemci-yoğun işlem SSL el sıkışmalarıdır (ÇN: SSL Handshake, kısaca sunucuda bulunan sertifikanın istemci bilgisayar tarafından onaylanması ve tekrar sunucuya bildirilmesi sürecidir). Her bir istemci için mevcut bu işlemlerin sayısını azaltmanın iki yolu vardır: İlki, keep-alive bağlantıları olanaklı kılarak bir çok talebi sadece bir bağlantı ile göndermek ve ikincisi ise SSL oturum parametrelerini tekrar kullanarak paralel ve izleyen (subsequent) bağlantılar için SSL el sıkışmalarından kaçınmaktır.
 
-Oturumlar, bir <dirname>ssl_session_cache</dirname> yönergesi tarafından yapılandırılan ve işçiler arasında paylaştırılmış bir SSL oturum önbelleğinde yer alır. Bir megabyte önbellek yaklaşık 4000 oturum içerir. Varsayılan önbellek zaman aşımı 5 dakikadır. <dirname>ssl_session_timeout</dirname> yönergesi ile bu süre arttırılabilir. 10M paylaşımlı oturum önbelleğine sahip bir quad core sistem için örnek yapılandırma:
+Oturumlar, bir <literal>ssl_session_cache</literal> yönergesi tarafından yapılandırılan ve işçiler arasında paylaştırılmış bir SSL oturum önbelleğinde yer alır. Bir megabyte önbellek yaklaşık 4000 oturum içerir. Varsayılan önbellek zaman aşımı 5 dakikadır. <literal>ssl_session_timeout</literal> yönergesi ile bu süre arttırılabilir. 10M paylaşımlı oturum önbelleğine sahip bir quad core sistem için örnek yapılandırma:
 
 <programlisting>
 <b>worker_processes  4</b>;
@@ -81,7 +81,7 @@ Bazı tarayıcılar popüler bir sertifika otoritesi tarafından imzalanmış se
 $ cat www.nginx.com.crt bundle.crt > www.nginx.com.chained.crt
 </programlisting>
 
-Oluşan dosya <dirname>ssl_certificate</dirname> yönergesi içinde kullanılmalıdır:
+Oluşan dosya <literal>ssl_certificate</literal> yönergesi içinde kullanılmalıdır:
 
 <programlisting>
 server {
@@ -147,7 +147,7 @@ Eğer sertifika dizisi eklemediyseniz, yalnızca bir sunucu sertifikası görür
 <section id="single_http_https_server" name="Tekil HTTP/HTTPS sunucusu">
 
 <para>
-En baştan HTTP ve HTTPS protokollerini ayrı yapılandırmak en iyisidir. Mevcut durumda fonksiyonellikleri aynı gözükmekle birlikte, bu gelecekte önemli bir şekilde değişebilir ve birleştirilmiş bir sunucu problemli olabilir. Ancak, eğer HTTP ve HTTPS sunucuları eşit ise ve geleceği düşünmek istemiyorsanız, <dirname>ssl on</dirname> yönergesini silerek ve *:443 portu için <dirname>ssl</dirname> parametresi ekleyerek, HTTP ve HTTPS taleplerini tutan yalnızca bir sunucu yapılandırabilirsiniz:
+En baştan HTTP ve HTTPS protokollerini ayrı yapılandırmak en iyisidir. Mevcut durumda fonksiyonellikleri aynı gözükmekle birlikte, bu gelecekte önemli bir şekilde değişebilir ve birleştirilmiş bir sunucu problemli olabilir. Ancak, eğer HTTP ve HTTPS sunucuları eşit ise ve geleceği düşünmek istemiyorsanız, <literal>ssl on</literal> yönergesini silerek ve *:443 portu için <literal>ssl</literal> parametresi ekleyerek, HTTP ve HTTPS taleplerini tutan yalnızca bir sunucu yapılandırabilirsiniz:
 
 <programlisting>
 server {
@@ -161,7 +161,7 @@ server {
 </programlisting>
 
 <note>
-Versiyon 0.8.21 öncesi, nginx yalnızca <dirname>default</dirname> parametresine sahip listen soketlerinde <dirname>ssl</dirname> parametresinin eklenmesine izin veriyordu:
+Versiyon 0.8.21 öncesi, nginx yalnızca <literal>default</literal> parametresine sahip listen soketlerinde <literal>ssl</literal> parametresinin eklenmesine izin veriyordu:
 <programlisting>
 listen  443  default  ssl;
 </programlisting>
@@ -321,7 +321,7 @@ Versiyon 0.8.21 ve 0.7.62 ile birlikte SNI destek statüsü &ldquo;-V&rdquo; ana
 </item>
 
 <item>
-Versiyon 0.7.14 ile birlikte <dirname>listen</dirname> yönergesinin <dirname>ssl</dirname> parametresi desteklenmeye başlandı.
+Versiyon 0.7.14 ile birlikte <literal>listen</literal> yönergesinin <literal>ssl</literal> parametresi desteklenmeye başlandı.
 </item>
 
 <item>
@@ -354,17 +354,17 @@ Versiyon 0.7.64, 0.8.18 ve öncesi varsayılan SSL protokolleri: SSLv2, SSLv3 ve
 
 <item>
 Versiyon 0.7.65, 0.8.20 ve sonrası varsayılan SSL şifreleri (cipher):
-<dirname>HIGH:!ADH:!MD5</dirname>.
+<literal>HIGH:!ADH:!MD5</literal>.
 </item>
 
 <item>
 Versiyon 0.8.19: varsayılan SSL şifreleri:
-<dirname>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</dirname>.
+<literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</literal>.
 </item>
 
 <item>
 Versiyon 0.7.64, 0.8.18 ve öncesi varsayılan SSL şifreleri:<br/>
-<dirname>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</dirname>.
+<literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</literal>.
 </item>
 
 </list>

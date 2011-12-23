@@ -6,8 +6,8 @@
 >
 
 <!ELEMENT  para         (#PCDATA | a | link | br | list | orderedlist | note |
-                         i | b | nobr | table | url | code | command |
-                         dirname | path | header | value | programlisting |
+                         i | b | nobr | table | url | literal | command |
+                         path | header | value | programlisting |
                          initial | development_version | stable_version |
                          registered | c-func)* >
 
@@ -28,9 +28,8 @@
 <!ELEMENT  i            (#PCDATA) >
 <!ELEMENT  b            (#PCDATA) >
 <!ELEMENT  command      (#PCDATA | value)* >
-<!ELEMENT  dirname      (#PCDATA | i)* >
-<!ELEMENT  path         (#PCDATA | development_version | stable_version)* >
-<!ELEMENT  code         (#PCDATA | i)* >
+<!ELEMENT  path         (#PCDATA | value | development_version | stable_version)* >
+<!ELEMENT  literal      (#PCDATA | value)* >
 <!ELEMENT  header       (#PCDATA) >
 <!ELEMENT  initial      (#PCDATA) >
 <!ELEMENT  url          (#PCDATA) >
@@ -39,21 +38,21 @@
 <!ELEMENT  registered   (#PCDATA) >
 <!ELEMENT  c-func       (#PCDATA)* >
 
-<!ELEMENT  programlisting  (#PCDATA | i | b | dirname | path |
+<!ELEMENT  programlisting  (#PCDATA | i | b | path |
                             development_version | stable_version)* >
 
-<!ELEMENT  nobr         (#PCDATA | i | b | code | command | dirname | path)* >
+<!ELEMENT  nobr         (#PCDATA | b | command | i | literal | path)* >
 
 <!ELEMENT  list         (item+ | listitem+) >
 <!ELEMENT  orderedlist  (item+) >
 <!ELEMENT  item         (#PCDATA | para | a | br | nobr | list | i | b | url |
-                         dirname | path | command | value | programlisting |
-                         link | registered | code)* >
+                         path | command | value | programlisting |
+                         link | registered | literal)* >
 <!ELEMENT  listitem     (#PCDATA | para | a | br | nobr | list | i | b | url |
-                         dirname | path | command | value | programlisting)* >
+                         path | literal | value | programlisting)* >
 
 <!ELEMENT  note         (#PCDATA | para | a | br | list | orderedlist | i | b |
-                         nobr | table | url | code | command | dirname | path |
+                         nobr | table | url | literal | command | path |
                          header | programlisting | initial | paypal |
                          development_version | stable_version )* >
 
@@ -63,7 +62,7 @@
            width        CDATA #IMPLIED
 >
 <!ELEMENT  tr           (td+) >
-<!ELEMENT  td           (#PCDATA | code | i)* >
+<!ELEMENT  td           (#PCDATA | literal | i)* >
 <!ATTLIST  td
            width        CDATA #IMPLIED
 >

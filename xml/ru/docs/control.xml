@@ -8,9 +8,9 @@
 
 <para>
 Управлять nginx можно с помощью сигналов. Номер главного процесса по умолчанию
-записывается в файл <command>/usr/local/nginx/logs/nginx.pid</command>.
+записывается в файл <path>/usr/local/nginx/logs/nginx.pid</path>.
 Изменить имя этого файла можно при конфигурации сборки или же в
-<command>nginx.conf</command> директивой
+<path>nginx.conf</path> директивой
 <link doc="ngx_core_module.xml" id="pid"/>.
 Главный процесс поддерживает следующие сигналы:
 <note>
@@ -127,8 +127,8 @@ ps ax -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'
 Для обновления сервера нужно записать на место старого исполняемого файла новый.
 Затем нужно послать сигнал USR2 главному процессу&mdash;он
 переименует свой файл с номером процесса в файл
-с суффиксом <command>.oldbin</command>, например,
-<command>/usr/local/nginx/logs/nginx.pid.oldbin</command>,
+с суффиксом <path>.oldbin</path>, например,
+<path>/usr/local/nginx/logs/nginx.pid.oldbin</path>,
 после чего запустит новый исполняемый файл, а тот в свою
 очередь&mdash;свои рабочие процессы:
 <programlisting>
@@ -148,8 +148,8 @@ ps ax -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'
 
 <para>
 Процесс с новым исполняемым файлом 36264 создаёт свой файл с номером процесса
-с суффиксом <command>.newbin</command>, например,
-<command>/usr/local/nginx/logs/nginx.pid.newbin</command>.
+с суффиксом <path>.newbin</path>, например,
+<path>/usr/local/nginx/logs/nginx.pid.newbin</path>.
 </para>
 
 -->
@@ -226,7 +226,7 @@ ps ax -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'
 
 <para>
 Если новый главный процесс выходит, то старый процесс убирает
-суффикс <command>.oldbin</command> из имени файла с номером процесса.
+суффикс <path>.oldbin</path> из имени файла с номером процесса.
 </para>
 
 <para>
@@ -245,8 +245,8 @@ QUIT, и у нас остаются только новые процессы:
 
 <para>
 После этого остаётся только переименовать
-<command>/usr/local/nginx/logs/nginx.pid.newbin</command> в
-<command>/usr/local/nginx/logs/nginx.pid</command> и обновление можно считать
+<path>/usr/local/nginx/logs/nginx.pid.newbin</path> в
+<path>/usr/local/nginx/logs/nginx.pid</path> и обновление можно считать
 завершённым.
 </para>
 

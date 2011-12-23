@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-The <code>ngx_http_log_module</code> module writes request logs
+The <literal>ngx_http_log_module</literal> module writes request logs
 in the specified format.
 </para>
 
@@ -35,10 +35,10 @@ in the specified format.
 
 <directive name="access_log">
 <syntax>
-  <argument>path</argument>
-  [<argument>format</argument>
-  [<parameter>buffer</parameter>=<argument>size</argument>]]</syntax>
-<syntax><value>off</value></syntax>
+  <value>path</value>
+  [<value>format</value>
+  [<literal>buffer</literal>=<value>size</value>]]</syntax>
+<syntax><literal>off</literal></syntax>
 <default>log/access.log combined</default>
 <context>http</context>
 <context>server</context>
@@ -49,10 +49,10 @@ in the specified format.
 <para>
 Sets the path, format, and buffer size for the buffered log writes.
 Several logs can be specified on the same level.
-The special value <value>off</value> cancels all <code>access_log</code>
+The special value <literal>off</literal> cancels all <literal>access_log</literal>
 directives on the current level.
 If format is not specified then the predefined format
-“<code>combined</code>” is used.
+“<literal>combined</literal>” is used.
 </para>
 
 <para>
@@ -80,7 +80,7 @@ buffered writes do not work;
 a file is opened and closed for each log write.
 However, since the descriptors of frequently used files can be stored
 in a <link id="open_log_file_cache">cache</link>, writes during the
-time specified by the <parameter>valid</parameter> parameter of the
+time specified by the <literal>valid</literal> parameter of the
 <link id="open_log_file_cache"/> directive can continue to be made
 to the old file.
 </listitem>
@@ -92,7 +92,7 @@ is checked, and if it does not exist the log is not
 created.
 It is thus a good idea to specify both
 <link doc="ngx_http_core_module.xml" id="root"/>
-and <code>access_log</code> on the same level:
+and <literal>access_log</literal> on the same level:
 <example>
 server {
     root       /spool/vhost/data/$host;
@@ -109,8 +109,8 @@ server {
 
 <directive name="log_format">
 <syntax>
-    <argument>name</argument>
-    <argument>string</argument> ...</syntax>
+    <value>name</value>
+    <value>string</value> ...</syntax>
 <default>combined "..."</default>
 <context>http</context>
 
@@ -126,8 +126,8 @@ exist only at the time of a log write:
 <tag-name><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
 the number of bytes sent to a client not counting the response header;
-this variable is compatible with the “<code>%B</code>” parameter of the
-<code>mod_log_config</code>
+this variable is compatible with the “<literal>%B</literal>” parameter of the
+<literal>mod_log_config</literal>
 Apache module
 </tag-desc>
 
@@ -148,7 +148,8 @@ time in seconds with a milliseconds resolution at the time of log write
 
 <tag-name><var>$pipe</var></tag-name>
 <tag-desc>
-“<code>p</code>” if request was pipelined, “<code>.</code>” otherwise
+“<literal>p</literal>” if request was pipelined, “<literal>.</literal>”
+otherwise
 </tag-desc>
 
 <tag-name><var>$request_length</var></tag-name>
@@ -183,13 +184,13 @@ local time in the Common Log Format
 
 <para>
 Header lines sent to a client have the prefix
-“<code>sent_http_</code>”, for example,
+“<literal>sent_http_</literal>”, for example,
 <var>$sent_http_content_range</var>.
 </para>
 
 <para>
 The configuration always includes the predefined format
-“<code>combined</code>”:
+“<literal>combined</literal>”:
 <example>
     log_format combined '$remote_addr - $remote_user [$time_local] '
                         '"$request" $status $body_bytes_sent '
@@ -202,11 +203,11 @@ The configuration always includes the predefined format
 <directive name="open_log_file_cache">
 
 <syntax>
-<parameter>max</parameter>=<argument>N</argument>
-[<parameter>inactive</parameter>=<argument>time</argument>]
-[<parameter>min_uses</parameter>=<argument>N</argument>]
-[<parameter>valid</parameter>=<argument>time</argument>]</syntax>
-<syntax><value>off</value></syntax>
+<literal>max</literal>=<value>N</value>
+[<literal>inactive</literal>=<value>time</value>]
+[<literal>min_uses</literal>=<value>N</value>]
+[<literal>valid</literal>=<value>time</value>]</syntax>
+<syntax><literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -218,35 +219,35 @@ whose names contain variables.
 The directive has the following parameters:
 <list type="tag">
 
-<tag-name><parameter>max</parameter></tag-name>
+<tag-name><literal>max</literal></tag-name>
 <tag-desc>
 sets a maximum number of descriptors in a cache;
 if cache becomes full the least recently used (LRU)
 descriptors are closed
 </tag-desc>
 
-<tag-name><parameter>inactive</parameter></tag-name>
+<tag-name><literal>inactive</literal></tag-name>
 <tag-desc>
 sets a time after which the cached descriptor is closed
 if there were no access during this time;
 by default, 10 seconds
 </tag-desc>
 
-<tag-name><parameter>min_uses</parameter></tag-name>
+<tag-name><literal>min_uses</literal></tag-name>
 <tag-desc>
 sets a minimum number of file uses during the time
-defined by the <parameter>inactive</parameter> parameter
+defined by the <literal>inactive</literal> parameter
 after which the descriptor will stay open in a cache;
 by default, 1
 </tag-desc>
 
-<tag-name><parameter>valid</parameter></tag-name>
+<tag-name><literal>valid</literal></tag-name>
 <tag-desc>
 sets a time after which it should be checked that the file
 still exists with the same name; by default, 60 seconds
 </tag-desc>
 
-<tag-name><value>off</value></tag-name>
+<tag-name><literal>off</literal></tag-name>
 <tag-desc>
 disables caching
 </tag-desc>

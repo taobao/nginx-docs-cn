@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-The module <code>ngx_http_empty_gif_module</code> emits
+The module <literal>ngx_http_empty_gif_module</literal> emits
 single-pixel transparent GIF.
 </para>
 

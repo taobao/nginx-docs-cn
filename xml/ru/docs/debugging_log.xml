@@ -15,7 +15,7 @@
 ./configure --with-debug ...
 </programlisting>
 
-Затем нужно задать уровень <value>debug</value> с помощью
+Затем нужно задать уровень <literal>debug</literal> с помощью
 директивы <link doc="ngx_core_module.xml" id="error_log"/>:
 
 <programlisting>
@@ -23,12 +23,12 @@ error_log /path/to/log debug;
 </programlisting>
 
 Бинарная версия nginx для Windows всегда собирается с поддержкой отладочного
-лога, поэтому понадобится лишь задать уровень <value>debug</value>.
+лога, поэтому понадобится лишь задать уровень <literal>debug</literal>.
 </para>
 
 <para>
 Обратите внимание, что переопределение лога без одновременного указания
-уровня <value>debug</value> отключит отладочный лог.
+уровня <literal>debug</literal> отключит отладочный лог.
 В примере ниже, переопределение лога на уровне
 <link doc="http/ngx_http_core_module.xml" id="server"/>
 отключает отладочный лог для этого сервера:
@@ -41,7 +41,7 @@ http {
         ...
 </programlisting>
 Чтобы избежать этого, следует либо закомментировать строку, переопределяющую
-лог, либо добавить определение уровня <value>debug</value>:
+лог, либо добавить определение уровня <literal>debug</literal>:
 <programlisting>
 error_log /path/to/log debug;
 

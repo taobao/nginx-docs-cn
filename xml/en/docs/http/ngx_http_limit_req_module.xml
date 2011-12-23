@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-The <code>ngx_http_limit_req_module</code> module (0.7.21) allows
+The <literal>ngx_http_limit_req_module</literal> module (0.7.21) allows
 to limit the number
 of requests per defined key, in particular, the number of requests
 from a single IP address.
@@ -45,9 +45,9 @@ http {
 
 <directive name="limit_req">
 <syntax>
-    <parameter>zone</parameter>=<argument>name</argument>
-    [<parameter>burst</parameter>=<argument>number</argument>]
-    [<parameter>nodelay</parameter>]</syntax>
+    <literal>zone</literal>=<value>name</value>
+    [<literal>burst</literal>=<value>number</value>]
+    [<literal>nodelay</literal>]</syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -79,7 +79,7 @@ with bursts not exceeding 5 requests.
 
 <para>
 If delaying of excessive requests while requests are being limited is not
-desired, the parameter <parameter>nodelay</parameter> should be used:
+desired, the parameter <literal>nodelay</literal> should be used:
 <example>
             limit_req zone=one burst=5 nodelay;
 </example>
@@ -90,10 +90,10 @@ desired, the parameter <parameter>nodelay</parameter> should be used:
 
 <directive name="limit_req_log_level">
 <syntax>
-<value>info</value> |
-<value>notice</value> |
-<value>warn</value> |
-<value>error</value></syntax>
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal></syntax>
 <default>error</default>
 <context>http</context>
 <context>server</context>
@@ -104,8 +104,8 @@ desired, the parameter <parameter>nodelay</parameter> should be used:
 Sets the desired logging level for cases when the server limits
 the number of requests, or delays request processing. 
 Delays are logged with the level one less than limits; for example,
-if <command>limit_req_log_level notice</command> is specified,
-delays are logged with the <value>info</value> level.
+if “<literal>limit_req_log_level notice</literal>” is specified,
+delays are logged with the <literal>info</literal> level.
 </para>
 
 </directive>
@@ -113,9 +113,9 @@ delays are logged with the <value>info</value> level.
 
 <directive name="limit_req_zone">
 <syntax>
-    <argument>$variable</argument>
-    <parameter>zone</parameter>=<argument>name</argument>:<argument>size</argument>
-    <parameter>rate</parameter>=<argument>rate</argument></syntax>
+    <value>$variable</value>
+    <literal>zone</literal>=<value>name</value>:<value>size</value>
+    <literal>rate</literal>=<value>rate</value></syntax>
 <default/>
 <context>http</context>
 

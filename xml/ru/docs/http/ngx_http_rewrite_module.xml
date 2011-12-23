@@ -152,9 +152,7 @@ ngx_http_rewrite_module.
 
 
 <directive name="rewrite">
-<syntax><value>regex</value> <value>замена</value>
-         <value>флаг</value>
-</syntax>
+<syntax><value>regex</value> <value>замена</value> <value>флаг</value></syntax>
 <default/>
 <context>server, location, if</context>
 
@@ -235,8 +233,7 @@ permanent — возвращает постоянное перенаправл�
 
 
 <directive name="set">
-<syntax><value>переменная</value> <value>значение</value>
-</syntax>
+<syntax><value>переменная</value> <value>значение</value></syntax>
 <default/>
 <context>server, location, if</context>
 
@@ -249,7 +246,7 @@ permanent — возвращает постоянное перенаправл�
 
 
 <directive name="uninitialized_variable_warn">
-<syntax><value>on|off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http, server, location, if</context>
 

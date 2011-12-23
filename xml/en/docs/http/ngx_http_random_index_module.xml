@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-The module <code>ngx_http_random_index_module</code> picks a random
+The module <literal>ngx_http_random_index_module</literal> picks a random
 file in a directory as an index file.
 It works before the
 <link doc="ngx_http_index_module.xml">ngx_http_index_module</link>
@@ -18,7 +18,7 @@ module.
 
 <para>
 This module is not built by default, it should be enabled with the
-<code>--with-http_random_index_module</code>
+<literal>--with-http_random_index_module</literal>
 configuration parameter.
 </para>
 
@@ -41,7 +41,7 @@ configuration parameter.
 <section name="Directives" id="directives">
 
 <directive name="random_index">
-<syntax><value>on</value> | <value>off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>location</context>
 

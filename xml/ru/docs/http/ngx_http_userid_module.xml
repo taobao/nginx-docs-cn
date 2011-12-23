@@ -38,7 +38,11 @@
 <section name="Директивы" id="directives">
 
 <directive name="userid">
-<syntax><value>[on|v1|log||off]</value></syntax>
+<syntax>
+  <literal>on</literal> |
+  <literal>v1</literal> |
+  <literal>log</literal> |
+  <literal>off</literal></syntax>
 <default>off</default>
 <context>http, server, location</context>
 
@@ -72,7 +76,7 @@ off — запрещает выдавать cookie и записывать пр
 
 
 <directive name="userid_domain">
-<syntax><value>[имя|none]</value></syntax>
+<syntax><value>имя</value> | <literal>none</literal></syntax>
 <default>none</default>
 <context>http, server, location</context>
 
@@ -85,7 +89,7 @@ off — запрещает выдавать cookie и записывать пр
 
 
 <directive name="userid_expires">
-<syntax><value>[время|max]</value></syntax>
+<syntax><value>время</value> | <literal>max</literal></syntax>
 <default/>
 <context>http, server, location</context>
 

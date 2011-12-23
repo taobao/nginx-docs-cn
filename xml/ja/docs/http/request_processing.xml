@@ -33,7 +33,7 @@ server {
 </para>
 
 <para>
-この設定では nginx は、（ブラウザからの）HTTP リクエストの &ldquo;Host&rdquo; ヘッダだけを考査して、そのリクエストをどのサーバに振り向けるべきかを決定します。もし &ldquo;Host&rdquo; ヘッダがどのサーバ名ともマッチしない場合、またはリクエストにこのフィールドがまったく含まれていない場合は、nginxはこのリクエストをデフォルトサーバに振り向けます。上記の設定ではデフォルトサーバは最初のもので、これは nginx の標準的なデフォルトの挙動です。設定内の最初のサーバをデフォルトサーバにしたくない場合は、<dirname>listen</dirname> ディレクティブに <dirname>default_server</dirname> パラメータを使って明示的に設定することができます:
+この設定では nginx は、（ブラウザからの）HTTP リクエストの &ldquo;Host&rdquo; ヘッダだけを考査して、そのリクエストをどのサーバに振り向けるべきかを決定します。もし &ldquo;Host&rdquo; ヘッダがどのサーバ名ともマッチしない場合、またはリクエストにこのフィールドがまったく含まれていない場合は、nginxはこのリクエストをデフォルトサーバに振り向けます。上記の設定ではデフォルトサーバは最初のもので、これは nginx の標準的なデフォルトの挙動です。設定内の最初のサーバをデフォルトサーバにしたくない場合は、<literal>listen</literal> ディレクティブに <literal>default_server</literal> パラメータを使って明示的に設定することができます:
 
 <programlisting>
 server {
@@ -44,10 +44,10 @@ server {
 </programlisting>
 
 <note>
-この <dirname>default_server</dirname> パラメータはバージョン 0.8.21 以上で利用できます。それ以前のバージョンでは代わりに <dirname>default</dirname> パラメータを使用してください。
+この <literal>default_server</literal> パラメータはバージョン 0.8.21 以上で利用できます。それ以前のバージョンでは代わりに <literal>default</literal> パラメータを使用してください。
 </note>
 
-このデフォルトサーバは <dirname>listen</dirname> ディレクティブのプロパティで、<dirname>server_name</dirname> ディレクティブのプロパティではないことに注意してください。詳細は後述します。
+このデフォルトサーバは <literal>listen</literal> ディレクティブのプロパティで、<literal>server_name</literal> ディレクティブのプロパティではないことに注意してください。詳細は後述します。
 </para>
 
 </section>
@@ -99,13 +99,13 @@ server {
 }
 </programlisting>
 
-この設定では、nginx はまず最初に <dirname>server</dirname> ブロックの <dirname>listen</dirname> ディレクティブに対してリクエストの IP アドレスとポートを考査します。次に、その IP アドレスとポートにマッチする <dirname>server</dirname> ブロックの <dirname>server_name</dirname> ディレクティブに対して、その HTTP リクエストの &ldquo;Host&rdquo; ヘッダを考査します。
+この設定では、nginx はまず最初に <literal>server</literal> ブロックの <literal>listen</literal> ディレクティブに対してリクエストの IP アドレスとポートを考査します。次に、その IP アドレスとポートにマッチする <literal>server</literal> ブロックの <literal>server_name</literal> ディレクティブに対して、その HTTP リクエストの &ldquo;Host&rdquo; ヘッダを考査します。
 
 もしサーバ名が見つからなければ、そのリクエストはデフォルトサーバによって処理されます。例えば、192.168.1.1:80 ポートで受信された <url>www.nginx.com</url> へのリクエストは 192.168.1.1:80 ポートのデフォルトサーバ、つまり最初のサーバで処理されます。これはこのポートでは <url>www.nginx.com</url> は定義されていないからです。
 </para>
 
 <para>
-すでに述べたように、デフォルトサーバは <dirname>listen</dirname> ディレクティブのプロパティで、別の <dirname>listen</dirname> ディレクティブには別のデフォルトサーバが定義されています:
+すでに述べたように、デフォルトサーバは <literal>listen</literal> ディレクティブのプロパティで、別の <literal>listen</literal> ディレクティブには別のデフォルトサーバが定義されています:
 
 <programlisting>
 server {
@@ -187,25 +187,25 @@ nginx はまず最初に、リストの順序には関係なくリテラルな�
 
 <item>
 <para>
-リクエスト <path>/logo.gif</path> はリテラルなロケーション <dirname>/</dirname> に最初にマッチし、次に正規表現 <dirname>\.(gif|jpg|png)$</dirname> にマッチするので、後者のロケーションによって処理されます。 このリクエストは <dirname>root&nbsp;/data/www</dirname> ディレクティブを使用してファイル <path>/data/www/logo.gif</path> にマップされ、このファイルがクライアントに送られます。
+リクエスト <path>/logo.gif</path> はリテラルなロケーション <literal>/</literal> に最初にマッチし、次に正規表現 <literal>\.(gif|jpg|png)$</literal> にマッチするので、後者のロケーションによって処理されます。 このリクエストは <literal>root&nbsp;/data/www</literal> ディレクティブを使用してファイル <path>/data/www/logo.gif</path> にマップされ、このファイルがクライアントに送られます。
 </para>
 </item>
 
 <item>
 <para>
-リクエスト <path>/index.php</path> もまたリテラルなロケーション <dirname>/</dirname> に最初にマッチし、次に正規表現 <dirname>\.(php)$</dirname> にマッチします。したがって、このリクエストは後者のロケーションによって処理され、localhost:9000 で待ち受けている FastCGI サーバに渡されます。<dirname>fastcgi_param</dirname> ディレクティブは FastCGI のパラメータ SCRIPT_FILENAME を <path>/data/www/index.php</path> にセットし、この FastCGI サーバがこのファイルを実行します。変数 $document_root は <dirname>root</dirname> ディレクティブの値と同等で、変数 $fastcgi_script_name はリクエスト URI、例えば <path>/index.php</path> と同等です。
+リクエスト <path>/index.php</path> もまたリテラルなロケーション <literal>/</literal> に最初にマッチし、次に正規表現 <literal>\.(php)$</literal> にマッチします。したがって、このリクエストは後者のロケーションによって処理され、localhost:9000 で待ち受けている FastCGI サーバに渡されます。<literal>fastcgi_param</literal> ディレクティブは FastCGI のパラメータ SCRIPT_FILENAME を <path>/data/www/index.php</path> にセットし、この FastCGI サーバがこのファイルを実行します。変数 $document_root は <literal>root</literal> ディレクティブの値と同等で、変数 $fastcgi_script_name はリクエスト URI、例えば <path>/index.php</path> と同等です。
 </para>
 </item>
 
 <item>
 <para>
-リクエスト <path>/about.html</path> はリテラルなロケーション <dirname>/</dirname> のみにマッチします。したがってこのロケーションで処理されます。このリクエストは <dirname>root</dirname> ディレクティブのパラメータ <dirname>/data/www</dirname> を使い、ファイル <path>/data/www/about.html</path> にマップされ、クライアントに送られます。
+リクエスト <path>/about.html</path> はリテラルなロケーション <literal>/</literal> のみにマッチします。したがってこのロケーションで処理されます。このリクエストは <literal>root</literal> ディレクティブのパラメータ <literal>/data/www</literal> を使い、ファイル <path>/data/www/about.html</path> にマップされ、クライアントに送られます。
 </para>
 </item>
 
 <item>
 <para>
-リクエスト <path>/</path> の処理はより複雑です。これはリテラルなロケーション <dirname>/</dirname> のみにマッチし、このロケーションで処理されます。ついで <dirname>index</dirname> ディレクティブがパラメータと <dirname>root</dirname> ディレクティブのパラメータ <dirname>/data/www</dirname> にしたがって index ファイルが存在するかどうかを考査します。もし <path>/data/www/index.php</path> ファイル存在すればこのディレクティブは <path>/index.php</path> への内部リダイレクトを実行し、nginx はまるでこのリクエストがクライアントに送られたかのようにこのロケーションを再び検索します。先に見たように、リダイレクトされたリクエストは最終的に FastCGI サーバで処理されます。
+リクエスト <path>/</path> の処理はより複雑です。これはリテラルなロケーション <literal>/</literal> のみにマッチし、このロケーションで処理されます。ついで <literal>index</literal> ディレクティブがパラメータと <literal>root</literal> ディレクティブのパラメータ <literal>/data/www</literal> にしたがって index ファイルが存在するかどうかを考査します。もし <path>/data/www/index.php</path> ファイル存在すればこのディレクティブは <path>/index.php</path> への内部リダイレクトを実行し、nginx はまるでこのリクエストがクライアントに送られたかのようにこのロケーションを再び検索します。先に見たように、リダイレクトされたリクエストは最終的に FastCGI サーバで処理されます。
 </para>
 </item>
 

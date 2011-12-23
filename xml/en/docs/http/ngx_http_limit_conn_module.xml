@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-The <code>ngx_http_limit_conn_module</code> module allows
+The <literal>ngx_http_limit_conn_module</literal> module allows
 to limit the number of connections per defined key, in
 particular, the number of connections from a single IP address.
 </para>
@@ -48,7 +48,7 @@ http {
 <section id="directives" name="Directives">
 
 <directive name="limit_conn">
-<syntax><argument>zone</argument> <argument>number</argument></syntax>
+<syntax><value>zone</value> <value>number</value></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -72,7 +72,7 @@ allow for only a single connection at a time, per unique IP address.
 </para>
 
 <para>
-When several <code>limit_conn</code> directives are specified,
+When several <literal>limit_conn</literal> directives are specified,
 any configured limit will apply.
 For example, the following configuration will limit the number
 of connections to the server per client IP and at the same time
@@ -93,7 +93,7 @@ will limit the total number of connections to the virtual host:
 <para>
 These directives are inherited from the previous level if and
 only if there are no
-<code>limit_conn</code>
+<literal>limit_conn</literal>
 directives on the current level.
 </para>
 
@@ -102,10 +102,10 @@ directives on the current level.
 
 <directive name="limit_conn_log_level">
 <syntax>
-<value>info</value> |
-<value>notice</value> |
-<value>warn</value> |
-<value>error</value></syntax>
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal></syntax>
 <default>error</default>
 <context>http</context>
 <context>server</context>
@@ -122,8 +122,8 @@ limits the number of connections.
 
 <directive name="limit_conn_zone">
 <syntax>
-    <argument>$variable</argument>
-    <parameter>zone</parameter>=<argument>name</argument>:<argument>size</argument></syntax>
+    <value>$variable</value>
+    <literal>zone</literal>=<value>name</value>:<value>size</value></syntax>
 <default/>
 <context>http</context>
 
@@ -156,9 +156,9 @@ to all further requests.
 
 <directive name="limit_zone">
 <syntax>
-    <argument>name</argument>
-    <argument>$variable</argument>
-    <argument>size</argument></syntax>
+    <value>name</value>
+    <value>$variable</value>
+    <value>size</value></syntax>
 <default/>
 <context>http</context>
 
@@ -167,9 +167,9 @@ This directive is made obsolete in version 1.1.8,
 an equivalent <link id="limit_conn_zone"/> directive
 with a changed syntax should be used instead:
 <note>
-<code>limit_conn_zone</code>
-<argument>$variable</argument>
-<parameter>zone</parameter>=<argument>name</argument>:<argument>size</argument>;
+<literal>limit_conn_zone</literal>
+<value>$variable</value>
+<literal>zone</literal>=<value>name</value>:<value>size</value>;
 </note>
 </para>
 

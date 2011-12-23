@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-Модуль <code>ngx_http_mp4_module</code> обеспечивает серверную поддержку
+Модуль <literal>ngx_http_mp4_module</literal> обеспечивает серверную поддержку
 псевдо-стриминга для файлов в формате H.264/AAC. Такие файлы обычно
 имеют расширения
 <path>.mp4</path>, <path>.m4v</path> и <path>.m4a</path>.
@@ -19,7 +19,7 @@
 Псевдо-стриминг работает в паре с совместимым Flash-плеером.
 Плеер посылает серверу HTTP-запрос с указанием точки времени старта
 в аргументе
-<parameter>start</parameter>
+<literal>start</literal>
 строки запроса (время задаётся в секундах), а сервер в
 ответ посылает поток, у которого начальная позиция соответствует
 запрошенному времени, например:
@@ -40,7 +40,7 @@ http://example.com/elephants_dream.mp4?start=238.88
 <para>
 До начала воспроизведения плееру необходимо прочитать метаданные.
 Для этого он отсылает специальный запрос с аргументом
-<parameter>start=0</parameter>.
+<literal>start=0</literal>.
 Многие кодирующие программы добавляют метаданные в конец файла.
 Для псевдо-стриминга это плохо: метаданные должны быть расположены
 в начале файла, иначе потребуется загрузить файл целиком, прежде
@@ -58,7 +58,7 @@ url="http://flowplayer.org/plugins/streaming/pseudostreaming.html#prepare">
 
 <para>
 Для запроса с ненулевым аргументом
-<parameter>start</parameter>
+<literal>start</literal>
 nginx считывает из файла метаданные, готовит поток с запрошенного
 смещения, и отправляет его клиенту.
 Это тоже требует дополнительных ресурсов, как указано выше.
@@ -66,7 +66,7 @@ nginx считывает из файла метаданные, готовит п
 
 <para>
 Если запрос, обрабатываемый этим модулем, не содержит аргумента
-<parameter>start</parameter>,
+<literal>start</literal>,
 дополнительные ресурсы не тратятся, а файл отсылается просто как
 статический ресурс.
 Некоторые плееры также поддерживают запросы с указанием диапазона
@@ -77,7 +77,7 @@ nginx считывает из файла метаданные, готовит п
 <para>
 По умолчанию этот модуль не собирается, его сборку необходимо
 разрешить с помощью конфигурационного параметра
-<code>--with-http_mp4_module</code>.
+<literal>--with-http_mp4_module</literal>.
 <note>
 Если вы ранее использовали сторонний модуль mp4, не забудьте его отключить.
 </note>
@@ -121,7 +121,7 @@ location /video/ {
 
 
 <directive name="mp4_buffer_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>512K</default>
 <context>http</context>
 <context>server</context>
@@ -135,7 +135,7 @@ location /video/ {
 
 
 <directive name="mp4_max_buffer_size">
-<syntax><argument>размер</argument></syntax>
+<syntax><value>размер</value></syntax>
 <default>10M</default>
 <context>http</context>
 <context>server</context>

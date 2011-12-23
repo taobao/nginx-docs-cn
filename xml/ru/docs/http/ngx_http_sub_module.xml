@@ -12,7 +12,7 @@
 Модуль ngx_http_sub_module — это фильтр,
 изменяющий в ответе одну заданную строку на другую.
 По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром <command>--with-http_sub_module</command>.
+при конфигурировании параметром <literal>--with-http_sub_module</literal>.
 </para>
 
 </section>
@@ -36,7 +36,7 @@ location / {
 <section name="Директивы" id="directives">
 
 <directive name="sub_filter">
-<syntax><value>строка замена</value></syntax>
+<syntax><value>строка</value> <value>замена</value></syntax>
 <default/>
 <context>http, server, location</context>
 
@@ -50,7 +50,7 @@ location / {
 
 
 <directive name="sub_filter_once">
-<syntax><value>on|off</value></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
 <context>http, server, location</context>
 
@@ -63,7 +63,7 @@ location / {
 
 
 <directive name="sub_filter_types">
-<syntax><value>mime-тип [mime-тип ...]</value></syntax>
+<syntax><value>mime-тип</value> ...</syntax>
 <default>text/html</default>
 <context>http, server, location</context>
 
