@@ -299,15 +299,7 @@
       <xsl:text disable-output-escaping="yes">&lt;p&gt; </xsl:text>
    </xsl:template>
 
-   <xsl:template match="argument"> 
-      <code>
-         <i>
-            <xsl:apply-templates/>
-         </i>
-      </code>
-   </xsl:template>
-
-   <xsl:template match="parameter"> 
+   <xsl:template match="literal"> 
       <code>
          <xsl:apply-templates/>
       </code>
@@ -328,28 +320,6 @@
       <xsl:text>)</xsl:text>
    </xsl:template>
 
-   <xsl:template match="dirname[/*[@lang='he']]">
-
-      <nobr>
-         <span class="ltr">
-
-            <xsl:text>“</xsl:text>
-            <xsl:apply-templates/>
-            <xsl:text>”</xsl:text>
-
-         </span>
-      </nobr>
-   </xsl:template>
-
-   <xsl:template match="dirname">
-
-      <nobr>
-         <xsl:text>“</xsl:text>
-         <xsl:apply-templates/>
-         <xsl:text>”</xsl:text>
-      </nobr>
-   </xsl:template>
-
    <xsl:template match="url[/*[@lang='he']]">
 
       <i>
@@ -367,7 +337,9 @@
 
    <xsl:template match="value"> 
       <code>
-         <xsl:apply-templates/>
+         <i>
+            <xsl:apply-templates/>
+         </i>
       </code>
    </xsl:template>
 
@@ -385,12 +357,6 @@
    </xsl:template>
 
    <xsl:template match="path"> 
-      <code>
-         <xsl:apply-templates/>
-      </code>
-   </xsl:template>
-
-   <xsl:template match="code"> 
       <code>
          <xsl:apply-templates/>
       </code>
