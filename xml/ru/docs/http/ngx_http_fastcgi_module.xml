@@ -290,7 +290,7 @@ fastcgi_param  SCRIPT_FILENAME  /home/www/scripts/php$fastcgi_script_name;
 nginx не передаёт клиенту строки заголовка "Status" и "X-Accel-..."
 из ответа FastCGI-сервера.
 Директива fastcgi_hide_header задаёт дополнительные строки.
-Если же строки нужно наоброт разрешить, то нужно воспользоваться
+Если же строки нужно напротив разрешить, следует воспользоваться
 директивой <link id="fastcgi_pass_header"/>.
 </para>
 
