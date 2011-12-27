@@ -51,7 +51,7 @@ nginx [engine x]&mdash;это HTTP-сервер и обратный прокси
 
 <item>
 <link doc="docs/http/ngx_http_proxy_module.xml">Акселерированное
-проксирование с кэшированием</link>,
+обратное проксирование с кэшированием</link>,
 <link doc="docs/http/ngx_http_upstream_module.xml">простое
 распределение нагрузки и отказоустойчивость</link>;
 </item>
