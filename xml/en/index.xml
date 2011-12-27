@@ -46,7 +46,8 @@ Serving static and index files, and autoindexing;
 </item>
 
 <item>
-Accelerated reverse proxying with caching;
+<link doc="docs/http/ngx_http_proxy_module.xml">Accelerated
+reverse proxying with caching</link>;
 simple load balancing and fault tolerance;
 </item>
 
