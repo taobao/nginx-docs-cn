@@ -189,7 +189,7 @@ rsync_gzip:
 do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
 		$(addsuffix .gz,					\
 			$(foreach lang, $(LANGS),			\
-			$(foreach dir, . docs docs/http,		\
+			$(foreach dir, . docs docs/faq docs/http,	\
 			$(wildcard $(ZIP)/$(lang)/$(dir)/*.html))))	\
 		$(ZIP)/index.rss.gz					\
 		$(ZIP)/LICENSE.gz					\
