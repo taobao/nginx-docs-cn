@@ -170,7 +170,7 @@ HTTPS</link>.
 <literal>--with-pcre=<value>путь</value></literal>&mdash;задаёт
 путь к исходным текстам библиотеки PCRE.
 Дистрибутив библиотеки (версию
-4.4&mdash;6.1) нужно взять на сайте <link url="http://www.pcre.org">PCRE</link>
+4.4&mdash;8.21) нужно взять на сайте <link url="http://www.pcre.org">PCRE</link>
 и распаковать.
 Всё остальное сделают ./configure nginx'а и make.
 Библиотека нужна для использования регулярных выражений в директиве
@@ -184,7 +184,7 @@ HTTPS</link>.
 <para>
 <literal>--with-zlib=<value>путь</value></literal>&mdash;задаёт
 путь к исходным текстам библиотеки zlib. Дистрибутив библиотеки (версию
-1.1.3&mdash;1.2.2) нужно взять на сайте
+1.1.3&mdash;1.2.5) нужно взять на сайте
 <link url="http://www.gzip.org/zlib/">zlib</link> и распаковать.
 Всё остальное сделают ./configure nginx'а и make.
 Библиотека нужна для модуля
