@@ -177,6 +177,31 @@ This directive is intended for nginx developers.
 </directive>
 
 
+<directive name="pcre_jit">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>main</context>
+<appeared-in>1.1.12</appeared-in>
+
+<para>
+Enables or disables the use of “just-in-time compilation” (PCRE JIT)
+for regular expressions known at configuration parse time.
+</para>
+
+<para>
+PCRE JIT can speed up processing of regular expressions significantly.
+<note>
+The JIT is available in PCRE libraries starting from version 8.20
+built with the <literal>--enable-jit</literal> configuration parameter.
+When building the PCRE library with nginx (<literal>--with-pcre=</literal>),
+the JIT support should be enabled with the
+<literal>--with-pcre-jit</literal> configuration parameter.
+</note>
+</para>
+
+</directive>
+
+
 <directive name="pid">
 <syntax><value>file</value></syntax>
 <default>nginx.pid</default>

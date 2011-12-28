@@ -188,6 +188,13 @@ module.
 
 <listitem>
 <para>
+<literal>--with-pcre-jit</literal>&mdash;builds the PCRE library with
+“just-in-time compilation” support.
+</para>
+</listitem>
+
+<listitem>
+<para>
 <literal>--with-zlib=<value>path</value></literal>&mdash;sets
 the path to the sources of the zlib library.
 The library distribution (version

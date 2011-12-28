@@ -182,6 +182,13 @@ HTTPS</link>.
 
 <listitem>
 <para>
+<literal>--with-pcre-jit</literal>&mdash;собирает библиотеку PCRE с
+поддержкой JIT-компиляции.
+</para>
+</listitem>
+
+<listitem>
+<para>
 <literal>--with-zlib=<value>путь</value></literal>&mdash;задаёт
 путь к исходным текстам библиотеки zlib. Дистрибутив библиотеки (версию
 1.1.3&mdash;1.2.5) нужно взять на сайте
