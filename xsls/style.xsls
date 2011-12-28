@@ -11,7 +11,7 @@ X:template style (lang) {
                             padding-right:  0.5em;
                             white-space:    nowrap; }
         div.directive     { background:     #EEEEEE;
-                            padding:        10pt 10pt 10pt 20pt; }
+                            padding:        10pt 10pt 10pt 0; }
         div.directive td  { vertical-align: baseline; }
         div.directive pre { padding:        0;
                             margin:         0; }
@@ -19,6 +19,7 @@ X:template style (lang) {
                             float:          left;
                             padding-right:  10pt;}
         li                { text-align:     justify; }
+        dd                { text-align:     justify; }
         td.list           { background:     #EEEEEE; }
         blockquote.note   { text-align:     justify;
                             background:     #EEEEEE;
