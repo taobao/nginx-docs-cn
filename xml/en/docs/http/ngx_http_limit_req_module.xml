@@ -102,7 +102,7 @@ desired, the parameter <literal>nodelay</literal> should be used:
 
 <para>
 Sets the desired logging level for cases when the server limits
-the number of requests, or delays request processing. 
+the number of requests, or delays request processing.
 Delays are logged with the level one less than limits; for example,
 if “<literal>limit_req_log_level notice</literal>” is specified,
 delays are logged with the <literal>info</literal> level.
@@ -123,7 +123,7 @@ delays are logged with the <literal>info</literal> level.
 Sets the parameters for a zone that keeps states for various keys.
 This state stores the current number of requests in particular.
 The key is the value of the specified variable.
-Example usage: 
+Example usage:
 <example>
 limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 </example>

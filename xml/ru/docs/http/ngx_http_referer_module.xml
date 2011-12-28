@@ -43,7 +43,7 @@
 
 <directive name="valid_referers">
 <syntax>
-  <literal>none</literal> | 
+  <literal>none</literal> |
   <literal>blocked</literal> |
   <literal>server_names</literal> |
   <value>строка</value>

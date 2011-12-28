@@ -11,7 +11,7 @@ nginx can be controlled with signals.
 The process ID of the master process is written to the file
 <path>/usr/local/nginx/logs/nginx.pid</path> by default.
 This name may be changed at configuration time, or in
-<path>nginx.conf</path> using the 
+<path>nginx.conf</path> using the
 <link doc="ngx_core_module.xml" id="pid"/>
 directive.
 The master process supports the following signals:
