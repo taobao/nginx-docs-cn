@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_upstream_module"
+        link="/en/docs/http/ngx_http_upstream_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_upstream_module</literal> module
+allows to define groups of servers that can be referenced
+from the <link doc="ngx_http_proxy_module.xml" id="proxy_pass"/> and
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass"/> directives.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+upstream <emphasis>backend</emphasis> {
+    server backend1.example.com       weight=5;
+    server backend2.example.com:8080;
+    server unix:/tmp/backend3;
+
+    server backup1.example.com:8080   backup;
+    server backup2.example.com:8080   backup;
+}
+
+server {
+    location / {
+        proxy_pass http://<emphasis>backend</emphasis>;
+    }
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="ip_hash">
+<syntax/>
+<default/>
+<context>upstream</context>
+
+<para>
+Specifies that a group should use a balancing method where requests
+are distributed between servers based on client IP addresses.
+A class C network containing the client IP address is used as a hashing key.
+The method ensures that requests of the same client will always be
+passed to the same server except when this server is considered down
+in which case client requests will be passed to another server and
+most probably it will also be the same server.
+</para>
+
+<para>
+It is not possible to specify a weight for servers using the
+<literal>ip_hash</literal> balancing method.
+If one of the servers needs to be temporarily removed, it should
+be marked with the <literal>down</literal> parameter in
+order to preserve the current hashing of client IP addresses.
+</para>
+
+<para>
+Example:
+<example>
+upstream backend {
+    ip_hash;
+
+    server backend1.example.com;
+    server backend2.example.com;
+    server backend3.example.com <emphasis>down</emphasis>;
+    server backend4.example.com;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="server">
+<syntax><value>name</value> [<value>parameters</value>]</syntax>
+<default/>
+<context>upstream</context>
+
+<para>
+Sets a <value>name</value> and other <value>parameters</value> of the server.
+A <value>name</value> can be a domain name, an address, a port, or a
+path of the UNIX-domain socket.
+If a domain name resolves to several addresses, all of them are used.
+<list type="tag">
+
+<tag-name><literal>weight</literal>=<value>number</value></tag-name>
+<tag-desc>
+sets a weight of the server, by default 1.
+</tag-desc>
+
+<tag-name><literal>max_fails</literal>=<value>number</value></tag-name>
+<tag-desc>
+sets a number of unsuccessful attempts to communicate with the server
+during a time set by the <literal>fail_timeout</literal> parameter
+after which it will be considered down for a period of time also set
+by the <literal>fail_timeout</literal> parameter.
+By default, the number of unsuccessful attempts is set to 1.
+A value of zero disables accounting of attempts.
+What is considered to be an unsuccessful attempt is configured by the
+<link doc="ngx_http_proxy_module.xml" id="proxy_next_upstream"/>
+and <link doc="ngx_http_fastcgi_module.xml" id="fastcgi_next_upstream"/>
+directives.
+The <literal>http_404</literal> state is not considered
+an unsuccessful attempt.
+</tag-desc>
+
+<tag-name><literal>fail_timeout</literal>=<value>time</value></tag-name>
+<tag-desc>
+sets
+<list type="bullet">
+
+<listitem>
+a time during which the specified number of unsuccessful attempts to
+communicate with the server should happen for the server to be
+considered down;
+</listitem>
+
+<listitem>
+and a period of time the server will be considered down.
+</listitem>
+
+</list>
+By default, timeout is set to 10 seconds.
+</tag-desc>
+
+<tag-name><literal>backup</literal></tag-name>
+<tag-desc>
+marks the server as a backup server.
+It will be passed requests when the primary servers are down.
+</tag-desc>
+
+<tag-name><literal>down</literal></tag-name>
+<tag-desc>
+marks the server as permanently down; used along with
+the <link id="ip_hash"/> directive.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+Example:
+<example>
+upstream backend {
+    server backend1.example.com     weight=5;
+    server 127.0.0.1:8080           max_fails=3 fail_timeout=30s;
+    server unix:/tmp/backend3;
+
+    server backup1.example.com:8080 backup;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="upstream">
+<syntax block="yes"><value>name</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+Defines a group of servers.
+Servers can listen on different ports.
+In addition, servers listening on TCP and UNIX-domain sockets
+can be used simultaneously.
+</para>
+
+<para>
+Example:
+<example>
+upstream backend {
+    server backend1.example.com weight=5;
+    server 127.0.0.1:8080       max_fails=3 fail_timeout=30s;
+    server unix:/tmp/backend3;
+}
+</example>
+</para>
+
+<para>
+Requests are distributed between servers in a round-robin fashion,
+taking into account the weights of servers.
+In the above example, each 7 requests will be distributed as follows:
+5 requests to <literal>backend1.example.com</literal>
+and one request to each of second and third servers.
+If an error occurs when communicating with the server, a request will
+be passed to the next server, and so on until all of the functioning
+servers will be tried.
+If a successful response could not be obtained from any of the servers,
+the client will be returned the result of contacting the last server.
+</para>
+
+</directive>
+
+</section>
+
+
+<section id="variables" name="Embedded Variables">
+
+<para>
+The <literal>ngx_http_upstream_module</literal> module
+supports the following embedded variables:
+<list type="tag">
+
+<tag-name><var>$upstream_addr</var></tag-name>
+<tag-desc>
+keeps an IP address and port of the server,
+or a path to the UNIX-domain socket.
+If several servers were contacted during request processing,
+their addresses are separated by commas, e.g.
+“<literal>192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock</literal>”.
+If an internal redirect from one server group to another happened
+using
+<header>X-Accel-Redirect</header> or
+<link doc="ngx_http_core_module.xml" id="error_page"/>
+then these server groups are separated by colons, e.g.
+“<literal>192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock : 192.168.10.1:80, 192.168.10.2:80</literal>”.
+</tag-desc>
+
+<tag-name><var>$upstream_response_time</var></tag-name>
+<tag-desc>
+keeps servers response times in seconds with a milliseconds resolution.
+Several responses are also separated by commas and colons.
+</tag-desc>
+
+<tag-name><var>$upstream_status</var></tag-name>
+<tag-desc>
+keeps servers response codes.
+Several responses are also separated by commas and colons.
+</tag-desc>
+
+<tag-name><var>$upstream_http_...</var></tag-name>
+<tag-desc>
+keep server response header fields.
+For example, the <header>Server</header> response header field
+is made available through the <var>$upstream_http_server</var> variable.
+Note that only the last server’s response header fields are saved.
+</tag-desc>
+
+</list>
+</para>
+
+</section>
+
+</module>

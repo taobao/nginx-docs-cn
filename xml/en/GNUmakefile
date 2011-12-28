@@ -54,6 +54,7 @@ REFS =									\
 		http/ngx_http_mp4_module				\
 		http/ngx_http_proxy_module				\
 		http/ngx_http_random_index_module			\
+		http/ngx_http_upstream_module				\
 
 REFS_XML =	$(foreach name, $(REFS), xml/$(DOC_LANG)/docs/$(name).xml)
 REFS_HTML =	$(foreach name, $(REFS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
