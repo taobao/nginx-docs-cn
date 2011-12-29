@@ -8,13 +8,14 @@
 
 <para>
 To quickly process static sets of data such as server names,
-map directive's values, mime-types, names of request header strings,
+<link doc="http/ngx_http_map_module.xml" id="map"/> directive's values,
+MIME types, names of request header strings,
 nginx uses hash tables.
-During the start and each re-configuration nginx picks out
-minimally possible sizes of hash tables such that the bucket size
+During the start and each re-configuration nginx selects the
+minimum possible sizes of hash tables such that the bucket size
 that stores keys with identical hash values does not exceed the
 configured parameter (hash bucket size).
-The size of the table is expressed in buckets.
+The size of a table is expressed in buckets.
 The adjustment is continued until the table size exceeds the
 hash max size parameter.
 Most hashes have the corresponding directives that allow to change
