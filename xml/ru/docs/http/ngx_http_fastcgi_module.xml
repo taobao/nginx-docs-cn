@@ -129,6 +129,40 @@ fastcgi_cache_key localhost:9000$request_uri;
 </directive>
 
 
+<directive name="fastcgi_cache_lock">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Если включено, одновременно только одному запросу будет позволено
+заполнить новый элемент кэша, идентифицируемый согласно директиве
+<link id="fastcgi_cache_key"/>, передав запрос на FastCGI-сервер.
+Остальные запросы этого же элемента будут либо ожидать
+появления ответа в кэше, либо освобождения блокировки
+этого элемента, в течение времени, заданного директивой
+<link id="fastcgi_cache_lock_timeout"/>.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_cache_lock_timeout">
+<syntax><value>время</value></syntax>
+<default>5s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Задаёт таймаут для <link id="fastcgi_cache_lock"/>.
+</para>
+
+</directive>
+
+
 <directive name="fastcgi_cache_min_uses">
 <syntax><value>число</value></syntax>
 <default>1</default>

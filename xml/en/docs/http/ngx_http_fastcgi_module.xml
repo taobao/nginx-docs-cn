@@ -130,6 +130,40 @@ fastcgi_cache_key localhost:9000$request_uri;
 </directive>
 
 
+<directive name="fastcgi_cache_lock">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+When enabled, only one request at a time will be allowed to populate
+a new cache element identified according to the <link id="fastcgi_cache_key"/>
+directive by passing a request to a FastCGI server.
+Other requests of the same cache element will either wait
+for a response to appear in the cache, or the cache lock for
+this element to be released, up to the time set by the
+<link id="fastcgi_cache_lock_timeout"/> directive.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_cache_lock_timeout">
+<syntax><value>time</value></syntax>
+<default>5s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a timeout for <link id="fastcgi_cache_lock"/>.
+</para>
+
+</directive>
+
+
 <directive name="fastcgi_cache_min_uses">
 <syntax><value>number</value></syntax>
 <default>1</default>
