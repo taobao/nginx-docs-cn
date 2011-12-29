@@ -53,7 +53,9 @@ load balancing and fault tolerance</link>;
 </item>
 
 <item>
-Accelerated support with caching of FastCGI, uwsgi, SCGI, and memcached servers;
+Accelerated support with caching of
+<link doc="docs/http/ngx_http_fastcgi_module.xml">FastCGI</link>,
+uwsgi, SCGI, and memcached servers;
 <link doc="docs/http/ngx_http_upstream_module.xml">simple
 load balancing and fault tolerance</link>;
 </item>
