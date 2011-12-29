@@ -765,7 +765,6 @@ fastcgi_temp_path /spool/nginx/fastcgi_temp 1 2;
 
 <tag-name><var>$fastcgi_script_name</var></tag-name>
 <tag-desc>
-<para>
 URI запроса или же, если URI заканчивается слэшом,
 то URI запроса, дополненное именем индексного файла, задаваемого директивой
 <link id="fastcgi_index"/>.
@@ -780,7 +779,6 @@ fastcgi_param SCRIPT_FILENAME /home/www/scripts/php$fastcgi_script_name;
 </example>
 параметр <literal>SCRIPT_FILENAME</literal> будет равен
 “<literal>/home/www/scripts/php/info/index.php</literal>”.
-</para>
 
 <para>
 При использовании директивы <link id="fastcgi_split_path_info"/>
