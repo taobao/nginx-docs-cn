@@ -78,7 +78,7 @@ turns off module processing in a surrounding location.
 
 <tag-name><literal>test</literal></tag-name>
 <tag-desc>
-ensures that answers are images in either JPEG, GIF, or PNG format.
+ensures that responses are images in either JPEG, GIF, or PNG format.
 Otherwise, the error
 <http-status code="415" text="Unsupported Media Type"/>
 is returned.

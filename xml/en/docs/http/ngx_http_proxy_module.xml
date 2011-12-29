@@ -124,9 +124,9 @@ from the previous configuration level.
 <context>location</context>
 
 <para>
-Defines conditions under which the answer will not be taken from a cache.
+Defines conditions under which the response will not be taken from a cache.
 If at least one value of the string parameters is not empty and is not
-equal to “0” then the answer will not be taken from the cache:
+equal to “0” then the response will not be taken from the cache:
 <example>
 proxy_cache_bypass $cookie_nocache $arg_nocache$arg_comment;
 proxy_cache_bypass $http_pragma    $http_authorization;
@@ -287,7 +287,7 @@ then only 200, 301, and 302 responses are cached.
 </para>
 
 <para>
-In addition, it can be specified to cache any answers using the
+In addition, it can be specified to cache any responses using the
 <literal>any</literal> parameter:
 <example>
 proxy_cache_valid 200 302 10m;
@@ -329,7 +329,7 @@ nginx does not pass the header fields <header>Date</header>,
 server to a client.
 The <literal>proxy_hide_header</literal> directive sets additional fields
 that will not be passed.
-If, on the contrary, the passing of fields needs to be enabled,
+If, on the contrary, the passing of fields needs to be permitted,
 the <link id="proxy_pass_header"/> directive can be used.
 </para>
 
@@ -346,7 +346,7 @@ the <link id="proxy_pass_header"/> directive can be used.
 <para>
 Determines should the connection with a proxied server be
 closed if a client closes a connection without waiting
-for an answer.
+for a response.
 </para>
 
 </directive>
@@ -360,7 +360,7 @@ for an answer.
 <context>location</context>
 
 <para>
-Disables processing of some response header fields from the proxied server.
+Disables processing of certain response header fields from the proxied server.
 The following fields can be ignored: <header>X-Accel-Redirect</header>,
 <header>X-Accel-Expires</header>, <header>X-Accel-Limit-Rate</header> (1.1.6),
 <header>X-Accel-Buffering</header> (1.1.6),
@@ -458,9 +458,9 @@ transferring a response, fixing this is impossible.
 <context>location</context>
 
 <para>
-Defines conditions under which the answer will not be saved to a cache.
+Defines conditions under which the response will not be saved to a cache.
 If at least one value of the string parameters is not empty and is not
-equal to “0” then the answer will not be saved:
+equal to “0” then the response will not be saved:
 <example>
 proxy_no_cache $cookie_nocache $arg_nocache$arg_comment;
 proxy_no_cache $http_pragma    $http_authorization;
@@ -494,7 +494,7 @@ and enclosed in two colons.
 </para>
 
 <para>
-If a domain name maps to several addresses, all of them will be
+If a domain name resolves to several addresses, all of them will be
 used in a round-robin fashion.
 In addition, an address can be specified as a
 <link doc="ngx_http_upstream_module.xml">server group</link>.
