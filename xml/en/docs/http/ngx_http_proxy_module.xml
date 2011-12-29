@@ -379,8 +379,8 @@ The following fields can be ignored: <header>X-Accel-Redirect</header>,
 <context>location</context>
 
 <para>
-Determines whether proxied responses with codes greater or equal to 400
-should be passed to a client or be redirected to nginx for processing
+Determines whether proxied responses with codes greater than or equal
+to 400 should be passed to a client or be redirected to nginx for processing
 using the <link doc="ngx_http_core_module.xml" id="error_page"/> directive.
 </para>
 
