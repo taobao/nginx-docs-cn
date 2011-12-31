@@ -2,27 +2,28 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_auth_basic_module"
+<module name="Модуль ngx_http_auth_basic_module"
         link="/ru/docs/http/ngx_http_auth_basic_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_auth_basic_module позволяет закрыть доступ с проверкой
-имени и пароля по протоколу HTTP Basic Authentication.
+Модуль <literal>ngx_http_auth_basic_module</literal> позволяет
+ограничить доступ к ресурсам с проверкой имени и пароля по протоколу
+“HTTP Basic Authentication”.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    location  /  {
-        auth_basic            "closed site";
-        auth_basic_user_file  conf/htpasswd;
+    location / {
+        auth_basic           "closed site";
+        auth_basic_user_file conf/htpasswd;
     }
 </example>
 </para>
@@ -30,19 +31,21 @@
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="auth_basic">
 <syntax><value>строка</value> | <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location, limit_except</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
 
 <para>
-Директива включает проверку имени и пароля по протоколу
-HTTP Basic Authentication.
-Заданный параметр используется в качестве realm.
-Параметр "off" позволяет отменить действие унаследованной с нижележащего
-уровня директивы.
+Включает проверку имени и пароля по протоколу “HTTP Basic Authentication”.
+Заданный параметр используется в качестве <value>realm</value>.
+Параметр <literal>off</literal> позволяет отменить действие унаследованной
+с предыдущего уровня конфигурации директивы <literal>auth_basic</literal>.
 </para>
 
 </directive>
@@ -51,11 +54,14 @@ HTTP Basic Authentication.
 <directive name="auth_basic_user_file">
 <syntax><value>файл</value></syntax>
 <default/>
-<context>http, server, location, limit_except</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
 
 <para>
-Директива задаёт файл, в котором хранятся имена и пароли
-пользователей. Формат файла следующий:
+Задаёт файл, в котором хранятся имена и пароли пользователей.
+Формат файла следующий:
 <example>
 # комментарий
 имя1:пароль1
@@ -65,9 +71,9 @@ HTTP Basic Authentication.
 </para>
 
 <para>
-Пароли должны быть зашифрованы функцией crypt(3).
-Для создания файла с паролями можно воспользоваться программой
-<command>htpasswd</command> из дистрибутива Apache.
+Пароли должны быть зашифрованы функцией <c-func>crypt</c-func>.
+Для создания файла с паролями можно воспользоваться командой
+<command>htpasswd</command> из дистрибутива веб-сервера Apache.
 </para>
 
 </directive>

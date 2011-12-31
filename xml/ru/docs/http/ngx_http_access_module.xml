@@ -2,7 +2,7 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_access_module"
+<module name="Модуль ngx_http_access_module"
         link="/ru/docs/http/ngx_http_access_module.html"
         lang="ru">
 
@@ -10,30 +10,31 @@
 <section id="summary">
 
 <para>
-Модуль ngx_http_access_module позволяет закрыть доступ для определённых
-IP-адресов клиентов.
+Модуль <literal>ngx_http_access_module</literal> позволяет
+закрыть доступ для определённых IP-адресов клиентов.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    location  /  {
-        deny    192.168.1.1;
-        allow   192.168.1.0/24;
-        allow   10.1.1.0/16;
-        deny    all;
+    location / {
+        deny  192.168.1.1;
+        allow 192.168.1.0/24;
+        allow 10.1.1.0/16;
+        deny  all;
     }
 </example>
 </para>
 
 <para>
 Правила проверяются в порядке их записи до первого соответствия.
-В данном примере доступ разрешён только для сетей 10.1.1.0/16
-и 192.168.1.0/24, кроме адреса 192.168.1.1.
+В данном примере доступ разрешён только для сетей
+<literal>10.1.1.0/16</literal> и <literal>192.168.1.0/24</literal>,
+кроме адреса <literal>192.168.1.1</literal>.
 Если правил много, то лучше воспользоваться переменными модуля
 <link doc="ngx_http_geo_module.xml">ngx_http_geo_module</link>.
 </para>
@@ -41,27 +42,39 @@ IP-адресов клиентов.
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="allow">
-<syntax><value>адрес</value> | <value>CIDR</value> | <literal>all</literal></syntax>
+<syntax>
+    <value>адрес</value> |
+    <value>CIDR</value> |
+    <literal>all</literal></syntax>
 <default/>
-<context>http, server, location, limit_except</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
 
 <para>
-Директива разрешает доступ для указанной сети или адреса.
+Разрешает доступ для указанной сети или адреса.
 </para>
 
 </directive>
 
 
 <directive name="deny">
-<syntax><value>адрес</value> | <value>CIDR</value> | <literal>all</literal></syntax>
+<syntax>
+    <value>адрес</value> |
+    <value>CIDR</value> |
+    <literal>all</literal></syntax>
 <default/>
-<context>http, server, location, limit_except</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
 
 <para>
-Директива запрещает доступ для указанной сети или адреса.
+Запрещает доступ для указанной сети или адреса.
 </para>
 
 </directive>

@@ -2,27 +2,29 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_autoindex_module"
+<module name="Модуль ngx_http_autoindex_module"
         link="/ru/docs/http/ngx_http_autoindex_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_autoindex_module выдаёт листинг каталога.
-Обычно запрос попадает к модулю ngx_http_autoindex_module,
-когда модуль <link doc="ngx_http_index_module.xml">ngx_http_index_module</link> не нашёл индексный файл.
+Модуль <literal>ngx_http_autoindex_module</literal> выдаёт
+листинг каталога.
+Обычно запрос попадает к модулю <literal>ngx_http_autoindex_module</literal>,
+когда модуль <link doc="ngx_http_index_module.xml">ngx_http_index_module</link>
+не нашёл индексный файл.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    location  /  {
-        autoindex  on;
+    location / {
+        autoindex on;
     }
 </example>
 </para>
@@ -30,15 +32,17 @@
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="autoindex">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива разрешает или запрещает вывод листинга каталога.
+Разрешает или запрещает вывод листинга каталога.
 </para>
 
 </directive>
@@ -47,13 +51,14 @@
 <directive name="autoindex_exact_size">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива определяет, как выводить размеры файлов в листинге
+Определяет, как выводить размеры файлов в листинге
 каталога — точно, или округляя до килобайт, мегабайт и гигабайт.
 </para>
-
 
 
 </directive>
@@ -62,10 +67,12 @@
 <directive name="autoindex_localtime">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива определяет, в какой временной зоне выводить время в листинге
+Определяет, в какой временной зоне выводить время в листинге
 каталога — в локальной или в GMT.
 </para>
 

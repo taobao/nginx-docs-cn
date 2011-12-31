@@ -2,29 +2,30 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_addition_module"
+<module name="Модуль ngx_http_addition_module"
         link="/ru/docs/http/ngx_http_addition_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_addition_module — это фильтр,
+Модуль <literal>ngx_http_addition_module</literal> — это фильтр,
 добавляющий текст до и после ответа.
-По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром <literal>--with-http_addition_module</literal>.
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-http_addition_module</literal>.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
     location / {
-        add_before_body   /before_action;
-        add_after_body    /after_action;
+        add_before_body /before_action;
+        add_after_body  /after_action;
     }
 </example>
 </para>
@@ -32,7 +33,7 @@
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="add_before_body">
 <syntax><value>uri</value></syntax>
@@ -40,7 +41,7 @@
 <context>location</context>
 
 <para>
-Директива добавляет перед телом ответа текст, выдаваемый в результате
+Добавляет перед телом ответа текст, выдаваемый в результате
 работы заданного подзапроса.
 </para>
 
@@ -53,7 +54,7 @@
 <context>location</context>
 
 <para>
-Директива добавляет после тела ответа текст, выдаваемый в результате
+Добавляет после тела ответа текст, выдаваемый в результате
 работы заданного подзапроса.
 </para>
 
@@ -63,11 +64,14 @@
 <directive name="addition_types">
 <syntax><value>mime-тип</value> ...</syntax>
 <default>text/html</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.7.9</appeared-in>
 
 <para>
-Директива (0.7.9) разрешает добавлять текст в ответах
-с указанными MIME-типами в дополнение к "text/html".
+Разрешает добавлять текст в ответах с указанными MIME-типами
+в дополнение к “<literal>text/html</literal>”.
 </para>
 
 </directive>
