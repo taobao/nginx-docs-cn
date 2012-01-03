@@ -6,7 +6,9 @@
 <para>
 <a href="/en/download.xml">nginx-1.1.12</a>
 development version has been released,
-introducing cache lock support and PCRE JIT support.
+introducing <link doc="/en/docs/http/ngx_http_proxy_module.xml"
+id="proxy_cache_lock">cache lock</link> support and
+<link doc="/en/docs/ngx_core_module.xml" id="pcre_jit">PCRE JIT</link> support.
 </para>
 </event>
 
