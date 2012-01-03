@@ -109,7 +109,7 @@ LANGS =		en ja he ru tr
 all:		news arx 404 $(LANGS)
 
 news:		$(OUT)/index.html $(OUT)/index.rss
-arx:		$(OUT)/2010.html $(OUT)/2009.html
+arx:		$(OUT)/2011.html $(OUT)/2010.html $(OUT)/2009.html
 404:		$(OUT)/404.html
 
 
@@ -128,6 +128,7 @@ $(OUT)/index.rss:							\
 	$(call XSLT, xslt/rss.xslt, $<, $@)
 
 
+$(OUT)/2011.html							\
 $(OUT)/2010.html							\
 $(OUT)/2009.html:							\
 		xml/index.xml						\
