@@ -93,11 +93,6 @@
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_upstream_module.xml">
-ngx_http_upstream_module</a>
-</item>
-
-<item>
 <a href="/ru/docs/http/ngx_http_access_module.xml">
 ngx_http_access_module</a>
 </item>
@@ -265,6 +260,11 @@ ngx_http_ssl_module</a>
 <item>
 <a href="/ru/docs/http/ngx_http_sub_module.xml">
 ngx_http_sub_module</a>
+</item>
+
+<item>
+<a href="/ru/docs/http/ngx_http_upstream_module.xml">
+ngx_http_upstream_module</a>
 </item>
 
 <item>
