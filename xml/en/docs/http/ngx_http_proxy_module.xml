@@ -164,6 +164,7 @@ proxy_cache_key $scheme$proxy_host$uri$is_args$args;
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>1.1.12</appeared-in>
 
 <para>
 When enabled, only one request at a time will be allowed to populate
@@ -184,6 +185,7 @@ this element to be released, up to the time set by the
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>1.1.12</appeared-in>
 
 <para>
 Sets a timeout for <link id="proxy_cache_lock"/>.

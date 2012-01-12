@@ -163,6 +163,7 @@ proxy_cache_key $scheme$proxy_host$uri$is_args$args;
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>1.1.12</appeared-in>
 
 <para>
 Если включено, одновременно только одному запросу будет позволено
@@ -183,6 +184,7 @@ proxy_cache_key $scheme$proxy_host$uri$is_args$args;
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>1.1.12</appeared-in>
 
 <para>
 Задаёт таймаут для <link id="proxy_cache_lock"/>.

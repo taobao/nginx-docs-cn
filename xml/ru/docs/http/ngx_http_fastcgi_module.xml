@@ -135,6 +135,7 @@ fastcgi_cache_key localhost:9000$request_uri;
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>1.1.12</appeared-in>
 
 <para>
 Если включено, одновременно только одному запросу будет позволено
@@ -155,6 +156,7 @@ fastcgi_cache_key localhost:9000$request_uri;
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>1.1.12</appeared-in>
 
 <para>
 Задаёт таймаут для <link id="fastcgi_cache_lock"/>.
