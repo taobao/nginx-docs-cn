@@ -20,7 +20,7 @@ server {
     ssl                  on;
     ssl_certificate      www.nginx.com.crt;
     ssl_certificate_key  www.nginx.com.key;
-    ssl_protocols        SSLv3 TLSv1;
+    ssl_protocols        SSLv3 TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers          HIGH:!aNULL:!MD5;
     ...
 }
@@ -50,6 +50,8 @@ to include only the strong versions and ciphers of SSL/TLS.
 Since version 1.0.5, nginx uses “<literal>ssl_protocols SSLv3 TLSv1</literal>”
 and “<literal>ssl_ciphers HIGH:!aNULL:!MD5</literal>” by default,
 so configuring them explicitly only makes sense for the earlier nginx versions.
+Since version 1.1.13, nginx uses
+“<literal>ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2</literal>” by default.
 </para>
 
 <para>
@@ -105,7 +107,7 @@ http {
         ssl                  on;
         ssl_certificate      www.nginx.com.crt;
         ssl_certificate_key  www.nginx.com.key;
-        ssl_protocols        SSLv3 TLSv1;
+        ssl_protocols        SSLv3 TLSv1 TLSv1.1 TLSv1.2;
         ssl_ciphers          HIGH:!aNULL:!MD5;
         ...
 </programlisting>
@@ -454,7 +456,8 @@ The shared SSL session cache has been supported since 0.5.6.
 <list>
 
 <item>
-Version 0.7.65, 0.8.19 and later: the default SSL protocols are SSLv3 and TLSv1.
+Version 0.7.65, 0.8.19 and later: the default SSL protocols are SSLv3, TLSv1,
+TLSv1.1, and TLSv1.2 (if supported by the OpenSSL library).
 </item>
 
 <item>

@@ -67,7 +67,7 @@ http {
         <emphasis>keepalive_timeout    70;</emphasis>
 
         ssl                  on;
-        ssl_protocols        SSLv3 TLSv1;
+        ssl_protocols        SSLv3 TLSv1 TLSv1.1 TLSv1.2;
         ssl_ciphers          AES128-SHA:AES256-SHA:RC4-SHA:DES-CBC3-SHA:RC4-MD5;
         ssl_certificate      /usr/local/nginx/conf/cert.pem;
         ssl_certificate_key  /usr/local/nginx/conf/cert.key;
@@ -215,7 +215,7 @@ OpenSSL, например:
 <context>http, server</context>
 
 <para>
-Директива указывает, чтобы при использовании протоколов SSLv3 и TLSv1
+Директива указывает, чтобы при использовании протоколов SSLv3 и TLS
 серверные шифры были более приоритетны, чем клиентские.
 </para>
 
@@ -223,12 +223,25 @@ OpenSSL, например:
 
 
 <directive name="ssl_protocols">
-<syntax>[<literal>SSLv2</literal>] [<literal>SSLv3</literal>] [<literal>TLSv1</literal>]</syntax>
-<default>SSLv3 TLSv1</default>
+<syntax>
+    [<literal>SSLv2</literal>]
+    [<literal>SSLv3</literal>]
+    [<literal>TLSv1</literal>]
+    [<literal>TLSv1.1</literal>]
+    [<literal>TLSv1.2</literal>]</syntax>
+<default>SSLv3 TLSv1 TLSv1.1 TLSv1.2</default>
 <context>http, server</context>
 
 <para>
 Директива разрешает указанные протоколы.
+Параметры <literal>TLSv1.1</literal> и <literal>TLSv1.2</literal> работают
+только при использовании библиотеки OpenSSL версии 1.0.1 и выше.
+<note>
+Параметры <literal>TLSv1.1</literal> и <literal>TLSv1.2</literal> поддерживаются
+только начиная с версии 1.1.13, поэтому при использовании OpenSSL версии 1.0.1
+и выше на старых версиях nginx эти протоколы работать будут, однако их нельзя
+будет отключить.
+</note>
 </para>
 
 </directive>
