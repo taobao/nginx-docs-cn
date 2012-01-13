@@ -368,6 +368,25 @@ nginx не передаёт клиенту поля заголовка <header>D
 </directive>
 
 
+<directive name="proxy_http_version">
+<syntax><literal>1.0</literal> | <literal>1.1</literal></syntax>
+<default>1.0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.4</appeared-in>
+
+<para>
+Задаёт версию протокола HTTP для проксирования.
+По умолчанию используется версия 1.0.
+Для работы
+<link doc="ngx_http_upstream_module.xml" id="keepalive">постоянных
+соединений</link> рекомендуется версия 1.1.
+</para>
+
+</directive>
+
+
 <directive name="proxy_ignore_client_abort">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>

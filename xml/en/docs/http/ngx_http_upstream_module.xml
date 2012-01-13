@@ -84,6 +84,126 @@ upstream backend {
 </directive>
 
 
+<directive name="keepalive">
+<syntax><value>connections</value></syntax>
+<default/>
+<context>upstream</context>
+<appeared-in>1.1.4</appeared-in>
+
+<para>
+Activates cache of connections to upstream servers.
+</para>
+
+<para>
+The <value>connections</value> parameter sets the maximum number of
+keepalive connections to upstream servers that are retained in
+the cache per one worker process.
+If there are more idle connections to retain to an upstream than
+are specified by this number, the least recently used ones will
+be closed.
+<note>
+It should be noted that <literal>keepalive</literal> directive
+does not limit the total number of connections that nginx worker
+process can open to upstream servers.
+The new connections are always created on demand.
+The <value>connections</value> parameter should be set low enough
+to allow upstream servers to process additional new incoming
+connections as well.
+</note>
+</para>
+
+<para>
+Example configuration of memcached upstream with keepalive connections:
+<example>
+upstream memcached_backend {
+    server 127.0.0.1:11211;
+    server 10.0.0.2:11211;
+
+    keepalive 32;
+}
+
+server {
+    ...
+
+    location /memcached/ {
+        set $memcached_key $uri;
+        memcached_pass memcached_backend;
+    }
+
+}
+</example>
+</para>
+
+<para>
+For HTTP, the <link doc="ngx_http_proxy_module.xml" id="proxy_http_version"/>
+directive should be set to “<literal>1.1</literal>”
+and the <header>Connection</header> header field should be cleared:
+<example>
+upstream http_backend {
+    server 127.0.0.1:8080;
+
+    keepalive 16;
+}
+
+server {
+    ...
+
+    location /http/ {
+        proxy_pass http://http_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        ...
+    }
+}
+</example>
+</para>
+
+<para>
+<note>
+Alternatively, HTTP/1.0 persistent connections can be used by passing the
+<header>Connection: Keep-Alive</header> header field to an upstream server,
+though this is not recommended.
+</note>
+</para>
+
+<para>
+For FastCGI servers, it is required to set
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_keep_conn"/>
+for keepalive connections to work:
+<example>
+upstream fastcgi_backend {
+    server 127.0.0.1:9000;
+
+    keepalive 8;
+}
+
+server {
+    ...
+
+    location /fastcgi/ {
+        fastcgi_pass fastcgi_backend;
+        fastcgi_keep_conn on;
+        ...
+    }
+}
+</example>
+</para>
+
+<para>
+<note>
+When using load balancer modules other than the default
+round-robin, it is necessary to activate them before
+the <literal>keepalive</literal> directive.
+</note>
+
+<note>
+SCGI and uwsgi protocols do not define keepalive connections.
+</note>
+</para>
+
+</directive>
+
+
 <directive name="server">
 <syntax><value>name</value> [<value>parameters</value>]</syntax>
 <default/>

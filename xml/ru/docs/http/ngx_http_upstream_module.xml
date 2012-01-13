@@ -87,6 +87,126 @@ upstream backend {
 </directive>
 
 
+<directive name="keepalive">
+<syntax><value>соединения</value></syntax>
+<default/>
+<context>upstream</context>
+<appeared-in>1.1.4</appeared-in>
+
+<para>
+Задействует кэш соединений для группы серверов.
+</para>
+
+<para>
+Параметр <value>соединения</value> устанавливает максимальное число
+постоянных соединений с серверами группы, которые будут сохраняться
+в кэше каждого рабочего процесса.
+При превышении указанного числа неактивных постоянных соединений
+с серверами группы самые старые соединения закрываются.
+<note>
+Следует отметить, что директива <literal>keepalive</literal>
+не ограничивает общее число соединений, которые рабочие процессы
+nginx могут открыть с серверами группы.
+Новые соединения всегда создаются по мере необходимости.
+Параметр <value>соединения</value> следует устанавливать
+достаточно консервативно для обеспечения возможности
+обработки серверами группы новых входящих соединений.
+</note>
+</para>
+
+<para>
+Пример конфигурации группы серверов memcached с постоянными соединениями:
+<example>
+upstream memcached_backend {
+    server 127.0.0.1:11211;
+    server 10.0.0.2:11211;
+
+    keepalive 32;
+}
+
+server {
+    ...
+
+    location /memcached/ {
+        set $memcached_key $uri;
+        memcached_pass memcached_backend;
+    }
+
+}
+</example>
+</para>
+
+<para>
+Для HTTP директиву
+<link doc="ngx_http_proxy_module.xml" id="proxy_http_version"/>
+следует установить в “<literal>1.1</literal>”,
+а строку заголовка <header>Connection</header> — очистить:
+<example>
+upstream http_backend {
+    server 127.0.0.1:8080;
+
+    keepalive 16;
+}
+
+server {
+    ...
+
+    location /http/ {
+        proxy_pass http://http_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        ...
+    }
+}
+</example>
+</para>
+
+<para>
+<note>
+Хоть это и не рекомендуется, но также возможно использование постоянных
+соединений в HTTP/1.0, путём передачи строки заголовка
+<header>Connection: Keep-Alive</header> серверу группы.
+</note>
+</para>
+
+<para>
+Для работы постоянных соединений с FastCGI-серверами потребуется
+включить директиву
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_keep_conn"/>:
+<example>
+upstream fastcgi_backend {
+    server 127.0.0.1:9000;
+
+    keepalive 8;
+}
+
+server {
+    ...
+
+    location /fastcgi/ {
+        fastcgi_pass fastcgi_backend;
+        fastcgi_keep_conn on;
+        ...
+    }
+}
+</example>
+</para>
+
+<para>
+<note>
+При использовании модулей балансировки нагрузки, отличных
+от стандартного round-robin, следует активировать их до
+директивы <literal>keepalive</literal>.
+</note>
+
+<note>
+Протоколы SCGI и uwsgi не определяют семантику постоянных соединений.
+</note>
+</para>
+
+</directive>
+
+
 <directive name="server">
 <syntax><value>название</value> [<value>параметры</value>]</syntax>
 <default/>

@@ -417,6 +417,26 @@ using the <link doc="ngx_http_core_module.xml" id="error_page"/> directive.
 </directive>
 
 
+<directive name="fastcgi_keep_conn">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+By default, a FastCGI server will close a connection right after
+sending the response.
+When set to the value <literal>on</literal>, nginx will instruct
+a FastCGI server to keep connections open.
+This in particular is necessary for 
+<link doc="ngx_http_upstream_module.xml" id="keepalive"/>
+connections to FastCGI servers to function.
+</para>
+
+</directive>
+
+
 <directive name="fastcgi_next_upstream">
 <syntax>
   <literal>error</literal> |

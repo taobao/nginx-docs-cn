@@ -412,6 +412,25 @@ fastcgi_param SCRIPT_FILENAME /home/www/scripts/php$fastcgi_script_name;
 
 </directive>
 
+<directive name="fastcgi_keep_conn">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+По умолчанию FastCGI-сервер будет закрывать соединение сразу же
+после отправки ответа.
+При установке значения <literal>on</literal> nginx указывает
+FastCGI-серверу оставлять соединения открытыми.
+Это в частности требуется для функционирования
+<link doc="ngx_http_upstream_module.xml" id="keepalive">постоянных
+соединений</link> с FastCGI-серверами.
+</para>
+
+</directive>
+
 
 <directive name="fastcgi_next_upstream">
 <syntax>

@@ -372,6 +372,25 @@ the <link id="proxy_pass_header"/> directive can be used.
 </directive>
 
 
+<directive name="proxy_http_version">
+<syntax><literal>1.0</literal> | <literal>1.1</literal></syntax>
+<default>1.0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.4</appeared-in>
+
+<para>
+Sets the HTTP protocol version for proxying.
+By default, version 1.0 is used.
+Version 1.1 is recommended for use with
+<link doc="ngx_http_upstream_module.xml" id="keepalive"/>
+connections.
+</para>
+
+</directive>
+
+
 <directive name="proxy_ignore_client_abort">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
