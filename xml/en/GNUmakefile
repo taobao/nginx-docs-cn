@@ -44,6 +44,11 @@ FAQ_HTML =	$(foreach name, $(FAQ), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 REFS =									\
 		ngx_core_module						\
 		http/ngx_http_core_module				\
+		http/ngx_http_access_module				\
+		http/ngx_http_addition_module				\
+		http/ngx_http_auth_basic_module				\
+		http/ngx_http_autoindex_module				\
+		http/ngx_http_browser_module				\
 		http/ngx_http_empty_gif_module				\
 		http/ngx_http_fastcgi_module				\
 		http/ngx_http_flv_module				\

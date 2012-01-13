@@ -70,6 +70,31 @@ ngx_http_core_module</a>
 </item>
 
 <item>
+<a href="/en/docs/http/ngx_http_access_module.xml">
+ngx_http_access_module</a>
+</item>
+
+<item>
+<a href="/en/docs/http/ngx_http_addition_module.xml">
+ngx_http_addition_module</a>
+</item>
+
+<item>
+<a href="/en/docs/http/ngx_http_auth_basic_module.xml">
+ngx_http_auth_basic_module</a>
+</item>
+
+<item>
+<a href="/en/docs/http/ngx_http_autoindex_module.xml">
+ngx_http_autoindex_module</a>
+</item>
+
+<item>
+<a href="/en/docs/http/ngx_http_browser_module.xml">
+ngx_http_browser_module</a>
+</item>
+
+<item>
 <a href="/en/docs/http/ngx_http_empty_gif_module.xml">
 ngx_http_empty_gif_module</a>
 </item>

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_access_module"
+        link="/en/docs/http/ngx_http_access_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_access_module</literal> module allows
+to limit access based on client IP addresses.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+    location / {
+        deny  192.168.1.1;
+        allow 192.168.1.0/24;
+        allow 10.1.1.0/16;
+        deny  all;
+    }
+</example>
+</para>
+
+<para>
+The rules are checked in sequence until the first match is found.
+In this example, an access is allowed only for networks
+<literal>10.1.1.0/16</literal> and <literal>192.168.1.0/24</literal>
+excluding the address <literal>192.168.1.1</literal>.
+In case of a lot of rules, the use of the
+<link doc="ngx_http_geo_module.xml">ngx_http_geo_module</link>
+module variables is preferable.
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="allow">
+<syntax>
+    <value>address</value> |
+    <value>CIDR</value> |
+    <literal>all</literal></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
+
+<para>
+Allows access for the specified network or address.
+</para>
+
+</directive>
+
+
+<directive name="deny">
+<syntax>
+    <value>address</value> |
+    <value>CIDR</value> |
+    <literal>all</literal></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
+
+<para>
+Denies access for the specified network or address.
+</para>
+
+</directive>
+
+</section>
+
+</module>

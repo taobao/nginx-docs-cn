@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_autoindex_module"
+        link="/en/docs/http/ngx_http_autoindex_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_autoindex_module</literal> module produces
+a directory listing.
+Usually a request is passed to the <literal>ngx_http_autoindex_module</literal>
+module when the <link doc="ngx_http_index_module.xml">ngx_http_index_module</link>
+module could not find an index file.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+    location / {
+        autoindex on;
+    }
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="autoindex">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables a directory listing output.
+</para>
+
+</directive>
+
+
+<directive name="autoindex_exact_size">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Specifies whether file sizes in the directory listing should be
+output exactly, or rounded to kilobytes, megabytes, and gigabytes.
+</para>
+
+
+</directive>
+
+
+<directive name="autoindex_localtime">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Specifies whether times in the directory listing should be
+output in a local time zone or UTC.
+</para>
+
+</directive>
+
+</section>
+
+</module>

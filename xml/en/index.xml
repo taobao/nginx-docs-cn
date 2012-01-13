@@ -40,7 +40,8 @@ The sources are distributed under the
 <list>
 
 <item>
-Serving static and index files, and autoindexing;
+Serving static and index files, and
+<link doc="docs/http/ngx_http_autoindex_module.xml">autoindexing</link>;
 <link doc="docs/http/ngx_http_core_module.xml"
        id="open_file_cache">open file descriptor cache</link>;
 </item>
@@ -128,7 +129,10 @@ Executing different functions depending on the client address;
 </item>
 
 <item>
-Access control based on client IP address and HTTP Basic authentication;
+Access control based on
+<link doc="docs/http/ngx_http_access_module.xml">client IP address</link>
+and <link doc="docs/http/ngx_http_auth_basic_module.xml">HTTP
+Basic authentication</link>;
 </item>
 
 <item>
