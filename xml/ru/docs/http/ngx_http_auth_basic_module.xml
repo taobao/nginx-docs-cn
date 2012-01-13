@@ -10,8 +10,8 @@
 
 <para>
 Модуль <literal>ngx_http_auth_basic_module</literal> позволяет
-ограничить доступ к ресурсам с проверкой имени и пароля по протоколу
-“HTTP Basic Authentication”.
+ограничить доступ к ресурсам с проверкой имени и пароля пользователя
+по протоколу “HTTP Basic Authentication”.
 </para>
 
 </section>
@@ -42,7 +42,8 @@
 <context>limit_except</context>
 
 <para>
-Включает проверку имени и пароля по протоколу “HTTP Basic Authentication”.
+Включает проверку имени и пароля пользователя по протоколу
+“HTTP Basic Authentication”.
 Заданный параметр используется в качестве <value>realm</value>.
 Параметр <literal>off</literal> позволяет отменить действие унаследованной
 с предыдущего уровня конфигурации директивы <literal>auth_basic</literal>.
