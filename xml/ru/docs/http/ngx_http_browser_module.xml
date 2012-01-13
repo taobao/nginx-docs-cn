@@ -88,7 +88,7 @@
 <para>
 Задаёт подстроки, при нахождении которых в поле <header>User-Agent</header>
 заголовка запроса браузер считается устаревшим.
-Специальная строка <literal>netscape4</literal> соответствует
+Специальная строка “<literal>netscape4</literal>” соответствует
 регулярному выражению “<literal>^Mozilla/[1-4]</literal>”.
 </para>
 
@@ -121,8 +121,8 @@
 Задаёт версию браузера, начиная с которой он считается современным.
 В качестве браузера можно задать <literal>msie</literal>,
 <literal>gecko</literal> (браузеры, созданные на основе Mozilla),
-<literal>opera</literal>, <literal>safari</literal>,
-<literal>konqueror</literal>.
+<literal>opera</literal>, <literal>safari</literal>
+или <literal>konqueror</literal>.
 </para>
 
 <para>
