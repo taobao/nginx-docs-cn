@@ -16,7 +16,7 @@ ending with the slash character (‘<literal>/</literal>’).
 </section>
 
 
-<section name="Example Configuration" id="example">
+<section id="example" name="Example Configuration">
 
 <para>
 <example>
@@ -29,7 +29,7 @@ ending with the slash character (‘<literal>/</literal>’).
 </section>
 
 
-<section name="Directives" id="directives">
+<section id="directives" name="Directives">
 
 <directive name="index">
 <syntax><value>file</value> ...</syntax>

@@ -29,7 +29,7 @@ configuration parameter.
 </section>
 
 
-<section name="Example Configuration" id="example">
+<section id="example" name="Example Configuration">
 
 <para>
 <example>
@@ -42,7 +42,7 @@ configuration parameter.
 </section>
 
 
-<section name="Directives" id="directives">
+<section id="directives" name="Directives">
 
 <directive name="flv">
 <syntax/>

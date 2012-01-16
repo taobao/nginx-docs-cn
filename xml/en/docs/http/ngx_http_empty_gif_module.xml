@@ -16,7 +16,7 @@ single-pixel transparent GIF.
 </section>
 
 
-<section name="Example Configuration" id="example">
+<section id="example" name="Example Configuration">
 
 <para>
 <example>
@@ -29,7 +29,7 @@ single-pixel transparent GIF.
 </section>
 
 
-<section name="Directives" id="directives">
+<section id="directives" name="Directives">
 
 <directive name="empty_gif">
 <syntax/>
