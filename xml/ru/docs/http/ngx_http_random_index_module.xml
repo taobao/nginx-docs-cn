@@ -2,29 +2,34 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_random_index_module"
+<module name="Модуль ngx_http_random_index_module"
         link="/ru/docs/http/ngx_http_random_index_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_random_index_module выдаёт случайный файл в качестве
-индексного файла каталога. Модуль работает до модуля
+Модуль <literal>ngx_http_random_index_module</literal> выдаёт случайный
+файл в качестве индексного файла каталога.
+Модуль работает до модуля
 <link doc="ngx_http_index_module.xml">ngx_http_index_module</link>.
-По умолчанию модуль не собирается, нужно разрешить его сборку при
-конфигурировании параметром <literal>--with-http_random_index_module</literal>.
+</para>
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-http_random_index_module</literal>.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    location  /  {
-        random_index  on;
+    location / {
+        random_index on;
     }
 </example>
 </para>
@@ -32,7 +37,7 @@
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="random_index">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
@@ -40,7 +45,7 @@
 <context>location</context>
 
 <para>
-Директива разрешает или запрещает работу модуля.
+Разрешает или запрещает в содержащем location обработку этим модулем.
 </para>
 
 </directive>

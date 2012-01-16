@@ -2,25 +2,26 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_index_module"
+<module name="Модуль ngx_http_index_module"
         link="/ru/docs/http/ngx_http_index_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_index_module обслуживает запросы, оканчивающиеся слэшом.
+Модуль <literal>ngx_http_index_module</literal> обслуживает запросы,
+оканчивающиеся слэшом (‘<literal>/</literal>’).
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    location  /  {
-        index  index.$geo.html  index.html;
+    location / {
+        index index.$geo.html index.html;
     }
 </example>
 </para>
@@ -28,30 +29,31 @@
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="index">
 <syntax><value>файл</value> ...</syntax>
 <default>index.html</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива определяет файлы, которые будут использоваться в качестве индекса.
+Определяет файлы, которые будут использоваться в качестве индекса.
 В имени файла можно использовать переменные.
 Наличие файлов проверяется в порядке их перечисления.
 В конце списка может стоять файл с абсолютным путём.
-Пример использования:
+Пример:
 <example>
-    index  index.$geo.html  index.0.html  /index.html;
+    index index.$geo.html index.0.html /index.html;
 </example>
 </para>
 
 <para>
 Необходимо иметь в виду, что при использовании индексного файла делается
 внутреннее перенаправление и запрос может быть обработан уже в другом
-location'е.
-Например, запрос "/" будет фактически обработан во втором location'е
-как "/index.html" в такой конфигурации:
+location’е.
+Например, в такой конфигурации:
 <example>
     location  = /  {
         index  index.html;
@@ -61,6 +63,8 @@ location'е.
         ...
     }
 </example>
+запрос “<literal>/</literal>” будет фактически обработан во
+втором location’е как “<literal>/index.html</literal>”.
 </para>
 
 </directive>

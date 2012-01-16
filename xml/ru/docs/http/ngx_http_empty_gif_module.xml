@@ -2,20 +2,21 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_empty_gif_module"
+<module name="Модуль ngx_http_empty_gif_module"
         link="/ru/docs/http/ngx_http_empty_gif_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_empty_gif_module выдаёт одно-пиксельный прозрачный GIF.
+Модуль <literal>ngx_http_empty_gif_module</literal> выдаёт
+однопиксельный прозрачный GIF.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
@@ -28,7 +29,7 @@
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="empty_gif">
 <syntax/>
@@ -36,7 +37,7 @@
 <context>location</context>
 
 <para>
-Директива разрешает выдавать одно-пиксельный прозрачный GIF.
+Разрешает в содержащем location выдавать однопиксельный прозрачный GIF.
 </para>
 
 </directive>

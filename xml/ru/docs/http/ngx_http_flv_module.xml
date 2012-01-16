@@ -2,27 +2,33 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_flv_module"
+<module name="Модуль ngx_http_flv_module"
         link="/ru/docs/http/ngx_http_flv_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_flv_module делает специальную обработку передаваемых файлов:
-при передаче файла, начиная со смещения, указанного в аргументах
-запроса "start=XXX", добавляет FLV-заголовок перед запрашиваемым файлом.
+Модуль <literal>ngx_http_flv_module</literal> обеспечивает серверную поддержку
+псевдо-стриминга для файлов Flash Video (FLV).
 </para>
 
 <para>
-По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром <literal>--with-http_flv_module</literal>.
+Он специальным образом обрабатывает запросы с аргументом
+<literal>start</literal> в строке запроса, посылая в ответ содержимое файла
+с запрошенного смещения в байтах, добавив перед ним FLV-заголовок.
+</para>
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-http_flv_module</literal>.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
@@ -35,7 +41,7 @@
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="flv">
 <syntax/>
@@ -43,7 +49,7 @@
 <context>location</context>
 
 <para>
-Директива разрешает специальную обработку передаваемых файлов.
+Включает в содержащем location обработку этим модулем.
 </para>
 
 </directive>
