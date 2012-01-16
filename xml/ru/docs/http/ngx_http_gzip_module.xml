@@ -2,44 +2,49 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_gzip_module"
+<module name="Модуль ngx_http_gzip_module"
         link="/ru/docs/http/ngx_http_gzip_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_gzip_module - это фильтр, сжимающий ответ методом gzip,
+Модуль <literal>ngx_http_gzip_module</literal> — это фильтр,
+сжимающий ответ методом gzip,
 что позволяет уменьшить размер передаваемых данных в 2 и более раз.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    gzip             on;
-    gzip_min_length  1000;
-    gzip_proxied     expired no-cache no-store private auth;
-    gzip_types       text/plain application/xml;
+    gzip            on;
+    gzip_min_length 1000;
+    gzip_proxied    expired no-cache no-store private auth;
+    gzip_types      text/plain application/xml;
 </example>
 </para>
 
 <para>
-Для записи в лог степени сжатия можно использовать переменную $gzip_ratio.
+Для записи в лог степени сжатия можно использовать переменную
+<var>$gzip_ratio</var>.
 </para>
 
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="gzip">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location, if в location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if в location</context>
 
 <para>
 Разрешает или запрещает сжатие ответа методом gzip.
@@ -50,14 +55,19 @@
 
 <directive name="gzip_buffers">
 <syntax><value>число</value> <value>размер</value></syntax>
-<default>32 4k/16 8k</default>
-<context>http, server, location</context>
+<default>32 4k|16 8k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт число и размер буферов, в которые будет сжиматься ответ.
-По умолчанию размер одного буфера равен размеру страницы, в зависимости
-от платформы это или 4K, или 8K.
+Задаёт <value>число</value> и <value>размер</value> буферов,
+в которые будет сжиматься ответ.
+По умолчанию размер одного буфера равен размеру страницы.
+В зависимости от платформы это или 4K, или 8K.
+<note>
 До версии 0.7.28 по умолчанию использовалось 4 буфера размером 4K или 8K.
+</note>
 </para>
 
 </directive>
@@ -67,7 +77,9 @@
 
 <syntax><value>степень</value></syntax>
 <default>1</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
 Устанавливает <value>степень</value> сжатия ответа методом gzip.
@@ -80,17 +92,22 @@
 <directive name="gzip_disable">
 <syntax><value>regex</value> ...</syntax>
 <default/>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.6.23</appeared-in>
 
 <para>
-Директива (0.6.23) запрещает сжатие ответа методом gzip для запросов
-со строками "User-Agent", совпадающими с заданными регулярными выражениями.
+Запрещает сжатие ответа методом gzip для запросов
+со строками заголовка <header>User-Agent</header>,
+совпадающими с заданными регулярными выражениями.
 </para>
 
 <para>
-Специальная маска "msie6" (0.7.12) соответствует
-регулярному выражению "MSIE [4-6]\.", но работает быстрее.
-Начиная с версии 0.8.11, из этой маски исключается "MSIE 6.0; ... SV1".
+Специальная маска “<literal>msie6</literal>” (0.7.12) соответствует
+регулярному выражению “<literal>MSIE [4-6]\.</literal>”, но работает быстрее.
+Начиная с версии 0.8.11, из этой маски исключается
+“<literal>MSIE 6.0; ... SV1</literal>”.
 </para>
 
 </directive>
@@ -99,12 +116,14 @@
 <directive name="gzip_min_length">
 <syntax><value>длина</value></syntax>
 <default>20</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Устанавливает минимальную длину ответа, для которых
-будет выполняться сжатие ответа методом gzip.
-Длина определяется только из строки "Content-Length" заголовка ответа.
+Устанавливает минимальную длину ответа, который будет сжиматься методом gzip.
+Длина определяется только из строки <header>Content-Length</header>
+заголовка ответа.
 </para>
 
 </directive>
@@ -113,10 +132,12 @@
 <directive name="gzip_http_version">
 <syntax><literal>1.0</literal> | <literal>1.1</literal></syntax>
 <default>1.1</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Устанавливает минимальную версию HTTP запроса для сжатия ответа.
+Устанавливает минимальную версию HTTP-запроса, необходимую для сжатия ответа.
 </para>
 
 </directive>
@@ -135,57 +156,71 @@
   <literal>any</literal>
   ...</syntax>
 <default>off</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
 Разрешает или запрещает сжатие ответа методом gzip для проксированных
 запросов в зависимости от запроса и ответа.
-То что, запрос проксированный, определяется на основании строки "Via"
+То, что запрос проксированный, определяется на основании строки
+<header>Via</header>
 в заголовке запроса.
 В директиве можно указать одновременно несколько параметров:
-<list type="bullet">
+<list type="tag">
 
-<listitem>
-off — запрещает сжатие для всех проксированных запросов,
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+запрещает сжатие для всех проксированных запросов,
 игнорируя остальные параметры;
-</listitem>
+</tag-desc>
 
-<listitem>
-expired — разрешить сжатие, если в ответе есть
-строка "Expires" со значением, запрещающим кэширование;
-</listitem>
+<tag-name><literal>expired</literal></tag-name>
+<tag-desc>
+разрешить сжатие, если в заголовке ответа есть строка
+<header>Expires</header> со значением, запрещающим кэширование;
+</tag-desc>
 
-<listitem>
-no-cache — разрешить сжатие, если в ответе есть
-строка "Cache-Control" с параметром "no-cache";
-</listitem>
+<tag-name><literal>no-cache</literal></tag-name>
+<tag-desc>
+разрешить сжатие, если в заголовке ответа есть строка
+<header>Cache-Control</header> с параметром “<literal>no-cache</literal>”;
+</tag-desc>
 
-<listitem>
-no-store — разрешить сжатие, если в ответе есть
-строка "Cache-Control" с параметром "no-store";
-</listitem>
+<tag-name><literal>no-store</literal></tag-name>
+<tag-desc>
+разрешить сжатие, если в заголовке ответа есть строка
+<header>Cache-Control</header> с параметром “<literal>no-store</literal>”;
+</tag-desc>
 
-<listitem>
-private — разрешить сжатие, если в ответе есть
-строка "Cache-Control" с параметром "private";
-</listitem>
+<tag-name><literal>private</literal></tag-name>
+<tag-desc>
+разрешить сжатие, если в заголовке ответа есть строка
+<header>Cache-Control</header> с параметром “<literal>private</literal>”;
+</tag-desc>
 
-<listitem>
-no_last_modified — разрешить сжатие, если в ответе нет
-строки "Last-Modified";
-</listitem>
+<tag-name><literal>no_last_modified</literal></tag-name>
+<tag-desc>
+разрешить сжатие, если в заголовке ответа нет строки
+<header>Last-Modified</header>;
+</tag-desc>
 
-<listitem>
-no_etag — разрешить сжатие, если в ответе нет строки "ETag";
-</listitem>
+<tag-name><literal>no_etag</literal></tag-name>
+<tag-desc>
+разрешить сжатие, если в заголовке ответа нет строки
+<header>ETag</header>;
+</tag-desc>
 
-<listitem>
-auth — разрешить сжатие, если в запросе есть строка "Authorization";
-</listitem>
+<tag-name><literal>auth</literal></tag-name>
+<tag-desc>
+разрешить сжатие, если в заголовке запроса есть строка
+<header>Authorization</header>;
+</tag-desc>
 
-<listitem>
-any — разрешить сжатие для всех проксированных запросов;
-</listitem>
+<tag-name><literal>any</literal></tag-name>
+<tag-desc>
+разрешить сжатие для всех проксированных запросов;
+</tag-desc>
 
 </list>
 </para>
@@ -196,11 +231,14 @@ any — разрешить сжатие для всех проксирован�
 <directive name="gzip_types">
 <syntax><value>mime-тип</value> ...</syntax>
 <default>text/html</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
 Разрешает сжатие ответа методом gzip для указанных MIME-типов в дополнение
-к "text/html". "text/html" сжимается всегда.
+к “<literal>text/html</literal>”.
+Ответы с типом “<literal>text/html</literal>” сжимаются всегда.
 </para>
 
 </directive>
@@ -209,11 +247,13 @@ any — разрешить сжатие для всех проксирован�
 <directive name="gzip_vary">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
 Разрешает или запрещает выдавать в ответе строку заголовка
-"Vary: Accept-Encoding", если директивы
+<header>Vary: Accept-Encoding</header>, если директивы
 <link id="gzip"/> или
 <link doc="ngx_http_gzip_static_module.xml" id="gzip_static"/>
 активны.

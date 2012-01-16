@@ -2,44 +2,47 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_gzip_static_module"
+<module name="Модуль ngx_http_gzip_static_module"
         link="/ru/docs/http/ngx_http_gzip_static_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_gzip_static_module позволяет отдавать
+Модуль <literal>ngx_http_gzip_static_module</literal> позволяет отдавать
 вместо обычного файла предварительно сжатый файл с таким же именем
-и с суффиксом ".gz".
+и с расширением “<literal>.gz</literal>”.
 </para>
 
 <para>
-По умолчанию модуль не собирается, нужно разрешить его сборку при
-конфигурировании параметром <literal>--with-http_gzip_static_module</literal>.
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-http_gzip_static_module</literal>.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    gzip_static      on;
-    gzip_proxied     expired no-cache no-store private auth;
+    gzip_static  on;
+    gzip_proxied expired no-cache no-store private auth;
 </example>
 </para>
 
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="gzip_static">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
 Разрешает или запрещает проверку готового сжатого файла.
@@ -51,8 +54,9 @@
 </para>
 
 <para>
-Сжимать файлы можно с помощью программы gzip или совместимой с ней.
-Желательно, чтобы время модификации исходного и сжатого файлов совпадали.
+Сжимать файлы можно с помощью программы <command>gzip</command>
+или совместимой с ней.
+Желательно, чтобы дата и время модификации исходного и сжатого файлов совпадали.
 </para>
 
 </directive>
