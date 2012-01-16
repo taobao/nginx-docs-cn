@@ -1704,7 +1704,7 @@ closed normally.
 <context>location</context>
 
 <para>
-Configures name servers used to resolve upstream server names,
+Configures name servers used to resolve names of upstream servers,
 for example:
 <example>
 resolver 127.0.0.1 192.0.2.1;
