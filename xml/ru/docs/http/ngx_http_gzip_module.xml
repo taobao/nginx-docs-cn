@@ -29,7 +29,7 @@
 </para>
 
 <para>
-Для записи в лог степени сжатия можно использовать переменную
+Для записи в лог полученной степени сжатия можно использовать переменную
 <var>$gzip_ratio</var>.
 </para>
 
@@ -99,7 +99,7 @@
 
 <para>
 Запрещает сжатие ответа методом gzip для запросов
-со строками заголовка <header>User-Agent</header>,
+с полями заголовка <header>User-Agent</header>,
 совпадающими с заданными регулярными выражениями.
 </para>
 
@@ -122,7 +122,7 @@
 
 <para>
 Устанавливает минимальную длину ответа, который будет сжиматься методом gzip.
-Длина определяется только из строки <header>Content-Length</header>
+Длина определяется только из поля <header>Content-Length</header>
 заголовка ответа.
 </para>
 
@@ -137,7 +137,7 @@
 <context>location</context>
 
 <para>
-Устанавливает минимальную версию HTTP-запроса, необходимую для сжатия ответа.
+Устанавливает минимальную HTTP-версию запроса, необходимую для сжатия ответа.
 </para>
 
 </directive>
@@ -163,9 +163,8 @@
 <para>
 Разрешает или запрещает сжатие ответа методом gzip для проксированных
 запросов в зависимости от запроса и ответа.
-То, что запрос проксированный, определяется на основании строки
-<header>Via</header>
-в заголовке запроса.
+То, что запрос проксированный, определяется на основании наличия поля
+<header>Via</header> в заголовке запроса.
 В директиве можно указать одновременно несколько параметров:
 <list type="tag">
 
@@ -177,49 +176,49 @@
 
 <tag-name><literal>expired</literal></tag-name>
 <tag-desc>
-разрешить сжатие, если в заголовке ответа есть строка
+разрешает сжатие, если в заголовке ответа есть поле
 <header>Expires</header> со значением, запрещающим кэширование;
 </tag-desc>
 
 <tag-name><literal>no-cache</literal></tag-name>
 <tag-desc>
-разрешить сжатие, если в заголовке ответа есть строка
+разрешает сжатие, если в заголовке ответа есть поле
 <header>Cache-Control</header> с параметром “<literal>no-cache</literal>”;
 </tag-desc>
 
 <tag-name><literal>no-store</literal></tag-name>
 <tag-desc>
-разрешить сжатие, если в заголовке ответа есть строка
+разрешает сжатие, если в заголовке ответа есть поле
 <header>Cache-Control</header> с параметром “<literal>no-store</literal>”;
 </tag-desc>
 
 <tag-name><literal>private</literal></tag-name>
 <tag-desc>
-разрешить сжатие, если в заголовке ответа есть строка
+разрешает сжатие, если в заголовке ответа есть поле
 <header>Cache-Control</header> с параметром “<literal>private</literal>”;
 </tag-desc>
 
 <tag-name><literal>no_last_modified</literal></tag-name>
 <tag-desc>
-разрешить сжатие, если в заголовке ответа нет строки
+разрешает сжатие, если в заголовке ответа нет поля
 <header>Last-Modified</header>;
 </tag-desc>
 
 <tag-name><literal>no_etag</literal></tag-name>
 <tag-desc>
-разрешить сжатие, если в заголовке ответа нет строки
+разрешает сжатие, если в заголовке ответа нет поля
 <header>ETag</header>;
 </tag-desc>
 
 <tag-name><literal>auth</literal></tag-name>
 <tag-desc>
-разрешить сжатие, если в заголовке запроса есть строка
+разрешает сжатие, если в заголовке запроса есть поле
 <header>Authorization</header>;
 </tag-desc>
 
 <tag-name><literal>any</literal></tag-name>
 <tag-desc>
-разрешить сжатие для всех проксированных запросов;
+разрешает сжатие для всех проксированных запросов.
 </tag-desc>
 
 </list>
@@ -252,7 +251,7 @@
 <context>location</context>
 
 <para>
-Разрешает или запрещает выдавать в ответе строку заголовка
+Разрешает или запрещает выдавать в ответе поле заголовка
 <header>Vary: Accept-Encoding</header>, если директивы
 <link id="gzip"/> или
 <link doc="ngx_http_gzip_static_module.xml" id="gzip_static"/>
