@@ -140,7 +140,7 @@ server {
 Для HTTP директиву
 <link doc="ngx_http_proxy_module.xml" id="proxy_http_version"/>
 следует установить в “<literal>1.1</literal>”,
-а строку заголовка <header>Connection</header> — очистить:
+а поле заголовка <header>Connection</header> — очистить:
 <example>
 upstream http_backend {
     server 127.0.0.1:8080;
@@ -164,7 +164,7 @@ server {
 <para>
 <note>
 Хоть это и не рекомендуется, но также возможно использование постоянных
-соединений в HTTP/1.0, путём передачи строки заголовка
+соединений в HTTP/1.0, путём передачи поля заголовка
 <header>Connection: Keep-Alive</header> серверу группы.
 </note>
 </para>
