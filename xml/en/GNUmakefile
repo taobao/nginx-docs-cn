@@ -52,6 +52,8 @@ REFS =									\
 		http/ngx_http_empty_gif_module				\
 		http/ngx_http_fastcgi_module				\
 		http/ngx_http_flv_module				\
+		http/ngx_http_gzip_module				\
+		http/ngx_http_gzip_static_module			\
 		http/ngx_http_image_filter_module			\
 		http/ngx_http_index_module				\
 		http/ngx_http_limit_conn_module				\

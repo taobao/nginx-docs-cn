@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_gzip_static_module"
+        link="/en/docs/http/ngx_http_gzip_static_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_gzip_static_module</literal> module allows
+to send precompressed files with the “<literal>.gz</literal>”
+filename extension instead of regular files.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_gzip_static_module</literal>
+configuration parameter.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+    gzip_static  on;
+    gzip_proxied expired no-cache no-store private auth;
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="gzip_static">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables checking the existence of precompressed files.
+The following directives are also taken into account:
+<link doc="ngx_http_gzip_module.xml" id="gzip_http_version"/>,
+<link doc="ngx_http_gzip_module.xml" id="gzip_proxied"/>,
+<link doc="ngx_http_gzip_module.xml" id="gzip_disable"/>,
+and <link doc="ngx_http_gzip_module.xml" id="gzip_vary"/>.
+</para>
+
+<para>
+The files can be compressed using the <command>gzip</command> command,
+or any other compatible.
+It is recommended that the modification date and time of original and
+compressed files be the same.
+</para>
+
+</directive>
+
+</section>
+
+</module>
