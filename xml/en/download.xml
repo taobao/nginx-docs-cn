@@ -197,9 +197,9 @@ To set up the yum repository for RHEL/CentOS, choose the corresponding
 
 </list>
 
-The package contains the yum configuration file
-and the public PGP key necessary to authenticate signed RPMs.
-Download and install it, then run the command:
+This package contains yum configuration file
+and a public PGP key necessary to authenticate signed RPMs.
+Download and install it, then run the following:
 <programlisting>
 yum install nginx
 </programlisting>
@@ -225,18 +225,23 @@ for 5.x or 6.x versions, respectively.
 </para>
 
 <para>
+In order to add repository signature checking and to eliminate gpg warnings during
+the installation on Debian or Ubuntu, it is necessary to import nginx signing key
+into apt keyring. Please download <link url="http://nginx.org/keys/nginx_signing.key">
+nginx signing key</link> from our web site, and add it to the apt keyring with the
+following  command:
+<programlisting>
+cat nginx_signing.key | sudo apt-key add -
+</programlisting>
+</para>
+
+<para>
 For Debian 6 append the following to the end of the
 <path>/etc/apt/sources.list</path> file:
 
 <programlisting>
 deb http://nginx.org/packages/debian/ squeeze nginx
 deb-src http://nginx.org/packages/debian/ squeeze nginx
-</programlisting>
-
-Then run the commands:
-<programlisting>
-apt-get update
-apt-get install nginx
 </programlisting>
 
 </para>
@@ -251,19 +256,9 @@ deb-src http://nginx.org/packages/ubuntu/ lucid nginx
 </programlisting>
 </para>
 
-<para>
-In order to add repository signature checking and to eliminate gpg warnings during
-the installation on Debian or Ubuntu, it is necessary to import nginx signing key
-into apt keyring. Please download <link url="http://nginx.org/keys/nginx_signing.key">
-nginx signing key</link> from our web site, and add it to the apt keyring with the
-following command:
-<programlisting>
-cat nginx_signing.key | sudo apt-key add -
-</programlisting>
-</para>
 
 <para>
-Then run the commands:
+Then run the following commands:
 <programlisting>
 apt-get update
 apt-get install nginx
