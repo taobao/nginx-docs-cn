@@ -110,12 +110,12 @@ ngx_http_flv_module</a>
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_gzip_module.xml">
+<a href="/en/docs/http/ngx_http_gzip_module.xml">
 ngx_http_gzip_module</a>
 </item>
 
 <item>
-<a href="/ru/docs/http/ngx_http_gzip_static_module.xml">
+<a href="/en/docs/http/ngx_http_gzip_static_module.xml">
 ngx_http_gzip_static_module</a>
 </item>
 
