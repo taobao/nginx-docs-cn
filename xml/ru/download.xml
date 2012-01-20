@@ -249,12 +249,6 @@ apt-get install nginx
 deb http://nginx.org/packages/ubuntu/ lucid nginx
 deb-src http://nginx.org/packages/ubuntu/ lucid nginx
 </programlisting>
-
-Затем выполните команды:
-<programlisting>
-apt-get update
-apt-get install nginx
-</programlisting>
 </para>
 
 <para>
@@ -266,6 +260,14 @@ apt-get install nginx
 выполнив команду:
 <programlisting>
 cat nginx_signing.key | sudo apt-key add -
+</programlisting>
+</para>
+
+<para>
+Затем выполните команды:
+<programlisting>
+apt-get update
+apt-get install nginx
 </programlisting>
 </para>
 
