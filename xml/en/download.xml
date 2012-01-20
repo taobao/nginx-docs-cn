@@ -256,6 +256,15 @@ apt-get update
 apt-get install nginx
 </programlisting>
 
+In order to add repository signature checking and to eliminate gpg warnings during
+the installation on Debian or Ubuntu, it is necessary to import nginx signing key
+into apt keyring. Please download <link url=http://nginx.org/keys/nginx_signing.key>
+nginx signing key</link> from our web site, and add it to the apt keyring with the
+following command:
+<programlisting>
+cat nginx_signing.key | sudo apt-key add -
+</programlisting>
+
 </para>
 
 </section>

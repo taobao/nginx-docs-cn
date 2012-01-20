@@ -256,6 +256,15 @@ apt-get update
 apt-get install nginx
 </programlisting>
 
+Для проверки подписи репозитория и для того, чтобы убрать предупреждения
+об отстутствующем gpg ключе при установке nginx на Debian или Ubuntu,
+необходимо добавить ключ, которым подписаны репозиторий и пакеты, в связку
+ключей программы apt. Загрузите <link url=http://nginx.org/keys/nginx_signing.key>
+данный ключ<link> с нашего сайта и добавьте в связку ключей программы apt,
+выполнив команду:
+<programlisting>
+cat nginx_signing.key | sudo apt-key add -
+</programlisting>
 </para>
 
 </section>
