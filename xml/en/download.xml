@@ -231,7 +231,7 @@ into apt keyring. Please download <link url="http://nginx.org/keys/nginx_signing
 nginx signing key</link> from our web site, and add it to the apt keyring with the
 following  command:
 <programlisting>
-cat nginx_signing.key | sudo apt-key add -
+sudo apt-key add nginx_signing.key
 </programlisting>
 </para>
 

@@ -259,7 +259,7 @@ deb-src http://nginx.org/packages/ubuntu/ lucid nginx
 данный ключ</link> с нашего сайта и добавьте в связку ключей программы apt,
 выполнив команду:
 <programlisting>
-cat nginx_signing.key | sudo apt-key add -
+sudo apt-key add nginx_signing.key
 </programlisting>
 </para>
 
