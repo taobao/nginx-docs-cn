@@ -2,60 +2,62 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_split_clients_module"
+<module name="Модуль ngx_http_split_clients_module"
         link="/ru/docs/http/ngx_http_split_clients_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_split_clients_module создаёт переменные для
-A/B split-тестирования.
+Модуль <literal>ngx_http_split_clients_module</literal> создаёт переменные для
+A/B тестирования (также известного как “split-тестирование”).
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
 http {
-    split_clients "${remote_addr}AAA"  $variant {
-                   0.5%                .one;
-                   2.0%                .two;
-                   *                   "";
+    split_clients "${remote_addr}AAA" $variant {
+                   0.5%               .one;
+                   2.0%               .two;
+                   *                  "";
     }
 
     server {
         location / {
-            index  index${variant}.html;
+            index index${variant}.html;
 </example>
 </para>
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="split_clients">
-<syntax block="yes"><value>$переменная1</value> <value>$переменная2</value></syntax>
+<syntax block="yes">
+    <value>строка</value>
+    <value>$переменная</value></syntax>
 <default/>
 <context>http</context>
 
 <para>
-Директива создаёт переменную для A/B split-тестирования, например:
+Создаёт переменную для A/B тестирования, например:
 <example>
-split_clients "${remote_addr}AAA"  $variant {
-               0.5%                .one;
-               2.0%                .two;
-               *                   "";
+split_clients "${remote_addr}AAA" $variant {
+               0.5%               .one;
+               2.0%               .two;
+               *                  "";
 }
 </example>
-Значение исходной строки переменных хэшируется с помощью CRC32.
+Значение исходной строки хэшируется с помощью MurmurHash2.
 В приведённом примере при значениях хэша от 0 до 21474836 (0.5%)
-переменная $variant получит значение ".one".
-При значениях хэша от 21474837 до 107374182 (2%) — ".two".
-И при значениях хэша от 107374183 до 4294967297 — "".
+переменная <var>$variant</var> получит значение <literal>".one"</literal>.
+При значениях хэша от 21474837 до 107374182 (2%) — <literal>".two"</literal>.
+И при значениях хэша от 107374183 до 4294967297 — <literal>""</literal>.
 </para>
 
 </directive>

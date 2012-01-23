@@ -2,29 +2,32 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_secure_link_module"
+<module name="Модуль ngx_http_secure_link_module"
         link="/ru/docs/http/ngx_http_secure_link_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_secure_link_module — это модуль проверяющий
+Модуль <literal>ngx_http_secure_link_module</literal> проверяет
 правильность запрашиваемой ссылки (0.7.18+).
-По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром
+</para>
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
 <literal>--with-http_secure_link_module</literal>.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
 location /p/ {
-    secure_link_secret   some_secret_word;
+    secure_link_secret some_secret_word;
 
     if ($secure_link = "") {
         return 403;
@@ -36,7 +39,7 @@ location /p/ {
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="secure_link_secret">
 <syntax><value>слово</value></syntax>
@@ -44,12 +47,12 @@ location /p/ {
 <context>location</context>
 
 <para>
-Директива задаёт секретное слово для проверки правильности ссылки.
+Задаёт секретное <value>слово</value> для проверки правильности ссылки.
 Полный URL защищённой ссылки выглядит так:
 <example>
 /prefix/<value>hash</value>/<value>ссылка</value>
 </example>
-где hash считается как
+где <value>hash</value> считается как
 <example>
 md5(ссылка, секретное_слово);
 </example>
@@ -64,15 +67,16 @@ md5(ссылка, секретное_слово);
 </section>
 
 
-<section name="Встроенные переменные" id="variables">
+<section id="variables" name="Встроенные переменные">
 
 <para>
-<list type="bullet">
+<list type="tag">
 
-<listitem>
-$secure_link, эта переменная равна ссылке выделенной из полного URL'а.
+<tag-name><var>$secure_link</var></tag-name>
+<tag-desc>
+равна ссылке, выделенной из полного URL’а.
 Если хэш неверный, то переменная равна пустой строке.
-</listitem>
+</tag-desc>
 
 </list>
 </para>

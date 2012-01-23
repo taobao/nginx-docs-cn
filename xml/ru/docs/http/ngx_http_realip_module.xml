@@ -2,44 +2,50 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_realip_module"
+<module name="Модуль ngx_http_realip_module"
         link="/ru/docs/http/ngx_http_realip_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_realip_module позволяет менять адрес клиента
-на переданный в указанной строке заголовка.
-По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром <literal>--with-http_realip_module</literal>.
+Модуль <literal>ngx_http_realip_module</literal> позволяет менять адрес клиента
+на переданный в указанном поле заголовка.
+</para>
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-http_realip_module</literal>.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    set_real_ip_from   192.168.1.0/24;
-    set_real_ip_from   192.168.2.1;
-    real_ip_header     X-Real-IP;
+    set_real_ip_from 192.168.1.0/24;
+    set_real_ip_from 192.168.2.1;
+    real_ip_header   X-Real-IP;
 </example>
 </para>
 
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="set_real_ip_from">
 <syntax><value>адрес</value> | <value>CIDR</value></syntax>
 <default/>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива описывает доверенные адреса, которые передают верный адрес
+Описывает доверенные адреса, которые передают верный адрес
 для замены.
 </para>
 
@@ -52,13 +58,16 @@
   <literal>X-Real-IP</literal> |
   <literal>X-Forwarded-For</literal></syntax>
 <default>X-Real-IP</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт поле заголовка запроса,
+Задаёт поле заголовка запроса,
 в котором передаётся адрес для замены.
-В случае строки "X-Forwarded-For" используется последний адрес в значении
-строки. Для остальных строк используется всё значение.
+В случае поля <header>X-Forwarded-For</header> используется
+последний адрес в значении поля.
+Для остальных полей используется всё значение.
 </para>
 
 </directive>
