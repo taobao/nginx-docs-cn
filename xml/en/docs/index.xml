@@ -110,6 +110,11 @@ ngx_http_flv_module</a>
 </item>
 
 <item>
+<a href="/en/docs/http/ngx_http_geoip_module.xml">
+ngx_http_geoip_module</a>
+</item>
+
+<item>
 <a href="/en/docs/http/ngx_http_gzip_module.xml">
 ngx_http_gzip_module</a>
 </item>
@@ -145,6 +150,11 @@ ngx_http_log_module</a>
 </item>
 
 <item>
+<a href="/en/docs/http/ngx_http_map_module.xml">
+ngx_http_map_module</a>
+</item>
+
+<item>
 <a href="/en/docs/http/ngx_http_mp4_module.xml">
 ngx_http_mp4_module</a>
 </item>
@@ -157,6 +167,26 @@ ngx_http_proxy_module</a>
 <item>
 <a href="/en/docs/http/ngx_http_random_index_module.xml">
 ngx_http_random_index_module</a>
+</item>
+
+<item>
+<a href="/en/docs/http/ngx_http_realip_module.xml">
+ngx_http_realip_module</a>
+</item>
+
+<item>
+<a href="/en/docs/http/ngx_http_secure_link_module.xml">
+ngx_http_secure_link_module</a>
+</item>
+
+<item>
+<a href="/en/docs/http/ngx_http_split_clients_module.xml">
+ngx_http_split_clients_module</a>
+</item>
+
+<item>
+<a href="/en/docs/http/ngx_http_sub_module.xml">
+ngx_http_sub_module</a>
 </item>
 
 <item>

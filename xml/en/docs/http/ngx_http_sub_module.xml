@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_sub_module"
+        link="/en/docs/http/ngx_http_sub_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_sub_module</literal> module is a filter
+that modifies a response by replacing one specified string by another.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_sub_module</literal>
+configuration parameter.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location / {
+    sub_filter      &lt;/head&gt;
+        '&lt;/head&gt;&lt;script language="javascript" src="$script"&gt;&lt;/script&gt;';
+    sub_filter_once on;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="sub_filter">
+<syntax><value>string</value> <value>replacement</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a string that needs to be changed, and a replacement string.
+The string to be replaced is matched ignoring the case.
+A replacement string can contain variables.
+</para>
+
+</directive>
+
+
+<directive name="sub_filter_once">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Determines how many times to look for a string to be replaced,
+once or several times.
+</para>
+
+</directive>
+
+
+<directive name="sub_filter_types">
+<syntax><value>mime-type</value> ...</syntax>
+<default>text/html</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables string replacement in responses with the specified MIME types
+in addition to “<literal>text/html</literal>”.
+</para>
+
+</directive>
+
+</section>
+
+</module>

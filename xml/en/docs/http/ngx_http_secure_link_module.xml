@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_secure_link_module"
+        link="/en/docs/http/ngx_http_secure_link_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_secure_link_module</literal> module (0.7.18+) checks
+the validity of the requested link.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_secure_link_module</literal>
+configuration parameter.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location /p/ {
+    secure_link_secret some_secret_word;
+
+    if ($secure_link = "") {
+        return 403;
+    }
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="secure_link_secret">
+<syntax><value>word</value></syntax>
+<default/>
+<context>location</context>
+
+<para>
+Defines a secret <value>word</value> used to check the validity of the link.
+The full URL of the protected link looks as follows:
+<example>
+/prefix/<value>hash</value>/<value>link</value>
+</example>
+where <value>hash</value> is computed as
+<example>
+md5(link, secret_word);
+</example>
+</para>
+
+<para>
+A prefix is an arbitrary string not including a slash.
+</para>
+
+</directive>
+
+</section>
+
+
+<section id="variables" name="Embedded Variables">
+
+<para>
+<list type="tag">
+
+<tag-name><var>$secure_link</var></tag-name>
+<tag-desc>
+equals to the link extracted from the full URL.
+If hash is incorrect, this variable is set to an empty string.
+</tag-desc>
+
+</list>
+</para>
+
+</section>
+
+</module>

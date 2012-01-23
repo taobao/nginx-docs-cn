@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_realip_module"
+        link="/en/docs/http/ngx_http_realip_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_realip_module</literal> module allows
+to change the client address to the one sent in the specified header field.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_realip_module</literal>
+configuration parameter.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+    set_real_ip_from 192.168.1.0/24;
+    set_real_ip_from 192.168.2.1;
+    real_ip_header   X-Real-IP;
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="set_real_ip_from">
+<syntax><value>address</value> | <value>CIDR</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Describes trusted addresses that are known to send correct
+replacement addresses.
+</para>
+
+</directive>
+
+
+<directive name="real_ip_header">
+<syntax>
+  <value>field</value> |
+  <literal>X-Real-IP</literal> |
+  <literal>X-Forwarded-For</literal></syntax>
+<default>X-Real-IP</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Defines a request header field used to send
+the address for a replacement.
+In case of the <header>X-Forwarded-For</header> field,
+the last address in the field’s value is used.
+For other fields the whole value is used.
+</para>
+
+</directive>
+
+</section>
+
+</module>

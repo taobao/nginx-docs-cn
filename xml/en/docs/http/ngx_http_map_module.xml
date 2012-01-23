@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_map_module"
+        link="/en/docs/http/ngx_http_map_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_map_module</literal> module creates variables
+whose values depend on values of other variables.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+map $http_host $name  {
+    hostnames;
+
+    default       0;
+
+    example.com   1;
+    *.example.com 1;
+    test.com      2;
+    *.test.com    2;
+    .site.com     3;
+    wap.*         4;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="map">
+<syntax block="yes">
+    <value>$variable1</value>
+    <value>$variable2</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+Creates a variable whose value
+depends on the value of another variable.
+The directive supports three special parameters:
+<list type="tag">
+<tag-name><literal>default</literal> <value>value</value></tag-name>
+<tag-desc>
+sets a value for the second variable when the value
+of the first variable cannot be found.
+</tag-desc>
+
+<tag-name><literal>hostnames</literal></tag-name>
+<tag-desc>
+allows to specify hostnames with a prefix or suffix mask, as source
+values, for example,
+<example>
+*.example.com 1;
+example.*     1;
+</example>
+The following two records
+<example>
+example.com   1;
+*.example.com 1;
+</example>
+can be combined:
+<example>
+.example.com  1;
+</example>
+</tag-desc>
+
+<tag-name><literal>include</literal> <value>file</value></tag-name>
+<tag-desc>
+includes a file with values.
+There can be several inclusions.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="map_hash_bucket_size">
+<syntax><value>size</value></syntax>
+<default>32|64|128</default>
+<context>http</context>
+
+<para>
+Sets the bucket size for the <link id="map"/> variables hash tables.
+Default value depends on the size of the processor's cache line.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
+<directive name="map_hash_max_size">
+<syntax><value>size</value></syntax>
+<default>2048</default>
+<context>http</context>
+
+<para>
+Sets the maximum <value>size</value> of the <link id="map"/> variables
+hash tables.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+</section>
+
+</module>

@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_geoip_module"
+        link="/en/docs/http/ngx_http_geoip_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_geoip_module</literal> module (0.8.6+) creates variables
+whose values depend on the client IP address, using the precompiled
+<link url="http://www.maxmind.com">MaxMind</link> databases.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_geoip_module</literal>
+configuration parameter.
+<note>
+This module requires the
+<link url="http://www.maxmind.com/app/c">MaxMind GeoIP</link> library.
+</note>
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+http {
+    geoip_country GeoIP.dat;
+    geoip_city    GeoLiteCity.dat;
+    ...
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="geoip_country">
+<syntax><value>database</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+Specifies a database used to determine a country
+depending on the client IP address.
+The following variables are available when using this database:
+<list type="tag">
+
+<tag-name><var>$geoip_country_code</var></tag-name>
+<tag-desc>
+two-letter country code, for example,
+“<literal>RU</literal>”, “<literal>US</literal>”.
+</tag-desc>
+
+<tag-name><var>$geoip_country_code3</var></tag-name>
+<tag-desc>
+three-letter country code, for example,
+“<literal>RUS</literal>”, “<literal>USA</literal>”.
+</tag-desc>
+
+<tag-name><var>$geoip_country_name</var></tag-name>
+<tag-desc>
+country name, for example,
+“<literal>Russian Federation</literal>”, “<literal>United States</literal>”.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="geoip_city">
+<syntax><value>database</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+Specifies a database used to determine a country, region, and city
+depending on the client IP address.
+The following variables are available when using this database:
+<list type="tag">
+
+<tag-name><var>$geoip_city_country_code</var></tag-name>
+<tag-desc>
+two-letter country code, for example,
+“<literal>RU</literal>”, “<literal>US</literal>”.
+</tag-desc>
+
+<tag-name><var>$geoip_city_country_code3</var></tag-name>
+<tag-desc>
+three-letter country code, for example,
+“<literal>RUS</literal>”, “<literal>USA</literal>”.
+</tag-desc>
+
+<tag-name><var>$geoip_city_country_name</var></tag-name>
+<tag-desc>
+country name, for example,
+“<literal>Russian Federation</literal>”, “<literal>United States</literal>”.
+</tag-desc>
+
+<tag-name><var>$geoip_region</var></tag-name>
+<tag-desc>
+country region name (region, territory, state, province, federal land
+and the like), for example,
+“<literal>Moscow City</literal>”, “<literal>DC</literal>”.
+</tag-desc>
+
+<tag-name><var>$geoip_city</var></tag-name>
+<tag-desc>
+city name, for example,
+“<literal>Moscow</literal>”, “<literal>Washington</literal>”.
+</tag-desc>
+
+<tag-name><var>$geoip_postal_code</var></tag-name>
+<tag-desc>
+postal code.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+</section>
+
+</module>

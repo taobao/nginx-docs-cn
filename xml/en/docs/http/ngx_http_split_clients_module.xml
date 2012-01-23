@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_split_clients_module"
+        link="/en/docs/http/ngx_http_split_clients_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_split_clients_module</literal> module creates
+variables suitable for A/B testing, also known as split testing.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+http {
+    split_clients "${remote_addr}AAA" $variant {
+                   0.5%               .one;
+                   2.0%               .two;
+                   *                  "";
+    }
+
+    server {
+        location / {
+            index index${variant}.html;
+</example>
+</para>
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="split_clients">
+<syntax block="yes">
+    <value>string</value>
+    <value>$variable</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+Creates a variable for A/B testing, for example:
+<example>
+split_clients "${remote_addr}AAA" $variant {
+               0.5%               .one;
+               2.0%               .two;
+               *                  "";
+}
+</example>
+The value of the original string is hashed using MurmurHash2.
+In the example given, hash values from 0 to 21474836 (0.5%)
+correspond to the <var>$variant</var> variable taking the
+value <literal>".one"</literal>,
+hash values from 21474837 to 107374182 (2%) correspond to
+the value <literal>".two"</literal>,
+and hash values from 107374183 to 4294967297 correspond to
+the value <literal>""</literal>.
+</para>
+
+</directive>
+
+</section>
+
+</module>
