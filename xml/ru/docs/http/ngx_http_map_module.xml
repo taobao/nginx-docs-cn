@@ -2,81 +2,86 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_map_module"
+<module name="Модуль ngx_http_map_module"
         link="/ru/docs/http/ngx_http_map_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_map_module создаёт переменные, значение которых
-зависят от значения других переменных.
+Модуль <literal>ngx_http_map_module</literal> создаёт переменные,
+значения которых зависят от значений других переменных.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    map  $http_host  $name  {
-        hostnames;
+map $http_host $name  {
+    hostnames;
 
-        default          0;
+    default       0;
 
-        example.com      1;
-        *.example.com    1;
-        test.com         2;
-        *.test.com       2;
-        .site.com        3;
-        wap.*            4;
-    }
+    example.com   1;
+    *.example.com 1;
+    test.com      2;
+    *.test.com    2;
+    .site.com     3;
+    wap.*         4;
+}
 </example>
 </para>
 
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="map">
-<syntax block="yes"><value>$переменная1</value> <value>$переменная2</value></syntax>
+<syntax block="yes">
+    <value>$переменная1</value>
+    <value>$переменная2</value></syntax>
 <default/>
 <context>http</context>
 
 <para>
-Директива создаёт переменную, значение которой
+Создаёт переменную, значение которой
 зависит от значения исходной переменной.
 Директива поддерживает три специальных параметра:
-<list type="bullet">
-<listitem>
-default — задаёт значение для второй переменной, если значение
+<list type="tag">
+<tag-name><literal>default</literal> <value>значение</value></tag-name>
+<tag-desc>
+задаёт значение для второй переменной, если значение
 первой переменной не найдено.
-</listitem>
+</tag-desc>
 
-<listitem>
-hostnames — указывает, что в качестве исходных значений можно
+<tag-name><literal>hostnames</literal></tag-name>
+<tag-desc>
+указывает, что в качестве исходных значений можно
 использовать маску для первой или последней части имени хоста, например,
 <example>
-*.example.com  1;
-example.*      1;
+*.example.com 1;
+example.*     1;
 </example>
 Вместо двух записей
 <example>
-example.com    1;
-*.example.com  1;
+example.com   1;
+*.example.com 1;
 </example>
-можно использовать одну
+можно использовать одну:
 <example>
-.example.com   1;
+.example.com  1;
 </example>
-</listitem>
+</tag-desc>
 
-<listitem>
-include — включает файл со значениями.
+<tag-name><literal>include</literal> <value>файл</value></tag-name>
+<tag-desc>
+включает файл со значениями.
 Включений может быть несколько.
-</listitem>
+</tag-desc>
 
 </list>
 </para>
@@ -84,30 +89,30 @@ include — включает файл со значениями.
 </directive>
 
 
-<directive name="map_hash_max_size">
-<syntax><value>число</value></syntax>
-<default>2048</default>
+<directive name="map_hash_bucket_size">
+<syntax><value>размер</value></syntax>
+<default>32|64|128</default>
 <context>http</context>
 
 <para>
-Директива задаёт максимальный размер хэш-таблиц для переменных map.
-Подробнее смотри в <link doc="../hash.xml">описании
-настройки хэшей</link>.
+Задаёт размер корзины в хэш-таблицах для переменных <link id="map"/>.
+Значение по умолчанию зависит от размера строки кэша процессора.
+Подробнее смотрите в документе по
+<link doc="../hash.xml">настройке хэшей</link>.
 </para>
 
 </directive>
 
 
-<directive name="map_hash_bucket_size">
-<syntax><value>число</value></syntax>
-<default>32/64/128</default>
+<directive name="map_hash_max_size">
+<syntax><value>размер</value></syntax>
+<default>2048</default>
 <context>http</context>
 
 <para>
-Директива задаёт размер корзины в хэш-таблицах для переменных map.
-Значение по умолчанию зависит от размера строки кэша процессора.
-Подробнее смотри в <link doc="../hash.xml">описании
-настройки хэшей</link>.
+Задаёт максимальный размер хэш-таблиц для переменных <link id="map"/>.
+Подробнее смотрите в документе по
+<link doc="../hash.xml">настройке хэшей</link>.
 </para>
 
 </directive>

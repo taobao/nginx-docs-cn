@@ -2,33 +2,38 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_geoip_module"
+<module name="Модуль ngx_http_geoip_module"
         link="/ru/docs/http/ngx_http_geoip_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_geoip_module создаёт переменные, значения которых
-зависят от IP-адреса клиента, используя готовые базы
-<link url="http://www.maxmind.com">MaxMind</link> (0.8.6+).
-По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром <literal>--with-http_geoip_module</literal>.
+Модуль <literal>ngx_http_geoip_module</literal> (0.8.6+) создаёт переменные,
+значения которых зависят от IP-адреса клиента, используя готовые базы данных
+<link url="http://www.maxmind.com">MaxMind</link>.
+</para>
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-http_geoip_module</literal>.
+<note>
 Для сборки и работы этого модуля нужна библиотека
 <link url="http://www.maxmind.com/app/c">MaxMind GeoIP</link>.
-
+</note>
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
 http {
-    geoip_country  GeoIP.dat;
-    geoip_city     GeoLiteCity.dat;
+    geoip_country GeoIP.dat;
+    geoip_city    GeoLiteCity.dat;
     ...
 </example>
 </para>
@@ -36,7 +41,7 @@ http {
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="geoip_country">
 <syntax><value>база</value></syntax>
@@ -44,23 +49,28 @@ http {
 <context>http</context>
 
 <para>
-Директива geoip_country указывает базу для определения страны в зависимости
+Задаёт базу данных для определения страны в зависимости
 от значения IP-адреса клиента.
-При использовании этой базы доступны следующие переменные:
-<list type="bullet">
+При использовании этой базы данных доступны следующие переменные:
+<list type="tag">
 
-<listitem>
-$geoip_country_code; — двухбуквенный код страны, например, "RU", "US".
-</listitem>
+<tag-name><var>$geoip_country_code</var></tag-name>
+<tag-desc>
+двухбуквенный код страны, например,
+“<literal>RU</literal>”, “<literal>US</literal>”.
+</tag-desc>
 
-<listitem>
-$geoip_country_code3; — трёхбуквенный код страны, например, "RUS", "USA".
-</listitem>
+<tag-name><var>$geoip_country_code3</var></tag-name>
+<tag-desc>
+трёхбуквенный код страны, например,
+“<literal>RUS</literal>”, “<literal>USA</literal>”.
+</tag-desc>
 
-<listitem>
-$geoip_country_name; — название страны, например, "Russian Federation",
-"United States".
-</listitem>
+<tag-name><var>$geoip_country_name</var></tag-name>
+<tag-desc>
+название страны, например,
+“<literal>Russian Federation</literal>”, “<literal>United States</literal>”.
+</tag-desc>
 
 </list>
 </para>
@@ -74,37 +84,46 @@ $geoip_country_name; — название страны, например, "Russ
 <context>http</context>
 
 <para>
-Директива geoip_city указывает базу для определения страны, региона и города
+Задаёт базу данных для определения страны, региона и города
 в зависимости от значения IP-адреса клиента.
-При использовании этой базы доступны следующие переменные:
-<list type="bullet">
+При использовании этой базы данных доступны следующие переменные:
+<list type="tag">
 
-<listitem>
-$geoip_city_country_code; — двухбуквенный код страны, например, "RU", "US".
-</listitem>
+<tag-name><var>$geoip_city_country_code</var></tag-name>
+<tag-desc>
+двухбуквенный код страны, например,
+“<literal>RU</literal>”, “<literal>US</literal>”.
+</tag-desc>
 
-<listitem>
-$geoip_city_country_code3; — трёхбуквенный код страны, например,
-"RUS", "USA".
-</listitem>
+<tag-name><var>$geoip_city_country_code3</var></tag-name>
+<tag-desc>
+трёхбуквенный код страны, например,
+“<literal>RUS</literal>”, “<literal>USA</literal>”.
+</tag-desc>
 
-<listitem>
-$geoip_city_country_name; — название страны, например, "Russian Federation",
-"United States".
-</listitem>
+<tag-name><var>$geoip_city_country_name</var></tag-name>
+<tag-desc>
+название страны, например,
+“<literal>Russian Federation</literal>”, “<literal>United States</literal>”.
+</tag-desc>
 
-<listitem>
-$geoip_region; — название региона страны (область, край, штат,
-провинция, федеральная земля и тому подобное), например, "Moscow City", "DC".
-</listitem>
+<tag-name><var>$geoip_region</var></tag-name>
+<tag-desc>
+название региона страны (область, край, штат,
+провинция, федеральная земля и тому подобное), например,
+“<literal>Moscow City</literal>”, “<literal>DC</literal>”.
+</tag-desc>
 
-<listitem>
-$geoip_city; — название города, например, "Moscow", "Washington".
-</listitem>
+<tag-name><var>$geoip_city</var></tag-name>
+<tag-desc>
+название города, например,
+“<literal>Moscow</literal>”, “<literal>Washington</literal>”.
+</tag-desc>
 
-<listitem>
-$geoip_postal_code; — почтовый индекс.
-</listitem>
+<tag-name><var>$geoip_postal_code</var></tag-name>
+<tag-desc>
+почтовый индекс.
+</tag-desc>
 
 </list>
 </para>
