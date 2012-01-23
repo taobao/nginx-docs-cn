@@ -9,8 +9,8 @@
 <section id="summary">
 
 <para>
-The <literal>ngx_http_image_filter_module</literal> module is a filter
-that transforms images in JPEG, GIF, and PNG (0.7.54+) formats.
+The <literal>ngx_http_image_filter_module</literal> module (0.7.54+) is a filter
+that transforms images in JPEG, GIF, and PNG formats.
 </para>
 
 <para>

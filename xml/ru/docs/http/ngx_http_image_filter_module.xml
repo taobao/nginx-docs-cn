@@ -9,8 +9,8 @@
 <section id="summary">
 
 <para>
-Модуль <literal>ngx_http_image_filter_module</literal> — это фильтр
-для преобразования изображений в форматах JPEG, GIF и PNG (0.7.54+).
+Модуль <literal>ngx_http_image_filter_module</literal> (0.7.54+) — это фильтр
+для преобразования изображений в форматах JPEG, GIF и PNG.
 </para>
 
 <para>
