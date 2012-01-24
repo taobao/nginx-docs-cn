@@ -61,12 +61,12 @@ When this limit is exceeded, the server will return error
 in reply to a request.
 For example, the directives
 <example>
-    limit_conn_zone $binary_remote_addr zone=addr:10m;
+limit_conn_zone $binary_remote_addr zone=addr:10m;
 
-    server {
-        location /download/ {
-            limit_conn addr 1;
-        }
+server {
+    location /download/ {
+        limit_conn addr 1;
+    }
 </example>
 allow for only a single connection at a time, per unique IP address.
 </para>
@@ -78,14 +78,14 @@ For example, the following configuration will limit the number
 of connections to the server per client IP and at the same time
 will limit the total number of connections to the virtual host:
 <example>
-    limit_conn_zone $binary_remote_addr zone=perip:10m;
-    limit_conn_zone $server_name zone=perserver:10m;
+limit_conn_zone $binary_remote_addr zone=perip:10m;
+limit_conn_zone $server_name zone=perserver:10m;
 
-    server {
-        ...
-        limit_conn perip 10;
-        limit_conn perserver 100;
-    }
+server {
+    ...
+    limit_conn perip 10;
+    limit_conn perserver 100;
+}
 </example>
 
 </para>

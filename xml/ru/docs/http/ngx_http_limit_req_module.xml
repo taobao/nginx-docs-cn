@@ -65,11 +65,10 @@ http {
 <example>
 limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
-    server {
-        location /search/ {
-            limit_req zone=one burst=5;
-        }
-
+server {
+    location /search/ {
+        limit_req zone=one burst=5;
+    }
 </example>
 позволяют в среднем не более 1 запроса в секунду
 со всплесками не более 5 запросов.
@@ -79,7 +78,7 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 Если же избыточные запросы в пределах лимита всплесков задерживать
 не требуется, то следует использовать параметр <literal>nodelay</literal>:
 <example>
-            limit_req zone=one burst=5 nodelay;
+limit_req zone=one burst=5 nodelay;
 </example>
 </para>
 

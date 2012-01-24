@@ -29,9 +29,9 @@ configuration parameter.
 
 <para>
 <example>
-    location / {
-        random_index on;
-    }
+location / {
+    random_index on;
+}
 </example>
 </para>
 

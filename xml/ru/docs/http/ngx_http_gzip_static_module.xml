@@ -27,8 +27,8 @@
 
 <para>
 <example>
-    gzip_static  on;
-    gzip_proxied expired no-cache no-store private auth;
+gzip_static  on;
+gzip_proxied expired no-cache no-store private auth;
 </example>
 </para>
 

@@ -533,11 +533,11 @@ proxy_no_cache $http_pragma    $http_authorization;
 будет отображаться location.
 Адрес может быть указан в виде доменного имени или адреса, и порта, например,
 <example>
-    proxy_pass http://localhost:8000/uri/;
+proxy_pass http://localhost:8000/uri/;
 </example>
 или в виде пути UNIX-сокета:
 <example>
-    proxy_pass http://unix:/tmp/backend.socket:/uri/;
+proxy_pass http://unix:/tmp/backend.socket:/uri/;
 </example>
 путь указан после слова “<literal>unix</literal>”
 и заключён между двумя двоеточиями.
@@ -613,11 +613,11 @@ location /some/path/ {
 Имя сервера, его порт и передаваемый URI можно также полностью задать
 с помощью переменных:
 <example>
-    proxy_pass http://$host$uri;
+proxy_pass http://$host$uri;
 </example>
 или так:
 <example>
-    proxy_pass $request;
+proxy_pass $request;
 </example>
 </para>
 
@@ -681,7 +681,7 @@ location /some/path/ {
 “<literal>Location: http://localhost:8000/two/some/uri/</literal>”.
 Директива
 <example>
-    proxy_redirect http://localhost:8000/two/ http://frontend/one/;
+proxy_redirect http://localhost:8000/two/ http://frontend/one/;
 </example>
 перепишет эту строку в виде
 “<literal>Location: http://frontend/one/some/uri/</literal>”.
@@ -690,7 +690,7 @@ location /some/path/ {
 <para>
 В заменяемой строке можно не указывать имя сервера:
 <example>
-    proxy_redirect http://localhost:8000/two/ /;
+proxy_redirect http://localhost:8000/two/ /;
 </example>
 тогда будет подставлено основное имя сервера и порт, если он отличен от 80.
 </para>
@@ -719,7 +719,7 @@ location /one/ {
 <para>
 В строке <value>замена</value> можно использовать переменные:
 <example>
-    proxy_redirect http://localhost:8000/ http://$host:$server_port/;
+proxy_redirect http://localhost:8000/ http://$host:$server_port/;
 </example>
 </para>
 
@@ -727,7 +727,7 @@ location /one/ {
 В строке <value>перенаправление</value> тоже можно использовать (1.1.11)
 переменные:
 <example>
-    proxy_redirect http://$proxy_host:8000/ /;
+proxy_redirect http://$proxy_host:8000/ /;
 </example>
 </para>
 
@@ -740,17 +740,17 @@ location /one/ {
 Регулярное выражение может содержать именованные и позиционные выделения,
 а <value>замена</value> ссылаться на них:
 <example>
-    proxy_redirect ~^(http://[^:]+):\d+(/.+)$ $1$2;
-    proxy_redirect ~*/user/([^/]+)/(.+)$      http://$1.example.com/$2;
+proxy_redirect ~^(http://[^:]+):\d+(/.+)$ $1$2;
+proxy_redirect ~*/user/([^/]+)/(.+)$      http://$1.example.com/$2;
 </example>
 </para>
 
 <para>
 Директив <literal>proxy_redirect</literal> может быть несколько:
 <example>
-    proxy_redirect default;
-    proxy_redirect http://localhost:8000/  /;
-    proxy_redirect http://www.example.com/ /;
+proxy_redirect default;
+proxy_redirect http://localhost:8000/  /;
+proxy_redirect http://www.example.com/ /;
 </example>
 </para>
 
@@ -759,10 +759,10 @@ location /one/ {
 <literal>proxy_redirect</literal>
 на данном уровне:
 <example>
-    proxy_redirect off;
-    proxy_redirect default;
-    proxy_redirect http://localhost:8000/  /;
-    proxy_redirect http://www.example.com/ /;
+proxy_redirect off;
+proxy_redirect default;
+proxy_redirect http://localhost:8000/  /;
+proxy_redirect http://www.example.com/ /;
 </example>
 </para>
 
@@ -770,7 +770,7 @@ location /one/ {
 С помощью этой директивы можно также добавлять имя хоста к относительным
 перенаправлениям, выдаваемым проксируемым сервером:
 <example>
-    proxy_redirect / /;
+proxy_redirect / /;
 </example>
 </para>
 

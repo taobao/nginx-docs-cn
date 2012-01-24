@@ -20,9 +20,9 @@ single-pixel transparent GIF.
 
 <para>
 <example>
-    location = /_.gif {
-        empty_gif;
-    }
+location = /_.gif {
+    empty_gif;
+}
 </example>
 </para>
 

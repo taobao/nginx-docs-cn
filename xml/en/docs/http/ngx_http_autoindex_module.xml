@@ -23,9 +23,9 @@ module could not find an index file.
 
 <para>
 <example>
-    location / {
-        autoindex on;
-    }
+location / {
+    autoindex on;
+}
 </example>
 </para>
 

@@ -60,12 +60,12 @@ http {
 <http-status code="503" text="Service Temporarily Unavailable"/>.
 Например, директивы
 <example>
-    limit_conn_zone $binary_remote_addr zone=addr:10m;
+limit_conn_zone $binary_remote_addr zone=addr:10m;
 
-    server {
-        location /download/ {
-            limit_conn addr 1;
-        }
+server {
+    location /download/ {
+        limit_conn addr 1;
+    }
 </example>
 разрешают одновременно обрабатывать не более одного соединения с одного
 IP-адреса.
@@ -79,14 +79,14 @@ IP-адреса.
 с одного клиентского IP-адреса и в то же время ограничивает общее число
 соединений с виртуальным хостом:
 <example>
-    limit_conn_zone $binary_remote_addr zone=perip:10m;
-    limit_conn_zone $server_name zone=perserver:10m;
+limit_conn_zone $binary_remote_addr zone=perip:10m;
+limit_conn_zone $server_name zone=perserver:10m;
 
-    server {
-        ...
-        limit_conn perip 10;
-        limit_conn perserver 100;
-    }
+server {
+    ...
+    limit_conn perip 10;
+    limit_conn perserver 100;
+}
 </example>
 
 </para>

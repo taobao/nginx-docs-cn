@@ -32,9 +32,9 @@
 
 <para>
 <example>
-    location ~ \.flv$ {
-        flv;
-    }
+location ~ \.flv$ {
+    flv;
+}
 </example>
 </para>
 

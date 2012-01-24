@@ -67,11 +67,10 @@ For example, the directives
 <example>
 limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
-    server {
-        location /search/ {
-            limit_req zone=one burst=5;
-        }
-
+server {
+    location /search/ {
+        limit_req zone=one burst=5;
+    }
 </example>
 allow not more than 1 request per second at an average,
 with bursts not exceeding 5 requests.
@@ -81,7 +80,7 @@ with bursts not exceeding 5 requests.
 If delaying of excessive requests while requests are being limited is not
 desired, the parameter <literal>nodelay</literal> should be used:
 <example>
-            limit_req zone=one burst=5 nodelay;
+limit_req zone=one burst=5 nodelay;
 </example>
 </para>
 

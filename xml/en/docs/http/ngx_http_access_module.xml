@@ -20,12 +20,12 @@ to limit access based on client IP addresses.
 
 <para>
 <example>
-    location / {
-        deny  192.168.1.1;
-        allow 192.168.1.0/24;
-        allow 10.1.1.0/16;
-        deny  all;
-    }
+location / {
+    deny  192.168.1.1;
+    allow 192.168.1.0/24;
+    allow 10.1.1.0/16;
+    deny  all;
+}
 </example>
 </para>
 

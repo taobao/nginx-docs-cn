@@ -578,11 +578,11 @@ fastcgi_param HTTPS           $https if_not_empty;
 Задаёт адрес FastCGI-сервера.
 Адрес может быть указан в виде доменного имени или адреса, и порта, например,
 <example>
-    fastcgi_pass localhost:9000;
+fastcgi_pass localhost:9000;
 </example>
 или в виде пути UNIX-сокета:
 <example>
-    fastcgi_pass unix:/tmp/fastcgi.socket;
+fastcgi_pass unix:/tmp/fastcgi.socket;
 </example>
 </para>
 

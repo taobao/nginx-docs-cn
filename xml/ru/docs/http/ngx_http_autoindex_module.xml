@@ -23,9 +23,9 @@
 
 <para>
 <example>
-    location / {
-        autoindex on;
-    }
+location / {
+    autoindex on;
+}
 </example>
 </para>
 

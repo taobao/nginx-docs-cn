@@ -23,10 +23,10 @@
 
 <para>
 <example>
-    location / {
-        add_before_body /before_action;
-        add_after_body  /after_action;
-    }
+location / {
+    add_before_body /before_action;
+    add_after_body  /after_action;
+}
 </example>
 </para>
 

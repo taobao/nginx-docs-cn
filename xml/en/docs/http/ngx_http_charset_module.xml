@@ -37,10 +37,10 @@ or single-byte charsets to/from UTF-8.
 
 <para>
 <example>
-    include        conf/koi-win;
+include        conf/koi-win;
 
-    charset        windows-1251;
-    source_charset koi8-r;
+charset        windows-1251;
+source_charset koi8-r;
 </example>
 </para>
 

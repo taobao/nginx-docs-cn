@@ -586,11 +586,11 @@ Sets an address of the FastCGI server.
 An address can be specified as a domain name or an address, and a port,
 for example,
 <example>
-    fastcgi_pass localhost:9000;
+fastcgi_pass localhost:9000;
 </example>
 or as a UNIX-domain socket path:
 <example>
-    fastcgi_pass unix:/tmp/fastcgi.socket;
+fastcgi_pass unix:/tmp/fastcgi.socket;
 </example>
 </para>
 

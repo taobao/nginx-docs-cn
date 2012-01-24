@@ -21,10 +21,10 @@
 
 <para>
 <example>
-    location / {
-        auth_basic           "closed site";
-        auth_basic_user_file conf/htpasswd;
-    }
+location / {
+    auth_basic           "closed site";
+    auth_basic_user_file conf/htpasswd;
+}
 </example>
 </para>
 

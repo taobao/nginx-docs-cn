@@ -20,9 +20,9 @@
 
 <para>
 <example>
-    location / {
-        index index.$geo.html index.html;
-    }
+location / {
+    index index.$geo.html index.html;
+}
 </example>
 </para>
 
@@ -45,7 +45,7 @@
 В конце списка может стоять файл с абсолютным путём.
 Пример:
 <example>
-    index index.$geo.html index.0.html /index.html;
+index index.$geo.html index.0.html /index.html;
 </example>
 </para>
 
@@ -55,13 +55,13 @@
 location’е.
 Например, в такой конфигурации:
 <example>
-    location  = /  {
-        index  index.html;
-    }
+location  = /  {
+    index  index.html;
+}
 
-    location  /  {
-        ...
-    }
+location  /  {
+    ...
+}
 </example>
 запрос “<literal>/</literal>” будет фактически обработан во
 втором location’е как “<literal>/index.html</literal>”.

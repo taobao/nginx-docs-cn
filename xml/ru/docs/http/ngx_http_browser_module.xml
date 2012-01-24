@@ -42,34 +42,34 @@
 <para>
 Выбор индексного файла:
 <example>
-    modern_browser_value "modern.";
+modern_browser_value "modern.";
 
-    modern_browser msie      5.5;
-    modern_browser gecko     1.0.0;
-    modern_browser opera     9.0;
-    modern_browser safari    413;
-    modern_browser konqueror 3.0;
+modern_browser msie      5.5;
+modern_browser gecko     1.0.0;
+modern_browser opera     9.0;
+modern_browser safari    413;
+modern_browser konqueror 3.0;
 
-    index index.${modern_browser}html index.html;
+index index.${modern_browser}html index.html;
 </example>
 </para>
 
 <para>
 Перенаправление для старых браузеров:
 <example>
-    modern_browser msie      5.0;
-    modern_browser gecko     0.9.1;
-    modern_browser opera     8.0;
-    modern_browser safari    413;
-    modern_browser konqueror 3.0;
+modern_browser msie      5.0;
+modern_browser gecko     0.9.1;
+modern_browser opera     8.0;
+modern_browser safari    413;
+modern_browser konqueror 3.0;
 
-    modern_browser unlisted;
+modern_browser unlisted;
 
-    ancient_browser Links Lynx netscape4;
+ancient_browser Links Lynx netscape4;
 
-    if ($ancient_browser) {
-        rewrite ^ /ancient.html;
-    }
+if ($ancient_browser) {
+    rewrite ^ /ancient.html;
+}
 </example>
 </para>
 

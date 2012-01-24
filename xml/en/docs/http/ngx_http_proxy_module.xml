@@ -538,11 +538,11 @@ Sets an address of the proxied server and a URI that maps a location.
 An address can be specified as a domain name or an address, and a port,
 for example,
 <example>
-    proxy_pass http://localhost:8000/uri/;
+proxy_pass http://localhost:8000/uri/;
 </example>
 or as a UNIX-domain socket path:
 <example>
-    proxy_pass http://unix:/tmp/backend.socket:/uri/;
+proxy_pass http://unix:/tmp/backend.socket:/uri/;
 </example>
 here a path is specified after the word “<literal>unix</literal>”
 and enclosed in two colons.
@@ -617,11 +617,11 @@ location /some/path/ {
 <para>
 Server name, its port, and passed URI can be specified using variables:
 <example>
-    proxy_pass http://$host$uri;
+proxy_pass http://$host$uri;
 </example>
 or like this:
 <example>
-    proxy_pass $request;
+proxy_pass $request;
 </example>
 </para>
 
@@ -685,7 +685,7 @@ Suppose a proxied server returned the header field
 “<literal>Location: http://localhost:8000/two/some/uri/</literal>”.
 The directive
 <example>
-    proxy_redirect http://localhost:8000/two/ http://frontend/one/;
+proxy_redirect http://localhost:8000/two/ http://frontend/one/;
 </example>
 will rewrite this string to
 “<literal>Location: http://frontend/one/some/uri/</literal>”.
@@ -694,7 +694,7 @@ will rewrite this string to
 <para>
 A server name may be omitted from the <value>replacement</value> string:
 <example>
-    proxy_redirect http://localhost:8000/two/ /;
+proxy_redirect http://localhost:8000/two/ /;
 </example>
 then the primary server’s name and a port, if different from 80,
 will be substituted.
@@ -724,14 +724,14 @@ The <literal>default</literal> parameter is not permitted if
 <para>
 A <value>replacement</value> string can contain variables:
 <example>
-    proxy_redirect http://localhost:8000/ http://$host:$server_port/;
+proxy_redirect http://localhost:8000/ http://$host:$server_port/;
 </example>
 </para>
 
 <para>
 A <value>redirect</value> can also contain (1.1.11) variables:
 <example>
-    proxy_redirect http://$proxy_host:8000/ /;
+proxy_redirect http://$proxy_host:8000/ /;
 </example>
 </para>
 
@@ -744,17 +744,17 @@ matching.
 A regular expression can contain named and positional captures,
 and <value>replacement</value> can reference them:
 <example>
-    proxy_redirect ~^(http://[^:]+):\d+(/.+)$ $1$2;
-    proxy_redirect ~*/user/([^/]+)/(.+)$      http://$1.example.com/$2;
+proxy_redirect ~^(http://[^:]+):\d+(/.+)$ $1$2;
+proxy_redirect ~*/user/([^/]+)/(.+)$      http://$1.example.com/$2;
 </example>
 </para>
 
 <para>
 There could be several <literal>proxy_redirect</literal> directives:
 <example>
-    proxy_redirect default;
-    proxy_redirect http://localhost:8000/  /;
-    proxy_redirect http://www.example.com/ /;
+proxy_redirect default;
+proxy_redirect http://localhost:8000/  /;
+proxy_redirect http://www.example.com/ /;
 </example>
 </para>
 
@@ -762,10 +762,10 @@ There could be several <literal>proxy_redirect</literal> directives:
 The <literal>off</literal> parameter cancels all
 <literal>proxy_redirect</literal> directives on the current level:
 <example>
-    proxy_redirect off;
-    proxy_redirect default;
-    proxy_redirect http://localhost:8000/  /;
-    proxy_redirect http://www.example.com/ /;
+proxy_redirect off;
+proxy_redirect default;
+proxy_redirect http://localhost:8000/  /;
+proxy_redirect http://www.example.com/ /;
 </example>
 </para>
 
@@ -773,7 +773,7 @@ The <literal>off</literal> parameter cancels all
 Using this directive it is also possible to add host names to relative
 redirects issued by a proxied server:
 <example>
-    proxy_redirect / /;
+proxy_redirect / /;
 </example>
 </para>
 

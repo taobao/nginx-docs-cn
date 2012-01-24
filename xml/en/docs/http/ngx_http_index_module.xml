@@ -20,9 +20,9 @@ ending with the slash character (‘<literal>/</literal>’).
 
 <para>
 <example>
-    location / {
-        index index.$geo.html index.html;
-    }
+location / {
+    index index.$geo.html index.html;
+}
 </example>
 </para>
 
@@ -45,7 +45,7 @@ Files are checked in the specified order.
 The last element of the list can be a file with an absolute path.
 Example:
 <example>
-    index index.$geo.html index.0.html /index.html;
+index index.$geo.html index.0.html /index.html;
 </example>
 </para>
 
@@ -54,13 +54,13 @@ It should be noted that when using an index file, an internal redirect
 is made, and request can be processed in a different location.
 For example, with the following configuration:
 <example>
-    location = / {
-        index index.html;
-    }
+location = / {
+    index index.html;
+}
 
-    location / {
-        ...
-    }
+location / {
+    ...
+}
 </example>
 a request of “<literal>/</literal>” will actually be processed in the
 second location as “<literal>/index.html</literal>”.
