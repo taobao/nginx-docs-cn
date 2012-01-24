@@ -2,15 +2,15 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_charset_module"
+<module name="Модуль ngx_http_charset_module"
         link="/ru/docs/http/ngx_http_charset_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_charset_module добавляет указанную кодировку
-в строку "Content-Type" в заголовок ответа.
+Модуль <literal>ngx_http_charset_module</literal> добавляет указанную
+кодировку в поле <header>Content-Type</header> заголовка ответа.
 Кроме того, модуль может перекодировать данные из одной кодировки в другую
 с некоторыми ограничениями:
 <list type="bullet">
@@ -33,56 +33,59 @@
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    include         conf/koi-win;
+    include        conf/koi-win;
 
-    charset         windows-1251;
-    source_charset  koi8-r;
+    charset        windows-1251;
+    source_charset koi8-r;
 </example>
 </para>
 
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="charset">
 <syntax><value>кодировка</value> | <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location, if в location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if в location</context>
 
 <para>
-Директива charset добавляет в строку "Content-Type"
-в заголовке ответа указанную кодировку.
+Добавляет указанную кодировку в поле <header>Content-Type</header>
+заголовка ответа.
 Если эта кодировка отличается от указанной в директиве
 <link id="source_charset"/>, то выполняется перекодирование.
 </para>
 
 <para>
-Параметр "off" отменяет добавление кодировки в строку "Content-Type"
-в заголовке ответа.
+Параметр <literal>off</literal> отменяет добавление кодировки
+в поле <header>Content-Type</header> заголовка ответа.
 </para>
 
 <para>
-Кодировка может быть задана переменной:
+Кодировка может быть задана с помощью переменной:
 <example>
-charset     $charset;
+charset $charset;
 </example>
-</para>
-
-<para>
 В этом случае необходимо, чтобы все возможные значения переменной
 присутствовали хотя бы один раз в любом месте конфигурации в виде
-директив charset_map, charset, или source_charset.
-Для кодировок utf-8, windows-1251 и koi8-r для этого достаточно
-включить в конфигурацию файлы conf/koi-win, conf/koi-utf и conf/win-utf.
+директив <link id="charset_map"/>, <link id="charset"/> или
+<link id="source_charset"/>.
+Для кодировок <literal>utf-8</literal>, <literal>windows-1251</literal>
+и <literal>koi8-r</literal> для этого достаточно включить в конфигурацию
+файлы <path>conf/koi-win</path>, <path>conf/koi-utf</path> и
+<path>conf/win-utf</path>.
 Для других кодировок можно просто сделать фиктивную таблицу перекодировки,
 например:
 <example>
-charset_map  iso-8859-5  _ { }
+charset_map iso-8859-5 _ { }
 </example>
 </para>
 
@@ -95,47 +98,47 @@ charset_map  iso-8859-5  _ { }
 <context>http</context>
 
 <para>
-Директива charset_map описывает таблицу перекодирования из одной
-кодировки в другую.
+Описывает таблицу перекодирования из одной кодировки в другую.
 Таблица для обратного перекодирования строится на основании тех же данных.
 Коды символов задаются в шестнадцатеричном виде.
-Неописанные символы в пределах 80-FF заменяются на "?".
+Неописанные символы в пределах 80-FF заменяются на “<literal>?</literal>”.
 При перекодировании из UTF-8 символы, отсутствующие в однобайтной кодировке,
-заменяются на "&amp;#XXXX;".
+заменяются на “<literal>&amp;#XXXX;</literal>”.
 </para>
 
 <para>
-Пример использования:
+Пример:
 <example>
-charset_map  koi8-r  windows-1251 {
-    C0  FE ; # small yu
-    C1  E0 ; # small a
-    C2  E1 ; # small b
-    C3  F6 ; # small ts
+charset_map koi8-r windows-1251 {
+    C0 FE ; # small yu
+    C1 E0 ; # small a
+    C2 E1 ; # small b
+    C3 F6 ; # small ts
     ...
 }
 </example>
 </para>
 
 <para>
-При описании таблицы перекодирования в UTF-8, значения этой кодировки должны
-описываться во второй колонке, например:
+При описании таблицы перекодирования в UTF-8, коды кодировки UTF-8 должны
+быть указаны во второй колонке, например:
 <example>
-charset_map  koi8-r  utf-8 {
-    C0  D18E ; # small yu
-    C1  D0B0 ; # small a
-    C2  D0B1 ; # small b
-    C3  D186 ; # small ts
+charset_map koi8-r utf-8 {
+    C0 D18E ; # small yu
+    C1 D0B0 ; # small a
+    C2 D0B1 ; # small b
+    C3 D186 ; # small ts
     ...
 }
 </example>
 </para>
 
 <para>
-Полные таблицы преобразования из koi8-r в windows-1251
-и из koi8-r и windows-1251 в utf-8
-входят в дистрибутив и находятся в файлах conf/koi-win, conf/koi-utf
-и conf/win-utf.
+Полные таблицы преобразования из <literal>koi8-r</literal> в
+<literal>windows-1251</literal> и из <literal>koi8-r</literal> и
+<literal>windows-1251</literal> в <literal>utf-8</literal>
+входят в дистрибутив и находятся в файлах <path>conf/koi-win</path>,
+<path>conf/koi-utf</path> и <path>conf/win-utf</path>.
 </para>
 
 </directive>
@@ -145,19 +148,14 @@ charset_map  koi8-r  utf-8 {
 <syntax><value>mime-тип</value> ...</syntax>
 <default>text/html text/xml text/plain text/vnd.wap.wml
 application/x-javascript application/rss+xml</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.7.9</appeared-in>
 
 <para>
-Директива (0.7.9) разрешает работу модуля в ответах с указанными MIME-типами
-в дополнение к "text/html". По умолчанию используются
-<list type="bullet">
-<listitem>text/html</listitem>
-<listitem>text/xml</listitem>
-<listitem>text/plain</listitem>
-<listitem>text/vnd.wap.wml</listitem>
-<listitem>application/x-javascript</listitem>
-<listitem>application/rss+xml</listitem>
-</list>
+Разрешает работу модуля в ответах с указанными MIME-типами
+в дополнение к “<literal>text/html</literal>”.
 </para>
 
 </directive>
@@ -166,20 +164,24 @@ application/x-javascript application/rss+xml</default>
 <directive name="override_charset">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location, if в location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if в location</context>
 
 <para>
-Директива определяет, выполнять ли перекодирование для ответов,
+Определяет, выполнять ли перекодирование для ответов,
 полученных от проксированного сервера или от FastCGI-сервера,
-если в них уже есть charset в строке "Content-Type" в заголовке ответа.
+если в ответах уже указана кодировка в поле <header>Content-Type</header>
+заголовка ответа.
 Если перекодирование разрешено, то в качестве исходной кодировки
 используется кодировка, указанная в полученном ответе.
-</para>
-
-<para>
+<note>
 Необходимо отметить, что если ответ был получен в подзапросе,
-то, независимо от директивы override_charset, всегда выполняется
-перекодирование из кодировки ответа в кодировку основного запроса.
+то, независимо от значения директивы <literal>override_charset</literal>,
+всегда выполняется перекодирование из кодировки ответа в кодировку
+основного запроса.
+</note>
 </para>
 
 </directive>
@@ -188,10 +190,13 @@ application/x-javascript application/rss+xml</default>
 <directive name="source_charset">
 <syntax><value>кодировка</value></syntax>
 <default/>
-<context>http, server, location, if в location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if в location</context>
 
 <para>
-Директива source_charset задают исходную кодировку ответа.
+Задаёт исходную кодировку ответа.
 Если эта кодировка отличается от указанной в директиве
 <link id="charset"/>, то выполняется перекодирование.
 </para>
