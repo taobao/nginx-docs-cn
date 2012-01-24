@@ -95,6 +95,11 @@ ngx_http_browser_module</a>
 </item>
 
 <item>
+<a href="/en/docs/http/ngx_http_charset_module.xml">
+ngx_http_charset_module</a>
+</item>
+
+<item>
 <a href="/en/docs/http/ngx_http_empty_gif_module.xml">
 ngx_http_empty_gif_module</a>
 </item>
