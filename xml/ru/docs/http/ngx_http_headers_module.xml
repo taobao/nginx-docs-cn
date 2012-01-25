@@ -2,45 +2,48 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_headers_module"
+<module name="Модуль ngx_http_headers_module"
         link="/ru/docs/http/ngx_http_headers_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_headers_module позволяет выдавать строки "Expires"
-и "Cache-Control" и добавлять произвольные строки в заголовке ответа.
+Модуль <literal>ngx_http_headers_module</literal> позволяет выдавать
+поля заголовка <header>Expires</header> и <header>Cache-Control</header>,
+а также добавлять произвольные поля в заголовок ответа.
 </para>
 
 </section>
 
-<section name="Примеры конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    expires     24h;
-    expires     modified +24h;
-    expires     @24h;
-    expires     0;
-    expires     -1;
-    expires     epoch;
-    add_header  Cache-Control  private;
+expires    24h;
+expires    modified +24h;
+expires    @24h;
+expires    0;
+expires    -1;
+expires    epoch;
+add_header Cache-Control private;
 </example>
 </para>
 
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="add_header">
-<syntax><value>название</value> <value>значение</value></syntax>
+<syntax><value>имя</value> <value>значение</value></syntax>
 <default/>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива добавляет строку в заголовке ответа при условии, что код ответа
+Добавляет указанное поле в заголовок ответа при условии, что код ответа
 равен 200, 204, 301, 302 или 304.
 В значении можно использовать переменные.
 </para>
@@ -51,59 +54,68 @@
 <directive name="expires">
 <syntax>[<literal>modified</literal>] <value>время</value></syntax>
 <syntax>
-  <literal>epoch</literal> |
-  <literal>max</literal> |
-  <literal>off</literal></syntax>
+    <literal>epoch</literal> |
+    <literal>max</literal> |
+    <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Разрешает или запрещает добавлять или менять строки "Expires"
-и "Cache-Control" в заголовке ответа.
+Разрешает или запрещает добавлять или менять поля <header>Expires</header>
+и <header>Cache-Control</header> в заголовке ответа.
 В качестве параметра можно задать положительное или отрицательное
 <link doc="../syntax.xml">время</link>.
 </para>
 
 <para>
-Время в строке "Expires" получается как сумма текущего времени
+Время в поле <header>Expires</header> получается как сумма текущего времени
 и времени, заданного в директиве.
-Если используется параметр "modified" (0.7.0, 0.6.32),
+Если используется параметр <literal>modified</literal> (0.7.0, 0.6.32),
 то время получается как сумма
 времени модификации файла и времени, заданного в директиве.
 </para>
 
 <para>
-Кроме того, с помощью префикса "@" можно задать время суток (0.7.9, 0.6.34):
+Кроме того, с помощью префикса “<literal>@</literal>” можно задать
+время суток (0.7.9, 0.6.34):
 <example>
-expires   @15h30m;
+expires @15h30m;
 </example>
 </para>
 
 <para>
-Параметр "epoch" означает абсолютное время 1 января 1970 года 00:00:01 GMT.
-Содержимое строки "Cache-Control" зависит от знака заданного времени:
+Параметр <literal>epoch</literal> соответствует абсолютному времени
+“<literal>Thu, 01 Jan 1970 00:00:01 GMT</literal>”
+(1 января 1970 года 00:00:01 GMT).
+Содержимое поля <header>Cache-Control</header> зависит от знака
+заданного времени:
 <list type="bullet">
 
 <listitem>
-отрицательное время — "Cache-Control: no-cache".
+отрицательное время — <header>Cache-Control: no-cache</header>.
 </listitem>
 
 <listitem>
-положительное время или равное нулю — "Cache-Control: max-age=#",
-где "#" - это время в секундах, заданное в директиве.
+положительное или равное нулю время —
+<header>Cache-Control: max-age=<value>t</value></header>,
+где <value>t</value> это время в секундах, заданное в директиве.
 </listitem>
 
 </list>
 </para>
 
 <para>
-Параметр "max" задаёт время 31 декабря 2037 23:55:55 GMT для строки "Expires"
-и 10 лет для строки "Cache-Control".
+Параметр <literal>max</literal> задаёт время
+“<literal>Thu, 31 Dec 2037 23:55:55 GMT</literal>” 
+(31 декабря 2037 23:55:55 GMT) для поля <header>Expires</header>
+и 10 лет для поля <header>Cache-Control</header>.
 </para>
 
 <para>
-Параметр "off" запрещает добавлять или менять строки "Expires"
-и "Cache-Control" в заголовке ответа.
+Параметр <literal>off</literal> запрещает добавлять или менять поля
+<header>Expires</header> и <header>Cache-Control</header> в заголовке ответа.
 </para>
 
 </directive>

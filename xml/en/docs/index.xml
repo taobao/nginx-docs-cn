@@ -130,6 +130,11 @@ ngx_http_gzip_static_module</a>
 </item>
 
 <item>
+<a href="/en/docs/http/ngx_http_headers_module.xml">
+ngx_http_headers_module</a>
+</item>
+
+<item>
 <a href="/en/docs/http/ngx_http_image_filter_module.xml">
 ngx_http_image_filter_module</a>
 </item>
