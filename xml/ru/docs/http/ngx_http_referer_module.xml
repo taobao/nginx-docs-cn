@@ -2,44 +2,46 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_referer_module"
+<module name="Модуль ngx_http_referer_module"
         link="/ru/docs/http/ngx_http_referer_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_referer_module позволяет блокировать доступ
-к сайту с неверными значениями строки "Referer" в заголовке запроса.
-Следует иметь в виду, что подделать запрос с нужной строкой "Referer"
-не составляет большого труда, поэтому цель использования данного модуля
-заключается не в стопроцентном блокировании подобных запросов,
-а в блокировании массового потока запросов, сделанных обычными браузерами.
-Нужно также учитывать, что обычные браузеры могут не передавать строку
-"Referer" даже для верных запросов.
+Модуль <literal>ngx_http_referer_module</literal> позволяет блокировать доступ
+к сайту для запросов с неверными значениями поля <header>Referer</header> в
+заголовке.
+Следует иметь в виду, что подделать запрос с нужным значением поля
+<header>Referer</header> не составляет большого труда, поэтому цель
+использования данного модуля заключается не в стопроцентном блокировании
+подобных запросов, а в блокировании массового потока запросов, сделанных
+обычными браузерами.
+Нужно также учитывать, что обычные браузеры могут не передавать поле
+<header>Referer</header> даже для верных запросов.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    valid_referers   none  blocked  server_names
-                     *.example.com  www.example.info/galleries/
-                     ~\.google\. ;
+valid_referers none blocked server_names
+               *.example.com example.* www.example.info/galleries/
+               ~\.google\.;
 
-    if ($invalid_referer) {
-        return   403;
-    }
+if ($invalid_referer) {
+    return 403;
+}
 </example>
 </para>
 
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="valid_referers">
 <syntax>
@@ -49,53 +51,61 @@
   <value>строка</value>
   ...</syntax>
 <default/>
-<context>server, location</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт значения строки "Referer" в заголовке запроса, при
-которых встроенная переменная $invalid_referer будет иметь значение 0.
+Задаёт значения поля <header>Referer</header> заголовка запроса, при
+которых встроенная переменная <var>$invalid_referer</var> будет иметь
+значение 0.
 </para>
 
 <para>
 Параметры могут быть следующие:
-<list type="bullet">
+<list type="tag">
 
-<listitem>
-none — строка "Referer" в заголовке запроса отсутствует;
-</listitem>
+<tag-name><literal>none</literal></tag-name>
+<tag-desc>
+поле <header>Referer</header> в заголовке запроса отсутствует;
+</tag-desc>
 
-<listitem>
-blocked — строка "Referer" в заголовке запроса присутствует,
-но её значение удалено файрволлом или прокси-сервером; к таким строкам
-относятся строки, неначинающиеся на "http://";
-</listitem>
+<tag-name><literal>blocked</literal></tag-name>
+<tag-desc>
+поле <header>Referer</header> в заголовке запроса присутствует,
+но его значение удалено межсетевым экраном (firewall) или прокси-сервером;
+к таким значениям относятся строки, не начинающиеся на
+“<literal>http://</literal>”;
+</tag-desc>
 
-<listitem>
-server_names — в строке "Referer" в заголовке запроса указано одно
+<tag-name><literal>server_names</literal></tag-name>
+<tag-desc>
+в поле <header>Referer</header> заголовка запроса указано одно
 из имён сервера;
-</listitem>
+</tag-desc>
 
-<listitem>
-произвольная строка — задаёт имя сервера и необязательное начало URI.
-В начале или конце имени сервера может быть "*".
-При проверке порт сервера в строке "Referer" игнорируется.
-</listitem>
+<tag-name>произвольная строка</tag-name>
+<tag-desc>
+задаёт имя сервера и необязательное начало URI.
+В начале или конце имени сервера может быть “<literal>*</literal>”.
+При проверке порт сервера в поле <header>Referer</header> игнорируется;
+</tag-desc>
 
-<listitem>
-регулярное выражение — в начале должен быть символ "~".
+<tag-name>регулярное выражение</tag-name>
+<tag-desc>
+в начале должен быть символ “<literal>~</literal>”.
 Необходимо учитывать, что на совпадение с выражением будет проверяться
-текст, начинающийся после "http://".
-</listitem>
+текст, начинающийся после “<literal>http://</literal>”.
+</tag-desc>
 
 </list>
 </para>
 
 <para>
-Пример использования:
+Пример:
 <example>
-    valid_referers   none  blocked  server_names
-                     *.example.com  example.*  www.example.info/galleries/
-                     ~\.google\. ;
+valid_referers none blocked server_names
+               *.example.com example.* www.example.info/galleries/
+               ~\.google\.;
 </example>
 </para>
 
