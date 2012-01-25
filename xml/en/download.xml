@@ -225,11 +225,13 @@ for 5.x or 6.x versions, respectively.
 </para>
 
 <para>
-In order to add repository signature checking and to eliminate gpg warnings during
-the installation on Debian or Ubuntu, it is necessary to import nginx signing key
-into apt keyring. Please download <link url="http://nginx.org/keys/nginx_signing.key">
-nginx signing key</link> from our web site, and add it to the apt keyring with the
-following  command:
+For Debian/Ubuntu, in order to authenticate the nginx repository signature
+and to eliminate warnings about missing gpg key during installation of the
+nginx package, it is necessary to add the key used to sign the nginx
+packages and repository to the <command>apt</command> program keyring.
+Please download <link url="http://nginx.org/keys/nginx_signing.key">this
+key</link> from our web site, and add it to the <command>apt</command>
+program keyring with the following command:
 <programlisting>
 sudo apt-key add nginx_signing.key
 </programlisting>
@@ -243,7 +245,6 @@ For Debian 6 append the following to the end of the
 deb http://nginx.org/packages/debian/ squeeze nginx
 deb-src http://nginx.org/packages/debian/ squeeze nginx
 </programlisting>
-
 </para>
 
 <para>
@@ -256,9 +257,8 @@ deb-src http://nginx.org/packages/ubuntu/ lucid nginx
 </programlisting>
 </para>
 
-
 <para>
-Then run the following commands:
+For Debian/Ubuntu then run the following commands:
 <programlisting>
 apt-get update
 apt-get install nginx

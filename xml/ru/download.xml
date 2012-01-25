@@ -225,12 +225,13 @@ enabled=1
 </para>
 
 <para>
-Для проверки подписи репозитория и для того, чтобы убрать предупреждения
-об отсутствующем gpg ключе при установке nginx на Debian или Ubuntu,
-необходимо добавить ключ, которым подписаны репозиторий и пакеты, в связку
-ключей программы apt. Загрузите <link url="http://nginx.org/keys/nginx_signing.key">
-данный ключ</link> с нашего сайта и добавьте в связку ключей программы apt,
-выполнив команду:
+Для Debian/Ubuntu, для проверки подлинности подписи репозитория nginx,
+и чтобы избавиться от предупреждений об отсутствующем gpg-ключе во время
+установки пакета nginx, необходимо добавить ключ, которым были подписаны
+пакеты и репозиторий nginx, в связку ключей программы <command>apt</command>.
+Загрузите <link url="http://nginx.org/keys/nginx_signing.key">этот
+ключ</link> с нашего веб-сайта и добавьте его в связку ключей программы
+<command>apt</command>, выполнив команду:
 <programlisting>
 sudo apt-key add nginx_signing.key
 </programlisting>
@@ -244,13 +245,6 @@ sudo apt-key add nginx_signing.key
 deb http://nginx.org/packages/debian/ squeeze nginx
 deb-src http://nginx.org/packages/debian/ squeeze nginx
 </programlisting>
-
-Затем выполните команды:
-<programlisting>
-apt-get update
-apt-get install nginx
-</programlisting>
-
 </para>
 
 <para>
@@ -264,7 +258,7 @@ deb-src http://nginx.org/packages/ubuntu/ lucid nginx
 </para>
 
 <para>
-Затем выполните команды:
+Для Debian/Ubuntu затем выполните команды:
 <programlisting>
 apt-get update
 apt-get install nginx
