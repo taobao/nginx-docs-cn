@@ -185,6 +185,11 @@ ngx_http_realip_module</a>
 </item>
 
 <item>
+<a href="/en/docs/http/ngx_http_referer_module.xml">
+ngx_http_referer_module</a>
+</item>
+
+<item>
 <a href="/en/docs/http/ngx_http_secure_link_module.xml">
 ngx_http_secure_link_module</a>
 </item>

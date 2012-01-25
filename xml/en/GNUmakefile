@@ -67,6 +67,7 @@ REFS =									\
 		http/ngx_http_proxy_module				\
 		http/ngx_http_random_index_module			\
 		http/ngx_http_realip_module				\
+		http/ngx_http_referer_module				\
 		http/ngx_http_secure_link_module			\
 		http/ngx_http_split_clients_module			\
 		http/ngx_http_sub_module				\
