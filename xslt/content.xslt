@@ -52,7 +52,7 @@
    </xsl:template>
 
    <xsl:template match="programlisting"> 
-      <blockquote>
+      <blockquote class="example">
          <pre>
             <xsl:apply-templates/>
          </pre>
@@ -63,7 +63,7 @@
 
       <xsl:text disable-output-escaping="yes">&lt;/p&gt; </xsl:text>
 
-      <blockquote>
+      <blockquote class="example">
          <pre>
             <xsl:apply-templates/>
          </pre>
@@ -279,7 +279,7 @@
    </xsl:template>
 
    <xsl:template match="example"> 
-      <blockquote>
+      <blockquote class="example">
          <pre>
             <xsl:apply-templates/>
          </pre>
@@ -290,7 +290,7 @@
 
       <xsl:text disable-output-escaping="yes">&lt;/p&gt; </xsl:text>
 
-      <blockquote>
+      <blockquote class="example">
          <pre>
             <xsl:apply-templates/>
          </pre>
