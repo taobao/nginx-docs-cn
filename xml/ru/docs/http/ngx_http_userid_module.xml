@@ -2,15 +2,17 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_userid_module"
+<module name="Модуль ngx_http_userid_module"
         link="/ru/docs/http/ngx_http_userid_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_userid_module выдаёт сookies для идентификации клиентов.
-Для записи в лог можно использовать переменные $uid_got и $uid_set.
+Модуль <literal>ngx_http_userid_module</literal> выдаёт cookies
+для идентификации клиентов.
+Для записи в лог можно использовать переменные <var>$uid_got</var>
+и <var>$uid_set</var>.
 Модуль совместим с модулем
 <link url="http://www.lexa.ru/programs/mod-uid.html">mod_uid</link>
 для Apache.
@@ -19,55 +21,61 @@
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    userid          on;
-    userid_name     uid;
-    userid_domain   example.com;
-    userid_path     /;
-    userid_expires  365d;
-    userid_p3p      'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
+userid         on;
+userid_name    uid;
+userid_domain  example.com;
+userid_path    /;
+userid_expires 365d;
+userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 </example>
 </para>
 
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="userid">
 <syntax>
-  <literal>on</literal> |
-  <literal>v1</literal> |
-  <literal>log</literal> |
-  <literal>off</literal></syntax>
+    <literal>on</literal> |
+    <literal>v1</literal> |
+    <literal>log</literal> |
+    <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
 Разрешает или запрещает выдавать cookie и записывать приходящие cookie в лог:
-<list type="bullet">
+<list type="tag">
 
-<listitem>
-on — разрешает выдавать сookie версии 2
+<tag-name><literal>on</literal></tag-name>
+<tag-desc>
+разрешает выдавать cookie версии 2
 и записывать приходящие cookie в лог;
-</listitem>
+</tag-desc>
 
-<listitem>
-v1 — разрешает выдавать сookie версии 1
+<tag-name><literal>v1</literal></tag-name>
+<tag-desc>
+разрешает выдавать cookie версии 1
 и записывать приходящие cookie в лог;
-</listitem>
+</tag-desc>
 
-<listitem>
-log — запрещает выдавать cookie,
+<tag-name><literal>log</literal></tag-name>
+<tag-desc>
+запрещает выдавать cookie,
 но разрешает записывать приходящие cookie в лог;
-</listitem>
+</tag-desc>
 
-<listitem>
-off — запрещает выдавать cookie и записывать приходящие cookie в лог;
-</listitem>
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+запрещает выдавать cookie и записывать приходящие cookie в лог.
+</tag-desc>
 
 </list>
 </para>
@@ -78,11 +86,13 @@ off — запрещает выдавать cookie и записывать пр
 <directive name="userid_domain">
 <syntax><value>имя</value> | <literal>none</literal></syntax>
 <default>none</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт домен, для которого устанавливается cookie.
-Параметр "none" запрещает выдавать домен для cookie.
+Задаёт домен, для которого устанавливается cookie.
+Параметр <literal>none</literal> запрещает выдавать домен для cookie.
 </para>
 
 </directive>
@@ -91,11 +101,13 @@ off — запрещает выдавать cookie и записывать пр
 <directive name="userid_expires">
 <syntax><value>время</value> | <literal>max</literal></syntax>
 <default/>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт время, в течение которого браузер должен хранить cookie.
-Параметр "max" задаёт время 31 декабря 2037 года 23:55:55 GMT.
+Задаёт время, в течение которого браузер должен хранить cookie.
+Параметр <literal>max</literal> задаёт время 31 декабря 2037 года 23:55:55 GMT.
 Это максимальное время, которое понимают старые браузеры.
 </para>
 
@@ -105,10 +117,12 @@ off — запрещает выдавать cookie и записывать пр
 <directive name="userid_name">
 <syntax><value>имя</value></syntax>
 <default>uid</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт имя cookie.
+Задаёт имя cookie.
 </para>
 
 </directive>
@@ -117,10 +131,12 @@ off — запрещает выдавать cookie и записывать пр
 <directive name="userid_p3p">
 <syntax><value>строка</value></syntax>
 <default/>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт значение для строки заголовка P3P, который будет
+Задаёт значение для поля заголовка <header>P3P</header>, который будет
 выдаваться вместе с cookie.
 </para>
 
@@ -130,10 +146,12 @@ off — запрещает выдавать cookie и записывать пр
 <directive name="userid_path">
 <syntax><value>путь</value></syntax>
 <default>/</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт путь, для которого устанавливается cookie.
+Задаёт путь, для которого устанавливается cookie.
 </para>
 
 </directive>
@@ -142,10 +160,12 @@ off — запрещает выдавать cookie и записывать пр
 <directive name="userid_service">
 <syntax><value>число</value></syntax>
 <default>IP-адрес сервера</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт номер сервиса, выдавшего cookie.
+Задаёт номер сервиса, выдавшего cookie.
 По умолчанию для cookie первой версии используется ноль,
 а для второй — IP-адрес сервера.
 </para>
