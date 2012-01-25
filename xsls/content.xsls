@@ -22,11 +22,11 @@ X:stylesheet {
     X:template = "initial" { <span class="initial"><b> !!; </b></span> }
 
 
-    X:template = "programlisting" { <blockquote><pre> !!; </pre></blockquote> }
+    X:template = "programlisting" { <blockquote class="example"><pre> !!; </pre></blockquote> }
 
     X:template = "para/programlisting" {
         X:text disable-output-escaping="yes" {&lt;/p&gt; }
-        <blockquote><pre> !!; </pre></blockquote>
+        <blockquote class="example"><pre> !!; </pre></blockquote>
         X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
@@ -108,11 +108,11 @@ X:stylesheet {
 
     X:template = "emphasis" { <strong> !!; </strong> }
 
-    X:template = "example" { <blockquote><pre> !!; </pre></blockquote> }
+    X:template = "example" { <blockquote class="example"><pre> !!; </pre></blockquote> }
 
     X:template = "para/example" {
         X:text disable-output-escaping="yes" {&lt;/p&gt; }
-        <blockquote><pre> !!; </pre></blockquote>
+        <blockquote class="example"><pre> !!; </pre></blockquote>
         X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 

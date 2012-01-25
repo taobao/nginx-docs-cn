@@ -26,7 +26,16 @@ X:template style (lang) {
         blockquote.note   { text-align:     justify;
                             background:     #EEEEEE;
                             border:         none;
-                            padding:        10pt 10pt 10pt 10pt; }
+                            margin:         1em;
+                            padding:        0.5em; }
+        blockquote.example {
+                            background:     transparent;
+                            border:         none;
+                            margin:         1em;
+                            padding:        0.5em; }
+        blockquote.example pre {
+                            padding:        0;
+                            margin:         0; }
         sup               { font-size:      50%; }
         ') }
 
