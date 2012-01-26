@@ -63,6 +63,7 @@ REFS =									\
 		http/ngx_http_limit_req_module				\
 		http/ngx_http_log_module				\
 		http/ngx_http_map_module				\
+		http/ngx_http_memcached_module				\
 		http/ngx_http_mp4_module				\
 		http/ngx_http_proxy_module				\
 		http/ngx_http_random_index_module			\

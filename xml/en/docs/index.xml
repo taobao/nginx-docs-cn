@@ -165,6 +165,11 @@ ngx_http_map_module</a>
 </item>
 
 <item>
+<a href="/en/docs/http/ngx_http_memcached_module.xml">
+ngx_http_memcached_module</a>
+</item>
+
+<item>
 <a href="/en/docs/http/ngx_http_mp4_module.xml">
 ngx_http_mp4_module</a>
 </item>
