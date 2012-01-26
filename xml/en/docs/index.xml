@@ -209,6 +209,11 @@ ngx_http_sub_module</a>
 ngx_http_upstream_module</a>
 </item>
 
+<item>
+<a href="/en/docs/http/ngx_http_userid_module.xml">
+ngx_http_userid_module</a>
+</item>
+
 </list>
 </para>
 

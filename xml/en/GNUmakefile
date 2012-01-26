@@ -72,6 +72,7 @@ REFS =									\
 		http/ngx_http_split_clients_module			\
 		http/ngx_http_sub_module				\
 		http/ngx_http_upstream_module				\
+		http/ngx_http_userid_module				\
 
 REFS_XML =	$(foreach name, $(REFS), xml/$(DOC_LANG)/docs/$(name).xml)
 REFS_HTML =	$(foreach name, $(REFS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
