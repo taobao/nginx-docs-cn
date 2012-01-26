@@ -9,10 +9,10 @@
 <section id="summary">
 
 <para>
-Модуль <literal>ngx_http_userid_module</literal> выдаёт cookies
+Модуль <literal>ngx_http_userid_module</literal> выдаёт куки
 для идентификации клиентов.
-Для записи в лог можно использовать переменные <var>$uid_got</var>
-и <var>$uid_set</var>.
+Для записи в лог полученных и выданных куки можно использовать встроенные
+переменные <var>$uid_got</var> и <var>$uid_set</var>.
 Модуль совместим с модулем
 <link url="http://www.lexa.ru/programs/mod-uid.html">mod_uid</link>
 для Apache.
@@ -51,30 +51,30 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 <context>location</context>
 
 <para>
-Разрешает или запрещает выдавать cookie и записывать приходящие cookie в лог:
+Разрешает или запрещает выдавать куки и записывать приходящие куки в лог:
 <list type="tag">
 
 <tag-name><literal>on</literal></tag-name>
 <tag-desc>
-разрешает выдавать cookie версии 2
-и записывать приходящие cookie в лог;
+разрешает выдавать куки версии 2
+и записывать приходящие куки в лог;
 </tag-desc>
 
 <tag-name><literal>v1</literal></tag-name>
 <tag-desc>
-разрешает выдавать cookie версии 1
-и записывать приходящие cookie в лог;
+разрешает выдавать куки версии 1
+и записывать приходящие куки в лог;
 </tag-desc>
 
 <tag-name><literal>log</literal></tag-name>
 <tag-desc>
-запрещает выдавать cookie,
-но разрешает записывать приходящие cookie в лог;
+запрещает выдавать куки,
+но разрешает записывать приходящие куки в лог;
 </tag-desc>
 
 <tag-name><literal>off</literal></tag-name>
 <tag-desc>
-запрещает выдавать cookie и записывать приходящие cookie в лог.
+запрещает выдавать куки и записывать приходящие куки в лог.
 </tag-desc>
 
 </list>
@@ -91,8 +91,8 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 <context>location</context>
 
 <para>
-Задаёт домен, для которого устанавливается cookie.
-Параметр <literal>none</literal> запрещает выдавать домен для cookie.
+Задаёт домен, для которого устанавливается куки.
+Параметр <literal>none</literal> запрещает выдавать домен для куки.
 </para>
 
 </directive>
@@ -106,7 +106,7 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 <context>location</context>
 
 <para>
-Задаёт время, в течение которого браузер должен хранить cookie.
+Задаёт время, в течение которого браузер должен хранить куки.
 Параметр <literal>max</literal> задаёт время 31 декабря 2037 года 23:55:55 GMT.
 Это максимальное время, которое понимают старые браузеры.
 </para>
@@ -122,7 +122,7 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 <context>location</context>
 
 <para>
-Задаёт имя cookie.
+Задаёт имя куки.
 </para>
 
 </directive>
@@ -137,7 +137,7 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 
 <para>
 Задаёт значение для поля заголовка <header>P3P</header>, который будет
-выдаваться вместе с cookie.
+выдаваться вместе с куки.
 </para>
 
 </directive>
@@ -151,7 +151,7 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 <context>location</context>
 
 <para>
-Задаёт путь, для которого устанавливается cookie.
+Задаёт путь, для которого устанавливается куки.
 </para>
 
 </directive>
@@ -165,8 +165,8 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 <context>location</context>
 
 <para>
-Задаёт номер сервиса, выдавшего cookie.
-По умолчанию для cookie первой версии используется ноль,
+Задаёт номер сервиса, выдавшего куки.
+По умолчанию для куки первой версии используется ноль,
 а для второй — IP-адрес сервера.
 </para>
 
