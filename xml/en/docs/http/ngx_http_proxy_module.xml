@@ -72,7 +72,7 @@ If the whole response does not fit into memory, part of it is saved to a disk.
 
 <para>
 When buffering is disabled, a response is passed to a client synchronously,
-immediately upon receipt.
+immediately as it is received.
 nginx will not try to read the whole response from the proxied server.
 The maximum size of the data that nginx can receive from the server
 at a time is set by the <link id="proxy_buffer_size"/> directive.
