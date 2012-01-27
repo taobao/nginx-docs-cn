@@ -2,37 +2,37 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_geo_module"
+<module name="Модуль ngx_http_geo_module"
         link="/ru/docs/http/ngx_http_geo_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_geo_module создаёт переменные, значения которых
-зависят от IP-адреса клиента.
+Модуль <literal>ngx_http_geo_module</literal> создаёт переменные,
+значения которых зависят от IP-адреса клиента.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    geo  $geo  {
-         default          0;
-         127.0.0.1/32     2;
-         192.168.1.0/24   1;
-         10.1.0.0/16      1;
-    }
+geo $geo {
+    default        0;
+    127.0.0.1/32   2;
+    192.168.1.0/24 1;
+    10.1.0.0/16    1;
+}
 </example>
 </para>
 
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="geo">
 <syntax block="yes">[<value>$адрес</value>] <value>$переменная</value></syntax>
@@ -40,97 +40,105 @@
 <context>http</context>
 
 <para>
-Директива geo описывает для указанной переменной зависимость значения от
+Описывает для указанной переменной зависимость значения от
 IP-адреса клиента.
-По умолчанию адрес берётся из переменной $remote_addr, но его также (0.7.27)
-можно получить из другой переменной, например:
+По умолчанию адрес берётся из переменной <var>$remote_addr</var>,
+но его также можно получить из другой переменной (0.7.27), например:
 <example>
-    geo  $arg_remote_addr  $geo {
-         ...;
-    }
+geo $arg_remote_addr $geo {
+    ...;
+}
 </example>
 Если значение переменной не представляет из себя правильный IP-адрес,
-то используется адрес "255.255.255.255".
+то используется адрес “<literal>255.255.255.255</literal>”.
 </para>
+
 <para>
 Адреса задаются в виде CIDR или в виде диапазонов (0.7.23).
-Кроме того, есть четыре специальных параметра:
-<list type="bullet">
+Кроме того, есть пять специальных параметров:
+<list type="tag">
 
-<listitem>
-delete — удаляет описанную сеть (0.7.23).
-</listitem>
+<tag-name><literal>delete</literal></tag-name>
+<tag-desc>
+удаляет описанную сеть (0.7.23).
+</tag-desc>
 
-<listitem>
-default — значение переменной, если адрес клиента не соответствует
+<tag-name><literal>default</literal></tag-name>
+<tag-desc>
+значение переменной, если адрес клиента не соответствует
 ни одному заданному адресу.
-При использовании CIDR вместо default можно также написать 0.0.0.0/0.
-</listitem>
+При использовании CIDR вместо <literal>default</literal> можно
+также написать “<literal>0.0.0.0/0</literal>”.
+</tag-desc>
 
-<listitem>
-include — включает файл с адресами и значениями.
+<tag-name><literal>include</literal></tag-name>
+<tag-desc>
+включает файл с адресами и значениями.
 Включений может быть несколько.
-</listitem>
+</tag-desc>
 
-<listitem>
-proxy — задаёт адреса проски-серверов (0.8.7, 0.7.63),
+<tag-name><literal>proxy</literal></tag-name>
+<tag-desc>
+задаёт адреса проски-серверов (0.8.7, 0.7.63),
 при запросе с которых будет использоваться адрес в переданной
 в строке заголовка запроса "X-Forwarded-For".
 В отличие от обычных адресов, адреса прокси-серверов проверяются
 последовательно.
-</listitem>
+</tag-desc>
 
-<listitem>
-ranges — указывает, что адреса задаются в виде диапазонов (0.7.23).
-Эта директива должны быть первой.
+<tag-name><literal>ranges</literal></tag-name>
+<tag-desc>
+указывает, что адреса задаются в виде диапазонов (0.7.23).
+Этот параметр должен быть первым.
 Для ускорения загрузки гео-базы нужно располагать адреса в порядке возрастания.
-</listitem>
+</tag-desc>
 
 </list>
 </para>
 
 <para>
-Пример описания:
+Пример:
 <example>
-    geo  $country  {
-         default          ZZ;
-         include          conf/geo.conf;
-         delete           127.0.0.0/16;
-         proxy            192.168.100.0/24;
+geo $country {
+    default        ZZ;
+    include        conf/geo.conf;
+    delete         127.0.0.0/16;
+    proxy          192.168.100.0/24;
 
-         127.0.0.0/24     US;
-         127.0.0.1/32     RU;
-         10.1.0.0/16      RU;
-         192.168.1.0/24   UK;
-    }
+    127.0.0.0/24   US;
+    127.0.0.1/32   RU;
+    10.1.0.0/16    RU;
+    192.168.1.0/24 UK;
+}
 </example>
 </para>
 
 <para>
-В файле conf/geo.conf могут быть такие строки:
+В файле <path>conf/geo.conf</path> могут быть такие строки:
 <example>
-10.2.0.0/16      RU;
-192.168.2.0/24   RU;
+10.2.0.0/16    RU;
+192.168.2.0/24 RU;
 </example>
 </para>
 
 <para>
 В качестве значения выбирается максимальное совпадение, например,
-для адреса 127.0.0.1 будет выбрано значение "RU", а не "US".
+для адреса 127.0.0.1 будет выбрано значение “<literal>RU</literal>”,
+а не “<literal>US</literal>”.
 </para>
 
 <para>
 Пример описания диапазонов:
 <example>
-    geo  $country  {
-         ranges;
-         default                    ZZ;
-         127.0.0.0-127.0.0.0        US;
-         127.0.0.1-127.0.0.1        RU;
-         127.0.0.1-127.0.0.255      US;
-         10.1.0.0-10.1.255.255      RU;
-         192.168.1.0-192.168.1.255  UK;
-    }
+geo $country {
+    ranges;
+    default                   ZZ;
+    127.0.0.0-127.0.0.0       US;
+    127.0.0.1-127.0.0.1       RU;
+    127.0.0.1-127.0.0.255     US;
+    10.1.0.0-10.1.255.255     RU;
+    192.168.1.0-192.168.1.255 UK;
+}
 </example>
 </para>
 
