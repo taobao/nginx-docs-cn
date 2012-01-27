@@ -129,7 +129,8 @@ The rewrite module: URI changing using regular expressions;
 </item>
 
 <item>
-Executing different functions depending on the client address;
+Executing different functions depending on the
+<link doc="docs/http/ngx_http_geo_module.xml">client address</link>;
 </item>
 
 <item>

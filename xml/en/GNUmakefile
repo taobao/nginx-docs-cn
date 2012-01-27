@@ -53,6 +53,7 @@ REFS =									\
 		http/ngx_http_empty_gif_module				\
 		http/ngx_http_fastcgi_module				\
 		http/ngx_http_flv_module				\
+		http/ngx_http_geo_module				\
 		http/ngx_http_geoip_module				\
 		http/ngx_http_gzip_module				\
 		http/ngx_http_gzip_static_module			\
