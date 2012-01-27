@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-Модуль <literal>ngx_http_gzip_module</literal> — это фильтр,
+Модуль <literal>ngx_http_gzip_module</literal> — это фильтр,
 сжимающий ответ методом gzip,
 что позволяет уменьшить размер передаваемых данных в 2 и более раз.
 </para>

@@ -58,9 +58,9 @@ The value of the original string is hashed using MurmurHash2.
 In the example given, hash values from 0 to 21474836 (0.5%)
 correspond to the <var>$variant</var> variable taking the
 value <literal>".one"</literal>,
-hash values from 21474837 to 107374182 (2%) correspond to
+hash values from 21474837 to 107374182 (2%) correspond to
 the value <literal>".two"</literal>,
-and hash values from 107374183 to 4294967297 correspond to
+and hash values from 107374183 to 4294967297 correspond to
 the value <literal>""</literal>.
 </para>
 

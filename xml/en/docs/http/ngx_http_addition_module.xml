@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-The <literal>ngx_http_addition_module</literal> module is a filter
+The <literal>ngx_http_addition_module</literal> module is a filter
 that adds a text before and after a response.
 This module is not built by default, it should be enabled with the
 <literal>--with-http_addition_module</literal>

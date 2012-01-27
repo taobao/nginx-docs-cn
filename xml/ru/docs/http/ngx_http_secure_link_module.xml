@@ -9,7 +9,7 @@
 <section id="summary">
 
 <para>
-Модуль <literal>ngx_http_secure_link_module</literal> (0.7.18+) проверяет
+Модуль <literal>ngx_http_secure_link_module</literal> (0.7.18+) проверяет
 правильность запрашиваемой ссылки.
 </para>
 

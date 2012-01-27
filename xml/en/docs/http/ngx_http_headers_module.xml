@@ -98,7 +98,7 @@ time is negative — <header>Cache-Control: no-cache</header>.
 </listitem>
 
 <listitem>
-time is positive or zero —
+time is positive or zero —
 <header>Cache-Control: max-age=<value>t</value></header>,
 where <value>t</value> is a time specified in the directive, in seconds.
 </listitem>

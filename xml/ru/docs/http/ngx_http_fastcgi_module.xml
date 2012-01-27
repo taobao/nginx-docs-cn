@@ -823,7 +823,7 @@ fastcgi_temp_path /spool/nginx/fastcgi_temp 1 2;
 <tag-name><var>$fastcgi_script_name</var></tag-name>
 <tag-desc>
 URI запроса или же, если URI заканчивается слэшом,
-то URI запроса, дополненное именем индексного файла, задаваемого директивой
+то URI запроса, дополненное именем индексного файла, задаваемого директивой
 <link id="fastcgi_index"/>.
 Эту переменную можно использовать для задания параметров
 <literal>SCRIPT_FILENAME</literal> и <literal>PATH_TRANSLATED</literal>,

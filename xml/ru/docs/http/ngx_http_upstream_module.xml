@@ -140,7 +140,7 @@ server {
 Для HTTP директиву
 <link doc="ngx_http_proxy_module.xml" id="proxy_http_version"/>
 следует установить в “<literal>1.1</literal>”,
-а поле заголовка <header>Connection</header> — очистить:
+а поле заголовка <header>Connection</header> — очистить:
 <example>
 upstream http_backend {
     server 127.0.0.1:8080;
