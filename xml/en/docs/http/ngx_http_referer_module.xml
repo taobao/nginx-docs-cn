@@ -44,11 +44,11 @@ if ($invalid_referer) {
 
 <directive name="valid_referers">
 <syntax>
-  <literal>none</literal> |
-  <literal>blocked</literal> |
-  <literal>server_names</literal> |
-  <value>string</value>
-  ...</syntax>
+    <literal>none</literal> |
+    <literal>blocked</literal> |
+    <literal>server_names</literal> |
+    <value>string</value>
+    ...</syntax>
 <default/>
 <context>server</context>
 <context>location</context>

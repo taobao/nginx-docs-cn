@@ -209,11 +209,11 @@ proxy_cache_key $scheme$proxy_host$uri$is_args$args;
 
 <directive name="proxy_cache_path">
 <syntax>
-  <value>путь</value>
-  [<literal>levels</literal>=<value>уровни</value>]
-  <literal>keys_zone</literal>=<value>имя</value>:<value>размер</value>
-  [<literal>inactive</literal>=<value>время</value>]
-  [<literal>max_size</literal>=<value>размер</value>]</syntax>
+    <value>путь</value>
+    [<literal>levels</literal>=<value>уровни</value>]
+    <literal>keys_zone</literal>=<value>имя</value>:<value>размер</value>
+    [<literal>inactive</literal>=<value>время</value>]
+    [<literal>max_size</literal>=<value>размер</value>]</syntax>
 <default/>
 <context>http</context>
 
@@ -235,7 +235,8 @@ proxy_cache_path /data/nginx/cache levels=1:2 keys_zone=one:10m;
 
 <para>
 Кэшируемый ответ сначала записывается во временный файл, а потом этот файл
-переименовывается. Начиная с версии 0.8.9, временные файлы и кэш
+переименовывается.
+Начиная с версии 0.8.9, временные файлы и кэш
 могут располагаться на разных файловых системах, но нужно учитывать,
 что в этом случае вместо дешёвой операции переименовывания в пределах
 одной файловой системы файл копируется с одной файловой системы на другую.
@@ -264,17 +265,17 @@ proxy_cache_path /data/nginx/cache levels=1:2 keys_zone=one:10m;
 
 <directive name="proxy_cache_use_stale">
 <syntax>
-  <literal>error</literal> |
-  <literal>timeout</literal> |
-  <literal>invalid_header</literal> |
-  <literal>updating</literal> |
-  <literal>http_500</literal> |
-  <literal>http_502</literal> |
-  <literal>http_503</literal> |
-  <literal>http_504</literal> |
-  <literal>http_404</literal> |
-  <literal>off</literal>
-  ...</syntax>
+    <literal>error</literal> |
+    <literal>timeout</literal> |
+    <literal>invalid_header</literal> |
+    <literal>updating</literal> |
+    <literal>http_500</literal> |
+    <literal>http_502</literal> |
+    <literal>http_503</literal> |
+    <literal>http_504</literal> |
+    <literal>http_404</literal> |
+    <literal>off</literal>
+    ...</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -283,7 +284,8 @@ proxy_cache_path /data/nginx/cache levels=1:2 keys_zone=one:10m;
 <para>
 Определяет, в каких случаях можно использовать
 устаревший закэшированный ответ, если при работе с проксированным
-сервером возникла ошибка. Параметры директивы совпадают с параметрами
+сервером возникла ошибка.
+Параметры директивы совпадают с параметрами
 директивы <link id="proxy_next_upstream"/>.
 Кроме того, дополнительный параметр <literal>updating</literal>
 разрешает использовать устаревший закэшированный ответ,
@@ -439,16 +441,16 @@ nginx не передаёт клиенту поля заголовка <header>D
 
 <directive name="proxy_next_upstream">
 <syntax>
-  <literal>error</literal> |
-  <literal>timeout</literal> |
-  <literal>invalid_header</literal> |
-  <literal>http_500</literal> |
-  <literal>http_502</literal> |
-  <literal>http_503</literal> |
-  <literal>http_504</literal> |
-  <literal>http_404</literal> |
-  <literal>off</literal>
-  ...</syntax>
+    <literal>error</literal> |
+    <literal>timeout</literal> |
+    <literal>invalid_header</literal> |
+    <literal>http_500</literal> |
+    <literal>http_502</literal> |
+    <literal>http_503</literal> |
+    <literal>http_504</literal> |
+    <literal>http_404</literal> |
+    <literal>off</literal>
+    ...</syntax>
 <default>error timeout</default>
 <context>http</context>
 <context>server</context>
@@ -825,8 +827,9 @@ proxy_set_header Host       $http_host;
 
 <para>
 Однако, если это поле отсутствует в заголовке запроса клиента, то ничего
-передаваться не будет. В этом случае лучше воспользоваться переменной
-<var>$host</var>&mdash;её значение равно имени сервера в поле <header>Host</header>
+передаваться не будет.
+В этом случае лучше воспользоваться переменной <var>$host</var>&mdash;её
+значение равно имени сервера в поле <header>Host</header>
 заголовка запроса, или же основному имени сервера, если поля нет:
 <example>
 proxy_set_header Host       $host;
@@ -860,7 +863,8 @@ proxy_set_header Accept-Encoding "";
 
 <para>
 Определяет, использовать ли повторно SSL-сессии при
-работе с проксированным сервером. Если в логах появляются ошибки
+работе с проксированным сервером.
+Если в логах появляются ошибки
 “<literal>SSL3_GET_FINISHED:digest check failed</literal>”,
 то можно попробовать выключить
 повторное использование сессий.

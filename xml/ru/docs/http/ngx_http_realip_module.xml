@@ -54,9 +54,9 @@ real_ip_header   X-Real-IP;
 
 <directive name="real_ip_header">
 <syntax>
-  <value>поле</value> |
-  <literal>X-Real-IP</literal> |
-  <literal>X-Forwarded-For</literal></syntax>
+    <value>поле</value> |
+    <literal>X-Real-IP</literal> |
+    <literal>X-Forwarded-For</literal></syntax>
 <default>X-Real-IP</default>
 <context>http</context>
 <context>server</context>

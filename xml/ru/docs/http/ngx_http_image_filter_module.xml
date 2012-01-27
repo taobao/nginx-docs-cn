@@ -28,7 +28,7 @@
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
@@ -48,22 +48,24 @@ location = /empty {
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="image_filter">
-    <syntax><literal>off</literal></syntax>
-    <syntax><literal>test</literal></syntax>
-    <syntax><literal>size</literal></syntax>
-    <syntax><literal>rotate</literal>
-        <literal>90</literal> | <literal>180</literal> | <literal>270</literal></syntax>
-    <syntax>
-        <literal>resize</literal>
-        <value>ширина</value>
-        <value>высота</value></syntax>
-    <syntax>
-        <literal>crop</literal>
-        <value>ширина</value>
-        <value>высота</value></syntax>
+<syntax><literal>off</literal></syntax>
+<syntax><literal>test</literal></syntax>
+<syntax><literal>size</literal></syntax>
+<syntax>
+    <literal>rotate</literal>
+    <literal>90</literal> | <literal>180</literal> |
+    <literal>270</literal></syntax>
+<syntax>
+    <literal>resize</literal>
+    <value>ширина</value>
+    <value>высота</value></syntax>
+<syntax>
+    <literal>crop</literal>
+    <value>ширина</value>
+    <value>высота</value></syntax>
 <default/>
 <context>location</context>
 
@@ -169,7 +171,8 @@ location = /empty {
 <context>location</context>
 
 <para>
-Задаёт желаемое <value>качество</value> преобразованного изображения в формате JPEG.
+Задаёт желаемое <value>качество</value> преобразованного изображения
+в формате JPEG.
 Допустимые значения находятся в диапазоне 1..100.
 Меньшим значениям обычно соответствует худшее качество изображения
 и меньший объём передаваемых данных.

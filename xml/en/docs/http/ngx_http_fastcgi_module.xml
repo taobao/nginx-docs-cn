@@ -183,11 +183,11 @@ will be cached.
 
 <directive name="fastcgi_cache_path">
 <syntax>
-  <value>path</value>
-  [<literal>levels</literal>=<value>levels</value>]
-  <literal>keys_zone</literal>=<value>name</value>:<value>size</value>
-  [<literal>inactive</literal>=<value>time</value>]
-  [<literal>max_size</literal>=<value>size</value>]</syntax>
+    <value>path</value>
+    [<literal>levels</literal>=<value>levels</value>]
+    <literal>keys_zone</literal>=<value>name</value>:<value>size</value>
+    [<literal>inactive</literal>=<value>time</value>]
+    [<literal>max_size</literal>=<value>size</value>]</syntax>
 <default/>
 <context>http</context>
 
@@ -239,15 +239,15 @@ when this size is exceeded it removes the least recently used data.
 
 <directive name="fastcgi_cache_use_stale">
 <syntax>
-  <literal>error</literal> |
-  <literal>timeout</literal> |
-  <literal>invalid_header</literal> |
-  <literal>updating</literal> |
-  <literal>http_500</literal> |
-  <literal>http_503</literal> |
-  <literal>http_404</literal> |
-  <literal>off</literal>
-  ...</syntax>
+    <literal>error</literal> |
+    <literal>timeout</literal> |
+    <literal>invalid_header</literal> |
+    <literal>updating</literal> |
+    <literal>http_500</literal> |
+    <literal>http_503</literal> |
+    <literal>http_404</literal> |
+    <literal>off</literal>
+    ...</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -429,7 +429,7 @@ By default, a FastCGI server will close a connection right after
 sending the response.
 When set to the value <literal>on</literal>, nginx will instruct
 a FastCGI server to keep connections open.
-This in particular is necessary for 
+This in particular is necessary for
 <link doc="ngx_http_upstream_module.xml" id="keepalive"/>
 connections to FastCGI servers to function.
 </para>
@@ -439,14 +439,14 @@ connections to FastCGI servers to function.
 
 <directive name="fastcgi_next_upstream">
 <syntax>
-  <literal>error</literal> |
-  <literal>timeout</literal> |
-  <literal>invalid_header</literal> |
-  <literal>http_500</literal> |
-  <literal>http_503</literal> |
-  <literal>http_404</literal> |
-  <literal>off</literal>
-  ...</syntax>
+    <literal>error</literal> |
+    <literal>timeout</literal> |
+    <literal>invalid_header</literal> |
+    <literal>http_500</literal> |
+    <literal>http_503</literal> |
+    <literal>http_404</literal> |
+    <literal>off</literal>
+    ...</syntax>
 <default>error timeout</default>
 <context>http</context>
 <context>server</context>
@@ -821,8 +821,8 @@ parameters using the <link id="fastcgi_param"/> directive.
 <section id="variables" name="Embedded Variables">
 
 <para>
-The <literal>ngx_http_fastcgi_module</literal> module supports embedded variables
-that can be used to set parameters using the
+The <literal>ngx_http_fastcgi_module</literal> module supports embedded
+variables that can be used to set parameters using the
 <link id="fastcgi_param"/> directive:
 <list type="tag">
 

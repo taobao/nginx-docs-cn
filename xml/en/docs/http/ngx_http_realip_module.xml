@@ -54,9 +54,9 @@ replacement addresses.
 
 <directive name="real_ip_header">
 <syntax>
-  <value>field</value> |
-  <literal>X-Real-IP</literal> |
-  <literal>X-Forwarded-For</literal></syntax>
+    <value>field</value> |
+    <literal>X-Real-IP</literal> |
+    <literal>X-Forwarded-For</literal></syntax>
 <default>X-Real-IP</default>
 <context>http</context>
 <context>server</context>

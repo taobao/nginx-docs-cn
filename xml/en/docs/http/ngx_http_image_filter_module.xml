@@ -51,19 +51,21 @@ location = /empty {
 <section id="directives" name="Directives">
 
 <directive name="image_filter">
-    <syntax><literal>off</literal></syntax>
-    <syntax><literal>test</literal></syntax>
-    <syntax><literal>size</literal></syntax>
-    <syntax><literal>rotate</literal>
-        <literal>90</literal> | <literal>180</literal> | <literal>270</literal></syntax>
-    <syntax>
-        <literal>resize</literal>
-        <value>width</value>
-        <value>height</value></syntax>
-    <syntax>
-        <literal>crop</literal>
-        <value>width</value>
-        <value>height</value></syntax>
+<syntax><literal>off</literal></syntax>
+<syntax><literal>test</literal></syntax>
+<syntax><literal>size</literal></syntax>
+<syntax>
+    <literal>rotate</literal>
+    <literal>90</literal> | <literal>180</literal> |
+    <literal>270</literal></syntax>
+<syntax>
+    <literal>resize</literal>
+    <value>width</value>
+    <value>height</value></syntax>
+<syntax>
+    <literal>crop</literal>
+    <value>width</value>
+    <value>height</value></syntax>
 <default/>
 <context>location</context>
 

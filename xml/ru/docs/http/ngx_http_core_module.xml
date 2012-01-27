@@ -10,9 +10,9 @@
 
 <directive name="aio">
 <syntax>
-        <literal>on</literal> |
-        <literal>off</literal> |
-        <literal>sendfile</literal></syntax>
+    <literal>on</literal> |
+    <literal>off</literal> |
+    <literal>sendfile</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -223,9 +223,9 @@ chunked encoding, несмотря на требования стандарта.
 
 <directive name="client_body_in_file_only">
 <syntax>
-        <literal>on</literal> |
-        <literal>clean</literal> |
-        <literal>off</literal></syntax>
+    <literal>on</literal> |
+    <literal>clean</literal> |
+    <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -273,10 +273,10 @@ chunked encoding, несмотря на требования стандарта.
 
 <directive name="client_body_temp_path">
 <syntax>
-        <value>путь</value>
-        [<value>уровень1</value>
-        [<value>уровень2</value>
-        [<value>уровень3</value>]]]</syntax>
+    <value>путь</value>
+    [<value>уровень1</value>
+    [<value>уровень2</value>
+    [<value>уровень3</value>]]]</syntax>
 <default>client_body_temp</default>
 <context>http</context>
 <context>server</context>
@@ -455,9 +455,9 @@ directio 4m;
 
 <directive name="error_page">
 <syntax>
-        <value>код</value> ...
-        [<literal>=</literal>[<value>ответ</value>]]
-        <value>uri</value></syntax>
+    <value>код</value> ...
+    [<literal>=</literal>[<value>ответ</value>]]
+    <value>uri</value></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -516,9 +516,9 @@ location @fallback {
 
 <directive name="if_modified_since">
 <syntax>
-        <literal>off</literal> |
-        <literal>exact</literal> |
-        <literal>before</literal></syntax>
+    <literal>off</literal> |
+    <literal>exact</literal> |
+    <literal>before</literal></syntax>
 <default>exact</default>
 <context>http</context>
 <context>server</context>
@@ -661,8 +661,8 @@ location /404.html {
 
 <directive name="keepalive_timeout">
 <syntax>
-        <value>таймаут</value>
-        [<value>заголовок_таймаута</value>]</syntax>
+    <value>таймаут</value>
+    [<value>заголовок_таймаута</value>]</syntax>
 <default>75s</default>
 <context>http</context>
 <context>server</context>
@@ -824,9 +824,9 @@ location /flv/ {
 
 <directive name="lingering_close">
 <syntax>
-  <literal>off</literal> |
-  <literal>on</literal> |
-  <literal>always</literal></syntax>
+    <literal>off</literal> |
+    <literal>on</literal> |
+    <literal>always</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>
@@ -900,42 +900,42 @@ location /flv/ {
 
 <directive name="listen">
 <syntax>
-        <value>адрес</value>[:<value>порт</value>]
-        [<literal>default_server</literal>]
-        [<literal>setfib</literal>=<value>число</value>]
-        [<literal>backlog</literal>=<value>число</value>]
-        [<literal>rcvbuf</literal>=<value>размер</value>]
-        [<literal>sndbuf</literal>=<value>размер</value>]
-        [<literal>accept_filter</literal>=<value>фильтр</value>]
-        [<literal>deferred</literal>]
-        [<literal>bind</literal>]
-        [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
-        [<literal>ssl</literal>]
-        [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
+    <value>адрес</value>[:<value>порт</value>]
+    [<literal>default_server</literal>]
+    [<literal>setfib</literal>=<value>число</value>]
+    [<literal>backlog</literal>=<value>число</value>]
+    [<literal>rcvbuf</literal>=<value>размер</value>]
+    [<literal>sndbuf</literal>=<value>размер</value>]
+    [<literal>accept_filter</literal>=<value>фильтр</value>]
+    [<literal>deferred</literal>]
+    [<literal>bind</literal>]
+    [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
+    [<literal>ssl</literal>]
+    [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
 <syntax>
-        <value>порт</value>
-        [<literal>default_server</literal>]
-        [<literal>setfib</literal>=<value>число</value>]
-        [<literal>backlog</literal>=<value>число</value>]
-        [<literal>rcvbuf</literal>=<value>размер</value>]
-        [<literal>sndbuf</literal>=<value>размер</value>]
-        [<literal>accept_filter</literal>=<value>фильтр</value>]
-        [<literal>deferred</literal>]
-        [<literal>bind</literal>]
-        [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
-        [<literal>ssl</literal>]
-        [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
+    <value>порт</value>
+    [<literal>default_server</literal>]
+    [<literal>setfib</literal>=<value>число</value>]
+    [<literal>backlog</literal>=<value>число</value>]
+    [<literal>rcvbuf</literal>=<value>размер</value>]
+    [<literal>sndbuf</literal>=<value>размер</value>]
+    [<literal>accept_filter</literal>=<value>фильтр</value>]
+    [<literal>deferred</literal>]
+    [<literal>bind</literal>]
+    [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
+    [<literal>ssl</literal>]
+    [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
 <syntax>
-        <literal>unix:</literal><value>путь</value>
-        [<literal>default_server</literal>]
-        [<literal>backlog</literal>=<value>число</value>]
-        [<literal>rcvbuf</literal>=<value>размер</value>]
-        [<literal>sndbuf</literal>=<value>размер</value>]
-        [<literal>accept_filter</literal>=<value>фильтр</value>]
-        [<literal>deferred</literal>]
-        [<literal>bind</literal>]
-        [<literal>ssl</literal>]
-        [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
+    <literal>unix:</literal><value>путь</value>
+    [<literal>default_server</literal>]
+    [<literal>backlog</literal>=<value>число</value>]
+    [<literal>rcvbuf</literal>=<value>размер</value>]
+    [<literal>sndbuf</literal>=<value>размер</value>]
+    [<literal>accept_filter</literal>=<value>фильтр</value>]
+    [<literal>deferred</literal>]
+    [<literal>bind</literal>]
+    [<literal>ssl</literal>]
+    [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
 <default>*:80 | *:8000</default>
 <context>server</context>
 
@@ -1145,11 +1145,11 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
 
 <directive name="location">
 <syntax block="yes">[
-        <literal>=</literal> |
-        <literal>~</literal> |
-        <literal>~*</literal> |
-        <literal>^~</literal>
-        ] <value>uri</value></syntax>
+    <literal>=</literal> |
+    <literal>~</literal> |
+    <literal>~*</literal> |
+    <literal>^~</literal>
+    ] <value>uri</value></syntax>
 <syntax block="yes"><literal>@</literal><value>имя</value></syntax>
 <default/>
 <context>server</context>
@@ -1318,7 +1318,8 @@ location ~* \.(gif|jpg|jpeg)$ {
 <para>
 Необходимо иметь в виду, что это преобразование необходимо для корректной
 проверки префиксных строк и регулярных выражений.
-Если его не делать, то запрос “<literal>//scripts/one.php</literal>” не попадёт в
+Если его не делать, то запрос “<literal>//scripts/one.php</literal>”
+не попадёт в
 <example>
 location /scripts/ {
     ...
@@ -1656,8 +1657,7 @@ open_file_cache_events   on;
 
 
 <directive name="reset_timedout_connection">
-<syntax>
-        <literal>on</literal> | <literal>off</literal></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -2163,12 +2163,8 @@ server {
 
 
 <directive name="try_files">
-<syntax>
-        <value>файл</value> ...
-        <value>uri</value></syntax>
-<syntax>
-        <value>файл</value> ...
-        =<value>код</value></syntax>
+<syntax><value>файл</value> ... <value>uri</value></syntax>
+<syntax><value>файл</value> ... =<value>код</value></syntax>
 <default/>
 <context>server</context>
 <context>location</context>
@@ -2428,11 +2424,12 @@ location /download/ {
 
 </section>
 
+
 <section id="variables" name="Встроенные переменные">
 
 <para>
-Модуль <literal>ngx_http_core_module</literal> поддерживает встроенные переменные,
-имена которых совпадают с именами переменных веб-сервера Apache.
+Модуль <literal>ngx_http_core_module</literal> поддерживает встроенные
+переменные, имена которых совпадают с именами переменных веб-сервера Apache.
 Прежде всего, это переменные, представляющие из себя поля заголовка
 запроса клиента, такие как <var>$http_user_agent</var>, <var>$http_cookie</var>
 и тому подобное.

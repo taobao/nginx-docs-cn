@@ -16,6 +16,7 @@
 
 </section>
 
+
 <section id="example" name="Пример конфигурации">
 
 <para>
@@ -108,7 +109,7 @@ expires @15h30m;
 
 <para>
 Параметр <literal>max</literal> задаёт время
-“<literal>Thu, 31 Dec 2037 23:55:55 GMT</literal>” 
+“<literal>Thu, 31 Dec 2037 23:55:55 GMT</literal>”
 (31 декабря 2037 23:55:55 GMT) для поля <header>Expires</header>
 и 10 лет для поля <header>Cache-Control</header>.
 </para>

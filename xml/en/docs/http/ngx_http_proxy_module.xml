@@ -211,11 +211,11 @@ will be cached.
 
 <directive name="proxy_cache_path">
 <syntax>
-  <value>path</value>
-  [<literal>levels</literal>=<value>levels</value>]
-  <literal>keys_zone</literal>=<value>name</value>:<value>size</value>
-  [<literal>inactive</literal>=<value>time</value>]
-  [<literal>max_size</literal>=<value>size</value>]</syntax>
+    <value>path</value>
+    [<literal>levels</literal>=<value>levels</value>]
+    <literal>keys_zone</literal>=<value>name</value>:<value>size</value>
+    [<literal>inactive</literal>=<value>time</value>]
+    [<literal>max_size</literal>=<value>size</value>]</syntax>
 <default/>
 <context>http</context>
 
@@ -267,17 +267,17 @@ when this size is exceeded it removes the least recently used data.
 
 <directive name="proxy_cache_use_stale">
 <syntax>
-  <literal>error</literal> |
-  <literal>timeout</literal> |
-  <literal>invalid_header</literal> |
-  <literal>updating</literal> |
-  <literal>http_500</literal> |
-  <literal>http_502</literal> |
-  <literal>http_503</literal> |
-  <literal>http_504</literal> |
-  <literal>http_404</literal> |
-  <literal>off</literal>
-  ...</syntax>
+    <literal>error</literal> |
+    <literal>timeout</literal> |
+    <literal>invalid_header</literal> |
+    <literal>updating</literal> |
+    <literal>http_500</literal> |
+    <literal>http_502</literal> |
+    <literal>http_503</literal> |
+    <literal>http_504</literal> |
+    <literal>http_404</literal> |
+    <literal>off</literal>
+    ...</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -444,16 +444,16 @@ using the <link doc="ngx_http_core_module.xml" id="error_page"/> directive.
 
 <directive name="proxy_next_upstream">
 <syntax>
-  <literal>error</literal> |
-  <literal>timeout</literal> |
-  <literal>invalid_header</literal> |
-  <literal>http_500</literal> |
-  <literal>http_502</literal> |
-  <literal>http_503</literal> |
-  <literal>http_504</literal> |
-  <literal>http_404</literal> |
-  <literal>off</literal>
-  ...</syntax>
+    <literal>error</literal> |
+    <literal>timeout</literal> |
+    <literal>invalid_header</literal> |
+    <literal>http_500</literal> |
+    <literal>http_502</literal> |
+    <literal>http_503</literal> |
+    <literal>http_504</literal> |
+    <literal>http_404</literal> |
+    <literal>off</literal>
+    ...</syntax>
 <default>error timeout</default>
 <context>http</context>
 <context>server</context>

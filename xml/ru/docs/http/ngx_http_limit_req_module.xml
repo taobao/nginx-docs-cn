@@ -17,7 +17,8 @@
 
 </section>
 
-<section name="Пример конфигурации" id="example">
+
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
@@ -39,7 +40,7 @@ http {
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="limit_req">
 <syntax>

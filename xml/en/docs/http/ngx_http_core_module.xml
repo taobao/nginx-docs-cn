@@ -10,9 +10,9 @@
 
 <directive name="aio">
 <syntax>
-        <literal>on</literal> |
-        <literal>off</literal> |
-        <literal>sendfile</literal></syntax>
+    <literal>on</literal> |
+    <literal>off</literal> |
+    <literal>sendfile</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -91,9 +91,11 @@ In this configuration, <c-func>sendfile</c-func> is called with
 the <c-def>SF_NODISKIO</c-def> flag which causes it not to
 block on disk I/O and instead report back when the data are not in
 memory; nginx then initiates an asynchronous data load by reading
-one byte. The FreeBSD kernel then loads the first 128K bytes
+one byte.
+The FreeBSD kernel then loads the first 128K bytes
 of a file into memory, however next reads will only load data
-in 16K chunks. This can be tuned using the
+in 16K chunks.
+This can be tuned using the
 <link id="read_ahead"/>
 directive.
 </para>
@@ -226,9 +228,9 @@ It is usually 16K on other 64-bit platforms.
 
 <directive name="client_body_in_file_only">
 <syntax>
-        <literal>on</literal> |
-        <literal>clean</literal> |
-        <literal>off</literal></syntax>
+    <literal>on</literal> |
+    <literal>clean</literal> |
+    <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -278,10 +280,10 @@ variable, to save the number of copy operations involved.
 
 <directive name="client_body_temp_path">
 <syntax>
-        <value>path</value>
-        [<value>level1</value>
-        [<value>level2</value>
-        [<value>level3</value>]]]</syntax>
+    <value>path</value>
+    [<value>level1</value>
+    [<value>level2</value>
+    [<value>level3</value>]]]</syntax>
 <default>client_body_temp</default>
 <context>http</context>
 <context>server</context>
@@ -464,9 +466,9 @@ using XFS under Linux, it needs to be increased to 4K.
 
 <directive name="error_page">
 <syntax>
-        <value>code</value> ...
-        [<literal>=</literal>[<value>response</value>]]
-        <value>uri</value></syntax>
+    <value>code</value> ...
+    [<literal>=</literal>[<value>response</value>]]
+    <value>uri</value></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -527,9 +529,9 @@ location @fallback {
 
 <directive name="if_modified_since">
 <syntax>
-        <literal>off</literal> |
-        <literal>exact</literal> |
-        <literal>before</literal></syntax>
+    <literal>off</literal> |
+    <literal>exact</literal> |
+    <literal>before</literal></syntax>
 <default>exact</default>
 <context>http</context>
 <context>server</context>
@@ -673,8 +675,8 @@ After this many requests are made, the connection is closed.
 
 <directive name="keepalive_timeout">
 <syntax>
-        <value>timeout</value>
-        [<value>header_timeout</value>]</syntax>
+    <value>timeout</value>
+    [<value>header_timeout</value>]</syntax>
 <default>75s</default>
 <context>http</context>
 <context>server</context>
@@ -839,9 +841,9 @@ location /flv/ {
 
 <directive name="lingering_close">
 <syntax>
-  <literal>off</literal> |
-  <literal>on</literal> |
-  <literal>always</literal></syntax>
+    <literal>off</literal> |
+    <literal>on</literal> |
+    <literal>always</literal></syntax>
 <default>on</default>
 <context>http</context>
 <context>server</context>
@@ -913,42 +915,42 @@ The “wait-read-ignore” cycle is repeated, but no longer than specified by th
 
 <directive name="listen">
 <syntax>
-        <value>address</value>[:<value>port</value>]
-        [<literal>default_server</literal>]
-        [<literal>setfib</literal>=<value>number</value>]
-        [<literal>backlog</literal>=<value>number</value>]
-        [<literal>rcvbuf</literal>=<value>size</value>]
-        [<literal>sndbuf</literal>=<value>size</value>]
-        [<literal>accept_filter</literal>=<value>filter</value>]
-        [<literal>deferred</literal>]
-        [<literal>bind</literal>]
-        [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
-        [<literal>ssl</literal>]
-        [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
+    <value>address</value>[:<value>port</value>]
+    [<literal>default_server</literal>]
+    [<literal>setfib</literal>=<value>number</value>]
+    [<literal>backlog</literal>=<value>number</value>]
+    [<literal>rcvbuf</literal>=<value>size</value>]
+    [<literal>sndbuf</literal>=<value>size</value>]
+    [<literal>accept_filter</literal>=<value>filter</value>]
+    [<literal>deferred</literal>]
+    [<literal>bind</literal>]
+    [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
+    [<literal>ssl</literal>]
+    [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
 <syntax>
-        <value>port</value>
-        [<literal>default_server</literal>]
-        [<literal>setfib</literal>=<value>number</value>]
-        [<literal>backlog</literal>=<value>number</value>]
-        [<literal>rcvbuf</literal>=<value>size</value>]
-        [<literal>sndbuf</literal>=<value>size</value>]
-        [<literal>accept_filter</literal>=<value>filter</value>]
-        [<literal>deferred</literal>]
-        [<literal>bind</literal>]
-        [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
-        [<literal>ssl</literal>]
-        [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
+    <value>port</value>
+    [<literal>default_server</literal>]
+    [<literal>setfib</literal>=<value>number</value>]
+    [<literal>backlog</literal>=<value>number</value>]
+    [<literal>rcvbuf</literal>=<value>size</value>]
+    [<literal>sndbuf</literal>=<value>size</value>]
+    [<literal>accept_filter</literal>=<value>filter</value>]
+    [<literal>deferred</literal>]
+    [<literal>bind</literal>]
+    [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
+    [<literal>ssl</literal>]
+    [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
 <syntax>
-        <literal>unix:</literal><value>path</value>
-        [<literal>default_server</literal>]
-        [<literal>backlog</literal>=<value>number</value>]
-        [<literal>rcvbuf</literal>=<value>size</value>]
-        [<literal>sndbuf</literal>=<value>size</value>]
-        [<literal>accept_filter</literal>=<value>filter</value>]
-        [<literal>deferred</literal>]
-        [<literal>bind</literal>]
-        [<literal>ssl</literal>]
-        [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
+    <literal>unix:</literal><value>path</value>
+    [<literal>default_server</literal>]
+    [<literal>backlog</literal>=<value>number</value>]
+    [<literal>rcvbuf</literal>=<value>size</value>]
+    [<literal>sndbuf</literal>=<value>size</value>]
+    [<literal>accept_filter</literal>=<value>filter</value>]
+    [<literal>deferred</literal>]
+    [<literal>bind</literal>]
+    [<literal>ssl</literal>]
+    [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
 <default>*:80 | *:8000</default>
 <context>server</context>
 
@@ -971,7 +973,8 @@ IPv6 addresses (0.7.36) are specified in square brackets:
 listen [::]:8000;
 listen [fe80::1];
 </example>
-UNIX-domain sockets (0.8.21) are specified with the “<literal>unix:</literal>” prefix:
+UNIX-domain sockets (0.8.21) are specified with the “<literal>unix:</literal>”
+prefix:
 <example>
 listen unix:/var/run/nginx.sock;
 </example>
@@ -1157,11 +1160,11 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
 
 <directive name="location">
 <syntax block="yes">[
-        <literal>=</literal> |
-        <literal>~</literal> |
-        <literal>~*</literal> |
-        <literal>^~</literal>
-        ] <value>uri</value></syntax>
+    <literal>=</literal> |
+    <literal>~</literal> |
+    <literal>~*</literal> |
+    <literal>^~</literal>
+    ] <value>uri</value></syntax>
 <syntax block="yes"><literal>@</literal><value>name</value></syntax>
 <default/>
 <context>server</context>
@@ -1668,8 +1671,7 @@ and should not generally be used.
 
 
 <directive name="reset_timedout_connection">
-<syntax>
-        <literal>on</literal> | <literal>off</literal></syntax>
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -2174,12 +2176,8 @@ send a file in full packets.
 
 
 <directive name="try_files">
-<syntax>
-        <value>file</value> ...
-        <value>uri</value></syntax>
-<syntax>
-        <value>file</value> ...
-        =<value>code</value></syntax>
+<syntax><value>file</value> ... <value>uri</value></syntax>
+<syntax><value>file</value> ... =<value>code</value></syntax>
 <default/>
 <context>server</context>
 <context>location</context>
@@ -2439,6 +2437,7 @@ For more information, please refer to
 </directive>
 
 </section>
+
 
 <section id="variables" name="Embedded Variables">
 

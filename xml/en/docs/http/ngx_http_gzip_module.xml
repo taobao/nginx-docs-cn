@@ -145,16 +145,16 @@ Sets the minimum HTTP version of a request required to compress a response.
 
 <directive name="gzip_proxied">
 <syntax>
-  <literal>off</literal> |
-  <literal>expired</literal> |
-  <literal>no-cache</literal> |
-  <literal>no-store</literal> |
-  <literal>private</literal> |
-  <literal>no_last_modified</literal> |
-  <literal>no_etag</literal> |
-  <literal>auth</literal> |
-  <literal>any</literal>
-  ...</syntax>
+    <literal>off</literal> |
+    <literal>expired</literal> |
+    <literal>no-cache</literal> |
+    <literal>no-store</literal> |
+    <literal>private</literal> |
+    <literal>no_last_modified</literal> |
+    <literal>no_etag</literal> |
+    <literal>auth</literal> |
+    <literal>any</literal>
+    ...</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>

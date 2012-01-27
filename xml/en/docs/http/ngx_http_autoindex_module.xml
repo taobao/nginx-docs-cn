@@ -12,8 +12,9 @@
 The <literal>ngx_http_autoindex_module</literal> module produces
 a directory listing.
 Usually a request is passed to the <literal>ngx_http_autoindex_module</literal>
-module when the <link doc="ngx_http_index_module.xml">ngx_http_index_module</link>
-module could not find an index file.
+module when the
+<link doc="ngx_http_index_module.xml">ngx_http_index_module</link> module
+could not find an index file.
 </para>
 
 </section>
@@ -59,7 +60,6 @@ Enables or disables a directory listing output.
 Specifies whether file sizes in the directory listing should be
 output exactly, or rounded to kilobytes, megabytes, and gigabytes.
 </para>
-
 
 </directive>
 

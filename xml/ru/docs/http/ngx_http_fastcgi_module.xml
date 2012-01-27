@@ -181,11 +181,11 @@ fastcgi_cache_key localhost:9000$request_uri;
 
 <directive name="fastcgi_cache_path">
 <syntax>
-  <value>путь</value>
-  [<literal>levels</literal>=<value>уровни</value>]
-  <literal>keys_zone</literal>=<value>имя</value>:<value>размер</value>
-  [<literal>inactive</literal>=<value>время</value>]
-  [<literal>max_size</literal>=<value>размер</value>]</syntax>
+    <value>путь</value>
+    [<literal>levels</literal>=<value>уровни</value>]
+    <literal>keys_zone</literal>=<value>имя</value>:<value>размер</value>
+    [<literal>inactive</literal>=<value>время</value>]
+    [<literal>max_size</literal>=<value>размер</value>]</syntax>
 <default/>
 <context>http</context>
 
@@ -207,7 +207,8 @@ fastcgi_cache_path /data/nginx/cache levels=1:2 keys_zone=one:10m;
 
 <para>
 Кэшируемый ответ сначала записывается во временный файл, а потом этот файл
-переименовывается. Начиная с версии 0.8.9, временные файлы и кэш
+переименовывается.
+Начиная с версии 0.8.9, временные файлы и кэш
 могут располагаться на разных файловых системах, но нужно учитывать,
 что в этом случае вместо дешёвой операции переименовывания в пределах
 одной файловой системы файл копируется с одной файловой системы на другую.
@@ -236,15 +237,15 @@ fastcgi_cache_path /data/nginx/cache levels=1:2 keys_zone=one:10m;
 
 <directive name="fastcgi_cache_use_stale">
 <syntax>
-  <literal>error</literal> |
-  <literal>timeout</literal> |
-  <literal>invalid_header</literal> |
-  <literal>updating</literal> |
-  <literal>http_500</literal> |
-  <literal>http_503</literal> |
-  <literal>http_404</literal> |
-  <literal>off</literal>
-  ...</syntax>
+    <literal>error</literal> |
+    <literal>timeout</literal> |
+    <literal>invalid_header</literal> |
+    <literal>updating</literal> |
+    <literal>http_500</literal> |
+    <literal>http_503</literal> |
+    <literal>http_404</literal> |
+    <literal>off</literal>
+    ...</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -412,6 +413,7 @@ fastcgi_param SCRIPT_FILENAME /home/www/scripts/php$fastcgi_script_name;
 
 </directive>
 
+
 <directive name="fastcgi_keep_conn">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
@@ -434,14 +436,14 @@ FastCGI-серверу оставлять соединения открытым�
 
 <directive name="fastcgi_next_upstream">
 <syntax>
-  <literal>error</literal> |
-  <literal>timeout</literal> |
-  <literal>invalid_header</literal> |
-  <literal>http_500</literal> |
-  <literal>http_503</literal> |
-  <literal>http_404</literal> |
-  <literal>off</literal>
-  ...</syntax>
+    <literal>error</literal> |
+    <literal>timeout</literal> |
+    <literal>invalid_header</literal> |
+    <literal>http_500</literal> |
+    <literal>http_503</literal> |
+    <literal>http_404</literal> |
+    <literal>off</literal>
+    ...</syntax>
 <default>error timeout</default>
 <context>http</context>
 <context>server</context>

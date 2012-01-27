@@ -35,9 +35,9 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 
 <directive name="access_log">
 <syntax>
-  <value>path</value>
-  [<value>format</value>
-  [<literal>buffer</literal>=<value>size</value>]]</syntax>
+    <value>path</value>
+    [<value>format</value>
+    [<literal>buffer</literal>=<value>size</value>]]</syntax>
 <syntax><literal>off</literal></syntax>
 <default>log/access.log combined</default>
 <context>http</context>
@@ -49,8 +49,8 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 <para>
 Sets the path, format, and buffer size for the buffered log writes.
 Several logs can be specified on the same level.
-The special value <literal>off</literal> cancels all <literal>access_log</literal>
-directives on the current level.
+The special value <literal>off</literal> cancels all
+<literal>access_log</literal> directives on the current level.
 If format is not specified then the predefined format
 “<literal>combined</literal>” is used.
 </para>
@@ -199,6 +199,7 @@ log_format combined '$remote_addr - $remote_user [$time_local] '
 </para>
 
 </directive>
+
 
 <directive name="open_log_file_cache">
 

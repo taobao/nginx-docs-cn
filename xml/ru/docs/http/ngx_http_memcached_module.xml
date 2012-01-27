@@ -75,12 +75,12 @@ server {
 
 <directive name="memcached_next_upstream">
 <syntax>
-  <literal>error</literal> |
-  <literal>timeout</literal> |
-  <literal>invalid_response</literal> |
-  <literal>not_found</literal> |
-  <literal>off</literal>
-  ...</syntax>
+    <literal>error</literal> |
+    <literal>timeout</literal> |
+    <literal>invalid_response</literal> |
+    <literal>not_found</literal> |
+    <literal>off</literal>
+    ...</syntax>
 <default>error timeout</default>
 <context>http</context>
 <context>server</context>
