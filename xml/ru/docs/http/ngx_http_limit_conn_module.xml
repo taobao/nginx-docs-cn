@@ -22,7 +22,7 @@
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
@@ -44,7 +44,7 @@ http {
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="limit_conn">
 <syntax><value>зона</value> <value>число</value></syntax>
@@ -153,6 +153,7 @@ limit_conn_zone $binary_remote_addr zone=addr:10m;
 </para>
 
 </directive>
+
 
 <directive name="limit_zone">
 <syntax>
