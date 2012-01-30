@@ -9,21 +9,21 @@
 
 <para>
 nginx [נהגה: engine x] הוא שרת HTTP ופרוקסי הפוך, כמו גם  שרת פרוקסי לדואר,
-שנכתב על ידי <a href="http://sysoev.ru/en/">Igor Sysoev</a>.
+שנכתב על ידי <link url="http://sysoev.ru/en/">Igor Sysoev</link>.
  הוא נמצא בשימוש כבר יותר מחמש שנים באתרים רוסיים עמוסים במיוחד, כגון 
-<a href="http://www.rambler.ru">Rambler</a>
-(ו <a href="http://ramblermedia.com">RamblerMedia.com</a>).
+<link url="http://www.rambler.ru">Rambler</link>
+(ו <link url="http://ramblermedia.com">RamblerMedia.com</link>).
 לפי חברת Netcraft, השרת nginx הגיש או נתן שירות ל
-<a href="http://news.netcraft.com/archives/2010/04/15/april_2010_web_server_survey.html">4.70%
-מהאתרים העמוסים ביותר באפריל 2010</a>.
+<link url="http://news.netcraft.com/archives/2010/04/15/april_2010_web_server_survey.html">4.70%
+מהאתרים העמוסים ביותר באפריל 2010</link>.
 הנה כמה סיפורי הצלחה:
-<a href="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</a>,
-<a href="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</a>.
+<link url="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</link>,
+<link url="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</link>.
 </para>
 
 <para>
 קוד המקור הוא בעל רשיון
-<a href="/LICENSE">2-פיסקאות דמוי רשיון BSD</a>.
+<link url="/LICENSE">2-פיסקאות דמוי רשיון BSD</link>.
 </para>
 
 </section>

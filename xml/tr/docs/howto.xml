@@ -11,11 +11,11 @@
 <list>
 
 <item>
-<a href="/tr/docs/debugging_log.xml"/>
+<link doc="debugging_log.xml"/>
 </item>
 
 <item>
-<a href="/tr/docs/http/converting_rewrite_rules.xml"/>
+<link doc="http/converting_rewrite_rules.xml"/>
 </item>
 
 </list>

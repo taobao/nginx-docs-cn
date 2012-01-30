@@ -9,7 +9,7 @@
 <section>
 
 <para>
-サーバ名は <literal>server_name</literal> ディレクティブを使用して定義され、リクエストに対してどのサーバブロックが使われるかを決定します。「<a href="/ja/docs/http/request_processing.xml" />」もお読みください。これらは完全一致名、ワイルドカード名、正規表現で定義されます:
+サーバ名は <literal>server_name</literal> ディレクティブを使用して定義され、リクエストに対してどのサーバブロックが使われるかを決定します。「<link doc="request_processing.xml" />」もお読みください。これらは完全一致名、ワイルドカード名、正規表現で定義されます:
 
 <programlisting>
 server {
@@ -213,7 +213,7 @@ server {
 </para>
 
 <para>
-nginx バージョン 0.6.25 までは特別なサーバ名 &ldquo;*&rdquo; をサポートしていて、これは誤ってすべてのサーバ名と一致するもの（キャッチオール名）として解釈されていました。この特別なサーバ名 &ldquo;*&rdquo;はキャッチオールまたはワイルドカードとして機能したことはありませんでした。代わりに、今は <literal>server_name_in_redirect</literal> ディレクティブによって提供されている機能の役を果たしていました。特別なサーバ名 &ldquo;*&rdquo; は今後廃止予定ですので、<literal>server_name_in_redirect</literal> ディレクティブを使うようにしてください。キャッチオール名を指定したり <literal>server_name</literal> ディレクティブを使用した<i>デフォルト</i>サーバを指定したりする方法はないことに注意してください。これは <literal>listen</literal> ディレクティブのプロパティであり、<literal>server_name</literal> ディレクティブのプロパティではありません。&ldquo;<a href="/ja/docs/http/request_processing.xml" />&rdquo; も参照してください。
+nginx バージョン 0.6.25 までは特別なサーバ名 &ldquo;*&rdquo; をサポートしていて、これは誤ってすべてのサーバ名と一致するもの（キャッチオール名）として解釈されていました。この特別なサーバ名 &ldquo;*&rdquo;はキャッチオールまたはワイルドカードとして機能したことはありませんでした。代わりに、今は <literal>server_name_in_redirect</literal> ディレクティブによって提供されている機能の役を果たしていました。特別なサーバ名 &ldquo;*&rdquo; は今後廃止予定ですので、<literal>server_name_in_redirect</literal> ディレクティブを使うようにしてください。キャッチオール名を指定したり <literal>server_name</literal> ディレクティブを使用した<i>デフォルト</i>サーバを指定したりする方法はないことに注意してください。これは <literal>listen</literal> ディレクティブのプロパティであり、<literal>server_name</literal> ディレクティブのプロパティではありません。&ldquo;<link doc="request_processing.xml" />&rdquo; も参照してください。
 ポート *:80 と *:8080 で待ち受けているサーバを定義し、ひとつをポート *:8080 のデフォルトサーバへ、もうひとつをポート *:80 のデフォルトサーバへ振り向けることができます。
 
 <programlisting>

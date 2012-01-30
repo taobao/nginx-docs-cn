@@ -11,7 +11,7 @@
 <list>
 
 <item>
-<a href="http://wiki.nginx.org">wiki.nginx.org</a>
+<link url="http://wiki.nginx.org">wiki.nginx.org</link>
 </item>
 
 </list>
@@ -24,12 +24,12 @@
 
 <para>
 Вы можете
-<a href="http://nginx.org/mailman/listinfo">
-просматривать</a>
+<link url="http://nginx.org/mailman/listinfo">
+просматривать</link>
 списки рассылок.
 Чтобы написать в список, необходимо вначале
-<a href="http://nginx.org/mailman/listinfo">
-подписать</a>
+<link url="http://nginx.org/mailman/listinfo">
+подписать</link>
 свой почтовый адрес, который будет использоваться для отправки сообщений.
 </para>
 
@@ -38,24 +38,24 @@
 
 <item>
 список
-<a href="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</a>
+<link url="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</link>
 (английский),
-<a href="http://nginx.org/pipermail/nginx/">
-архив</a>,
-<a href="http://dir.gmane.org/gmane.comp.web.nginx.english">
-архив Gmane</a>,
-<a href="http://marc.info/?l=nginx">
-архив MARC</a>
+<link url="http://nginx.org/pipermail/nginx/">
+архив</link>,
+<link url="http://dir.gmane.org/gmane.comp.web.nginx.english">
+архив Gmane</link>,
+<link url="http://marc.info/?l=nginx">
+архив MARC</link>
 </item>
 
 <item>
 список
-<a href="http://nginx.org/mailman/listinfo/nginx-ru">nginx-ru@nginx.org</a>
+<link url="http://nginx.org/mailman/listinfo/nginx-ru">nginx-ru@nginx.org</link>
 (русский),
-<a href="http://nginx.org/pipermail/nginx-ru/">
-архив</a>,
-<a href="http://dir.gmane.org/gmane.comp.web.nginx.russian">
-архив Gmane</a>
+<link url="http://nginx.org/pipermail/nginx-ru/">
+архив</link>,
+<link url="http://dir.gmane.org/gmane.comp.web.nginx.russian">
+архив Gmane</link>
 </item>
 
 </list>
@@ -70,7 +70,7 @@
 <list>
 
 <item>
-<a href="http://forum.nginx.org">forum.nginx.org</a>,
+<link url="http://forum.nginx.org">forum.nginx.org</link>,
 интегрированный со списками рассылок.
 Это не обычный форум, поэтому, когда вы там
 &ldquo;создаёте топик&rdquo;, этот &ldquo;топик&rdquo;
@@ -79,10 +79,10 @@
 </item>
 
 <item>
-<a href="http://www.ruby-forum.com/forum/nginx">
-форум Ruby</a>,
+<link url="http://www.ruby-forum.com/forum/nginx">
+форум Ruby</link>,
 интегрированный со списком рассылки
-<a href="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</a>
+<link url="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</link>
 </item>
 
 </list>
@@ -98,22 +98,22 @@
 
 <item>
 Список рассылки для разработчиков
-<a href="http://nginx.org/mailman/listinfo/nginx-devel">nginx-devel@nginx.org</a>
+<link url="http://nginx.org/mailman/listinfo/nginx-devel">nginx-devel@nginx.org</link>
 (английский),
-<a href="http://nginx.org/pipermail/nginx-devel/">
-архив</a>
+<link url="http://nginx.org/pipermail/nginx-devel/">
+архив</link>
 </item>
 
 <item>
-<a href="http://trac.nginx.org/nginx/browser">
+<link url="http://trac.nginx.org/nginx/browser">
 Смотреть исходный код
-</a>
+</link>
 </item>
 
 <item>
-<a href="http://trac.nginx.org/nginx/report">
+<link url="http://trac.nginx.org/nginx/report">
 Сообщить об ошибке
-</a>
+</link>
 </item>
 
 </list>

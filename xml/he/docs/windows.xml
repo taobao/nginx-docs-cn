@@ -15,7 +15,7 @@ nginx/Windows משתמש ב API הטבעי של חלונות, Win32 API (ולא 
 פילטר תמונות, מודול GeoIP ושפת Perl משובצת.</para>
 
 <para>
-כדי להתקין את nginx/Windows, יש <a href="/en/download.xml">להוריד</a>
+כדי להתקין את nginx/Windows, יש <link doc="../../en/download.xml">להוריד</link>
 את קובץ הזיפ של גירסת הפיתוח האחרונה <development_version />,
 כיוון שענף הפיתוח מכיל את כל התיקונים הידועים, בייחוד אלו הקשורים לחלונות.
 אחרי ההורדה, יש לפרוס את קובץ הזיפ,

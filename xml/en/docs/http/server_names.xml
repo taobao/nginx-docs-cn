@@ -14,7 +14,7 @@ Server names are defined using the
 <link doc="ngx_http_core_module.xml" id="server_name"/>
 directive
 and determine which server block is used for a given request.
-See also &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
+See also &ldquo;<link doc="request_processing.xml"/>&rdquo;.
 They may be defined using exact names, wildcard names, or regular expressions:
 
 <programlisting>
@@ -269,7 +269,7 @@ directive
 and not of the
 <link doc="ngx_http_core_module.xml" id="server_name"/>
 directive.
-See also &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
+See also &ldquo;<link doc="request_processing.xml"/>&rdquo;.
 You can define servers listening on ports *:80 and *:8080,
 and direct that one will be the default server for port *:8080,
 while the other will be the default for port *:80:

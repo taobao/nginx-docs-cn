@@ -261,7 +261,7 @@ server {
 <section id="sni" name="サーバ名指示（Server Name Indication – SNI）">
 
 <para>
-単一の IP アドレス上で複数の HTTPS サーバを動かすときのさらに包括的な解決方法として <a href="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1 Server Name Indication extension（サーバ名指示拡張）</a> (SNI, RFC3546) があります。これは、ブラウザが SSL ハンドシェイクの間にリクエストされたサーバ名を渡せるようにするもので、それによりサーバはその接続でどの証明書を使用するべきかが分かります。しかし、SNI は限られたブラウザしかサポートしていません。現時点では次のブラウザのバージョン以降のものがサポートされています:
+単一の IP アドレス上で複数の HTTPS サーバを動かすときのさらに包括的な解決方法として <link url="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1 Server Name Indication extension（サーバ名指示拡張）</link> (SNI, RFC3546) があります。これは、ブラウザが SSL ハンドシェイクの間にリクエストされたサーバ名を渡せるようにするもので、それによりサーバはその接続でどの証明書を使用するべきかが分かります。しかし、SNI は限られたブラウザしかサポートしていません。現時点では次のブラウザのバージョン以降のものがサポートされています:
 </para>
 
 <list>

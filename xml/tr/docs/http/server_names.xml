@@ -9,7 +9,7 @@
 <section>
 
 <para>
-Sunucu adları <literal>server_name</literal> yönergesi kullanılarak tanımlanırlar ve gelen bir talep için hangi server bloğunun kullanılacağını belirlerler. Ayrıca bakınız &ldquo;<a href="/tr/docs/http/request_processing.xml" />&rdquo;. Gerçek, wildcard veya düzenli ifadeler şeklinde tanımlanabilirler.
+Sunucu adları <literal>server_name</literal> yönergesi kullanılarak tanımlanırlar ve gelen bir talep için hangi server bloğunun kullanılacağını belirlerler. Ayrıca bakınız &ldquo;<link doc="request_processing.xml" />&rdquo;. Gerçek, wildcard veya düzenli ifadeler şeklinde tanımlanabilirler.
 
 <programlisting>
 server {
@@ -220,7 +220,7 @@ Fakat bu bir catch-all veya wildcard sunucu adı olarak fonksiyonel değil. Bunu
 &ldquo;*&rdquo; özel karakteri artık desteklenmiyor, bu yüzden <literal>server_name_in_redirect</literal> yönergesi kullanılmalıdır.
 Not: <literal>server_name</literal> yönergesini kullanan varsayılan sunucuyu veya catch-all adını belirtmenin bir yolu bulunmuyor.
 Bu, <literal>server_name</literal> yönergesinin değil, <literal>listen</literal> yönergesinin bir özelliğidir.
-Ayrıca bakınız &ldquo;<a href="/tr/docs/http/request_processing.xml" />&rdquo;.
+Ayrıca bakınız &ldquo;<link doc="request_processing.xml" />&rdquo;.
 *:80 ve *:8080 portlarını dinleyen sunucular tanımlayabilir ve birini *:8080 portu için varsayılan olarak belirlerken, diğerini de *:80 için varsayılan olarak belirleyebilirsiniz:
 
 <programlisting>

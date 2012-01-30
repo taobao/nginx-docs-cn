@@ -10,15 +10,15 @@
 <list>
 
 <item>
-<a href="/ja/docs/introduction.xml"/>
+<link doc="introduction.xml"/>
 </item>
 
 <item>
-<a href="/ja/docs/howto.xml"/>
+<link doc="howto.xml"/>
 </item>
 
 <item>
-<a href="/ja/docs/faq.xml"/>
+<link doc="faq.xml"/>
 </item>
 
 </list>
@@ -30,7 +30,7 @@
 <list>
 
 <item>
-<a href="/ja/docs/windows.xml"/>
+<link doc="windows.xml"/>
 </item>
 
 </list>

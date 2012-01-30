@@ -10,15 +10,15 @@
 <list>
 
 <item>
-<a href="/ja/docs/http/request_processing.xml"/>
+<link doc="http/request_processing.xml"/>
 </item>
 
 <item>
-<a href="/ja/docs/http/server_names.xml"/>
+<link doc="http/server_names.xml"/>
 </item>
 
 <item>
-<a href="/ja/docs/http/configuring_https_servers.xml"/>
+<link doc="http/configuring_https_servers.xml"/>
 </item>
 
 </list>

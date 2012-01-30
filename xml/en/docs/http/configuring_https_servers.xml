@@ -57,7 +57,7 @@ Since version 1.1.13, nginx uses
 <para>
 CBC-mode ciphers might be vulnerable to a number of attacks and to
 the BEAST attack in particular (see
-<a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3389">CVE-2011-3389</a>).
+<link url="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3389">CVE-2011-3389</link>).
 Configuration of ciphers can be adjusted to prefer RC4-SHA as the following:
 
 <programlisting>
@@ -362,8 +362,8 @@ server {
 <para>
 A more generic solution for running several HTTPS servers on a single
 IP address is
-<a href="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1
-Server Name Indication extension</a> (SNI, RFC3546),
+<link url="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1
+Server Name Indication extension</link> (SNI, RFC3546),
 which allows a browser to pass a requested server name during the SSL handshake
 and, therefore, the server will know which certificate it should use
 for the connection.

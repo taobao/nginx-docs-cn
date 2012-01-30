@@ -262,7 +262,7 @@ server {
 <section id="sni" name="Server Name Indication">
 
 <para>
-Bir IP adresi üzerinde birçok HTTPS sunucusu yürütebilmenin en genel yollarından biri, bir SSL el sıkışması (handshake) sırasında, tarayıcının talep edilmiş bir sunucu adını iletmesine izin veren ve böylece sunucunun varsayılan bağlantı için hangi sertifikayı kullanacağını bilmesini sağlayan <a href="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1 Server Name Indication eklentisidir</a> (SNI, RFC3546). Ancak SNI, kısıtlı bir tarayıcı desteğine sahiptir. Mevcut destekleyen tarayıcılar ve versiyonları:
+Bir IP adresi üzerinde birçok HTTPS sunucusu yürütebilmenin en genel yollarından biri, bir SSL el sıkışması (handshake) sırasında, tarayıcının talep edilmiş bir sunucu adını iletmesine izin veren ve böylece sunucunun varsayılan bağlantı için hangi sertifikayı kullanacağını bilmesini sağlayan <link url="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1 Server Name Indication eklentisidir</link> (SNI, RFC3546). Ancak SNI, kısıtlı bir tarayıcı desteğine sahiptir. Mevcut destekleyen tarayıcılar ve versiyonları:
 </para>
 
 <list>

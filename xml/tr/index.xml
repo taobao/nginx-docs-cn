@@ -8,17 +8,17 @@
 <section>
 
 <para>
-nginx [engine x], <a href="http://sysoev.ru/en/">Igor Sysoev</a> tarafından yazılan bir HTTP, reverse proxy ve mail proxy sunucusudur. 5 yıldır, özellikle Rus sitelerinde yoğun bir şekilde kullanılmaktadır. Örneğin;
-<a href="http://www.rambler.ru">Rambler</a>
-(<a href="http://ramblermedia.com">RamblerMedia.com</a>).
-Netcraft'a göre, nginx, <a href="http://news.netcraft.com/archives/2010/04/15/april_2010_web_server_survey.html">Nisan 2010 itibari ile %4.70</a> oranında kullanılmaktadır.
+nginx [engine x], <link url="http://sysoev.ru/en/">Igor Sysoev</link> tarafından yazılan bir HTTP, reverse proxy ve mail proxy sunucusudur. 5 yıldır, özellikle Rus sitelerinde yoğun bir şekilde kullanılmaktadır. Örneğin;
+<link url="http://www.rambler.ru">Rambler</link>
+(<link url="http://ramblermedia.com">RamblerMedia.com</link>).
+Netcraft'a göre, nginx, <link url="http://news.netcraft.com/archives/2010/04/15/april_2010_web_server_survey.html">Nisan 2010 itibari ile %4.70</link> oranında kullanılmaktadır.
 Bazı başarı hikayeleri (İngilizce):
-<a href="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</a>,
-<a href="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</a>.
+<link url="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</link>,
+<link url="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</link>.
 </para>
 
 <para>
-Kaynak kodu, <a href="/LICENSE">2-clause BSD-like license</a> lisansı altındadır.
+Kaynak kodu, <link url="/LICENSE">2-clause BSD-like license</link> lisansı altındadır.
 </para>
 
 </section>

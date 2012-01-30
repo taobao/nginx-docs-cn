@@ -11,17 +11,17 @@
 <list>
 
 <item>
-<a href="/he/docs/introduction.xml"/>
+<link doc="introduction.xml"/>
 </item>
 
 <item>
-<a href="/he/docs/howto.xml"/>
+<link doc="howto.xml"/>
 </item>
 
 <!--
 
 <item>
-<a href="/he/docs/faq.xml"/>
+<link doc="faq.xml"/>
 </item>
 
 -->
@@ -33,7 +33,7 @@
 <list>
 
 <item>
-<a href="/he/docs/windows.xml"/>
+<link doc="windows.xml"/>
 </item>
 
 </list>

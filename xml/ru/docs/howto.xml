@@ -11,16 +11,16 @@
 <list>
 
 <item>
-<a href="/ru/docs/debugging_log.xml"/>
+<link doc="debugging_log.xml"/>
 </item>
 
 <!--
 <item>
-<a href="/ru/docs/http/converting_rewrite_rules.xml"/>
+<link doc="http/converting_rewrite_rules.xml"/>
 </item>
 
 <item>
-<a href="/ru/docs/howto_build_on_win32.xml"/>
+<link doc="howto_build_on_win32.xml"/>
 </item>
 -->
 

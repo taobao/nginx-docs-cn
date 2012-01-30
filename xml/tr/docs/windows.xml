@@ -14,7 +14,7 @@ Unix versiyonu ile karşılaştırıldığında, XSLT filtresi, imaj filtresi, G
 </para>
 
 <para>
-nginx/Windows versiyonunu yüklemek için <a href="/en/download.xml">indir</a> bağlantısından zip formatındaki <development_version /> geliştirme versiyonunu indirebilirsiniz. Geliştirme versiyonu, özellikle Windows ile ilgili en son yamaları içerir. Dosyayı indirdikten sonra açarak, nginx-<development_version /> klasörü içerisinden nginx&rsquo;i çalıştırabilirsiniz. 
+nginx/Windows versiyonunu yüklemek için <link doc="../../en/download.xml">indir</link> bağlantısından zip formatındaki <development_version /> geliştirme versiyonunu indirebilirsiniz. Geliştirme versiyonu, özellikle Windows ile ilgili en son yamaları içerir. Dosyayı indirdikten sonra açarak, nginx-<development_version /> klasörü içerisinden nginx&rsquo;i çalıştırabilirsiniz. 
 C sürücüsü için örnek. root dizini:
 
 <programlisting>

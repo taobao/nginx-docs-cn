@@ -8,19 +8,24 @@
 <para>
 <list>
 <item>
-<a href="http://nginx.org/keys/is.key">Igor Sysoev&rsquo;s PGP public key.</a>
+<link url="http://nginx.org/keys/is.key">Igor Sysoev&rsquo;s
+PGP public key.</link>
 </item>
 <item>
-<a href="http://nginx.org/keys/mdounin.key">Maxim Dounin&rsquo;s PGP public key.</a>
+<link url="http://nginx.org/keys/mdounin.key">Maxim Dounin&rsquo;s
+PGP public key.</link>
 </item>
 <item>
-<a href="http://nginx.org/keys/maxim.key">Maxim Konovalov&rsquo;s PGP public key.</a>
+<link url="http://nginx.org/keys/maxim.key">Maxim Konovalov&rsquo;s
+PGP public key.</link>
 </item>
 <item>
-<a href="http://nginx.org/keys/sb.key">Sergey Budnevitch&rsquo;s PGP public key.</a>
+<link url="http://nginx.org/keys/sb.key">Sergey Budnevitch&rsquo;s
+PGP public key.</link>
 </item>
 <item>
-<a href="http://nginx.org/keys/nginx_signing.key">nginx public key (used for signing packages and repositories).</a>
+<link url="http://nginx.org/keys/nginx_signing.key">nginx
+public key (used for signing packages and repositories).</link>
 </item>
 </list>
 </para>

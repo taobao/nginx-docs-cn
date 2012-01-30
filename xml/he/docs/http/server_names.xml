@@ -11,7 +11,7 @@
 <para>
 שמות שרת מוגדרים על ידי המאפיין <literal>server_name</literal>
 והם קובעים איזה בלוק תצורת שרת מקובץ התצורה יהיה בשימוש לכל בקשה ובקשה לשרת.
-ראו גם &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
+ראו גם &ldquo;<link doc="../../../en/docs/http/request_processing.xml" />&rdquo;.
 ניתן להגדירם באמצעות שמות מדוייקים, שמות Wildcard, או באמצעות ביטויים רגולריים:
 
 <programlisting>
@@ -250,7 +250,7 @@ nginx בגירסאות עד 0.6.25 תמך בשם המיוחד &ldquo;*&rdquo;
 שימו לב שאין דרך לציין את שם ה catch-all או את שרת <i>ברירת המחדל</i>
 על ידי שימוש במאפיין <literal>server_name</literal>.
 זוהי תכונה של המאפיין <literal>listen</literal> ולא של המאפיין <literal>server_name</literal>.
-ראו גם &ldquo;<a href="/en/docs/http/request_processing.xml" />&rdquo;.
+ראו גם &ldquo;<link doc="../../../en/docs/http/request_processing.xml" />&rdquo;.
 
 באפשרותכם להגדיר שרתים המאזינים על פורטים <url>*:80</url> ו <url>*:8080</url>,
 ולהגדיר שרת אחת שהוא ברירת המחדל עבור פורט

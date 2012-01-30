@@ -11,7 +11,7 @@
 <list>
 
 <item>
-<a href="http://wiki.nginx.org">wiki.nginx.org</a>
+<link url="http://wiki.nginx.org">wiki.nginx.org</link>
 </item>
 
 </list>
@@ -24,12 +24,12 @@
 
 <para>
 You can
-<a href="http://nginx.org/mailman/listinfo">
-browse</a>
+<link url="http://nginx.org/mailman/listinfo">
+browse</link>
 the mailing lists.
 To post to a mailing list, you must first
-<a href="http://nginx.org/mailman/listinfo">
-subscribe</a>
+<link url="http://nginx.org/mailman/listinfo">
+subscribe</link>
 an e-mail address that you will use for posting.
 </para>
 
@@ -37,23 +37,23 @@ an e-mail address that you will use for posting.
 <list>
 
 <item>
-<a href="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</a>
+<link url="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</link>
 list (English),
-<a href="http://nginx.org/pipermail/nginx/">
-archive</a>,
-<a href="http://dir.gmane.org/gmane.comp.web.nginx.english">
-Gmane archive</a>,
-<a href="http://marc.info/?l=nginx">
-MARC archive</a>
+<link url="http://nginx.org/pipermail/nginx/">
+archive</link>,
+<link url="http://dir.gmane.org/gmane.comp.web.nginx.english">
+Gmane archive</link>,
+<link url="http://marc.info/?l=nginx">
+MARC archive</link>
 </item>
 
 <item>
-<a href="http://nginx.org/mailman/listinfo/nginx-ru">nginx-ru@nginx.org</a>
+<link url="http://nginx.org/mailman/listinfo/nginx-ru">nginx-ru@nginx.org</link>
 list (Russian),
-<a href="http://nginx.org/pipermail/nginx-ru/">
-archive</a>,
-<a href="http://dir.gmane.org/gmane.comp.web.nginx.russian">
-Gmane archive</a>
+<link url="http://nginx.org/pipermail/nginx-ru/">
+archive</link>,
+<link url="http://dir.gmane.org/gmane.comp.web.nginx.russian">
+Gmane archive</link>
 </item>
 
 </list>
@@ -68,15 +68,15 @@ Gmane archive</a>
 <list>
 
 <item>
-<a href="http://forum.nginx.org">forum.nginx.org</a>
+<link url="http://forum.nginx.org">forum.nginx.org</link>
 (with mailing lists integration)
 </item>
 
 <item>
-<a href="http://www.ruby-forum.com/forum/nginx">
-Ruby Forum</a>
+<link url="http://www.ruby-forum.com/forum/nginx">
+Ruby Forum</link>
 (with
-<a href="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</a>
+<link url="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</link>
 mailing list integration)
 </item>
 
@@ -92,20 +92,20 @@ mailing list integration)
 <list>
 
 <item>
-<a href="http://nginx.org/mailman/listinfo/nginx-devel">nginx-devel@nginx.org</a>
+<link url="http://nginx.org/mailman/listinfo/nginx-devel">nginx-devel@nginx.org</link>
 mailing list for developers (English),
-<a href="http://nginx.org/pipermail/nginx-devel/">
-archive</a>
+<link url="http://nginx.org/pipermail/nginx-devel/">
+archive</link>
 </item>
 
 <item>
-<a href="http://trac.nginx.org/nginx/browser">
-Browse a Source Code</a>
+<link url="http://trac.nginx.org/nginx/browser">
+Browse a Source Code</link>
 </item>
 
 <item>
-<a href="http://trac.nginx.org/nginx/report">
-Report a Bug</a>
+<link url="http://trac.nginx.org/nginx/report">
+Report a Bug</link>
 </item>
 
 </list>

@@ -117,7 +117,7 @@ nmake -f objs/Makefile
 <list>
 
 <item>
-<a href="/en/docs/windows.xml"/>
+<link doc="windows.xml"/>
 </item>
 
 </list>

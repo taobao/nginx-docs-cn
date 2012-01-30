@@ -5,16 +5,11 @@
            name         CDATA #IMPLIED
 >
 
-<!ELEMENT  para         (#PCDATA | a | link | br | list | orderedlist | note |
+<!ELEMENT  para         (#PCDATA | link | br | list | orderedlist | note |
                          i | b | nobr | table | url | literal | command |
                          path | header | value | programlisting |
                          initial | development_version | stable_version |
                          registered | c-func)* >
-
-<!ELEMENT  a            (#PCDATA) >
-<!ATTLIST  a
-           href         CDATA #REQUIRED
->
 
 <!ELEMENT  link         (#PCDATA) >
 <!ATTLIST  link
@@ -45,13 +40,13 @@
 
 <!ELEMENT  list         (item+ | listitem+) >
 <!ELEMENT  orderedlist  (item+) >
-<!ELEMENT  item         (#PCDATA | para | a | br | nobr | list | i | b | url |
+<!ELEMENT  item         (#PCDATA | para | br | nobr | list | i | b | url |
                          path | command | value | programlisting |
                          link | registered | literal)* >
-<!ELEMENT  listitem     (#PCDATA | para | a | br | nobr | list | i | b | url |
+<!ELEMENT  listitem     (#PCDATA | para | br | nobr | list | i | b | url |
                          path | literal | value | programlisting)* >
 
-<!ELEMENT  note         (#PCDATA | para | a | br | list | orderedlist | i | b |
+<!ELEMENT  note         (#PCDATA | para | br | list | orderedlist | i | b |
                          nobr | table | url | literal | command | path |
                          header | programlisting | initial | paypal |
                          development_version | stable_version )* >

@@ -11,31 +11,31 @@
 <list>
 
 <item>
-<a href="/en/docs/welcome_nginx_facebook.xml"/>
+<link doc="welcome_nginx_facebook.xml"/>
 </item>
 
 <item>
-<a href="/en/docs/faq/license_copyright.xml"/>
+<link doc="faq/license_copyright.xml"/>
 </item>
 
 <item>
-<a href="/en/docs/faq/accept_failed.xml"/>
+<link doc="faq/accept_failed.xml"/>
 </item>
 
 <item>
-<a href="/en/docs/faq/variables_in_config.xml"/>
+<link doc="faq/variables_in_config.xml"/>
 </item>
 
 <item>
-<a href="/en/docs/faq/daemon_master_process_off.xml"/>
+<link doc="faq/daemon_master_process_off.xml"/>
 </item>
 
 <item>
-<a href="/en/docs/faq/chunked_encoding_from_backend.xml"/>
+<link doc="faq/chunked_encoding_from_backend.xml"/>
 </item>
 
 <item>
-<a href="/en/docs/sys_errlist.xml"/>
+<link doc="sys_errlist.xml"/>
 </item>
 
 </list>

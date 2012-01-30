@@ -23,7 +23,7 @@ when using nginx as part of a proprietary software distribution?
 <initial>A:</initial>
 The text below should be added to your license conditions,
 followed by the text of the applicable 2-clause BSD license described
-<a href="http://nginx.org/LICENSE">here</a>.
+<link url="http://nginx.org/LICENSE">here</link>.
 
 <programlisting>
 This product contains software provided by Nginx, Inc. and its contributors.
