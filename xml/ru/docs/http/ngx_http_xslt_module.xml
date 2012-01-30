@@ -2,32 +2,38 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_xslt_module"
+<module name="Модуль ngx_http_xslt_module"
         link="/ru/docs/http/ngx_http_xslt_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_xslt_module — это фильтр, преобразующий XML-ответ
-с помощью одного или нескольких XSLT-шаблонов (0.7.8+).
-По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром <literal>--with-http_xslt_module</literal>.
+Модуль <literal>ngx_http_xslt_module</literal> (0.7.8+) — это фильтр,
+преобразующий XML-ответ с помощью одного или нескольких XSLT-шаблонов.
+</para>
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-http_xslt_module</literal>.
+<note>
 Для сборки и работы этого модуля нужны библиотеки
 <link url="http://www.xmlsoft.org">libxml2 и libxslt</link>.
+</note>
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
 location / {
-    xml_entities       /site/dtd/entities.dtd;
-    xslt_stylesheet    /site/xslt/one.xslt   param=value;
-    xslt_stylesheet    /site/xslt/two.xslt;
+    xml_entities    /site/dtd/entities.dtd;
+    xslt_stylesheet /site/xslt/one.xslt param=value;
+    xslt_stylesheet /site/xslt/two.xslt;
 }
 </example>
 </para>
@@ -35,15 +41,17 @@ location / {
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="xml_entities">
 <syntax><value>путь</value></syntax>
 <default/>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт файл DTD, в котором описаны символьные сущности.
+Задаёт файл DTD, в котором описаны символьные сущности.
 Этот файл компилируется на стадии конфигурации.
 По техническим причинам модуль не имеет возможности
 использовать внешнее подмножество, заданное в обрабатываемом XML,
@@ -59,26 +67,24 @@ location / {
 
 
 <directive name="xslt_stylesheet">
-<syntax><value>шаблон</value> [<value>параметр</value> ...]</syntax>
+<syntax>
+    <value>шаблон</value>
+    [<value>параметр</value>=<value>значение</value> ...]</syntax>
 <default/>
 <context>location</context>
 
 <para>
-Директива задаёт XSLT-шаблон и параметры для этого шаблона.
+Задаёт XSLT-шаблон и необязательные параметры для этого шаблона.
 Шаблон компилируется на стадии конфигурации.
-Параметры задаются в формате
-<example>
-param=value
-</example>
 </para>
 
 <para>
-Их можно задавать как по отдельности, так и группировать
-в одной строке, разделяя символом ":".
-Если же в самих параметрах встречается символ ":", то его нужно
-экранировать в виде "%3A".
-Кроме того, необходимо помнить о требовании libxslt, чтобы параметры,
-содержащие не только алфавитно-цифровые символы,
+Параметры можно задавать как по отдельности, так и группировать
+в одной строке, разделяя символом “<literal>:</literal>”.
+Если же в самих параметрах встречается символ “<literal>:</literal>”,
+то его нужно экранировать в виде “<literal>%3A</literal>”.
+Кроме того, необходимо помнить о требовании <command>libxslt</command>,
+чтобы параметры, содержащие не только алфавитно-цифровые символы,
 были заключены в одинарные или двойные кавычки, например:
 <example>
 param1='http%3A//www.example.com':param2=value2
@@ -90,10 +96,10 @@ param1='http%3A//www.example.com':param2=value2
 целая строка параметров может быть взята из одной переменной:
 <example>
 location / {
-    xslt_stylesheet    /site/xslt/one.xslt
-                       $arg_xslt_params
-                       param1='$value1':param2=value2
-                       param3=value3;
+    xslt_stylesheet /site/xslt/one.xslt
+                    $arg_xslt_params
+                    param1='$value1':param2=value2
+                    param3=value3;
 }
 </example>
 </para>
@@ -105,16 +111,19 @@ location / {
 
 </directive>
 
+
 <directive name="xslt_types">
 <syntax><value>mime-тип</value> ...</syntax>
 <default>text/xml</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива разрешает замену строк в ответах с указанными MIME-типами
-в дополнение к "text/xml".
+Разрешает преобразования в ответах с указанными MIME-типами
+в дополнение к “<literal>text/xml</literal>”.
 Если в результате преобразования выдаётся HTML-ответ, то его MIME-тип
-меняется на "text/html".
+меняется на “<literal>text/html</literal>”.
 </para>
 
 </directive>
