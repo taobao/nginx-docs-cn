@@ -141,7 +141,8 @@ Basic authentication</link>;
 </item>
 
 <item>
-The PUT, DELETE, MKCOL, COPY, and MOVE methods;
+The <link doc="docs/http/ngx_http_dav_module.xml">PUT, DELETE, MKCOL, COPY,
+and MOVE</link> methods;
 </item>
 
 <item>

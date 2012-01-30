@@ -50,6 +50,7 @@ REFS =									\
 		http/ngx_http_autoindex_module				\
 		http/ngx_http_browser_module				\
 		http/ngx_http_charset_module				\
+		http/ngx_http_dav_module				\
 		http/ngx_http_empty_gif_module				\
 		http/ngx_http_fastcgi_module				\
 		http/ngx_http_flv_module				\
