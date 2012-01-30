@@ -2,64 +2,74 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_dav_module"
+<module name="Модуль ngx_http_dav_module"
         link="/ru/docs/http/ngx_http_dav_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_dav_module обрабатывает HTTP- и WebDAV-методы
+Модуль <literal>ngx_http_dav_module</literal> обрабатывает HTTP- и WebDAV-методы
 PUT, DELETE, MKCOL, COPY и MOVE.
-По умолчанию модуль не собирается, нужно разрешить его сборку
-при конфигурировании параметром <literal>--with-http_dav_module</literal>.
+</para>
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-http_dav_module</literal>.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    location / {
-        root                   /data/www;
+location / {
+    root                  /data/www;
 
-        client_body_temp_path  /data/client_temp;
+    client_body_temp_path /data/client_temp;
 
-        dav_methods  PUT DELETE MKCOL COPY MOVE;
+    dav_methods PUT DELETE MKCOL COPY MOVE;
 
-        create_full_put_path   on;
-        dav_access             group:rw  all:r;
+    create_full_put_path  on;
+    dav_access            group:rw  all:r;
 
-        limit_except  GET {
-            allow  192.168.1.0/32;
-            deny   all;
-        }
+    limit_except GET {
+        allow 192.168.1.0/32;
+        deny  all;
     }
+}
 </example>
 </para>
 
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="dav_access">
-<syntax><value>пользователи</value><literal>:</literal><value>права</value> ...</syntax>
+<syntax><value>пользователи</value>:<value>права</value> ...</syntax>
 <default>user:rw</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива задаёт права доступа для создаваемых файлов и каталогов,
+Задаёт права доступа для создаваемых файлов и каталогов,
 например,
 <example>
-dav_access  user:rw  group:rw  all:r;
+dav_access user:rw group:rw all:r;
 </example>
-Если заданы какие-либо права для groups или all, то права для user
+</para>
+
+<para>
+Если заданы какие-либо права для <literal>group</literal> или
+<literal>all</literal>, то права для <literal>user</literal>
 указывать необязательно:
 <example>
-dav_access  group:rw  all:r;
+dav_access group:rw all:r;
 </example>
 </para>
 
@@ -68,16 +78,19 @@ dav_access  group:rw  all:r;
 
 <directive name="dav_methods">
 <syntax>
-  <literal>off</literal> | <literal>put</literal> | <literal>delete</literal> |
-  <literal>mkcol</literal> | <literal>copy</literal> | <literal>move</literal>
-  ...</syntax>
+    <literal>off</literal> | <literal>put</literal> |
+    <literal>delete</literal> | <literal>mkcol</literal> |
+    <literal>copy</literal> | <literal>move</literal>
+    ...</syntax>
 <default>off</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива разрешает указанные HTTP- и WebDAV-методы.
-Параметр off запрещает все методы, обрабатываемые данным модулем,
-игнорируя остальные параметры;
+Разрешает указанные HTTP- и WebDAV-методы.
+Параметр <literal>off</literal> запрещает все методы, обрабатываемые
+данным модулем, игнорируя остальные параметры;
 </para>
 
 <para>
@@ -95,7 +108,7 @@ dav_access  group:rw  all:r;
 
 <para>
 При создании файла с помощью метода PUT можно задать дату модификации,
-передав её в строке заголовка "Date".
+передав её в поле заголовка <header>Date</header>.
 </para>
 
 </directive>
@@ -104,13 +117,14 @@ dav_access  group:rw  all:r;
 <directive name="create_full_put_path">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
 По спецификации WebDAV метод PUT может создавать файл только в
-уже существующем каталоге. Данная директива разрешает создавать
-все необходимые промежуточные каталоги.
-
+уже существующем каталоге.
+Данная директива разрешает создавать все необходимые промежуточные каталоги.
 </para>
 
 </directive>
@@ -119,14 +133,16 @@ dav_access  group:rw  all:r;
 <directive name="min_delete_depth">
 <syntax><value>число</value></syntax>
 <default>0</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Данная директива разрешает методу DELETE удалять файлы
+Разрешает методу DELETE удалять файлы
 при условии, что число элементов в пути запроса не меньше заданного.
 Например, директива
 <example>
-min_delete_depth  4;
+min_delete_depth 4;
 </example>
 разрешает удалять файлы по запросам
 <example>
