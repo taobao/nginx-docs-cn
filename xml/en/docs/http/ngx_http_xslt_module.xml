@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_xslt_module"
+        link="/en/docs/http/ngx_http_xslt_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_xslt_module</literal> (0.7.8+) is a filter
+that transforms XML responses using one or more XSLT stylesheets.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_xslt_module</literal>
+configuration parameter.
+<note>
+This module requires the
+<link url="http://www.xmlsoft.org">libxml2 and libxslt</link> libraries.
+</note>
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location / {
+    xml_entities    /site/dtd/entities.dtd;
+    xslt_stylesheet /site/xslt/one.xslt param=value;
+    xslt_stylesheet /site/xslt/two.xslt;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="xml_entities">
+<syntax><value>path</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Specifies the DTD file that declares character entities.
+This file is compiled during the configuration stage.
+For technical reasons the module is unable to use the
+external subset declared in the processed XML, so it is
+ignored and instead a specially defined file is used.
+This file should not describe the XML structure, it is
+enough to only declare the required character entities, for example:
+<example>
+&lt;!ENTITY nbsp "&amp;#xa0;"&gt;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="xslt_stylesheet">
+<syntax>
+    <value>stylesheet</value>
+    [<value>parameter</value>=<value>value</value> ...]</syntax>
+<default/>
+<context>location</context>
+
+<para>
+Defines the XSLT stylesheet and its optional parameters.
+A stylesheet is compiled during the configuration stage.
+</para>
+
+<para>
+Parameters can either be specified separately, or grouped in a
+single line using the “<literal>:</literal>” delimiter.
+If a parameter includes the “<literal>:</literal>” character,
+it should be escaped as “<literal>%3A</literal>”.
+Also, <command>libxslt</command> requires to enclose parameters
+that contain non-alphanumeric characters into single or double quotes,
+for example:
+<example>
+param1='http%3A//www.example.com':param2=value2
+</example>
+</para>
+
+<para>
+The description of parameters can contain variables, for example,
+the whole line of parameters can be taken from a single variable:
+<example>
+location / {
+    xslt_stylesheet /site/xslt/one.xslt
+                    $arg_xslt_params
+                    param1='$value1':param2=value2
+                    param3=value3;
+}
+</example>
+</para>
+
+<para>
+It is possible to specify several stylesheets; in this case they
+will be applied sequentially in the specified order.
+</para>
+
+</directive>
+
+
+<directive name="xslt_types">
+<syntax><value>mime-type</value> ...</syntax>
+<default>text/xml</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables transformations in responses with the specified MIME types
+in addition to “<literal>text/xml</literal>”.
+If the result of transformation is an HTML response, its MIME type
+is changes to “<literal>text/html</literal>”.
+</para>
+
+</directive>
+
+</section>
+
+</module>

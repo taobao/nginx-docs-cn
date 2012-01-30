@@ -67,7 +67,9 @@ load balancing and fault tolerance</link>;
 Modular architecture.
 Filters include
 <link doc="docs/http/ngx_http_gzip_module.xml">gzipping</link>,
-byte ranges, chunked responses, XSLT, SSI,
+byte ranges, chunked responses,
+<link doc="docs/http/ngx_http_xslt_module.xml">XSLT</link>,
+SSI,
 and <link doc="docs/http/ngx_http_image_filter_module.xml">image
 transformation</link> filter.
 Multiple SSI inclusions within a single page can be processed in

@@ -229,6 +229,11 @@ ngx_http_upstream_module</link>
 ngx_http_userid_module</link>
 </item>
 
+<item>
+<link doc="http/ngx_http_xslt_module.xml">
+ngx_http_xslt_module</link>
+</item>
+
 </list>
 </para>
 
