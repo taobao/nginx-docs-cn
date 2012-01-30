@@ -71,7 +71,13 @@ X:template = "link[@id and not(@doc)]" {
 }
 
 X:template = "link[@doc and not(@id)]" {
-    <a href="{substring-before(@doc, '.xml')}.html"> !!; </a>
+    <a href="{substring-before(@doc, '.xml')}.html">
+    X:if "count(node()) != 0" {
+        !!;
+    } else {
+        !{ document(@doc)/article/@name | document(@doc)/module/@name }
+    }
+    </a>
 }
 
 X:template = "link[@id and @doc]" {
