@@ -20,7 +20,7 @@
 
 <para>
 <example>
-map $http_host $name  {
+map $http_host $name {
     hostnames;
 
     default       0;

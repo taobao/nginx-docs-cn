@@ -55,11 +55,11 @@ index index.$geo.html index.0.html /index.html;
 location’е.
 Например, в такой конфигурации:
 <example>
-location  = /  {
-    index  index.html;
+location = / {
+    index index.html;
 }
 
-location  /  {
+location / {
     ...
 }
 </example>
