@@ -1,0 +1,473 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_ssl_module"
+        link="/en/docs/http/ngx_http_ssl_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_ssl_module</literal> module provides the
+necessary support for HTTPS.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_ssl_module</literal>
+configuration parameter.
+<note>
+This module requires the
+<link url="http://www.openssl.org">OpenSSL</link> library.
+</note>
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+To reduce the processor load it is recommended to
+<list type="bullet">
+
+<listitem>
+set the number of worker processes equal to the number of processors,
+</listitem>
+
+<listitem>
+enable keep-alive connections,
+</listitem>
+
+<listitem>
+enable shared session cache,
+</listitem>
+
+<listitem>
+disable built-in session cache,
+</listitem>
+
+<listitem>
+and possibly increase the session lifetime (by default, 5 minutes):
+</listitem>
+
+</list>
+
+<example>
+<emphasis>worker_processes 2;</emphasis>
+
+http {
+
+    ...
+
+    server {
+        listen              443;
+        <emphasis>keepalive_timeout   70;</emphasis>
+
+        ssl                 on;
+        ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         AES128-SHA:AES256-SHA:RC4-SHA:DES-CBC3-SHA:RC4-MD5;
+        ssl_certificate     /usr/local/nginx/conf/cert.pem;
+        ssl_certificate_key /usr/local/nginx/conf/cert.key;
+        <emphasis>ssl_session_cache   shared:SSL:10m;</emphasis>
+        <emphasis>ssl_session_timeout 10m;</emphasis>
+
+        ...
+    }
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="ssl">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Enables the HTTPS protocol for the given virtual server.
+</para>
+
+</directive>
+
+
+<directive name="ssl_certificate">
+<syntax><value>file</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+
+<para>
+Specifies a file with a certificate in the PEM format
+for the given virtual server.
+If intermediate certificates should be specified in addition
+to a primary certificate, they should be specified in the same file
+in the following order: the primary certificate comes first, then
+the intermediate certificates.
+A secret key in the PEM format may be placed in the same file.
+</para>
+
+<para>
+It should be kept in mind that due to the HTTPS protocol limitations
+virtual servers should listen on different IP addresses:
+<example>
+server {
+    listen          192.168.1.1:443;
+    server_name     one.example.com;
+    ssl_certificate /usr/local/nginx/conf/one.example.com.cert;
+    ...
+}
+
+server {
+    listen          192.168.1.2:443;
+    server_name     two.example.com;
+    ssl_certificate /usr/local/nginx/conf/two.example.com.cert;
+    ...
+}
+</example>
+otherwise
+<link doc="configuring_https_servers.xml"
+    id="name_based_https_servers">the first server’s certificate</link>
+will be issued for the second site.
+</para>
+
+</directive>
+
+
+<directive name="ssl_certificate_key">
+<syntax><value>file</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+
+<para>
+Specifies a file with a secret key in the PEM format
+for the given virtual server.
+</para>
+
+</directive>
+
+
+<directive name="ssl_ciphers">
+<syntax><value>ciphers</value></syntax>
+<default>HIGH:!ADH:!MD5</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Specifies the enabled ciphers.
+The ciphers are specified in the format understood by the
+OpenSSL library, for example:
+<example>
+ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+</example>
+</para>
+
+<para>
+The full list can be viewed using the
+“<command>openssl ciphers</command>” command.
+</para>
+
+</directive>
+
+
+<directive name="ssl_client_certificate">
+<syntax><value>file</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+
+<para>
+Specifies a file with CA certificates in the PEM format
+used for client certificate verification.
+</para>
+
+</directive>
+
+
+<directive name="ssl_crl">
+<syntax><value>file</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<appeared-in>0.8.7</appeared-in>
+
+<para>
+Specifies a file with revoked certificates (CRL)
+in the PEM format, used to client certificate verification.
+</para>
+
+</directive>
+
+
+<directive name="ssl_dhparam">
+<syntax><value>file</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<appeared-in>0.7.2</appeared-in>
+
+<para>
+Specifies a file with DH parameters for EDH ciphers.
+</para>
+
+</directive>
+
+
+<directive name="ssl_prefer_server_ciphers">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Specifies that server ciphers should be preferred over client
+ciphers when using the SSLv3 and TLS protocols.
+</para>
+
+</directive>
+
+
+<directive name="ssl_protocols">
+<syntax>
+    [<literal>SSLv2</literal>]
+    [<literal>SSLv3</literal>]
+    [<literal>TLSv1</literal>]
+    [<literal>TLSv1.1</literal>]
+    [<literal>TLSv1.2</literal>]</syntax>
+<default>SSLv3 TLSv1 TLSv1.1 TLSv1.2</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Enables the specified protocols.
+The parameters <literal>TLSv1.1</literal> and <literal>TLSv1.2</literal> work
+only when using the OpenSSL library version 1.0.1 and higher.
+<note>
+The parameters <literal>TLSv1.1</literal> and <literal>TLSv1.2</literal> are
+supported starting from version 1.1.13 so when using OpenSSL version 1.0.1
+and higher on older nginx versions these protocols will work but could not
+be disabled.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="ssl_session_cache">
+<syntax>
+    <literal>off</literal> |
+    <literal>none</literal> |
+    [<literal>builtin</literal>[:<value>size</value>]]
+    [<literal>shared</literal>:<value>name</value>:<value>size</value>]</syntax>
+<default>none</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Sets types and sizes of caches that store session parameters.
+A cache can be any of the following types:
+<list type="tag">
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+the use of session cache is strictly prohibited:
+nginx explicitly tells a client that sessions may not be reused.
+</tag-desc>
+
+<tag-name><literal>none</literal></tag-name>
+<tag-desc>
+the use of session cache is gently disallowed:
+nginx tells a client that sessions may be reused, but does not
+actually do that.
+</tag-desc>
+
+<tag-name><literal>builtin</literal></tag-name>
+<tag-desc>
+a cache built in OpenSSL; used by one worker process only.
+The cache size is specified in sessions.
+If size is not given, it is equal to 20480 sessions.
+Use of the built-in cache can cause memory fragmentation.
+</tag-desc>
+
+<tag-name><literal>shared</literal></tag-name>
+<tag-desc>
+shared between all worker processes.
+The cache size is specified in bytes; one megabyte can store
+about 4000 sessions.
+Each shared cache should have an arbitrary name.
+A cache with the same name can be used in several virtual servers.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+Both cache types can be used simultaneously, for example:
+<example>
+ssl_session_cache builtin:1000 shared:SSL:10m;
+</example>
+but using only shared cache without the built-in cache should
+be more efficient.
+</para>
+
+</directive>
+
+
+<directive name="ssl_session_timeout">
+<syntax><value>time</value></syntax>
+<default>5m</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Specifies a time during which a client may reuse the
+session parameters stored in a cache.
+</para>
+
+</directive>
+
+
+<directive name="ssl_verify_client">
+<syntax>
+    <literal>on</literal> | <literal>off</literal> |
+    <literal>optional</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Enables the client certificate verification.
+The <literal>optional</literal> parameter (0.8.7+) requests the client
+certificate and verifies it if it was present.
+The result of verification is stored in the
+<var>$ssl_client_verify</var> variable.
+</para>
+
+</directive>
+
+
+<directive name="ssl_verify_depth">
+<syntax><value>number</value></syntax>
+<default>1</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Sets a verification depth in the client certificates chain.
+</para>
+
+</directive>
+
+</section>
+
+
+<section id="errors" name="Error Processing">
+
+<para>
+The <literal>ngx_http_ssl_module</literal> module supports several
+non-standard error codes that can be used for redirects using the
+<link doc="ngx_http_core_module.xml" id="error_page"/> directive:
+<list type="tag">
+
+<tag-name>495</tag-name>
+<tag-desc>
+an error has occurred during the client certificate verification;
+</tag-desc>
+
+<tag-name>496</tag-name>
+<tag-desc>
+a client did not present the required certificate;
+</tag-desc>
+
+<tag-name>497</tag-name>
+<tag-desc>
+a regular request was sent to the HTTPS port.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+A redirection happens after the request was fully parsed and
+variables such as <var>$request_uri</var>,
+<var>$uri</var>, <var>$args</var> and others were made available.
+</para>
+
+</section>
+
+
+<section id="variables" name="Embedded Variables">
+
+<para>
+The <literal>ngx_http_ssl_module</literal> module supports
+several embedded variables:
+<list type="tag">
+
+<tag-name><var>$ssl_cipher</var></tag-name>
+<tag-desc>
+returns the string of ciphers used
+for an established SSL connection;
+</tag-desc>
+
+<tag-name><var>$ssl_client_cert</var></tag-name>
+<tag-desc>
+returns the client certificate in the PEM format
+for an established SSL connection, with each line except the first
+prepended with the tab character;
+this is intended for the use in the
+<link doc="ngx_http_proxy_module.xml" id="proxy_set_header"/> directive;
+</tag-desc>
+
+<tag-name><var>$ssl_client_raw_cert</var></tag-name>
+<tag-desc>
+returns the client certificate in the PEM format
+for an established SSL connection;
+</tag-desc>
+
+<tag-name><var>$ssl_client_serial</var></tag-name>
+<tag-desc>
+returns the serial number of the client certificate
+for an established SSL connection;
+</tag-desc>
+
+<tag-name><var>$ssl_client_s_dn</var></tag-name>
+<tag-desc>
+returns the “subject DN” string of the client certificate
+for an established SSL connection;
+</tag-desc>
+
+<tag-name><var>$ssl_client_i_dn</var></tag-name>
+<tag-desc>
+returns the “issuer DN” string of the client certificate
+for an established SSL connection;
+</tag-desc>
+
+<tag-name><var>$ssl_client_verify</var></tag-name>
+<tag-desc>
+returns the result of client certificate verification:
+“<literal>SUCCESS</literal>”, “<literal>FAILED</literal>”, and
+“<literal>NONE</literal>” if a certificate was not present;
+</tag-desc>
+
+<tag-name><var>$ssl_protocol</var></tag-name>
+<tag-desc>
+returns the protocol of an established SSL connection;
+</tag-desc>
+
+<tag-name><var>$ssl_session_id</var></tag-name>
+<tag-desc>
+returns the session identifier of an established SSL connection.
+</tag-desc>
+
+</list>
+</para>
+
+</section>
+
+</module>

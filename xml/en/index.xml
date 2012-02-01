@@ -77,7 +77,8 @@ parallel if they are handled by proxied or FastCGI servers;
 </item>
 
 <item>
-SSL and TLS SNI support.
+<link doc="docs/http/ngx_http_ssl_module.xml">SSL and
+TLS SNI support</link>.
 </item>
 
 </list>
