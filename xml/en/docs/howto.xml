@@ -22,6 +22,10 @@
 <link doc="howto_build_on_win32.xml"/>
 </item>
 
+<item>
+<a href="/en/docs/howto_setup_development_environment_on_ec2.xml"/>
+</item>
+
 </list>
 </para>
 

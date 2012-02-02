@@ -25,6 +25,7 @@ HOWTO =									\
 		http/converting_rewrite_rules				\
 		howto_build_on_win32					\
 		freebsd_tuning						\
+		howto_setup_development_environment_on_ec2		\
 
 HOWTO_XML =	$(foreach name, $(HOWTO), xml/$(DOC_LANG)/docs/$(name).xml)
 HOWTO_HTML =	$(foreach name, $(HOWTO), $(OUT)/$(DOC_LANG)/docs/$(name).html)
