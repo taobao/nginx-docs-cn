@@ -130,7 +130,8 @@ limits the number of connections.
 <para>
 Sets the parameters for a zone that keeps states for various keys.
 This state stores the current number of connections in particular.
-The key is the value of the specified variable.
+The key is any non-empty value of the specified variable
+(empty values are not accounted).
 Example usage:
 <example>
 limit_conn_zone $binary_remote_addr zone=addr:10m;
