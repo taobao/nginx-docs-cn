@@ -1,0 +1,395 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_rewrite_module"
+        link="/en/docs/http/ngx_http_rewrite_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_rewrite_module</literal> module allows to
+change URIs using regular expressions, return redirects, and
+conditionally select configurations.
+</para>
+
+<para>
+The <literal>ngx_http_rewrite_module</literal> module directives are
+processed in the following order:
+<list type="bullet">
+
+<listitem>
+the directives of this module specified on the
+<link doc="ngx_http_core_module.xml" id="server"/> level are processed;
+</listitem>
+
+<listitem>
+a location for a request is searched;
+</listitem>
+
+<listitem>
+the directives of this module specified in the selected
+<link doc="ngx_http_core_module.xml" id="location"/> are processed,
+and if they changed a URI, a new location is searched for the new URI.
+This cycle may be repeated up to 10 times after which the error
+<http-status code="500" text="Internal Server Error"/> is returned.
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="break">
+<syntax/>
+<default/>
+<context>server</context>
+<context>location</context>
+<context>if</context>
+
+<para>
+Stops processing the current set of
+<literal>ngx_http_rewrite_module</literal> directives.
+</para>
+
+<para>
+Example:
+<example>
+if ($slow) {
+    limit_rate 10k;
+    break;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="if">
+<syntax block="yes">(<value>condition</value>)</syntax>
+<default/>
+<context>server</context>
+<context>location</context>
+
+<para>
+The specified <value>condition</value> is evaluated.
+If true, the directives of this module specified inside the braces are
+executed, and a request is assigned the configuration inside the
+<literal>if</literal> directive.
+Configurations inside the <literal>if</literal> directives are
+inherited from the previous configuration level.
+</para>
+
+<para>
+A condition may be any of the following:
+<list type="bullet">
+
+<listitem>
+a variable name; false if the value of a variable is an empty string
+or any string starting with “<literal>0</literal>”;
+</listitem>
+
+<listitem>
+comparing a variable with a string using the
+“<literal>=</literal>” and “<literal>!=</literal>” operators;
+</listitem>
+
+<listitem>
+matching a variable against a regular expression using the
+“<literal>~</literal>” (for case-sensitive matching) and
+“<literal>~*</literal>” (for case-insensitive matching) operators.
+Regular expressions can contain captures that are made available for
+later reuse in the <var>$1</var>..<var>$9</var> variables.
+Negative operators “<literal>!~</literal>” and “<literal>!~*</literal>”
+are also available.
+If a regular expression includes the characters “<literal>}</literal>”
+or “<literal>;</literal>”, the whole expressions should be enclosed
+in single or double quotes.
+</listitem>
+
+<listitem>
+checking a file existence with the “<literal>-f</literal>” and
+“<literal>!-f</literal>” operators;
+</listitem>
+
+<listitem>
+checking a directory existence with the “<literal>-d</literal>” and
+“<literal>!-d</literal>” operators;
+</listitem>
+
+<listitem>
+checking a file, directory, or symbolic link existence with the
+“<literal>-e</literal>” and “<literal>!-e</literal>” operators;
+</listitem>
+
+<listitem>
+checking for an executable file with operators “<literal>-x</literal>”
+and “<literal>!-x</literal>” operators.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Examples:
+<example>
+if ($http_user_agent ~ MSIE) {
+    rewrite ^(.*)$ /msie/$1 break;
+}
+
+if ($http_cookie ~* "id=([^;]+)(?:;|$)") {
+    set $id $1;
+}
+
+if ($request_method = POST) {
+    return 405;
+}
+
+if ($slow) {
+    limit_rate 10k;
+}
+
+if ($invalid_referer) {
+    return 403;
+}
+</example>
+<note>
+A value of the embedded variable <var>$invalid_referer</var> is set by the
+<link doc="ngx_http_referer_module.xml" id="valid_referers"/> directive.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="return">
+<syntax><value>code</value></syntax>
+<default/>
+<context>server</context>
+<context>location</context>
+<context>if</context>
+
+<para>
+Stops processing and returns the specified <value>code</value> to a client.
+The following codes can be returned: 204, 400,
+402 — 406, 408, 410, 411, 413, 416 и 500 — 504.
+In addition, the non-standard code 444 closes a connection without sending
+a response header.
+</para>
+
+</directive>
+
+
+<directive name="rewrite">
+<syntax>
+    <value>regex</value>
+    <value>replacement</value>
+    [<value>flag</value>]</syntax>
+<default/>
+<context>server</context>
+<context>location</context>
+<context>if</context>
+
+<para>
+If the specified regular expression matches a URI, the URI is changed
+as specified in the <value>replacement</value> string.
+The <literal>rewrite</literal> directives are executed sequentially
+in order of their appearance in the configuration file.
+Flags make it possible to terminate further processing of directives.
+If a replacement string starts with “<literal>http://</literal>”
+or “<literal>https://</literal>”, the processing stops and a
+redirect is returned to a client.
+</para>
+
+<para>
+An optional <value>flag</value> parameter can be one of:
+<list type="tag">
+
+<tag-name><literal>last</literal></tag-name>
+<tag-desc>
+stops processing the current set of
+<literal>ngx_http_rewrite_module</literal> directives
+followed by a search for a new location matching the changed URI;
+</tag-desc>
+
+<tag-name><literal>break</literal></tag-name>
+<tag-desc>
+stops processing the current set of
+<literal>ngx_http_rewrite_module</literal> directives;
+</tag-desc>
+
+<tag-name><literal>redirect</literal></tag-name>
+<tag-desc>
+returns a temporary redirect with the code 302;
+used if a replacement string does not start with
+“<literal>http://</literal>” or “<literal>https://</literal>”;
+</tag-desc>
+
+<tag-name><literal>permanent</literal></tag-name>
+<tag-desc>
+returns a permanent redirect with the code 301.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+Example:
+<example>
+server {
+    ...
+    rewrite ^(/download/.*)/media/(.*)\..*$ $1/mp3/$2.mp3 last;
+    rewrite ^(/download/.*)/audio/(.*)\..*$ $1/mp3/$2.ra  last;
+    return  403;
+    ...
+}
+</example>
+</para>
+
+<para>
+But if these directives are put inside the “<literal>/download/</literal>”
+location, the <literal>last</literal> flag should be replaced by
+<literal>break</literal>, otherwise nginx will make 10 cycles and
+return the error 500:
+<example>
+location /download/ {
+    rewrite ^(/download/.*)/media/(.*)\..*$ $1/mp3/$2.mp3 break;
+    rewrite ^(/download/.*)/audio/(.*)\..*$ $1/mp3/$2.ra  break;
+    return  403;
+}
+</example>
+</para>
+
+<para>
+If a <value>replacement</value> string includes the new request arguments,
+the previous request arguments are appended after them.
+If this is undesired, putting a question mark at the end of a replacement
+string avoids having them appended, for example:
+<example>
+rewrite ^/users/(.*)$ /show?user=$1? last;
+</example>
+</para>
+
+<para>
+If a regular expression includes the characters “<literal>}</literal>”
+or “<literal>;</literal>”, the whole expressions should be enclosed
+in single or double quotes.
+</para>
+
+</directive>
+
+
+<directive name="set">
+<syntax><value>variable</value> <value>value</value></syntax>
+<default/>
+<context>server</context>
+<context>location</context>
+<context>if</context>
+
+<para>
+Sets a <value>value</value> for the specified <value>variable</value>.
+A <value>value</value> can contain text, variables, and their combination.
+</para>
+
+</directive>
+
+
+<directive name="uninitialized_variable_warn">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if</context>
+
+<para>
+Controls whether warnings about uninitialized variables are logged.
+</para>
+
+</directive>
+
+</section>
+
+
+<section id="internals" name="Internal Implementation">
+
+<para>
+The <literal>ngx_http_rewrite_module</literal> module directives
+are compiled during the configuration stage into internal instructions
+that are interpreted during request processing.
+An interpreter is a simple virtual stack machine.
+</para>
+
+<para>
+For example, the directives
+<example>
+location /download/ {
+    if ($forbidden) {
+        return 403;
+    }
+
+    if ($slow) {
+        limit_rate 10k;
+    }
+
+    rewrite ^/(download/.*)/media/(.*)\..*$ /$1/mp3/$2.mp3 break;
+}
+</example>
+will be translated into these instructions:
+<example>
+variable $forbidden
+check against zero
+    return 403
+    end of code
+variable $slow
+check against zero
+match of regular expression
+copy "/"
+copy $1
+copy "/mp3/"
+copy $2
+copy ".mp3"
+end of regular expression
+end of code
+</example>
+</para>
+
+<para>
+Note that there are no instructions for the
+<link doc="ngx_http_core_module.xml" id="limit_rate"/>
+directive above as it is unrelated to the
+<literal>ngx_http_rewrite_module</literal> module.
+A separate configuration is created for the <link id="if"/> block.
+If the condition holds true, a request is assigned this configuration
+where <literal>limit_rate</literal> equals to 10k.
+</para>
+
+<para>
+The directive
+<example>
+rewrite ^/(download/.*)/media/(.*)\..*$ /$1/mp3/$2.mp3 break;
+</example>
+can be made smaller by one instruction if the first slash in the regular expression
+is put inside the parentheses:
+<example>
+rewrite ^(<emphasis>/</emphasis>download/.*)/media/(.*)\..*$ $1/mp3/$2.mp3 break;
+</example>
+The corresponding instructions will then look like this:
+<example>
+match of regular expression
+copy $1
+copy "/mp3/"
+copy $2
+copy ".mp3"
+end of regular expression
+end of code
+</example>
+</para>
+
+</section>
+
+</module>

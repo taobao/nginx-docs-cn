@@ -205,6 +205,11 @@ ngx_http_referer_module</link>
 </item>
 
 <item>
+<link doc="http/ngx_http_rewrite_module.xml">
+ngx_http_rewrite_module</link>
+</item>
+
+<item>
 <link doc="http/ngx_http_secure_link_module.xml">
 ngx_http_secure_link_module</link>
 </item>

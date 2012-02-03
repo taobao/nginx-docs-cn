@@ -128,11 +128,14 @@ log writing</link>, and
 </item>
 
 <item>
-The rewrite module: URI changing using regular expressions;
+The rewrite module:
+<link doc="docs/http/ngx_http_rewrite_module.xml">URI changing
+using regular expressions</link>;
 </item>
 
 <item>
-Executing different functions depending on the
+<link doc="docs/http/ngx_http_rewrite_module.xml" id="if">Executing
+different functions</link> depending on the
 <link doc="docs/http/ngx_http_geo_module.xml">client address</link>;
 </item>
 
