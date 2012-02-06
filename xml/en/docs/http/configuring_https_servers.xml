@@ -50,7 +50,7 @@ to include only the strong versions and ciphers of SSL/TLS.
 Since version 1.0.5, nginx uses “<literal>ssl_protocols SSLv3 TLSv1</literal>”
 and “<literal>ssl_ciphers HIGH:!aNULL:!MD5</literal>” by default,
 so configuring them explicitly only makes sense for the earlier nginx versions.
-Since version 1.1.13, nginx uses
+Since versions 1.1.13 and 1.0.12, nginx uses
 “<literal>ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2</literal>” by default.
 </para>
 

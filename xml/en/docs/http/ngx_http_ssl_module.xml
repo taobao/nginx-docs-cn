@@ -250,7 +250,8 @@ The parameters <literal>TLSv1.1</literal> and <literal>TLSv1.2</literal> work
 only when using the OpenSSL library version 1.0.1 and higher.
 <note>
 The parameters <literal>TLSv1.1</literal> and <literal>TLSv1.2</literal> are
-supported starting from version 1.1.13 so when using OpenSSL version 1.0.1
+supported starting from versions 1.1.13 and 1.0.12
+so when using OpenSSL version 1.0.1
 and higher on older nginx versions these protocols will work but could not
 be disabled.
 </note>
