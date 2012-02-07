@@ -2,44 +2,48 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Директивы модуля ngx_http_ssi_module"
+<module name="Модуль ngx_http_ssi_module"
         link="/ru/docs/http/ngx_http_ssi_module.html"
         lang="ru">
 
 <section id="summary">
 
 <para>
-Модуль ngx_http_ssi_module — фильтр, обрабатывающий команды SSI (Server
-Side Includes) в проходящих через него ответах.
+Модуль <literal>ngx_http_ssi_module</literal> — это фильтр,
+обрабатывающий команды SSI (Server Side Includes) в проходящих
+через него ответах.
 На данный момент список поддерживаемых команд SSI неполон.
 </para>
 
 </section>
 
 
-<section name="Пример конфигурации" id="example">
+<section id="example" name="Пример конфигурации">
 
 <para>
 <example>
-    location / {
-        ssi  on;
-        ...
-    }
+location / {
+    ssi on;
+    ...
+}
 </example>
 </para>
 
 </section>
 
 
-<section name="Директивы" id="directives">
+<section id="directives" name="Директивы">
 
 <directive name="ssi">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location, if в location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if в location</context>
 
 <para>
-Директива разрешает обработку команд SSI в ответах.
+Разрешает или запрещает обработку команд SSI в ответах.
 </para>
 
 </directive>
@@ -48,11 +52,13 @@ Side Includes) в проходящих через него ответах.
 <directive name="ssi_silent_errors">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Директива разрешает не выводить строку
-"[an error occurred while processing the directive]",
+Разрешает не выводить строку
+“<literal>[an error occurred while processing the directive]</literal>”,
 если во время обработки SSI произошла ошибка.
 </para>
 
@@ -62,11 +68,13 @@ Side Includes) в проходящих через него ответах.
 <directive name="ssi_types">
 <syntax><value>mime-тип</value> ...</syntax>
 <default>text/html</default>
-<context>http, server, location</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
 
 <para>
-Разрешает обработку команд SSI в ответах с указанными MIME-типами в дополнение
-к "text/html".
+Разрешает обработку команд SSI в ответах с указанными MIME-типами
+в дополнение к “<literal>text/html</literal>”.
 </para>
 
 </directive>
@@ -74,99 +82,116 @@ Side Includes) в проходящих через него ответах.
 </section>
 
 
-<section name="Команды SSI" id="commands">
+<section id="commands" name="Команды SSI">
 
 <para>
-Формат команды следующий
+Общий формат команд SSI такой:
 <example>
-&lt;!--# команда параметр1=значение параметр2=значение ... --&gt;
+&lt;!--# команда параметр1=значение1 параметр2=значение2 ... --&gt;
 </example>
 </para>
 
 <para>
-Ниже перечислены поддерживаемые команды:
-<list type="bullet">
+Поддерживаются следующие команды:
+<list type="tag">
 
-<listitem>
-<emphasis>block</emphasis> — команда описывает блок, который можно использовать
-как заглушку в команде include.
-Внутри блока могут быть команды SSI.
+<tag-name><literal>block</literal></tag-name>
+<tag-desc>
+Описывает блок, который можно использовать
+как заглушку в команде <literal>include</literal>.
+Внутри блока могут быть другие команды SSI.
+Параметр команды:
 
-<list type="bullet">
-<listitem>
-<emphasis>name</emphasis> — имя блока.
-</listitem>
+<list type="tag">
+<tag-name><literal>name</literal></tag-name>
+<tag-desc>
+имя блока.
+</tag-desc>
 </list>
 
-Пример использования:
+Пример:
 <example>
 &lt;!--# block name="one" --&gt;
 заглушка
 &lt;!--# endblock --&gt;
 </example>
 
-</listitem>
+</tag-desc>
 
-<listitem>
-<emphasis>config</emphasis> — команда задаёт некоторые параметры при обработке SSI.
 
-<list type="bullet">
-<listitem>
-<emphasis>errmsg</emphasis> — строка, выводящаяся при ошибке во время обработки
-SSI. По умолчанию используется такая строка:
+<tag-name><literal>config</literal></tag-name>
+<tag-desc>
+Задаёт некоторые параметры, используемые при обработке SSI, а именно:
+
+<list type="tag">
+<tag-name><literal>errmsg</literal></tag-name>
+<tag-desc>
+строка, выводящаяся при ошибке во время обработки SSI.
+По умолчанию выводится такая строка:
 <example>
 [an error occurred while processing the directive]
 </example>
-</listitem>
+</tag-desc>
 
-<listitem>
-<emphasis>timefmt</emphasis> — строка, используемая функцией strftime(3)
-для вывода дат и времени.
+<tag-name><literal>timefmt</literal></tag-name>
+<tag-desc>
+строка формата, передаваемая функции <c-func>strftime</c-func>
+для вывода даты и времени.
 По умолчанию используется такой формат:
 <example>
 "%A, %d-%b-%Y %H:%M:%S %Z"
 </example>
-Для вывода времени в секундах подходит формат "%s".
-</listitem>
+Для вывода времени в секундах подходит формат
+“<literal>%s</literal>”.
+</tag-desc>
 </list>
 
-</listitem>
+</tag-desc>
 
 
-<listitem>
-<emphasis>echo</emphasis> — команда выводит значение переменной.
+<tag-name><literal>echo</literal></tag-name>
+<tag-desc>
+Выводит значение переменной.
+Параметры команды:
 
-<list type="bullet">
-<listitem>
-<emphasis>var</emphasis> — имя переменной.
-</listitem>
+<list type="tag">
+<tag-name><literal>var</literal></tag-name>
+<tag-desc>
+имя переменной.
+</tag-desc>
 
-<listitem>
-<emphasis>encoding</emphasis> — способ кодирования.
-Возможны три значения — none, url и entity.
-По умолчанию используется entity.
-</listitem>
+<tag-name><literal>encoding</literal></tag-name>
+<tag-desc>
+способ кодирования.
+Возможны три значения — <literal>none</literal>, <literal>url</literal> и
+<literal>entity</literal>.
+По умолчанию используется <literal>entity</literal>.
+</tag-desc>
 
-<listitem>
-<emphasis>default</emphasis> — нестандартный параметр, задающий строку,
-которая выводится, если переменная не определена.
-По умолчанию выводится строка "none". Команда
+<tag-name><literal>default</literal></tag-name>
+<tag-desc>
+нестандартный параметр, задающий строку, которая выводится,
+если переменная не определена.
+По умолчанию выводится строка
+“<literal>none</literal>”.
+Команда
 <example>
 &lt;!--# echo var="name" default="<emphasis>нет</emphasis>" --&gt;
 </example>
-заменяет такую последовательность команд
+заменяет такую последовательность команд:
 <example>
 &lt;!--# if expr="$name" --&gt;&lt;!--# echo var="name" --&gt;&lt;!--#
        else --&gt;<emphasis>нет</emphasis>&lt;!--# endif --&gt;
 </example>
-</listitem>
+</tag-desc>
 </list>
 
-</listitem>
+</tag-desc>
 
 
-<listitem>
-<emphasis>if</emphasis> — команда выполняет условное включение.
+<tag-name><literal>if</literal></tag-name>
+<tag-desc>
+Выполняет условное включение.
 Поддерживаются следующие команды:
 <example>
 &lt;!--# if expr="..." --&gt;
@@ -177,84 +202,108 @@ SSI. По умолчанию используется такая строка:
 ...
 &lt;!--# endif --&gt;
 </example>
-На данный момент поддерживаются только один уровень вложенности.
+На данный момент поддерживается только один уровень вложенности.
+Параметр команды:
+
+<list type="tag">
+<tag-name><literal>expr</literal></tag-name>
+<tag-desc>
+выражение.
+В выражении может быть:
 
 <list type="bullet">
+
 <listitem>
-<emphasis>expr</emphasis> — выражение.
-В выражении может быть проверка существования переменной:
+проверка существования переменной:
 <example>
 &lt;!--# if expr="$name" --&gt;
 </example>
+</listitem>
+
+<listitem>
 сравнение переменной с текстом:
 <example>
-&lt;!--# if expr="$name = text" --&gt;
-&lt;!--# if expr="$name != text" --&gt;
+&lt;!--# if expr="$name = <value>text</value>" --&gt;
+&lt;!--# if expr="$name != <value>text</value>" --&gt;
 </example>
-или с регулярным выражением:
+</listitem>
+
+<listitem>
+сравнение переменной с регулярным выражением:
 <example>
-&lt;!--# if expr="$name = /text/" --&gt;
-&lt;!--# if expr="$name != /text/" --&gt;
+&lt;!--# if expr="$name = /<value>text</value>/" --&gt;
+&lt;!--# if expr="$name != /<value>text</value>/" --&gt;
 </example>
-Если в text встречаются переменные, то производится подстановка их значений.
+</listitem>
+</list>
+
+Если в <value>text</value> встречаются переменные,
+то производится подстановка их значений.
 В регулярном выражении можно задать позиционные и именованные выделения,
-а затем использовать их через переменные:
+а затем использовать их через переменные, например:
 <example>
 &lt;!--# if expr="$name = /(.+)@(?P&lt;domain&gt;.+)/" --&gt;
     &lt;!--# echo var="1" --&gt;
     &lt;!--# echo var="domain" --&gt;
 &lt;!--# endif --&gt;
 </example>
-</listitem>
+</tag-desc>
 </list>
 
-</listitem>
+</tag-desc>
 
 
-<listitem>
-<emphasis>include</emphasis> — команда включает в ответ результат другого запроса.
+<tag-name><literal>include</literal></tag-name>
+<tag-desc>
+Включает в ответ результат другого запроса.
+Параметры команды:
 
-<list type="bullet">
-<listitem>
-<emphasis>file</emphasis> — задаёт включаемый файл, например:
+<list type="tag">
+<tag-name><literal>file</literal></tag-name>
+<tag-desc>
+задаёт включаемый файл, например:
 <example>
 &lt;!--# include file="footer.html" --&gt;
 </example>
-</listitem>
+</tag-desc>
 
-<listitem>
-<emphasis>virtual</emphasis> — задаёт включаемый запрос, например:
+<tag-name><literal>virtual</literal></tag-name>
+<tag-desc>
+задаёт включаемый запрос, например:
 <example>
 &lt;!--# include virtual="/remote/body.php?argument=value" --&gt;
 </example>
-Несколько запросов на одной странице, обрабатываемые через прокси или FastCGI,
-работают параллельно. Если нужно последовательная обработка, то нужно
-воспользоваться параметром wait.
-</listitem>
+Несколько запросов, указанных на одной странице и обрабатываемых
+проксируемыми или FastCGI-серверами, работают параллельно.
+Если нужна последовательная обработка, следует воспользоваться параметром
+<literal>wait</literal>.
+</tag-desc>
 
-<listitem>
-<emphasis>stub</emphasis> — нестандартный параметр, задающий имя блока,
+<tag-name><literal>stub</literal></tag-name>
+<tag-desc>
+нестандартный параметр, задающий имя блока,
 содержимое которого будет выведено, если тело ответа на включаемый запрос
-пустое или при исполнении запроса произошла ошибка, например:
+пустое или если при исполнении запроса произошла ошибка, например:
 <example>
 &lt;!--# block name="one" --&gt;&amp;nbsp;&lt;!--# endblock --&gt;
 &lt;!--# include virtual="/remote/body.php?argument=value" stub="one" --&gt;
 </example>
-при этом содержимое замещающего блока обрабатывается в контексте включаемого
-запроса.
-</listitem>
+Содержимое замещающего блока обрабатывается в контексте включаемого запроса.
+</tag-desc>
 
-<listitem>
-<emphasis>wait</emphasis> — нестандартный параметр, указывающий, нужно ли ждать
+<tag-name><literal>wait</literal></tag-name>
+<tag-desc>
+нестандартный параметр, указывающий, нужно ли ждать
 полного исполнения данного запроса, прежде чем продолжать выполнение
 SSI, например:
 <example>
 &lt;!--# include virtual="/remote/body.php?argument=value" wait="yes" --&gt;
 </example>
-</listitem>
+</tag-desc>
 
-<listitem>
-<emphasis>set</emphasis> — нестандартный параметр, указывающий, что удачный
+<tag-name><literal>set</literal></tag-name>
+<tag-desc>
+нестандартный параметр, указывающий, что удачный
 результат выполнения запроса нужно записать в заданную переменную,
 например:
 <example>
@@ -262,28 +311,35 @@ SSI, например:
 </example>
 Необходимо учитывать, что в переменные можно записать только результаты
 ответов, полученные через модули
-ngx_http_proxy_module и ngx_http_memcached_module.
-</listitem>
+<link doc="ngx_http_proxy_module.xml">ngx_http_proxy_module</link> и
+<link doc="ngx_http_memcached_module.xml">ngx_http_memcached_module</link>.
+</tag-desc>
 
 </list>
 
-</listitem>
+</tag-desc>
 
-<listitem>
-<emphasis>set</emphasis> — команда присваивает значение переменной.
 
-<list type="bullet">
-<listitem>
-<emphasis>var</emphasis> — имя переменной.
-</listitem>
+<tag-name><literal>set</literal></tag-name>
+<tag-desc>
+Присваивает значение переменной.
+Параметры команды:
 
-<listitem>
-<emphasis>value</emphasis> — значение переменной. Если в присваиваемом значении
-есть переменные, то производится подстановка их значений.
-</listitem>
+<list type="tag">
+<tag-name><literal>var</literal></tag-name>
+<tag-desc>
+имя переменной.
+</tag-desc>
+
+<tag-name><literal>value</literal></tag-name>
+<tag-desc>
+значение переменной.
+Если в присваиваемом значении есть переменные,
+то производится подстановка их значений.
+</tag-desc>
 </list>
 
-</listitem>
+</tag-desc>
 
 </list>
 </para>
@@ -291,21 +347,26 @@ ngx_http_proxy_module и ngx_http_memcached_module.
 </section>
 
 
-<section name="Встроенные переменные" id="variables">
+<section id="variables" name="Встроенные переменные">
 
 <para>
-Модуль ngx_http_ssi_module поддерживает две встроенные переменные:
-<list type="bullet">
+Модуль <literal>ngx_http_ssi_module</literal> поддерживает
+две встроенные переменные:
+<list type="tag">
 
-<listitem>
-$date_local, эта переменная равна текущему времени в локальной временной зоне.
-Формат даты задаётся командой config с параметром timefmt.
-</listitem>
+<tag-name><var>$date_local</var></tag-name>
+<tag-desc>
+текущее время в локальной временной зоне.
+Формат задаётся командой <literal>config</literal>
+с параметром <literal>timefmt</literal>.
+</tag-desc>
 
-<listitem>
-$date_gmt, эта переменная равна текущему времени в GMT.
-Формат даты задаётся командой config с параметром timefmt.
-</listitem>
+<tag-name><var>$date_gmt</var></tag-name>
+<tag-desc>
+текущее время в GMT.
+Формат задаётся командой <literal>config</literal>
+с параметром <literal>timefmt</literal>.
+</tag-desc>
 
 </list>
 </para>
