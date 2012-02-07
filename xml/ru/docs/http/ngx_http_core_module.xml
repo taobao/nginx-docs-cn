@@ -1116,7 +1116,8 @@ listen 443 default ssl;
 “TCP keepalive” на уровне сокета посредством опций
 <c-def>TCP_KEEPIDLE</c-def>, <c-def>TCP_KEEPINTVL</c-def> и
 <c-def>TCP_KEEPCNT</c-def>.
-На таких системах (в настоящий момент это Linux 2.4+ и NetBSD 5+)
+На таких системах (в настоящий момент это Linux 2.4+, NetBSD 5+ и
+FreeBSD 10.0-CURRENT)
 их можно сконфигурировать с помощью параметров <value>keepidle</value>,
 <value>keepintvl</value> и <value>keepcnt</value>.
 Один или два параметра могут быть опущены, в таком случае для
