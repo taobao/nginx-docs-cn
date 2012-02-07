@@ -220,6 +220,11 @@ ngx_http_split_clients_module</link>
 </item>
 
 <item>
+<link doc="http/ngx_http_ssi_module.xml">
+ngx_http_ssi_module</link>
+</item>
+
+<item>
 <link doc="http/ngx_http_ssl_module.xml">
 ngx_http_ssl_module</link>
 </item>

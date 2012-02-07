@@ -1,0 +1,373 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_ssi_module"
+        link="/en/docs/http/ngx_http_ssi_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_ssi_module</literal> module is a filter
+that processes SSI (Server Side Includes) commands in responses
+passing through it.
+Currently, the list of supported SSI commands is incomplete.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location / {
+    ssi on;
+    ...
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="ssi">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if in location</context>
+
+<para>
+Enables or disables processing of SSI commands in responses.
+</para>
+
+</directive>
+
+
+<directive name="ssi_silent_errors">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Allows to suppress output of the string
+“<literal>[an error occurred while processing the directive]</literal>”
+if an error occurred during SSI processing.
+</para>
+
+</directive>
+
+
+<directive name="ssi_types">
+<syntax><value>mime-type</value> ...</syntax>
+<default>text/html</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables processing of SSI commands in responses with the specified MIME types
+in addition to “<literal>text/html</literal>”.
+</para>
+
+</directive>
+
+</section>
+
+
+<section id="commands" name="SSI Commands">
+
+<para>
+SSI commands have the following generic format:
+<example>
+&lt;!--# command parameter1=value1 parameter2=value2 ... --&gt;
+</example>
+</para>
+
+<para>
+The following commands are supported:
+<list type="tag">
+
+<tag-name><literal>block</literal></tag-name>
+<tag-desc>
+Defines a block that can be used as a stub
+in the <literal>include</literal> command.
+The block can contain other SSI commands.
+The command has the following parameter:
+
+<list type="tag">
+<tag-name><literal>name</literal></tag-name>
+<tag-desc>
+block name.
+</tag-desc>
+</list>
+
+Example:
+<example>
+&lt;!--# block name="one" --&gt;
+stub
+&lt;!--# endblock --&gt;
+</example>
+
+</tag-desc>
+
+
+<tag-name><literal>config</literal></tag-name>
+<tag-desc>
+Sets some parameters used during SSI processing, namely:
+
+<list type="tag">
+<tag-name><literal>errmsg</literal></tag-name>
+<tag-desc>
+a string that is output if an error occurs during SSI processing.
+By default, the following string is output:
+<example>
+[an error occurred while processing the directive]
+</example>
+</tag-desc>
+
+<tag-name><literal>timefmt</literal></tag-name>
+<tag-desc>
+a format string passed to the <c-func>strftime</c-func> function
+used to output date and time.
+By default, the following format is used:
+<example>
+"%A, %d-%b-%Y %H:%M:%S %Z"
+</example>
+The “<literal>%s</literal>” format is suitable to output time in seconds.
+</tag-desc>
+</list>
+
+</tag-desc>
+
+
+<tag-name><literal>echo</literal></tag-name>
+<tag-desc>
+Outputs the value of a variable.
+The command has the following parameters:
+
+<list type="tag">
+<tag-name><literal>var</literal></tag-name>
+<tag-desc>
+variable name.
+</tag-desc>
+
+<tag-name><literal>encoding</literal></tag-name>
+<tag-desc>
+encoding method.
+Possible values include <literal>none</literal>, <literal>url</literal>, and
+<literal>entity</literal>.
+By default, <literal>entity</literal> is used.
+</tag-desc>
+
+<tag-name><literal>default</literal></tag-name>
+<tag-desc>
+non-standard parameter that sets a string to be output
+if a variable is undefined.
+By default, “<literal>none</literal>” is output.
+The command
+<example>
+&lt;!--# echo var="name" default="<emphasis>no</emphasis>" --&gt;
+</example>
+replaces the following sequence of commands:
+<example>
+&lt;!--# if expr="$name" --&gt;&lt;!--# echo var="name" --&gt;&lt;!--#
+       else --&gt;<emphasis>no</emphasis>&lt;!--# endif --&gt;
+</example>
+</tag-desc>
+</list>
+
+</tag-desc>
+
+
+<tag-name><literal>if</literal></tag-name>
+<tag-desc>
+Performs a conditional inclusion.
+The following commands are supported:
+<example>
+&lt;!--# if expr="..." --&gt;
+...
+&lt;!--# elif expr="..." --&gt;
+...
+&lt;!--# else --&gt;
+...
+&lt;!--# endif --&gt;
+</example>
+Only one level of nesting is currently supported.
+The command has the following parameter:
+
+<list type="tag">
+<tag-name><literal>expr</literal></tag-name>
+<tag-desc>
+expression.
+An expression can be:
+
+<list type="bullet">
+
+<listitem>
+variable existence check:
+<example>
+&lt;!--# if expr="$name" --&gt;
+</example>
+</listitem>
+
+<listitem>
+comparison of a variable with a text:
+<example>
+&lt;!--# if expr="$name = <value>text</value>" --&gt;
+&lt;!--# if expr="$name != <value>text</value>" --&gt;
+</example>
+</listitem>
+
+<listitem>
+comparison of a variable with a regular expression:
+<example>
+&lt;!--# if expr="$name = /<value>text</value>/" --&gt;
+&lt;!--# if expr="$name != /<value>text</value>/" --&gt;
+</example>
+</listitem>
+</list>
+
+If a <value>text</value> contains variables,
+their values are substituted.
+A regular expression can contain positional and named captures
+that can later be used through variables, for example:
+<example>
+&lt;!--# if expr="$name = /(.+)@(?P&lt;domain&gt;.+)/" --&gt;
+    &lt;!--# echo var="1" --&gt;
+    &lt;!--# echo var="domain" --&gt;
+&lt;!--# endif --&gt;
+</example>
+</tag-desc>
+</list>
+
+</tag-desc>
+
+
+<tag-name><literal>include</literal></tag-name>
+<tag-desc>
+Includes the result of another request into a response.
+The command has the following parameters:
+
+<list type="tag">
+<tag-name><literal>file</literal></tag-name>
+<tag-desc>
+specifies an included file, for example:
+<example>
+&lt;!--# include file="footer.html" --&gt;
+</example>
+</tag-desc>
+
+<tag-name><literal>virtual</literal></tag-name>
+<tag-desc>
+specifies an included request, for example:
+<example>
+&lt;!--# include virtual="/remote/body.php?argument=value" --&gt;
+</example>
+Several requests specified on one page and processed by proxied or
+FastCGI servers run in parallel.
+If sequential processing is desired, the <literal>wait</literal>
+parameter should be used.
+</tag-desc>
+
+<tag-name><literal>stub</literal></tag-name>
+<tag-desc>
+non-standard parameter that names the block whose
+content will be output if an included request results in an empty
+body or if an error occurs during request processing, for example:
+<example>
+&lt;!--# block name="one" --&gt;&amp;nbsp;&lt;!--# endblock --&gt;
+&lt;!--# include virtual="/remote/body.php?argument=value" stub="one" --&gt;
+</example>
+The replacement block content is processed in the included request context.
+</tag-desc>
+
+<tag-name><literal>wait</literal></tag-name>
+<tag-desc>
+non-standard parameter that instructs to wait for a request to fully
+complete before continuing with SSI processing, for example:
+<example>
+&lt;!--# include virtual="/remote/body.php?argument=value" wait="yes" --&gt;
+</example>
+</tag-desc>
+
+<tag-name><literal>set</literal></tag-name>
+<tag-desc>
+non-standard parameter that instructs to write a successful result
+of request processing to the specified variable,
+for example:
+<example>
+&lt;!--# include virtual="/remote/body.php?argument=value" set="one" --&gt;
+</example>
+It should be noted that only the results of responses obtained using the
+<link doc="ngx_http_proxy_module.xml">ngx_http_proxy_module</link> and
+<link doc="ngx_http_memcached_module.xml">ngx_http_memcached_module</link>
+modules can be written into variables.
+</tag-desc>
+
+</list>
+
+</tag-desc>
+
+
+<tag-name><literal>set</literal></tag-name>
+<tag-desc>
+Sets a value of a variable.
+The command has the following parameters:
+
+<list type="tag">
+<tag-name><literal>var</literal></tag-name>
+<tag-desc>
+variable name.
+</tag-desc>
+
+<tag-name><literal>value</literal></tag-name>
+<tag-desc>
+variable value.
+If an assigned value contains variables,
+their values are substituted.
+</tag-desc>
+</list>
+
+</tag-desc>
+
+</list>
+</para>
+
+</section>
+
+
+<section id="variables" name="Embedded Variables">
+
+<para>
+The <literal>ngx_http_ssi_module</literal> module supports
+two embedded variables:
+<list type="tag">
+
+<tag-name><var>$date_local</var></tag-name>
+<tag-desc>
+current time in local time zone.
+The format is set by the <literal>config</literal> command
+with the <literal>timefmt</literal> parameter.
+</tag-desc>
+
+<tag-name><var>$date_gmt</var></tag-name>
+<tag-desc>
+current time in GMT.
+The format is set by the <literal>config</literal> command
+with the <literal>timefmt</literal> parameter.
+</tag-desc>
+
+</list>
+</para>
+
+</section>
+
+</module>
