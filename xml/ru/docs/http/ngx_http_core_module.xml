@@ -594,12 +594,16 @@ location @fallback {
 “<command>include virtual</command>”
 модуля
 <link doc="ngx_http_ssi_module.xml">ngx_http_ssi_module</link>;
-ngx_http_ssi_module;
 </listitem>
 
 <listitem>
 запросы, изменённые директивой
-<link doc="ngx_http_rewrite_module.xml" id="rewrite"/>.
+<link doc="ngx_http_rewrite_module.xml" id="rewrite"/>;
+</listitem>
+
+<listitem>
+запросы, перенаправленные с помощью поля
+<header>X-Accel-Redirect</header> заголовка ответа вышестоящего сервера.
 </listitem>
 
 </list>

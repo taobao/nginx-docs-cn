@@ -614,7 +614,12 @@ command of the module
 <listitem>
 requests changed by the
 <link doc="ngx_http_rewrite_module.xml" id="rewrite"/>
-directive.
+directive;
+</listitem>
+
+<listitem>
+requests redirected by the <header>X-Accel-Redirect</header>
+response header field from an upstream server.
 </listitem>
 
 </list>
