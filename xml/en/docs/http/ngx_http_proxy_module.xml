@@ -60,14 +60,18 @@ It can be made smaller however.
 <context>location</context>
 
 <para>
-Enables or disables buffering a response from the proxied server.
+Enables or disables buffering of responses from the proxied server.
 </para>
 
 <para>
 When buffering is enabled, nginx receives a response from the proxied server
 as soon as possible, saving it into buffers set by the
 <link id="proxy_buffer_size"/> and <link id="proxy_buffers"/> directives.
-If the whole response does not fit into memory, part of it is saved to a disk.
+If the whole response does not fit into memory, part of it can be saved
+to a <link id="proxy_temp_path">temporary file</link> on disk.
+Writes to temporary files are controlled by the
+<link id="proxy_max_temp_file_size"/> and
+<link id="proxy_temp_file_write_size"/> directives.
 </para>
 
 <para>
@@ -94,6 +98,27 @@ buffers used for reading a response from the proxied server,
 for a single connection.
 By default, the buffer size is equal to one memory page.
 This is either 4K or 8K, depending on a platform.
+</para>
+
+</directive>
+
+
+<directive name="proxy_busy_buffers_size">
+<syntax><value>size</value></syntax>
+<default>8k|16k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+When <link id="proxy_buffering">buffering</link> of responses from the proxied
+server is enabled, limits the total <value>size</value> of buffers that
+can be busy sending a response to the client while the response is not
+yet fully read.
+In the mean time, the rest of the buffers can be used for reading a response
+and, if needed, buffering part of a response to a temporary file.
+By default, <value>size</value> is limited by two buffers set by the
+<link id="proxy_buffer_size"/> and <link id="proxy_buffers"/> directives.
 </para>
 
 </directive>
@@ -437,6 +462,30 @@ The following fields can be ignored: <header>X-Accel-Redirect</header>,
 Determines whether proxied responses with codes greater than or equal
 to 400 should be passed to a client or be redirected to nginx for processing
 using the <link doc="ngx_http_core_module.xml" id="error_page"/> directive.
+</para>
+
+</directive>
+
+
+<directive name="proxy_max_temp_file_size">
+<syntax><value>size</value></syntax>
+<default>1024m</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+When <link id="proxy_buffering">buffering</link> of responses from the proxied
+server is enabled, and the whole response does not fit into memory buffers
+set by the <link id="proxy_buffer_size"/> and <link id="proxy_buffers"/>
+directives, part of a response can be saved to a temporary file.
+This directive sets the maximum <value>size</value> of a temporary file.
+The size of data written to a temporary file at a time is set
+by the <link id="proxy_temp_file_write_size"/> directive.
+</para>
+
+<para>
+Value of zero disables buffering of responses to temporary files.
 </para>
 
 </directive>
@@ -984,6 +1033,26 @@ proxy_store_access group:rw all:r;
 </directive>
 
 
+<directive name="proxy_temp_file_write_size">
+<syntax><value>size</value></syntax>
+<default>8k|16k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Limits the <value>size</value> of data written to a temporary file
+at a time, when buffering of responses from the proxied server
+to temporary files is enabled.
+By default, <value>size</value> is limited by two buffers set by the
+<link id="proxy_buffer_size"/> and <link id="proxy_buffers"/> directives.
+The maximum size of a temporary file is set by the
+<link id="proxy_max_temp_file_size"/> directive.
+</para>
+
+</directive>
+
+
 <directive name="proxy_temp_path">
 <syntax>
     <value>path</value>
@@ -997,7 +1066,7 @@ proxy_store_access group:rw all:r;
 
 <para>
 Defines a directory for storing temporary files
-received from another server.
+with data received from proxied servers.
 Up to three-level subdirectory hierarchy can be used underneath the specified
 directory.
 For example, in the following configuration
