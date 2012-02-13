@@ -1818,8 +1818,8 @@ location / {
 <context>location</context>
 
 <para>
-Эта директива была переименована в директиву
-<link id="satisfy">satisfy any</link>.
+Эта директива была заменена параметром <literal>any</literal>
+директивы <link id="satisfy"/>.
 </para>
 
 </directive>
@@ -2579,8 +2579,7 @@ cookie <value>имя</value>
 <para>
 По завершению обработки файл необходимо удалить.
 Для того, чтобы тело запроса всегда записывалось в файл,
-следует указать
-<link id="client_body_in_file_only">client_body_in_file_only on</link>.
+следует включить <link id="client_body_in_file_only"/>.
 При передаче имени временного файла в проксированном запросе
 или в запросе к FastCGI-серверу следует запретить передачу самого
 тела директивами

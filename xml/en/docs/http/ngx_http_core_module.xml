@@ -1831,8 +1831,8 @@ location / {
 <context>location</context>
 
 <para>
-This directive was renamed to the <link id="satisfy">satisfy any</link>
-directive.
+This directive has been replaced by the <literal>any</literal>
+parameter of the <link id="satisfy"/> directive.
 </para>
 
 </directive>
@@ -2595,8 +2595,7 @@ name of a temporary file with the request body
 <para>
 At the end of processing, the file needs to be removed.
 To always write a request body to a file,
-<link id="client_body_in_file_only">client_body_in_file_only on</link>
-needs be specified.
+<link id="client_body_in_file_only"/> needs to be enabled.
 When passing the name of a temporary file in a proxied request,
 or in a request to a FastCGI server,
 passing of the request body should be disabled by the
