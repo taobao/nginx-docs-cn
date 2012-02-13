@@ -86,7 +86,7 @@
       </xsl:if>
    </xsl:template>
 
-   <xsl:template match="menu/item[starts-with(@href, 'http://')]">
+   <xsl:template match="menu/item[starts-with(@href, 'http://') or starts-with(@href, 'https://')]">
 
       <a href="{@href}">
          <xsl:value-of select=" normalize-space(text())"/>
