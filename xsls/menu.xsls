@@ -53,7 +53,7 @@ X:template = "menu/item[@year]" {
 }
 
 
-X:template = "menu/item[starts-with(@href, 'http://')]" {
+X:template = "menu/item[starts-with(@href, 'http://') or starts-with(@href, 'https://')]" {
     <a href="{@href}"> !{ normalize-space(text()) } </a>
     X:if "@lang" { X:text { [} !{@lang} X:text {]}}
     <br/>
