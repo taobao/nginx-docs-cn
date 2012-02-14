@@ -75,6 +75,26 @@ This is either 4K or 8K, depending on a platform.
 </directive>
 
 
+<directive name="fastcgi_busy_buffers_size">
+<syntax><value>size</value></syntax>
+<default>8k|16k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Limits the total <value>size</value> of buffers that
+can be busy sending a response to the client while the response is not
+yet fully read.
+In the mean time, the rest of the buffers can be used for reading a response
+and, if needed, buffering part of a response to a temporary file.
+By default, <value>size</value> is limited by two buffers set by the
+<link id="fastcgi_buffer_size"/> and <link id="fastcgi_buffers"/> directives.
+</para>
+
+</directive>
+
+
 <directive name="fastcgi_cache">
 <syntax><value>zone</value> | <literal>off</literal></syntax>
 <default>off</default>
@@ -437,6 +457,29 @@ connections to FastCGI servers to function.
 </directive>
 
 
+<directive name="fastcgi_max_temp_file_size">
+<syntax><value>size</value></syntax>
+<default>1024m</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+When the whole response does not fit into memory buffers
+set by the <link id="fastcgi_buffer_size"/> and <link id="fastcgi_buffers"/>
+directives, part of a response can be saved to a temporary file.
+This directive sets the maximum <value>size</value> of a temporary file.
+The size of data written to a temporary file at a time is set
+by the <link id="fastcgi_temp_file_write_size"/> directive.
+</para>
+
+<para>
+Value of zero disables buffering of responses to temporary files.
+</para>
+
+</directive>
+
+
 <directive name="fastcgi_next_upstream">
 <syntax>
     <literal>error</literal> |
@@ -772,6 +815,26 @@ fastcgi_store_access group:rw all:r;
 </directive>
 
 
+<directive name="fastcgi_temp_file_write_size">
+<syntax><value>size</value></syntax>
+<default>8k|16k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Limits the <value>size</value> of data written to a temporary file
+at a time, when buffering of responses from the FastCGI server
+to temporary files is enabled.
+By default, <value>size</value> is limited by two buffers set by the
+<link id="fastcgi_buffer_size"/> and <link id="fastcgi_buffers"/> directives.
+The maximum size of a temporary file is set by the
+<link id="fastcgi_max_temp_file_size"/> directive.
+</para>
+
+</directive>
+
+
 <directive name="fastcgi_temp_path">
 <syntax>
     <value>path</value>
@@ -785,7 +848,7 @@ fastcgi_store_access group:rw all:r;
 
 <para>
 Defines a directory for storing temporary files
-received from another server.
+with data received from FastCGI servers.
 Up to three-level subdirectory hierarchy can be used underneath the specified
 directory.
 For example, in the following configuration
