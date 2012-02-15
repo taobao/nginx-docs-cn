@@ -11,7 +11,7 @@
 <para>
 Модуль <literal>ngx_http_userid_module</literal> выдаёт куки
 для идентификации клиентов.
-Для записи в лог полученных и выданных куки можно использовать встроенные
+Для записи в лог полученных и выданных кук можно использовать встроенные
 переменные <var>$uid_got</var> и <var>$uid_set</var>.
 Модуль совместим с модулем
 <link url="http://www.lexa.ru/programs/mod-uid.html">mod_uid</link>
@@ -51,30 +51,30 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 <context>location</context>
 
 <para>
-Разрешает или запрещает выдавать куки и записывать приходящие куки в лог:
+Разрешает или запрещает выдачу кук и запись приходящих кук в лог:
 <list type="tag">
 
 <tag-name><literal>on</literal></tag-name>
 <tag-desc>
-разрешает выдавать куки версии 2
-и записывать приходящие куки в лог;
+разрешает выдачу кук версии 2
+и запись приходящих кук в лог;
 </tag-desc>
 
 <tag-name><literal>v1</literal></tag-name>
 <tag-desc>
-разрешает выдавать куки версии 1
-и записывать приходящие куки в лог;
+разрешает выдачу кук версии 1
+и запись приходящих кук в лог;
 </tag-desc>
 
 <tag-name><literal>log</literal></tag-name>
 <tag-desc>
-запрещает выдавать куки,
-но разрешает записывать приходящие куки в лог;
+запрещает выдачу кук,
+но разрешает запись приходящих кук в лог;
 </tag-desc>
 
 <tag-name><literal>off</literal></tag-name>
 <tag-desc>
-запрещает выдавать куки и записывать приходящие куки в лог.
+запрещает выдачу кук и запись приходящих кук в лог.
 </tag-desc>
 
 </list>
@@ -91,7 +91,7 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 <context>location</context>
 
 <para>
-Задаёт домен, для которого устанавливается куки.
+Задаёт домен, для которого устанавливается кука.
 Параметр <literal>none</literal> запрещает выдавать домен для куки.
 </para>
 
@@ -106,7 +106,7 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 <context>location</context>
 
 <para>
-Задаёт время, в течение которого браузер должен хранить куки.
+Задаёт время, в течение которого браузер должен хранить куку.
 Параметр <literal>max</literal> задаёт время 31 декабря 2037 года 23:55:55 GMT.
 Это максимальное время, которое понимают старые браузеры.
 </para>
@@ -137,7 +137,7 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 
 <para>
 Задаёт значение для поля заголовка <header>P3P</header>, который будет
-выдаваться вместе с куки.
+выдаваться вместе с кукой.
 </para>
 
 </directive>
@@ -151,7 +151,7 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 <context>location</context>
 
 <para>
-Задаёт путь, для которого устанавливается куки.
+Задаёт путь, для которого устанавливается кука.
 </para>
 
 </directive>
@@ -165,7 +165,7 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 <context>location</context>
 
 <para>
-Задаёт номер сервиса, выдавшего куки.
+Задаёт номер сервиса, выдавшего куку.
 По умолчанию для куки первой версии используется ноль,
 а для второй — IP-адрес сервера.
 </para>
