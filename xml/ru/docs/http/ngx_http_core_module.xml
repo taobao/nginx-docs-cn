@@ -453,6 +453,58 @@ directio 4m;
 </directive>
 
 
+<directive name="disable_symlinks">
+<syntax>
+    <literal>on</literal> |
+    <literal>off</literal> |
+    <literal>if_not_owner</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.15</appeared-in>
+
+<para>
+Определяет, как следует поступать с символическими ссылками
+при открытии файлов:
+<list type="tag">
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+Символические ссылки в пути никак специально не обрабатываются.
+Это стандартное поведение.
+</tag-desc>
+
+<tag-name><literal>on</literal></tag-name>
+<tag-desc>
+Если любой компонент пути является символической ссылкой,
+доступ к файлу запрещается.
+</tag-desc>
+
+<tag-name><literal>if_not_owner</literal></tag-name>
+<tag-desc>
+Доступ к файлу запрещается, если любой компонент пути
+является символической ссылкой, и ссылка и объект, на
+который она ссылается, имеют разных владельцев.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+Эта директива доступна только на системах, в которых есть
+интерфейсы <c-func>openat</c-func> и <c-func>fstatat</c-func>.
+К таким системам относятся современные версии FreeBSD, Linux и Solaris.
+</para>
+
+<para>
+Параметры <literal>on</literal> и <literal>if_not_owner</literal>
+требуют дополнительных затрат на обработку.
+</para>
+
+</directive>
+
+
 <directive name="error_page">
 <syntax>
     <value>код</value> ...

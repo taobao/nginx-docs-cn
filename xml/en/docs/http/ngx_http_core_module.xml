@@ -464,6 +464,57 @@ using XFS under Linux, it needs to be increased to 4K.
 </directive>
 
 
+<directive name="disable_symlinks">
+<syntax>
+    <literal>on</literal> |
+    <literal>off</literal> |
+    <literal>if_not_owner</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.15</appeared-in>
+
+<para>
+Determines how nginx treats symbolic links when opening files:
+<list type="tag">
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+Symbolic links in the pathname are not processed specially.
+This is the default behavior.
+</tag-desc>
+
+<tag-name><literal>on</literal></tag-name>
+<tag-desc>
+If any component of the pathname is a symbolic link,
+access to a file is denied.
+</tag-desc>
+
+<tag-name><literal>if_not_owner</literal></tag-name>
+<tag-desc>
+Access to a file is denied if any component of the pathname
+is a symbolic link, and the link and object that the link
+points to have different owners.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+This directive is only available on systems that have the
+<c-func>openat</c-func> and <c-func>fstatat</c-func> interfaces.
+This includes modern versions of FreeBSD, Linux, and Solaris.
+</para>
+
+<para>
+Parameters <literal>on</literal> and <literal>if_not_owner</literal>
+add a processing overhead.
+</para>
+
+</directive>
+
+
 <directive name="error_page">
 <syntax>
     <value>code</value> ...
