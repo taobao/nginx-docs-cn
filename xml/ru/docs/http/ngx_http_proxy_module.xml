@@ -374,6 +374,142 @@ proxy_cache_valid any      1m;
 </directive>
 
 
+<directive name="proxy_cookie_domain">
+<syntax><literal>off</literal></syntax>
+<syntax><value>домен</value> <value>замена</value></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.15</appeared-in>
+
+<para>
+Задаёт текст, который нужно изменить в атрибуте <literal>domain</literal>
+полей <header>Set-Cookie</header> заголовка ответа проксируемого сервера.
+Предположим, проксируемый сервер вернул поле заголовка
+<header>Set-Cookie</header> с атрибутом
+“<literal>domain=localhost</literal>”.
+Директива
+<example>
+proxy_cookie_domain localhost example.org;
+</example>
+перепишет данный атрибут в виде
+“<literal>domain=example.org</literal>”.
+</para>
+
+<para>
+Точка в начале строк <value>домен</value> и <value>замена</value>,
+а равно как и в атрибуте <literal>domain</literal> игнорируется.
+Регистр значения не имеет.
+</para>
+
+<para>
+В строках <value>домен</value> и <value>замена</value> можно использовать
+переменные:
+<example>
+proxy_cookie_domain www.$host $host;
+</example>
+</para>
+
+<para>
+Директиву также можно задать при помощи регулярных выражений.
+При этом <value>домен</value> должен начинаться с символа
+“<literal>~</literal>”.
+Регулярное выражение может содержать именованные и позиционные выделения,
+а <value>замена</value> ссылаться на них:
+<example>
+proxy_cookie_domain ~\.(?P&lt;sl_domain&gt;[-0-9a-z]+\.[a-z]+)$ $sl_domain;
+</example>
+</para>
+
+<para>
+Директив <literal>proxy_cookie_domain</literal> может быть несколько:
+<example>
+proxy_cookie_domain localhost example.org;
+proxy_cookie_domain ~\.([a-z]+\.[a-z]+)$ $1;
+</example>
+</para>
+
+<para>
+Параметр <literal>off</literal> запрещает все директивы
+<literal>proxy_cookie_domain</literal>
+на данном уровне:
+<example>
+proxy_cookie_domain off;
+proxy_cookie_domain localhost example.org;
+proxy_cookie_domain www.example.org example.org;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="proxy_cookie_path">
+<syntax><literal>off</literal></syntax>
+<syntax><value>путь</value> <value>замена</value></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.15</appeared-in>
+
+<para>
+Задаёт текст, который нужно изменить в атрибуте <literal>path</literal>
+полей <header>Set-Cookie</header> заголовка ответа проксируемого сервера.
+Предположим, проксируемый сервер вернул поле заголовка
+<header>Set-Cookie</header> с атрибутом
+“<literal>path=/two/some/uri/</literal>”.
+Директива
+<example>
+proxy_cookie_path /two/ /;
+</example>
+перепишет данный атрибут в виде
+“<literal>path=/some/uri/</literal>”.
+</para>
+
+<para>
+В строках <value>путь</value> и <value>замена</value> можно использовать
+переменные:
+<example>
+proxy_cookie_path $uri /some$uri;
+</example>
+</para>
+
+<para>
+Директиву также можно задать при помощи регулярных выражений.
+При этом <value>путь</value> должен начинаться либо с символа
+“<literal>~</literal>”, если при сравнении следует учитывать регистр символов,
+либо с символов “<literal>~*</literal>”, если регистр символов учитывать
+не нужно.
+Регулярное выражение может содержать именованные и позиционные выделения,
+а <value>замена</value> ссылаться на них:
+<example>
+proxy_cookie_path ~*^/user/([^/]+) /u/$1;
+</example>
+</para>
+
+<para>
+Директив <literal>proxy_cookie_path</literal> может быть несколько:
+<example>
+proxy_cookie_path /one/ /;
+proxy_cookie_path / /two/;
+</example>
+</para>
+
+<para>
+Параметр <literal>off</literal> запрещает все директивы
+<literal>proxy_cookie_path</literal>
+на данном уровне:
+<example>
+proxy_cookie_path off;
+proxy_cookie_path /two/ /;
+proxy_cookie_path ~*^/user/([^/]+) /u/$1;
+</example>
+</para>
+
+</directive>
+
+
 <directive name="proxy_hide_header">
 <syntax><value>поле</value></syntax>
 <default/>

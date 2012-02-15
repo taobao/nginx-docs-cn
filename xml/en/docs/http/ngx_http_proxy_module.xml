@@ -375,6 +375,143 @@ It should be noted that this timeout cannot usually exceed 75 seconds.
 </directive>
 
 
+<directive name="proxy_cookie_domain">
+<syntax><literal>off</literal></syntax>
+<syntax><value>domain</value> <value>replacement</value></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.15</appeared-in>
+
+<para>
+Sets a text that should be changed in the <literal>domain</literal>
+attribute of the <header>Set-Cookie</header> header fields of a
+proxied server response.
+Suppose a proxied server returned the header field
+<header>Set-Cookie</header> with the attribute
+“<literal>domain=localhost</literal>”.
+The directive
+<example>
+proxy_cookie_domain localhost example.org;
+</example>
+will rewrite this attribute to
+“<literal>domain=example.org</literal>”.
+</para>
+
+<para>
+A dot at the beginning of the <value>domain</value> and
+<value>replacement</value> strings, and the <literal>domain</literal>
+attribute is ignored.
+Matching is case-insensitive.
+</para>
+
+<para>
+The strings <value>domain</value> and <value>replacement</value>
+can contain variables:
+<example>
+proxy_cookie_domain www.$host $host;
+</example>
+</para>
+
+<para>
+A directive can also be specified using regular expressions.
+In this case, <value>domain</value> should start from
+the “<literal>~</literal>” symbol.
+A regular expression can contain named and positional captures,
+and <value>replacement</value> can reference them:
+<example>
+proxy_cookie_domain ~\.(?P&lt;sl_domain&gt;[-0-9a-z]+\.[a-z]+)$ $sl_domain;
+</example>
+</para>
+
+<para>
+There could be several <literal>proxy_cookie_domain</literal> directives:
+<example>
+proxy_cookie_domain localhost example.org;
+proxy_cookie_domain ~\.([a-z]+\.[a-z]+)$ $1;
+</example>
+</para>
+
+<para>
+The <literal>off</literal> parameter cancels all
+<literal>proxy_cookie_domain</literal> directives on the current level:
+<example>
+proxy_cookie_domain off;
+proxy_cookie_domain localhost example.org;
+proxy_cookie_domain www.example.org example.org;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="proxy_cookie_path">
+<syntax><literal>off</literal></syntax>
+<syntax><value>path</value> <value>replacement</value></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.15</appeared-in>
+
+<para>
+Sets a text that should be changed in the <literal>path</literal>
+attribute of the <header>Set-Cookie</header> header fields of a
+proxied server response.
+Suppose a proxied server returned the header field
+<header>Set-Cookie</header> with the attribute
+“<literal>path=/two/some/uri/</literal>”.
+The directive
+<example>
+proxy_cookie_path /two/ /;
+</example>
+will rewrite this attribute to
+“<literal>path=/some/uri/</literal>”.
+</para>
+
+<para>
+The strings <value>path</value> and <value>replacement</value>
+can contain variables:
+<example>
+proxy_cookie_path $uri /some$uri;
+</example>
+</para>
+
+<para>
+A directive can also be specified using regular expressions.
+In this case, <value>path</value> should either start from
+the “<literal>~</literal>” symbol for a case-sensitive matching,
+or from the “<literal>~*</literal>” symbols for case-insensitive
+matching.
+A regular expression can contain named and positional captures,
+and <value>replacement</value> can reference them:
+<example>
+proxy_cookie_path ~*^/user/([^/]+) /u/$1;
+</example>
+</para>
+
+<para>
+There could be several <literal>proxy_cookie_path</literal> directives:
+<example>
+proxy_cookie_path /one/ /;
+proxy_cookie_path / /two/;
+</example>
+</para>
+
+<para>
+The <literal>off</literal> parameter cancels all
+<literal>proxy_cookie_path</literal> directives on the current level:
+<example>
+proxy_cookie_path off;
+proxy_cookie_path /two/ /;
+proxy_cookie_path ~*^/user/([^/]+) /u/$1;
+</example>
+</para>
+
+</directive>
+
+
 <directive name="proxy_hide_header">
 <syntax><value>field</value></syntax>
 <default/>
@@ -786,7 +923,7 @@ proxy_redirect http://$proxy_host:8000/ /;
 
 <para>
 A directive can be specified (1.1.11) using regular expressions.
-In this case, <value>replacement</value> should either start from
+In this case, <value>redirect</value> should either start from
 the “<literal>~</literal>” symbol for a case-sensitive matching,
 or from the “<literal>~*</literal>” symbols for case-insensitive
 matching.
