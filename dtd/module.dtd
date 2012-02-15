@@ -66,7 +66,7 @@
 <!ELEMENT   tag-name    ANY >
 <!ELEMENT   tag-desc    ANY >
 
-<!ELEMENT   literal     (#PCDATA)* >
+<!ELEMENT   literal     (#PCDATA | value)* >
 
 <!ELEMENT   note        ANY >
 
