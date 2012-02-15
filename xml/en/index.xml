@@ -172,7 +172,7 @@ coming from one address;
 </item>
 
 <item>
-Embedded Perl.
+<link doc="docs/http/ngx_http_perl_module.xml">Embedded Perl</link>.
 </item>
 
 </list>

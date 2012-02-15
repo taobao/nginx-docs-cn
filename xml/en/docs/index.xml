@@ -185,6 +185,11 @@ ngx_http_mp4_module</link>
 </item>
 
 <item>
+<link doc="http/ngx_http_perl_module.xml">
+ngx_http_perl_module</link>
+</item>
+
+<item>
 <link doc="http/ngx_http_proxy_module.xml">
 ngx_http_proxy_module</link>
 </item>
