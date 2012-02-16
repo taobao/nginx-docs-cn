@@ -510,6 +510,10 @@ This includes modern versions of FreeBSD, Linux, and Solaris.
 <para>
 Parameters <literal>on</literal> and <literal>if_not_owner</literal>
 add a processing overhead.
+Furthermore,
+the use of these parameters requires that
+worker processes be able to read all intermediate
+directories.
 </para>
 
 </directive>
