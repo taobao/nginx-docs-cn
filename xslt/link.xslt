@@ -64,4 +64,17 @@
       </a>
    </xsl:template>
 
+   <xsl:template match="links">
+
+      <xsl:for-each select="link">
+         <xsl:sort select="@id"/>
+
+         <a href="{substring-before(@doc, '.xml')}.html#{@id}">
+            <xsl:value-of select="@id"/>
+         </a>
+
+         <br/>
+      </xsl:for-each>
+   </xsl:template>
+
 </xsl:stylesheet>
