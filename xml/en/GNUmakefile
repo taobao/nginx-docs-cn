@@ -8,6 +8,7 @@ DOCS =									\
 		windows							\
 		control							\
 		hash							\
+		dirindex						\
 
 DOCS_XML =	$(foreach name, $(DOCS), xml/$(DOC_LANG)/docs/$(name).xml)
 DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
@@ -115,6 +116,16 @@ $(OUT)/$(DOC_LANG)/security_advisories.html:				\
 $(OUT)/$(DOC_LANG)/docs/index.html:					\
 		$(DOCS_XML)						\
 		$(REFS_XML)						\
+
+xml/$(DOC_LANG)/docs/dirindex.xml:					\
+		$(REFS_XML)						\
+		xslt/dirindex.xslt
+	echo "<modules>$(patsubst %,					\
+	<module name=\"%\"/>, $(filter %.xml,$^))</modules>" |		\
+	xsltproc -o -							\
+	--stringparam LANG $(patsubst xml/%/docs/dirindex.xml,%,$@)	\
+	xslt/dirindex.xslt - |						\
+	sed 's;xml/[^/]*/docs/;;g' > $@
 
 $(OUT)/$(DOC_LANG)/docs/introduction.html:				\
 		$(INTRO_XML)						\

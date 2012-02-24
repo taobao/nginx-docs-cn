@@ -26,4 +26,11 @@ X:template = "link[@id and @doc]" {
     </a>
 }
 
+X:template = "links" {
+    X:for-each "link", X:sort "@id" {
+        <a href="{substring-before(@doc, '.xml')}.html#{@id}">!{@id}</a>
+        <br/>
+    }
+}
+
 }

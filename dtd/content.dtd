@@ -5,11 +5,13 @@
            name         CDATA #IMPLIED
 >
 
-<!ELEMENT  para         (#PCDATA | link | br | list | orderedlist | note |
+<!ELEMENT  para         (#PCDATA | link | links | br | list | orderedlist | note |
                          i | b | nobr | table | url | literal | command |
                          path | header | value | programlisting |
                          initial | development_version | stable_version |
                          registered | c-func)* >
+
+<!ELEMENT  links        (link)+ >
 
 <!ELEMENT  link         (#PCDATA) >
 <!ATTLIST  link

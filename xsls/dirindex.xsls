@@ -1,0 +1,35 @@
+X:stylesheet {
+
+X:output method="xml" doctype-system="../../../dtd/article.dtd";
+
+<!--
+  -- a current directory of a XSLT script is where the script is stored,
+  -- but not where XSLT processor has been started to run the script
+  -->
+X:param XML = "'../xml'"; 
+
+X:param LANG;
+
+X:template = "modules" {
+    <article name="{document(concat($XML, '/i18n.xml'))
+                    /i18n/text[@lang = $LANG]/item[@id='dirindex']}"
+             link="/{$LANG}/docs/dirindex.html"
+             lang="{$LANG}">
+    <section>
+    <para>
+    <links>
+    !! "module";
+    </links>
+    </para>
+    </section>
+    </article>
+}
+
+X:template = "module" {
+    X:var module="@name"
+    X:for-each "document(@name)/module/section/directive" {
+        <link doc="{$module}" id="{@name}"/>
+    }
+}
+
+}

@@ -55,6 +55,16 @@
 <list>
 
 <item>
+<link doc="dirindex.xml"/>
+</item>
+
+</list>
+</para>
+
+<para>
+<list>
+
+<item>
 <link doc="ngx_core_module.xml" />
 </item>
 
