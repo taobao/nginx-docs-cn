@@ -143,8 +143,6 @@ $(OUT)/404.html:							\
 		xslt/error.xslt
 	$(call XSLT, xslt/error.xslt, $<, $@)
 
-.SECONDARY:
-
 $(OUT)/%.html:	xml/%.xml						\
 		$(ARTICLE_DEPS)
 	$(call XSLT, xslt/article.xslt, $<, $@)
