@@ -148,6 +148,9 @@ $(OUT)/%.html:	xml/%.xml						\
 	$(call XSLT, xslt/article.xslt, $<, $@)
 
 
+# Prevent intermediate .xslt files from being removed.
+$(patsubst xsls/%.xsls,xslt/%.xslt,$(wildcard xsls/*.xsls)):
+
 xslt/%.xslt:	xsls/%.xsls						\
 		xsls/dump.xsls
 	mkdir -p $(dir $@)
