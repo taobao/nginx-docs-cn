@@ -638,6 +638,13 @@ underscores (as controlled by the <link id="underscores_in_headers"/>
 directive).
 </para>
 
+<para>
+A directive can be specified on the <link id="server"/> level
+in a default server.
+In this case, its value will cover all virtual servers
+listening on the same address and port.
+</para>
+
 </directive>
 
 
@@ -2465,6 +2472,13 @@ Enables or disables the use of underscores in client request header fields.
 When disabled, request header fields whose names contain underscores are
 marked as invalid and are subject to the <link id="ignore_invalid_headers"/>
 directive.
+</para>
+
+<para>
+If a directive is specified on the
+<link id="server"/>
+level, which is also a default server, its value will cover
+all virtual servers listening on the same address and port.
 </para>
 
 </directive>
