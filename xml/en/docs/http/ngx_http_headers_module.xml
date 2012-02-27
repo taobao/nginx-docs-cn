@@ -45,7 +45,7 @@ add_header Cache-Control private;
 
 <para>
 Adds the specified field to a response header provided that
-the response code equals 200, 204, 301, 302, or 304.
+the response code equals 200, 204, 206, 301, 302, 303, 304, or 307.
 A value can contain variables.
 </para>
 
