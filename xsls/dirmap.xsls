@@ -1,0 +1,18 @@
+X:stylesheet {
+
+X:output method="text";
+
+X:template = "link" {
+    !{@id}
+    X:text{ }
+    !{substring-before(@doc, '.xml')}
+    X:text{.html#}
+    !{@id}
+    X:text{;&#10;}
+}
+
+X:template = "links" {
+    !! "link";
+}
+
+}

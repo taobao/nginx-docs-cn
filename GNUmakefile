@@ -263,4 +263,12 @@ tarball:
 		--exclude .svn						\
 		$(SITE)
 
+dir.map:	xslt/dirmap.xslt xml/en/docs/dirindex.xml
+	@xsltproc -o - xslt/dirmap.xslt xml/en/docs/dirindex.xml |	\
+	sort -u -k1,1 | sed 's/^include /\\&/' > $@
+
+ifeq ($(patsubst %.nginx.org,YES,$(shell hostname)), YES)
+all:	dir.map
+endif
+
 .DELETE_ON_ERROR:
