@@ -649,7 +649,16 @@ location @fallback {
 <list type="bullet">
 
 <listitem>
-запросы, перенаправленные директивой <link id="error_page"/>;
+запросы, перенаправленные директивами
+<link id="error_page"/>,
+<link doc="ngx_http_index_module.xml" id="index"/>,
+<link doc="ngx_http_random_index_module.xml" id="random_index"/> и
+<link id="try_files"/>;
+</listitem>
+
+<listitem>
+запросы, перенаправленные с помощью поля
+<header>X-Accel-Redirect</header> заголовка ответа вышестоящего сервера;
 </listitem>
 
 <listitem>
@@ -661,12 +670,7 @@ location @fallback {
 
 <listitem>
 запросы, изменённые директивой
-<link doc="ngx_http_rewrite_module.xml" id="rewrite"/>;
-</listitem>
-
-<listitem>
-запросы, перенаправленные с помощью поля
-<header>X-Accel-Redirect</header> заголовка ответа вышестоящего сервера.
+<link doc="ngx_http_rewrite_module.xml" id="rewrite"/>.
 </listitem>
 
 </list>

@@ -663,7 +663,16 @@ Internal requests are the following:
 <list type="bullet">
 
 <listitem>
-requests redirected by the <link id="error_page"/> directive;
+requests redirected by the
+<link id="error_page"/>,
+<link doc="ngx_http_index_module.xml" id="index"/>,
+<link doc="ngx_http_random_index_module.xml" id="random_index"/>, and
+<link id="try_files"/> directives;
+</listitem>
+
+<listitem>
+requests redirected by the <header>X-Accel-Redirect</header>
+response header field from an upstream server;
 </listitem>
 
 <listitem>
@@ -675,13 +684,7 @@ command of the module
 
 <listitem>
 requests changed by the
-<link doc="ngx_http_rewrite_module.xml" id="rewrite"/>
-directive;
-</listitem>
-
-<listitem>
-requests redirected by the <header>X-Accel-Redirect</header>
-response header field from an upstream server.
+<link doc="ngx_http_rewrite_module.xml" id="rewrite"/> directive.
 </listitem>
 
 </list>
