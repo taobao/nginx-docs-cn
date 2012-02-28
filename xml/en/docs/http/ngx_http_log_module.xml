@@ -13,6 +13,13 @@ The <literal>ngx_http_log_module</literal> module writes request logs
 in the specified format.
 </para>
 
+<para>
+Requests are logged in a context of a location where processing ends.
+This may be different from the original location, if an
+<link doc="ngx_http_core_module.xml" id="internal">internal
+redirect</link> happens during request processing.
+</para>
+
 </section>
 
 
