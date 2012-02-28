@@ -2632,7 +2632,7 @@ cookie <value>имя</value>
 
 <tag-name><var>$request</var></tag-name>
 <tag-desc>
-оригинальная строка запроса целиком
+первоначальная строка запроса целиком
 </tag-desc>
 
 <tag-name><var>$request_body</var></tag-name>
@@ -2686,7 +2686,7 @@ fastcgi_pass_request_body off</link>
 
 <tag-name><var>$request_uri</var></tag-name>
 <tag-desc>
-оригинальный URI запроса целиком (с аргументами)
+первоначальный URI запроса целиком (с аргументами)
 </tag-desc>
 
 <tag-name><var>$scheme</var></tag-name>
