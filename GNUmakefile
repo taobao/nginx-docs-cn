@@ -269,6 +269,10 @@ dir.map:	xslt/dirmap.xslt xml/en/docs/dirindex.xml
 
 ifeq ($(patsubst %.nginx.org,YES,$(shell hostname)), YES)
 all:	dir.map
+copy:	copy_dirmap
+.PHONY:	copy_dirmap
+copy_dirmap:
+	/usr/local/bin/copy_dirmap.sh dir.map
 endif
 
 .DELETE_ON_ERROR:
