@@ -465,10 +465,11 @@ using XFS under Linux, it needs to be increased to 4K.
 
 
 <directive name="disable_symlinks">
+<syntax><literal>off</literal></syntax>
 <syntax>
     <literal>on</literal> |
-    <literal>off</literal> |
-    <literal>if_not_owner</literal></syntax>
+    <literal>if_not_owner</literal>
+    [<literal>from</literal>=<value>prefix</value>]</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -476,12 +477,12 @@ using XFS under Linux, it needs to be increased to 4K.
 <appeared-in>1.1.15</appeared-in>
 
 <para>
-Determines how nginx treats symbolic links when opening files:
+Determines how symbolic links should be treated when opening files:
 <list type="tag">
 
 <tag-name><literal>off</literal></tag-name>
 <tag-desc>
-Symbolic links in the pathname are not processed specially.
+Symbolic links in the pathname are allowed and not checked.
 This is the default behavior.
 </tag-desc>
 
@@ -498,7 +499,28 @@ is a symbolic link, and the link and object that the link
 points to have different owners.
 </tag-desc>
 
+<tag-name><literal>from</literal>=<value>prefix</value></tag-name>
+<tag-desc>
+When checking symbolic links
+(parameters <literal>on</literal> and <literal>if_not_owner</literal>),
+each component of the pathname is normally checked.
+If however the
+<literal>from</literal>=<value>prefix</value> is also given,
+symbolic links are checked only from the component of the pathname
+specified by <value>prefix</value>.
+The <value>prefix</value> value can contain variables.
+If a value is not a prefix of the checked pathname, the whole
+pathname is checked as if this parameter was not specified at all.
+</tag-desc>
+
 </list>
+</para>
+
+<para>
+Example:
+<example>
+disable_symlinks on from=$document_root;
+</example>
 </para>
 
 <para>
@@ -510,10 +532,12 @@ This includes modern versions of FreeBSD, Linux, and Solaris.
 <para>
 Parameters <literal>on</literal> and <literal>if_not_owner</literal>
 add a processing overhead.
-Furthermore,
+<note>
+On systems that do not support opening directories for search only,
 the use of these parameters requires that
 worker processes be able to read all intermediate
 directories.
+</note>
 </para>
 
 </directive>
@@ -2565,7 +2589,8 @@ the <value>name</value> cookie
 
 <tag-name><var>$document_root</var></tag-name>
 <tag-desc>
-<link id="root"/> directive's value for the current request
+<link id="root"/> or <link id="alias"/> directive's value
+for the current request
 </tag-desc>
 
 <tag-name><var>$document_uri</var></tag-name>
@@ -2624,8 +2649,10 @@ same as <var>$args</var>
 
 <tag-name><var>$realpath_root</var></tag-name>
 <tag-desc>
-<link id="root"/> directive's value
-for the current request, with all symbolic links resolved to real paths
+an absolute pathname corresponding to the
+<link id="root"/> or <link id="alias"/> directive's value
+for the current request,
+with all symbolic links resolved to real paths
 </tag-desc>
 
 <tag-name><var>$remote_addr</var></tag-name>

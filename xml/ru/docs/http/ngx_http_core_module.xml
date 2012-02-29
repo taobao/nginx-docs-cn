@@ -454,10 +454,11 @@ directio 4m;
 
 
 <directive name="disable_symlinks">
+<syntax><literal>off</literal></syntax>
 <syntax>
     <literal>on</literal> |
-    <literal>off</literal> |
-    <literal>if_not_owner</literal></syntax>
+    <literal>if_not_owner</literal>
+    [<literal>from</literal>=<value>префикс</value>]</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -471,7 +472,7 @@ directio 4m;
 
 <tag-name><literal>off</literal></tag-name>
 <tag-desc>
-Символические ссылки в пути никак специально не обрабатываются.
+Символические ссылки в пути допускаются и не проверяются.
 Это стандартное поведение.
 </tag-desc>
 
@@ -484,11 +485,32 @@ directio 4m;
 <tag-name><literal>if_not_owner</literal></tag-name>
 <tag-desc>
 Доступ к файлу запрещается, если любой компонент пути
-является символической ссылкой, и ссылка и объект, на
+является символической ссылкой, а ссылка и объект, на
 который она ссылается, имеют разных владельцев.
 </tag-desc>
 
+<tag-name><literal>from</literal>=<value>префикс</value></tag-name>
+<tag-desc>
+При проверке символических ссылок
+(параметры <literal>on</literal> и <literal>if_not_owner</literal>)
+обычно проверяется каждый элемент пути.
+Однако если дополнительно указан параметр
+<literal>from</literal>=<value>префикс</value>,
+символические ссылки проверяются лишь начиная с элемента пути,
+заданного префиксом.
+В значении префикса можно использовать переменные.
+Если значение не является префиксом проверяемого пути,
+путь проверяется целиком, как если бы этот параметр не был указан вовсе.
+</tag-desc>
+
 </list>
+</para>
+
+<para>
+Пример:
+<example>
+disable_symlinks on from=$document_root;
+</example>
 </para>
 
 <para>
@@ -500,10 +522,13 @@ directio 4m;
 <para>
 Параметры <literal>on</literal> и <literal>if_not_owner</literal>
 требуют дополнительных затрат на обработку.
-Кроме того,
+<note>
+На системах, не поддерживающих операцию открытия каталогов только для поиска,
 использование этих параметров требует, чтобы
 рабочие процессы имели возможность читать все
 промежуточные каталоги.
+</note>
+
 </para>
 
 </directive>
@@ -2552,7 +2577,8 @@ cookie <value>имя</value>
 
 <tag-name><var>$document_root</var></tag-name>
 <tag-desc>
-значение директивы <link id="root"/> для текущего запроса
+значение директивы <link id="root"/> или <link id="alias"/>
+для текущего запроса
 </tag-desc>
 
 <tag-name><var>$document_uri</var></tag-name>
@@ -2611,8 +2637,10 @@ cookie <value>имя</value>
 
 <tag-name><var>$realpath_root</var></tag-name>
 <tag-desc>
-значение директивы <link id="root"/> для текущего запроса,
-при этом все символические ссылки преобразованы в реальные путь
+абсолютный путь, соответствующий
+значению директивы <link id="root"/> или <link id="alias"/>
+для текущего запроса,
+в котором все символические ссылки преобразованы в реальные пути
 </tag-desc>
 
 <tag-name><var>$remote_addr</var></tag-name>
