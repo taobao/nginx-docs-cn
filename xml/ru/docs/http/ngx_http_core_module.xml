@@ -458,7 +458,7 @@ directio 4m;
 <syntax>
     <literal>on</literal> |
     <literal>if_not_owner</literal>
-    [<literal>from</literal>=<value>префикс</value>]</syntax>
+    [<literal>from</literal>=<value>часть</value>]</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -489,18 +489,21 @@ directio 4m;
 который она ссылается, имеют разных владельцев.
 </tag-desc>
 
-<tag-name><literal>from</literal>=<value>префикс</value></tag-name>
+<tag-name><literal>from</literal>=<value>часть</value></tag-name>
 <tag-desc>
 При проверке символических ссылок
 (параметры <literal>on</literal> и <literal>if_not_owner</literal>)
-обычно проверяется каждый элемент пути.
-Однако если дополнительно указан параметр
-<literal>from</literal>=<value>префикс</value>,
-символические ссылки проверяются лишь начиная с элемента пути,
-заданного префиксом.
-В значении префикса можно использовать переменные.
-Если значение не является префиксом проверяемого пути,
+обычно проверяются все компоненты пути.
+Можно не проверять символические ссылки в начальной части пути,
+указав дополнительно параметр
+<literal>from</literal>=<value>часть</value>.
+В этом случае символические ссылки проверяются лишь начиная
+с компонента пути, который следует за заданной начальной частью.
+Если значение не является начальной частью проверяемого пути,
 путь проверяется целиком, как если бы этот параметр не был указан вовсе.
+Если значение целиком совпадает с именем файла,
+символические ссылки не проверяются.
+В значении параметра можно использовать переменные.
 </tag-desc>
 
 </list>
@@ -524,11 +527,19 @@ disable_symlinks on from=$document_root;
 требуют дополнительных затрат на обработку.
 <note>
 На системах, не поддерживающих операцию открытия каталогов только для поиска,
-использование этих параметров требует, чтобы
-рабочие процессы имели возможность читать все
-промежуточные каталоги.
+использование этих параметров требует, чтобы рабочие процессы
+имели право читать все проверяемые каталоги.
 </note>
+</para>
 
+<para>
+<note>
+Модули
+<link doc="ngx_http_autoindex_module.xml">ngx_http_autoindex_module</link>,
+<link doc="ngx_http_random_index_module.xml">ngx_http_random_index_module</link>
+и <link doc="ngx_http_dav_module.xml">ngx_http_dav_module.xml</link>
+в настоящий момент игнорируют эту директиву.
+</note>
 </para>
 
 </directive>
@@ -690,7 +701,9 @@ location @fallback {
 подзапросы, формируемые командой
 “<command>include virtual</command>”
 модуля
-<link doc="ngx_http_ssi_module.xml">ngx_http_ssi_module</link>;
+<link doc="ngx_http_ssi_module.xml">ngx_http_ssi_module</link>
+и директивами модуля
+<link doc="ngx_http_addition_module.xml">ngx_http_addition_module</link>;
 </listitem>
 
 <listitem>

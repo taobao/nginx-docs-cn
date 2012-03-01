@@ -469,7 +469,7 @@ using XFS under Linux, it needs to be increased to 4K.
 <syntax>
     <literal>on</literal> |
     <literal>if_not_owner</literal>
-    [<literal>from</literal>=<value>prefix</value>]</syntax>
+    [<literal>from</literal>=<value>part</value>]</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -499,18 +499,21 @@ is a symbolic link, and the link and object that the link
 points to have different owners.
 </tag-desc>
 
-<tag-name><literal>from</literal>=<value>prefix</value></tag-name>
+<tag-name><literal>from</literal>=<value>part</value></tag-name>
 <tag-desc>
 When checking symbolic links
 (parameters <literal>on</literal> and <literal>if_not_owner</literal>),
-each component of the pathname is normally checked.
-If however the
-<literal>from</literal>=<value>prefix</value> is also given,
-symbolic links are checked only from the component of the pathname
-specified by <value>prefix</value>.
-The <value>prefix</value> value can contain variables.
-If a value is not a prefix of the checked pathname, the whole
+all components of the pathname are normally checked.
+Checking of symbolic links in the initial part of the pathname
+may be avoided by also specifying the
+<literal>from</literal>=<value>part</value> parameter.
+In this case, symbolic links are checked only from
+the component of the pathname following the specified initial part.
+If a value is not an initial part of the checked pathname, the whole
 pathname is checked as if this parameter was not specified at all.
+If a value fully matches the file name,
+symbolic links are not checked.
+The parameter value can contain variables.
 </tag-desc>
 
 </list>
@@ -534,9 +537,18 @@ Parameters <literal>on</literal> and <literal>if_not_owner</literal>
 add a processing overhead.
 <note>
 On systems that do not support opening directories for search only,
-the use of these parameters requires that
-worker processes be able to read all intermediate
-directories.
+the use of these parameters requires that worker processes
+have read permissions for all checked directories.
+</note>
+</para>
+
+<para>
+<note>
+The
+<link doc="ngx_http_autoindex_module.xml">ngx_http_autoindex_module</link>,
+<link doc="ngx_http_random_index_module.xml">ngx_http_random_index_module</link>,
+and <link doc="ngx_http_dav_module.xml">ngx_http_dav_module.xml</link>
+modules currently ignore this directive.
 </note>
 </para>
 
@@ -702,8 +714,11 @@ response header field from an upstream server;
 <listitem>
 subrequests formed by the
 “<command>include virtual</command>”
-command of the module
-<link doc="ngx_http_ssi_module.xml">ngx_http_ssi_module</link>;
+command of the
+<link doc="ngx_http_ssi_module.xml">ngx_http_ssi_module</link>
+module and by the
+<link doc="ngx_http_addition_module.xml">ngx_http_addition_module</link>
+module directives;
 </listitem>
 
 <listitem>
