@@ -1458,10 +1458,10 @@ the compression.
 </para>
 
 <para>
-If a directive is specified on the
-<link id="server"/>
-level, which is also a default server, its value will cover
-all virtual servers listening on the same address and port.
+A directive can be specified on the <link id="server"/> level
+in a default server.
+In this case, its value will cover all virtual servers
+listening on the same address and port.
 </para>
 
 </directive>
@@ -2517,10 +2517,10 @@ directive.
 </para>
 
 <para>
-If a directive is specified on the
-<link id="server"/>
-level, which is also a default server, its value will cover
-all virtual servers listening on the same address and port.
+A directive can be specified on the <link id="server"/> level
+in a default server.
+In this case, its value will cover all virtual servers
+listening on the same address and port.
 </para>
 
 </directive>
