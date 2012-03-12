@@ -138,6 +138,13 @@ env OPENSSL_ALLOW_PROXY_CERTS=1;
 </example>
 </para>
 
+<para>
+<note>
+The NGINX environment variable is used internally by nginx
+and should not be set directly by the user.
+</note>
+</para>
+
 </directive>
 
 

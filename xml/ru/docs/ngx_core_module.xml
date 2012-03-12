@@ -136,6 +136,13 @@ env OPENSSL_ALLOW_PROXY_CERTS=1;
 </example>
 </para>
 
+<para>
+<note>
+Переменная окружения NGINX используется для внутренних целей nginx
+и не должна устанавливаться непосредственно самим пользователем.
+</note>
+</para>
+
 </directive>
 
 
