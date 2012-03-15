@@ -2,6 +2,18 @@
 
 <news name="nginx news" link="/" lang="en">
 
+<event date="2012-03-15">
+<para>
+<link doc="en/download.xml">nginx-1.0.14</link>
+stable and
+<link doc="en/download.xml">nginx-1.1.17</link>
+development versions have been released,
+with the fix for the
+<link doc="en/security_advisories.xml">memory disclosure</link>
+security problem discovered by Matthew Daley.
+</para>
+</event>
+
 <event date="2012-03-05">
 <para>
 <link doc="en/download.xml">nginx-1.0.13</link>

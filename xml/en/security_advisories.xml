@@ -12,6 +12,12 @@
 
 <security>
 
+<item name="Memory disclosure with specially crafted backend responses"
+      severity="major"
+      good="1.1.17+, 1.0.14+"
+      vulnerable="0.1.0-1.1.16"
+      patch="patch.2012.memory.txt" />
+
 <item name="Vulnerabilities with invalid UTF-8 sequence on Windows"
       severity="major"
       cve="2010-2266"
