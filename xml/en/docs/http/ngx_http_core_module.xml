@@ -2626,7 +2626,9 @@ host name
 
 <tag-name><var>$http_</var><value>name</value></tag-name>
 <tag-desc>
-the <value>name</value> request header field
+arbitrary request header field;
+the last part of a variable name is the field name converted
+to lower case with dashes replaced by underscores
 </tag-desc>
 
 <tag-name><var>$https</var></tag-name>
@@ -2753,7 +2755,9 @@ request scheme, “<literal>http</literal>” or “<literal>https</literal>”
 
 <tag-name><var>$sent_http_</var><value>name</value></tag-name>
 <tag-desc>
-the <value>name</value> response header field
+arbitrary response header field;
+the last part of a variable name is the field name converted
+to lower case with dashes replaced by underscores
 </tag-desc>
 
 <tag-name><var>$server_addr</var></tag-name>

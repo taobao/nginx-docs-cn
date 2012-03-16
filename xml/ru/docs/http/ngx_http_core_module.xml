@@ -2612,7 +2612,9 @@ cookie <value>имя</value>
 
 <tag-name><var>$http_</var><value>имя</value></tag-name>
 <tag-desc>
-поле <value>имя</value> заголовка запроса
+произвольное поле заголовка запроса;
+последняя часть имени переменной соответствует имени поля, приведённому
+к нижнему регистру, с заменой символов тире на символы подчёркивания
 </tag-desc>
 
 <tag-name><var>$https</var></tag-name>
@@ -2737,7 +2739,9 @@ fastcgi_pass_request_body off</link>
 
 <tag-name><var>$sent_http_</var><value>имя</value></tag-name>
 <tag-desc>
-поле <value>имя</value> заголовка ответа
+произвольное поле заголовка ответа;
+последняя часть имени переменной соответствует имени поля, приведённому
+к нижнему регистру, с заменой символов тире на символы подчёркивания
 </tag-desc>
 
 <tag-name><var>$server_addr</var></tag-name>
