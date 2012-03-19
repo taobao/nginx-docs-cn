@@ -167,8 +167,8 @@ request length (including request line, header, and request body)
 <tag-name><var>$request_time</var></tag-name>
 <tag-desc>
 request processing time in seconds with a milliseconds resolution;
-time elapsed since first bytes were read from the client till
-last bytes were sent to client and logging happened
+time elapsed between the first bytes were read from the client and
+the log write after the last bytes were sent to the client
 </tag-desc>
 
 <tag-name><var>$status</var></tag-name>
