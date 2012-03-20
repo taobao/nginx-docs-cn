@@ -2788,6 +2788,17 @@ or
 “<literal>HTTP/1.1</literal>”
 </tag-desc>
 
+<tag-name>
+<var>$tcpinfo_rtt</var>,
+<var>$tcpinfo_rttvar</var>,
+<var>$tcpinfo_snd_cwnd</var>,
+<var>$tcpinfo_rcv_space</var>
+</tag-name>
+<tag-desc>
+information about the client TCP connection; available on systems
+that support the <c-def>TCP_INFO</c-def> socket option
+</tag-desc>
+
 <tag-name><var>$uri</var></tag-name>
 <tag-desc>
 current URI in request
