@@ -29,11 +29,13 @@ to Facebook (Yahoo!, Google, etc.) ?
 
 <para>
 <initial>A:</initial>
-nginx is among the 3 most popular web servers in the world.
-It is a free open source server software which is absolutely legitimate and
+nginx is among the 3 most popular web servers in the world, it's being
+used by over 10% of the Internet web sites, including 25% of the top-1000 ones.
+It is a free open source server software, focused on high performance and
+high concurrency, and it's absolutely legitimate and
 has nothing to do with any kind of threatening or malicious activity per se.
 A web page saying &ldquo;Welcome to nginx!&rdquo; is one of the diagnostics
-responses that can be produced by an Internet server running nginx.
+responses that can be produced by any of the web sites running nginx.
 </para>
 
 <para>
@@ -49,9 +51,95 @@ We recommend you to check and verify your entire system setup
 (possibly with the help of your ISP or another support personnel),
 and it would also be a good idea to install and run an anti-virus software
 on your computer. It may happen that some malign entity is trying
-to divert the traffic from your computer to a different server and
+to divert the traffic from your computer to a wrong server and
 potentially cause significant harm to you and the other users on
 the Internet.
+</para>
+
+<para>
+What you should check is at least the following:
+</para>
+
+<para>
+(Disclaimer: we at nginx are not responsible for any negative
+impact or effects that the actions below might cause. Use the
+following recommendations at your own risk, especially if
+you aren't an experienced user of your operating system and/or
+Internet applications. In no event shall nginx be liable for
+any direct, indirect, incidental, special, exemplary, or
+consequential damages, including, but not limited to loss of
+use, data, or profits; or business interruption).
+</para>
+
+<para>
+<list>
+<listitem>
+Check your TCP/IP settings and see if the DNS servers
+configuration matches the one recommended by your Internet
+service provider and/or your IT support personnel.
+</listitem>
+
+<listitem>
+Check if the "hosts" file doesn't contain entries other
+than "127.0.0.1 localhost", and if so &#8212; if these entries are for
+the web site you're trying to reach and instead you're seeing a
+wrong web site. The "hosts" files is located in
+C:\WINDOWS\system32\drivers\etc directory. Typically there should
+be just one entry in it, for "127.0.0.1 localhost", that's it. The
+"hosts" file can be viewed with your standard Notepad application.
+</listitem>
+
+<listitem>
+Try to (temporarily) use Google Public DNS and see if
+it fixes the problem. From Google's description of its Public DNS -
+"Google Public DNS is a free, global Domain Name System (DNS)
+resolution service,
+that you can use as an alternative to your current DNS provider.
+To try it out: Configure your network settings to use the IP
+addresses 8.8.8.8 and 8.8.4.4 as your DNS servers. [..] By
+using Google Public DNS you can: Speed up your browsing
+experience. Improve your security. Get the results you expect
+with absolutely no redirection."
+</listitem>
+
+<listitem>
+Try to clear browser data (cache, cookies etc.), e.g. perform
+"Clear Browsing Data (Chrome)". Caution: you may be
+deleting saved passwords information here, so do it carefully
+and check what actions you are performing.
+</listitem>
+
+<listitem>
+Try to check the plugins/extensions you've installed
+for use with your browser. It might make sense to re-install
+your favorite browser and/or try a different one if possible.
+</listitem>
+
+<listitem>
+If cleaning "hosts" file (when applicable), changing
+DNS servers to Google Public DNS, or fixing your browser
+configuration have helped, it might be that there's a malware
+somewhere on your PC or around. It makes perfect sense then
+to run a number of checks using your preferred
+anti-virus/anti-malware tools.
+</listitem>
+</list>
+</para>
+
+<para>
+Links describing Google Public DNS:
+</para>
+
+<para>
+<link url="http://code.google.com/speed/public-dns/">
+http://code.google.com/speed/public-dns/
+</link>
+</para>
+
+<para>
+<link url="http://code.google.com/speed/public-dns/docs/using.html">
+http://code.google.com/speed/public-dns/docs/using.html
+</link>
 </para>
 
 </section>
