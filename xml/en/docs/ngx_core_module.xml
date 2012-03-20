@@ -44,7 +44,7 @@ Mainly used during development.
 
 <directive name="error_log">
 <syntax>
-<value>file</value>
+<value>file</value> | <literal>stderr</literal>
 [<literal>debug</literal> |
 <literal>info</literal> |
 <literal>notice</literal> |
@@ -68,6 +68,7 @@ The first parameter defines a file that will store the log.
 <!--
 If filename is not absolute, it is prefixed with the prefix path.
 -->
+The special value <literal>stderr</literal> selects the standard error file.
 </para>
 
 <para>
@@ -79,6 +80,7 @@ For example, the default level <literal>error</literal> will
 cause <literal>error</literal>, <literal>crit</literal>,
 <literal>alert</literal>, and <literal>emerg</literal> messages
 to be logged.
+If this parameter is omitted then <literal>error</literal> is used.
 <note>
 For <literal>debug</literal> logging to work, nginx needs to
 be built with <literal>--with-debug</literal>.

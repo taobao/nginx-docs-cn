@@ -44,7 +44,7 @@ events {
 
 <directive name="error_log">
 <syntax>
-<value>файл</value>
+<value>файл</value> | <literal>stderr</literal>
 [<literal>debug</literal> |
 <literal>info</literal> |
 <literal>notice</literal> |
@@ -68,6 +68,7 @@ events {
 <!--
 Если имя файла не абсолютное, к нему добавляется в начало путь префикса.
 -->
+Специальное значение <literal>stderr</literal> выбирает стандартный файл ошибок.
 </para>
 
 <para>
@@ -78,7 +79,7 @@ events {
 Например, при стандартном уровне <literal>error</literal> в лог попадают
 сообщения уровней <literal>error</literal>, <literal>crit</literal>,
 <literal>alert</literal> и <literal>emerg</literal>.
-
+Если этот параметр не задан, используется <literal>error</literal>.
 <note>
 Для работы уровня лога <literal>debug</literal> необходимо сконфигурировать
 nginx с <literal>--with-debug</literal>.
