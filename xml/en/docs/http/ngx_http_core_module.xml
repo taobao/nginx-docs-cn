@@ -1243,7 +1243,7 @@ Some operating systems support tuning TCP keepalive parameters on a per-socket
 basis using the <c-def>TCP_KEEPIDLE</c-def>, <c-def>TCP_KEEPINTVL</c-def>,
 and <c-def>TCP_KEEPCNT</c-def> socket options.
 On such systems (currently, Linux 2.4+, NetBSD 5+, and
-FreeBSD 10.0-CURRENT) they can be configured
+FreeBSD 9.0-STABLE) they can be configured
 using the <value>keepidle</value>, <value>keepintvl</value>, and
 <value>keepcnt</value> parameters.
 One or two parameters may be omitted, in which case the system default setting
