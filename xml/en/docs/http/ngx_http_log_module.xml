@@ -148,6 +148,11 @@ the number of bytes sent to a client
 connection serial number
 </tag-desc>
 
+<tag-name><var>$connection_requests</var></tag-name>
+<tag-desc>
+the current number of requests made through a connection
+</tag-desc>
+
 <tag-name><var>$msec</var></tag-name>
 <tag-desc>
 time in seconds with a milliseconds resolution at the time of log write

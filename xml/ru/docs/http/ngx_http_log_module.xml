@@ -145,6 +145,11 @@ server {
 порядковый номер соединения
 </tag-desc>
 
+<tag-name><var>$connection_requests</var></tag-name>
+<tag-desc>
+текущее число запросов в соединении
+</tag-desc>
+
 <tag-name><var>$msec</var></tag-name>
 <tag-desc>
 время в секундах с точностью до миллисекунд на момент записи в лог
