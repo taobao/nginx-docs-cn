@@ -42,25 +42,25 @@ server {
 
 השמות נבדקים בסדר הבא:
 
-<orderedlist>
+<list type="enum">
 
-<item>
+<listitem>
 שמות מדוייקים;
-</item>
+</listitem>
 
-<item>
+<listitem>
 שמות Wildcard המתחילים בכוכבית: <url>*.nginx.org</url>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 שמות Wildcard המסתיימים בכוכבית: <url>mail.*</url>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 ביטויים רגולריים לפי הסדר שבו הם מופיעים בקובץ התצורה.
-</item>
+</listitem>
 
-</orderedlist>
+</list>
 ההתאמה הראשונה עוצרת את החיפוש.
 </para>
 
@@ -376,40 +376,40 @@ nginx חייב לבצע את הביטוי כדי לקבל את מה שנלכד �
         name="תאימות">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 לכידת שמות בביטויים רגולריים נתמכה החל מגירסה 0.8.25.
-</item>
+</listitem>
 
-<item>
+<listitem>
 לכידת ביטויים רגולריים נתמכה החל מגירסה 0.7.40.
 
-</item>
+</listitem>
 
-<item>
+<listitem>
 שם שרת ריק &ldquo;&rdquo; נתמך החל מגירסה 0.7.12.
-</item>
+</listitem>
 
-<item>
+<listitem>
 שם שרת מסוג wildcard או ביטוי רגולרי נתמכו לשימוש כשם שרת ראשון החל מגירסה 0.6.25.
-</item>
+</listitem>
 
-<item>
+<listitem>
 שמות שרת כביטוי רגולרי נתמכו החל מגירסה 0.6.7.
-</item>
+</listitem>
 
-<item>
+<listitem>
 צורות Wildcard מסוג <url>nginx.*</url> נתמכו החל מגירסה 0.6.0.
-</item>
+</listitem>
 
-<item>
+<listitem>
 הצורה המיוחדת <url>.nginx.org</url> נתמכה החל מגירסה 0.3.18.
-</item>
+</listitem>
 
-<item>
+<listitem>
 הצורה <url>*.nginx.org</url> נתמכה החל מגירסה 0.1.13.
-</item>
+</listitem>
 
 </list>
 </para>

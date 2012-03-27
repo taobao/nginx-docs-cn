@@ -188,31 +188,31 @@ Ayrıca herhangi biri, herhangi bir şeyi sorgu dizgileri ile talep edebilir:
 <para>
 Yukarıdaki yapılandırmada taleplerin nasıl işlendiğini inceleyelim:
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <para>
 Bir <path>/logo.gif</path> talebi, ilk olarak <literal>/</literal> literal lokasyonu, daha sonra, <literal>\.(gif|jpg|png)$</literal> düzenli ifadesi tarafından eşleştirilir. Bu sonraki (latter) lokasyon tarafından tutulur. <literal>root&nbsp;/data/www</literal> yönergesi kullanılarak, talep <path>/data/www/logo.gif</path> dosyasına eşlemlenir (mapped to) ve dosya istemciye gönderilir.
 </para>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <para>
 Bir <path>/index.php</path> talebi de ilk olarak <literal>/</literal> literal lokasyonu, sonra, <literal>\.(php)$</literal> düzenli ifadesi tarafından eşleştirilir. Bu nedenle sonraki lokasyon tarafından tutulur ve localhost:9000&rsquo;in dinlendiği bir FastCGI sunucusuna iletilir. <literal>fastcgi_param</literal> yönergesi, SCRIPT_FILENAME FastCGI parametresini <path>/data/www/index.php</path> adresine yerleştirir ve FastCGI sunucusu dosyayı yürütür. $document_root değişkeni <literal>root</literal> yönergesinin değerine, $fastcgi_script_name değişkeni ise talebin URI değerine eşittir. Örneğin <path>/index.php</path>.
 </para>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <para>
 Bir <path>/about.html</path> talebi yalnızca <literal>/</literal> literal lokasyonu tarafından eşleştirilir ve bu yüzden, bu lokasyon tarafından tutulur. <literal>root /data/www</literal> yönergesi kullanılarak talep, <path>/data/www/about.html</path> dosyasına eşlemlenir ve istemciye gönderilir.
 </para>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <para>
 Bir <path>/</path> talebini tutmak daha karmaşıktır. Sadece <literal>/</literal> literal lokasyonu tarafından eşleştirilir ve bu yüzden bu lokasyon tarafından tutulur. Sonra <literal>index</literal> yönergesi parametrelerine ve <literal>root&nbsp;/data/www</literal> yönergesine göre bir index dosyası olup olmadığını kontrol eder. Eğer bir <path>/data/www/index.php</path> dosyası mevcut ise yönerge, <path>/index.php</path> adresine dahili bir yönlendirme yapar ve eğer talep bir istemci tarafından gönderilmiş ise nginx, lokasyonları tekrar arar. Daha önce gördüğümüz gibi, yönlendirilmiş talep en son olarak FastCGI sunucusu tarafından tutulur.
 </para>
-</item>
+</listitem>
 
 </list>
 </para>

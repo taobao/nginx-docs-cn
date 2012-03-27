@@ -183,31 +183,31 @@ nginx はまず最初に、リストの順序には関係なくリテラルな�
 <para>
 では、上記の設定ではどのようにリクエストが処理されるのかを見てみましょう:
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <para>
 リクエスト <path>/logo.gif</path> はリテラルなロケーション <literal>/</literal> に最初にマッチし、次に正規表現 <literal>\.(gif|jpg|png)$</literal> にマッチするので、後者のロケーションによって処理されます。 このリクエストは <literal>root&nbsp;/data/www</literal> ディレクティブを使用してファイル <path>/data/www/logo.gif</path> にマップされ、このファイルがクライアントに送られます。
 </para>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <para>
 リクエスト <path>/index.php</path> もまたリテラルなロケーション <literal>/</literal> に最初にマッチし、次に正規表現 <literal>\.(php)$</literal> にマッチします。したがって、このリクエストは後者のロケーションによって処理され、localhost:9000 で待ち受けている FastCGI サーバに渡されます。<literal>fastcgi_param</literal> ディレクティブは FastCGI のパラメータ SCRIPT_FILENAME を <path>/data/www/index.php</path> にセットし、この FastCGI サーバがこのファイルを実行します。変数 $document_root は <literal>root</literal> ディレクティブの値と同等で、変数 $fastcgi_script_name はリクエスト URI、例えば <path>/index.php</path> と同等です。
 </para>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <para>
 リクエスト <path>/about.html</path> はリテラルなロケーション <literal>/</literal> のみにマッチします。したがってこのロケーションで処理されます。このリクエストは <literal>root</literal> ディレクティブのパラメータ <literal>/data/www</literal> を使い、ファイル <path>/data/www/about.html</path> にマップされ、クライアントに送られます。
 </para>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <para>
 リクエスト <path>/</path> の処理はより複雑です。これはリテラルなロケーション <literal>/</literal> のみにマッチし、このロケーションで処理されます。ついで <literal>index</literal> ディレクティブがパラメータと <literal>root</literal> ディレクティブのパラメータ <literal>/data/www</literal> にしたがって index ファイルが存在するかどうかを考査します。もし <path>/data/www/index.php</path> ファイル存在すればこのディレクティブは <path>/index.php</path> への内部リダイレクトを実行し、nginx はまるでこのリクエストがクライアントに送られたかのようにこのロケーションを再び検索します。先に見たように、リダイレクトされたリクエストは最終的に FastCGI サーバで処理されます。
 </para>
-</item>
+</listitem>
 
 </list>
 </para>

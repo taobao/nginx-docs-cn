@@ -39,25 +39,25 @@ server {
 
 サーバ名は次の順序で考査されます:
 
-<orderedlist>
+<list type="enum">
 
-<item>
+<listitem>
 完全一致名
-</item>
+</listitem>
 
-<item>
+<listitem>
 アスタリスクで始まるワイルドカード名: <url>*.nginx.org</url>
-</item>
+</listitem>
 
-<item>
+<listitem>
 アスタリスクで終わるワイルドカード名: <url>mail.*</url>
-</item>
+</listitem>
 
-<item>
+<listitem>
 設定ファイル内の順序での正規表現
-</item>
+</listitem>
 
-</orderedlist>
+</list>
 最初にマッチしたところで検索は終了します。.
 </para>
 
@@ -304,43 +304,43 @@ or server_names_hash_bucket_size: 32
         name="互換性">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 0.8.48 以降、デフォルトのサーバ名の値は空の名前 &ldquo;&rdquo; です。
-</item>
+</listitem>
 
-<item>
+<listitem>
 正規表現サーバ名の名前付きキャプチャのサポートは 0.8.25 からです。
-</item>
+</listitem>
 
-<item>
+<listitem>
 正規表現サーバ名のキャプチャのサポートは 0.7.40 からです。
-</item>
+</listitem>
 
-<item>
+<listitem>
 空のサーバ名 &ldquo;&rdquo; のサポートは 0.7.12 からです。
-</item>
+</listitem>
 
-<item>
+<listitem>
 ワイルドカードサーバ名と正規表現の最初のサーバ名としての使用は0.6.25 からサポートされています。
-</item>
+</listitem>
 
-<item>
+<listitem>
 正規表現サーバ名のサポートは 0.6.7 からです。
-</item>
+</listitem>
 
-<item>
+<listitem>
 ワイルドカードの形式 <url>nginx.*</url> のサポートは 0.6.0 からです。
-</item>
+</listitem>
 
-<item>
+<listitem>
 特別な形式 <url>.nginx.org</url> のサポートは 0.3.18 からです。
-</item>
+</listitem>
 
-<item>
+<listitem>
 ワイルドカードの形式 <url>*.nginx.org</url> のサポートは 0.1.13 からです。
-</item>
+</listitem>
 
 </list>
 </para>

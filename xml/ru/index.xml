@@ -37,9 +37,9 @@ nginx [engine x]&mdash;это HTTP-сервер и обратный прокси
         name="Основная функциональность HTTP-сервера">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Обслуживание статических запросов,
 <link doc="docs/http/ngx_http_index_module.xml">индексных
 файлов</link>,
@@ -47,16 +47,16 @@ nginx [engine x]&mdash;это HTTP-сервер и обратный прокси
 создание списка файлов</link>,
 <link doc="docs/http/ngx_http_core_module.xml"
        id="open_file_cache">кэш дескрипторов открытых файлов</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_proxy_module.xml">Акселерированное
 обратное проксирование с кэшированием</link>,
 <link doc="docs/http/ngx_http_upstream_module.xml">простое
 распределение нагрузки и отказоустойчивость</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Акселерированная поддержка
 <link doc="docs/http/ngx_http_fastcgi_module.xml">FastCGI</link>,
 uwsgi, SCGI и
@@ -64,9 +64,9 @@ uwsgi, SCGI и
 серверов с кэшированием,
 <link doc="docs/http/ngx_http_upstream_module.xml">простое
 распределение нагрузки и отказоустойчивость</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Модульность, фильтры, в том числе
 <link doc="docs/http/ngx_http_gzip_module.xml">сжатие (gzip)</link>,
 byte-ranges (докачка),
@@ -77,12 +77,12 @@ chunked ответы,
 изображений</link>;
 несколько подзапросов на одной странице, обрабатываемые в SSI-фильтре
 через прокси или FastCGI, выполняются параллельно;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_ssl_module.xml">Поддержка SSL и
 расширения TLS SNI</link>.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -94,89 +94,89 @@ chunked ответы,
         name="Другие возможности HTTP-сервера">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link doc="docs/virtual_hosts.xml">Виртуальные серверы</link>,
 определяемые по IP-адресу и имени;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Поддержка
 <link doc="docs/http/ngx_http_core_module.xml"
        id="keepalive_timeout">keep-alive</link>
 и pipelined соединений;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/example.xml">Гибкость конфигурации</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/control.xml" id="reconfiguration">Изменение настроек</link>
 и <link doc="docs/control.xml" id="upgrade">обновление
 исполняемого файла</link> без перерыва в обслуживании клиентов;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_log_module.xml" id="log_format">Настройка
 форматов логов</link>,
 <link doc="docs/http/ngx_http_log_module.xml" id="access_log">буферизованная
 запись в лог</link>,
 <link doc="docs/control.xml" id="logs">быстрая ротация логов</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_core_module.xml" id="error_page">Специальные
 страницы</link> для ошибок 3xx-5xx;
-</item>
+</listitem>
 
-<item>
+<listitem>
 rewrite-модуль:
 <link doc="docs/http/ngx_http_rewrite_module.xml">изменение URI
 с помощью регулярных выражений</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_rewrite_module.xml" id="if">Выполнение
 разных функций</link> в зависимости от
 <link doc="docs/http/ngx_http_geo_module.xml">адреса клиента</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Ограничение доступа в зависимости от
 <link doc="docs/http/ngx_http_access_module.xml">адреса клиента</link>
 и <link doc="docs/http/ngx_http_auth_basic_module.xml">по паролю
 (HTTP Basic аутентификация)</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_dav_module.xml">Методы
 PUT, DELETE, MKCOL, COPY и MOVE</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_flv_module.xml">FLV</link>
 и
 <link doc="docs/http/ngx_http_mp4_module.xml">MP4</link>
 стриминг;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_core_module.xml"
        id="limit_rate">Ограничение скорости отдачи ответов</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Ограничение числа одновременных
 <link doc="docs/http/ngx_http_limit_conn_module.xml">соединений</link> и
 <link doc="docs/http/ngx_http_limit_req_module.xml">запросов</link>
 с одного адреса;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_perl_module.xml">Встроенный Perl</link>.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -188,45 +188,45 @@ PUT, DELETE, MKCOL, COPY и MOVE</link>;
         name="Функциональность почтового прокси-сервера">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Перенаправление пользователя на IMAP или POP3-бэкенд с использованием
 внешнего HTTP-сервера аутентификации;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Проверка пользователя с помощью внешнего HTTP-сервера аутентификации
 и перенаправление соединения на внутренний SMTP-сервер;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Методы аутентификации:
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 POP3: USER/PASS, APOP, AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
-<item>
+<listitem>
 IMAP: LOGIN, AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
-<item>
+<listitem>
 SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
 </list>
-</item>
+</listitem>
 
-<item>
+<listitem>
 Поддержка SSL;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Поддержка STARTTLS и STLS.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -238,58 +238,58 @@ SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
         name="Архитектура и масштабируемость">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Один главный и несколько рабочих процессов, рабочие процессы работают под
 непривилегированным пользователем;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/events.xml">Поддержка</link>
 kqueue (FreeBSD 4.1+),
 epoll (Linux 2.6+), rt signals (Linux 2.2.19+),
 /dev/poll <nobr>(Solaris 7 11/99+),</nobr>
 event ports <nobr>(Solaris 10),</nobr>
 select и poll;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Использование возможностей, предоставляемых kqueue, таких как
 <!-- EVFILT_VNODE, --> EV_CLEAR, EV_DISABLE (для временного выключения события),
 NOTE_LOWAT, EV_EOF, число доступных данных, коды ошибок;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Поддержка sendfile (FreeBSD 3.1+, Linux 2.2+, Mac OS X 10.5+),
 sendfile64 (Linux 2.4.21+) и sendfilev <nobr>(Solaris 8 7/01+);</nobr>
-</item>
+</listitem>
 
-<item>
+<listitem>
 Поддержка
 <link doc="docs/http/ngx_http_core_module.xml" id="aio">файлового
 AIO</link> (FreeBSD 4.3+, Linux 2.6.22+);
-</item>
+</listitem>
 
-<item>
+<listitem>
 Поддержка
 <link doc="docs/http/ngx_http_core_module.xml" id="directio">DIRECTIO</link>
 (FreeBSD 4.4+, Linux 2.4+, Solaris 2.6+, Mac OS X);
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_core_module.xml" id="listen">Поддержка</link>
 accept-фильтров (FreeBSD 4.1+) и TCP_DEFER_ACCEPT (Linux 2.4+);
-</item>
+</listitem>
 
-<item>
+<listitem>
 На <nobr>10 000</nobr> неактивных HTTP keep-alive соединений расходуется
 около 2.5M памяти;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Минимум операций копирования данных.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -301,31 +301,31 @@ accept-фильтров (FreeBSD 4.1+) и TCP_DEFER_ACCEPT (Linux 2.4+);
         name="Протестированные ОС и платформы">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 FreeBSD 3 &mdash; 10 / i386; FreeBSD 5 &mdash; 10 / amd64;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Linux 2.2 &mdash; 2.6 / i386; Linux 2.6 / amd64;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Solaris 9 / i386, sun4u; Solaris 10 / i386, amd64, sun4v;
-</item>
+</listitem>
 
-<item>
+<listitem>
 AIX 7.1 / powerpc
-</item>
+</listitem>
 
-<item>
+<listitem>
 Mac OS X / ppc, i386;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Windows XP, Windows Server 2003.
-</item>
+</listitem>
 
 </list>
 </para>

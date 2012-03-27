@@ -7,17 +7,17 @@
 <section name="nginx internals">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link url="http://www.evanmiller.org/nginx-modules-guide.html">Emiller&rsquo;s
 Guide To Nginx Module Development</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://www.evanmiller.org/nginx-modules-guide-advanced.html">Emiller&rsquo;s
 Advanced Topics In Nginx Module Development</link>
-</item>
+</listitem>
 
 </list>
 </para>
@@ -28,15 +28,15 @@ Advanced Topics In Nginx Module Development</link>
 <section name="miscellanea">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link url="http://planet.nginx.org">Planet nginx</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://php-fpm.org">php-fpm: PHP FastCGI Process Manager</link>
-</item>
+</listitem>
 
 </list>
 </para>

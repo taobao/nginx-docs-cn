@@ -205,7 +205,7 @@ It should be noted that the old master process does not close its listen
 sockets, and it can be managed to start its worker processes again if needed.
 If for some reason the new executable file works unacceptably, the following
 can be done:
-<list>
+<list type="bullet">
 
 <listitem>
 <para>

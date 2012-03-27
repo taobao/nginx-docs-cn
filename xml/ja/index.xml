@@ -24,27 +24,27 @@ nginx [えんじんえっくす] は <link url="http://sysoev.ru/en/">Igor Sysoe
         name="基本的な HTTP 機能">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 スタティックなインデックスファイルの提供、自動インデクシング、オープンなファイルディスクリプタキャッシュ
-</item>
+</listitem>
 
-<item>
+<listitem>
 キャッシングで高速化されたリバースプロキシ、シンプルなロードバランシングとフォールトトレランス
-</item>
+</listitem>
 
-<item>
+<listitem>
 リモートの FastCGI サーバのキャッシングによる高速化サポート、シンプルなロードバランシングとフォールトトレランス
-</item>
+</listitem>
 
-<item>
+<listitem>
 モジュールアーキテクチャ。フィルタには gzip、バイトレンジ、チャンク化されたレスポンス、XSLT、SSI、画像リサイズフィルタが含まれます。FastCGI もしくはプロキシ化されたサーバなら、単一ページ内への複数 SSI 封入が並列で処理可能。
-</item>
+</listitem>
 
-<item>
+<listitem>
 SSL と TLS SNI サポート。
-</item>
+</listitem>
 
 </list>
 </para>
@@ -56,59 +56,59 @@ SSL と TLS SNI サポート。
         name="他の HTTP 機能">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 名前ベースと IP ベースの仮想サーバ
-</item>
+</listitem>
 
-<item>
+<listitem>
 キープアライブとパイプライン接続のサポート
-</item>
+</listitem>
 
-<item>
+<listitem>
 柔軟な設定
-</item>
+</listitem>
 
-<item>
+<listitem>
 クライアント処理を中断させること無く再構成、オンラインアップグレード
-</item>
+</listitem>
 
-<item>
+<listitem>
 アクセスログフォーマット、バッファされたログ書き込み、素早いログローテーション
-</item>
+</listitem>
 
-<item>
+<listitem>
 3xx-5xx エラーコードのリダイレクト
-</item>
+</listitem>
 
-<item>
+<listitem>
 rewrite モジュール
-</item>
+</listitem>
 
-<item>
+<listitem>
 クライアントの IP アドレスをベースにしたアクセスコントロールと HTTP ベーシック認証
-</item>
+</listitem>
 
-<item>
+<listitem>
 PUT、DELETE、MKCOL、COPY、MOVE メソッド
-</item>
+</listitem>
 
-<item>
+<listitem>
 FLV ストリーミング
-</item>
+</listitem>
 
-<item>
+<listitem>
 速度制限
-</item>
+</listitem>
 
-<item>
+<listitem>
 同一アドレスからの同時接続もしくは同時リクエストの制限
-</item>
+</listitem>
 
-<item>
+<listitem>
 埋め込み perl
-</item>
+</listitem>
 
 </list>
 </para>
@@ -120,43 +120,43 @@ FLV ストリーミング
         name="メールプロキシサーバ機能">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 外部の HTTP 認証サーバを利用した IMAP/POP3 バックエンドへのユーザリダイレクト
-</item>
+</listitem>
 
-<item>
+<listitem>
 外部の HTTP 認証サーバと内部 SMTP バックエンドへの接続リダイレクトを利用したユーザ認証
-</item>
+</listitem>
 
-<item>
+<listitem>
 認証メソッド:
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 POP3: USER/PASS, APOP, AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
-<item>
+<listitem>
 IMAP: LOGIN, AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
-<item>
+<listitem>
 SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
 </list>
-</item>
+</listitem>
 
-<item>
+<listitem>
 SSL サポート
-</item>
+</listitem>
 
-<item>
+<listitem>
 STARTTLS と STLS のサポート
-</item>
+</listitem>
 
 </list>
 </para>
@@ -168,39 +168,39 @@ STARTTLS と STLS のサポート
         name="アーキテクチャとスケーラビリティ">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 一つのマスタープロセスと複数のワーカープロセス。ワーカーは非特権ユーザとして動く
-</item>
+</listitem>
 
-<item>
+<listitem>
 通知メソッド: kqueue (FreeBSD 4.1+)、epoll (Linux 2.6+)、rt シグナルs (Linux 2.2.19+)、/dev/poll (Solaris 7 11/99+)、イベントポート (Solaris 10)、select、poll
-</item>
+</listitem>
 
-<item>
+<listitem>
 EV_CLEAR, EV_DISABLE (イベントを一時的に無効にする)、 NOTE_LOWAT, EV_EOF、利用可能なデータの数、エラーコードを含む様々な kqueue 機能のサポート
-</item>
+</listitem>
 
-<item>
+<listitem>
 sendfile (FreeBSD 3.1+, Linux 2.2+, Mac OS X 10.5)、sendfile64 (Linux 2.4.21+)、sendfilev (Solaris 8 7/01+) のサポート
-</item>
+</listitem>
 
-<item>
+<listitem>
 ファイル AIO (FreeBSD 4.3+, Linux 2.6.22+)
-</item>
+</listitem>
 
-<item>
+<listitem>
 Accept-filters (FreeBSD 4.1+) と TCP_DEFER_ACCEPT (Linux 2.4+) のサポート
-</item>
+</listitem>
 
-<item>
+<listitem>
 1 万の非アクティブな HTTP キープアライブ接続は約 2.5M のメモリーを使用
-</item>
+</listitem>
 
-<item>
+<listitem>
 データコピーの実施は最小に保たれる
-</item>
+</listitem>
 
 </list>
 </para>
@@ -212,27 +212,27 @@ Accept-filters (FreeBSD 4.1+) と TCP_DEFER_ACCEPT (Linux 2.4+) のサポート
         name="テスト済み OS とプラットフォーム">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 8 / amd64;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Linux 2.2 &mdash; 2.6 / i386; Linux 2.6 / amd64;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Solaris 9 / i386, sun4u; Solaris 10 / i386, amd64, sun4v;
-</item>
+</listitem>
 
-<item>
+<listitem>
 MacOS X / ppc, i386;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Windows XP, Windows Server 2003.
-</item>
+</listitem>
 
 </list>
 </para>

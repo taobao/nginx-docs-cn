@@ -8,7 +8,7 @@
 
 <para>
 nginx поддерживает следующие параметры:
-<list>
+<list type="bullet">
 
 <listitem>
 <literal>-c <value>файл</value></literal>&mdash;указывает

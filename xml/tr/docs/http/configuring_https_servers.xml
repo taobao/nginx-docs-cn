@@ -265,27 +265,27 @@ server {
 Bir IP adresi üzerinde birçok HTTPS sunucusu yürütebilmenin en genel yollarından biri, bir SSL el sıkışması (handshake) sırasında, tarayıcının talep edilmiş bir sunucu adını iletmesine izin veren ve böylece sunucunun varsayılan bağlantı için hangi sertifikayı kullanacağını bilmesini sağlayan <link url="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1 Server Name Indication eklentisidir</link> (SNI, RFC3546). Ancak SNI, kısıtlı bir tarayıcı desteğine sahiptir. Mevcut destekleyen tarayıcılar ve versiyonları:
 </para>
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Opera 8.0;
-</item>
+</listitem>
 
-<item>
+<listitem>
 MSIE 7.0 (sadece Windows Vista ve üstü);
-</item>
+</listitem>
 
-<item>
+<listitem>
 Firefox 2.0 ve Mozilla Platform rv:1.8.1 platformunu kullanan diğer tarayıcılar;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Safari 3.2.1 (Windows Vista ve üstü);
-</item>
+</listitem>
 
-<item>
+<listitem>
 Chrome (Windows Vista ve üstü).
-</item>
+</listitem>
 
 </list>
 
@@ -314,58 +314,58 @@ therefore SNI is not available
 <section id="compatibility" name="Uygunluk">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Versiyon 0.8.21 ve 0.7.62 ile birlikte SNI destek statüsü &ldquo;-V&rdquo; anahtarı ile birlikte görüntülenmeye başlandı.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Versiyon 0.7.14 ile birlikte <literal>listen</literal> yönergesinin <literal>ssl</literal> parametresi desteklenmeye başlandı.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Versiyon 0.5.32 ile birlikte SNI desteği gelmiştir.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Versiyon 0.5.6 ile birlikte paylaşımlı SSL otorum önbelleği desteği gelmiştir.
-</item>
+</listitem>
 
 </list>
 </para>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Versiyon 0.7.65, 0.8.19 ve sonrası varsayılan SSL protokolleri: SSLv3 ve TLSv1.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Versiyon 0.7.64, 0.8.18 ve öncesi varsayılan SSL protokolleri: SSLv2, SSLv3 ve TLSv1.
-</item>
+</listitem>
 
 </list>
 </para>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Versiyon 0.7.65, 0.8.20 ve sonrası varsayılan SSL şifreleri (cipher):
 <literal>HIGH:!ADH:!MD5</literal>.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Versiyon 0.8.19: varsayılan SSL şifreleri:
 <literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</literal>.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Versiyon 0.7.64, 0.8.18 ve öncesi varsayılan SSL şifreleri:<br/>
 <literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</literal>.
-</item>
+</listitem>
 
 </list>
 </para>

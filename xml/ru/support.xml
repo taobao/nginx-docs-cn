@@ -8,11 +8,11 @@
 <section name="Wiki">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link url="http://wiki.nginx.org">wiki.nginx.org</link>
-</item>
+</listitem>
 
 </list>
 </para>
@@ -34,9 +34,9 @@
 </para>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 список
 <link url="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</link>
 (английский),
@@ -46,9 +46,9 @@
 архив Gmane</link>,
 <link url="http://marc.info/?l=nginx">
 архив MARC</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 список
 <link url="http://nginx.org/mailman/listinfo/nginx-ru">nginx-ru@nginx.org</link>
 (русский),
@@ -56,7 +56,7 @@
 архив</link>,
 <link url="http://dir.gmane.org/gmane.comp.web.nginx.russian">
 архив Gmane</link>
-</item>
+</listitem>
 
 </list>
 </para>
@@ -67,23 +67,23 @@
 <section name="Форумы">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link url="http://forum.nginx.org">forum.nginx.org</link>,
 интегрированный со списками рассылок.
 Это не обычный форум, поэтому, когда вы там
 &ldquo;создаёте топик&rdquo;, этот &ldquo;топик&rdquo;
 в виде письма уходит в список рассылки, а также архивируется.
 Удалить или закрыть &ldquo;топик&rdquo; нельзя.
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://www.ruby-forum.com/forum/nginx">
 форум Ruby</link>,
 интегрированный со списком рассылки
 <link url="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</link>
-</item>
+</listitem>
 
 </list>
 </para>
@@ -94,27 +94,27 @@
 <section name="Разработка">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Список рассылки для разработчиков
 <link url="http://nginx.org/mailman/listinfo/nginx-devel">nginx-devel@nginx.org</link>
 (английский),
 <link url="http://nginx.org/pipermail/nginx-devel/">
 архив</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://trac.nginx.org/nginx/browser">
 Смотреть исходный код
 </link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://trac.nginx.org/nginx/report">
 Сообщить об ошибке
 </link>
-</item>
+</listitem>
 
 </list>
 </para>

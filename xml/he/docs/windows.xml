@@ -98,21 +98,21 @@ nginx/Windows רץ כיישום קונסול סטנדרטי, ולא כשירות
 <section id="known_issues"
         name="בעיות ידועות">
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 למרות שניתן להפעיל מספר תהליכים עובדים, רק אחד מהם עושה בפועל את העבודה.
-</item>
+</listitem>
 
-<item>
+<listitem>
 תהליך עובד לא יכול לטפל ביותר מ 1024 חיבורים פעילים בו זמנית.
-</item>
+</listitem>
 
-<item>
+<listitem>
 מודול המטמון ומודולים אחרים אשר דורשים תמיכה בזיכרון משותף, לא עובדים בחלונות
 ויסטה או גירסאות מאוחרות יותר, עקב הפעלת טכניקת address space layout randomization
 המופעלת בגירסאות אלה של חלונות.
-</item>
+</listitem>
 
 </list>
 
@@ -121,19 +121,19 @@ nginx/Windows רץ כיישום קונסול סטנדרטי, ולא כשירות
 <section id="possible_future_enhancements"
         name="שיפורים עתידיים אפשריים">
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 הרצה כשירות במערכת (Service).
-</item>
+</listitem>
 
-<item>
+<listitem>
 שימוש ב I/O completion ports כשיטת יידוע.
-</item>
+</listitem>
 
-<item>
+<listitem>
 שימוש במספר נימי עובדים בתוך תהליך עובד אחד.
-</item>
+</listitem>
 
 </list>
 

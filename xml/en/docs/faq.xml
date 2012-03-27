@@ -8,35 +8,35 @@
 <section>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link doc="welcome_nginx_facebook.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="faq/license_copyright.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="faq/accept_failed.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="faq/variables_in_config.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="faq/daemon_master_process_off.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="faq/chunked_encoding_from_backend.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="sys_errlist.xml"/>
-</item>
+</listitem>
 
 </list>
 </para>

@@ -9,7 +9,7 @@
 <para>
 nginx поддерживает следующие методы обработки соединений, которые
 можно задать директивой <link doc="ngx_core_module.xml" id="use"/>:
-<list>
+<list type="bullet">
 
 <listitem>
 <para>

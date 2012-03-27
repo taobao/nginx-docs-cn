@@ -33,33 +33,33 @@ nginx [נהגה: engine x] הוא שרת HTTP ופרוקסי הפוך, כמו ג
         name="תכונות HTTP בסיסיות">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 הגשת קבצים סטטיים וקובצי אינדקס, ואינדוקס אוטומטי;
 מטמון file descriptor-ים פתוחים;
-</item>
+</listitem>
 
-<item>
+<listitem>
 פרוקסי הפוך מואץ כולל מטמון;
 ביזור עומסים פשוט ושרידות מפני תקלות;
-</item>
+</listitem>
 
-<item>
+<listitem>
 תמיכה בהאצה עם מטמון של שרתי FastCGI מרוחקים;
 ביזור עומסים פשוט ושרידות מפני תקלות;
-</item>
+</listitem>
 
-<item>
+<listitem>
 ארכיטקטורה מודולרית. פילטרים המבצעים gzip, טווחי בתים (byte ranges),
 תשובות מסוג chunked, תמיכה ב XSLT, SSI ופילטר שינוי גודל תמונות.
 ריבוי הכללות SSI בדף בודד יכול להיות מבוצע באופן מקבילי אם הן מטופלות
 על ידי FastCGI או שרתים ש nginx הוא פרוקסי עבורם.
-</item>
+</listitem>
 
-<item>
+<listitem>
 תמיכה ב SSL ו TLS SNI.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -71,60 +71,60 @@ nginx [נהגה: engine x] הוא שרת HTTP ופרוקסי הפוך, כמו ג
         name="תכונות HTTP אחרות">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 שרתים וירטואליים מבוססי IP ושם (הוסט);
-</item>
+</listitem>
 
-<item>
+<listitem>
 תמיכה ב keep-alive וב pipelining לחיבורים;
-</item>
+</listitem>
 
-<item>
+<listitem>
 תצורה גמישה;
-</item>
+</listitem>
 
-<item>
+<listitem>
 קביעת תצורה מחדש ואף שדרוג מקוון ללא כל הפרעה לעיבוד
 בקשות הלקוחות;
-</item>
+</listitem>
 
-<item>
+<listitem>
 פורמטים ללוג הגישה, כתיבה ללוג באמצעות חוצץ, והחלפת לוגים מהירה;
-</item>
+</listitem>
 
-<item>
+<listitem>
 הפנייה באמצעות קודי שגיאה 3xx-5xx;
-</item>
+</listitem>
 
-<item>
+<listitem>
 מודול rewrite;
-</item>
+</listitem>
 
-<item>
+<listitem>
 בקרת גישה המבוססת על כתובת IP של הלקוח וגם אימות מסוג HTTP Basic;
-</item>
+</listitem>
 
-<item>
+<listitem>
 המתודות PUT, DELETE, MKCOL, COPY ו MOVE;
-</item>
+</listitem>
 
-<item>
+<listitem>
 סטרימינג של FLV;
-</item>
+</listitem>
 
-<item>
+<listitem>
 הגבלת מהירות;
-</item>
+</listitem>
 
-<item>
+<listitem>
 הגבלה של מספר החיבורים בו זמנית או מספר הבקשות מכתובת אחת.
-</item>
+</listitem>
 
-<item>
+<listitem>
 perl משובץ.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -136,43 +136,43 @@ perl משובץ.
         name="תכונות פרוקסי דואר">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 הפניית משתמשים לשרתי IMAP/POP3 אחוריים בהתבסס על שרת אימות HTTP חיצוני;
-</item>
+</listitem>
 
-<item>
+<listitem>
 אימות משתמש באמצעות שרת אימות HTTP חיצוני והפניית חיבור לשרת SMTP פנימי;
-</item>
+</listitem>
 
-<item>
+<listitem>
 מתודות אימות:
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 POP3: USER/PASS, APOP, AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
-<item>
+<listitem>
 IMAP: LOGIN, AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
-<item>
+<listitem>
 SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
 </list>
-</item>
+</listitem>
 
-<item>
+<listitem>
 תמיכה בהצפנת SSL;
-</item>
+</listitem>
 
-<item>
+<listitem>
 תמיכה ב STARTTLS ו STLS.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -184,46 +184,46 @@ SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
         name="ארכיטקטורה ויכולת גידול">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 תהליך ראשי אחד ומספר תהליכי עובדים.
 תהליכי העובדים רצים בתור משתמש ללא הרשאות;
-</item>
+</listitem>
 
-<item>
+<listitem>
 שיטות יידוע: kqueue (במערכות FreeBSD 4.1 ומעלה),
 epoll (במערכות לינוקס 2.6 ומעלה), סיגנלי rt (במערכות לינוקס 2.2.19 ומעלה),
 <path>/dev/poll</path> (במערכות סולאריס 7 11/99 ומעלה), event ports (במערכות סולאריס 10),
 select, ואף poll;
-</item>
+</listitem>
 
-<item>
+<listitem>
 תמיכה עבור תכונות kqueue שונות כולל  EV_CLEAR ו EV_DISABLE
 (כדי לבטל אירועים זמנית), NOTE_LOWAT, EV_EOF, מספר קודי מידע ושגיאה;
-</item>
+</listitem>
 
-<item>
+<listitem>
 תמיכה ב sendfile (במערכות FreeBSD 3.1 ומעלה, לינוקס 2.2 ומעלה ו Mac OS X 10.5), תמיכה ב sendfile64 (לינוקס 2.4.21 ומעלה),
 ו sendfilev (סולאריס 8 7/01 ומעלה);
-</item>
+</listitem>
 
-<item>
+<listitem>
 File AIO (במערכות FreeBSD 4.3 ומעלה ולינוקס 2.6.22 ומעלה);
-</item>
+</listitem>
 
-<item>
+<listitem>
 תמיכה ב Accept-filters (במערכות FreeBSD 4.1 ומעלה) ו TCP_DEFER_ACCEPT (במערכות לינוקס 2.4 ומעלה) 
-</item>
+</listitem>
 
-<item>
+<listitem>
 10,000 חיבורי HTTP לא פעילים במצב keep-alive תופסים נפח זיכרון העומד על בערך 
 12.5M;
-</item>
+</listitem>
 
-<item>
+<listitem>
 פעולות העתקת מידע מבוצעות באופן נדיר ככל האפשר.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -235,27 +235,27 @@ File AIO (במערכות FreeBSD 4.3 ומעלה ולינוקס 2.6.22 ומעלה
         name="מערכות הפעלה ופלטפורמות בדוקות">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 8 / amd64;
-</item>
+</listitem>
 
-<item>
+<listitem>
 לינוקס 2.2 &mdash; 2.6 / i386; לינוקס 2.6 / amd64;
-</item>
+</listitem>
 
-<item>
+<listitem>
 סולאריס 9 / i386, sun4u; סולאריס 10 / i386, amd64, sun4v;
-</item>
+</listitem>
 
-<item>
+<listitem>
 MacOS X / ppc, i386;
-</item>
+</listitem>
 
-<item>
+<listitem>
 חלונות XP, חלונות סרבר 2003.
-</item>
+</listitem>
 
 </list>
 </para>

@@ -11,32 +11,32 @@
 <para>
 To build nginx on the <registered>Microsoft Win32</registered> platform you need:
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Microsoft Visual C compiler. <registered>Microsoft Visual Studio</registered>
 8 and 10 are known to work.
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://www.mingw.org/wiki/MSYS">MSYS</link>.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Perl, if you want to build <registered>OpenSSL</registered> and nginx with SSL support.
 For example <link url="http://www.activestate.com/activeperl">ActivePerl</link>
 or <link url="http://strawberryperl.com">Strawberry Perl</link>.
-</item>
+</listitem>
 
-<item>
+<listitem>
 <registered>Subversion</registered> client. Choose any from the
 <link url="http://subversion.apache.org/packages.html#windows">list</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://www.pcre.org">PCRE</link>, <link url="http://zlib.net">zlib</link>
 and <link url="http://www.openssl.org">OpenSSL</link> libraries sources.
-</item>
+</listitem>
 </list>
 
 </para>
@@ -55,20 +55,20 @@ run vcvarsall.bat script from Visual C directory.
 <para>
 
 To build nginx:
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Start MSYS bash.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Check out nginx sources from the svn.nginx.org repository. For example:
 <programlisting>
 svn co svn://svn.nginx.org/tags/release-1.1.6
 </programlisting>
-</item>
+</listitem>
 
-<item>
+<listitem>
 Create a build and lib directories, and unpack zlib, PCRE and OpenSSL libraries
 sources into lib directory:
 <programlisting>
@@ -79,9 +79,9 @@ unzip ../../pcre-8.12.zip
 tar -xzf ../../zlib-1.2.5.tar.gz
 tar -xzf ../../openssl-1.0.0e.tar.gz
 </programlisting>
-</item>
+</listitem>
 
-<item>
+<listitem>
 Run configure script:
 <programlisting>
 auto/configure --with-cc=cl --builddir=objs --prefix= \
@@ -94,14 +94,14 @@ auto/configure --with-cc=cl --builddir=objs --prefix= \
 --with-zlib=objs/lib/zlib-1.2.5 --with-openssl=objs/lib/openssl-1.0.0e \
 --with-select_module --with-http_ssl_module --with-ipv6
 </programlisting>
-</item>
+</listitem>
 
-<item>
+<listitem>
 Run make:
 <programlisting>
 nmake -f objs/Makefile
 </programlisting>
-</item>
+</listitem>
 
 
 </list>
@@ -114,11 +114,11 @@ nmake -f objs/Makefile
          name="See also">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link doc="windows.xml"/>
-</item>
+</listitem>
 
 </list>
 </para>

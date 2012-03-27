@@ -453,23 +453,23 @@ stable version has been released.
 <para>
 Now the 0.8.x branch becomes a stable branch.
 The new features have appeared during 0.8 development:
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 named regular expression captures,
-</item>
+</listitem>
 
-<item>
+<listitem>
 file AIO in FreeBSD and Linux,
-</item>
+</listitem>
 
-<item>
+<listitem>
 SSL CRL,
-</item>
+</listitem>
 
-<item>
+<listitem>
 SCGI and uwsgi modules.
-</item>
+</listitem>
 
 </list>
 </para>

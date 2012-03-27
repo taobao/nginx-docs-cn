@@ -19,8 +19,8 @@ prepare your virtual machine and nginx configuration.
 
 <para>
 To set up a development environment:
-<list>
-<item>
+<list type="bullet">
+<listitem>
 Follow the 
 <link url="http://docs.amazonwebservices.com/AWSEC2/latest/GettingStartedGuide/Welcome.html">
 Get Started with EC2</link> guide to sign up to AWS and
@@ -29,9 +29,9 @@ choose either “Basic 32-bit Amazon Linux AMI” or
 “Basic 64-bit Amazon Linux AMI” for an AMI. When configuring
 the firewall rules, it is necessary to add a rule to accept web
 traffic on port 80.
-</item>
+</listitem>
 
-<item>
+<listitem>
 As soon as the new instance is launched, log in to it and
 download <literal>aws_nginx_setup.sh</literal> script with the
 following command:
@@ -42,9 +42,9 @@ then run the script with root privileges:
 <programlisting>
 sudo sh ./aws_nginx_setup.sh
 </programlisting>
-</item>
+</listitem>
 
-<item>
+<listitem>
 You will be asked to select what components to install. Currently
 it is possible to choose Django, Pyramid, Ruby on Rails or PHP
 development environment. After you have selected the necessary
@@ -52,9 +52,9 @@ component, the script will automatically prepare its configuration
 for use with nginx. There will be a separate user created too,
 and then a sample web application is started to ensure everything
 is working correctly.
-</item>
+</listitem>
 
-<item>
+<listitem>
 After the installation completes and the web application is installed
 in a subdirectory inside <path>/var/www</path>, the script will print how to
 start/stop sample application. For example, the Rails application will
@@ -62,7 +62,7 @@ reside in <path>/var/www/rails</path>, and Rails specific part of nginx
 configuration will be in <path>/etc/nginx/conf.d/rails.conf</path>.
 Installed application and configuration files can be used as a basis for
 further development.
-</item>
+</listitem>
 </list>
 </para>
 

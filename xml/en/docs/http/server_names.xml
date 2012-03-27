@@ -45,25 +45,25 @@ server {
 
 The names are tested in the following order:
 
-<orderedlist>
+<list type="enum">
 
-<item>
+<listitem>
 exact names;
-</item>
+</listitem>
 
-<item>
+<listitem>
 wildcard names starting with an asterisk: <url>*.nginx.org</url>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 wildcard names ending with an asterisk: <url>mail.*</url>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 and regular expressions in the order listed in the configuration file.
-</item>
+</listitem>
 
-</orderedlist>
+</list>
 The first match stops the search.
 </para>
 
@@ -405,44 +405,44 @@ then nginx has to execute the expression to get the captures.
         name="Compatibility">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 A default server name value is an empty name &ldquo;&rdquo; since 0.8.48.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Named regular expression server name captures have been supported since 0.8.25.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Regular expression server name captures have been supported since 0.7.40.
-</item>
+</listitem>
 
-<item>
+<listitem>
 An empty server name &ldquo;&rdquo; has been supported since 0.7.12.
-</item>
+</listitem>
 
-<item>
+<listitem>
 A wildcard server name or regular expression has been supported for use
 as the first server name since 0.6.25.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Regular expression server names have been supported since 0.6.7.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Wildcard form <url>nginx.*</url> has been supported since 0.6.0.
-</item>
+</listitem>
 
-<item>
+<listitem>
 The special form <url>.nginx.org</url> has been supported since 0.3.18.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Wildcard form <url>*.nginx.org</url> has been supported since 0.1.13.
-</item>
+</listitem>
 
 </list>
 </para>

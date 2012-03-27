@@ -237,9 +237,9 @@ Besides, anyone may request anything in the query string:
 Now let&rsquo;s look at how requests would be processed
 in the configuration above:
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <para>
 A request “<literal>/logo.gif</literal>” is matched by the literal location
 “<literal>/</literal>” first and then by the regular expression
@@ -249,9 +249,9 @@ Using the directive “<literal>root&nbsp;/data/www</literal>” the request
 is mapped to a file <path>/data/www/logo.gif</path>, and the file
 is sent to the client.
 </para>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <para>
 A request “<literal>/index.php</literal>” is also matched by the literal location
 “<literal>/</literal>” first and then by the regular expression
@@ -269,9 +269,9 @@ directive and
 the variable $fastcgi_script_name is equal to the request URI,
 i.e. “<literal>/index.php</literal>”.
 </para>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <para>
 A request “<literal>/about.html</literal>” is matched by the literal location
 “<literal>/</literal>” only, therefore, it is handled in this location.
@@ -279,9 +279,9 @@ Using the directive “<literal>root /data/www</literal>” the request is mappe
 to the file <path>/data/www/about.html</path>, and the file is sent
 to the client.
 </para>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <para>
 Handling a request “<literal>/</literal>” is more complex.
 It is matched by the literal location “<literal>/</literal>” only,
@@ -298,7 +298,7 @@ as if the request had been sent by a client.
 As we saw before, the redirected request will eventually be handled
 by the FastCGI server.
 </para>
-</item>
+</listitem>
 
 </list>
 </para>

@@ -5,7 +5,7 @@
            name         CDATA #IMPLIED
 >
 
-<!ELEMENT  para         (#PCDATA | link | links | br | list | orderedlist | note |
+<!ELEMENT  para         (#PCDATA | link | links | br | list | note |
                          i | b | nobr | table | url | literal | command |
                          path | header | value | programlisting |
                          initial | development_version | stable_version |
@@ -40,15 +40,16 @@
 
 <!ELEMENT  nobr         (#PCDATA | b | command | i | literal | path)* >
 
-<!ELEMENT  list         (item+ | listitem+) >
-<!ELEMENT  orderedlist  (item+) >
-<!ELEMENT  item         (#PCDATA | para | br | nobr | list | i | b | url |
-                         path | command | value | programlisting |
-                         link | registered | literal)* >
-<!ELEMENT  listitem     (#PCDATA | para | br | nobr | list | i | b | url |
-                         path | literal | value | programlisting)* >
+<!ELEMENT  list         (listitem+) >
+<!ATTLIST  list
+           type         (bullet | enum) #REQUIRED
+           >
 
-<!ELEMENT  note         (#PCDATA | para | br | list | orderedlist | i | b |
+<!ELEMENT  listitem     (#PCDATA | para | br | nobr | list | i | b | url |
+                         path | literal | value | programlisting |
+                         link | registered)* >
+
+<!ELEMENT  note         (#PCDATA | para | br | list | i | b |
                          nobr | table | url | literal | command | path |
                          header | programlisting | initial | paypal |
                          development_version | stable_version )* >
@@ -87,6 +88,7 @@
            changes      CDATA #REQUIRED
 >
 
+<!ELEMENT  item         EMPTY >
 <!ATTLIST  item
            ver          CDATA #IMPLIED
            pgp          CDATA #IMPLIED

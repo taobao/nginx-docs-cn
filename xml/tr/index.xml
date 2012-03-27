@@ -28,32 +28,32 @@ Kaynak kodu, <link url="/LICENSE">2-clause BSD-like license</link> lisansı alt�
         name="Temel HTTP özellikleri">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Statik ve index dosyalarının sunumu, otomatik indeksleme;
 açık dosya açıklayıcı önbellek;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Önbellek ile hızlandırılmış reverse proxying;
 basit yük dengeleme ve hata toleransı;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Uzak FastCgi sunucularının önbelleklenmesi ile hızlandırılmış destek;
 basit yük dengeleme ve hata toleransı;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Modüler yapı.
 Gzip, byte aralıkları, yığın cevaplar (chunked responses), XSLT, SSI, imaj boyutlandırma gibi filtreler.
 FastCGI veya proksilenmiş sunucular ile tek bir sayfada çoklu SSI içermelerinin paralel işlenmesi.
-</item>
+</listitem>
 
-<item>
+<listitem>
 SSL ve TLS SNI desteği.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -65,59 +65,59 @@ SSL ve TLS SNI desteği.
         name="Diğer HTTP özellikleri">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Ad ve IP tabanlı sanal sunucular;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Keep-alive ve pipelined bağlantı desteği;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Esnek yapılandırma;
-</item>
+</listitem>
 
-<item>
+<listitem>
 İstemci işlemlerinde kopma olmadan yeniden yapılandırma ve online güncelleme;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Erişim kayıt (log) formatları, tamponlanmış kayıt yazımı ve hızlı kayıt devri;
-</item>
+</listitem>
 
-<item>
+<listitem>
 3xx-5xx hata kod yönlendirmeleri;
-</item>
+</listitem>
 
-<item>
+<listitem>
 rewrite modülü;
-</item>
+</listitem>
 
-<item>
+<listitem>
 İstemcinin IP adresine dayalı erişim kontrolü ve HTTP temel kimlik denetleme;
-</item>
+</listitem>
 
-<item>
+<listitem>
 PUT, DELETE, MKCOL, COPY ve MOVE methodları;
-</item>
+</listitem>
 
-<item>
+<listitem>
 FLV streaming;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Hız sınırlandırma;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Bir adresten gelen eşzamanlı bağlantı ve talepleri sınırlandırma.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Gömülü perl.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -129,43 +129,43 @@ Gömülü perl.
         name="Mail proxy sunucu özellikleri">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Harici bir HTTP kimlik denetleme sunucusunu kullanarak, kullanıcıyı IMAP/POP3 backend'ine yönlendirme;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Harici bir HTTP kimlik denetleme sunucusunu kullanarak, kullanıcıyı SMTP backend'ine yönlendirme ve kullanıcı kimlik denetlemesi;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Kimlik denetleme methodları:
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 POP3: USER/PASS, APOP, AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
-<item>
+<listitem>
 IMAP: LOGIN, AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
-<item>
+<listitem>
 SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
 </list>
-</item>
+</listitem>
 
-<item>
+<listitem>
 SSL desteği;
-</item>
+</listitem>
 
-<item>
+<listitem>
 STARTTLS ve STLS desteği.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -177,46 +177,46 @@ STARTTLS ve STLS desteği.
         name="Yapı ve ölçeklenebilirlik">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Bir ana işlem (main process) ve çok sayıda işçi işlemleri (workers).
 İşçiler, imtiyazsız kullanıcı olarak yürütülürler;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Uyarı methodları: kqueue (FreeBSD 4.1+),
 epoll (Linux 2.6+), rt signals (Linux 2.2.19+),
 /dev/poll (Solaris 7 11/99+), event ports (Solaris 10),
 select ve poll;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Çeşitli kqueue özellikleri desteği: EV_CLEAR, EV_DISABLE
 (event'i geçici olarak etkisizleştirir), NOTE_LOWAT, EV_EOF, olanaklı data sayısı,
 hata kodları;
-</item>
+</listitem>
 
-<item>
+<listitem>
 sendfile (FreeBSD 3.1+, Linux 2.2+, Mac OS X 10.5), sendfile64 (Linux 2.4.21+),
 ve sendfilev (Solaris 8 7/01+) desteği;
-</item>
+</listitem>
 
-<item>
+<listitem>
 File AIO (FreeBSD 4.3+, Linux 2.6.22+);
-</item>
+</listitem>
 
-<item>
+<listitem>
 Accept-filters (FreeBSD 4.1+) ve TCP_DEFER_ACCEPT (Linux 2.4+) desteği;
-</item>
+</listitem>
 
-<item>
+<listitem>
 10,000 inaktif HTTP keep-alive bağlantısı yaklaşık 2.5M hafıza kullanır;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Data kopyalama operasyonları minimum düzeydedir.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -228,27 +228,27 @@ Data kopyalama operasyonları minimum düzeydedir.
         name="Test edilen işletim sistemleri ve platformlar">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 8 / amd64;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Linux 2.2 &mdash; 2.6 / i386; Linux 2.6 / amd64;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Solaris 9 / i386, sun4u; Solaris 10 / i386, amd64, sun4v;
-</item>
+</listitem>
 
-<item>
+<listitem>
 MacOS X / ppc, i386;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Windows XP, Windows Server 2003.
-</item>
+</listitem>
 
 </list>
 </para>

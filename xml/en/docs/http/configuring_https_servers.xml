@@ -371,27 +371,27 @@ However, SNI has limited browser support.
 Currently it is supported starting with the following browsers versions:
 </para>
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Opera 8.0;
-</item>
+</listitem>
 
-<item>
+<listitem>
 MSIE 7.0 (but only on Windows Vista or higher);
-</item>
+</listitem>
 
-<item>
+<listitem>
 Firefox 2.0 and other browsers using Mozilla Platform rv:1.8.1;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Safari 3.2.1 (Windows version supports SNI on Vista or higher);
-</item>
+</listitem>
 
-<item>
+<listitem>
 and Chrome (Windows version supports SNI on Vista or higher, too).
-</item>
+</listitem>
 
 </list>
 
@@ -428,68 +428,68 @@ therefore SNI is not available
 <section id="compatibility" name="Compatibility">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 The SNI support status has been shown by the &ldquo;-V&rdquo; switch
 since 0.8.21 and 0.7.62.
-</item>
+</listitem>
 
-<item>
+<listitem>
 The <literal>ssl</literal> parameter of the
 <link doc="ngx_http_core_module.xml" id="listen"/>
 directive has been supported since 0.7.14.
-</item>
+</listitem>
 
-<item>
+<listitem>
 SNI has been supported since 0.5.32.
-</item>
+</listitem>
 
-<item>
+<listitem>
 The shared SSL session cache has been supported since 0.5.6.
-</item>
+</listitem>
 
 </list>
 </para>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Version 0.7.65, 0.8.19 and later: the default SSL protocols are SSLv3, TLSv1,
 TLSv1.1, and TLSv1.2 (if supported by the OpenSSL library).
-</item>
+</listitem>
 
-<item>
+<listitem>
 Version 0.7.64, 0.8.18 and earlier: the default SSL protocols are SSLv2,
 SSLv3, and TLSv1.
-</item>
+</listitem>
 
 </list>
 </para>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Version 1.0.5 and later: the default SSL ciphers are
 “<literal>HIGH:!aNULL:!MD5</literal>”.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Version 0.7.65, 0.8.20 and later: the default SSL ciphers are
 “<literal>HIGH:!ADH:!MD5</literal>”.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Version 0.8.19: the default SSL ciphers are
 “<literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</literal>”.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Version 0.7.64, 0.8.18 and earlier: the default SSL ciphers are<br/>
 “<literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</literal>”.
-</item>
+</listitem>
 
 </list>
 </para>

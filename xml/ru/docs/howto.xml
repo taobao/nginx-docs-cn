@@ -8,20 +8,20 @@
 <section>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link doc="debugging_log.xml"/>
-</item>
+</listitem>
 
 <!--
-<item>
+<listitem>
 <link doc="http/converting_rewrite_rules.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="howto_build_on_win32.xml"/>
-</item>
+</listitem>
 -->
 
 </list>

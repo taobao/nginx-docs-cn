@@ -155,16 +155,16 @@
 <section name="Исходный код">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Репозиторий Subversion, доступный только для чтения:
 <literal>svn://svn.nginx.org/nginx</literal>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://trac.nginx.org/nginx/browser">Исходный код в Trac</link>
-</item>
+</listitem>
 
 </list>
 </para>
@@ -184,23 +184,23 @@
 Для настройки репозитория yum для RHEL/CentOS выберите из списка
 соответствующий пакет <literal>nginx-release</literal>:
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link url="http://nginx.org/packages/rhel/5/noarch/RPMS/nginx-release-rhel-5-0.el5.ngx.noarch.rpm">RHEL 5</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://nginx.org/packages/rhel/6/noarch/RPMS/nginx-release-rhel-6-0.el6.ngx.noarch.rpm">RHEL 6</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://nginx.org/packages/centos/5/noarch/RPMS/nginx-release-centos-5-0.el5.ngx.noarch.rpm">CentOS 5</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm">CentOS 6</link>
-</item>
+</listitem>
 
 </list>
 

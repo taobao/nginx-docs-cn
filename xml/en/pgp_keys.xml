@@ -6,27 +6,27 @@
 
 <section>
 <para>
-<list>
-<item>
+<list type="bullet">
+<listitem>
 <link url="http://nginx.org/keys/is.key">Igor Sysoev&rsquo;s
 PGP public key</link>
-</item>
-<item>
+</listitem>
+<listitem>
 <link url="http://nginx.org/keys/mdounin.key">Maxim Dounin&rsquo;s
 PGP public key</link>
-</item>
-<item>
+</listitem>
+<listitem>
 <link url="http://nginx.org/keys/maxim.key">Maxim Konovalov&rsquo;s
 PGP public key</link>
-</item>
-<item>
+</listitem>
+<listitem>
 <link url="http://nginx.org/keys/sb.key">Sergey Budnevitch&rsquo;s
 PGP public key</link>
-</item>
-<item>
+</listitem>
+<listitem>
 <link url="http://nginx.org/keys/nginx_signing.key">nginx
 public key (used for signing packages and repositories)</link>
-</item>
+</listitem>
 </list>
 </para>
 </section>

@@ -107,22 +107,22 @@ graceful shutdown of old worker processes
 <section id="known_issues"
         name="Known issues">
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Although several workers can be started, only one of them
 actually does any work.
-</item>
+</listitem>
 
-<item>
+<listitem>
 A worker can handle no more than 1024 simultaneous connections.
-</item>
+</listitem>
 
-<item>
+<listitem>
 The cache and other modules which require shared memory support do not work
 on Windows Vista and later versions due to
 address space layout randomization being enabled in these Windows versions.
-</item>
+</listitem>
 
 </list>
 
@@ -131,19 +131,19 @@ address space layout randomization being enabled in these Windows versions.
 <section id="possible_future_enhancements"
         name="Possible future enhancements">
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Running as a service.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Using the I/O completion ports as a request processing method.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Using multiple worker threads inside a single worker process.
-</item>
+</listitem>
 
 </list>
 

@@ -39,25 +39,25 @@ server {
 
 Bu adlar şu sıra ile test edilirler:
 
-<orderedlist>
+<list type="enum">
 
-<item>
+<listitem>
 gerçek adlar;
-</item>
+</listitem>
 
-<item>
+<listitem>
 * ile başlayan wildcard adlar: <url>*.nginx.org</url>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 * ile biten wildcard adlar: <url>mail.*</url>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 ve düzenli ifadeler (regular expressions).
-</item>
+</listitem>
 
-</orderedlist>
+</list>
 İlk eşleşme arama işlemini bitirir.
 </para>
 
@@ -312,39 +312,39 @@ Eğer bir sunucu sadece bir listen port için ise, nginx sunucu adlarını test 
         name="Uygunluk">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Named düzenli ifade sunucu adı tutukları, 0.8.25 versiyonundan beri destekleniyor.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Düzenli ifade sunucu adı tutukları, 0.7.40 versiyonundan beri destekleniyor.
-</item>
+</listitem>
 
-<item>
+<listitem>
 &ldquo;&rdquo; boş sunucu adı 0.7.12 versiyonundan beri destekleniyor.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Bir wildcard sunucu adının veya düzenli ifadenin ilk sunucu adı olarak kullanılması 0.6.25 versiyonundan beri destekleniyor.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Düzenli ifade sunucu adları 0.6.7 versiyonundan beri destekleniyor.
-</item>
+</listitem>
 
-<item>
+<listitem>
 <url>nginx.*</url> wildcard formu 0.6.0 versiyonundan beri destekleniyor.
-</item>
+</listitem>
 
-<item>
+<listitem>
 <url>.nginx.org</url> özel formu 0.3.18 versiyonundan beri destekleniyor.
-</item>
+</listitem>
 
-<item>
+<listitem>
 <url>*.nginx.org</url> wildcard formu 0.1.13 versiyonundan beri destekleniyor.
-</item>
+</listitem>
 
 </list>
 </para>

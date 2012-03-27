@@ -8,11 +8,11 @@
 <section>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link doc="sys_errlist.xml"/>
-</item>
+</listitem>
 
 </list>
 </para>

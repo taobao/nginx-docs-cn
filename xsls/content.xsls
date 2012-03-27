@@ -65,27 +65,6 @@ X:stylesheet {
     X:template = "tag-name" { <dt> !!; </dt> }
     X:template = "tag-desc" { <dd> !!; </dd> }
 
-    <!-- legacy list templates -->
-
-    X:template = "list[not(@type)]" { <ul> !!; </ul> }
-    X:template = "para/list[not(@type)]" {
-        X:text disable-output-escaping="yes" {&lt;/p&gt; }
-        <ul> !!; </ul>
-        X:text disable-output-escaping="yes" {&lt;p&gt; }
-    }
-    X:template = "item" { <li> !!; </li> }
-
-
-    X:template = "orderedlist" { <ol> !!; </ol> }
-    X:template = "para/orderedlist" {
-        X:text disable-output-escaping="yes" {&lt;/p&gt; }
-        <ol> !!; </ol>
-        X:text disable-output-escaping="yes" {&lt;p&gt; }
-    }
-    X:template = "item" { <li> !!; </li> }
-
-    <!-- -->
-
     X:template = "table[@note and @width]" {
         <blockquote><table width="{@width}"> !!; </table></blockquote>
     }

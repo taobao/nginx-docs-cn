@@ -37,23 +37,23 @@ The sources are distributed under the
         name="Basic HTTP server features">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Serving static and index files, and
 <link doc="docs/http/ngx_http_autoindex_module.xml">autoindexing</link>;
 <link doc="docs/http/ngx_http_core_module.xml"
        id="open_file_cache">open file descriptor cache</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_proxy_module.xml">Accelerated
 reverse proxying with caching</link>;
 <link doc="docs/http/ngx_http_upstream_module.xml">simple
 load balancing and fault tolerance</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Accelerated support with caching of
 <link doc="docs/http/ngx_http_fastcgi_module.xml">FastCGI</link>,
 uwsgi, SCGI, and
@@ -61,9 +61,9 @@ uwsgi, SCGI, and
 servers;
 <link doc="docs/http/ngx_http_upstream_module.xml">simple
 load balancing and fault tolerance</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Modular architecture.
 Filters include
 <link doc="docs/http/ngx_http_gzip_module.xml">gzipping</link>,
@@ -74,12 +74,12 @@ and <link doc="docs/http/ngx_http_image_filter_module.xml">image
 transformation</link> filter.
 Multiple SSI inclusions within a single page can be processed in
 parallel if they are handled by proxied or FastCGI servers;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_ssl_module.xml">SSL and
 TLS SNI support</link>.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -91,89 +91,89 @@ TLS SNI support</link>.
         name="Other HTTP server features">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Name-based and IP-based virtual servers;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_core_module.xml"
        id="keepalive_timeout">Keep-alive</link>
 and pipelined connections support;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Flexible configuration;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/control.xml" id="reconfiguration">Reconfiguration</link>
 and <link doc="docs/control.xml" id="upgrade">upgrade of an
 executable</link> without interruption of the client servicing;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_log_module.xml" id="log_format">Access
 log formats</link>,
 <link doc="docs/http/ngx_http_log_module.xml" id="access_log">buffered
 log writing</link>, and
 <link doc="docs/control.xml" id="logs">fast log rotation</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 3xx-5xx error codes
 <link doc="docs/http/ngx_http_core_module.xml"
        id="error_page">redirection</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 The rewrite module:
 <link doc="docs/http/ngx_http_rewrite_module.xml">URI changing
 using regular expressions</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_rewrite_module.xml" id="if">Executing
 different functions</link> depending on the
 <link doc="docs/http/ngx_http_geo_module.xml">client address</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Access control based on
 <link doc="docs/http/ngx_http_access_module.xml">client IP address</link>
 and <link doc="docs/http/ngx_http_auth_basic_module.xml">HTTP
 Basic authentication</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 The <link doc="docs/http/ngx_http_dav_module.xml">PUT, DELETE, MKCOL, COPY,
 and MOVE</link> methods;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_flv_module.xml">FLV</link>
 and
 <link doc="docs/http/ngx_http_mp4_module.xml">MP4</link>
 streaming;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_core_module.xml"
        id="limit_rate">Response rate limiting</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Limiting the number of simultaneous
 <link doc="docs/http/ngx_http_limit_conn_module.xml">connections</link>
 or
 <link doc="docs/http/ngx_http_limit_req_module.xml">requests</link>
 coming from one address;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_perl_module.xml">Embedded Perl</link>.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -185,45 +185,45 @@ coming from one address;
         name="Mail proxy server features">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 User redirection to IMAP/POP3 backend using an external HTTP
 authentication server;
-</item>
+</listitem>
 
-<item>
+<listitem>
 User authentication using an external HTTP authentication server
 and connection redirection to an internal SMTP backend;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Authentication methods:
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 POP3: USER/PASS, APOP, AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
-<item>
+<listitem>
 IMAP: LOGIN, AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
-<item>
+<listitem>
 SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
-</item>
+</listitem>
 
 </list>
-</item>
+</listitem>
 
-<item>
+<listitem>
 SSL support;
-</item>
+</listitem>
 
-<item>
+<listitem>
 STARTTLS and STLS support.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -235,53 +235,53 @@ STARTTLS and STLS support.
         name="Architecture and scalability">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 One master and several worker processes;
 worker processes run under an unprivileged user;
-</item>
+</listitem>
 
-<item>
+<listitem>
 The notification methods: kqueue (FreeBSD 4.1+),
 epoll (Linux 2.6+), rt signals (Linux 2.2.19+),
 /dev/poll (Solaris 7 11/99+), event ports (Solaris 10),
 select, and poll;
-</item>
+</listitem>
 
-<item>
+<listitem>
 The support of the various kqueue features including EV_CLEAR, EV_DISABLE
 (to temporarily disable events), NOTE_LOWAT, EV_EOF, number of available data,
 error codes;
-</item>
+</listitem>
 
-<item>
+<listitem>
 sendfile (FreeBSD 3.1+, Linux 2.2+, Mac OS X 10.5+), sendfile64 (Linux 2.4.21+),
 and sendfilev (Solaris 8 7/01+) support;
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_core_module.xml" id="aio">File AIO</link>
 (FreeBSD 4.3+, Linux 2.6.22+);
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="docs/http/ngx_http_core_module.xml" id="directio">DIRECTIO</link>
 (FreeBSD 4.4+, Linux 2.4+, Solaris 2.6+, Mac OS X);
-</item>
+</listitem>
 
-<item>
+<listitem>
 Accept-filters (FreeBSD 4.1+) and TCP_DEFER_ACCEPT (Linux 2.4+)
 <link doc="docs/http/ngx_http_core_module.xml" id="listen">support</link>;
-</item>
+</listitem>
 
-<item>
+<listitem>
 10,000 inactive HTTP keep-alive connections take about 2.5M memory;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Data copy operations are kept to a minimum.
-</item>
+</listitem>
 
 </list>
 </para>
@@ -293,31 +293,31 @@ Data copy operations are kept to a minimum.
         name="Tested OS and platforms">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 FreeBSD 3 &mdash; 10 / i386; FreeBSD 5 &mdash; 10 / amd64;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Linux 2.2 &mdash; 2.6 / i386; Linux 2.6 / amd64;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Solaris 9 / i386, sun4u; Solaris 10 / i386, amd64, sun4v;
-</item>
+</listitem>
 
-<item>
+<listitem>
 AIX 7.1 / powerpc
-</item>
+</listitem>
 
-<item>
+<listitem>
 Mac OS X / ppc, i386;
-</item>
+</listitem>
 
-<item>
+<listitem>
 Windows XP, Windows Server 2003.
-</item>
+</listitem>
 
 </list>
 </para>

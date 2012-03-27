@@ -12,7 +12,7 @@
 может использовать для обработки соединений.
 В конце концов она создаёт <path>Makefile</path>.
 Команда <command>configure</command> поддерживает следующие параметры:
-<list>
+<list type="bullet">
 
 <listitem>
 <para>

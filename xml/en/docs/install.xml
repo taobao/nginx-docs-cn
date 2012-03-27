@@ -12,7 +12,7 @@ It defines various aspects of the system, including the methods nginx
 is allowed to use for connection processing.
 At the end it creates a <path>Makefile</path>.
 The <command>configure</command> command supports the following parameters:
-<list>
+<list type="bullet">
 
 <listitem>
 <para>

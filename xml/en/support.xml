@@ -8,11 +8,11 @@
 <section name="Wiki">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link url="http://wiki.nginx.org">wiki.nginx.org</link>
-</item>
+</listitem>
 
 </list>
 </para>
@@ -34,9 +34,9 @@ an e-mail address that you will use for posting.
 </para>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link url="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</link>
 list (English),
 <link url="http://nginx.org/pipermail/nginx/">
@@ -45,16 +45,16 @@ archive</link>,
 Gmane archive</link>,
 <link url="http://marc.info/?l=nginx">
 MARC archive</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://nginx.org/mailman/listinfo/nginx-ru">nginx-ru@nginx.org</link>
 list (Russian),
 <link url="http://nginx.org/pipermail/nginx-ru/">
 archive</link>,
 <link url="http://dir.gmane.org/gmane.comp.web.nginx.russian">
 Gmane archive</link>
-</item>
+</listitem>
 
 </list>
 </para>
@@ -65,20 +65,20 @@ Gmane archive</link>
 <section name="Forums">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link url="http://forum.nginx.org">forum.nginx.org</link>
 (with mailing lists integration)
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://www.ruby-forum.com/forum/nginx">
 Ruby Forum</link>
 (with
 <link url="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</link>
 mailing list integration)
-</item>
+</listitem>
 
 </list>
 </para>
@@ -89,24 +89,24 @@ mailing list integration)
 <section name="Development">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link url="http://nginx.org/mailman/listinfo/nginx-devel">nginx-devel@nginx.org</link>
 mailing list for developers (English),
 <link url="http://nginx.org/pipermail/nginx-devel/">
 archive</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://trac.nginx.org/nginx/browser">
 Browse a Source Code</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link url="http://trac.nginx.org/nginx/report">
 Report a Bug</link>
-</item>
+</listitem>
 
 </list>
 </para>

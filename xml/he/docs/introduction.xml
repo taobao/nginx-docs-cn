@@ -8,25 +8,25 @@
 <section>
 
 <para>
-<list>
+<list type="bullet">
 
 <!--
 
-<item>
+<listitem>
 <link doc="http/request_processing.xml"/>
-</item>
+</listitem>
 
 -->
 
-<item>
+<listitem>
 <link doc="http/server_names.xml"/>
-</item>
+</listitem>
 
 <!--
 
-<item>
+<listitem>
 <link doc="http/configuring_https_servers.xml"/>
-</item>
+</listitem>
 
 -->
 

@@ -8,21 +8,21 @@
 <section>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link doc="introduction.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="howto.xml"/>
-</item>
+</listitem>
 
 <!--
 
-<item>
+<listitem>
 <link doc="faq.xml"/>
-</item>
+</listitem>
 
 -->
 
@@ -30,11 +30,11 @@
 </para>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link doc="windows.xml"/>
-</item>
+</listitem>
 
 </list>
 </para>

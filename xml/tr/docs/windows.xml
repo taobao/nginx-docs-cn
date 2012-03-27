@@ -90,21 +90,21 @@ eski işçi işlemden yavaşça çıkmak
 <section id="known_issues"
         name="Bilinen sorunlar">
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Bir çok işçi yürütülebildiği halde sadece biri iş yapabilmektedir.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Bir işçi, 1024 eşzamanlı bağlantıdan fazlasını karşılayamamaktadır.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Paylaşımlı hafıza desteğine ihtiyaç duyan önbellek ve diğer modüller,
 &ldquo;address space layout randomization&rdquo; etkin olduğundan,
 Windows Vista ve sonraki versiyonlarda çalışmamaktadır.
-</item>
+</listitem>
 
 </list>
 
@@ -113,19 +113,19 @@ Windows Vista ve sonraki versiyonlarda çalışmamaktadır.
 <section id="possible_future_enhancements"
         name="Muhtemel geliştirmeler">
 
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 Servis olarak yürütme.
-</item>
+</listitem>
 
-<item>
+<listitem>
 I/O completion portlarını, uyarı methodu olarak kulanmak.
-</item>
+</listitem>
 
-<item>
+<listitem>
 Bir işçi işleminde (worker process) çoklu thread (yürütme birimi) kullanmak.
-</item>
+</listitem>
 
 </list>
 

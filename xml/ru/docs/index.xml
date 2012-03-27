@@ -8,65 +8,65 @@
 <section>
 
 <para>
-<list>
+<list type="bullet">
 
 <!--
 
-<item>
+<listitem>
 <link doc="introduction.xml"/>
-</item>
+</listitem>
 
 -->
 
-<item>
+<listitem>
 <link doc="howto.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="faq.xml"/>
-</item>
+</listitem>
 
 </list>
 </para>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link doc="install.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="windows.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="events.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="syntax.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="example.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="switches.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="virtual_hosts.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="control.xml"/>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="hash.xml"/>
-</item>
+</listitem>
 
 </list>
 </para>
@@ -76,217 +76,217 @@
 <section name="Справочник по модулям">
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link doc="dirindex.xml"/>
-</item>
+</listitem>
 
 </list>
 </para>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link doc="ngx_core_module.xml" />
-</item>
+</listitem>
 
 </list>
 </para>
 
 <para>
-<list>
+<list type="bullet">
 
-<item>
+<listitem>
 <link doc="http/ngx_http_core_module.xml">
 ngx_http_core_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_access_module.xml">
 ngx_http_access_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_addition_module.xml">
 ngx_http_addition_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_auth_basic_module.xml">
 ngx_http_auth_basic_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_autoindex_module.xml">
 ngx_http_autoindex_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_browser_module.xml">
 ngx_http_browser_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_charset_module.xml">
 ngx_http_charset_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_dav_module.xml">
 ngx_http_dav_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_empty_gif_module.xml">
 ngx_http_empty_gif_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_fastcgi_module.xml">
 ngx_http_fastcgi_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_flv_module.xml">
 ngx_http_flv_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_geo_module.xml">
 ngx_http_geo_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_geoip_module.xml">
 ngx_http_geoip_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_gzip_module.xml">
 ngx_http_gzip_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_gzip_static_module.xml">
 ngx_http_gzip_static_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_headers_module.xml">
 ngx_http_headers_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_image_filter_module.xml">
 ngx_http_image_filter_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_index_module.xml">
 ngx_http_index_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_limit_conn_module.xml">
 ngx_http_limit_conn_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_limit_req_module.xml">
 ngx_http_limit_req_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_log_module.xml">
 ngx_http_log_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_map_module.xml">
 ngx_http_map_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_memcached_module.xml">
 ngx_http_memcached_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_mp4_module.xml">
 ngx_http_mp4_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_perl_module.xml">
 ngx_http_perl_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_proxy_module.xml">
 ngx_http_proxy_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_random_index_module.xml">
 ngx_http_random_index_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_realip_module.xml">
 ngx_http_realip_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_referer_module.xml">
 ngx_http_referer_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_rewrite_module.xml">
 ngx_http_rewrite_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_secure_link_module.xml">
 ngx_http_secure_link_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_split_clients_module.xml">
 ngx_http_split_clients_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_ssi_module.xml">
 ngx_http_ssi_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_ssl_module.xml">
 ngx_http_ssl_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_sub_module.xml">
 ngx_http_sub_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_upstream_module.xml">
 ngx_http_upstream_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_userid_module.xml">
 ngx_http_userid_module</link>
-</item>
+</listitem>
 
-<item>
+<listitem>
 <link doc="http/ngx_http_xslt_module.xml">
 ngx_http_xslt_module</link>
-</item>
+</listitem>
 
 </list>
 </para>
