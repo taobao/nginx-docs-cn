@@ -7,6 +7,11 @@
 <section>
 
 <para>
+All nginx security issues should be reported to
+<link url="mailto:security-alert@nginx.org">security-alert@nginx.org</link>.
+</para>
+
+<para>
 <link doc="pgp_keys.xml">PGP public keys</link>
 </para>
 
