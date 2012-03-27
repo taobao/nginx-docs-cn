@@ -66,6 +66,58 @@ enough to only declare the required character entities, for example:
 </directive>
 
 
+<directive name="xslt_param">
+<syntax><value>parameter</value> <value>value</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.18</appeared-in>
+
+<para>
+Defines parameters for XSLT stylesheets.
+The <value>value</value> is treated as an XPath expression.
+The <value>value</value> can contain variables.
+To pass a string value to a stylesheet,
+the <link id="xslt_string_param"/> directive can be used.
+</para>
+
+<para>
+There could be several <literal>xslt_param</literal> directives.
+These directives are inherited from the previous level if and
+only if there are no
+<literal>xslt_param</literal> and <link id="xslt_string_param"/>
+directives defined on the current level.
+</para>
+
+</directive>
+
+
+<directive name="xslt_string_param">
+<syntax><value>parameter</value> <value>value</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.18</appeared-in>
+
+<para>
+Defines string parameters for XSLT stylesheets.
+XPath expressions in the <value>value</value> are not interpreted.
+The <value>value</value> can contain variables.
+</para>
+
+<para>
+There could be several <literal>xslt_string_param</literal> directives.
+These directives are inherited from the previous level if and
+only if there are no
+<link id="xslt_param"/> and <literal>xslt_string_param</literal>
+directives defined on the current level.
+</para>
+
+</directive>
+
+
 <directive name="xslt_stylesheet">
 <syntax>
     <value>stylesheet</value>

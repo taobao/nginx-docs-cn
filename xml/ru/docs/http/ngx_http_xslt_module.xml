@@ -66,6 +66,56 @@ location / {
 </directive>
 
 
+<directive name="xslt_param">
+<syntax><value>параметр</value> <value>значение</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.18</appeared-in>
+
+<para>
+Задаёт параметры для XSLT-шаблонов.
+Значение рассматривается как выражение XPath.
+В значении можно использовать переменные.
+Если нужно передать в шаблон строковое значение,
+можно воспользоваться директивой <link id="xslt_string_param"/>.
+</para>
+
+<para>
+Директив <literal>xslt_param</literal> может быть несколько.
+Директивы наследуются с предыдущего уровня при условии, что на данном
+уровне не описаны свои директивы <literal>xslt_param</literal> и
+<link id="xslt_string_param"/>.
+</para>
+
+</directive>
+
+
+<directive name="xslt_string_param">
+<syntax><value>параметр</value> <value>значение</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.18</appeared-in>
+
+<para>
+Задаёт строковые параметры для XSLT-шаблонов.
+Выражения XPath в значении параметра не интерпретируются.
+В значении можно использовать переменные.
+</para>
+
+<para>
+Директив <literal>xslt_string_param</literal> может быть несколько.
+Директивы наследуются с предыдущего уровня при условии, что на данном
+уровне не описаны свои директивы <link id="xslt_param"/> и
+<literal>xslt_string_param</literal>.
+</para>
+
+</directive>
+
+
 <directive name="xslt_stylesheet">
 <syntax>
     <value>шаблон</value>
