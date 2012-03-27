@@ -12,7 +12,8 @@ All nginx security issues should be reported to
 </para>
 
 <para>
-<link doc="pgp_keys.xml">PGP public keys</link>
+Patches are signed using one of the
+<link doc="pgp_keys.xml">PGP public keys</link>.
 </para>
 
 <security>
