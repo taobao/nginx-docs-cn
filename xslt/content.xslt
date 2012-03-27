@@ -158,52 +158,6 @@
       </dd>
    </xsl:template>
 
-   <xsl:template match="list[not(@type)]"> 
-      <ul>
-         <xsl:apply-templates/>
-      </ul>
-   </xsl:template>
-
-   <xsl:template match="para/list[not(@type)]">
-
-      <xsl:text disable-output-escaping="yes">&lt;/p&gt; </xsl:text>
-
-      <ul>
-         <xsl:apply-templates/>
-      </ul>
-
-      <xsl:text disable-output-escaping="yes">&lt;p&gt; </xsl:text>
-   </xsl:template>
-
-   <xsl:template match="item"> 
-      <li>
-         <xsl:apply-templates/>
-      </li>
-   </xsl:template>
-
-   <xsl:template match="orderedlist"> 
-      <ol>
-         <xsl:apply-templates/>
-      </ol>
-   </xsl:template>
-
-   <xsl:template match="para/orderedlist">
-
-      <xsl:text disable-output-escaping="yes">&lt;/p&gt; </xsl:text>
-
-      <ol>
-         <xsl:apply-templates/>
-      </ol>
-
-      <xsl:text disable-output-escaping="yes">&lt;p&gt; </xsl:text>
-   </xsl:template>
-
-   <xsl:template match="item"> 
-      <li>
-         <xsl:apply-templates/>
-      </li>
-   </xsl:template>
-
    <xsl:template match="table[@note and @width]">
 
       <blockquote>
