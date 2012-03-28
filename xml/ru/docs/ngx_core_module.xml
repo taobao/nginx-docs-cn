@@ -290,6 +290,44 @@ timer_resolution 100ms;
 </directive>
 
 
+<directive name="worker_cpu_affinity">
+<syntax><value>маска_CPU</value> ...</syntax>
+<default/>
+<context>main</context>
+
+<para>
+Привязывает рабочие процессы к группам процессоров.
+Каждая группа процессоров задаётся битовой маской
+разрешённых к использованию процессоров.
+Для каждого рабочего процесса должна быть задана отдельная группа.
+По умолчанию рабочие процессы не привязаны к конкретным процессорам.
+</para>
+
+<para>
+Например,
+<example>
+worker_processes    4;
+worker_cpu_affinity 0001 0010 0100 1000;
+</example>
+привязывает каждый рабочий процесс к отдельному процессору, тогда как
+<example>
+worker_processes    2;
+worker_cpu_affinity 0101 1010;
+</example>
+привязывает первый рабочий процесс к CPU0/CPU2,
+а второй — к CPU1/CPU3.
+Второй пример пригоден для hyper-threading.
+</para>
+
+<para>
+<note>
+Директива доступна только на FreeBSD и Linux.
+</note>
+</para>
+
+</directive>
+
+
 <directive name="worker_priority">
 <syntax><value>число</value></syntax>
 <default>0</default>

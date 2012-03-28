@@ -293,6 +293,43 @@ that of <value>user</value> is used.
 </directive>
 
 
+<directive name="worker_cpu_affinity">
+<syntax><value>cpumask</value> ...</syntax>
+<default/>
+<context>main</context>
+
+<para>
+Binds worker processes to the sets of CPUs.
+Each CPU set is represented by a bitmask of allowed to use CPUs.
+There should be a separate set defined for each of the worker processes.
+By default, worker processes are not bound to any specific CPUs.
+</para>
+
+<para>
+For example,
+<example>
+worker_processes    4;
+worker_cpu_affinity 0001 0010 0100 1000;
+</example>
+binds each worker process to a separate CPU, while
+<example>
+worker_processes    2;
+worker_cpu_affinity 0101 1010;
+</example>
+binds the first worker process to CPU0/CPU2,
+and the second worker process to CPU1/CPU3.
+The second example is suitable for hyper-threading.
+</para>
+
+<para>
+<note>
+The directive is only available on FreeBSD and Linux.
+</note>
+</para>
+
+</directive>
+
+
 <directive name="worker_priority">
 <syntax><value>number</value></syntax>
 <default>0</default>
