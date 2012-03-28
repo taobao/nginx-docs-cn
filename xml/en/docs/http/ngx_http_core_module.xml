@@ -745,7 +745,7 @@ location /404.html {
 
 <directive name="keepalive_disable">
 <syntax><literal>none</literal> | <value>browser</value> ...</syntax>
-<default>msie6 safari</default>
+<default>msie6</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -757,9 +757,15 @@ browsers will be affected.
 The value <literal>msie6</literal> disables keep-alive connections
 with old versions of MSIE, after seeing a POST request.
 The value <literal>safari</literal> disables keep-alive connections
-with Safari browsers.
+with Safari and Safari-like browsers on Mac OS X and Mac OS X-like
+operating systems.
 The value <literal>none</literal> enables keep-alive connections
 with all browsers.
+<note>
+Prior to version 1.1.18, the value <literal>safari</literal> matched
+all Safari and Safari-like browsers on all operating systems, and
+keep-alive connections with them were disabled by default.
+</note>
 </para>
 
 </directive>

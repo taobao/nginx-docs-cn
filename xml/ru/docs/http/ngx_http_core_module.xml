@@ -730,7 +730,7 @@ location /404.html {
 
 <directive name="keepalive_disable">
 <syntax><literal>none</literal> | <value>браузер</value> ...</syntax>
-<default>msie6 safari</default>
+<default>msie6</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -742,9 +742,14 @@ location /404.html {
 Значение <literal>msie6</literal> запрещает keep-alive соединения
 со старыми версиями MSIE после получения запроса POST.
 Значение <literal>safari</literal> запрещает keep-alive соединения
-с браузерами Safari.
+с Safari и подобными им браузерами на Mac OS X и подобных ей ОС.
 Значение <literal>none</literal> разрешает keep-alive соединения
 со всеми браузерами.
+<note>
+До версии 1.1.18 под значение <literal>safari</literal> подпадали
+все Sarari и подобные им браузеры на всех ОС, и keep-alive
+соединения с ними были по умолчанию запрещены.
+</note>
 </para>
 
 </directive>
