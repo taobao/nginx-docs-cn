@@ -20,6 +20,7 @@ Patches are signed using one of the
 
 <item name="Memory disclosure with specially crafted backend responses"
       severity="major"
+      cve="2012-1180"
       good="1.1.17+, 1.0.14+"
       vulnerable="0.1.0-1.1.16"
       patch="patch.2012.memory.txt" />
