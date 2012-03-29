@@ -18,7 +18,7 @@ with a message referring to nginx: &ldquo;Welcome to nginx!&rdquo; or
 
 <para>
 I suspect something is wrong and there is probably a malicious attempt here
-to direct me to a rogue web page (for hacking my computer, phishing etc.).
+to direct me to a rogue web page (to break into my computer, do phishing etc.).
 Why is that and what has nginx to do with my attempts to connect
 to Facebook (Yahoo!, Google, etc.) ?
 </para>
@@ -40,10 +40,10 @@ responses that can be produced by any of the web sites running nginx.
 
 <para>
 However, you are right in your assumption that something must be wrong
-with your computer or browser, or operating system setup when you are
+with your browser, operating system or even router setup when you are
 trying to access a well known web site and instead of a familiar page you get
 &ldquo;Welcome to nginx!&rdquo;. This should not happen if your computer
-is clean and safe.
+and network are clean and safe.
 </para>
 
 <para>
@@ -52,8 +52,7 @@ We recommend you to check and verify your entire system setup
 and it would also be a good idea to install and run an anti-virus software
 on your computer. It may happen that some malign entity is trying
 to divert the traffic from your computer to a wrong server and
-potentially cause significant harm to you and the other users on
-the Internet.
+hijack the data, which may subsequently lead to a significant harm.
 </para>
 
 <para>
@@ -61,7 +60,7 @@ What you should check is at least the following:
 </para>
 
 <para>
-(Disclaimer: we at nginx are not responsible for any negative
+(Disclaimer: at nginx we are not responsible for any negative
 impact or effects that the actions below might cause. Use the
 following recommendations at your own risk, especially if
 you aren't an experienced user of your operating system and/or
@@ -106,7 +105,7 @@ with absolutely no redirection."
 Try to clear browser data (cache, cookies etc.), e.g. perform
 "Clear Browsing Data (Chrome)". Caution: you may be
 deleting saved passwords information here, so do it carefully
-and check what actions you are performing.
+and check what exact actions you are performing.
 </listitem>
 
 <listitem>
@@ -139,6 +138,16 @@ http://code.google.com/speed/public-dns/
 <para>
 <link url="http://code.google.com/speed/public-dns/docs/using.html">
 http://code.google.com/speed/public-dns/docs/using.html
+</link>
+</para>
+
+<para>
+Microsoft's Malicious Software Removal Tool:
+</para>
+
+<para>
+<link url="http://www.microsoft.com/security/pc-security/malware-removal.aspx">
+http://www.microsoft.com/security/pc-security/malware-removal.aspx
 </link>
 </para>
 
