@@ -39,17 +39,37 @@ X:stylesheet {
         X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
-    X:template = "list[@type='bullet']" { <ul> !!; </ul> }
+    X:template = "list[@type='bullet']" {
+        X:if "@compact = 'yes'" {
+            <ul class="compact"> !!; </ul>
+        } else {
+            <ul> !!; </ul>
+        }
+    }
     X:template = "para/list[@type='bullet']" {
         X:text disable-output-escaping="yes" {&lt;/p&gt; }
-        <ul> !!; </ul>
+        X:if "@compact = 'yes'" {
+            <ul class="compact"> !!; </ul>
+        } else {
+            <ul> !!; </ul>
+        }
         X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
-    X:template = "list[@type='enum']" { <ol> !!; </ol> }
+    X:template = "list[@type='enum']" {
+        X:if "@compact = 'yes'" {
+            <ol class="compact"> !!; </ol>
+        } else {
+            <ol> !!; </ol>
+        }
+    }
     X:template = "para/list[@type='enum']" {
         X:text disable-output-escaping="yes" {&lt;/p&gt; }
-        <ol> !!; </ol>
+        X:if "@compact = 'yes'" {
+            <ol class="compact"> !!; </ol>
+        } else {
+            <ol> !!; </ol>
+        }
         X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 

@@ -60,6 +60,7 @@
 <!ELEMENT   list        (listitem+ | (tag-name | tag-desc)+) >
 <!ATTLIST   list
             type        (bullet | enum | tag) #REQUIRED
+            compact     (yes | no) "yes"
 >
 
 <!ELEMENT   listitem    ANY >

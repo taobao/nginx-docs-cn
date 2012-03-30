@@ -20,7 +20,9 @@ X:template style (lang) {
         span.initial      { font-size:      200%;
                             float:          left;
                             padding-right:  10pt;}
-        li                { text-align:     justify; }
+        li                { text-align:     justify;
+                            padding-top:    0.5em; }
+        .compact li       { padding-top:    0; }
         dd                { text-align:     justify; }
         td.list           { background:     #EEEEEE; }
         blockquote.note   { text-align:     justify;

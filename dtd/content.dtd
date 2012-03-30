@@ -43,7 +43,8 @@
 <!ELEMENT  list         (listitem+) >
 <!ATTLIST  list
            type         (bullet | enum) #REQUIRED
-           >
+           compact      (yes | no) "yes"
+>
 
 <!ELEMENT  listitem     (#PCDATA | para | br | nobr | list | i | b | url |
                          path | literal | value | programlisting |
