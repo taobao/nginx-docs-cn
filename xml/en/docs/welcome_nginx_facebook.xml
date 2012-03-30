@@ -71,7 +71,7 @@ use, data, or profits; or business interruption).
 </para>
 
 <para>
-<list type="bullet">
+<list type="bullet" compact="no">
 <listitem>
 Check your TCP/IP settings and see if the DNS servers
 configuration matches the one recommended by your Internet
