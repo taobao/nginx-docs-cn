@@ -89,36 +89,86 @@
       <xsl:text disable-output-escaping="yes">&lt;p&gt; </xsl:text>
    </xsl:template>
 
-   <xsl:template match="list[@type='bullet']"> 
-      <ul>
-         <xsl:apply-templates/>
-      </ul>
+   <xsl:template match="list[@type='bullet']">
+      <xsl:choose>
+
+         <xsl:when test="@compact = 'yes'">
+
+            <ul class="compact">
+               <xsl:apply-templates/>
+            </ul>
+         </xsl:when>
+
+         <xsl:otherwise>
+
+            <ul>
+               <xsl:apply-templates/>
+            </ul>
+         </xsl:otherwise>
+      </xsl:choose>
    </xsl:template>
 
    <xsl:template match="para/list[@type='bullet']">
 
       <xsl:text disable-output-escaping="yes">&lt;/p&gt; </xsl:text>
+      <xsl:choose>
 
-      <ul>
-         <xsl:apply-templates/>
-      </ul>
+         <xsl:when test="@compact = 'yes'">
+
+            <ul class="compact">
+               <xsl:apply-templates/>
+            </ul>
+         </xsl:when>
+
+         <xsl:otherwise>
+
+            <ul>
+               <xsl:apply-templates/>
+            </ul>
+         </xsl:otherwise>
+      </xsl:choose>
 
       <xsl:text disable-output-escaping="yes">&lt;p&gt; </xsl:text>
    </xsl:template>
 
-   <xsl:template match="list[@type='enum']"> 
-      <ol>
-         <xsl:apply-templates/>
-      </ol>
+   <xsl:template match="list[@type='enum']">
+      <xsl:choose>
+
+         <xsl:when test="@compact = 'yes'">
+
+            <ol class="compact">
+               <xsl:apply-templates/>
+            </ol>
+         </xsl:when>
+
+         <xsl:otherwise>
+
+            <ol>
+               <xsl:apply-templates/>
+            </ol>
+         </xsl:otherwise>
+      </xsl:choose>
    </xsl:template>
 
    <xsl:template match="para/list[@type='enum']">
 
       <xsl:text disable-output-escaping="yes">&lt;/p&gt; </xsl:text>
+      <xsl:choose>
 
-      <ol>
-         <xsl:apply-templates/>
-      </ol>
+         <xsl:when test="@compact = 'yes'">
+
+            <ol class="compact">
+               <xsl:apply-templates/>
+            </ol>
+         </xsl:when>
+
+         <xsl:otherwise>
+
+            <ol>
+               <xsl:apply-templates/>
+            </ol>
+         </xsl:otherwise>
+      </xsl:choose>
 
       <xsl:text disable-output-escaping="yes">&lt;p&gt; </xsl:text>
    </xsl:template>
