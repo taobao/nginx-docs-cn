@@ -1095,7 +1095,6 @@ listen unix:/var/run/nginx.sock;
 Если же директив с параметром <literal>default_server</literal> нет, то
 сервером по умолчанию будет первый сервер, в котором описана пара
 <value>адрес</value>:<value>порт</value>.
-адрес:порт.
 <note>
 До версии 0.8.21 этот параметр назывался просто
 <literal>default</literal>.
@@ -1210,7 +1209,7 @@ listen unix:/var/run/nginx.sock;
 работающего сразу в двух режимах — HTTP и HTTPS.
 <example>
 listen 80;
-listen 443 default ssl;
+listen 443 ssl;
 </example>
 </tag-desc>
 

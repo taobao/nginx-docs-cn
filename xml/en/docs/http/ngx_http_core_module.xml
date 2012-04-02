@@ -1229,7 +1229,7 @@ This allows for a more compact configuration for the server operating
 in both HTTP and HTTPS modes simultaneously.
 <example>
 listen 80;
-listen 443 default ssl;
+listen 443 ssl;
 </example>
 </tag-desc>
 
