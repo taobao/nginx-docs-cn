@@ -537,7 +537,7 @@ disable_symlinks on from=$document_root;
 Модули
 <link doc="ngx_http_autoindex_module.xml">ngx_http_autoindex_module</link>,
 <link doc="ngx_http_random_index_module.xml">ngx_http_random_index_module</link>
-и <link doc="ngx_http_dav_module.xml">ngx_http_dav_module.xml</link>
+и <link doc="ngx_http_dav_module.xml">ngx_http_dav_module</link>
 в настоящий момент игнорируют эту директиву.
 </note>
 </para>

@@ -547,7 +547,7 @@ have read permissions for all checked directories.
 The
 <link doc="ngx_http_autoindex_module.xml">ngx_http_autoindex_module</link>,
 <link doc="ngx_http_random_index_module.xml">ngx_http_random_index_module</link>,
-and <link doc="ngx_http_dav_module.xml">ngx_http_dav_module.xml</link>
+and <link doc="ngx_http_dav_module.xml">ngx_http_dav_module</link>
 modules currently ignore this directive.
 </note>
 </para>
