@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-   <xsl:output doctype-system="../../../dtd/article.dtd" method="xml"/>
+   <xsl:output doctype-system="../../../dtd/article.dtd" encoding="utf-8" method="xml"/>
 
    <xsl:param select="'../xml'" name="XML"/>
 
