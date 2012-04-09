@@ -384,14 +384,6 @@
       </nobr>
    </xsl:template>
 
-   <xsl:template match="mdash">
-      <xsl:text> — </xsl:text>
-   </xsl:template>
-
-   <xsl:template match="space">
-      <xsl:text> </xsl:text>
-   </xsl:template>
-
    <xsl:template match="br"> 
       <br/>
    </xsl:template>
