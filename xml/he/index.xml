@@ -238,11 +238,11 @@ File AIO (במערכות FreeBSD 4.3 ומעלה ולינוקס 2.6.22 ומעלה
 <list type="bullet">
 
 <listitem>
-FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 8 / amd64;
+FreeBSD 3&mdash;8 / i386; FreeBSD 5&mdash;8 / amd64;
 </listitem>
 
 <listitem>
-לינוקס 2.2 &mdash; 2.6 / i386; לינוקס 2.6 / amd64;
+לינוקס 2.2&mdash;2.6 / i386; לינוקס 2.6 / amd64;
 </listitem>
 
 <listitem>

@@ -215,11 +215,11 @@ Accept-filters (FreeBSD 4.1+) と TCP_DEFER_ACCEPT (Linux 2.4+) のサポート
 <list type="bullet">
 
 <listitem>
-FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 8 / amd64;
+FreeBSD 3&mdash;8 / i386; FreeBSD 5&mdash;8 / amd64;
 </listitem>
 
 <listitem>
-Linux 2.2 &mdash; 2.6 / i386; Linux 2.6 / amd64;
+Linux 2.2&mdash;2.6 / i386; Linux 2.6 / amd64;
 </listitem>
 
 <listitem>

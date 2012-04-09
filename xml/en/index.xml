@@ -296,11 +296,11 @@ Data copy operations are kept to a minimum.
 <list type="bullet">
 
 <listitem>
-FreeBSD 3 &mdash; 10 / i386; FreeBSD 5 &mdash; 10 / amd64;
+FreeBSD 3&mdash;10 / i386; FreeBSD 5&mdash;10 / amd64;
 </listitem>
 
 <listitem>
-Linux 2.2 &mdash; 2.6 / i386; Linux 2.6 / amd64;
+Linux 2.2&mdash;2.6 / i386; Linux 2.6 / amd64;
 </listitem>
 
 <listitem>
