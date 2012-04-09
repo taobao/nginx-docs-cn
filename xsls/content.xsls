@@ -141,8 +141,6 @@ X:stylesheet {
     X:template = "i" { <i> !!; </i> }
     X:template = "b" { <b> !!; </b> }
     X:template = "nobr" { <nobr> !!; </nobr> }
-    X:template = "mdash" { X:text {&#xA0;&#8212; } }
-    X:template = "space" { X:text { } }
     X:template = "br" { <br/> }
 
 
