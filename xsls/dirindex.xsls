@@ -1,6 +1,6 @@
 X:stylesheet {
 
-X:output method="xml" doctype-system="../../../dtd/article.dtd";
+X:output method="xml" doctype-system="../../../dtd/article.dtd" encoding="utf-8";
 
 <!--
   -- a current directory of a XSLT script is where the script is stored,
