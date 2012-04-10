@@ -8,6 +8,10 @@
 <para>
 <list type="bullet">
 <listitem>
+<link url="http://nginx.org/keys/aalexeev.key">Andrew Alexeev&rsquo;s
+PGP public key</link>
+</listitem>
+<listitem>
 <link url="http://nginx.org/keys/is.key">Igor Sysoev&rsquo;s
 PGP public key</link>
 </listitem>
