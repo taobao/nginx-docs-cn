@@ -170,7 +170,7 @@ HTTPS</link>.
 <literal>--with-pcre=<value>путь</value></literal>&mdash;задаёт
 путь к исходным текстам библиотеки PCRE.
 Дистрибутив библиотеки (версию
-4.4&mdash;8.21) нужно взять на сайте <link url="http://www.pcre.org">PCRE</link>
+4.4&mdash;8.30) нужно взять на сайте <link url="http://www.pcre.org">PCRE</link>
 и распаковать.
 Всё остальное сделают ./configure nginx'а и make.
 Библиотека нужна для использования регулярных выражений в директиве
@@ -183,7 +183,8 @@ HTTPS</link>.
 <listitem>
 <para>
 <literal>--with-pcre-jit</literal>&mdash;собирает библиотеку PCRE с
-поддержкой JIT-компиляции.
+поддержкой JIT-компиляции (1.1.12, см.
+<link doc="ngx_core_module.xml" id="pcre_jit"/>). 
 </para>
 </listitem>
 

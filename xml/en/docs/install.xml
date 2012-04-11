@@ -175,7 +175,7 @@ The OpenSSL library is required to build and run this module.
 <literal>--with-pcre=<value>path</value></literal>&mdash;sets
 the path to the sources of the PCRE library.
 The library distribution (version
-4.4&mdash;8.21) needs to be downloaded from the
+4.4&mdash;8.30) needs to be downloaded from the
 <link url="http://www.pcre.org">PCRE</link> site and extracted.
 The rest is done by nginx's ./configure and make.
 The library is required for regular expressions support in the
@@ -189,7 +189,8 @@ module.
 <listitem>
 <para>
 <literal>--with-pcre-jit</literal>&mdash;builds the PCRE library with
-“just-in-time compilation” support.
+“just-in-time compilation” support (1.1.12, see
+<link doc="ngx_core_module.xml" id="pcre_jit"/>).
 </para>
 </listitem>
 
