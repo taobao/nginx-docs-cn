@@ -18,6 +18,13 @@ Patches are signed using one of the
 
 <security>
 
+<item name="Buffer overflow in the ngx_http_mp4_module"
+      severity="major"
+      cve="2012-2089"
+      good="1.1.19+, 1.0.15+"
+      vulnerable="1.1.3-1.1.18, 1.0.7-1.0.14"
+      patch="patch.2012.mp4.txt" />
+
 <item name="Memory disclosure with specially crafted backend responses"
       severity="major"
       cve="2012-1180"

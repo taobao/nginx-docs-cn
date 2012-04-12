@@ -9,6 +9,7 @@
 
 <download last="1" changes="CHANGES.ru">
 
+<item ver="1.1.19" pgp="yes" win="yes" />
 <item ver="1.1.18" pgp="yes" win="yes" />
 <item ver="1.1.17" pgp="yes" win="yes" />
 <item ver="1.1.16" pgp="yes" win="yes" />
@@ -38,6 +39,7 @@
 
 <download last="1" changes="CHANGES.ru-1.0">
 
+<item ver="1.0.15" pgp="yes" win="yes" />
 <item ver="1.0.14" pgp="yes" win="yes" />
 <item ver="1.0.13" pgp="yes" win="yes" />
 <item ver="1.0.12" pgp="yes" win="yes" />
