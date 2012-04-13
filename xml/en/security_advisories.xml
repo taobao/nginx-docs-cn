@@ -32,6 +32,12 @@ Patches are signed using one of the
       vulnerable="0.1.0-1.1.16"
       patch="patch.2012.memory.txt" />
 
+<item name="Buffer overflow in resolver"
+      severity="medium"
+      cve="2011-4315"
+      good="1.1.8+, 1.0.10+"
+      vulnerable="0.6.18-1.1.7" />
+
 <item name="Vulnerabilities with invalid UTF-8 sequence on Windows"
       severity="major"
       cve="2010-2266"
