@@ -102,10 +102,16 @@ with absolutely no redirection."
 </listitem>
 
 <listitem>
-Try to clear browser data (cache, cookies etc.), e.g. perform
-"Clear Browsing Data (Chrome)". Caution: you may be
-deleting saved passwords information here, so do it carefully
-and check what exact actions you are performing.
+If you change DNS settings, clear your DNS resolver cache. On
+Microsoft Windows it is done with the following command:
+Start > Run > ipconfig /flushdns
+</listitem>
+
+<listitem>
+Clear browser data (cache, cookies etc.), e.g. in Chrome
+find and click "Clear Browsing Data" (Settings > Under the Hood).
+Caution: you may be deleting saved passwords information here,
+so do it carefully and check what exact actions you are performing.
 </listitem>
 
 <listitem>
@@ -116,11 +122,11 @@ your favorite browser and/or try a different one if possible.
 
 <listitem>
 If cleaning "hosts" file (when applicable), changing
-DNS servers to Google Public DNS, or fixing your browser
-configuration have helped, it might be that there's a malware
-somewhere on your PC or around. It makes perfect sense then
-to run a number of checks using your preferred
-anti-virus/anti-malware tools.
+DNS servers to Google Public DNS, flushing DNS resolver cache,
+or fixing your browser configuration have helped, it might be
+that there's a malware somewhere on your PC or around.
+It makes perfect sense then to run a number of checks using
+your preferred anti-virus/anti-malware tools.
 </listitem>
 </list>
 </para>
