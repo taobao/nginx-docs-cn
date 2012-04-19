@@ -7,9 +7,19 @@
       </img>
    </xsl:template>
 
-   <xsl:template match="link[@url]"> 
+   <xsl:template match="link[@url]">
+
       <a href="{@url}">
-         <xsl:apply-templates/>
+         <xsl:choose>
+
+            <xsl:when test="count(node()) != 0">
+               <xsl:apply-templates/>
+            </xsl:when>
+            <xsl:otherwise>
+               <xsl:value-of select="@url"/>
+            </xsl:otherwise>
+         </xsl:choose>
+
       </a>
    </xsl:template>
 
