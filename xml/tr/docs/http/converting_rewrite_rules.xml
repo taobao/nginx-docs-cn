@@ -10,8 +10,8 @@
 Paylaşımlı hosting kullananlar genelde her şeyi, sadece Apache&rsquo;nin .htaccess dosyalarını yapılandırarak kullanırlar. Bu dosyada bulunan kuralların çevirisine örnek olarak:
 
 <programlisting>
-RewriteCond  %{HTTP_HOST}  nginx.org
-RewriteRule  (.*)          http://www.nginx.org$1
+RewriteCond  %{HTTP_HOST}  example.org
+RewriteRule  (.*)          http://www.example.org$1
 </programlisting>
 
 kuralı, nginx içerisinde şu şekilde yapılıyor:
@@ -19,9 +19,9 @@ kuralı, nginx içerisinde şu şekilde yapılıyor:
 <programlisting>
 server {
     listen       80;
-    server_name  www.nginx.org  nginx.org;
-    if ($http_host = nginx.org) {
-        rewrite  (.*)  http://www.nginx.org$1;
+    server_name  www.example.org  example.org;
+    if ($http_host = example.org) {
+        rewrite  (.*)  http://www.example.org$1;
     }
     ...
 }
@@ -34,13 +34,13 @@ Bu yanlış, kullanışsız ve etkisiz bir yoldur. Doğru olan ayrı bir sunucu 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org;
-    rewrite   ^  http://www.nginx.org$request_uri?;
+    server_name  example.org;
+    rewrite   ^  http://www.example.org$request_uri?;
 }
 
 server {
     listen       80;
-    server_name  www.nginx.org;
+    server_name  www.example.org;
     ...
 }
 </programlisting>
@@ -52,27 +52,27 @@ server {
 <section>
 
 <para>
-Diğer bir örnek ile aşağıdaki geri kalmış mantık yerine (<url>nginx.com</url> olmayan her şey ve <url>www.nginx.com</url> olmayan her şey):
+Diğer bir örnek ile aşağıdaki geri kalmış mantık yerine (<url>example.com</url> olmayan her şey ve <url>www.example.com</url> olmayan her şey):
 
 <programlisting>
-RewriteCond  %{HTTP_HOST}  !nginx.com
-RewriteCond  %{HTTP_HOST}  !www.nginx.com
-RewriteRule  (.*)          http://www.nginx.com$1
+RewriteCond  %{HTTP_HOST}  !example.com
+RewriteCond  %{HTTP_HOST}  !www.example.com
+RewriteRule  (.*)          http://www.example.com$1
 </programlisting>
 
-sadece <url>nginx.com</url>, <url>www.nginx.com</url> ve diğer her şeyi ayrı ayrı tanımlamalısınız:
+sadece <url>example.com</url>, <url>www.example.com</url> ve diğer her şeyi ayrı ayrı tanımlamalısınız:
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.com  www.nginx.com;
+    server_name  example.com  www.example.com;
     ...
 }
 
 server {
     listen       80 default_server;
     server_name  _;
-    rewrite   ^  http://nginx.com$request_uri?;
+    rewrite   ^  http://example.com$request_uri?;
 }
 </programlisting>
 </para>

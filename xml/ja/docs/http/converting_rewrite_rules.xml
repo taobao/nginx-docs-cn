@@ -10,8 +10,8 @@
 共有のホスティングで Apache の .htaccess ファイル<i>のみ</i>で<i>すべて</i>を設定してきたのなら、次のようにルールをコンバートします:
 
 <programlisting>
-RewriteCond  %{HTTP_HOST}  nginx.org
-RewriteRule  (.*)          http://www.nginx.org$1
+RewriteCond  %{HTTP_HOST}  example.org
+RewriteRule  (.*)          http://www.example.org$1
 </programlisting>
 
 上記は下記のようになります:
@@ -19,9 +19,9 @@ RewriteRule  (.*)          http://www.nginx.org$1
 <programlisting>
 server {
     listen       80;
-    server_name  www.nginx.org  nginx.org;
-    if ($http_host = nginx.org) {
-        rewrite  (.*)  http://www.nginx.org$1;
+    server_name  www.example.org  example.org;
+    if ($http_host = example.org) {
+        rewrite  (.*)  http://www.example.org$1;
     }
     ...
 }
@@ -29,18 +29,18 @@ server {
 </para>
 
 <para>
-これは間違っていて面倒で非効率的な方法です。正しい方法は <url>nginx.org</url> 用に別のサーバを定義します:
+これは間違っていて面倒で非効率的な方法です。正しい方法は <url>example.org</url> 用に別のサーバを定義します:
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org;
-    rewrite   ^  http://www.nginx.org$request_uri?;
+    server_name  example.org;
+    rewrite   ^  http://www.example.org$request_uri?;
 }
 
 server {
     listen       80;
-    server_name  www.nginx.org;
+    server_name  www.example.org;
     ...
 }
 </programlisting>
@@ -52,28 +52,28 @@ server {
 <section>
 
 <para>
-別の例として、<url>nginx.com</url> 以外と <url>www.nginx.com</url> 以外のすべて、という後方ロジックの代わりの例です:
+別の例として、<url>example.com</url> 以外と <url>www.example.com</url> 以外のすべて、という後方ロジックの代わりの例です:
 
 <programlisting>
-RewriteCond  %{HTTP_HOST}  !nginx.com
-RewriteCond  %{HTTP_HOST}  !www.nginx.com
-RewriteRule  (.*)          http://www.nginx.com$1
+RewriteCond  %{HTTP_HOST}  !example.com
+RewriteCond  %{HTTP_HOST}  !www.example.com
+RewriteRule  (.*)          http://www.example.com$1
 </programlisting>
 
-この場合、単に <url>nginx.com</url>、<url>www.nginx.com</url>、そしてそれ以外を定義します:
+この場合、単に <url>example.com</url>、<url>www.example.com</url>、そしてそれ以外を定義します:
 
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org;
+    server_name  example.org  www.example.org;
     ...
 }
 
 server {
     listen       80 default_server;
     server_name  _;
-    rewrite   ^  http://nginx.org$request_uri?;
+    rewrite   ^  http://example.org$request_uri?;
 }
 </programlisting>
 </para>

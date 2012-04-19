@@ -29,7 +29,7 @@
 <para>
 <example>
 valid_referers none blocked server_names
-               *.example.com example.* www.example.info/galleries/
+               *.example.com example.* www.example.org/galleries/
                ~\.google\.;
 
 if ($invalid_referer) {
@@ -104,7 +104,7 @@ if ($invalid_referer) {
 Пример:
 <example>
 valid_referers none blocked server_names
-               *.example.com example.* www.example.info/galleries/
+               *.example.com example.* www.example.org/galleries/
                ~\.google\.;
 </example>
 </para>

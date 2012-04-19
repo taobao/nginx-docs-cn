@@ -28,7 +28,7 @@ not send the <header>Referer</header> field even for valid requests.
 <para>
 <example>
 valid_referers none blocked server_names
-               *.example.com example.* www.example.info/galleries/
+               *.example.com example.* www.example.org/galleries/
                ~\.google\.;
 
 if ($invalid_referer) {
@@ -104,7 +104,7 @@ the text starting after the “<literal>http://</literal>”.
 Example:
 <example>
 valid_referers none blocked server_names
-               *.example.com example.* www.example.info/galleries/
+               *.example.com example.* www.example.org/galleries/
                ~\.google\.;
 </example>
 </para>

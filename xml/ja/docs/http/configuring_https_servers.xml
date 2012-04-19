@@ -14,10 +14,10 @@ HTTPS サーバを設定するには server ブロックで SSL プロトコル�
 <programlisting>
 server {
     listen               443;
-    server_name          www.nginx.com;
+    server_name          www.example.com;
     ssl                  on;
-    ssl_certificate      www.nginx.com.crt;
-    ssl_certificate_key  www.nginx.com.key;
+    ssl_certificate      www.example.com.crt;
+    ssl_certificate_key  www.example.com.key;
     ssl_protocols        SSLv3 TLSv1;
     ssl_ciphers          HIGH:!ADH:!MD5;
     ...
@@ -27,8 +27,8 @@ server {
 サーバ証明書とはドメインの所有者情報や、送信情報の暗号化に必要な公開鍵を含む電子証明書です。そのサーバに接続するすべてのクライアントに送られます。秘密鍵はサーバ証明書に含まれる公開鍵で暗号化された情報を復号するために必要な鍵で、秘匿する必要が有ります。アクセスを制限したファイルに保存するようにしてください。ただし、nginx のマスタープロセスからは読めるようにする必要があります。もうひとつの方法として、秘密鍵は証明書と同じファイルに保存することもできます:
 
 <programlisting>
-    ssl_certificate      www.nginx.com.cert;
-    ssl_certificate_key  www.nginx.com.cert;
+    ssl_certificate      www.example.com.cert;
+    ssl_certificate_key  www.example.com.cert;
 </programlisting>
 
 この場合もファイルのアクセス権は制限するようにします。証明書と秘密鍵がひとつのファイルに保存されていても、証明書だけがクライアントに送られます。
@@ -56,12 +56,12 @@ http {
 
     server {
         listen               443;
-        server_name          www.nginx.com;
+        server_name          www.example.com;
         <b>keepalive_timeout    70</b>;
 
         ssl                  on;
-        ssl_certificate      www.nginx.com.crt;
-        ssl_certificate_key  www.nginx.com.key;
+        ssl_certificate      www.example.com.crt;
+        ssl_certificate_key  www.example.com.key;
         ssl_protocols        SSLv3 TLSv1;
         ssl_ciphers          HIGH:!ADH:!MD5;
         ...
@@ -77,7 +77,7 @@ http {
 ブラウザによっては有名な認証局によって署名された証明書にエラーをだすことがあります。その一方でその証明書を他のブラウザでは問題なく受け入れることもあります。これは発行している認証局が、有名で信用されている認証局の認証基盤には含まれない特定のブラウザで配布されている中間証明書を使ったサーバ証明書に署名しているからです。このケースでは、認証局は署名されたサーバ証明書に連結されているはずの連鎖証明書のバンドルを提供しています。サーバ証明書は、かならず結合されたファイル内の連鎖証明書に存在している必要があります:
 
 <programlisting>
-$ cat www.nginx.com.crt bundle.crt > www.nginx.com.chained.crt
+$ cat www.example.com.crt bundle.crt > www.example.com.chained.crt
 </programlisting>
 
 この結合されたファイルを <literal>ssl_certificate</literal> ディレクティブで使われるようにします:
@@ -85,10 +85,10 @@ $ cat www.nginx.com.crt bundle.crt > www.nginx.com.chained.crt
 <programlisting>
 server {
     listen               443;
-    server_name          www.nginx.com;
+    server_name          www.example.com;
     ssl                  on;
-    ssl_certificate      www.nginx.com.chained.crt;
-    ssl_certificate_key  www.nginx.com.key;
+    ssl_certificate      www.example.com.chained.crt;
+    ssl_certificate_key  www.example.com.key;
     ...
 }
 </programlisting>
@@ -96,7 +96,7 @@ server {
 サーバ証明書とバンドルされたものが間違った順序で連結されていた場合、nginx は起動に失敗して次のエラーメッセージを表示します:
 
 <programlisting>
-SSL_CTX_use_PrivateKey_file(" ... /www.nginx.com.key") failed
+SSL_CTX_use_PrivateKey_file(" ... /www.example.com.key") failed
    (SSL: error:0B080074:x509 certificate routines:
     X509_check_private_key:key values mismatch)
 </programlisting>
@@ -152,9 +152,9 @@ Certificate chain
 server {
     listen               80;
     listen               443  ssl;
-    server_name          www.nginx.com;
-    ssl_certificate      www.nginx.com.crt;
-    ssl_certificate_key  www.nginx.com.key;
+    server_name          www.example.com;
+    ssl_certificate      www.example.com.crt;
+    ssl_certificate_key  www.example.com.key;
     ...
 }
 </programlisting>
@@ -178,22 +178,22 @@ listen  443  default  ssl;
 <programlisting>
 server {
     listen           443;
-    server_name      www.nginx.com;
+    server_name      www.example.com;
     ssl              on;
-    ssl_certificate  www.nginx.com.crt;
+    ssl_certificate  www.example.com.crt;
     ...
 }
 
 server {
     listen           443;
-    server_name      www.nginx.org;
+    server_name      www.example.org;
     ssl              on;
-    ssl_certificate  www.nginx.org.crt;
+    ssl_certificate  www.example.org.crt;
     ...
 }
 </programlisting>
 
-この設定では、ブラウザはリクエストされたサーバ名に関わらずデフォルトサーバ、すなわちここでは <url>www.nginx.com</url> の証明書を受信します。これは SSL プロトコルの作用によるものです。この SSL 接続はブラウザが HTTP リクエストを送る前に確立されるので、nginx にはリクエストされたサーバ名は分かりません。したがって、デフォルトサーバの証明書を送ることしかできません。
+この設定では、ブラウザはリクエストされたサーバ名に関わらずデフォルトサーバ、すなわちここでは <url>www.example.com</url> の証明書を受信します。これは SSL プロトコルの作用によるものです。この SSL 接続はブラウザが HTTP リクエストを送る前に確立されるので、nginx にはリクエストされたサーバ名は分かりません。したがって、デフォルトサーバの証明書を送ることしかできません。
 </para>
 
 <para>
@@ -202,17 +202,17 @@ server {
 <programlisting>
 server {
     listen           192.168.1.1:443;
-    server_name      www.nginx.com;
+    server_name      www.example.com;
     ssl              on;
-    ssl_certificate  www.nginx.com.crt;
+    ssl_certificate  www.example.com.crt;
     ...
 }
 
 server {
     listen           192.168.1.2:443;
-    server_name      www.nginx.org;
+    server_name      www.example.org;
     ssl              on;
-    ssl_certificate  www.nginx.org.crt;
+    ssl_certificate  www.example.org.crt;
     ...
 }
 </programlisting>
@@ -225,11 +225,11 @@ server {
         name="複数サーバ名をもつ SSL 証明書">
 
 <para>
-単一の IP アドレスを複数の HTTPS サーバ間で共有する方法は他にもありますが、どれも欠点があります。ひとつは、SubjectAltName フィールドに複数サーバ名（例えば、<url>www.nginx.com</url> と <url>www.nginx.org</url>）をもつ単一の証明書を使用する方法です。しかし、SubjectAltName の長さには制限があります。
+単一の IP アドレスを複数の HTTPS サーバ間で共有する方法は他にもありますが、どれも欠点があります。ひとつは、SubjectAltName フィールドに複数サーバ名（例えば、<url>www.example.com</url> と <url>www.example.org</url>）をもつ単一の証明書を使用する方法です。しかし、SubjectAltName の長さには制限があります。
 </para>
 
 <para>
-もうひとつの方法は、例えば <url>*.nginx.org</url> のようにワイルドカード名を持った証明書を使用する方法です。この証明書は <url>www.nginx.org</url> にマッチしますが <url>nginx.org</url> や <url>www.sub.nginx.org</url> にはマッチしません。以上の二つの方法は組み合わせることもできます。証明書には、例えば <url>nginx.org</url> と <url>*.nginx.org</url> のように SubjectAltName フィールドに完全一致名とワイルドカード名を含ませることができます。
+もうひとつの方法は、例えば <url>*.example.org</url> のようにワイルドカード名を持った証明書を使用する方法です。この証明書は <url>www.example.org</url> にマッチしますが <url>example.org</url> や <url>www.sub.example.org</url> にはマッチしません。以上の二つの方法は組み合わせることもできます。証明書には、例えば <url>example.org</url> と <url>*.example.org</url> のように SubjectAltName フィールドに完全一致名とワイルドカード名を含ませることができます。
 </para>
 
 <para>
@@ -241,14 +241,14 @@ ssl_certificate_key  common.key;
 
 server {
     listen           443;
-    server_name      www.nginx.com;
+    server_name      www.example.com;
     ssl              on;
     ...
 }
 
 server {
     listen           443;
-    server_name      www.nginx.org;
+    server_name      www.example.org;
     ssl              on;
     ...
 }

@@ -17,13 +17,13 @@
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org;
+    server_name  example.org  www.example.org;
     ...
 }
 
 server {
     listen       80;
-    server_name  *.nginx.org;
+    server_name  *.example.org;
     ...
 }
 
@@ -35,7 +35,7 @@ server {
 
 server {
     listen       80;
-    server_name  ~^(?&lt;user&gt;.+)\.nginx\.net$;
+    server_name  ~^(?&lt;user&gt;.+)\.example\.net$;
     ...
 }
 </programlisting>
@@ -49,7 +49,7 @@ server {
 </listitem>
 
 <listitem>
-שמות Wildcard המתחילים בכוכבית: <url>*.nginx.org</url>;
+שמות Wildcard המתחילים בכוכבית: <url>*.example.org</url>;
 </listitem>
 
 <listitem>
@@ -72,20 +72,20 @@ server {
 
 <para>
 שם wildcard יכול להכיל כוכבית רק בתחילת או בסוף השם, וחייב להיות בגבול של נקודה.
-השמות <literal>www.*.nginx.org</literal>
-ו <literal>w*.nginx.org</literal> הם שגויים.
+השמות <literal>www.*.example.org</literal>
+ו <literal>w*.example.org</literal> הם שגויים.
 למרות זאת, ניתן לציין שמות כאלה באמצעות ביטויים רגולריים,
-לדוגמא, <literal>~^www\..+\.nginx\.org$</literal> ו
-<literal>~^w.*\.nginx\.org$</literal>.
+לדוגמא, <literal>~^www\..+\.example\.org$</literal> ו
+<literal>~^w.*\.example\.org$</literal>.
 סימן הכוכבית יכול להחליף מספר חלקי שם.
-השם <literal>*.nginx.org</literal> מתאים לא רק ל
-<url>www.nginx.org</url> אלא גם ל <url>www.sub.nginx.org</url>.
+השם <literal>*.example.org</literal> מתאים לא רק ל
+<url>www.example.org</url> אלא גם ל <url>www.sub.example.org</url>.
 </para>
 
 <para>
-ניתן להשתמש ב wildcard מיוחד בצורה של <literal>.nginx.org</literal>
-כדי להתאים גם לשם המדוייק <literal>nginx.org</literal>
-וגם לשם ה wildcard הבא: <literal>*.nginx.org</literal>.
+ניתן להשתמש ב wildcard מיוחד בצורה של <literal>.example.org</literal>
+כדי להתאים גם לשם המדוייק <literal>example.org</literal>
+וגם לשם ה wildcard הבא: <literal>*.example.org</literal>.
 </para>
 
 </section>
@@ -100,7 +100,7 @@ server {
 כדי להשתמש בביטוי רגולרי, על שם השרת להתחיל עם סימן הטילדה (~), כך:
 
 <programlisting>
-server_name  ~^www\d+\.nginx\.net$;
+server_name  ~^www\d+\.example\.net$;
 </programlisting>
 
 אחרת nginx יתייחס אליו כשם מדוייק, או אם הביטוי מכיל כוכבית, כשם wildcard (וסביר
@@ -113,7 +113,7 @@ server_name  ~^www\d+\.nginx\.net$;
 ו &ldquo;}&rdquo; צריך להיות במרכאות:
 
 <programlisting>
-server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.nginx\.net$";
+server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.example\.net$";
 </programlisting>
 
 אחרת nginx יכשל בעלייה, ויציג את הודעת השגיאה הבאה:
@@ -199,7 +199,7 @@ server {
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org  "";
+    server_name  example.org  www.example.org  "";
     ...
 }
 </programlisting>
@@ -213,8 +213,8 @@ server {
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org
-                 www.nginx.org
+    server_name  example.org
+                 www.example.org
                  ""
                  <b>192.168.1.1</b>
                  ;
@@ -260,14 +260,14 @@ nginx בגירסאות עד 0.6.25 תמך בשם המיוחד &ldquo;*&rdquo;
 server {
     listen       80;
     listen       8080  default_server;
-    server_name  nginx.net;
+    server_name  example.net;
     ...
 }
 
 server {
     listen       80  default_server;
     listen       8080;
-    server_name  nginx.org;
+    server_name  example.org;
     ...
 }
 </programlisting>
@@ -294,7 +294,7 @@ server {
 אם הוא לא נמצא גם שם, מתחיל חיפוש בגיבוב השמות המסתיימים בכוכבית.
 חיפוש בגיבובי שמות wildcard הוא איטי יותר מחיפוש שם בגיבוב השמות המדוייקים
 כיוון ששמות עוברים חיפוש על פי חלקי שם המתחם.
-שימו לב שצורת ה wildcard המיוחדת  <literal>.nginx.org</literal>
+שימו לב שצורת ה wildcard המיוחדת  <literal>.example.org</literal>
 שמורה גם היא בגיבוב שמות ה wildcard ולא בגיבוב השמות המדוייקים.
 ביטויים רגולריים נבדקים באופן סדרתי, ועל כן הם השיטה האיטית ביותר
 ואינם סקאלאביליים.
@@ -302,13 +302,13 @@ server {
 
 <para>
 בהתחשב בנסיבות אלה, הכי טוב להשתמש בשמות מדוייקים בכל מקום שהדבר אפשרי.
-לדוגמה, אם השמות הנפוצים ביותר לשרת הם <url>nginx.org</url> ו <url>www.nginx.org</url>,
+לדוגמה, אם השמות הנפוצים ביותר לשרת הם <url>example.org</url> ו <url>www.example.org</url>,
 יותר יעיל להגדיר אותם באופן מפורש:
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org  *.nginx.org;
+    server_name  example.org  www.example.org  *.example.org;
     ...
 }
 </programlisting>
@@ -318,7 +318,7 @@ server {
 <programlisting>
 server {
     listen       80;
-    server_name  .nginx.org;
+    server_name  .example.org;
     ...
 }
 </programlisting>
@@ -331,7 +331,7 @@ server {
 ערך ברירת המחדל של <literal>server_names_hash_bucket_size</literal>
 יכול להיות שווה ל 32, ל 64, או לערך אחר, בהתאם לגודל קו המטמון של המעבד שלכם.
 אם ברירת המחדל היא 32 ותגדירו 
-&ldquo;too.long.server.name.nginx.org&rdquo; בתור שם שרת,
+&ldquo;too.long.server.name.example.org&rdquo; בתור שם שרת,
 אזי nginx ייכשל בעלייה ויציג את הודעת השגיאה הבאה:
 
 <programlisting>
@@ -400,15 +400,15 @@ nginx חייב לבצע את הביטוי כדי לקבל את מה שנלכד �
 </listitem>
 
 <listitem>
-צורות Wildcard מסוג <url>nginx.*</url> נתמכו החל מגירסה 0.6.0.
+צורות Wildcard מסוג <url>example.*</url> נתמכו החל מגירסה 0.6.0.
 </listitem>
 
 <listitem>
-הצורה המיוחדת <url>.nginx.org</url> נתמכה החל מגירסה 0.3.18.
+הצורה המיוחדת <url>.example.org</url> נתמכה החל מגירסה 0.3.18.
 </listitem>
 
 <listitem>
-הצורה <url>*.nginx.org</url> נתמכה החל מגירסה 0.1.13.
+הצורה <url>*.example.org</url> נתמכה החל מגירסה 0.1.13.
 </listitem>
 
 </list>

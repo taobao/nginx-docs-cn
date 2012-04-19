@@ -14,19 +14,19 @@ nginx はまず最初にどの<i>サーバ</i>がそのリクエストを処理�
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org;
+    server_name  example.org  www.example.org;
     ...
 }
 
 server {
     listen       80;
-    server_name  nginx.net  www.nginx.net;
+    server_name  example.net  www.example.net;
     ...
 }
 
 server {
     listen       80;
-    server_name  nginx.com  www.nginx.com;
+    server_name  example.com  www.example.com;
     ...
 }
 </programlisting>
@@ -38,7 +38,7 @@ server {
 <programlisting>
 server {
     listen       80  <b>default_server</b>;
-    server_name  nginx.net  www.nginx.net;
+    server_name  example.net  www.example.net;
     ...
 }
 </programlisting>
@@ -82,26 +82,26 @@ server {
 <programlisting>
 server {
     listen       192.168.1.1:80;
-    server_name  nginx.org  www.nginx.org;
+    server_name  example.org  www.example.org;
     ...
 }
 
 server {
     listen       192.168.1.1:80;
-    server_name  nginx.net  www.nginx.net;
+    server_name  example.net  www.example.net;
     ...
 }
 
 server {
     listen       192.168.1.2:80;
-    server_name  nginx.com  www.nginx.com;
+    server_name  example.com  www.example.com;
     ...
 }
 </programlisting>
 
 この設定では、nginx はまず最初に <literal>server</literal> ブロックの <literal>listen</literal> ディレクティブに対してリクエストの IP アドレスとポートを考査します。次に、その IP アドレスとポートにマッチする <literal>server</literal> ブロックの <literal>server_name</literal> ディレクティブに対して、その HTTP リクエストの &ldquo;Host&rdquo; ヘッダを考査します。
 
-もしサーバ名が見つからなければ、そのリクエストはデフォルトサーバによって処理されます。例えば、192.168.1.1:80 ポートで受信された <url>www.nginx.com</url> へのリクエストは 192.168.1.1:80 ポートのデフォルトサーバ、つまり最初のサーバで処理されます。これはこのポートでは <url>www.nginx.com</url> は定義されていないからです。
+もしサーバ名が見つからなければ、そのリクエストはデフォルトサーバによって処理されます。例えば、192.168.1.1:80 ポートで受信された <url>www.example.com</url> へのリクエストは 192.168.1.1:80 ポートのデフォルトサーバ、つまり最初のサーバで処理されます。これはこのポートでは <url>www.example.com</url> は定義されていないからです。
 </para>
 
 <para>
@@ -110,19 +110,19 @@ server {
 <programlisting>
 server {
     listen        192.168.1.1:80;
-    server_name   nginx.org  www.nginx.org;
+    server_name   example.org  www.example.org;
     ...
 }
 
 server {
     listen        192.168.1.1:80  default_server;
-    server_name   nginx.net  www.nginx.net;
+    server_name   example.net  www.example.net;
     ...
 }
 
 server {
     listen        192.168.1.2:80  default_server;
-    server_name   nginx.com  www.nginx.com;
+    server_name   example.com  www.example.com;
     ...
 }
 </programlisting>
@@ -140,7 +140,7 @@ server {
 <programlisting>
 server {
     listen        80;
-    server_name   nginx.org  www.nginx.org;
+    server_name   example.org  www.example.org;
     root          /data/www;
 
     location / {

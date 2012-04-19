@@ -14,13 +14,13 @@
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org;
+    server_name  example.org  www.example.org;
     ...
 }
 
 server {
     listen       80;
-    server_name  *.nginx.org;
+    server_name  *.example.org;
     ...
 }
 
@@ -32,7 +32,7 @@ server {
 
 server {
     listen       80;
-    server_name  ~^(?&lt;user&gt;.+)\.nginx\.net$;
+    server_name  ~^(?&lt;user&gt;.+)\.example\.net$;
     ...
 }
 </programlisting>
@@ -46,7 +46,7 @@ server {
 </listitem>
 
 <listitem>
-アスタリスクで始まるワイルドカード名: <url>*.nginx.org</url>
+アスタリスクで始まるワイルドカード名: <url>*.example.org</url>
 </listitem>
 
 <listitem>
@@ -68,11 +68,11 @@ server {
         name="ワイルドカード名">
 
 <para>
-ワイルドカード名にはそのサーバ名の最初か最後のみ、そしてドットに隣接したところのみにアスタリスクが含まれます。サーバ名 <literal>www.*.nginx.org</literal> や <literal>w*.nginx.org</literal> は無効です。しかし、これらのサーバ名は正規表現を使用して、例えば  <literal>~^www\..+\.nginx\.org$</literal> や <literal>~^w.*\.nginx\.org$</literal> として指定することができます。アスタリスクは複数部分にマッチさせることができます。<literal>*.nginx.org</literal> は <url>www.nginx.org</url> だけでなく <url>www.sub.nginx.org</url> にもマッチします。
+ワイルドカード名にはそのサーバ名の最初か最後のみ、そしてドットに隣接したところのみにアスタリスクが含まれます。サーバ名 <literal>www.*.example.org</literal> や <literal>w*.example.org</literal> は無効です。しかし、これらのサーバ名は正規表現を使用して、例えば  <literal>~^www\..+\.example\.org$</literal> や <literal>~^w.*\.example\.org$</literal> として指定することができます。アスタリスクは複数部分にマッチさせることができます。<literal>*.example.org</literal> は <url>www.example.org</url> だけでなく <url>www.sub.example.org</url> にもマッチします。
 </para>
 
 <para>
-特別なワイルドカードの形式 <literal>.nginx.org</literal> は、完全一致名 <literal>nginx.org</literal> とワイルドカード名 <literal>*.nginx.org</literal> の両方にマッチさせるように利用できます。
+特別なワイルドカードの形式 <literal>.example.org</literal> は、完全一致名 <literal>example.org</literal> とワイルドカード名 <literal>*.example.org</literal> の両方にマッチさせるように利用できます。
 </para>
 
 </section>
@@ -85,13 +85,13 @@ server {
 nginx で使用される正規表現は Perl プログラミング言語（PCRE）で使用されているものと互換性があります。正規表現を使用するには、サーバ名を必ずチルダで始めます:
 
 <programlisting>
-server_name  ~^www\d+\.nginx\.net$;
+server_name  ~^www\d+\.example\.net$;
 </programlisting>
 
 チルダで始まっていないと完全一致名として、またはその正規表現にアスタリスクが含まれている場合はワイルドカード名として（そしてたいていの場合は無効なものとして）扱われてしまいます。&ldquo;^&rdquo; と &ldquo;$&rdquo; アンカーをセットし忘れないようにしてください。これらは構文的には必須ではありませんが論理的に必須です。また、ドメイン名のドットはバックスラッシュで必ずエスケープしてください。&ldquo;{&rdquo; と &ldquo;}&rdquo; 文字を含む正規表現は必ずダブルクォーテーションで囲ってください:
 
 <programlisting>
-server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.nginx\.net$";
+server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.example\.net$";
 </programlisting>
 
 さもないと、nginx は起動に失敗し次のエラーメッセージを表示します:
@@ -167,7 +167,7 @@ server {
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org  "";
+    server_name  example.org  www.example.org  "";
     ...
 }
 </programlisting>
@@ -188,8 +188,8 @@ nginx のバージョン 0.8.48 までは、このような場合はサーバ名
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org
-                 www.nginx.org
+    server_name  example.org
+                 www.example.org
                  ""
                  <b>192.168.1.1</b>
                  ;
@@ -220,14 +220,14 @@ nginx バージョン 0.6.25 までは特別なサーバ名 &ldquo;*&rdquo; を�
 server {
     listen       80;
     listen       8080  default_server;
-    server_name  nginx.net;
+    server_name  example.net;
     ...
 }
 
 server {
     listen       80  default_server;
     listen       8080;
-    server_name  nginx.org;
+    server_name  example.org;
     ...
 }
 </programlisting>
@@ -241,16 +241,16 @@ server {
         name="最適化">
 
 <para>
-完全一致名とワイルドカード名はハッシュで保存されます。このハッシュは待ち受けポートに結び付けられ、各待ち受けポートは、完全一致名のハッシュ、アスタリスクで始まるワイルドカード名のハッシュ、アスタリスクで終わるワイルドカード名のハッシュの３つまでのハッシュを持つことができます。ハッシュのサイズは構成フェーズで最適化されるので、CPU キャッシュのミスは最低でもサーバ名を見つけることができます。最初に完全一致名のハッシュが検索されます。完全一致名のハッシュを使って見つからなければ、次にアスタリスクで始まるワイルドカード名のハッシュが検索されます。さらにまだ見つからなければ、アスタリスクで終わるワイルドカード名のハッシュが検索されます。ワイルドカード名のハッシュの検索は完全一致名のハッシュの検索よりも遅くなります。これはサーバ名の検索がドメイン部分によって検索されるからです。特別なワイルドカード形式の <literal>.nginx.org</literal> は完全一致名のハッシュではなくワイルドカード名のハッシュで保存されます。正規表現は順番に考査されるので、これがもっとも遅い方式ですし、非スケーラブルでもあります。
+完全一致名とワイルドカード名はハッシュで保存されます。このハッシュは待ち受けポートに結び付けられ、各待ち受けポートは、完全一致名のハッシュ、アスタリスクで始まるワイルドカード名のハッシュ、アスタリスクで終わるワイルドカード名のハッシュの３つまでのハッシュを持つことができます。ハッシュのサイズは構成フェーズで最適化されるので、CPU キャッシュのミスは最低でもサーバ名を見つけることができます。最初に完全一致名のハッシュが検索されます。完全一致名のハッシュを使って見つからなければ、次にアスタリスクで始まるワイルドカード名のハッシュが検索されます。さらにまだ見つからなければ、アスタリスクで終わるワイルドカード名のハッシュが検索されます。ワイルドカード名のハッシュの検索は完全一致名のハッシュの検索よりも遅くなります。これはサーバ名の検索がドメイン部分によって検索されるからです。特別なワイルドカード形式の <literal>.example.org</literal> は完全一致名のハッシュではなくワイルドカード名のハッシュで保存されます。正規表現は順番に考査されるので、これがもっとも遅い方式ですし、非スケーラブルでもあります。
 </para>
 
 <para>
-これらの理由から、可能な場合は完全一致名を利用するのがよいでしょう。例えば、もっとも頻繁にリクエストされるサーバ名が <url>nginx.org</url> と <url>www.nginx.org</url> だとすると、これらを明示的に定義するとより効率的です:
+これらの理由から、可能な場合は完全一致名を利用するのがよいでしょう。例えば、もっとも頻繁にリクエストされるサーバ名が <url>example.org</url> と <url>www.example.org</url> だとすると、これらを明示的に定義するとより効率的です:
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org  *.nginx.org;
+    server_name  example.org  www.example.org  *.example.org;
     ...
 }
 </programlisting>
@@ -260,14 +260,14 @@ server {
 <programlisting>
 server {
     listen       80;
-    server_name  .nginx.org;
+    server_name  .example.org;
     ...
 }
 </programlisting>
 </para>
 
 <para>
-たくさんの数のサーバ名を定義したり非常に長いサーバ名を定義したりする場合は、http レベルの <literal>server_names_hash_max_size</literal> と <literal>server_names_hash_bucket_size</literal> ディレクティブを調整する必要があるかもしれません。<literal>server_names_hash_bucket_size</literal> のデフォルト値は 32、もしくは 64、あるいはお使いの CPU キャッシュラインのサイズによってはその他の値になっているかもしれません。もしデフォルト値が 32 でサーバ名として &ldquo;too.long.server.name.nginx.org&rdquo; のような非常に長いサーバ名を定義している場合、nginx は起動に失敗し、次のエラーメッセージを表示させます:
+たくさんの数のサーバ名を定義したり非常に長いサーバ名を定義したりする場合は、http レベルの <literal>server_names_hash_max_size</literal> と <literal>server_names_hash_bucket_size</literal> ディレクティブを調整する必要があるかもしれません。<literal>server_names_hash_bucket_size</literal> のデフォルト値は 32、もしくは 64、あるいはお使いの CPU キャッシュラインのサイズによってはその他の値になっているかもしれません。もしデフォルト値が 32 でサーバ名として &ldquo;too.long.server.name.example.org&rdquo; のような非常に長いサーバ名を定義している場合、nginx は起動に失敗し、次のエラーメッセージを表示させます:
 
 <programlisting>
 could not build the server_names_hash,
@@ -331,15 +331,15 @@ or server_names_hash_bucket_size: 32
 </listitem>
 
 <listitem>
-ワイルドカードの形式 <url>nginx.*</url> のサポートは 0.6.0 からです。
+ワイルドカードの形式 <url>example.*</url> のサポートは 0.6.0 からです。
 </listitem>
 
 <listitem>
-特別な形式 <url>.nginx.org</url> のサポートは 0.3.18 からです。
+特別な形式 <url>.example.org</url> のサポートは 0.3.18 からです。
 </listitem>
 
 <listitem>
-ワイルドカードの形式 <url>*.nginx.org</url> のサポートは 0.1.13 からです。
+ワイルドカードの形式 <url>*.example.org</url> のサポートは 0.1.13 からです。
 </listitem>
 
 </list>

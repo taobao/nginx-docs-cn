@@ -14,8 +14,8 @@
 הכללים הבאים:
 
 <programlisting>
-RewriteCond  %{HTTP_HOST}  nginx.org
-RewriteRule  (.*)          http://www.nginx.org$1
+RewriteCond  %{HTTP_HOST}  example.org
+RewriteRule  (.*)          http://www.example.org$1
 </programlisting>
 
 למשהו כזה:
@@ -23,9 +23,9 @@ RewriteRule  (.*)          http://www.nginx.org$1
 <programlisting>
 server {
     listen       80;
-    server_name  www.nginx.org  nginx.org;
-    if ($http_host = nginx.org) {
-        rewrite  (.*)  http://www.nginx.org$1;
+    server_name  www.example.org  example.org;
+    if ($http_host = example.org) {
+        rewrite  (.*)  http://www.example.org$1;
     }
     ...
 }
@@ -34,18 +34,18 @@ server {
 
 <para>
 צורה זו היא שגוייה, מסובכת, ולא יעילה.
-הדרך הנכונה היא להגדיר שרת נפרד עבור <url>nginx.org</url>:
+הדרך הנכונה היא להגדיר שרת נפרד עבור <url>example.org</url>:
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org;
-    rewrite   ^  http://www.nginx.org$request_uri?;
+    server_name  example.org;
+    rewrite   ^  http://www.example.org$request_uri?;
 }
 
 server {
     listen       80;
-    server_name  www.nginx.org;
+    server_name  www.example.org;
     ...
 }
 </programlisting>
@@ -58,28 +58,28 @@ server {
 
 <para>
 דוגמה נוספת, במקום הגיון הפוך: כל מה שהוא לא 
-<url>nginx.com</url> וגם לא <url>www.nginx.com</url>:
+<url>example.com</url> וגם לא <url>www.example.com</url>:
 
 <programlisting>
-RewriteCond  %{HTTP_HOST}  !nginx.com
-RewriteCond  %{HTTP_HOST}  !www.nginx.com
-RewriteRule  (.*)          http://www.nginx.com$1
+RewriteCond  %{HTTP_HOST}  !example.com
+RewriteCond  %{HTTP_HOST}  !www.example.com
+RewriteRule  (.*)          http://www.example.com$1
 </programlisting>
 
-עלייך רק להגדיר את <url>nginx.com</url>, <url>www.nginx.com</url>,
+עלייך רק להגדיר את <url>example.com</url>, <url>www.example.com</url>,
 וכל דבר אחר:
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org;
+    server_name  example.org  www.example.org;
     ...
 }
 
 server {
     listen       80 default_server;
     server_name  _;
-    rewrite   ^  http://nginx.org$request_uri?;
+    rewrite   ^  http://example.org$request_uri?;
 }
 </programlisting>
 </para>

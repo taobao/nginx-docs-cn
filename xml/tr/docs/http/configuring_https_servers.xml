@@ -14,10 +14,10 @@ Bir HTTPS sunucusunu yapılandırmak için, server bloğu içerisinde SSL&rsquo;
 <programlisting>
 server {
     listen               443;
-    server_name          www.nginx.com;
+    server_name          www.example.com;
     ssl                  on;
-    ssl_certificate      www.nginx.com.crt;
-    ssl_certificate_key  www.nginx.com.key;
+    ssl_certificate      www.example.com.crt;
+    ssl_certificate_key  www.example.com.key;
     ssl_protocols        SSLv3 TLSv1;
     ssl_ciphers          HIGH:!ADH:!MD5;
     ...
@@ -27,8 +27,8 @@ server {
 Sunucu sertifikası herkese açık bir birimdir. Sunucuya bağlanan her istemciye gönderilir. Özel anahtar ise gizli bir birimdir ve erişimi engellenmiş bir alanda saklanır. Ancak nginx&rsquo;in ana işlemi tarafından okunabilir olmalıdır. Özel anahtar, alternatif olarak sertifika ile aynı dosya içerisinde saklanabilir:
 
 <programlisting>
-    ssl_certificate      www.nginx.com.cert;
-    ssl_certificate_key  www.nginx.com.cert;
+    ssl_certificate      www.example.com.cert;
+    ssl_certificate_key  www.example.com.cert;
 </programlisting>
 
 Bu durumda dosya erişimi kısıtlanmalıdır. Aynı dosyada yer alsalar da istemciye sadece sertifika gönderilir.
@@ -57,12 +57,12 @@ http {
 
     server {
         listen               443;
-        server_name          www.nginx.com;
+        server_name          www.example.com;
         <b>keepalive_timeout    70</b>;
 
         ssl                  on;
-        ssl_certificate      www.nginx.com.crt;
-        ssl_certificate_key  www.nginx.com.key;
+        ssl_certificate      www.example.com.crt;
+        ssl_certificate_key  www.example.com.key;
         ssl_protocols        SSLv3 TLSv1;
         ssl_ciphers          HIGH:!ADH:!MD5;
         ...
@@ -78,7 +78,7 @@ http {
 Bazı tarayıcılar popüler bir sertifika otoritesi tarafından imzalanmış sertifikaları sorunsuz kabul ederken, diğerleri sorun çıkarabilir. Bunun nedeni sertifika otoritesinin, sunucu sertifikasını, güvenilir sertifika veri tabanında yer almayan aracı bir sertifikayı kullanarak imzalamış olmasıdır. Bu durumda otorite, imzalanmış sertifikaya art arda bağlanması gereken bir dizi sertifika zinciri sunar. Bir araya geldikleri dosyada ilk önce sunucu sertifikası daha sonra zincirlenmiş sertifikalar yer almalıdır:
 
 <programlisting>
-$ cat www.nginx.com.crt bundle.crt > www.nginx.com.chained.crt
+$ cat www.example.com.crt bundle.crt > www.example.com.chained.crt
 </programlisting>
 
 Oluşan dosya <literal>ssl_certificate</literal> yönergesi içinde kullanılmalıdır:
@@ -86,10 +86,10 @@ Oluşan dosya <literal>ssl_certificate</literal> yönergesi içinde kullanılmal
 <programlisting>
 server {
     listen               443;
-    server_name          www.nginx.com;
+    server_name          www.example.com;
     ssl                  on;
-    ssl_certificate      www.nginx.com.chained.crt;
-    ssl_certificate_key  www.nginx.com.key;
+    ssl_certificate      www.example.com.chained.crt;
+    ssl_certificate_key  www.example.com.key;
     ...
 }
 </programlisting>
@@ -97,7 +97,7 @@ server {
 Eğer bu art arda diziliş yanlış yapılmış olursa, nginx başlamayacak ve aşağıdakine benzer bir hata mesajını verecektir:
 
 <programlisting>
-SSL_CTX_use_PrivateKey_file(" ... /www.nginx.com.key") failed
+SSL_CTX_use_PrivateKey_file(" ... /www.example.com.key") failed
    (SSL: error:0B080074:x509 certificate routines:
     X509_check_private_key:key values mismatch)
 </programlisting>
@@ -153,9 +153,9 @@ En baştan HTTP ve HTTPS protokollerini ayrı yapılandırmak en iyisidir. Mevcu
 server {
     listen               80;
     listen               443  ssl;
-    server_name          www.nginx.com;
-    ssl_certificate      www.nginx.com.crt;
-    ssl_certificate_key  www.nginx.com.key;
+    server_name          www.example.com;
+    ssl_certificate      www.example.com.crt;
+    ssl_certificate_key  www.example.com.key;
     ...
 }
 </programlisting>
@@ -179,22 +179,22 @@ Bir IP adresini dinleyen iki veya daha fazla HTTPS sunucusunu yapılandırdığ�
 <programlisting>
 server {
     listen           443;
-    server_name      www.nginx.com;
+    server_name      www.example.com;
     ssl              on;
-    ssl_certificate  www.nginx.com.crt;
+    ssl_certificate  www.example.com.crt;
     ...
 }
 
 server {
     listen           443;
-    server_name      www.nginx.org;
+    server_name      www.example.org;
     ssl              on;
-    ssl_certificate  www.nginx.org.crt;
+    ssl_certificate  www.example.org.crt;
     ...
 }
 </programlisting>
 
-Bu yapılandırmada, bir tarayıcı talep edilen sunucuya bakmadan, varsayılan sunucunun sertifikasını alır, örneğin: <url>www.nginx.com</url>. Bu SSL protokolüne özgü bir durumdan kaynaklanır. SSL bağlantısı, tarayıcının HTTP talebi göndermesinden önce kurulur ve nginx talep edilen sunucunun adını bilmez. Bu nedenle yalnızca varsayılan sunucunun sertifikasını önerir.
+Bu yapılandırmada, bir tarayıcı talep edilen sunucuya bakmadan, varsayılan sunucunun sertifikasını alır, örneğin: <url>www.example.com</url>. Bu SSL protokolüne özgü bir durumdan kaynaklanır. SSL bağlantısı, tarayıcının HTTP talebi göndermesinden önce kurulur ve nginx talep edilen sunucunun adını bilmez. Bu nedenle yalnızca varsayılan sunucunun sertifikasını önerir.
 </para>
 
 <para>
@@ -203,17 +203,17 @@ Bu problemi çözmenin en eski ve sağlam methodu HTTPS sunucularının her biri
 <programlisting>
 server {
     listen           192.168.1.1:443;
-    server_name      www.nginx.com;
+    server_name      www.example.com;
     ssl              on;
-    ssl_certificate  www.nginx.com.crt;
+    ssl_certificate  www.example.com.crt;
     ...
 }
 
 server {
     listen           192.168.1.2:443;
-    server_name      www.nginx.org;
+    server_name      www.example.org;
     ssl              on;
-    ssl_certificate  www.nginx.org.crt;
+    ssl_certificate  www.example.org.crt;
     ...
 }
 </programlisting>
@@ -226,11 +226,11 @@ server {
         name="Birçok ad içeren SSL sertifikası">
 
 <para>
-Bir tekil IP&rsquo;yi birçok HTTPS sunucu arasında paylaştırmanın başka yolları da vardır, ancak bunların hepsi dezavantajlara sahiptir. Bunlardan biri, birçok ad içeren bir sertifikanın, SubjectAltName sertifika alanında kullanılmasıdır. Örneğin: <url>www.nginx.com</url> ve <url>www.nginx.org</url>. Ancak SubjectAltName alan uzunluğu sınırlandırılmıştır.
+Bir tekil IP&rsquo;yi birçok HTTPS sunucu arasında paylaştırmanın başka yolları da vardır, ancak bunların hepsi dezavantajlara sahiptir. Bunlardan biri, birçok ad içeren bir sertifikanın, SubjectAltName sertifika alanında kullanılmasıdır. Örneğin: <url>www.example.com</url> ve <url>www.example.org</url>. Ancak SubjectAltName alan uzunluğu sınırlandırılmıştır.
 </para>
 
 <para>
-Diğer bir yol ise bir sertifikayı bir wildcard adı ile birlikte kullanmaktır. Örneğin: <url>*.nginx.org</url>. Bu sertifika <url>www.nginx.org</url> ile eşleşir ancak <url>nginx.org</url> ve <url>www.sub.nginx.org</url> ile eşleşmez. Bu iki method birlikte de kullanılabilir. Bir sertifika SubjectAltName alanı içerisinde gerçek ve wildcard adlarını içerebilir. Örneğin: <url>nginx.org</url> ve <url>*.nginx.org</url>.
+Diğer bir yol ise bir sertifikayı bir wildcard adı ile birlikte kullanmaktır. Örneğin: <url>*.example.org</url>. Bu sertifika <url>www.example.org</url> ile eşleşir ancak <url>example.org</url> ve <url>www.sub.example.org</url> ile eşleşmez. Bu iki method birlikte de kullanılabilir. Bir sertifika SubjectAltName alanı içerisinde gerçek ve wildcard adlarını içerebilir. Örneğin: <url>example.org</url> ve <url>*.example.org</url>.
 </para>
 
 <para>
@@ -242,14 +242,14 @@ ssl_certificate_key  common.key;
 
 server {
     listen           443;
-    server_name      www.nginx.com;
+    server_name      www.example.com;
     ssl              on;
     ...
 }
 
 server {
     listen           443;
-    server_name      www.nginx.org;
+    server_name      www.example.org;
     ssl              on;
     ...
 }

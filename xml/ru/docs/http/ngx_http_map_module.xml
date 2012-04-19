@@ -27,9 +27,9 @@ map $http_host $name {
 
     example.com   1;
     *.example.com 1;
-    test.com      2;
-    *.test.com    2;
-    .site.com     3;
+    example.org   2;
+    *.example.org 2;
+    .example.net  3;
     wap.*         4;
 }
 </example>

@@ -15,19 +15,19 @@ nginx, ilk olarak hangi sunucunun talebi işleyeceğine karar verir.
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org;
+    server_name  example.org  www.example.org;
     ...
 }
 
 server {
     listen       80;
-    server_name  nginx.net  www.nginx.net;
+    server_name  example.net  www.example.net;
     ...
 }
 
 server {
     listen       80;
-    server_name  nginx.com  www.nginx.com;
+    server_name  example.com  www.example.com;
     ...
 }
 </programlisting>
@@ -42,7 +42,7 @@ Eğer ilk server ifadesinin varsayılan olmasını istemiyorsanız, <literal>lis
 <programlisting>
 server {
     listen       80  <b>default_server</b>;
-    server_name  nginx.net  www.nginx.net;
+    server_name  example.net  www.example.net;
     ...
 }
 </programlisting>
@@ -87,26 +87,26 @@ Farklı adreslerde bulunan sanal sunucuların yer aldığı biraz daha karışı
 <programlisting>
 server {
     listen       192.168.1.1:80;
-    server_name  nginx.org  www.nginx.org;
+    server_name  example.org  www.example.org;
     ...
 }
 
 server {
     listen       192.168.1.1:80;
-    server_name  nginx.net  www.nginx.net;
+    server_name  example.net  www.example.net;
     ...
 }
 
 server {
     listen       192.168.1.2:80;
-    server_name  nginx.com  www.nginx.com;
+    server_name  example.com  www.example.com;
     ...
 }
 </programlisting>
 
 Bu yapılandırmada, nginx <literal>server</literal> bloklarında yer alan <literal>listen</literal> yönergelerini ilk olarak IP adresi ve port üzerinde test eder. Daha sonra, gelen taleplerin header bilgisinde yer alan &ldquo;Host&rdquo; datasını, IP ve port ile eşleşen <literal>server</literal> bloklarında yer alan <literal>server_name</literal> girdileri ile kontrol eder.
 
-Eğer sunucu bulunamazsa varsayılan sunucu tarafından işlenir. Örneğin, <url>www.nginx.com</url> için 192.168.1.1:80 adres ve portuna gelen bir talep, eğer bu adres ve port için <url>www.nginx.com</url> tanımlanmamışsa, 192.168.1.1:80&rsquo;e ait varsayılan sunucu tarafından işlenir.
+Eğer sunucu bulunamazsa varsayılan sunucu tarafından işlenir. Örneğin, <url>www.example.com</url> için 192.168.1.1:80 adres ve portuna gelen bir talep, eğer bu adres ve port için <url>www.example.com</url> tanımlanmamışsa, 192.168.1.1:80&rsquo;e ait varsayılan sunucu tarafından işlenir.
 </para>
 
 <para>
@@ -115,19 +115,19 @@ Daha önce belirtildiği gibi, varsayılan bir sunucu, bir listen portunun ve de
 <programlisting>
 server {
     listen        192.168.1.1:80;
-    server_name   nginx.org  www.nginx.org;
+    server_name   example.org  www.example.org;
     ...
 }
 
 server {
     listen        192.168.1.1:80  default_server;
-    server_name   nginx.net  www.nginx.net;
+    server_name   example.net  www.example.net;
     ...
 }
 
 server {
     listen        192.168.1.2:80  default_server;
-    server_name   nginx.com  www.nginx.com;
+    server_name   example.com  www.example.com;
     ...
 }
 </programlisting>
@@ -145,7 +145,7 @@ nginx&rsquo;in basit bir PHP sitesi için gelen talebi işlemek için nasıl bir
 <programlisting>
 server {
     listen        80;
-    server_name   nginx.org  www.nginx.org;
+    server_name   example.org  www.example.org;
     root          /data/www;
 
     location / {

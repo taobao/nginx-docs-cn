@@ -14,13 +14,13 @@ Sunucu adları <literal>server_name</literal> yönergesi kullanılarak tanımlan
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org;
+    server_name  example.org  www.example.org;
     ...
 }
 
 server {
     listen       80;
-    server_name  *.nginx.org;
+    server_name  *.example.org;
     ...
 }
 
@@ -32,7 +32,7 @@ server {
 
 server {
     listen       80;
-    server_name  ~^(?&lt;user&gt;.+)\.nginx\.net$;
+    server_name  ~^(?&lt;user&gt;.+)\.example\.net$;
     ...
 }
 </programlisting>
@@ -46,7 +46,7 @@ gerçek adlar;
 </listitem>
 
 <listitem>
-* ile başlayan wildcard adlar: <url>*.nginx.org</url>;
+* ile başlayan wildcard adlar: <url>*.example.org</url>;
 </listitem>
 
 <listitem>
@@ -68,11 +68,11 @@ ve düzenli ifadeler (regular expressions).
         name="Wildcard adlar">
 
 <para>
-Bir wildcard ad ancak başlangıçta veya bitişte * ifadesini içerir ve nokta ile sınırlandırılır. <literal>www.*.nginx.org</literal> ve <literal>w*.nginx.org</literal> adları geçersizdir. Ancak bu adlar düzenli ifadeler ile geçerli hale getirilebilir, örneğin, <literal>~^www\..+\.nginx\.org$</literal> ve <literal>~^w.*\.nginx\.org$</literal>. Buradaki * bir çok eşleşmeyi tanımlayabilir. <literal>*.nginx.org</literal> ifadesi <url>www.nginx.org</url> ve <url>www.sub.nginx.org</url> adlarına karşılık gelebilir.
+Bir wildcard ad ancak başlangıçta veya bitişte * ifadesini içerir ve nokta ile sınırlandırılır. <literal>www.*.example.org</literal> ve <literal>w*.example.org</literal> adları geçersizdir. Ancak bu adlar düzenli ifadeler ile geçerli hale getirilebilir, örneğin, <literal>~^www\..+\.example\.org$</literal> ve <literal>~^w.*\.example\.org$</literal>. Buradaki * bir çok eşleşmeyi tanımlayabilir. <literal>*.example.org</literal> ifadesi <url>www.example.org</url> ve <url>www.sub.example.org</url> adlarına karşılık gelebilir.
 </para>
 
 <para>
-<literal>.nginx.org</literal> şeklindeki bir wildcard <literal>nginx.org</literal> gerçek adı ile <literal>*.nginx.org</literal> wildcard adına karşılık gelir.
+<literal>.example.org</literal> şeklindeki bir wildcard <literal>example.org</literal> gerçek adı ile <literal>*.example.org</literal> wildcard adına karşılık gelir.
 </para>
 
 </section>
@@ -86,7 +86,7 @@ nginx tarafından kullanılan düzenli ifadeler, Perl programlama dili (PCRE) ta
 Bir düzenli ifade kullanmak için sunucu adı tilda (~) ile başlamalıdır:
 
 <programlisting>
-server_name  ~^www\d+\.nginx\.net$;
+server_name  ~^www\d+\.example\.net$;
 </programlisting>
 
 diğer türlü ifade gerçek ad veya düzenli ifade * içeriyorsa wildcard ad gibi algılanacaktır (ve yüksek ihtimal geçersiz bir ad olarak).
@@ -96,7 +96,7 @@ Ayrıca alan adında bulunan noktalarda da \ önceli ile kullanılmalıdır.
 &ldquo;{&rdquo; ve &ldquo;}&rdquo; kullanan bir düzenli ifade tırnak arasına alınmalıdır:
 
 <programlisting>
-server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.nginx\.net$";
+server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.example\.net$";
 </programlisting>
 
 diğer türlü, nginx şu şekilde bir hata verecektir:
@@ -177,7 +177,7 @@ Eğer varsayılan dışındaki bir server bloğuna gelen ve header bilgisinde &l
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org  "";
+    server_name  example.org  www.example.org  "";
     ...
 }
 </programlisting>
@@ -189,8 +189,8 @@ Eğer bir istemci ad yerine IP adresini kullanarak bir talepte bulunursa, header
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org
-                 www.nginx.org
+    server_name  example.org
+                 www.example.org
                  ""
                  <b>192.168.1.1</b>
                  ;
@@ -227,14 +227,14 @@ Ayrıca bakınız &ldquo;<link doc="request_processing.xml" />&rdquo;.
 server {
     listen       80;
     listen       8080  default_server;
-    server_name  nginx.net;
+    server_name  example.net;
     ...
 }
 
 server {
     listen       80  default_server;
     listen       8080;
-    server_name  nginx.org;
+    server_name  example.org;
     ...
 }
 </programlisting>
@@ -248,16 +248,16 @@ server {
         name="Optimizasyon">
 
 <para>
-Gerçek ve wildcard adlar çırpılarda (hash) depolanır. Çırpılar listen portlarına bağlıdırlar ve her bir listen port 3 farklı çırpıya sahip olabilir: gerçek ad çırpısı, * ile başlayan bir wildcard adı çırpısı ve * ile biten bir wildcard adı çırpısı. Çırpıların boyutu yapılandırma aşamasında optimize edilir ve böylece bir ad en az önbellek kayıpları ile bulundurulur. İlk olarak gerçek ad çırpısı aranır. Gerçek ad çırpısı kullanan bir ad bulunmaz ise, * ile başlayan wildcard ad çırpısı aranır. Bu da bulunmaz ise, * ile biten wildcard ad çırpısı aranır. Adların alanadı parçaları ile aranması nedeniyle wildcard ad çırpıları araması, gerçek ad çırpı aramasına oranla daha yavaştır. Not: Özel <literal>.nginx.org</literal> wildcard formu, gerçek ad çırpısında değil, wildcard ad çırpısında saklanır. Düzenli İfadeler sırayla test edildiğinden bu en yavaş ve ölçeklenebilir olmayan yöntemdir.
+Gerçek ve wildcard adlar çırpılarda (hash) depolanır. Çırpılar listen portlarına bağlıdırlar ve her bir listen port 3 farklı çırpıya sahip olabilir: gerçek ad çırpısı, * ile başlayan bir wildcard adı çırpısı ve * ile biten bir wildcard adı çırpısı. Çırpıların boyutu yapılandırma aşamasında optimize edilir ve böylece bir ad en az önbellek kayıpları ile bulundurulur. İlk olarak gerçek ad çırpısı aranır. Gerçek ad çırpısı kullanan bir ad bulunmaz ise, * ile başlayan wildcard ad çırpısı aranır. Bu da bulunmaz ise, * ile biten wildcard ad çırpısı aranır. Adların alanadı parçaları ile aranması nedeniyle wildcard ad çırpıları araması, gerçek ad çırpı aramasına oranla daha yavaştır. Not: Özel <literal>.example.org</literal> wildcard formu, gerçek ad çırpısında değil, wildcard ad çırpısında saklanır. Düzenli İfadeler sırayla test edildiğinden bu en yavaş ve ölçeklenebilir olmayan yöntemdir.
 </para>
 
 <para>
-Bu nedenlerden dolayı, imkanlar el veriyorsa gerçek adları kullanmak en iyisidir. Örneğin, bir sunucunun en sık talep edilen adları <url>nginx.org</url> ve <url>www.nginx.org</url> ise bunları açıkca belirtmek daha etkili olacaktır:
+Bu nedenlerden dolayı, imkanlar el veriyorsa gerçek adları kullanmak en iyisidir. Örneğin, bir sunucunun en sık talep edilen adları <url>example.org</url> ve <url>www.example.org</url> ise bunları açıkca belirtmek daha etkili olacaktır:
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org  *.nginx.org;
+    server_name  example.org  www.example.org  *.example.org;
     ...
 }
 </programlisting>
@@ -267,7 +267,7 @@ bu kullanım aşağıdaki basit kullanımdan daha etkili olacaktır:
 <programlisting>
 server {
     listen       80;
-    server_name  .nginx.org;
+    server_name  .example.org;
     ...
 }
 </programlisting>
@@ -275,7 +275,7 @@ server {
 
 <para>
 Eğer çok miktarda veya olağandışı şekilde uzun sunucu adları tanımladıysanız, <i>http</i> düzeyinde <literal>server_names_hash_max_size</literal>
-ve <literal>server_names_hash_bucket_size</literal> yönergelerini tekrar ayarlamalısınız. <literal>server_names_hash_bucket_size</literal> yönergesinin varsayılan değeri CPU önbellek satır boyutuna göre 32, 64 veya başka bir rakam olabilir. Eğer bu değer 32 ise ve &ldquo;cok.uzun.sunucu.adi.nginx.org&rdquo; ifadesini sunucu adı olarak belirlerseniz nginx, başlamayacak ve aşağıdaki hatayı verecektir:
+ve <literal>server_names_hash_bucket_size</literal> yönergelerini tekrar ayarlamalısınız. <literal>server_names_hash_bucket_size</literal> yönergesinin varsayılan değeri CPU önbellek satır boyutuna göre 32, 64 veya başka bir rakam olabilir. Eğer bu değer 32 ise ve &ldquo;cok.uzun.sunucu.adi.example.org&rdquo; ifadesini sunucu adı olarak belirlerseniz nginx, başlamayacak ve aşağıdaki hatayı verecektir:
 
 <programlisting>
 could not build the server_names_hash,
@@ -335,15 +335,15 @@ Düzenli ifade sunucu adları 0.6.7 versiyonundan beri destekleniyor.
 </listitem>
 
 <listitem>
-<url>nginx.*</url> wildcard formu 0.6.0 versiyonundan beri destekleniyor.
+<url>example.*</url> wildcard formu 0.6.0 versiyonundan beri destekleniyor.
 </listitem>
 
 <listitem>
-<url>.nginx.org</url> özel formu 0.3.18 versiyonundan beri destekleniyor.
+<url>.example.org</url> özel formu 0.3.18 versiyonundan beri destekleniyor.
 </listitem>
 
 <listitem>
-<url>*.nginx.org</url> wildcard formu 0.1.13 versiyonundan beri destekleniyor.
+<url>*.example.org</url> wildcard formu 0.1.13 versiyonundan beri destekleniyor.
 </listitem>
 
 </list>

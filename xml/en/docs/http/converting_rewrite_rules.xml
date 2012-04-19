@@ -13,8 +13,8 @@ People who during their shared hosting life used to configure
 usually translate the following rules:
 
 <programlisting>
-RewriteCond  %{HTTP_HOST}  nginx.org
-RewriteRule  (.*)          http://www.nginx.org$1
+RewriteCond  %{HTTP_HOST}  example.org
+RewriteRule  (.*)          http://www.example.org$1
 </programlisting>
 
 to something like this:
@@ -22,9 +22,9 @@ to something like this:
 <programlisting>
 server {
     listen       80;
-    server_name  www.nginx.org  nginx.org;
-    if ($http_host = nginx.org) {
-        rewrite  (.*)  http://www.nginx.org$1;
+    server_name  www.example.org  example.org;
+    if ($http_host = example.org) {
+        rewrite  (.*)  http://www.example.org$1;
     }
     ...
 }
@@ -33,18 +33,18 @@ server {
 
 <para>
 This is a wrong, cumbersome, and ineffective way.
-The right way is to define a separate server for <url>nginx.org</url>:
+The right way is to define a separate server for <url>example.org</url>:
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org;
-    return       301 http://www.nginx.org$request_uri;
+    server_name  example.org;
+    return       301 http://www.example.org$request_uri;
 }
 
 server {
     listen       80;
-    server_name  www.nginx.org;
+    server_name  www.example.org;
     ...
 }
 </programlisting>
@@ -52,7 +52,7 @@ server {
 <note>
 On versions prior to 0.9.1, redirects can be made with:
 <programlisting>
-    rewrite      ^ http://www.nginx.org$request_uri?;
+    rewrite      ^ http://www.example.org$request_uri?;
 </programlisting>
 </note>
 
@@ -66,35 +66,35 @@ On versions prior to 0.9.1, redirects can be made with:
 <para>
 Another example.
 Instead of the &ldquo;upside-down&rdquo; logic &ldquo;all that is not
-<url>nginx.com</url> and is not <url>www.nginx.com</url>&rdquo;:
+<url>example.com</url> and is not <url>www.example.com</url>&rdquo;:
 
 <programlisting>
-RewriteCond  %{HTTP_HOST}  !nginx.com
-RewriteCond  %{HTTP_HOST}  !www.nginx.com
-RewriteRule  (.*)          http://www.nginx.com$1
+RewriteCond  %{HTTP_HOST}  !example.com
+RewriteCond  %{HTTP_HOST}  !www.example.com
+RewriteRule  (.*)          http://www.example.com$1
 </programlisting>
 
-one should simply define <url>nginx.com</url>, <url>www.nginx.com</url>,
+one should simply define <url>example.com</url>, <url>www.example.com</url>,
 and &ldquo;everything else&rdquo;:
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.com www.nginx.com;
+    server_name  example.com www.example.com;
     ...
 }
 
 server {
     listen       80 default_server;
     server_name  _;
-    return       301 http://nginx.com$request_uri;
+    return       301 http://example.com$request_uri;
 }
 </programlisting>
 
 <note>
 On versions prior to 0.9.1, redirects can be made with:
 <programlisting>
-    rewrite      ^ http://nginx.com$request_uri?;
+    rewrite      ^ http://example.com$request_uri?;
 </programlisting>
 </note>
 
