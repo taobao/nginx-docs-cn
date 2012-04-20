@@ -14,6 +14,13 @@ to limit access to resources by validating the user name and password
 using the “HTTP Basic Authentication” protocol.
 </para>
 
+<para>
+Access can also be limited by
+<link doc="ngx_http_auth_basic_module.xml">address</link>.
+Simultaneous limitation of access by address and by password is controlled
+by the <link doc="ngx_http_core_module.xml" id="satisfy"/> directive.
+</para>
+
 </section>
 
 

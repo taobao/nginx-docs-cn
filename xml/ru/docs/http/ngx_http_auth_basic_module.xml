@@ -14,6 +14,13 @@
 по протоколу “HTTP Basic Authentication”.
 </para>
 
+<para>
+Ограничить доступ можно также по
+<link doc="ngx_http_access_module.xml">адресу</link>.
+Одновременное ограничение доступа по адресу и паролю управляется
+директивой <link doc="ngx_http_core_module.xml" id="satisfy"/>.
+</para>
+
 </section>
 
 

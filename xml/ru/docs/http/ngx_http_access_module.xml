@@ -10,7 +10,14 @@
 
 <para>
 Модуль <literal>ngx_http_access_module</literal> позволяет
-закрыть доступ для определённых IP-адресов клиентов.
+ограничить доступ для определённых IP-адресов клиентов.
+</para>
+
+<para>
+Ограничить доступ можно также по
+<link doc="ngx_http_auth_basic_module.xml">паролю</link>.
+Одновременное ограничение доступа по адресу и паролю управляется
+директивой <link doc="ngx_http_core_module.xml" id="satisfy"/>.
 </para>
 
 </section>
@@ -24,6 +31,7 @@ location / {
     deny  192.168.1.1;
     allow 192.168.1.0/24;
     allow 10.1.1.0/16;
+    allow 2001:0db8::/32;
     deny  all;
 }
 </example>
@@ -31,9 +39,10 @@ location / {
 
 <para>
 Правила проверяются в порядке их записи до первого соответствия.
-В данном примере доступ разрешён только для сетей
+В данном примере доступ разрешён только для IPv4-сетей
 <literal>10.1.1.0/16</literal> и <literal>192.168.1.0/24</literal>,
-кроме адреса <literal>192.168.1.1</literal>.
+кроме адреса <literal>192.168.1.1</literal>,
+и для IPv6-сети <literal>2001:0db8::/32</literal>.
 Если правил много, то лучше воспользоваться переменными модуля
 <link doc="ngx_http_geo_module.xml">ngx_http_geo_module</link>.
 </para>
