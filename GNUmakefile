@@ -253,8 +253,8 @@ SITE =	nginx.org
 tarball:
 	rm -rf $(TEMP)
 	mkdir -p $(TEMP)/$(SITE)
-	cp -Rp BSDmakefile GNUmakefile TODO				\
-		xml xsls xslt dtd binary				\
+	cp -Rp BSDmakefile GNUmakefile umasked.sh			\
+		xml xsls xslt dtd binary sources text			\
 	$(TEMP)/$(SITE)
 
 	rm -f $(SITE).tar.bz2
