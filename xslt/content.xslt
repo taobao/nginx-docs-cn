@@ -179,19 +179,44 @@
       </li>
    </xsl:template>
 
-   <xsl:template match="list[@type='tag']"> 
-      <dl compact="">
-         <xsl:apply-templates/>
-      </dl>
+   <xsl:template match="list[@type='tag']">
+      <xsl:choose>
+
+         <xsl:when test="@compact = 'yes'">
+
+            <dl class="compact">
+               <xsl:apply-templates/>
+            </dl>
+         </xsl:when>
+
+         <xsl:otherwise>
+
+            <dl>
+               <xsl:apply-templates/>
+            </dl>
+         </xsl:otherwise>
+      </xsl:choose>
    </xsl:template>
 
    <xsl:template match="para/list[@type='tag']">
 
       <xsl:text disable-output-escaping="yes">&lt;/p&gt; </xsl:text>
+      <xsl:choose>
 
-      <dl compact="">
-         <xsl:apply-templates/>
-      </dl>
+         <xsl:when test="@compact = 'yes'">
+
+            <dl class="compact">
+               <xsl:apply-templates/>
+            </dl>
+         </xsl:when>
+
+         <xsl:otherwise>
+
+            <dl>
+               <xsl:apply-templates/>
+            </dl>
+         </xsl:otherwise>
+      </xsl:choose>
 
       <xsl:text disable-output-escaping="yes">&lt;p&gt; </xsl:text>
    </xsl:template>
