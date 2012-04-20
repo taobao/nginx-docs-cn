@@ -75,10 +75,20 @@ X:stylesheet {
 
     X:template = "listitem" { <li> !!; </li> }
     
-    X:template = "list[@type='tag']" { <dl compact=""> !!; </dl> }
+    X:template = "list[@type='tag']" {
+        X:if "@compact = 'yes'" {
+            <dl class="compact"> !!; </dl>
+        } else {
+            <dl> !!; </dl>
+        }
+    }
     X:template = "para/list[@type='tag']" {
         X:text disable-output-escaping="yes" {&lt;/p&gt; }
-        <dl compact=""> !!; </dl>
+        X:if "@compact = 'yes'" {
+            <dl class="compact"> !!; </dl>
+        } else {
+            <dl> !!; </dl>
+        }
         X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
