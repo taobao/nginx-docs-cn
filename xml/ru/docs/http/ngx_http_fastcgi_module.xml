@@ -440,6 +440,7 @@ fastcgi_param SCRIPT_FILENAME /home/www/scripts/php$fastcgi_script_name;
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>1.1.4</appeared-in>
 
 <para>
 По умолчанию FastCGI-сервер будет закрывать соединение сразу же

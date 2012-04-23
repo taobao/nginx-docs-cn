@@ -443,6 +443,7 @@ using the <link doc="ngx_http_core_module.xml" id="error_page"/> directive.
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>1.1.4</appeared-in>
 
 <para>
 By default, a FastCGI server will close a connection right after
