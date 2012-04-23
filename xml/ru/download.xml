@@ -7,8 +7,20 @@
 
 <section name="Разрабатываемая версия">
 
-<download last="1" changes="CHANGES.ru">
+<download last="1" changes="CHANGES.ru-1.2">
 
+<item ver="1.2.0" pgp="yes" win="yes" />
+
+</download>
+
+</section>
+
+
+<section name="Стабильная версия">
+
+<download last="1" changes="CHANGES.ru-1.2">
+
+<item ver="1.2.0" pgp="yes" win="yes" />
 <item ver="1.1.19" pgp="yes" win="yes" />
 <item ver="1.1.18" pgp="yes" win="yes" />
 <item ver="1.1.17" pgp="yes" win="yes" />
@@ -35,7 +47,7 @@
 </section>
 
 
-<section name="Стабильная версия">
+<section name="Устаревшие версии">
 
 <download last="1" changes="CHANGES.ru-1.0">
 
@@ -65,11 +77,6 @@
 <item ver="0.9.0" pgp="yes" win="yes" />
 
 </download>
-
-</section>
-
-
-<section name="Устаревшие версии">
 
 <download last="1" changes="CHANGES.ru-0.8">
 
