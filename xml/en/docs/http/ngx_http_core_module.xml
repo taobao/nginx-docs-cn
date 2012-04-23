@@ -1419,6 +1419,7 @@ Enables or disables logging of subrequests into the
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<appeared-in>1.1.2</appeared-in>
 
 <para>
 Limits the maximum allowed number of ranges in byte-range requests.
