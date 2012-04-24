@@ -207,7 +207,10 @@ will be cached.
     [<literal>levels</literal>=<value>levels</value>]
     <literal>keys_zone</literal>=<value>name</value>:<value>size</value>
     [<literal>inactive</literal>=<value>time</value>]
-    [<literal>max_size</literal>=<value>size</value>]</syntax>
+    [<literal>max_size</literal>=<value>size</value>]
+    [<literal>loader_files</literal>=<value>number</value>]
+    [<literal>loader_sleep</literal>=<value>time</value>]
+    [<literal>loader_threshold</literal>=<value>time</value>]</syntax>
 <default/>
 <context>http</context>
 
@@ -252,6 +255,19 @@ By default, <literal>inactive</literal> is set to 10 minutes.
 The special process “cache manager” monitors the maximum cache size set
 by the <literal>max_size</literal> parameter;
 when this size is exceeded it removes the least recently used data.
+</para>
+
+<para>
+A minute after the start the special process “cache loader” is activated
+that loads information about previously cached data stored on file system
+into a cache zone.
+A load is done in iterations.
+During one iteration no more than <literal>loader_files</literal> items
+are loaded (by default, 100).
+Besides, the duration of one iteration is limited by the
+<literal>loader_threshold</literal> parameter (by default, 200 milliseconds).
+A pause is made between iterations, configured by the
+<literal>loader_sleep</literal> parameter (by default, 50 milliseconds).
 </para>
 
 </directive>

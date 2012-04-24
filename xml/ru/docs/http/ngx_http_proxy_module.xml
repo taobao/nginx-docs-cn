@@ -246,7 +246,10 @@ proxy_cache_key $scheme$proxy_host$uri$is_args$args;
     [<literal>levels</literal>=<value>уровни</value>]
     <literal>keys_zone</literal>=<value>имя</value>:<value>размер</value>
     [<literal>inactive</literal>=<value>время</value>]
-    [<literal>max_size</literal>=<value>размер</value>]</syntax>
+    [<literal>max_size</literal>=<value>размер</value>]
+    [<literal>loader_files</literal>=<value>число</value>]
+    [<literal>loader_sleep</literal>=<value>время</value>]
+    [<literal>loader_threshold</literal>=<value>время</value>]</syntax>
 <default/>
 <context>http</context>
 
@@ -291,6 +294,19 @@ proxy_cache_path /data/nginx/cache levels=1:2 keys_zone=one:10m;
 Специальный процесс “cache manager” следит за максимальным размером кэша,
 заданным параметром <literal>max_size</literal>, и при превышении
 его размеров удаляет наименее востребованные данные.
+</para>
+
+<para>
+Через минуту после старта активируется специальный процесс “cache loader”,
+который загружает в зону кэша информацию о ранее закэшированных данных,
+хранящихся на файловой системе.
+Загрузка происходит итерациями.
+За одну итерацию загружается не более <literal>loader_files</literal>
+элементов (по умолчанию 100).
+Кроме того, время работы одной итерации ограничено параметром
+<literal>loader_threshold</literal> (по умолчанию 200 миллисекунд).
+Между итерациями делается пауза на время, заданное параметром
+<literal>loader_sleep</literal> (по умолчанию 50 миллисекунд).
 </para>
 
 </directive>
