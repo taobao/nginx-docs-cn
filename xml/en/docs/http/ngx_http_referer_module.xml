@@ -42,6 +42,38 @@ if ($invalid_referer) {
 
 <section id="directives" name="Directives">
 
+<directive name="referer_hash_bucket_size">
+<syntax><value>size</value></syntax>
+<default>64</default>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.0.5</appeared-in>
+
+<para>
+Sets the bucket size for the valid referers hash tables.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
+<directive name="referer_hash_max_size">
+<syntax><value>size</value></syntax>
+<default>2048</default>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.0.5</appeared-in>
+
+<para>
+Sets the maximum <value>size</value> of the valid referers hash tables.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
 <directive name="valid_referers">
 <syntax>
     <literal>none</literal> |
@@ -56,7 +88,9 @@ if ($invalid_referer) {
 <para>
 Specifies values of the <header>Referer</header> request header field
 that will cause the embedded variable <var>$invalid_referer</var> to
-be set to 0.
+be set to an empty string.
+Otherwise, the variable will be set to “<literal>1</literal>”.
+Search for a match is case-insensitive.
 </para>
 
 <para>
@@ -73,7 +107,7 @@ the <header>Referer</header> field is missing in the request header;
 the <header>Referer</header> field is present in the request header,
 but its value was deleted by a firewall or proxy server;
 such values are strings that do not start from
-“<literal>http://</literal>”;
+“<literal>http://</literal>” or “<literal>https://</literal>”;
 </tag-desc>
 
 <tag-name><literal>server_names</literal></tag-name>
@@ -94,7 +128,8 @@ is ignored;
 <tag-desc>
 the first symbol should be a “<literal>~</literal>”.
 It should be noted that an expression will be matched against
-the text starting after the “<literal>http://</literal>”.
+the text starting after the “<literal>http://</literal>”
+or “<literal>https://</literal>”.
 </tag-desc>
 
 </list>
