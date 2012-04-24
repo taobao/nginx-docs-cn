@@ -249,7 +249,7 @@ fastcgi_cache_path /data/nginx/cache levels=1:2 keys_zone=one:10m;
 <para>
 Специальный процесс “cache manager” следит за максимальным размером кэша,
 заданным параметром <literal>max_size</literal>, и при превышении
-его размеров удаляет самые невостребованные данные.
+его размеров удаляет наименее востребованные данные.
 </para>
 
 </directive>
