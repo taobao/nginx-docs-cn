@@ -305,7 +305,7 @@ when updating cached data.
 </para>
 
 <para>
-To minimize the number of accesses to FastCGI servers when 
+To minimize the number of accesses to FastCGI servers when
 populating a new cache element, the <link id="fastcgi_cache_lock"/>
 directive can be used.
 </para>

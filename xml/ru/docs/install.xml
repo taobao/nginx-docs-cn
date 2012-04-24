@@ -184,7 +184,7 @@ HTTPS</link>.
 <para>
 <literal>--with-pcre-jit</literal>&mdash;собирает библиотеку PCRE с
 поддержкой JIT-компиляции (1.1.12, см.
-<link doc="ngx_core_module.xml" id="pcre_jit"/>). 
+<link doc="ngx_core_module.xml" id="pcre_jit"/>).
 </para>
 </listitem>
 

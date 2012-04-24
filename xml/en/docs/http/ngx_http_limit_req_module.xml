@@ -122,7 +122,7 @@ delays are logged with the <literal>info</literal> level.
 Sets the parameters for a zone that keeps states for various keys.
 This state stores the current number of requests in particular.
 The key is any non-empty value of the specified variable
-(empty values are not accounted). 
+(empty values are not accounted).
 Example usage:
 <example>
 limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;

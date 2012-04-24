@@ -303,7 +303,7 @@ fastcgi_cache_path /data/nginx/cache levels=1:2 keys_zone=one:10m;
 </para>
 
 <para>
-Чтобы минимизировать число обращений к FastCGI-серверам при 
+Чтобы минимизировать число обращений к FastCGI-серверам при
 заполнении нового элемента кэша, можно воспользоваться директивой
 <link id="fastcgi_cache_lock"/>.
 </para>

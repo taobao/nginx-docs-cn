@@ -21,7 +21,7 @@ prepare your virtual machine and nginx configuration.
 To set up a development environment:
 <list type="bullet">
 <listitem>
-Follow the 
+Follow the
 <link url="http://docs.amazonwebservices.com/AWSEC2/latest/GettingStartedGuide/Welcome.html">
 Get Started with EC2</link> guide to sign up to AWS and
 launch your EC2 instance. Only Amazon Linux is supported, so please
