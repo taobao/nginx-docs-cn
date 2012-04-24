@@ -89,6 +89,15 @@ charset_map iso-8859-5 _ { }
 </example>
 </para>
 
+<para>
+Кроме того, кодировка может быть задана в поле <header>X-Accel-Charset</header>
+заголовка ответа.
+Эту возможность можно запретить с помощью директив
+<link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>
+и
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_ignore_headers"/>.
+</para>
+
 </directive>
 
 

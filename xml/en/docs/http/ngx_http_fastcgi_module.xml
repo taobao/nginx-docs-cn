@@ -333,6 +333,24 @@ fastcgi_cache_valid any      1m;
 </example>
 </para>
 
+<para>
+Parameters of caching can also be set directly
+in the response header.
+This has a higher precedence than setting of caching time using the directive.
+The <header>X-Accel-Expires</header> header field sets caching time of a
+response in seconds.
+The value 0 disables to cache a response.
+If a value starts with the prefix <literal>@</literal>, it sets an absolute
+time in seconds since Epoch, up to which the response may be cached.
+If header does not include the <header>X-Accel-Expires</header> field,
+parameters of caching may be set in the header fields
+<header>Expires</header> or <header>Cache-Control</header>.
+If a header includes the <header>Set-Cookie</header> field, such a
+response will not be cached.
+Processing of one or more of these response header fields can be disabled
+using the <link id="fastcgi_ignore_headers"/> directive.
+</para>
+
 </directive>
 
 
@@ -402,6 +420,42 @@ The following fields can be ignored: <header>X-Accel-Redirect</header>,
 <header>X-Accel-Buffering</header> (1.1.6),
 <header>X-Accel-Charset</header> (1.1.6), <header>Expires</header>,
 <header>Cache-Control</header>, and <header>Set-Cookie</header> (0.8.44).
+</para>
+
+<para>
+If not disabled, processing of these header fields has the following effect:
+<list type="bullet" compact="no">
+
+<listitem>
+<header>X-Accel-Expires</header>, <header>Expires</header>,
+<header>Cache-Control</header>, and <header>Set-Cookie</header>
+set parameters of response <link id="fastcgi_cache_valid">caching</link>;
+</listitem>
+
+<listitem>
+<header>X-Accel-Redirect</header> performs an
+<link doc="ngx_http_core_module.xml" id="internal">internal
+redirect</link> to the specified URI;
+</listitem>
+
+<listitem>
+<header>X-Accel-Limit-Rate</header> sets a
+<link doc="ngx_http_core_module.xml" id="limit_rate">rate
+limit</link> for transmission of a response to a client;
+</listitem>
+
+<listitem>
+<header>X-Accel-Buffering</header> enables or disables
+buffering of a response;
+</listitem>
+
+<listitem>
+<header>X-Accel-Charset</header> sets the desired
+<link doc="ngx_http_charset_module.xml" id="charset"/>
+of a response.
+</listitem>
+
+</list>
 </para>
 
 </directive>

@@ -905,6 +905,15 @@ server {
 </example>
 </para>
 
+<para>
+Кроме того, ограничение скорости может быть задано в поле
+<header>X-Accel-Limit-Rate</header> заголовка ответа.
+Эту возможность можно запретить с помощью директив
+<link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>
+и
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_ignore_headers"/>.
+</para>
+
 </directive>
 
 

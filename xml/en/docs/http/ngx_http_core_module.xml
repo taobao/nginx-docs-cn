@@ -923,6 +923,16 @@ server {
 </example>
 </para>
 
+<para>
+In addition, rate limit can also be set in the
+<header>X-Accel-Limit-Rate</header> response header field.
+This ability can be disabled using the
+<link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>
+and
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_ignore_headers"/>
+directives.
+</para>
+
 </directive>
 
 

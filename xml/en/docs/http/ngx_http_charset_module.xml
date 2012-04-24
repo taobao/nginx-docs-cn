@@ -89,6 +89,16 @@ charset_map iso-8859-5 _ { }
 </example>
 </para>
 
+<para>
+In addition, charset can also be set in the
+<header>X-Accel-Charset</header> response header field.
+This ability can be disabled using the
+<link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>
+and
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_ignore_headers"/>
+directives.
+</para>
+
 </directive>
 
 

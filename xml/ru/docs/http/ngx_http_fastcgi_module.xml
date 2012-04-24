@@ -331,6 +331,24 @@ fastcgi_cache_valid any      1m;
 </example>
 </para>
 
+<para>
+Параметры кэширования могут также быть заданы непосредственно
+в заголовке ответа.
+Такой способ приоритетнее, чем задание времени кэширования с помощью директивы.
+Поле заголовка <header>X-Accel-Expires</header> задаёт время кэширования
+ответа в секундах.
+Значение 0 запрещает кэшировать ответ.
+Если значение начинается с префикса <literal>@</literal>, оно задаёт абсолютное
+время в секундах с начала эпохи, до которого ответ может быть закэширован.
+Если в заголовке нет поля <header>X-Accel-Expires</header>,
+параметры кэширования определяются по полям заголовка
+<header>Expires</header> или <header>Cache-Control</header>.
+Ответ, в заголовке которого есть поле <header>Set-Cookie</header>,
+не будет кэшироваться.
+Обработка одного или более из этих полей заголовка может быть отключена
+при помощи директивы <link id="fastcgi_ignore_headers"/>.
+</para>
+
 </directive>
 
 
@@ -398,6 +416,42 @@ nginx не передаёт клиенту поля заголовка <header>S
 <header>X-Accel-Buffering</header> (1.1.6),
 <header>X-Accel-Charset</header> (1.1.6), <header>Expires</header>,
 <header>Cache-Control</header> и <header>Set-Cookie</header> (0.8.44).
+</para>
+
+<para>
+Если не запрещено, обработка этих полей заголовка заключается в следующем:
+<list type="bullet" compact="no">
+
+<listitem>
+<header>X-Accel-Expires</header>, <header>Expires</header>,
+<header>Cache-Control</header> и <header>Set-Cookie</header>
+задают параметры <link id="fastcgi_cache_valid">кэширования</link> ответа;
+</listitem>
+
+<listitem>
+<header>X-Accel-Redirect</header> производит
+<link doc="ngx_http_core_module.xml" id="internal">внутреннее
+перенаправление</link> на указанный URI;
+</listitem>
+
+<listitem>
+<header>X-Accel-Limit-Rate</header> задаёт
+<link doc="ngx_http_core_module.xml" id="limit_rate">ограничение
+скорости</link> передачи ответа клиенту;
+</listitem>
+
+<listitem>
+<header>X-Accel-Buffering</header> включает или выключает
+буферизацию ответа;
+</listitem>
+
+<listitem>
+<header>X-Accel-Charset</header> задаёт желаемую
+<link doc="ngx_http_charset_module.xml" id="charset">кодировку</link>
+ответа.
+</listitem>
+
+</list>
 </para>
 
 </directive>
