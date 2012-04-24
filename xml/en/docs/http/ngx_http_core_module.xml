@@ -1288,6 +1288,18 @@ listen 127.0.0.1 default accept_filter=dataready backlog=1024;
 
 <para>
 Sets a configuration based on a request URI.
+</para>
+
+<para>
+The matching is performed against a normalized URI,
+after decoding a text encoded in the “<literal>%XX</literal>” form,
+resolving references to relative path components “<literal>.</literal>”
+and “<literal>..</literal>”, and possible
+<link id="merge_slashes">compression</link> of two or more
+adjacent slashes into a single slash.
+</para>
+
+<para>
 A location can either be defined by a prefix string, or by a regular expression.
 Regular expressions are specified by prepending them with the
 “<literal>~*</literal>” prefix (for case-insensitive matching), or with the
@@ -2808,10 +2820,10 @@ that support the <c-def>TCP_INFO</c-def> socket option
 
 <tag-name><var>$uri</var></tag-name>
 <tag-desc>
-current URI in request
+current URI in request, <link id="location">normalized</link>
 <para>
-It may differ from an original, e.g. when doing internal redirects,
-or when using index files.
+The value of <var>$uri</var> may change during request processing,
+e.g. when doing internal redirects, or when using index files.
 </para>
 </tag-desc>
 
