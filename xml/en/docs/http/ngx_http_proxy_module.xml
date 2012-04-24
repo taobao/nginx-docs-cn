@@ -314,8 +314,19 @@ to use a stale cached response.
 This directives determines in which cases it is permitted.
 The directive’s parameters match those of the
 <link id="proxy_next_upstream"/> directive.
+</para>
+
+<para>
 Additionally, the <literal>updating</literal> parameter permits
 to use a stale cached response if it is currently being updated.
+This allows to minimize the number of accesses to proxied servers
+when updating cached data.
+</para>
+
+<para>
+To minimize the number of accesses to proxied servers when
+populating a new cache element, the <link id="proxy_cache_lock"/>
+directive can be used.
 </para>
 
 </directive>
