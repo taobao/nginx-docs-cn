@@ -5,7 +5,8 @@
 <event date="2012-04-23">
 <para>
 <link doc="en/download.xml">nginx-1.2.0</link>
-stable version has been released.
+stable version has been released, incorporating many new
+features developed in the 1.1.x branch.
 </para>
 </event>
 
