@@ -1,7 +1,8 @@
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article name="I am trying to open Facebook and
-                instead I am getting &ldquo;Welcome to nginx!&rdquo; page"
+<article name="I am trying to open Facebook,
+               Yahoo!, Yandex, Tumblr, Google etc., and
+               instead I am getting &ldquo;Welcome to nginx!&rdquo; page"
          link="/en/docs/welcome_nginx_facebook.html"
          lang="en">
 
@@ -10,17 +11,17 @@
 
 <para>
 <initial>Q:</initial>
-I am trying to open Facebook, Yahoo!, Google, or some
-other well-known web site and instead I am getting a blank web page
+I am trying to open Facebook, Yahoo!, Yandex, Google, or some
+other well known web site and instead I am getting a blank web page
 with a message referring to nginx: &ldquo;Welcome to nginx!&rdquo; or
 &ldquo;404 Not Found / nginx&rdquo;.
 </para>
 
 <para>
-I suspect something is wrong and there is probably a malicious attempt here
-to direct me to a rogue web page (to break into my computer, do phishing etc.).
-Why is that and what has nginx to do with my attempts to connect
-to Facebook (Yahoo!, Google, etc.) ?
+I suspect something is wrong and there is probably a malicious attempt
+to direct me to a rogue web page (to break into my computer, do
+phishing etc.). Why is that, and what has nginx to do with my attempts
+to connect to Facebook (Yahoo!, Google, etc.) ?
 </para>
 
 <para>
@@ -29,34 +30,29 @@ to Facebook (Yahoo!, Google, etc.) ?
 
 <para>
 <initial>A:</initial>
-nginx is among the 3 most popular web servers in the world, it's being
-used by over 10% of the Internet web sites, including 25% of the top-1000 ones.
-It is a free open source server software, focused on high performance and
-high concurrency, and it's absolutely legitimate and
-has nothing to do with any kind of threatening or malicious activity per se.
-A web page saying &ldquo;Welcome to nginx!&rdquo; is one of the diagnostics
-responses that can be produced by any of the web sites running nginx.
+First of all, the &ldquo;Welcome to nginx!&rdquo; page you see is
+NOT our website. At nginx, we write and distribute a <b>free</b>
+<link url="http://en.wikipedia.org/wiki/Open-source_software">
+open source</link> web server software. A web page saying
+&ldquo;Welcome to nginx!&rdquo; is just a diagnostics response that
+can be produced by any of the websites out there, running nginx
+web server. Currently, nginx is the 2nd most popular open source
+web server in the world, it's being used by over 70,000,000 (or
+10% of the Internet) websites. Most of these websites are
+legitimate, but some aren't. Our software was created with a good
+reason of enabling performance and scalability on the Internet,
+it is licensed under <link url="http://nginx.org/LICENSE">
+popular open source license</link>, and has nothing to do with any
+kind of threatening or malicious activity per se &#8212;
+nginx is NOT a malware, and it is NOT on your computer. But someone's
+malware could have indeed tampered with your computer or router,
+redirecting you to a fraudulent Internet server.
 </para>
 
 <para>
-However, you are right in your assumption that something must be wrong
-with your browser, operating system or even router setup when you are
-trying to access a well known web site and instead of a familiar page you get
-&ldquo;Welcome to nginx!&rdquo;. This should not happen if your computer
-and network are clean and safe.
-</para>
-
-<para>
-We recommend you to check and verify your entire system setup
-(possibly with the help of your ISP or another support personnel),
-and it would also be a good idea to install and run an anti-virus software
-on your computer. It may happen that some malign entity is trying
-to divert the traffic from your computer to a wrong server and
-hijack the data, which may subsequently lead to a significant harm.
-</para>
-
-<para>
-What you should check is at least the following:
+We recommend running an anti-virus check on your computer, and
+we recommend to check and verify your entire system setup with the
+help of your ISP, or another support personnel:
 </para>
 
 <para>
@@ -74,81 +70,100 @@ use, data, or profits; or business interruption).
 <list type="bullet" compact="no">
 <listitem>
 Check your TCP/IP settings and see if the DNS servers
-configuration matches the one recommended by your Internet
-service provider and/or your IT support personnel.
+configuration matches the valid one (suggested by your Internet
+service provider or IT support personnel).
+</listitem>
+
+<listitem>
+Use <link url="http://code.google.com/speed/public-dns/">Google
+Public DNS</link>, and see if it fixes the problem. From Google's
+description of its Public DNS &#8212; "Google Public DNS is a free,
+global Domain Name System (DNS) resolution service,
+that you can use as an alternative to your current DNS
+provider. [..] By using Google Public DNS you can: Speed up your
+browsing experience. <b>Improve your security</b>."
+</listitem>
+
+<listitem>
+Clear your DNS resolver cache. On Microsoft Windows XP go to
+Start > Run, and then type the following command:
+"ipconfig /flushdns". On Microsoft Vista, Windows 7, and
+Windows 8 click on Start logo, follow All Programs > Accessories,
+right-click on Command Prompt, choose "Run As Administrator",
+type in "ipconfig /flushdns" and hit Enter.
+</listitem>
+
+<listitem>
+Click the "page reload" button in your browser. Clear browser
+data (cache, cookies etc.). E.g. in Chrome find and click
+"Clear Browsing Data" (Settings > Under the Hood). <b>Caution:</b>
+you may be deleting saved passwords information here,
+so do it carefully and check what exact actions you are performing.
 </listitem>
 
 <listitem>
 Check if the "hosts" file doesn't contain entries other
 than "127.0.0.1 localhost", and if so &#8212; if these entries are for
-the web site you're trying to reach and instead you're seeing a
-wrong web site. The "hosts" files is located in
+the web site you're trying to reach. The "hosts" files is located in
 C:\WINDOWS\system32\drivers\etc directory. Typically there should
 be just one entry in it, for "127.0.0.1 localhost", that's it. The
-"hosts" file can be viewed with your standard Notepad application.
+"hosts" file can be viewed and edited with your standard
+Notepad application.
 </listitem>
 
 <listitem>
-Try to (temporarily) use Google Public DNS and see if
-it fixes the problem. From Google's description of its Public DNS -
-"Google Public DNS is a free, global Domain Name System (DNS)
-resolution service,
-that you can use as an alternative to your current DNS provider.
-To try it out: Configure your network settings to use the IP
-addresses 8.8.8.8 and 8.8.4.4 as your DNS servers. [..] By
-using Google Public DNS you can: Speed up your browsing
-experience. Improve your security. Get the results you expect
-with absolutely no redirection."
-</listitem>
-
-<listitem>
-If you change DNS settings, clear your DNS resolver cache. On
-Microsoft Windows it is done with the following command:
-Start > Run > ipconfig /flushdns
-</listitem>
-
-<listitem>
-Clear browser data (cache, cookies etc.), e.g. in Chrome
-find and click "Clear Browsing Data" (Settings > Under the Hood).
-Caution: you may be deleting saved passwords information here,
-so do it carefully and check what exact actions you are performing.
-</listitem>
-
-<listitem>
-Try to check the plugins/extensions you've installed
-for use with your browser. It might make sense to re-install
-your favorite browser and/or try a different one if possible.
-</listitem>
-
-<listitem>
-If cleaning "hosts" file (when applicable), changing
-DNS servers to Google Public DNS, flushing DNS resolver cache,
-or fixing your browser configuration have helped, it might be
-that there's a malware somewhere on your PC or around.
-It makes perfect sense then to run a number of checks using
-your preferred anti-virus/anti-malware tools.
+Check the plugins and extensions installed with your browser.
+Re-install your browser or try an alternative one if possible.
 </listitem>
 </list>
 </para>
 
 <para>
-Links describing Google Public DNS:
+Something must be wrong with your <b>operating
+system</b> settings, <b>home router</b> setup, or <b>browser</b>
+configuration, if you are trying to access a well known web site
+and what you get instead is &ldquo;Welcome to nginx!&rdquo;.
+This should NOT happen if your computers and network are
+clean and safe.
 </para>
 
 <para>
-<link url="http://code.google.com/speed/public-dns/"/>
+If changing DNS servers to Google Public DNS, flushing DNS resolver
+cache, fixing your browser configuration, or cleaning "hosts" file
+(when applicable) have helped, it might be that there's a malware
+somewhere on your PC or around. Find and clean it using
+your preferred anti-virus and anti-malware tools.
 </para>
 
 <para>
-<link url="http://code.google.com/speed/public-dns/docs/using.html"/>
+Additional articles that might be helpful:
 </para>
 
 <para>
-Microsoft's Malicious Software Removal Tool:
+Microsoft:
+</para>
+<para>
+<link url="http://www.microsoft.com/security/pc-security/malware-removal.aspx">
+Malicious Software Removal Tool</link>
 </para>
 
 <para>
-<link url="http://www.microsoft.com/security/pc-security/malware-removal.aspx"/>
+<link url="http://support.microsoft.com/kb/972034">
+How can I reset the Hosts file back to the default?</link>
+</para>
+
+<para>
+<link url="http://support.microsoft.com/kb/299357">
+How to reset Internet Protocol (TCP/IP)</link>
+</para>
+
+<para>
+Tech-Recipes:
+</para>
+<para>
+<link url="http://www.tech-recipes.com/rx/1600/vista_dns_cache_flush/">
+DNS Cache Flush, Clear, or Reset in Vista,
+Windows 7, and Windows 8</link>
 </para>
 
 </section>
