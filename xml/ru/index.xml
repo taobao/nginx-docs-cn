@@ -151,6 +151,10 @@ rewrite-модуль:
 </listitem>
 
 <listitem>
+Проверка <link doc="docs/http/ngx_http_referer_module.xml">HTTP referer</link>;
+</listitem>
+
+<listitem>
 <link doc="docs/http/ngx_http_dav_module.xml">Методы
 PUT, DELETE, MKCOL, COPY и MOVE</link>;
 </listitem>
