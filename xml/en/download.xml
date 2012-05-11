@@ -165,18 +165,22 @@
 <section name="Source Code">
 
 <para>
+Read-only Subversion repositories:
 <list type="bullet">
 
 <listitem>
-Read-only Subversion repository:
-<literal>svn://svn.nginx.org/nginx</literal>
+code: <literal>svn://svn.nginx.org/nginx</literal>
 </listitem>
 
 <listitem>
-<link url="http://trac.nginx.org/nginx/browser">Trac source browser</link>
+site: <literal>svn://svn.nginx.org/nginx.org</literal>
 </listitem>
 
 </list>
+</para>
+
+<para>
+<link url="http://trac.nginx.org/nginx/browser">Trac source browser</link>
 </para>
 
 </section>

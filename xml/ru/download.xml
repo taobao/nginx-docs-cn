@@ -165,18 +165,22 @@
 <section name="Исходный код">
 
 <para>
+Репозитории Subversion, доступные только для чтения:
 <list type="bullet">
 
 <listitem>
-Репозиторий Subversion, доступный только для чтения:
-<literal>svn://svn.nginx.org/nginx</literal>
+код: <literal>svn://svn.nginx.org/nginx</literal>
 </listitem>
 
 <listitem>
-<link url="http://trac.nginx.org/nginx/browser">Исходный код в Trac</link>
+сайт: <literal>svn://svn.nginx.org/nginx.org</literal>
 </listitem>
 
 </list>
+</para>
+
+<para>
+<link url="http://trac.nginx.org/nginx/browser">Исходный код в Trac</link>
 </para>
 
 </section>
