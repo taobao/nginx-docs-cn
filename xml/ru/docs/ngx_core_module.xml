@@ -42,6 +42,43 @@ events {
 </directive>
 
 
+<directive name="debug_connection">
+<syntax>
+    <value>адрес</value> |
+    <value>CIDR</value> |
+    <literal>unix:</literal></syntax>
+<default/>
+<context>events</context>
+
+<para>
+Включает отладочный лог для отдельных клиентских соединений.
+Для остальных соединений используется уровень лога, заданный директивой
+<link id="error_log"/>.
+Отлаживаемые соединения задаются IPv4 или IPv6 (1.3.0) адресом или сетью.
+Соединение может быть также задано при помощи имени хоста, в этом случае
+используется первый IPv4-адрес, соответствующий имени.
+Отладочный лог для соединений через UNIX-сокеты (1.3.0) включается параметром
+“<literal>unix:</literal>”.
+<example>
+events {
+    debug_connection 127.0.0.1;
+    debug_connection localhost;
+    debug_connection 192.0.2.0/24;
+    debug_connection ::1;
+    debug_connection 2001:0db8::/32;
+    debug_connection unix:;
+    ...
+}
+</example>
+<note>
+Для работы директивы необходимо сконфигурировать nginx с параметром
+<literal>--with-debug</literal>.
+</note>
+</para>
+
+</directive>
+
+
 <directive name="error_log">
 <syntax>
 <value>файл</value> | <literal>stderr</literal>

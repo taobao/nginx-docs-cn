@@ -53,7 +53,9 @@ http {
 </para>
 
 <para>
-Можно включить отладочный лог только для определённых адресов:
+Можно включить отладочный лог только для
+<link doc="ngx_core_module.xml" id="debug_connection">определённых
+клиентских адресов</link>:
 
 <programlisting>
 error_log /path/to/log;

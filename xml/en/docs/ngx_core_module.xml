@@ -42,6 +42,43 @@ Mainly used during development.
 </directive>
 
 
+<directive name="debug_connection">
+<syntax>
+    <value>address</value> |
+    <value>CIDR</value> |
+    <literal>unix:</literal></syntax>
+<default/>
+<context>events</context>
+
+<para>
+Enables debugging log for selected client connections.
+Other connections will use logging level set by the
+<link id="error_log"/> directive.
+Debugged connections are specified by IPv4 or IPv6 (1.3.0) address or network.
+A connection may also be specified using a hostname, in which case the
+first IPv4 address corresponding to a name is used.
+For connections using UNIX-domain sockets (1.3.0), debugging log is enabled
+by the “<literal>unix:</literal>” parameter.
+<example>
+events {
+    debug_connection 127.0.0.1;
+    debug_connection localhost;
+    debug_connection 192.0.2.0/24;
+    debug_connection ::1;
+    debug_connection 2001:0db8::/32;
+    debug_connection unix:;
+    ...
+}
+</example>
+<note>
+For this directive to work, nginx needs to
+be built with <literal>--with-debug</literal>.
+</note>
+</para>
+
+</directive>
+
+
 <directive name="error_log">
 <syntax>
 <value>file</value> | <literal>stderr</literal>

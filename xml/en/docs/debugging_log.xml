@@ -55,7 +55,9 @@ http {
 </para>
 
 <para>
-It is also possible to enable the debugging log for selected addresses only:
+It is also possible to enable the debugging log for
+<link doc="ngx_core_module.xml" id="debug_connection">selected
+client addresses</link> only:
 
 <programlisting>
 error_log /path/to/log;
