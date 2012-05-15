@@ -26,9 +26,11 @@
 
 <para>
 <example>
-set_real_ip_from 192.168.1.0/24;
-set_real_ip_from 192.168.2.1;
-real_ip_header   X-Real-IP;
+set_real_ip_from  192.168.1.0/24;
+set_real_ip_from  192.168.2.1;
+set_real_ip_from  2001:0db8::/32;
+real_ip_header    X-Forwarded-For;
+real_ip_recursive on;
 </example>
 </para>
 
@@ -48,10 +50,13 @@ real_ip_header   X-Real-IP;
 <context>location</context>
 
 <para>
-Описывает доверенные IPv4-адреса, которые передают верный адрес
+Задаёт доверенные адреса, которые передают верный адрес
 для замены.
 Если указано специальное значение <literal>unix:</literal>,
 доверенными будут считаться все UNIX-сокеты.
+<note>
+IPv6-адреса поддерживаются начиная с версии 1.3.0.
+</note>
 </para>
 
 </directive>
@@ -70,9 +75,27 @@ real_ip_header   X-Real-IP;
 <para>
 Задаёт поле заголовка запроса,
 в котором передаётся адрес для замены.
-В случае поля <header>X-Forwarded-For</header> используется
-последний адрес в значении поля.
-Для остальных полей используется всё значение.
+</para>
+
+</directive>
+
+
+<directive name="real_ip_recursive">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.3.0</appeared-in>
+
+<para>
+При выключенном рекурсивном поиске исходный адрес клиента,
+совпадающий с одним из доверенных адресов, заменяется на последний
+адрес, переданный в поле заголовка запроса, заданного
+директивой <link id="real_ip_header"/>.
+При включённом рекурсивном поиске исходный адрес клиента,
+совпадающий с одним из доверенных адресов, заменяется на последний
+не доверенный адрес, переданный в заданном поле заголовка запроса.
 </para>
 
 </directive>

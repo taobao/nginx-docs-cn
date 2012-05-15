@@ -32,8 +32,11 @@ This module requires the
 <para>
 <example>
 http {
-    geoip_country GeoIP.dat;
-    geoip_city    GeoLiteCity.dat;
+    geoip_country         GeoIP.dat;
+    geoip_city            GeoLiteCity.dat;
+    geoip_proxy           192.168.100.0/24;
+    geoip_proxy           2001:0db8::/32;
+    geoip_proxy_recursive on;
     ...
 </example>
 </para>
@@ -126,6 +129,40 @@ postal code.
 </tag-desc>
 
 </list>
+</para>
+
+</directive>
+
+
+<directive name="geoip_proxy">
+<syntax><value>address</value> | <value>CIDR</value></syntax>
+<default/>
+<context>http</context>
+<appeared-in>1.3.0</appeared-in>
+
+<para>
+Defines trusted addresses.
+When a request comes from a trusted address,
+an address from the <header>X-Forwarded-For</header> request
+header field will be used instead.
+</para>
+
+</directive>
+
+
+<directive name="geoip_proxy_recursive">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<appeared-in>1.3.0</appeared-in>
+
+<para>
+If recursive search is disabled then instead of an original client
+address that matches one of the trusted addresses, the last
+address sent in <header>X-Forwarded-For</header> will be used.
+If recursive search is enabled then instead an original client
+address that matches one of the trusted addresses, the last
+non-trusted address sent in <header>X-Forwarded-For</header> will be used.
 </para>
 
 </directive>
