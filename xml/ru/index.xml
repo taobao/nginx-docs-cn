@@ -97,7 +97,7 @@ chunked ответы,
 <list type="bullet">
 
 <listitem>
-<link doc="docs/virtual_hosts.xml">Виртуальные серверы</link>,
+<link doc="docs/http/request_processing.xml">Виртуальные серверы</link>,
 определяемые по IP-адресу и имени;
 </listitem>
 

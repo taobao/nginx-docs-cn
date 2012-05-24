@@ -116,7 +116,7 @@
 <item href="/en/security_advisories.html" lang="en"> безопасность </item>
 <item href="/en/pgp_keys.html" lang="en"> pgp ключи </item>
 <item href="/ru/docs/"> документация </item>
-<item href="/en/docs/introduction.html" lang="en"> введение </item>
+<item href="/ru/docs/introduction.html"> введение </item>
 <item href="/ru/docs/howto.html"> howto </item>
 <item href="/ru/docs/faq.html"> faq </item>
 <item href="http://trac.nginx.org/nginx"> trac </item>

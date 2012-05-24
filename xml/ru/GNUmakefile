@@ -1,6 +1,7 @@
 DOC_LANG =	ru
 
 DOCS =									\
+		introduction						\
 		howto							\
 		faq							\
 		install							\
@@ -9,13 +10,18 @@ DOCS =									\
 		syntax							\
 		example							\
 		switches						\
-		virtual_hosts						\
 		control							\
 		hash							\
 		dirindex						\
 
 DOCS_XML =	$(foreach name, $(DOCS), xml/$(DOC_LANG)/docs/$(name).xml)
 DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
+
+INTRO =									\
+		http/request_processing					\
+
+INTRO_XML =	$(foreach name, $(INTRO), xml/$(DOC_LANG)/docs/$(name).xml)
+INTRO_HTML =	$(foreach name, $(INTRO), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 
 HOWTO =									\
 		debugging_log						\
@@ -81,6 +87,7 @@ $(DOC_LANG):								\
 		$(OUT)/$(DOC_LANG)/docs/index.html			\
 		$(DOCS_HTML)						\
 		$(REFS_HTML)						\
+		$(INTRO_HTML)						\
 		$(HOWTO_HTML)						\
 		$(FAQ_HTML)						\
 
@@ -102,6 +109,9 @@ xml/$(DOC_LANG)/docs/dirindex.xml:					\
 	--stringparam LANG $(patsubst xml/%/docs/dirindex.xml,%,$@)	\
 	xslt/dirindex.xslt - |						\
 	sed 's;xml/[^/]*/docs/;;g' > $@
+
+$(OUT)/$(DOC_LANG)/docs/introduction.html:				\
+		$(INTRO_XML)						\
 
 $(OUT)/$(DOC_LANG)/docs/howto.html:					\
 		$(HOWTO_XML)						\

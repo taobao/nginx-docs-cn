@@ -94,7 +94,8 @@ TLS SNI support</link>.
 <list type="bullet">
 
 <listitem>
-Name-based and IP-based virtual servers;
+Name-based and IP-based
+<link doc="docs/http/request_processing.xml">virtual servers</link>;
 </listitem>
 
 <listitem>

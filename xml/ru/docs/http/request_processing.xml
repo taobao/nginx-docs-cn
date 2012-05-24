@@ -1,0 +1,297 @@
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
+
+<article name="Как nginx обрабатывает запросы"
+         link="/ru/docs/http/request_processing.html"
+         lang="ru"
+         author="Игорь Сысоев"
+         editor="Brian Mercer">
+
+<section name="Определение виртуального сервера по имени">
+
+<para>
+nginx вначале решает, какой из серверов должен обработать запрос.
+Рассмотрим простую конфигурацию,
+где все три виртуальных сервера слушают на порту *:80:
+<programlisting>
+server {
+    listen      80;
+    server_name example.org www.example.org;
+    ...
+}
+
+server {
+    listen      80;
+    server_name example.net www.example.net;
+    ...
+}
+
+server {
+    listen      80;
+    server_name example.com www.example.com;
+    ...
+}
+</programlisting>
+
+</para>
+
+<para>
+В этой конфигурации, чтобы определить, какому серверу следует направить
+запрос, nginx проверяет только поле <header>Host</header> заголовка запроса.
+Если его значение не соответствует ни одному из имён серверов
+или в заголовке запроса нет этого поля вовсе,
+nginx направит запрос в сервер по умолчанию для этого порта.
+В вышеприведённой конфигурации сервером по умолчанию будет первый сервер,
+что соответствует стандартному поведению nginx по умолчанию.
+Сервер по умолчанию можно задать явно с помощью параметра
+<literal>default_server</literal> в директиве
+<link doc="ngx_http_core_module.xml" id="listen"/>:
+<programlisting>
+server {
+    listen      80 <b>default_server</b>;
+    server_name example.net www.example.net;
+    ...
+}
+</programlisting>
+
+<note>
+Параметр <literal>default_server</literal> появился в
+версии 0.8.21.
+В более ранних версиях вместо него следует использовать параметр
+<literal>default</literal>.
+</note>
+Следует иметь в виду, что сервер по умолчанию является свойством
+слушающего порта, а не имени сервера.
+Подробнее это обсуждается ниже.
+</para>
+
+</section>
+
+
+<section id="how_to_prevent_undefined_server_names"
+         name="Как предотвратить обработку запросов без имени сервера">
+
+<para>
+Если запросы без поля <header>Host</header> в заголовке не должны
+обрабатываться, можно определить сервер, который будет их отклонять:
+<programlisting>
+server {
+    listen      80;
+    server_name "";
+    return      444;
+}
+</programlisting>
+Здесь в качестве имени сервера указана пустая строка, которая
+соответствует запросам без поля <header>Host</header> в заголовке,
+и возвращается специальный для nginx код 444, который закрывает
+соединение.
+<note>
+Начиная с версии 0.8.48 настройка <literal>server_name ""</literal>
+является стандартной и может явно не указываться.
+В более ранних версиях в качестве стандартного имени сервера
+выступало имя машины (hostname).
+</note>
+</para>
+
+</section>
+
+
+<section id="mixed_name_ip_based_servers"
+         name="Определение виртуального сервера по имени и IP-адресу">
+
+<para>
+Рассмотрим более сложную конфигурацию,
+в которой некоторые виртуальные серверы слушают на разных адресах:
+<programlisting>
+server {
+    listen      192.168.1.1:80;
+    server_name example.org www.example.org;
+    ...
+}
+
+server {
+    listen      192.168.1.1:80;
+    server_name example.net www.example.net;
+    ...
+}
+
+server {
+    listen      192.168.1.2:80;
+    server_name example.com www.example.com;
+    ...
+}
+</programlisting>
+В этой конфигурации nginx вначале сопоставляет IP-адрес и порт
+запроса с директивами
+<link doc="ngx_http_core_module.xml" id="listen"/>
+в блоках
+<link doc="ngx_http_core_module.xml" id="server"/>.
+Затем он сопоставляет значение поля <header>Host</header>
+заголовка запроса с директивами
+<link doc="ngx_http_core_module.xml" id="server_name"/>
+в блоках
+<link doc="ngx_http_core_module.xml" id="server"/>,
+которые соответствуют IP-адресу и порту.
+Если имя сервера не найдено, запрос будет обработан в
+сервере по умолчанию.
+Например, запрос <url>www.example.com</url>, пришедший на порт
+192.168.1.1:80, будет обработан сервером по умолчанию для порта
+192.168.1.1:80, т.е. первым сервером, т.к. для этого порта
+<url>www.example.com</url> не указан в списке имён серверов.
+</para>
+
+<para>
+Как уже говорилось, сервер по умолчанию является свойством слушающего порта,
+поэтому у разных портов могут быть определены свои серверы по умолчанию:
+<programlisting>
+server {
+    listen      192.168.1.1:80;
+    server_name example.org www.example.org;
+    ...
+}
+
+server {
+    listen      192.168.1.1:80 <b>default_server</b>;
+    server_name example.net www.example.net;
+    ...
+}
+
+server {
+    listen      192.168.1.2:80 <b>default_server</b>;
+    server_name example.com www.example.com;
+    ...
+}
+</programlisting>
+
+</para>
+
+</section>
+
+
+<section id="simple_php_site_configuration"
+         name="Конфигурация простого сайта PHP">
+
+<para>
+Теперь посмотрим на то, как nginx выбирает <i>location</i>
+для обработки запроса на примере обычного простого PHP-сайта:
+<programlisting>
+server {
+    listen      80;
+    server_name example.org www.example.org;
+    root        /data/www;
+
+    location / {
+        index   index.html index.php;
+    }
+
+    location ~* \.(gif|jpg|png)$ {
+        expires 30d;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass  localhost:9000;
+        fastcgi_param SCRIPT_FILENAME
+                      $document_root$fastcgi_script_name;
+        include       fastcgi_params;
+    }
+}
+</programlisting>
+
+</para>
+
+<para>
+nginx вначале ищет среди всех префиксных location’ов, заданных строками,
+максимально совпадающий.
+В вышеприведённой конфигурации
+указан только один префиксный location “<literal>/</literal>”, и поскольку
+он подходит под любой запрос, он и будет использован, если других
+совпадений не будет найдено.
+Затем nginx проверяет location’ы, заданные регулярными выражениями, в
+порядке их следования в конфигурационном файле.
+При первом же совпадении поиск прекращается и nginx использует
+совпавший location.
+Если запросу не соответствует ни одно из регулярных выражений,
+nginx использует максимально совпавший префиксный location,
+найденный ранее.
+</para>
+
+<para>
+Следует иметь в виду, что location’ы всех типов сопоставляются только с
+URI-частью строки запроса без аргументов.
+Так делается потому, что аргументы в строке запроса могут быть
+заданы различными способами, например:
+<programlisting>
+/index.php?user=john&amp;page=1
+/index.php?page=1&amp;user=john
+</programlisting>
+Кроме того, в строке запроса можно запросить что угодно:
+<programlisting>
+/index.php?page=1&amp;something+else&amp;user=john
+</programlisting>
+
+</para>
+
+<para>
+Теперь посмотрим, как бы обрабатывались запросы
+в вышеприведённой конфигурации:
+<list type="bullet" compact="no">
+
+<listitem>
+Запросу “<literal>/logo.gif</literal>” во-первых соответствует префиксный
+location “<literal>/</literal>”, а во-вторых&mdash;регулярное выражение
+“<literal>\.(gif|jpg|png)$</literal>”,
+поэтому он обрабатывается location’ом регулярного выражения.
+Согласно директиве “<literal>root&nbsp;/data/www</literal>” запрос
+отображается в файл <path>/data/www/logo.gif</path>, который
+и посылается клиенту.
+</listitem>
+
+<listitem>
+Запросу “<literal>/index.php</literal>” также во-первых соответствует префиксный
+location “<literal>/</literal>”, а во-вторых&mdash;регулярное выражение
+“<literal>\.(php)$</literal>”.
+Следовательно, он обрабатывается location’ом регулярного выражения
+и запрос передаётся FastCGI-серверу, слушающему на localhost:9000.
+Директива
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_param"/>
+устанавливает FastCGI-параметр
+<literal>SCRIPT_FILENAME</literal> в “<literal>/data/www/index.php</literal>”,
+и сервер FastCGI выполняет указанный файл.
+Переменная <var>$document_root</var> равна
+значению директивы
+<link doc="ngx_http_core_module.xml" id="root"/>,
+а переменная <var>$fastcgi_script_name</var> равна
+URI запроса, т.е. “<literal>/index.php</literal>”.
+</listitem>
+
+<listitem>
+Запросу “<literal>/about.html</literal>” соответствует только префиксный
+location “<literal>/</literal>”, поэтому запрос обрабатывается в нём.
+Согласно директиве “<literal>root /data/www</literal>” запрос
+отображается в файл <path>/data/www/about.html</path>, который
+и посылается клиенту.
+</listitem>
+
+<listitem>
+Обработка запроса “<literal>/</literal>” более сложная.
+Ему соответствует только префиксный location “<literal>/</literal>”,
+поэтому запрос обрабатывается в нём.
+Затем директива
+<link doc="ngx_http_index_module.xml" id="index"/>
+проверяет существование индексных файлов согласно своих параметров
+и директиве “<literal>root /data/www</literal>”.
+Если файл <path>/data/www/index.html</path> не существует,
+а файл <path>/data/www/index.php</path> существует, то
+директива делает внутреннее перенаправление на “<literal>/index.php</literal>”
+и nginx снова сопоставляет его с location’ами,
+как если бы такой запрос был послан клиентом.
+Как мы видели ранее, перенаправленный запрос будет в конечном итоге
+обработан сервером FastCGI.
+</listitem>
+
+</list>
+
+</para>
+
+</section>
+
+</article>

@@ -10,13 +10,9 @@
 <para>
 <list type="bullet">
 
-<!--
-
 <listitem>
 <link doc="introduction.xml"/>
 </listitem>
-
--->
 
 <listitem>
 <link doc="howto.xml"/>
@@ -54,10 +50,6 @@
 
 <listitem>
 <link doc="switches.xml"/>
-</listitem>
-
-<listitem>
-<link doc="virtual_hosts.xml"/>
 </listitem>
 
 <listitem>

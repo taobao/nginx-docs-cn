@@ -2059,9 +2059,8 @@ virtual servers.
 Instead, the <link id="listen"/> directives describe all
 addresses and ports that should accept connections for a server, and the
 <link id="server_name"/> directive lists all server names.
-An example configuration is provided in the
-<link doc="../virtual_hosts.xml">
-Setting Up Virtual Servers</link> document.
+Example configurations are provided in the
+“<link doc="request_processing.xml"/>” document.
 </para>
 
 </directive>
