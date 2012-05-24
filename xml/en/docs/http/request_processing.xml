@@ -6,51 +6,49 @@
          author="Igor Sysoev"
          editor="Brian Mercer">
 
-
 <section name="Name-based virtual servers">
 
 <para>
 nginx first decides which <i>server</i> should process the request.
-Let&rsquo;s start with a simple configuration
+Let’s start with a simple configuration
 where all three virtual servers listen on port *:80:
-
 <programlisting>
 server {
-    listen       80;
-    server_name  example.org  www.example.org;
+    listen      80;
+    server_name example.org www.example.org;
     ...
 }
 
 server {
-    listen       80;
-    server_name  example.net  www.example.net;
+    listen      80;
+    server_name example.net www.example.net;
     ...
 }
 
 server {
-    listen       80;
-    server_name  example.com  www.example.com;
+    listen      80;
+    server_name example.com www.example.com;
     ...
 }
 </programlisting>
+
 </para>
 
 <para>
-In this configuration nginx tests only the request&rsquo;s header line
-&ldquo;Host&rdquo; to determine which server the request should be routed to.
-If the &ldquo;Host&rdquo; header line does not match any server name,
-or the request does not contain this line at all,
-then nginx will route the request to the default server.
+In this configuration nginx tests only the request’s header field
+<header>Host</header> to determine which server the request should be routed to.
+If its value does not match any server name,
+or the request does not contain this header field at all,
+then nginx will route the request to the default server for this port.
 In the configuration above, the default server is the first
-one&mdash;which is nginx&rsquo;s standard default behaviour.
-If you do not want the first server listed to be the default server,
-you may set it explicitly with the <literal>default_server</literal> parameter
+one&mdash;which is nginx’s standard default behaviour.
+It can also be set explicitly which server should be default,
+with the <literal>default_server</literal> parameter
 in the <link doc="ngx_http_core_module.xml" id="listen"/> directive:
-
 <programlisting>
 server {
-    listen       80  <b>default_server</b>;
-    server_name  example.net  www.example.net;
+    listen      80 <b>default_server</b>;
+    server_name example.net www.example.net;
     ...
 }
 </programlisting>
@@ -61,82 +59,79 @@ version 0.8.21.
 In earlier versions the <literal>default</literal> parameter should be used
 instead.
 </note>
-
 Note that the default server is a property of the listen port
-and not of the server name. More about this later.
+and not of the server name.
+More about this later.
 </para>
 
 </section>
 
 
 <section id="how_to_prevent_undefined_server_names"
-        name="How to prevent processing requests with undefined server names">
+         name="How to prevent processing requests with undefined server names">
 
 <para>
-If you do not want to process requests without the <header>Host</header>
-header line, you may define a server that just drops the requests:
-
+If requests without the <header>Host</header> header field should not be
+allowed, a server that just drops the requests can be defined:
 <programlisting>
 server {
-    listen       80;
-    server_name  "";
-    return       444;
+    listen      80;
+    server_name "";
+    return      444;
 }
 </programlisting>
-
-Here, the server name is set to an empty string which will match
-requests without the <header>Host</header> header line,
+Here, the server name is set to an empty string that will match
+requests without the <header>Host</header> header field,
 and a special nginx’s non-standard code 444
 is returned that closes the connection.
+<note>
 Since version 0.8.48, this is the default setting for the
 server name, so the <literal>server_name ""</literal> can be omitted.
-In earlier versions, the machine's <i>hostname</i> was used as
+In earlier versions, the machine’s <i>hostname</i> was used as
 a default server name.
+</note>
 </para>
 
 </section>
 
 
 <section id="mixed_name_ip_based_servers"
-        name="Mixed name-based and IP-based virtual servers">
+         name="Mixed name-based and IP-based virtual servers">
 
 <para>
-Let&rsquo;s look at a more complex configuration
+Let’s look at a more complex configuration
 where some virtual servers listen on different addresses:
-
 <programlisting>
 server {
-    listen       192.168.1.1:80;
-    server_name  example.org  www.example.org;
+    listen      192.168.1.1:80;
+    server_name example.org www.example.org;
     ...
 }
 
 server {
-    listen       192.168.1.1:80;
-    server_name  example.net  www.example.net;
+    listen      192.168.1.1:80;
+    server_name example.net www.example.net;
     ...
 }
 
 server {
-    listen       192.168.1.2:80;
-    server_name  example.com  www.example.com;
+    listen      192.168.1.2:80;
+    server_name example.com www.example.com;
     ...
 }
 </programlisting>
-
 In this configuration, nginx first tests the IP address and port
 of the request against the
 <link doc="ngx_http_core_module.xml" id="listen"/> directives
 of the
 <link doc="ngx_http_core_module.xml" id="server"/> blocks.
-It then tests the &ldquo;Host&rdquo;
-header line of the request against the
+It then tests the <header>Host</header>
+header field of the request against the
 <link doc="ngx_http_core_module.xml" id="server_name"/>
 entries of the
 <link doc="ngx_http_core_module.xml" id="server"/>
 blocks that matched
 the IP address and port.
-
 If the server name is not found, the request will be processed by
 the default server.
 For example, a request for <url>www.example.com</url> received on
@@ -146,161 +141,155 @@ since there is no <url>www.example.com</url> defined for this port.
 </para>
 
 <para>
-As already stated, a default server is a property of the listen port
-and different default servers may be defined for different listen ports:
-
+As already stated, a default server is a property of the listen port,
+and different default servers may be defined for different ports:
 <programlisting>
 server {
-    listen        192.168.1.1:80;
-    server_name   example.org  www.example.org;
+    listen      192.168.1.1:80;
+    server_name example.org www.example.org;
     ...
 }
 
 server {
-    listen        192.168.1.1:80  default_server;
-    server_name   example.net  www.example.net;
+    listen      192.168.1.1:80 <b>default_server</b>;
+    server_name example.net www.example.net;
     ...
 }
 
 server {
-    listen        192.168.1.2:80  default_server;
-    server_name   example.com  www.example.com;
+    listen      192.168.1.2:80 <b>default_server</b>;
+    server_name example.com www.example.com;
     ...
 }
 </programlisting>
+
 </para>
 
 </section>
 
 
 <section id="simple_php_site_configuration"
-        name="A simple PHP site configuration">
+         name="A simple PHP site configuration">
 
 <para>
-Now let&rsquo;s look at how nginx chooses a <i>location</i> to process a request
+Now let’s look at how nginx chooses a <i>location</i> to process a request
 for a typical, simple PHP site:
-
 <programlisting>
 server {
-    listen        80;
-    server_name   example.org  www.example.org;
-    root          /data/www;
+    listen      80;
+    server_name example.org www.example.org;
+    root        /data/www;
 
     location / {
-        index     index.html  index.php;
+        index   index.html index.php;
     }
 
     location ~* \.(gif|jpg|png)$ {
-        expires   30d;
+        expires 30d;
     }
 
     location ~ \.php$ {
-        fastcgi_pass   localhost:9000;
-        fastcgi_param  SCRIPT_FILENAME
-                       $document_root$fastcgi_script_name;
-        include        fastcgi_params;
+        fastcgi_pass  localhost:9000;
+        fastcgi_param SCRIPT_FILENAME
+                      $document_root$fastcgi_script_name;
+        include       fastcgi_params;
     }
 }
 </programlisting>
+
 </para>
 
 <para>
-nginx first searches for the most specific location given by literal strings
-regardless of the listed order. In the configuration above
-the only literal location is “<literal>/</literal>” and since it matches
+nginx first searches for the most specific prefix location given by
+literal strings regardless of the listed order.
+In the configuration above
+the only prefix location is “<literal>/</literal>” and since it matches
 any request it will be used as a last resort.
 Then nginx checks locations given by
 regular expression in the order listed in the configuration file.
 The first matching expression stops the search and nginx will use this
-location. If no regular expression matches a request, then nginx uses
-the most specific literal location found earlier.
+location.
+If no regular expression matches a request, then nginx uses
+the most specific prefix location found earlier.
 </para>
 
 <para>
-Note that locations of all types test only a request URI part without a query
-string. This is done because arguments in the query string may be given in
+Note that locations of all types test only a URI part of request line
+without arguments.
+This is done because arguments in the query string may be given in
 several ways, for example:
-
 <programlisting>
 /index.php?user=john&amp;page=1
 /index.php?page=1&amp;user=john
 </programlisting>
-
 Besides, anyone may request anything in the query string:
-
 <programlisting>
 /index.php?page=1&amp;something+else&amp;user=john
 </programlisting>
+
 </para>
 
 <para>
-Now let&rsquo;s look at how requests would be processed
+Now let’s look at how requests would be processed
 in the configuration above:
-
-<list type="bullet">
+<list type="bullet" compact="no">
 
 <listitem>
-<para>
-A request “<literal>/logo.gif</literal>” is matched by the literal location
+A request “<literal>/logo.gif</literal>” is matched by the prefix location
 “<literal>/</literal>” first and then by the regular expression
 “<literal>\.(gif|jpg|png)$</literal>”,
 therefore, it is handled by the latter location.
 Using the directive “<literal>root&nbsp;/data/www</literal>” the request
-is mapped to a file <path>/data/www/logo.gif</path>, and the file
+is mapped to the file <path>/data/www/logo.gif</path>, and the file
 is sent to the client.
-</para>
 </listitem>
 
 <listitem>
-<para>
-A request “<literal>/index.php</literal>” is also matched by the literal location
+A request “<literal>/index.php</literal>” is also matched by the prefix location
 “<literal>/</literal>” first and then by the regular expression
-“<literal>\.(php)$</literal>”. Therefore, it is handled by the latter location
+“<literal>\.(php)$</literal>”.
+Therefore, it is handled by the latter location
 and the request is passed to a FastCGI server listening on localhost:9000.
 The
 <link doc="ngx_http_fastcgi_module.xml" id="fastcgi_param"/>
 directive sets the FastCGI parameter
-SCRIPT_FILENAME to “<literal>/data/www/index.php</literal>”,
+<literal>SCRIPT_FILENAME</literal> to “<literal>/data/www/index.php</literal>”,
 and the FastCGI server executes the file.
-The variable $document_root is equal to
+The variable <var>$document_root</var> is equal to
 the value of the
 <link doc="ngx_http_core_module.xml" id="root"/>
-directive and
-the variable $fastcgi_script_name is equal to the request URI,
-i.e. “<literal>/index.php</literal>”.
-</para>
+directive and the variable <var>$fastcgi_script_name</var> is equal to
+the request URI, i.e. “<literal>/index.php</literal>”.
 </listitem>
 
 <listitem>
-<para>
-A request “<literal>/about.html</literal>” is matched by the literal location
+A request “<literal>/about.html</literal>” is matched by the prefix location
 “<literal>/</literal>” only, therefore, it is handled in this location.
 Using the directive “<literal>root /data/www</literal>” the request is mapped
 to the file <path>/data/www/about.html</path>, and the file is sent
 to the client.
-</para>
 </listitem>
 
 <listitem>
-<para>
 Handling a request “<literal>/</literal>” is more complex.
-It is matched by the literal location “<literal>/</literal>” only,
+It is matched by the prefix location “<literal>/</literal>” only,
 therefore, it is handled by this location.
 Then the
 <link doc="ngx_http_index_module.xml" id="index"/>
 directive tests for the existence
-of an index file according to its parameters and
-the “<literal>root&nbsp;/data/www</literal>” directive.
-If a file <path>/data/www/index.php</path> exists,
+of index files according to its parameters and
+the “<literal>root /data/www</literal>” directive.
+If the file <path>/data/www/index.html</path> does not exist,
+and the file <path>/data/www/index.php</path> exists,
 then the directive does an internal redirect to “<literal>/index.php</literal>”,
 and nginx searches the locations again
 as if the request had been sent by a client.
 As we saw before, the redirected request will eventually be handled
 by the FastCGI server.
-</para>
 </listitem>
 
 </list>
+
 </para>
 
 </section>
