@@ -31,6 +31,7 @@
 <!ELEMENT  initial      (#PCDATA) >
 <!ELEMENT  url          (#PCDATA) >
 <!ELEMENT  value        (#PCDATA) >
+<!ELEMENT  var          (#PCDATA) >
 
 <!ELEMENT  registered   (#PCDATA) >
 <!ELEMENT  c-func       (#PCDATA)* >
@@ -47,7 +48,7 @@
 >
 
 <!ELEMENT  listitem     (#PCDATA | para | br | nobr | list | i | b | url |
-                         path | literal | value | programlisting |
+                         path | literal | value | var | programlisting |
                          link | registered)* >
 
 <!ELEMENT  note         (#PCDATA | para | br | list | i | b |
