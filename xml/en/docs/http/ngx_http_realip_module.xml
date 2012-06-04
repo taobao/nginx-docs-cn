@@ -55,7 +55,7 @@ replacement addresses.
 If the special value <literal>unix:</literal> is specified,
 all UNIX-domain sockets will be trusted.
 <note>
-IPv6 addresses are supported starting from version 1.3.0.
+IPv6 addresses are supported starting from versions 1.3.0 and 1.2.1.
 </note>
 </para>
 
@@ -87,6 +87,7 @@ the address for a replacement.
 <context>server</context>
 <context>location</context>
 <appeared-in>1.3.0</appeared-in>
+<appeared-in>1.2.1</appeared-in>
 
 <para>
 If recursive search is disabled, an original client address that

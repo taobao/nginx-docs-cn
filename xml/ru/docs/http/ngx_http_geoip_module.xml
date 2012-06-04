@@ -139,6 +139,7 @@ http {
 <default/>
 <context>http</context>
 <appeared-in>1.3.0</appeared-in>
+<appeared-in>1.2.1</appeared-in>
 
 <para>
 Задаёт доверенные адреса, при запросе с которых будет использоваться
@@ -153,6 +154,7 @@ http {
 <default>off</default>
 <context>http</context>
 <appeared-in>1.3.0</appeared-in>
+<appeared-in>1.2.1</appeared-in>
 
 <para>
 При выключенном рекурсивном поиске вместо исходного адреса клиента,
