@@ -18,6 +18,12 @@ Patches are signed using one of the
 
 <security>
 
+<item name="Vulnerabilities with Windows directory aliases"
+      severity="medium"
+      cve="2011-4963"
+      good="1.3.1+, 1.2.1+"
+      vulnerable="nginx/Windows 0.7.52-1.3.0" />
+
 <item name="Buffer overflow in the ngx_http_mp4_module"
       severity="major"
       cve="2012-2089"
