@@ -63,8 +63,6 @@ server {
 </para>
 
 <para>
-Для серверов, использующих метод распределения <literal>ip_hash</literal>,
-нельзя задать вес.
 Если один из серверов нужно убрать на некоторое время, то для сохранения
 текущего хэширования IP-адресов клиентов этот сервер нужно пометить
 параметром <literal>down</literal>.
@@ -82,6 +80,13 @@ upstream backend {
     server backend4.example.com;
 }
 </example>
+</para>
+
+<para>
+<note>
+До версии 1.3.1 для серверов, использующих метод распределения
+<literal>ip_hash</literal>, нельзя было задать вес.
+</note>
 </para>
 
 </directive>
@@ -207,8 +212,25 @@ server {
 </directive>
 
 
+<directive name="least_conn">
+<syntax/>
+<default/>
+<context>upstream</context>
+<appeared-in>1.3.1</appeared-in>
+
+<para>
+Задаёт для группы метод распределения запросов по серверам, при
+котором запрос передаётся серверу с наименьшим числом активных соединений,
+с учётом весов серверов.
+Если подходит сразу несколько серверов, они выбираются циклически
+(в режиме round-robin) с учётом их весов.
+</para>
+
+</directive>
+
+
 <directive name="server">
-<syntax><value>название</value> [<value>параметры</value>]</syntax>
+<syntax><value>имя</value> [<value>параметры</value>]</syntax>
 <default/>
 <context>upstream</context>
 
