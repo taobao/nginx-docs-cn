@@ -10,8 +10,8 @@
 
 <para>
 The <literal>ngx_http_limit_req_module</literal> module (0.7.21) allows
-to limit the number
-of requests per defined key, in particular, the number of requests
+to limit the request processing rate per defined key,
+in particular, the processing rate of requests coming
 from a single IP address.
 The limitation is done using the “leaky bucket” method.
 </para>
@@ -60,7 +60,7 @@ request processing is delayed such as that they are processed
 at a defined rate.
 Excessive requests are delayed until their number exceeds the
 defined number of bursts.
-In this case, the request is terminated with an error
+When exceeded, the request is terminated with an error
 <http-status code="503" text="Service Temporarily Unavailable"/>.
 By default, the number of bursts is equal to zero.
 For example, the directives
@@ -100,9 +100,11 @@ limit_req zone=one burst=5 nodelay;
 <appeared-in>0.8.18</appeared-in>
 
 <para>
-Sets the desired logging level for cases when the server limits
-the number of requests, or delays request processing.
-Delays are logged with the level one less than limits; for example,
+Sets the desired logging level
+for cases when the server refuses to process requests
+due to rate being exceeded,
+or delays request processing.
+Delays are logged with the level one less than refusals; for example,
 if “<literal>limit_req_log_level notice</literal>” is specified,
 delays are logged with the <literal>info</literal> level.
 </para>
@@ -120,7 +122,7 @@ delays are logged with the <literal>info</literal> level.
 
 <para>
 Sets the parameters for a zone that keeps states for various keys.
-This state stores the current number of requests in particular.
+The state stores the current number of excessive requests in particular.
 The key is any non-empty value of the specified variable
 (empty values are not accounted).
 Example usage:
@@ -131,7 +133,7 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
 <para>
 Here, the states are kept in a 10 megabyte zone “one”, and an
-average rate of requests for this zone cannot exceed
+average request processing rate for this zone cannot exceed
 1 request per second.
 </para>
 
