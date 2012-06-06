@@ -2766,7 +2766,7 @@ or an empty string otherwise
 
 <tag-name><var>$request_filename</var></tag-name>
 <tag-desc>
-file path for the current query, based on the
+file path for the current request, based on the
 <link id="root"/> or <link id="alias"/>
 directives, and the request URI
 </tag-desc>
