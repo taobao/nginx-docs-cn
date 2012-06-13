@@ -261,23 +261,71 @@ sudo apt-key add nginx_signing.key
 </para>
 
 <para>
-Для Debian 6 добавьте в конец файла
-<path>/etc/apt/sources.list</path> следующее:
+Для Debian замените <i>codename</i> на кодовое имя дистрибутива,
+и добавьте в конец файла <path>/etc/apt/sources.list</path>
+следующее:
 
 <programlisting>
-deb http://nginx.org/packages/debian/ squeeze nginx
-deb-src http://nginx.org/packages/debian/ squeeze nginx
+deb http://nginx.org/packages/debian/ <i>codename</i> nginx
+deb-src http://nginx.org/packages/debian/ <i>codename</i> nginx
 </programlisting>
 </para>
 
 <para>
-Для Ubuntu 10.04 добавьте в конец файла
-<path>/etc/apt/sources.list</path> следующее:
+Поддерживаемые версии Debian:
+
+<table note="yes">
+
+<tr>
+<td width="20%">Версия</td>
+<td>Кодовое имя</td>
+</tr>
+
+<tr>
+<td width="20%">6.x</td>
+<td>squeeze</td>
+</tr>
+
+</table>
+</para>
+
+<para>
+Для Ubuntu замените <i>codename</i> на кодовое имя дистрибутива,
+и добавьте в конец файла <path>/etc/apt/sources.list</path>
+следующее:
 
 <programlisting>
-deb http://nginx.org/packages/ubuntu/ lucid nginx
-deb-src http://nginx.org/packages/ubuntu/ lucid nginx
+deb http://nginx.org/packages/ubuntu/ <i>codename</i> nginx
+deb-src http://nginx.org/packages/ubuntu/ <i>codename</i> nginx
 </programlisting>
+</para>
+
+<para>
+Поддерживаемые версии Ubuntu:
+
+<table note="yes">
+
+<tr>
+<td width="20%">Версия</td>
+<td>Кодовое имя</td>
+</tr>
+
+<tr>
+<td width="20%">10.04</td>
+<td>lucid</td>
+</tr>
+
+<tr>
+<td width="20%">11.10</td>
+<td>oneiric</td>
+</tr>
+
+<tr>
+<td width="20%">12.04</td>
+<td>precise</td>
+</tr>
+
+</table>
 </para>
 
 <para>

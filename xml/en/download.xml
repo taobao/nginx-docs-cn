@@ -261,23 +261,71 @@ sudo apt-key add nginx_signing.key
 </para>
 
 <para>
-For Debian 6 append the following to the end of the
+For Debian replace <i>codename</i> with Debian distribution
+codename, and append the following to the end of the
 <path>/etc/apt/sources.list</path> file:
 
 <programlisting>
-deb http://nginx.org/packages/debian/ squeeze nginx
-deb-src http://nginx.org/packages/debian/ squeeze nginx
+deb http://nginx.org/packages/debian/ <i>codename</i> nginx
+deb-src http://nginx.org/packages/debian/ <i>codename</i> nginx
 </programlisting>
 </para>
 
 <para>
-For Ubuntu 10.04 append the following to the end of the
+Supported Debian versions:
+
+<table note="yes">
+
+<tr>
+<td width="20%">Version</td>
+<td>Codename</td>
+</tr>
+
+<tr>
+<td width="20%">6.x</td>
+<td>squeeze</td>
+</tr>
+
+</table>
+</para>
+
+<para>
+For Ubuntu replace <i>codename</i> with Ubuntu distribution
+codename, and append the following to the end of the
 <path>/etc/apt/sources.list</path> file:
 
 <programlisting>
-deb http://nginx.org/packages/ubuntu/ lucid nginx
-deb-src http://nginx.org/packages/ubuntu/ lucid nginx
+deb http://nginx.org/packages/ubuntu/ <i>codename</i> nginx
+deb-src http://nginx.org/packages/ubuntu/ <i>codename</i> nginx
 </programlisting>
+</para>
+
+<para>
+Supported Ubuntu versions:
+
+<table note="yes">
+
+<tr>
+<td width="20%">Version</td>
+<td>Codename</td>
+</tr>
+
+<tr>
+<td width="20%">10.04</td>
+<td>lucid</td>
+</tr>
+
+<tr>
+<td width="20%">11.10</td>
+<td>oneiric</td>
+</tr>
+
+<tr>
+<td width="20%">12.04</td>
+<td>precise</td>
+</tr>
+
+</table>
 </para>
 
 <para>
