@@ -805,40 +805,80 @@ proxy_no_cache $http_pragma    $http_authorization;
 <context>limit_except</context>
 
 <para>
-Задаёт адрес проксируемоего сервера и URI, на который
-будет отображаться location.
-Адрес может быть указан в виде доменного имени или адреса, и порта, например,
+Задаёт протокол и адрес проксируемоего сервера, а также необязательный URI,
+на который должен отображаться location.
+В качестве протокола можно указать
+“<literal>http</literal>” или “<literal>https</literal>”.
+Адрес может быть указан в виде доменного имени или IP-адреса,
+и необязательного порта:
 <example>
 proxy_pass http://localhost:8000/uri/;
 </example>
-или в виде пути UNIX-сокета:
+или в виде пути UNIX-сокета, который указывается после слова
+“<literal>unix</literal>” и заключается в двоеточия:
 <example>
 proxy_pass http://unix:/tmp/backend.socket:/uri/;
 </example>
-путь указан после слова “<literal>unix</literal>”
-и заключён между двумя двоеточиями.
 </para>
 
 <para>
 Если доменному имени соответствует несколько адресов, то все они будут
 использоваться по очереди (round-robin).
-И, кроме того, адрес может быть
-<link doc="ngx_http_upstream_module.xml">группой серверов</link>.
+Кроме того, в качестве адреса можно указать
+<link doc="ngx_http_upstream_module.xml">группу серверов</link>.
 </para>
 
 <para>
-При передаче запроса серверу часть URI, соответствующая location,
-заменяется на URI, указанный в директиве <literal>proxy_pass</literal>.
-Но из этого правила есть два исключения, в которых нельзя определить
-заменяемый location:
-<list type="bullet">
+URI запроса передаётся на сервер так:
+<list type="bullet" compact="no">
 
 <listitem>
-если location задан регулярным выражением;
+Если <literal>proxy_pass</literal> указана с URI,
+то при передаче запроса серверу часть
+<link doc="ngx_http_core_module.xml" id="location">нормализованного</link>
+URI запроса, соответствующая location, заменяется на URI,
+указанный в директиве:
+<example>
+location /name/ {
+    proxy_pass http://127.0.0.1/remote/;
+}  
+</example>
 </listitem>
 
 <listitem>
-если внутри проксируемого location с помощью директивы
+Если <literal>proxy_pass</literal> указана без URI,
+то при обработке первоначального запроса на сервер передаётся
+URI запроса в том же виде, в каком его прислал клиент,
+а при обработке изменённого URI&mdash;
+нормализованный URI запроса целиком:
+<example>
+location /some/path/ {
+    proxy_pass http://127.0.0.1;
+}
+</example>
+<note>
+До версии 1.1.12,
+если <literal>proxy_pass</literal> указана без URI,
+в ряде случаев при изменении URI на сервер мог передаваться
+URI первоначального запроса вместо изменённого URI.
+</note>
+</listitem>
+</list>
+</para>
+
+<para>
+В ряде случаев часть URI запроса, подлежащую замене, выделить невозможно:
+<list type="bullet" compact="no">
+
+<listitem>
+Если location задан регулярным выражением.
+<para>
+В этом случае директиву следует указывать без URI.
+</para>
+</listitem>
+
+<listitem>
+Если внутри проксируемого location с помощью директивы
 <link doc="ngx_http_rewrite_module.xml" id="rewrite"/> изменяется
 URI, и именно с этой конфигурацией будет обрабатываться запрос
 (<literal>break</literal>):
@@ -848,41 +888,12 @@ location /name/ {
     proxy_pass http://127.0.0.1;
 }
 </example>
-Для этих случаев URI передаётся без отображения.
-</listitem>
-
-</list>
-</para>
-
 <para>
-Кроме того, можно указать, чтобы URI запроса передавался в том же виде,
-в каком его прислал клиент, а не в обработанном виде.
-Во время обработки
-<list type="bullet">
-
-<listitem>
-два и более слэшей заменяются на один: “//” — “/”;
-</listitem>
-
-<listitem>
-убираются ссылки на текущий каталог: “/./” — “/”;
-</listitem>
-
-<listitem>
-убираются ссылки на предыдущий каталог: “/dir/../” — “/”.
-</listitem>
-
-</list>
+В этом случае URI, указанный в директиве, игнорируется, и на сервер
+передаётся изменённый URI запроса целиком.
 </para>
-
-<para>
-Если на сервер нужно передать URI в необработанном виде, то для этого
-в директиве <literal>proxy_pass</literal> нужно указать URL сервера без URI:
-<example>
-location /some/path/ {
-    proxy_pass http://127.0.0.1;
-}
-</example>
+</listitem>
+</list>
 </para>
 
 <para>
@@ -891,7 +902,7 @@ location /some/path/ {
 <example>
 proxy_pass http://$host$uri;
 </example>
-или так:
+или даже так:
 <example>
 proxy_pass $request;
 </example>

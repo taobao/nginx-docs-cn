@@ -809,18 +809,20 @@ Can be used along with the <link id="proxy_cache_bypass"/> directive.
 <context>limit_except</context>
 
 <para>
-Sets an address of the proxied server and a URI that maps a location.
-An address can be specified as a domain name or an address, and a port,
-for example,
+Sets the protocol and address of a proxied server, and an optional URI
+to which a location should be mapped.
+A protocol can be specified as
+“<literal>http</literal>” or “<literal>https</literal>”.
+An address can be specified as a domain name or IP address,
+and an optional port:
 <example>
 proxy_pass http://localhost:8000/uri/;
 </example>
-or as a UNIX-domain socket path:
+or as a UNIX-domain socket path specified after the word
+“<literal>unix</literal>” and enclosed in colons:
 <example>
 proxy_pass http://unix:/tmp/backend.socket:/uri/;
 </example>
-here a path is specified after the word “<literal>unix</literal>”
-and enclosed in two colons.
 </para>
 
 <para>
@@ -831,70 +833,79 @@ In addition, an address can be specified as a
 </para>
 
 <para>
-When passing a request to the server, part of a URI matching the location
-is replaced by a URI specified in the <literal>proxy_pass</literal> directive.
-This rule has two exceptions where a replacement location cannot be
-defined:
-<list type="bullet">
+A request URI is passed to the server as follows:
+<list type="bullet" compact="no">
 
 <listitem>
-when a location is specified using a regular expression;
+If <literal>proxy_pass</literal> is specified with URI,
+when passing a request to the server, part of a
+<link doc="ngx_http_core_module.xml" id="location">normalized</link>
+request URI matching the location is replaced by a URI
+specified in the directive:
+<example>
+location /name/ {
+    proxy_pass http://127.0.0.1/remote/;
+}
+</example>
 </listitem>
 
 <listitem>
-if a URI is changed using the
-<link doc="ngx_http_rewrite_module.xml" id="rewrite"/> directive
-inside a proxied location, and this same configuration will be
-used to process a request (<literal>break</literal>):
+If <literal>proxy_pass</literal> is specified without URI,
+a request URI is passed to the server in the same form
+as sent by a client when processing an original request,
+or the full normalized request URI is passed
+when processing the changed URI:
+<example>
+location /some/path/ {
+    proxy_pass http://127.0.0.1;
+}
+</example>
+<note>
+Before version 1.1.12,
+if <literal>proxy_pass</literal> is specified without a URI,
+an original request URI might be passed
+instead of the changed URI in some cases.
+</note>
+</listitem>
+</list>
+</para>
+
+<para>
+In some cases, part of a request URI to be replaced cannot be determined:
+<list type="bullet" compact="no">
+
+<listitem>
+When location is specified using a regular expression.
+<para>
+In this case, the directive should be specified without URI.
+</para>
+</listitem>
+
+<listitem>
+When URI is changed inside a proxied location using the
+<link doc="ngx_http_rewrite_module.xml" id="rewrite"/> directive,
+and this same configuration will be used to process a request
+(<literal>break</literal>):
 <example>
 location /name/ {
     rewrite    /name/([^/]+) /users?name=$1 break;
     proxy_pass http://127.0.0.1;
 }
 </example>
-In these cases a URI is passed without mapping.
+<para>
+In this case, a URI specified in the directive is ignored and
+the full changed request URI is passed to the server.
+</para>
 </listitem>
-
 </list>
 </para>
 
 <para>
-It can also be specified that a request URI should be passed unchanged,
-in the same form it was sent by the client, not the processed form.
-During a processing
-<list type="bullet">
-
-<listitem>
-two or more adjacent slashes are replaced by one: “//” — “/”;
-</listitem>
-
-<listitem>
-links to the current directory get removed: “/./” — “/”;
-</listitem>
-
-<listitem>
-links to the parent directory get removed: “/dir/../” — “/”.
-</listitem>
-
-</list>
-</para>
-
-<para>
-If a URI should be passed unchanged then the server URL should be specified
-without a URI in the <literal>proxy_pass</literal> directive:
-<example>
-location /some/path/ {
-    proxy_pass http://127.0.0.1;
-}
-</example>
-</para>
-
-<para>
-Server name, its port, and passed URI can be specified using variables:
+A server name, its port and passed URI can also be specified using variables:
 <example>
 proxy_pass http://$host$uri;
 </example>
-or like this:
+or even like this:
 <example>
 proxy_pass $request;
 </example>
