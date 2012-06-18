@@ -155,7 +155,7 @@ for the given virtual server.
 
 <directive name="ssl_ciphers">
 <syntax><value>ciphers</value></syntax>
-<default>HIGH:!ADH:!MD5</default>
+<default>HIGH:!aNULL:!MD5</default>
 <context>http</context>
 <context>server</context>
 
@@ -164,13 +164,21 @@ Specifies the enabled ciphers.
 The ciphers are specified in the format understood by the
 OpenSSL library, for example:
 <example>
-ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+ssl_ciphers ALL:!aNULL:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
 </example>
 </para>
 
 <para>
 The full list can be viewed using the
 “<command>openssl ciphers</command>” command.
+</para>
+
+<para>
+<note>
+The previous versions of nginx used
+<link doc="configuring_https_servers.xml" id="compatibility">different</link>
+ciphers by default.
+</note>
 </para>
 
 </directive>
