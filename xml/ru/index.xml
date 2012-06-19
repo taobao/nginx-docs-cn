@@ -321,11 +321,11 @@ Solaris 9 / i386, sun4u; Solaris 10 / i386, amd64, sun4v;
 </listitem>
 
 <listitem>
-AIX 7.1 / powerpc
+AIX 7.1 / powerpc;
 </listitem>
 
 <listitem>
-HP-UX 11.31 / ia64
+HP-UX 11.31 / ia64;
 </listitem>
 
 <listitem>
