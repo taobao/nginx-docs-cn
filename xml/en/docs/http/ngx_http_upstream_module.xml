@@ -184,12 +184,15 @@ upstream backend {
 <para>
 Specifies that a group should use a load balancing method where requests
 are distributed between servers based on client IP addresses.
-The first three octets of the client IPv4 address
+The first three octets of the client IPv4 address, or the entire IPv6 address,
 are used as a hashing key.
 The method ensures that requests of the same client will always be
 passed to the same server except when this server is considered down
 in which case client requests will be passed to another server and
 most probably it will also be the same server.
+<note>
+IPv6 addresses are supported starting from version 1.3.2.
+</note>
 </para>
 
 <para>
