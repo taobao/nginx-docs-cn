@@ -2818,6 +2818,11 @@ or
 “<literal>HTTP/1.1</literal>”
 </tag-desc>
 
+<tag-name><var>$status</var></tag-name>
+<tag-desc>
+response status
+</tag-desc>
+
 <tag-name>
 <var>$tcpinfo_rtt</var>,
 <var>$tcpinfo_rttvar</var>,

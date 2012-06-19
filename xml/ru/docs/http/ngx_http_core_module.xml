@@ -2799,6 +2799,11 @@ fastcgi_pass_request_body off</link>
 “<literal>HTTP/1.1</literal>”
 </tag-desc>
 
+<tag-name><var>$status</var></tag-name>
+<tag-desc>
+статус ответа
+</tag-desc>
+
 <tag-name>
 <var>$tcpinfo_rtt</var>,
 <var>$tcpinfo_rttvar</var>,
