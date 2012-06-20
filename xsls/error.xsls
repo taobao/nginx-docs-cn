@@ -1,5 +1,7 @@
 X:stylesheet {
 
+X:include href = "ga.xslt";
+
 X:output method="html" version="4.0" indent="no" encoding="utf-8";
 
 X:strip-space elements = "*";
@@ -18,6 +20,9 @@ X:template = "/error" {
         body  { font-family:  Georgia, serif; }
         ') }
     </style>
+
+    !ga ()
+
     </head>
 
     <body>

@@ -48,6 +48,7 @@ ARTICLE_DEPS =								\
 		xslt/body.xslt						\
 		xslt/menu.xslt						\
 		xslt/donate.xslt					\
+		xslt/ga.xslt						\
 		xslt/directive.xslt					\
 		xslt/content.xslt					\
 		xslt/versions.xslt
@@ -63,6 +64,7 @@ NEWS_DEPS =								\
 		xslt/style.xslt						\
 		xslt/body.xslt						\
 		xslt/menu.xslt						\
+		xslt/ga.xslt						\
 		xslt/content.xslt
 
 DOWNLOAD_DEPS =								\
@@ -76,6 +78,7 @@ DOWNLOAD_DEPS =								\
 		xslt/style.xslt						\
 		xslt/body.xslt						\
 		xslt/menu.xslt						\
+		xslt/ga.xslt						\
 		xslt/content.xslt
 
 SECURITY_DEPS =								\
@@ -89,6 +92,7 @@ SECURITY_DEPS =								\
 		xslt/style.xslt						\
 		xslt/body.xslt						\
 		xslt/menu.xslt						\
+		xslt/ga.xslt						\
 		xslt/content.xslt
 
 BOOK_DEPS =								\
@@ -102,6 +106,7 @@ BOOK_DEPS =								\
 		xslt/style.xslt						\
 		xslt/body.xslt						\
 		xslt/menu.xslt						\
+		xslt/ga.xslt						\
 		xslt/content.xslt
 
 LANGS =		en ja he ru tr
@@ -140,6 +145,7 @@ $(OUT)/404.html:							\
 		xml/menu.xml						\
 		dtd/article.dtd						\
 		dtd/content.dtd						\
+		xslt/ga.xslt						\
 		xslt/error.xslt
 	$(call XSLT, xslt/error.xslt, $<, $@)
 

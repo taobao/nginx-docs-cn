@@ -18,6 +18,7 @@ X:include href = "link.xslt";
 X:include href = "style.xslt";
 X:include href = "body.xslt";
 X:include href = "menu.xslt";
+X:include href = "ga.xslt";
 X:include href = "content.xslt";
 
 
@@ -27,6 +28,8 @@ X:template = "/article" {
     <title> !{@name} </title>
 
     !style (lang="@lang")
+
+    !ga ()
 
     </head>
 

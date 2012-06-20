@@ -22,6 +22,7 @@ X:include href = "menu.xslt";
 X:include href = "donate.xslt";
 X:include href = "directive.xslt";
 X:include href = "content.xslt";
+X:include href = "ga.xslt";
 X:include href = "versions.xslt";
 
 
@@ -33,6 +34,8 @@ X:template = "/article | /module" {
     <title> !{@name} </title>
 
     !style (lang="@lang")
+
+    !ga ()
 
     </head>
 
@@ -50,6 +53,8 @@ X:template = "/article[@lang='he'] | /module[@lang='he']" {
     <title> !{@name} </title>
 
     !style (lang="@lang")
+
+    !ga ()
 
     </head>
 
