@@ -21,6 +21,8 @@
 
    <xsl:include href="menu.xslt"/>
 
+   <xsl:include href="ga.xslt"/>
+
    <xsl:include href="content.xslt"/>
 
    <xsl:template match="/article">
@@ -35,6 +37,8 @@
             <xsl:call-template name="style">
                <xsl:with-param select="@lang" name="lang"/>
             </xsl:call-template>
+
+            <xsl:call-template name="ga"/>
 
          </head>
 

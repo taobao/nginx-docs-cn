@@ -29,6 +29,8 @@
 
    <xsl:include href="content.xslt"/>
 
+   <xsl:include href="ga.xslt"/>
+
    <xsl:include href="versions.xslt"/>
 
    <xsl:template match="/article | /module">
@@ -44,6 +46,8 @@
             <xsl:call-template name="style">
                <xsl:with-param select="@lang" name="lang"/>
             </xsl:call-template>
+
+            <xsl:call-template name="ga"/>
 
          </head>
 
@@ -67,6 +71,8 @@
             <xsl:call-template name="style">
                <xsl:with-param select="@lang" name="lang"/>
             </xsl:call-template>
+
+            <xsl:call-template name="ga"/>
 
          </head>
 

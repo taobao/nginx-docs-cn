@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
+   <xsl:include href="ga.xslt"/>
+
    <xsl:output indent="no" version="4.0" encoding="utf-8" method="html"/>
 
    <xsl:strip-space elements="*"/>
@@ -19,6 +21,8 @@
                <xsl:value-of select=" normalize-space('         body  { font-family:  Georgia, serif; }         ')"/>
 
             </style>
+
+            <xsl:call-template name="ga"/>
 
          </head>
 
