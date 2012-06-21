@@ -174,6 +174,7 @@ will be applied sequentially in the specified order.
 <para>
 Enables transformations in responses with the specified MIME types
 in addition to “<literal>text/xml</literal>”.
+The special value “<literal>*</literal>” matches any MIME type (0.8.29).
 If the result of transformation is an HTML response, its MIME type
 is changes to “<literal>text/html</literal>”.
 </para>

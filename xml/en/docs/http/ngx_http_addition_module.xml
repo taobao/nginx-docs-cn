@@ -72,6 +72,7 @@ after the response body.
 <para>
 Allows to add text in responses with the specified MIME types,
 in addition to “<literal>text/html</literal>”.
+The special value “<literal>*</literal>” matches any MIME type (0.8.29).
 </para>
 
 </directive>

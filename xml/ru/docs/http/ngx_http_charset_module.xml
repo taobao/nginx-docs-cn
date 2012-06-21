@@ -165,6 +165,8 @@ application/x-javascript application/rss+xml</default>
 <para>
 Разрешает работу модуля в ответах с указанными MIME-типами
 в дополнение к “<literal>text/html</literal>”.
+Специальное значение “<literal>*</literal>” соответствует любому MIME-типу
+(0.8.29).
 </para>
 
 </directive>

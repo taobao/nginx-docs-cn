@@ -75,6 +75,7 @@ if an error occurred during SSI processing.
 <para>
 Enables processing of SSI commands in responses with the specified MIME types
 in addition to “<literal>text/html</literal>”.
+The special value “<literal>*</literal>” matches any MIME type (0.8.29).
 </para>
 
 </directive>

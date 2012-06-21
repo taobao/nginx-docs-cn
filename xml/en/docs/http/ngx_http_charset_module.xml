@@ -166,6 +166,7 @@ application/x-javascript application/rss+xml</default>
 <para>
 Enables module processing in responses with the specified MIME types
 in addition to “<literal>text/html</literal>”.
+The special value “<literal>*</literal>” matches any MIME type (0.8.29).
 </para>
 
 </directive>

@@ -237,6 +237,8 @@ gzip_types      text/plain application/xml;
 <para>
 Разрешает сжатие ответа методом gzip для указанных MIME-типов в дополнение
 к “<literal>text/html</literal>”.
+Специальное значение “<literal>*</literal>” соответствует любому MIME-типу
+(0.8.29).
 Ответы с типом “<literal>text/html</literal>” сжимаются всегда.
 </para>
 

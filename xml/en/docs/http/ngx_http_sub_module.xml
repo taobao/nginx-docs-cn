@@ -80,6 +80,7 @@ once or several times.
 <para>
 Enables string replacement in responses with the specified MIME types
 in addition to “<literal>text/html</literal>”.
+The special value “<literal>*</literal>” matches any MIME type (0.8.29).
 </para>
 
 </directive>

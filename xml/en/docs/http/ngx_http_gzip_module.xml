@@ -238,6 +238,7 @@ enables compression for all proxied requests.
 <para>
 Enables gzipping of responses for the specified MIME types in addition
 to “<literal>text/html</literal>”.
+The special value “<literal>*</literal>” matches any MIME type (0.8.29).
 Responses with the type “<literal>text/html</literal>” are always compressed.
 </para>
 
