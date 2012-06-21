@@ -331,6 +331,29 @@ that of <value>user</value> is used.
 </directive>
 
 
+<directive name="worker_connections">
+<syntax><value>number</value></syntax>
+<default>512</default>
+<context>events</context>
+
+<para>
+Sets the maximum number of simultaneous connections that
+can be opened by a worker process.
+</para>
+
+<para>
+It should be kept in mind that this number includes all connections
+(e.g. connections with proxied servers, among other things),
+not only connections with clients.
+Another consideration is that the actual number of simultaneous
+connections may not exceed the current limit on
+the maximum number of open files, see
+<link id="worker_rlimit_nofile"/>.
+</para>
+
+</directive>
+
+
 <directive name="worker_cpu_affinity">
 <syntax><value>cpumask</value> ...</syntax>
 <default/>

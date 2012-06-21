@@ -328,6 +328,29 @@ timer_resolution 100ms;
 </directive>
 
 
+<directive name="worker_connections">
+<syntax><value>число</value></syntax>
+<default>512</default>
+<context>events</context>
+
+<para>
+Задаёт максимальное число соединений, которое одновременно
+может открыть рабочий процесс.
+</para>
+
+<para>
+Следует иметь в виду, что в это число входят все соединения
+(в том числе, например, соединения с проксируемыми серверами),
+а не только соединения с клиентами.
+Стоит также учитывать, что фактическое число одновременных
+соединений не может превышать действующего ограничения на
+максимальное число открытых файлов,
+см. <link id="worker_rlimit_nofile"/>.
+</para>
+
+</directive>
+
+
 <directive name="worker_cpu_affinity">
 <syntax><value>маска_CPU</value> ...</syntax>
 <default/>
