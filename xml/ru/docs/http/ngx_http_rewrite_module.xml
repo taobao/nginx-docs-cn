@@ -166,7 +166,9 @@ if ($invalid_referer) {
 
 
 <directive name="return">
-<syntax><value>код</value></syntax>
+<syntax><value>код</value> [<value>текст</value>]</syntax>
+<syntax><value>код</value> <value>URL</value></syntax>
+<syntax><value>URL</value></syntax>
 <default/>
 <context>server</context>
 <context>location</context>
@@ -174,10 +176,39 @@ if ($invalid_referer) {
 
 <para>
 Завершает обработку и возвращает клиенту указанный <value>код</value>.
-Можно возвращать следующие коды: 204, 400,
-402 — 406, 408, 410, 411, 413, 416 и 500 — 504.
-Кроме того, нестандартный код 444 закрывает соединение без передачи
+Нестандартный код 444 закрывает соединение без передачи
 заголовка ответа.
+</para>
+
+<para>
+Начиная с версии 0.8.42 можно задать
+либо URL перенаправления (для кодов 301, 302, 303 и 307),
+либо <value>текст</value> тела ответа (для остальных кодов).
+В тексте тела ответа и URL перенаправления можно использовать переменные.
+Как частный случай, URL перенаправления может быть задан как URI,
+локальный для данного сервера, при этом полный URL перенаправления
+формируется согласно схеме запроса (<var>$scheme</var>) и директив
+<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/> и
+<link doc="ngx_http_core_module.xml" id="port_in_redirect"/>.
+</para>
+
+<para>
+Кроме того, в качестве единственного параметра можно указать
+<value>URL</value> для временного перенаправления с кодом 302.
+Такой параметр должен начинаться со строк “<literal>http://</literal>”,
+“<literal>https://</literal>” или “<literal>$scheme</literal>”.
+В <value>URL</value> можно использовать переменные.
+</para>
+
+<para>
+<note>
+До версии 0.7.51 можно было возвращать только следующие коды:
+204, 400, 402 — 406, 408, 410, 411, 413, 416 и 500 — 504.
+</note>
+
+<note>
+До версий 1.1.16 и 1.0.13 код 307 не обрабатывался как перенаправление.
+</note>
 </para>
 
 </directive>
@@ -234,6 +265,10 @@ if ($invalid_referer) {
 </tag-desc>
 
 </list>
+Полный URL перенаправлений формируется согласно
+схеме запроса (<var>$scheme</var>) и директив
+<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/> и
+<link doc="ngx_http_core_module.xml" id="port_in_redirect"/>.
 </para>
 
 <para>
