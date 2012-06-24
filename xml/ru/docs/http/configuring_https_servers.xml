@@ -1,0 +1,507 @@
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
+
+<article name="Настройка HTTPS-серверов"
+         link="/ru/docs/http/configuring_https_servers.html"
+         lang="ru"
+         author="Игорь Сысоев"
+         editor="Brian Mercer">
+
+<section>
+
+<para>
+Чтобы настроить HTTPS-сервер, необходимо включить протокол SSL
+в блоке server, а также указать местоположение файлов с
+сертификатом сервера и секретным ключом:
+
+<programlisting>
+server {
+    listen               443;
+    server_name          www.example.com;
+    ssl                  on;
+    ssl_certificate      www.example.com.crt;
+    ssl_certificate_key  www.example.com.key;
+    ssl_protocols        SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers          HIGH:!aNULL:!MD5;
+    ...
+}
+</programlisting>
+
+Сертификат сервера является публичным.
+Он посылается каждому клиенту, соединяющемуся с сервером.
+Секретный ключ следует хранить в файле с ограниченным доступом
+(права доступа должны позволять основному процессу nginx читать этот файл).
+Секретный ключ можно также хранить в одном файле с сертификатом:
+
+<programlisting>
+    ssl_certificate      www.example.com.cert;
+    ssl_certificate_key  www.example.com.cert;
+</programlisting>
+
+при этом права доступа к файлу следует также ограничить.
+Несмотря на то, что и сертификат, и ключ хранятся в одном файле,
+клиенту посылается только сертификат.
+</para>
+
+<para>
+С помощью директив <link doc="ngx_http_ssl_module.xml" id="ssl_protocols"/> и
+<link doc="ngx_http_ssl_module.xml" id="ssl_ciphers"/>
+можно ограничить соединения
+использованием только “сильных” версий и шифров SSL/TLS.
+Начиная с версии 1.0.5 nginx по умолчанию использует
+“<literal>ssl_protocols SSLv3 TLSv1</literal>” и
+“<literal>ssl_ciphers HIGH:!aNULL:!MD5</literal>”,
+поэтому явная их настройка имеет смысл только для более ранних версий nginx.
+Начиная с версий 1.1.13 и 1.0.12 nginx по умолчанию использует
+“<literal>ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2</literal>”.
+</para>
+
+<para>
+Известно, что шифры с CBC-режимом уязвимы к ряду атак, в частности
+к BEAST-атаке (см.
+<link url="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3389">CVE-2011-3389</link>).
+Настройка шифров может быть изменена так, чтобы предпочитался RC4-SHA:
+
+<programlisting>
+    ssl_ciphers RC4:HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+</programlisting>
+</para>
+
+</section>
+
+
+<section id="optimization" name="Оптимизация HTTPS-сервера">
+
+<para>
+SSL-операции потребляют дополнительные ресурсы процессора.
+На мультипроцессорных системах следует запускать несколько рабочих процессов,
+не меньше числа доступных процессорных ядер.
+Наиболее ресурсоёмкой для процессора является операция SSL handshake, в рамках
+которой формируются криптографические параметры сессии.
+Существует два способа уменьшения числа этих операций, производимых для каждого
+клиента: включение постоянных (keepalive) соединений, позволяющих в рамках
+одного соединения обрабатывать сразу несколько запросов, и повторное
+использование параметров SSL-сессии для предотвращения необходимости выполнения
+SSL handshake для параллельных и последующих соединений.
+Сессии хранятся в кэше SSL-сессий, разделяемом между рабочими процессами и
+настраиваемом директивой
+<link doc="ngx_http_ssl_module.xml" id="ssl_session_cache"/>.
+В 1 мегабайт кэша помещается около 4000 сессий.
+Таймаут кэша по умолчанию равен 5 минутам.
+Он может быть увеличен с помощью директивы
+<link doc="ngx_http_ssl_module.xml" id="ssl_session_timeout"/>.
+Вот пример конфигурации, оптимизированной под 4-ядерную систему
+с 10M разделяемого кэша сессий:
+
+<programlisting>
+<b>worker_processes  4</b>;
+
+http {
+    <b>ssl_session_cache    shared:SSL:10m</b>;
+    <b>ssl_session_timeout  10m</b>;
+
+    server {
+        listen               443;
+        server_name          www.example.com;
+        <b>keepalive_timeout    70</b>;
+
+        ssl                  on;
+        ssl_certificate      www.example.com.crt;
+        ssl_certificate_key  www.example.com.key;
+        ssl_protocols        SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers          HIGH:!aNULL:!MD5;
+        ...
+</programlisting>
+</para>
+
+</section>
+
+
+<section id="chains" name="Цепочки SSL-сертификатов">
+
+<para>
+Некоторые браузеры могут выдавать предупреждение о сертификате, подписанном
+общеизвестным центром сертификации, в то время как другие браузеры без
+проблем принимают этот же сертификат.
+Так происходит потому, что центр, выдавший сертификат, подписал его
+промежуточным сертификатом, которого нет в базе данных сертификатов
+общеизвестных доверенных центров сертификации, распространяемой
+вместе с браузером.
+В подобном случае центр сертификации предоставляет “связку” сертификатов,
+которую следует присоединить к сертификату сервера.
+Сертификат сервера следует разместить перед связкой сертификатов
+в скомбинированном файле:
+
+<programlisting>
+$ cat www.example.com.crt bundle.crt > www.example.com.chained.crt
+</programlisting>
+
+Полученный файл следует указать в директиве
+<link doc="ngx_http_ssl_module.xml" id="ssl_certificate"/>:
+
+<programlisting>
+server {
+    listen               443;
+    server_name          www.example.com;
+    ssl                  on;
+    ssl_certificate      www.example.com.chained.crt;
+    ssl_certificate_key  www.example.com.key;
+    ...
+}
+</programlisting>
+
+Если сертификат сервера и связка сертификатов были соединены в неправильном
+порядке, nginx откажется запускаться и выдаст сообщение об ошибке:
+
+<programlisting>
+SSL_CTX_use_PrivateKey_file(" ... /www.example.com.key") failed
+   (SSL: error:0B080074:x509 certificate routines:
+    X509_check_private_key:key values mismatch)
+</programlisting>
+
+поскольку nginx попытается использовать секретный ключ с первым
+сертификатом из связки вместо сертификата сервера.
+</para>
+
+<para>
+Браузеры обычно сохраняют полученные промежуточные сертификаты, подписанные
+доверенными центрами сертификации, поэтому активно используемые браузеры
+уже могут иметь требуемые промежуточные сертификаты и не выдать предупреждение
+о сертификате, присланном без связанной с ним цепочки сертификатов.
+Убедиться в том, что сервер присылает полную цепочку сертификатов,
+можно при помощи утилиты командной строки <command>openssl</command>, например:
+
+<programlisting>
+$ openssl s_client -connect www.godaddy.com:443
+...
+Certificate chain
+ 0 s:/C=US/ST=Arizona/L=Scottsdale/1.3.6.1.4.1.311.60.2.1.3=US
+     /1.3.6.1.4.1.311.60.2.1.2=AZ/O=GoDaddy.com, Inc
+     /OU=MIS Department/<b>CN=www.GoDaddy.com</b>
+     /serialNumber=0796928-7/2.5.4.15=V1.0, Clause 5.(b)
+   i:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.
+     /OU=http://certificates.godaddy.com/repository
+     /CN=Go Daddy Secure Certification Authority
+     /serialNumber=07969287
+ 1 s:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.
+     /OU=http://certificates.godaddy.com/repository
+     /CN=Go Daddy Secure Certification Authority
+     /serialNumber=07969287
+   i:/C=US/O=The Go Daddy Group, Inc.
+     /OU=Go Daddy Class 2 Certification Authority
+ 2 s:/C=US/O=The Go Daddy Group, Inc.
+     /OU=Go Daddy Class 2 Certification Authority
+   i:/L=ValiCert Validation Network/O=<b>ValiCert, Inc.</b>
+     /OU=ValiCert Class 2 Policy Validation Authority
+     /CN=http://www.valicert.com//emailAddress=info@valicert.com
+...
+</programlisting>
+
+В этом примере субъект (&ldquo;<i>s</i>&rdquo;) сертификата №0 сервера
+<url>www.GoDaddy.com</url> подписан издателем (&ldquo;<i>i</i>&rdquo;),
+который в свою очередь является субъектом сертификата №1, подписанного
+издателем, который в свою очередь является субъектом сертификата №2,
+подписанного общеизвестным издателем <i>ValiCert, Inc.</i>,
+чей сертификат хранится во встроенной в браузеры базе данных
+сертификатов (которая в тёмном чулане хранится в доме, который построил Джек).
+</para>
+
+<para>
+Если связку сертификатов не добавили, будет показан только сертификат
+сервера №0.
+</para>
+
+</section>
+
+
+<section id="single_http_https_server" name="Единый HTTP/HTTPS сервер">
+
+<para>
+На практике рекомендуется с самого начала настраивать отдельные серверы
+для протоколов HTTP и HTTPS.
+И хотя сегодня их функциональность может казаться идентичной, в будущем
+это может измениться и использование консолидированного сервера может
+стать проблематичным.
+Однако, если серверы HTTP и HTTPS идентичны, и думать о будущем не
+хочется, можно настроить единый сервер, который обслуживает
+как HTTP-, так и HTTPS-запросы.
+Для этого следует исключить директиву “<literal>ssl on</literal>”
+и добавить параметр <literal>ssl</literal> к порту *:443:
+
+<programlisting>
+server {
+    listen               80;
+    listen               443  ssl;
+    server_name          www.example.com;
+    ssl_certificate      www.example.com.crt;
+    ssl_certificate_key  www.example.com.key;
+    ...
+}
+</programlisting>
+
+<note>
+До версии 0.8.21 nginx допускал указание параметра <literal>ssl</literal>
+на слушающем сокете только совместно с параметром <literal>default</literal>:
+<programlisting>
+listen  443  default  ssl;
+</programlisting>
+</note>
+</para>
+
+</section>
+
+
+<section id="name_based_https_servers" name="Выбор HTTPS-сервера по имени">
+
+<para>
+Типичная проблема возникает при настройке двух и более серверов HTTPS,
+слушающих на одном и том же IP-адресе:
+
+<programlisting>
+server {
+    listen           443;
+    server_name      www.example.com;
+    ssl              on;
+    ssl_certificate  www.example.com.crt;
+    ...
+}
+
+server {
+    listen           443;
+    server_name      www.example.org;
+    ssl              on;
+    ssl_certificate  www.example.org.crt;
+    ...
+}
+</programlisting>
+
+В такой конфигурации браузер получит сертификат первого сервера, т.е.
+<url>www.example.com</url>, независимо от запрашиваемого имени сервера.
+Это связано с поведением протокола SSL.
+SSL-соединение устанавливается до того, как браузер посылает HTTP-запрос,
+и nginx не знает имени запрашиваемого сервера.
+Следовательно, он лишь может предложить сертификат сервера по умолчанию.
+</para>
+
+<para>
+Наиболее старым и надёжным способом решения этой проблемы
+является назначение каждому HTTPS-серверу своего IP-адреса:
+
+<programlisting>
+server {
+    listen           192.168.1.1:443;
+    server_name      www.example.com;
+    ssl              on;
+    ssl_certificate  www.example.com.crt;
+    ...
+}
+
+server {
+    listen           192.168.1.2:443;
+    server_name      www.example.org;
+    ssl              on;
+    ssl_certificate  www.example.org.crt;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section id="certificate_with_several_names"
+        name="SSL-сертификат с несколькими именами">
+
+<para>
+Существуют и другие способы, которые позволяют использовать один и тот же
+IP-адрес сразу для нескольких HTTPS-серверов.
+Все они, однако, имеют свои недостатки.
+Одним из таких способов является использование сертификата с несколькими
+именами в поле SubjectAltName сертификата, например <url>www.example.com</url>
+и <url>www.example.org</url>.
+Однако, длина поля SubjectAltName ограничена.
+</para>
+
+<para>
+Другим способом является использование wildcard-сертификата, например
+<url>*.example.org</url>.
+Такой сертификат защищает все поддомены указанного домена, но только
+на заданном уровне.
+Под такой сертификат подходит <url>www.example.org</url>, но не подходят
+<url>example.org</url> и <url>www.sub.example.org</url>.
+Два вышеуказанных способа можно комбинировать.
+Сертификат может одновременно содержать и точное, и wildcard имена в поле
+SubjectAltName, например <url>example.org</url> и <url>*.example.org</url>.
+</para>
+
+<para>
+Лучше поместить сведения о файле сертификата с несколькими именами и
+файле с его секретным ключом на уровне конфигурации <i>http</i>, чтобы
+все серверы унаследовали их единственную копию в памяти:
+
+<programlisting>
+ssl_certificate      common.crt;
+ssl_certificate_key  common.key;
+
+server {
+    listen           443;
+    server_name      www.example.com;
+    ssl              on;
+    ...
+}
+
+server {
+    listen           443;
+    server_name      www.example.org;
+    ssl              on;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section id="sni" name="Указание имени сервера">
+
+<para>
+Более общее решение для работы нескольких HTTPS-серверов на одном
+IP-адресе —
+<link url="http://en.wikipedia.org/wiki/Server_Name_Indication">расширение
+TLSv1.1 Server Name Indication</link> (SNI, RFC3546),
+которое позволяет браузеру передать запрашиваемое имя сервера во время
+SSL handshake, а значит сервер будет знать, какой сертификат ему
+следует использовать для соединения.
+Однако, поддержка SNI браузерами ограничена.
+Сейчас это поддерживается браузерами начиная со следующих версий:
+</para>
+
+<list type="bullet">
+
+<listitem>
+Opera 8.0;
+</listitem>
+
+<listitem>
+MSIE 7.0 (но только на Windows Vista и выше);
+</listitem>
+
+<listitem>
+Firefox 2.0 и другие браузеры, использующие Mozilla Platform rv:1.8.1;
+</listitem>
+
+<listitem>
+Safari 3.2.1 (Windows-версия поддерживает SNI только на Vista и выше);
+</listitem>
+
+<listitem>
+и Chrome (Windows-версия также поддерживает SNI только на Vista и выше).
+</listitem>
+
+</list>
+
+<para>
+Чтобы использовать SNI в nginx, соответствующая поддержка должна
+присутствовать как в библиотеке OpenSSL, использованной при сборке
+бинарного файла nginx, так и в библиотеке, подгружаемой в момент
+работы.
+OpenSSL поддерживает SNI начиная с версии 0.9.8f, если она была
+собрана с опцией конфигурации <nobr>&ldquo;--enable-tlsext&rdquo;.</nobr>
+Начиная с OpenSSL 0.9.8j эта опция включена по умолчанию.
+Если nginx был собран с поддержкой SNI, то при запуске nginx с ключом
+&ldquo;-V&rdquo; об этом сообщается:
+
+<programlisting>
+$ nginx -V
+...
+TLS SNI support enabled
+...
+</programlisting>
+
+Однако, если nginx, собранный с поддержкой SNI, в процессе работы подгружает
+библиотеку OpenSSL, в которой нет поддержки SNI, nginx выдаёт предупреждение:
+
+<programlisting>
+nginx was built with SNI support, however, now it is linked
+dynamically to an OpenSSL library which has no tlsext support,
+therefore SNI is not available
+</programlisting>
+</para>
+
+</section>
+
+
+<section id="compatibility" name="Совместимость">
+
+<para>
+<list type="bullet">
+
+<listitem>
+Статус поддержки SNI отображается по ключу &ldquo;-V&rdquo;
+начиная с версий 0.8.21 и 0.7.62.
+</listitem>
+
+<listitem>
+Параметр <literal>ssl</literal> директивы
+<link doc="ngx_http_core_module.xml" id="listen"/>
+поддерживается начиная с версии 0.7.14.
+</listitem>
+
+<listitem>
+SNI поддерживается начиная с версии 0.5.32.
+</listitem>
+
+<listitem>
+Разделяемый кэш SSL-сессий поддерживается начиная с версии 0.5.6.
+</listitem>
+
+</list>
+</para>
+
+<para>
+<list type="bullet">
+
+<listitem>
+Версия 0.7.65, 0.8.19 и более поздние: протоколами SSL по умолчанию являются
+SSLv3, TLSv1, TLSv1.1 и TLSv1.2 (если поддерживается библиотекой OpenSSL).
+</listitem>
+
+<listitem>
+Версия 0.7.64, 0.8.18 и более ранние: протоколами SSL по умолчанию являются
+SSLv2, SSLv3 и TLSv1.
+</listitem>
+
+</list>
+</para>
+
+<para>
+<list type="bullet">
+
+<listitem>
+Версия 1.0.5 и более поздние: шифрами SSL по умолчанию являются
+“<literal>HIGH:!aNULL:!MD5</literal>”.
+</listitem>
+
+<listitem>
+Версия 0.7.65, 0.8.20 и более поздние: шифрами SSL по умолчанию являются
+“<literal>HIGH:!ADH:!MD5</literal>”.
+</listitem>
+
+<listitem>
+Версия 0.8.19: шифрами SSL по умолчанию являются
+“<literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</literal>”.
+</listitem>
+
+<listitem>
+Версия 0.7.64, 0.8.18 и более ранние: шифрами SSL по умолчанию являются<br/>
+“<literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</literal>”.
+</listitem>
+
+</list>
+</para>
+
+
+</section>
+
+
+</article>

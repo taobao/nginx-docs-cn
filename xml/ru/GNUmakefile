@@ -19,6 +19,7 @@ DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 
 INTRO =									\
 		http/request_processing					\
+		http/configuring_https_servers				\
 
 INTRO_XML =	$(foreach name, $(INTRO), xml/$(DOC_LANG)/docs/$(name).xml)
 INTRO_HTML =	$(foreach name, $(INTRO), $(OUT)/$(DOC_LANG)/docs/$(name).html)
