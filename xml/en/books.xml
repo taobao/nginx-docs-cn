@@ -16,7 +16,7 @@
     translator="長尾高弘"
     publisher="アスキー・メディアワークス"
     lang="日本語 (Japanese)"
-    cover="/books/nginx_http_server_jp.jpg" />
+    cover="../books/nginx_http_server_jp.jpg" />
 
 <book
     title="Nginx 1 Web Server Implementation Cookbook"
@@ -26,7 +26,7 @@
     site="http://www.dipankar.name"
     publisher="Packt Publishing"
     lang="English"
-    cover="/books/nginx_1_web_server.jpg" />
+    cover="../books/nginx_1_web_server.jpg" />
 
 <book
     title="Nginx HTTP Server"
@@ -35,7 +35,7 @@
     site="http://cnedelcu.blogspot.com"
     publisher="Packt Publishing"
     lang="English"
-    cover="/books/nginx_http_server.jpg" />
+    cover="../books/nginx_http_server.jpg" />
 
 <book
     title="实战Nginx：取代Apache的高性能Web服务器
@@ -45,7 +45,7 @@
     site="http://blog.s135.com"
     publisher="电子工业出版社 (Publishing House of Electronics Industry)"
     lang="中文 (Chinese)"
-    cover="/books/nginx_in_practice.jpg" />
+    cover="../books/nginx_in_practice.jpg" />
 
 </section>
 
