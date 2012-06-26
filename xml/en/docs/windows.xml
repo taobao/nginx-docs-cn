@@ -9,7 +9,7 @@
 <para>
 Version of nginx for Windows uses the native Win32 API (not the Cygwin emulation
 layer).
-Only the <c-func>select</c-func> request processing method is currently used,
+Only the <c-func>select</c-func> connection processing method is currently used,
 so high performance and scalability should not be expected.
 Due to this and some other known issues version of nginx for Windows
 is considered to be a <i>beta</i> version.
@@ -138,7 +138,7 @@ Running as a service.
 </listitem>
 
 <listitem>
-Using the I/O completion ports as a request processing method.
+Using the I/O completion ports as a connection processing method.
 </listitem>
 
 <listitem>

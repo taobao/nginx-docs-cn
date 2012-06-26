@@ -1983,8 +1983,8 @@ parameter of the <link id="satisfy"/> directive.
 <para>
 If set to a non-zero value, nginx will try to minimize the number
 of send operations on client sockets by using either
-<c-def>NOTE_LOWAT</c-def> flag of
-<link doc="../events.xml" id="kqueue"/>,
+<c-def>NOTE_LOWAT</c-def> flag of the
+<link doc="../events.xml" id="kqueue"/> method,
 or the <c-def>SO_SNDLOWAT</c-def> socket option,
 with the specified <value>size</value>.
 </para>

@@ -6,6 +6,7 @@ DOCS =									\
 		faq							\
 		install							\
 		windows							\
+		events							\
 		control							\
 		hash							\
 		dirindex						\
