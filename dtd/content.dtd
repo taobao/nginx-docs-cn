@@ -51,7 +51,7 @@
                          path | literal | value | var | programlisting |
                          link | registered)* >
 
-<!ELEMENT  note         (#PCDATA | para | br | list | i | b |
+<!ELEMENT  note         (#PCDATA | para | br | list | i | b | link |
                          nobr | table | url | literal | command | path |
                          header | programlisting | initial | paypal |
                          development_version | stable_version )* >
