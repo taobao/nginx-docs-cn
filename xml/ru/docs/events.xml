@@ -74,7 +74,8 @@ Mac OS X использование kqueue может привести к kernel
 с помощью параметра ядра <path>/proc/sys/kernel/rtsig-max</path>.
 Однако, начиная с Linux 2.6.6-mm2, этого параметра уже нет и для каждого
 процесса существует отдельная очередь сигналов, размер которой
-ограничивается с помощью <literal>RLIMIT_SIGPENDING</literal>.
+ограничивается с помощью <literal>RLIMIT_SIGPENDING</literal>
+(см. также <link doc="ngx_core_module.xml" id="worker_rlimit_sigpending"/>).
 </para>
 
 <para>

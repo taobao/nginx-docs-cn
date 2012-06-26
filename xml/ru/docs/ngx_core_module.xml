@@ -460,6 +460,22 @@ worker_priority -10;
 </directive>
 
 
+<directive name="worker_rlimit_sigpending">
+<syntax><value>число</value></syntax>
+<default/>
+<context>main</context>
+
+<para>
+На системах с поддержкой метода обработки соединений
+<link doc="events.xml" id="rtsig"/>,
+изменяет ограничение на размер очереди сигналов
+(<c-def>RLIMIT_SIGPENDING</c-def>) для рабочих процессов.
+Используется для увеличения ограничения без перезапуска основного процесса.
+</para>
+
+</directive>
+
+
 <directive name="working_directory">
 <syntax><value>каталог</value></syntax>
 <default/>

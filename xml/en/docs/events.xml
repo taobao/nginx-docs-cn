@@ -74,7 +74,8 @@ On loaded servers it may become necessary to increase this limit
 by changing the <path>/proc/sys/kernel/rtsig-max</path> kernel parameter.
 However, in Linux 2.6.6-mm2 this parameter is gone, and each process
 now has its own event queue.
-The size of each queue is limited by <literal>RLIMIT_SIGPENDING</literal>.
+The size of each queue is limited by <literal>RLIMIT_SIGPENDING</literal>
+(see also <link doc="ngx_core_module.xml" id="worker_rlimit_sigpending"/>).
 </para>
 
 <para>

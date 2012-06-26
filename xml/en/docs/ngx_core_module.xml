@@ -462,6 +462,22 @@ Used to increase the limit without restarting the main process.
 </directive>
 
 
+<directive name="worker_rlimit_sigpending">
+<syntax><value>number</value></syntax>
+<default/>
+<context>main</context>
+
+<para>
+On systems that support <link doc="events.xml" id="rtsig"/>
+connection processing method,
+changes the limit on the number of signals that may be queued
+(<c-def>RLIMIT_SIGPENDING</c-def>) for worker processes.
+Used to increase the limit without restarting the main process.
+</para>
+
+</directive>
+
+
 <directive name="working_directory">
 <syntax><value>directory</value></syntax>
 <default/>
