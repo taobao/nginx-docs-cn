@@ -185,6 +185,19 @@ env OPENSSL_ALLOW_PROXY_CERTS=1;
 </directive>
 
 
+<directive name="events">
+<syntax block="yes"/>
+<default/>
+<context>main</context>
+
+<para>
+Предоставляет контекст конфигурационного файла, в котором указываются
+директивы, влияющие на обработку соединений.
+</para>
+
+</directive>
+
+
 <directive name="include">
 <syntax><value>файл</value> | <value>маска</value></syntax>
 <default/>
@@ -308,6 +321,21 @@ timer_resolution 100ms;
 </listitem>
 
 </list>
+</para>
+
+</directive>
+
+
+<directive name="use">
+<syntax><value>метод</value></syntax>
+<default/>
+<context>events</context>
+
+<para>
+Задаёт <value>метод</value>, используемый для
+<link doc="events.xml">обработки соединений</link>.
+Обычно нет необходимости задавать его явно, поскольку по умолчанию
+nginx сам выбирает наиболее эффективный метод.
 </para>
 
 </directive>

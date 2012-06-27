@@ -188,6 +188,19 @@ and should not be set directly by the user.
 </directive>
 
 
+<directive name="events">
+<syntax block="yes"/>
+<default/>
+<context>main</context>
+
+<para>
+Provides a configuration file context in which the directives that
+affect connection processing are specified.
+</para>
+
+</directive>
+
+
 <directive name="include">
 <syntax><value>file</value> | <value>mask</value></syntax>
 <default/>
@@ -311,6 +324,21 @@ an <c-def>EVFILT_TIMER</c-def> filter if <literal>kqueue</literal> is used;
 </listitem>
 
 </list>
+</para>
+
+</directive>
+
+
+<directive name="use">
+<syntax><value>method</value></syntax>
+<default/>
+<context>events</context>
+
+<para>
+Specifies the <link doc="events.xml">connection processing</link>
+<value>method</value> to use.
+There is normally no need to specify it explicitly because nginx will
+by default use the most efficient method.
 </para>
 
 </directive>
