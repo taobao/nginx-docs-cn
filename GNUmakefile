@@ -109,7 +109,7 @@ BOOK_DEPS =								\
 		xslt/ga.xslt						\
 		xslt/content.xslt
 
-LANGS =		en ja he ru tr
+LANGS =		en ru cn he ja tr
 
 all:		news arx 404 $(LANGS)
 

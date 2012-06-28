@@ -1,0 +1,26 @@
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="nginx faq"
+         link="/cn/docs/faq.html"
+         lang="cn">
+
+
+<section>
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link doc="welcome_nginx_facebook.xml"/>
+</listitem>
+
+<listitem>
+<link doc="sys_errlist.xml"/>
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</article>

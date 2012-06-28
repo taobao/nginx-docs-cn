@@ -27,6 +27,20 @@
 <item id="dirindex">Алфавитный указатель директив</item>
 </text>
 
+<text lang="cn">
+<item id="and">和</item>
+<item id="author">作者</item>
+<item id="editor">编辑</item>
+<item id="translator">翻译</item>
+<item id="syntax">语法</item>
+<item id="default">默认值</item>
+<item id="context">上下文</item>
+<item id="context.any">任意</item>
+<item id="directive.version">这个指令出现在版本</item>
+<item id="directive.versions">这个指令出现在版本</item>
+<item id="dirindex">指令目录</item>
+</text>
+
 <text lang="ja">
 <item id="author">作成:</item>
 <item id="translator">翻訳:</item>

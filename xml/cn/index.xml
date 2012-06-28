@@ -1,0 +1,243 @@
+﻿<!DOCTYPE article SYSTEM "../../dtd/article.dtd">
+
+<article name="nginx"
+         link="/cn/"
+         lang="cn">
+
+
+<section>
+
+<para>
+nginx [engine x]是<link url="http://sysoev.ru/en/">Igor Sysoev</link>编写的一个HTTP和反向代理服务器，另外它也可以作为邮件代理服务器。
+它从2004开始已经在众多流量很大的俄罗斯网站上使用，包括<link url="http://www.yandex.ru">Yandex</link>、<link url="http://www.mail.ru">Mail.Ru</link>、<link url="http://www.vkontakte.ru">VKontakte</link>，以及<link url="http://www.rambler.ru">Rambler</link>。据Netcraft统计，在2011年10月份，<link url="http://news.netcraft.com/archives/2011/10/06/september-2011-web-server-survey.htm">世界上最繁忙的网站中有7.84%</link>使用Nginx作为其服务器或者代理服务器。部分成功案例请见：<link url="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</link>，
+<link url="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</link>。
+</para>
+
+<para>
+Nginx的源码使用的许可为<link url="http://nginx.org/LICENSE">两条款类BSD协议</link>。
+</para>
+
+</section>
+
+
+<section id="basic_http_features"
+        name="基本的HTTP服务器特性">
+
+<para>
+<list type="bullet">
+
+<listitem>
+处理静态文件，索引文件以及自动索引；打开文件描述符缓存；
+</listitem>
+
+<listitem>
+使用缓存加速反向代理；简单负载均衡以及容错；
+</listitem>
+
+<listitem>
+远程FastCGI服务的缓存加速支持；简单的负载均衡以及容错；
+</listitem>
+
+<listitem>
+模块化的架构。过滤器包括gzip压缩、ranges支持、chunked响应、XSLT，SSI以及图像缩放。在SSI 过滤器中，一个包含多个SSI的页面，如果经由FastCGI或反向代理处理，可被并行处理；
+</listitem>
+
+<listitem>
+支持SSL，TLS SNI。
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section id="other_http_features"
+        name="其他的HTTP服务器特性">
+
+<para>
+<list type="bullet">
+
+<listitem>
+基于名字和IP的虚拟主机；
+</listitem>
+
+<listitem>
+Keep-alive和pipelined连接支持；
+</listitem>
+
+<listitem>
+灵活的配置；
+</listitem>
+
+<listitem>
+重新加载配置以及在线升级时，不需要中断正在处理的请求；
+</listitem>
+
+<listitem>
+自定义访问日志格式，带缓存的日志写操作以及快速日志轮转；
+</listitem>
+
+<listitem>
+3xx-5xx错误代码重定向；
+</listitem>
+
+<listitem>
+重写（rewrite）模块；
+</listitem>
+
+<listitem>
+基于客户端IP地址和HTTP基本认证机制的访问控制；
+</listitem>
+
+<listitem>
+支持PUT、DELETE、MKCOL、COPY以及MOVE方法；
+</listitem>
+
+<listitem>
+支持FLV流和MP4流；
+</listitem>
+
+<listitem>
+速度限制；
+</listitem>
+
+<listitem>
+来自同一地址的同时连接数或请求数限制；
+</listitem>
+
+<listitem>
+嵌入Perl语言。
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section id="mail_proxy_server_features"
+        name="邮件代理服务器特性">
+
+<para>
+<list type="bullet">
+
+<listitem>
+使用外部HTTP认证服务器重定向用户到IMAP/POP3后端；
+</listitem>
+
+<listitem>
+使用外部HTTP认证服务器认证用户后重定向连接到内部SMTP后端；
+</listitem>
+
+<listitem>
+支持的认证方式：
+
+<list type="bullet">
+
+<listitem>
+POP3: USER/PASS, APOP, AUTH LOGIN/PLAIN/CRAM-MD5;
+</listitem>
+
+<listitem>
+IMAP: LOGIN, AUTH LOGIN/PLAIN/CRAM-MD5;
+</listitem>
+
+<listitem>
+SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
+</listitem>
+
+</list>
+</listitem>
+
+<listitem>
+SSL支持；
+</listitem>
+
+<listitem>
+STARTTLS和STLS支持。
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section id="architecture_and_scalability"
+        name="架构和扩展性">
+
+<para>
+<list type="bullet">
+
+<listitem>
+一个主进程和多个工作进程，工作进程以非特权用户运行；
+</listitem>
+
+<listitem>
+支持的事件机制：kqueue（FreeBSD 4.1+）、epoll（Linux 2.6+）、rt signals（Linux 2.2.19+）、/dev/poll（Solaris 7 11/99+）、event ports（Solaris 10）、select以及poll；
+</listitem>
+
+<listitem>
+众多支持的kqueue特性包括EV_CLEAR、EV_DISABLE（临时禁止事件）、NOTE_LOWAT、EV_EOF，可用数据的数量，错误代码；
+</listitem>
+
+<listitem>
+支持sendfile（FreeBSD 3.1+, Linux 2.2+, Mac OS X 10.5）、sendfile64（Linux 2.4.21+）和sendfilev（Solaris 8 7/01+）；
+</listitem>
+
+<listitem>
+文件AIO（FreeBSD 4.3+, Linux 2.6.22+）；
+</listitem>
+
+<listitem>
+Accept-filters（FreeBSD 4.1+）和 TCP_DEFER_ACCEPT（Linux 2.4+）；
+</listitem>
+
+<listitem>
+10000个非活跃的HTTP keep-alive连接仅占用约2.5M内存；
+</listitem>
+
+<listitem>
+尽可能避免数据拷贝操作。
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section id="tested_os_and_platforms"
+        name="测试过的操作系统和平台">
+
+<para>
+<list type="bullet">
+
+<listitem>
+FreeBSD 3 &mdash; 8 / i386; FreeBSD 5 &mdash; 9 / amd64;
+</listitem>
+
+<listitem>
+Linux 2.2 &mdash; 2.6 / i386; Linux 2.6 / amd64;
+</listitem>
+
+<listitem>
+Solaris 9 / i386, sun4u; Solaris 10 / i386, amd64, sun4v;
+</listitem>
+
+<listitem>
+MacOS X / ppc, i386;
+</listitem>
+
+<listitem>
+Windows XP, Windows Server 2003.
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+</article>

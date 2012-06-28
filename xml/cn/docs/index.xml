@@ -1,0 +1,40 @@
+﻿<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="nginx文档"
+         link="/cn/docs/"
+         lang="cn">
+
+
+<section>
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link doc="introduction.xml"/>
+</listitem>
+
+<listitem>
+<link doc="howto.xml"/>
+</listitem>
+
+<listitem>
+<link doc="faq.xml"/>
+</listitem>
+
+</list>
+</para>
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link doc="windows.xml"/>
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</article>

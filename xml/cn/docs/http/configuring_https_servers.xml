@@ -1,0 +1,386 @@
+﻿<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
+
+<article name="配置HTTPS服务器"
+         link="/cn/docs/http/configuring_https_servers.html"
+         lang="cn"
+         author="Igor Sysoev"
+         editor="Brian Mercer">
+
+<section>
+
+<para>
+配置HTTPS主机，必须在server配置块中打开SSL协议，还需要指定服务器端证书和密钥文件的位置：
+
+<programlisting>
+server {
+    listen               443;
+    server_name          www.nginx.com;
+    ssl                  on;
+    ssl_certificate      www.nginx.com.crt;
+    ssl_certificate_key  www.nginx.com.key;
+    ssl_protocols        SSLv3 TLSv1;
+    ssl_ciphers          HIGH:!aNULL:!MD5;
+    ...
+}
+</programlisting>
+
+服务器证书是公开的，会被传送到所有连接到服务器的客户端。而私钥不是公开的，需要存放在访问受限的文件中，当然，nginx主进程必须有读取密钥的权限。还有一种情况，私钥和证书存放在同一个文件中：
+
+
+<programlisting>
+    ssl_certificate      www.nginx.com.cert;
+    ssl_certificate_key  www.nginx.com.cert;
+</programlisting>
+
+
+这种情况下，证书文件同样得设置访问限制。当然，虽然证书和密钥存放在同一个文件，只有证书会发送给客户端，密钥不会发送。
+</para>
+
+<para>
+
+<literal>ssl_protocols</literal>和<literal>ssl_ciphers</literal>指令可以用来强制用户连接只能引入SSL/TLS那些强壮的协议版本和强大的加密算法。从1.0.5版本开始，nginx默认使用<literal>ssl_protocols SSLv3 TLSv1</literal>和<literal>ssl_ciphers HIGH:!aNULL:!MD5</literal>，所以只有在之前的版本，明确地配置它们才是有意义的。
+</para>
+
+<para>
+CBC模式的加密算法容易受到一些攻击，尤其是BEAST攻击（参见<link url="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-3389">CVE-2011-3389</link>）。可以通过下面配置调整为优先使用RC4-SHA加密算法：
+
+<programlisting>
+    ssl_ciphers RC4:HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+</programlisting>
+</para>
+
+</section>
+
+
+<section id="optimization" name="HTTPS服务器优化">
+
+<para>
+SSL操作需要消耗CPU资源，所以在多处理器的系统，需要启动多个工作进程，而且数量需要不少于可用CPU的个数。最消耗CPU资源的SSL操作是SSL握手，有两种方法可以将每个客户端的握手操作数量降到最低：第一种是保持客户端长连接，在一个SSL连接发送多个请求，第二种是在并发的连接或者后续的连接中重用SSL会话参数，这样可以避免SSL握手的操作。会话缓存用于保存SSL会话，这些缓存在工作进程间共享，可以使用<literal>ssl_session_cache</literal>指令进行配置。1M缓存可以存放大约4000个会话。默认的缓存超时是5分钟，可以使用<literal>ssl_session_timeout</literal>来修改。下面是一个针对4核系统的配置优化的例子，使用10M的共享会话缓存：
+
+<programlisting>
+<b>worker_processes  4</b>;
+
+http {
+    <b>ssl_session_cache    shared:SSL:10m</b>;
+    <b>ssl_session_timeout  10m</b>;
+
+    server {
+        listen               443;
+        server_name          www.nginx.com;
+        <b>keepalive_timeout    70</b>;
+
+        ssl                  on;
+        ssl_certificate      www.nginx.com.crt;
+        ssl_certificate_key  www.nginx.com.key;
+        ssl_protocols        SSLv3 TLSv1;
+        ssl_ciphers          HIGH:!aNULL:!MD5;
+        ...
+</programlisting>
+</para>
+
+</section>
+
+
+<section id="chains" name="SSL证书链">
+
+<para>
+有些浏览器不接受那些众所周知的证书认证机构签署的证书，而另外一些浏览器却接受它们。这是由于证书签发使用了一些中间认证机构，这些中间机构被众所周知的证书认证机构授权代为签发证书，但是它们自己却不被广泛认知，所以有些客户端不予识别。针对这种情况，证书认证机构提供一个证书链的包裹，用来声明众所周知的认证机构和自己的关系，需要将这个证书链包裹与服务器证书合并成一个文件。在这个文件里，服务器证书需要出现在认证方证书链的前面：
+
+<programlisting>
+$ cat www.nginx.com.crt bundle.crt > www.nginx.com.chained.crt
+</programlisting>
+
+这个文件需要使用<literal>ssl_certificate</literal>指令来引用：
+
+<programlisting>
+server {
+    listen               443;
+    server_name          www.nginx.com;
+    ssl                  on;
+    ssl_certificate      www.nginx.com.chained.crt;
+    ssl_certificate_key  www.nginx.com.key;
+    ...
+}
+</programlisting>
+
+如果服务器证书和认证方证书链合并时顺序弄错了，nginx就不能正常启动，而且会显示下面的错误信息：
+
+<programlisting>
+SSL_CTX_use_PrivateKey_file(" ... /www.nginx.com.key") failed
+   (SSL: error:0B080074:x509 certificate routines:
+    X509_check_private_key:key values mismatch)
+</programlisting>
+
+因为nginx首先需要用私钥去解密服务器证书，而遇到的却是认证方的证书。
+</para>
+
+<para>
+浏览器通常会将那些被受信的认证机构认证的中间认证机构保存下来，那么这些浏览器以后在遇到使用这些中间认证机构但不包含证书链的情况时，因为已经保存了这些中间认证机构的信息，所以不会报错。可以使用<command>openssl</command>命令行工具来确认服务器发送了完整的证书链：
+<programlisting>
+$ openssl s_client -connect www.godaddy.com:443
+...
+Certificate chain
+ 0 s:/C=US/ST=Arizona/L=Scottsdale/1.3.6.1.4.1.311.60.2.1.3=US
+     /1.3.6.1.4.1.311.60.2.1.2=AZ/O=GoDaddy.com, Inc
+     /OU=MIS Department/<b>CN=www.GoDaddy.com</b>
+     /serialNumber=0796928-7/2.5.4.15=V1.0, Clause 5.(b)
+   i:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.
+     /OU=http://certificates.godaddy.com/repository
+     /CN=Go Daddy Secure Certification Authority
+     /serialNumber=07969287
+ 1 s:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.
+     /OU=http://certificates.godaddy.com/repository
+     /CN=Go Daddy Secure Certification Authority
+     /serialNumber=07969287
+   i:/C=US/O=The Go Daddy Group, Inc.
+     /OU=Go Daddy Class 2 Certification Authority
+ 2 s:/C=US/O=The Go Daddy Group, Inc.
+     /OU=Go Daddy Class 2 Certification Authority
+   i:/L=ValiCert Validation Network/O=<b>ValiCert, Inc.</b>
+     /OU=ValiCert Class 2 Policy Validation Authority
+     /CN=http://www.valicert.com//emailAddress=info@valicert.com
+...
+</programlisting>
+
+在这个例子中，www.GoDaddy.com的服务器证书（#0）的受签者（“s”）是被签发机构（“i”）签名的，而这个签发机构又是证书（#1）的受签者，接着证书（#1）的签发机构又是证书（#2）的受签者，最后证书（#2）是被众所周知的签发机构ValiCert, Inc签发。ValiCert, Inc的证书内嵌在浏览器中，被浏览器自动识别。
+</para>
+
+<para>
+如果没有加入认证方证书链，那只能看到服务器证书（#0）。
+</para>
+
+</section>
+
+
+<section id="single_http_https_server" name="统一的HTTP/HTTPS主机">
+
+<para>
+从开始就将HTTP主机和HTTPS主机分开配置是很好一个很好的实践。虽然它们的功能现在看来是一样的，但是这个情况将来可能会有很大变化，那么合在一起的配置就有问题了。如果HTTP和HTTPS主机配置相同，而又不考虑将来重写配置的话，可以用一个主机配置统一处理HTTP和HTTPS请求。方法是删除<literal>ssl on</literal>的配置项，并在*:443端口添加参数<literal>ssl</literal>：
+<programlisting>
+server {
+    listen               80;
+    listen               443  ssl;
+    server_name          www.nginx.com;
+    ssl_certificate      www.nginx.com.crt;
+    ssl_certificate_key  www.nginx.com.key;
+    ...
+}
+</programlisting>
+
+<note>
+在0.8.21版本以前，只有添加了<literal>default</literal>参数的监听端口才能添加<literal>ssl</literal>参数：
+<programlisting>
+listen  443  default  ssl;
+</programlisting>
+</note>
+</para>
+
+</section>
+
+
+<section id="name_based_https_servers" name="基于名字的HTTPS主机">
+
+<para>
+在同一个IP上配置多个HTTPS主机，会出现问题：
+
+<programlisting>
+server {
+    listen           443;
+    server_name      www.nginx.com;
+    ssl              on;
+    ssl_certificate  www.nginx.com.crt;
+    ...
+}
+
+server {
+    listen           443;
+    server_name      www.nginx.org;
+    ssl              on;
+    ssl_certificate  www.nginx.org.crt;
+    ...
+}
+</programlisting>
+
+使用上面的配置，不论浏览器请求哪个主机，都只会收到默认主机的证书，比方说就是<url>www.nginx.com</url>。这是由SSL协议本身的行为引起的。因为SSL规定在建立SSL连接以后，才能发送HTTP请求，所以nginx建立SSL连接时不知道所请求主机的名字，因此，它只会返回默认主机的证书。
+</para>
+
+<para>
+最古老的也是最稳定的解决方法就是每个HTTPS主机使用不同的IP地址：
+
+<programlisting>
+server {
+    listen           192.168.1.1:443;
+    server_name      www.nginx.com;
+    ssl              on;
+    ssl_certificate  www.nginx.com.crt;
+    ...
+}
+
+server {
+    listen           192.168.1.2:443;
+    server_name      www.nginx.org;
+    ssl              on;
+    ssl_certificate  www.nginx.org.crt;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section id="certificate_with_several_names"
+        name="带有多个主机名的SSL证书">
+
+<para>
+也有其他一些方法可以实现多个HTTPS主机共享一个IP地址，但都有不足。其中一种方法是使用在“SubjectAltName”字段中存放多个名字的证书，比如<url>www.nginx.com</url>和<url>www.nginx.org</url>。这种方法的限制是“SubjectAltName”字段的长度。
+</para>
+
+<para>
+另一种方式是使用主机名中含有通配符的证书，比如<url>*.nginx.org</url>。这个证书匹配<url>www.nginx.org</url>，但是不匹配<url>nginx.org</url>和<url>www.sub.nginx.org</url>。这两种方法可以结合在一起——使用在“SubjectAltName”字段中存放的多个名字的证书，这些名字既可以是确切的名字，也可以是通配符，比如<url>nginx.org</url>和<url>*.nginx.org</url>。
+</para>
+
+<para>
+最好将带有多个名字的证书和它的密钥文件配置在http配置块中，这样可以只保存一份内容拷贝，所有主机的配置都从中继承：
+
+<programlisting>
+ssl_certificate      common.crt;
+ssl_certificate_key  common.key;
+
+server {
+    listen           443;
+    server_name      www.nginx.com;
+    ssl              on;
+    ...
+}
+
+server {
+    listen           443;
+    server_name      www.nginx.org;
+    ssl              on;
+    ...
+}
+</programlisting>
+</para>
+
+</section>
+
+
+<section id="sni" name="主机名指示">
+
+<para>
+在一个IP上运行多个HTTPS主机的更通用的方案是<link url="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1 主机名指示扩展</link>（SNI，RFC3546），它允许浏览器和服务器进行SSL握手时，将请求的主机名传递服务器，因此服务器可以知道使用哪一个证书来服务这个连接。但SNI只得到有限的浏览器的支持。下面列举支持SNI的浏览器最低版本和平台信息：
+</para>
+
+<list type="bullet">
+
+<listitem>
+Opera 8.0；
+</listitem>
+
+<listitem>
+MSIE 7.0（仅在Windows Vista操作系统及后续操作系统）；
+</listitem>
+
+<listitem>
+Firefox 2.0和使用Mozilla平台1.8.1版本的其他浏览器；
+</listitem>
+
+<listitem>
+Safari 3.2.1（Windows版需要最低Vista操作系统）；
+</listitem>
+
+<listitem>
+Chrome（Windows版需要最低Vista操作系统）。
+</listitem>
+
+</list>
+
+<para>
+为了在nginx中使用SNI，那么无论是在编译nginx时使用的OpenSSL类库，还是在运行nginx时使用的OpenSSL运行库，都必须支持SNI。从0.9.8f版本开始，OpenSSL通过<nobr>&ldquo;--enable-tlsext&rdquo;</nobr>配置选项加入SNI支持，从0.9.8j版本开始，此选项成为默认选项。当nginx被编译成支持SNI时，在使用“-V”选项运行时会显示如下信息：
+
+<programlisting>
+$ nginx -V
+...
+TLS SNI support enabled
+...
+</programlisting>
+
+但是，当开启SNI支持的nginx被动态链接到不支持SNI的OpenSSL库上时，nginx会显示如下警告：
+
+<programlisting>
+nginx was built with SNI support, however, now it is linked
+dynamically to an OpenSSL library which has no tlsext support,
+therefore SNI is not available
+</programlisting>
+</para>
+
+</section>
+
+
+<section id="compatibility" name="兼容性">
+
+<para>
+<list type="bullet">
+
+<listitem>
+从0.8.21和0.7.62版本开始，使用“-V”选项运行nginx时，将显示SNI支持状态信息。
+</listitem>
+
+<listitem>
+从0.7.14版本开始，<literal>listen</literal>指令支持<literal>ssl</literal>参数。
+</listitem>
+
+<listitem>
+从0.5.32版本开始，支持SNI。
+</listitem>
+
+<listitem>
+从0.5.6版本开始，支持SSL会话缓存，并可在工作进程间共享。
+</listitem>
+
+</list>
+</para>
+
+<para>
+<list type="bullet">
+
+<listitem>
+0.7.65、0.8.19及以后版本，默认SSL协议是SSLv3和TLSv1。
+</listitem>
+
+<listitem>
+0.7.64、0.8.18及以前版本，默认SSL协议是SSLv2、SSLv3和TLSv1。
+</listitem>
+
+</list>
+</para>
+
+<para>
+<list type="bullet">
+
+<listitem>
+1.0.5及以后版本，默认SSL密码算法是<literal>HIGH:!aNULL:!MD5</literal>。
+</listitem>
+
+<listitem>
+0.7.65、0.8.20及以后版本，默认SSL密码算法是<literal>HIGH:!ADH:!MD5</literal>。
+</listitem>
+
+<listitem>
+0.8.19版本，默认SSL密码算法是<literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM</literal>。
+</listitem>
+
+<listitem>
+0.7.64、0.8.18及以前版本，默认SSL密码算法是<literal>ALL:!ADH:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP</literal>。
+</listitem>
+
+</list>
+</para>
+
+
+</section>
+
+
+</article>

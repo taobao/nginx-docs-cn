@@ -1,0 +1,144 @@
+﻿<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
+
+<article name="转换rewrite规则"
+         link="/cn/docs/http/converting_rewrite_rules.html"
+         lang="cn">
+
+
+<section name="重定向到主站">
+
+<para>
+共享站点的管理员，习惯于<i>只</i>在Apache下使用.htaccess文件配置<i>所有</i>信息，通常会将下面规则
+
+<programlisting>
+RewriteCond  %{HTTP_HOST}  nginx.org
+RewriteRule  (.*)          http://www.nginx.org$1
+</programlisting>
+
+翻译成这样：
+
+<programlisting>
+server {
+    listen       80;
+    server_name  www.nginx.org  nginx.org;
+    if ($http_host = nginx.org) {
+        rewrite  (.*)  http://www.nginx.org$1;
+    }
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+这种做法是错的，复杂而且低效。正确的方式是为<url>nginx.org</url>定义一个单独的服务器：
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.org;
+    return       301 http://www.nginx.org$request_uri;
+}
+
+server {
+    listen       80;
+    server_name  www.nginx.org;
+    ...
+}
+</programlisting>
+
+<note>
+在0.9.1版本（含）以前，可以这样实现重定向：
+<programlisting>
+    rewrite      ^ http://www.nginx.org$request_uri?;
+</programlisting>
+</note>
+
+</para>
+
+</section>
+
+
+<section>
+
+<para>
+再举一个例子，处理一个和刚才相反的逻辑：既不是来自<url>nginx.com</url>，又不是来自<url>www.nginx.com</url>：
+
+<programlisting>
+RewriteCond  %{HTTP_HOST}  !nginx.com
+RewriteCond  %{HTTP_HOST}  !www.nginx.com
+RewriteRule  (.*)          http://www.nginx.com$1
+</programlisting>
+
+应该按下面这样分开定义<url>nginx.com</url>、<url>www.nginx.com</url>和其他站点：
+
+<programlisting>
+server {
+    listen       80;
+    server_name  nginx.com www.nginx.com;
+    ...
+}
+
+server {
+    listen       80 default_server;
+    server_name  _;
+    return       301 http://nginx.com$request_uri;
+}
+</programlisting>
+
+<note>
+在0.9.1版本（含）以前，可以这样实现重定向：
+<programlisting>
+    rewrite      ^ http://nginx.com$request_uri?;
+</programlisting>
+</note>
+
+</para>
+
+</section>
+
+
+<section id="converting_mongrel_rules"
+        name="转化混合规则">
+
+<para>
+典型的混合规则如下：
+
+<programlisting>
+DocumentRoot /var/www/myapp.com/current/public
+
+RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+RewriteRule ^.*$ %{DOCUMENT_ROOT}/system/maintenance.html [L]
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.*)$ $1 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.*)$ $1/index.html [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1/index.html [QSA,L]
+
+RewriteRule ^/(.*)$ balancer://mongrel_cluster%{REQUEST_URI} [P,QSA,L]
+</programlisting>
+
+转换成nginx配置应该是这样：
+
+<programlisting>
+location / {
+    root       /var/www/myapp.com/current/public;
+
+    try_files  /system/maintenance.html
+               $uri  $uri/index.html $uri.html
+               @mongrel;
+}
+
+location @mongrel {
+    proxy_pass  http://mongrel;
+}
+</programlisting>
+</para>
+
+</section>
+
+</article>

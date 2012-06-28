@@ -1,0 +1,62 @@
+﻿<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="调试日志"
+         link="/cn/docs/debugging_log.html"
+         lang="cn">
+
+
+<section>
+
+<para>
+要开启调试日志，首先需要在配置nginx时打开调试功能，然后编译：
+
+<programlisting>
+./configure --with-debug ...
+</programlisting>
+
+然后在配置文件中设置<literal>error_log</literal>的级别为<literal>debug</literal>：
+
+<programlisting>
+error_log  /path/to/log  debug;
+</programlisting>
+
+nginx的windows二进制版本总是将调试日志开启的，因此只需要设置<literal>debug</literal>的日志级别即可。
+</para>
+
+<para>
+注意，在其他级别定义日志，如在<i>server</i>层次，会关闭该主机的日志：
+<programlisting>
+error_log  /path/to/log  debug;
+
+http {
+    server {
+        error_log  /path/to/log;
+        ...
+</programlisting>
+应该注释掉这条server日志，或者也增加<literal>debug</literal>标志：
+<programlisting>
+error_log  /path/to/log  debug;
+
+http {
+    server {
+        error_log  /path/to/log  debug;
+        ...
+</programlisting>
+</para>
+
+<para>
+另外，也可以只针对某些地址开启调试日志：
+
+<programlisting>
+error_log  /path/to/log;
+
+events {
+    debug_connection   192.168.1.1;
+    debug_connection   192.168.10.0/24;
+}
+</programlisting>
+</para>
+
+</section>
+
+</article>

@@ -2,12 +2,49 @@
 
 <menus>
 
+<menu lang="cn">
+
+<item href="/en/"> english </item>
+<item href="/ru/"> русский </item>
+<item />
+
+<item> 简体中文 </item>
+<item href="/he/"> עברית </item>
+<item href="/ja/"> 日本語 </item>
+<item href="/tr/"> türkçe </item>
+<item />
+
+<item href="/" lang="en"> 新闻 </item>
+<item />
+
+<item href="/cn/"> nginx 介绍 </item>
+<item href="/en/download.html" lang="en"> 下载 </item>
+<item href="/en/security_advisories.html" lang="en"> 安全漏洞 </item>
+<item href="/cn/docs/"> 文档 </item>
+<item href="/cn/docs/introduction.html"> 入门 </item>
+<item href="/cn/docs/howto.html"> How to </item>
+<item href="/cn/docs/faq.html"> FAQ </item>
+<item href="http://trac.nginx.org/nginx" lang="en"> trac </item>
+<item href="http://wiki.nginx.org" lang="en"> wiki </item>
+<item href="/en/links.html" lang="en"> 外部连接 </item>
+<item href="/en/books.html" lang="en"> 书籍 </item>
+<item href="/en/support.html" lang="en"> 支持 </item>
+<item href="/en/donation.html" lang="en"> 捐献 </item>
+<item href="http://www.nginx.com/"> nginx.com </item>
+<item href="https://twitter.com/nginxorg"> @nginxorg </item>
+
+</menu>
+
+
 <menu lang="en">
 
 <item> english </item>
+<item href="/ru/"> русский </item>
+<item />
+
+<item href="/cn/"> 简体中文 </item>
 <item href="/he/"> עברית </item>
 <item href="/ja/"> 日本語 </item>
-<item href="/ru/"> русский </item>
 <item href="/tr/"> türkçe </item>
 <item />
 
@@ -46,9 +83,12 @@
 <menu lang="he">
 
 <item href="/en/"> english </item>
+<item href="/ru/"> русский </item>
+<item />
+
+<item href="/cn/"> 简体中文 </item>
 <item> עברית </item>
 <item href="/ja/"> 日本語 </item>
-<item href="/ru/"> русский </item>
 <item href="/tr/"> türkçe </item>
 <item />
 
@@ -74,9 +114,12 @@
 <menu lang="ja">
 
 <item href="/en/"> english </item>
+<item href="/ru/"> русский </item>
+<item />
+
+<item href="/cn/"> 简体中文 </item>
 <item href="/he/"> עברית </item>
 <item> 日本語 </item>
-<item href="/ru/"> русский </item>
 <item href="/tr/"> türkçe </item>
 <item />
 
@@ -102,9 +145,12 @@
 <menu lang="ru">
 
 <item href="/en/"> english </item>
+<item> русский </item>
+<item />
+
+<item href="/cn/"> 简体中文 </item>
 <item href="/he/"> עברית </item>
 <item href="/ja/"> 日本語 </item>
-<item> русский </item>
 <item href="/tr/"> türkçe </item>
 <item />
 
@@ -134,9 +180,12 @@
 <menu lang="tr">
 
 <item href="/en/"> english </item>
+<item href="/ru/"> русский </item>
+<item />
+
+<item href="/cn/"> 简体中文 </item>
 <item href="/he/"> עברית </item>
 <item href="/ja/"> 日本語 </item>
-<item href="/ru/"> русский </item>
 <item> türkçe </item>
 <item />
 

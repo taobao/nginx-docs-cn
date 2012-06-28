@@ -1,0 +1,37 @@
+﻿<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="我尝试打开Facebook，但得到的是一个“Welcome to nginx!”的页面"
+         link="/cn/docs/welcome_nginx_facebook.html"
+         lang="cn">
+
+<section>
+
+<para>
+<initial>问：</initial>
+我尝试打开Facebook，Yahoo!，Google，或者其他一些知名网站时，但是得到的都是空白页，上面有一条与nginx相关的信息：“Welcome to nginx!”或者是“404 Not Found / nginx”。
+</para>
+
+
+<para>
+我怀疑出了什么问题，而且有可能有恶意的企图要把我引导到流氓页面去（为了黑掉我的电脑，钓鱼等等）。为什么？nginx跟我想连上Facebook（Yahoo!，Google等等）有什么关系？
+</para>
+
+
+<para>
+&nbsp;
+</para>
+
+<para>
+<initial>答：</initial>
+nginx是世界上最流行的三种web服务器之一。它是一个免费的开源软件，完全合法，和任何威胁或者恶意活动毫无关系。“Welcome to nginx!”的网页是一个运行nginx的服务器可能的诊断返回之一。
+</para>
+
+
+<para>
+然而，你认为你的电脑或操作系统设置一定出问题了的假设是正确的——当你尝试访问一些知名网站的时候，得到的不是熟悉的页面反而是“Welcome to nginx!”。如果你的电脑是干净且安全的，就不应该出现这种情况。我们建议你检查并且核实你的操作系统设置（可能需要ISP或者支持人员的帮助），而且在你的电脑上安装并运行杀毒软件是一个好主意。可能有些邪恶的组织正在窃听从你电脑发出的数据流，而且潜在地可能对你和Internet上的其他用户造成巨大危害。
+</para>
+
+
+</section>
+
+</article>
