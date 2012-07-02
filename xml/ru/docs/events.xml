@@ -97,10 +97,6 @@ Mac OS X использование kqueue может привести к kernel
 <para>
 <literal>eventport</literal>&mdash;event ports, эффективный метод,
 используемый в Solaris 10.
-<note>
-Во избежание kernel panic, нужно установить
-<link url="http://sunsolve.sun.com/search/document.do?assetkey=1-26-102485-1">патч</link>.
-</note>
 </para>
 </listitem>
 

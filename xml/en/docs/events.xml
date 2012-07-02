@@ -97,11 +97,6 @@ and Tru64 UNIX 5.1A+.
 <para>
 <literal>eventport</literal>&mdash;event ports, efficient method
 used on Solaris 10.
-<note>
-This
-<link url="http://sunsolve.sun.com/search/document.do?assetkey=1-26-102485-1">patch</link>
-might be required to avoid kernel panics.
-</note>
 </para>
 </listitem>
 
