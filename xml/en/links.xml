@@ -10,6 +10,11 @@
 <list type="bullet">
 
 <listitem>
+<link url="http://www.aosabook.org/en/nginx.html">The Architecture of Open
+Source Applications: nginx</link>
+</listitem>
+
+<listitem>
 <link url="http://www.evanmiller.org/nginx-modules-guide.html">Emiller&rsquo;s
 Guide To Nginx Module Development</link>
 </listitem>
