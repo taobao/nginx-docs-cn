@@ -2,6 +2,14 @@
 
 <news name="nginx news" link="/" lang="en">
 
+<event date="2012-07-02">
+<para>
+<link url="http://www.aosabook.org/en/nginx.html">nginx chapter</link> by
+Andrew Alexeev in <link url="http://www.aosabook.org/en/">The Architecture
+of Open Source Applications</link> book.
+</para>
+</event>
+
 <event date="2012-06-28">
 <para>
 <link url="cn/">Simplified Chinese</link> translation of the site by the
