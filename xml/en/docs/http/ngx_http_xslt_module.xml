@@ -19,7 +19,8 @@ This module is not built by default, it should be enabled with the
 configuration parameter.
 <note>
 This module requires the
-<link url="http://www.xmlsoft.org">libxml2 and libxslt</link> libraries.
+<link url="http://xmlsoft.org">libxml2</link> and
+<link url="http://xmlsoft.org/XSLT/">libxslt</link> libraries.
 </note>
 </para>
 

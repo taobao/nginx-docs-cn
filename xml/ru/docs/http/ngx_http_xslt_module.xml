@@ -19,7 +19,8 @@
 <literal>--with-http_xslt_module</literal>.
 <note>
 Для сборки и работы этого модуля нужны библиотеки
-<link url="http://www.xmlsoft.org">libxml2 и libxslt</link>.
+<link url="http://xmlsoft.org">libxml2</link> и
+<link url="http://xmlsoft.org/XSLT/">libxslt</link>.
 </note>
 </para>
 
