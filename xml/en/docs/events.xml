@@ -46,10 +46,6 @@ can be used to forcibly enable or disable the build of this module.
 <para>
 <literal>kqueue</literal>&mdash;efficient method used on
 FreeBSD 4.1+, OpenBSD 2.9+, NetBSD 2.0, and Mac OS X.
-<note>
-On two-processor machines running some older versions of Mac OS X
-the use of kqueue may cause a kernel panic.
-</note>
 </para>
 </listitem>
 
