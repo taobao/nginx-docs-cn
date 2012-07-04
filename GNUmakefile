@@ -39,6 +39,7 @@ endef
 ARTICLE_DEPS =								\
 		xml/menu.xml						\
 		xml/versions.xml					\
+		xml/i18n.xml						\
 		dtd/article.dtd						\
 		dtd/content.dtd						\
 		xslt/article.xslt					\
@@ -56,6 +57,7 @@ ARTICLE_DEPS =								\
 NEWS_DEPS =								\
 		xml/menu.xml						\
 		xml/versions.xml					\
+		xml/i18n.xml						\
 		dtd/news.dtd						\
 		dtd/content.dtd						\
 		xslt/news.xslt						\
@@ -70,6 +72,7 @@ NEWS_DEPS =								\
 DOWNLOAD_DEPS =								\
 		xml/menu.xml						\
 		xml/versions.xml					\
+		xml/i18n.xml						\
 		dtd/article.dtd						\
 		dtd/content.dtd						\
 		xslt/download.xslt					\
@@ -84,6 +87,7 @@ DOWNLOAD_DEPS =								\
 SECURITY_DEPS =								\
 		xml/menu.xml						\
 		xml/versions.xml					\
+		xml/i18n.xml						\
 		dtd/article.dtd						\
 		dtd/content.dtd						\
 		xslt/security.xslt					\
@@ -98,6 +102,7 @@ SECURITY_DEPS =								\
 BOOK_DEPS =								\
 		xml/menu.xml						\
 		xml/versions.xml					\
+		xml/i18n.xml						\
 		dtd/article.dtd						\
 		dtd/content.dtd						\
 		xslt/books.xslt						\
