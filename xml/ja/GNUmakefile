@@ -37,6 +37,9 @@ $(DOC_LANG):								\
 		$(HOWTO_HTML)						\
 		$(FAQ_HTML)						\
 
+$(OUT)/$(DOC_LANG)/docs/index.html:					\
+		$(DOCS_XML)						\
+
 $(OUT)/$(DOC_LANG)/docs/introduction.html:				\
 		$(INTRO_XML)						\
 
