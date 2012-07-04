@@ -18,6 +18,9 @@
 
 <text lang="ru">
 <item id="and">и</item>
+<item id="author">автор:</item>
+<item id="editor">редактор:</item>
+<item id="translator">перевод:</item>
 <item id="syntax">синтаксис</item>
 <item id="default">умолчание</item>
 <item id="context">контекст</item>
