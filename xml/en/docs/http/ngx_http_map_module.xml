@@ -32,6 +32,11 @@ map $http_host $name {
     .example.net  3;
     wap.*         4;
 }
+
+map $http_user_agent $mobile {
+    default       0;
+    "~Opera Mini" 1;
+}
 </example>
 </para>
 
@@ -42,20 +47,58 @@ map $http_host $name {
 
 <directive name="map">
 <syntax block="yes">
-    <value>$variable1</value>
-    <value>$variable2</value></syntax>
+    <value>string</value>
+    <value>$variable</value></syntax>
 <default/>
 <context>http</context>
 
 <para>
-Creates a variable whose value
-depends on the value of another variable.
-The directive supports three special parameters:
+Creates a new variable whose value
+depends on values of one or more of the source variables
+specified in the first parameter.
+<note>
+Before version 0.9.0 only a single variable could be
+specified in the first parameter.
+</note>
+</para>
+
+<para>
+Parameters inside the <literal>map</literal> block specify a mapping
+between source and resulting values.
+</para>
+
+<para>
+Source values are specified as strings or regular expressions (0.9.6).
+</para>
+
+<para>
+A regular expression should either start from the “<literal>~</literal>”
+symbol for a case-sensitive matching, or from the “<literal>~*</literal>”
+symbols (1.0.4) for case-insensitive matching.
+A regular expression can contain named and positional captures
+that can later be used in other directives along with the
+resulting variable.
+</para>
+
+<para>
+If a source value matches one of the names of special parameters
+(see below), it should be prefixed with the “<literal>\</literal>” symbol.
+</para>
+
+<para>
+The resulting value can be a string
+or another variable (0.9.0).
+</para>
+
+<para>
+The directive also supports three special parameters:
 <list type="tag">
 <tag-name><literal>default</literal> <value>value</value></tag-name>
 <tag-desc>
-sets a value for the second variable when the value
-of the first variable cannot be found.
+sets the resulting value if the source value matches none
+of the specified variants.
+When <literal>default</literal> is not specified, the default
+resulting value will be an empty string.
 </tag-desc>
 
 <tag-name><literal>hostnames</literal></tag-name>
@@ -75,6 +118,7 @@ can be combined:
 <example>
 .example.com  1;
 </example>
+This parameter should be specified before the list of values.
 </tag-desc>
 
 <tag-name><literal>include</literal> <value>file</value></tag-name>
@@ -82,6 +126,38 @@ can be combined:
 includes a file with values.
 There can be several inclusions.
 </tag-desc>
+
+</list>
+</para>
+
+<para>
+If the source value matches more than one of the specified variants,
+e.g. both mask and regular expression match, the first matching
+variant will be choosen, in the following order of precedence:
+<list type="enum">
+
+<listitem>
+string value without a mask
+</listitem>
+
+<listitem>
+longest string value with a prefix mask,
+e.g. “<literal>*.example.com</literal>”
+</listitem>
+
+<listitem>
+longest string value with a suffix mask,
+e.g. “<literal>mail.*</literal>”
+</listitem>
+
+<listitem>
+first matching regular expression
+(in order of appearance in a configuration file)
+</listitem>
+
+<listitem>
+default value
+</listitem>
 
 </list>
 </para>
