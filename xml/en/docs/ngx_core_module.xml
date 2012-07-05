@@ -29,6 +29,42 @@ events {
 
 <section id="directives" name="Directives">
 
+<directive name="accept_mutex">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>events</context>
+
+<para>
+If enabled,
+accepts of new connections by multiple worker processes will be serialized.
+Otherwise, all worker processes will be notified about new connections,
+and if volume of new connections is low, some of the worker processes
+may just waste system resources.
+<note>
+The use of <link doc="events.xml" id="rtsig"/>
+connection processing method
+requires <literal>accept_mutex</literal> to be enabled.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="accept_mutex_delay">
+<syntax><value>time</value></syntax>
+<default>500ms</default>
+<context>events</context>
+
+<para>
+If <link id="accept_mutex"/> is enabled, specifies the maximum time
+during which a worker process will try to restart accepting new
+connections if another worker process is already doing this
+currently.
+</para>
+
+</directive>
+
+
 <directive name="daemon">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
@@ -224,6 +260,23 @@ include vhosts/*.conf;
 </directive>
 
 
+<directive name="lock_file">
+<syntax><value>file</value></syntax>
+<default>logs/nginx.lock</default>
+<context>main</context>
+
+<para>
+nginx uses the locking mechanism to implement <link id="accept_mutex"/>
+and serialize accesses to shared memory.
+On most systems the locks are implemented using atomic operations,
+and this directive is ignored.
+On other systems the “lock file” mechanism is used.
+This directive specifies a prefix for the names of lock files.
+</para>
+
+</directive>
+
+
 <directive name="master_process">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
@@ -232,6 +285,31 @@ include vhosts/*.conf;
 <para>
 Determines whether worker processes are started.
 This directive is intended for nginx developers.
+</para>
+
+</directive>
+
+
+<directive name="multi_accept">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>events</context>
+
+<para>
+If disabled, a worker process
+will accept one new connection at a time.
+Otherwise, a worker process
+will accept all new connections at a time.
+<note>
+The directive is ignored if <link doc="events.xml" id="kqueue"/>
+connection processing method is used because it can report
+the number of new connections waiting to be accepted.
+</note>
+<note>
+The use of <link doc="events.xml" id="rtsig"/>
+connection processing method
+automatically enables <literal>multi_accept</literal>.
+</note>
 </para>
 
 </directive>

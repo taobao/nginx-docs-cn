@@ -29,6 +29,42 @@ events {
 
 <section id="directives" name="Директивы">
 
+<directive name="accept_mutex">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>events</context>
+
+<para>
+Если <literal>accept_mutex</literal> включён,
+рабочие процессы будут принимать новые соединения по очереди.
+В противном случае о новых соединениях будет сообщаться сразу всем рабочим
+процессам, и при низкой интенсивности поступления новых соединений
+часть рабочих процессов может работать вхолостую.
+<note>
+Использование метода обработки соединений
+<link doc="events.xml" id="rtsig"/>
+требует обязательного включения <literal>accept_mutex</literal>.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="accept_mutex_delay">
+<syntax><value>время</value></syntax>
+<default>500ms</default>
+<context>events</context>
+
+<para>
+При включённом <link id="accept_mutex"/> задаёт максимальное время,
+в течение которого рабочий процесс вновь попытается начать принимать
+новые соединения, если в настоящий момент этим уже занимается другой
+рабочий процесс.
+</para>
+
+</directive>
+
+
 <directive name="daemon">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
@@ -220,6 +256,23 @@ include vhosts/*.conf;
 </directive>
 
 
+<directive name="lock_file">
+<syntax><value>файл</value></syntax>
+<default>logs/nginx.lock</default>
+<context>main</context>
+
+<para>
+Для реализации <link id="accept_mutex"/> и сериализации доступа к
+разделяемой памяти nginx использует механизм блокировок.
+На большинстве систем блокировки реализованы с помощью атомарных
+операций, и эта директива игнорируется.
+Для остальных систем применяется механизм файлов блокировок.
+Эта директива задаёт префикс имён файлов блокировок.
+</para>
+
+</directive>
+
+
 <directive name="master_process">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>on</default>
@@ -228,6 +281,31 @@ include vhosts/*.conf;
 <para>
 Определяет, будут ли запускаться рабочие процессы.
 Эта директива предназначена для разработчиков nginx.
+</para>
+
+</directive>
+
+
+<directive name="multi_accept">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>events</context>
+
+<para>
+Если <literal>multi_accept</literal> выключен, рабочий процесс
+за один раз будет принимать только одно новое соединение.
+В противном случае рабочий процесс
+за один раз будет принимать сразу все новые соединения.
+<note>
+Директива игнорируется в случае использования метода обработки соединений
+<link doc="events.xml" id="kqueue"/>, т.к. данный метод сам сообщает
+число новых соединений, ожидающих приёма.
+</note>
+<note>
+Использование метода обработки соединений
+<link doc="events.xml" id="rtsig"/>
+автоматически включает <literal>multi_accept</literal>.
+</note>
 </para>
 
 </directive>
