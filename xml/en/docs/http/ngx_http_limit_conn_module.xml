@@ -55,7 +55,8 @@ http {
 <context>location</context>
 
 <para>
-Sets the maximum allowed number of connections for a given key value.
+Sets a shared memory zone
+and the maximum allowed number of connections for a given key value.
 When this limit is exceeded, the server will return error
 <http-status code="503" text="Service Temporarily Unavailable"/>
 in reply to a request.
@@ -128,7 +129,8 @@ limits the number of connections.
 <context>http</context>
 
 <para>
-Sets the parameters for a zone that keeps states for various keys.
+Sets parameters of a shared memory zone that keeps states
+for various keys.
 This state stores the current number of connections in particular.
 The key is any non-empty value of the specified variable
 (empty values are not accounted).

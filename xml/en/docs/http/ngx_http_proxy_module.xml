@@ -140,7 +140,7 @@ By default, <value>size</value> is limited by two buffers set by the
 <context>location</context>
 
 <para>
-Defines a zone used for caching.
+Defines a shared memory zone used for caching.
 The same zone can be used in several places.
 The <literal>off</literal> parameter disables caching inherited
 from the previous configuration level.

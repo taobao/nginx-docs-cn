@@ -54,7 +54,8 @@ http {
 <context>location</context>
 
 <para>
-Sets a zone and the maximum allowed burst of requests.
+Sets a shared memory zone
+and the maximum allowed burst of requests.
 If the rate of requests exceeds the rate configured for a zone,
 request processing is delayed such as that they are processed
 at a defined rate.
@@ -121,7 +122,8 @@ delays are logged with the <literal>info</literal> level.
 <context>http</context>
 
 <para>
-Sets the parameters for a zone that keeps states for various keys.
+Sets parameters of a shared memory zone
+that keeps states for various keys.
 The state stores the current number of excessive requests in particular.
 The key is any non-empty value of the specified variable
 (empty values are not accounted).
