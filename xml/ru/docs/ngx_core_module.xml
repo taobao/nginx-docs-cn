@@ -116,6 +116,26 @@ events {
 </directive>
 
 
+<directive name="debug_points">
+<syntax><literal>abort</literal> | <literal>stop</literal></syntax>
+<default/>
+<context>main</context>
+
+<para>
+Эта директива используется для отладки.
+</para>
+
+<para>
+В случае обнаружения внутренней ошибки, например, утечки сокетов в момент
+перезапуска рабочих процессов, включение <literal>debug_points</literal>
+приводит к созданию core-файла (<literal>abort</literal>)
+или остановке процесса (<literal>stop</literal>) с целью последующей
+диагностики с помощью системного отладчика.
+</para>
+
+</directive>
+
+
 <directive name="error_log">
 <syntax>
 <value>файл</value> | <literal>stderr</literal>

@@ -116,6 +116,26 @@ be built with <literal>--with-debug</literal>.
 </directive>
 
 
+<directive name="debug_points">
+<syntax><literal>abort</literal> | <literal>stop</literal></syntax>
+<default/>
+<context>main</context>
+
+<para>
+This directive is used for debugging.
+</para>
+
+<para>
+When internal error is detected, e.g. the leak of sockets on
+restart of working processes, enabling <literal>debug_points</literal>
+leads to a core file creation (<literal>abort</literal>)
+or stopping a process (<literal>stop</literal>) for further
+analysis using a system debugger.
+</para>
+
+</directive>
+
+
 <directive name="error_log">
 <syntax>
 <value>file</value> | <literal>stderr</literal>
