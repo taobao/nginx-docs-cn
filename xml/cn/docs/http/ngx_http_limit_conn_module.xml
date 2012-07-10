@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="ngx_http_limit_conn_module 模块"
+        link="/cn/docs/http/ngx_http_limit_conn_module.html"
+        lang="cn">
+
+<section id="summary">
+
+<para>
+<literal>ngx_http_limit_conn_module</literal> 模块可以让您限定某种定义好模式的连接数，需要特别指出的是，您可以设定单一 IP 来源的连接数。
+</para>
+
+<para>
+并不是所有的连接都会被模块计数；只有那些被处理的请求才计数，也就是那些请求头信息被完全读取的请求。
+</para>
+
+</section>
+
+
+<section id="example" name="配置范例">
+
+<para>
+<example>
+http {
+    limit_conn_zone $binary_remote_addr zone=addr:10m;
+
+    ...
+
+    server {
+
+        ...
+
+        location /download/ {
+            limit_conn addr 1;
+        }
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="指令">
+
+<directive name="limit_conn">
+<syntax><value>zone</value> <value>number</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+对于一个给定的键名，需要设置一块共享内存空间和最大连接数。当连接数超过最大连接数时，服务器将会返回
+<http-status code="503" text="Service Temporarily Unavailable"/>
+错误。比如，如下指令配置
+<example>
+limit_conn_zone $binary_remote_addr zone=addr:10m;
+
+server {
+    location /download/ {
+        limit_conn addr 1;
+    }
+</example>
+表示，同一 IP 同一时间只允许有一个连接。
+</para>
+
+<para>
+当多个 <literal>limit_conn</literal> 指令被配置时，所有的连接数限制都会生效。比如，如下配置不仅会限制单一 IP 来源的连接数，也同时会限制此虚拟服务器的总连接数：
+<example>
+limit_conn_zone $binary_remote_addr zone=perip:10m;
+limit_conn_zone $server_name zone=perserver:10m;
+
+server {
+    ...
+    limit_conn perip 10;
+    limit_conn perserver 100;
+}
+</example>
+
+</para>
+
+<para>
+当前配置层级如果没有 <literal>limit_conn</literal> 指令，将会从上一层级继承连接限制配置。
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_log_level">
+<syntax>
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal></syntax>
+<default>error</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.8.18</appeared-in>
+
+<para>
+设定当连接数超过设定的最大连接数时的日志等级。
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_zone">
+<syntax>
+    <value>$variable</value>
+    <literal>zone</literal>=<value>name</value>:<value>size</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+设定保存标记各种键值连接状态的共享内存空间的参数。具体保存的状态是当前的连接数。这些标记键值可以是特定变量的任何非空值（空值将不会被计数）。
+使用范例：
+<example>
+limit_conn_zone $binary_remote_addr zone=addr:10m;
+</example>
+这里，设置客户端的 IP 地址作为标记键值。注意，这里使用的是 <var>$binary_remote_addr</var> 变量，而不是  <var>$remote_addr</var> 变量。 <var>$remote_addr</var> 变量的长度可以从 7 bytes 到 15 bytes，所以在32 位平台中，存储状态的内存空间需要为此划分 32 或者 64 bytes 的内存，在 64 位平台中需要 64 bytes 的内存。但是 <var>$binary_remote_addr</var> 变量的长度固定是 4 bytes，所以在 32 位平台中，固定在状态保存区域划分 32 bytes 内存存储，在 64 位平台中划分 64 bytes 存储。一兆字节的空间，可以保存 3.2 万个 32 位的状态标记，1.6 万个 64 位的状态标记。如果一块存储空间被耗尽，服务器将会对以后所有的请求，返回
+<http-status code="503" text="Service Temporarily Unavailable"/>
+错误。
+</para>
+
+</directive>
+
+
+<directive name="limit_zone">
+<syntax>
+    <value>name</value>
+    <value>$variable</value>
+    <value>size</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+这条指令在 1.1.8 版本中已经被废弃，可以使用 <link id="limit_conn_zone"/> 按如下语法实现相同的功能：
+<note>
+<literal>limit_conn_zone</literal>
+<value>$variable</value>
+<literal>zone</literal>=<value>name</value>:<value>size</value>;
+</note>
+</para>
+
+</directive>
+
+</section>
+
+</module>
