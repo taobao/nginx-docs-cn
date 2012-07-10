@@ -606,6 +606,22 @@ location @fallback {
 </directive>
 
 
+<directive name="etag">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.3.3</appeared-in>
+
+<para>
+Разрешает или запрещает автоматическую генерацию поля <header>ETag</header>
+заголовка ответа для статических ресурсов.
+</para>
+
+</directive>
+
+
 <directive name="if_modified_since">
 <syntax>
     <literal>off</literal> |
