@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Модуль ngx_http_dav_module"

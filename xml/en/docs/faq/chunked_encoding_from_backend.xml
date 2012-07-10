@@ -1,3 +1,7 @@
+<!--
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article name="Why nginx doesn't handle chunked encoding

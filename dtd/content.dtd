@@ -1,3 +1,8 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!ELEMENT  section      (para | list | book | download | security | note |
                          programlisting)* >
 <!ATTLIST  section

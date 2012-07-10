@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 
+<!--
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Module ngx_http_mp4_module"

@@ -1,3 +1,8 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE news SYSTEM "../dtd/news.dtd">
 
 <news name="nginx news" link="/" lang="en">
