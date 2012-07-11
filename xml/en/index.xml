@@ -46,7 +46,9 @@ The sources and documentation are distributed under the
 <list type="bullet">
 
 <listitem>
-Serving static and index files, and
+Serving static and
+<link doc="docs/http/ngx_http_index_module.xml">index</link>
+files,
 <link doc="docs/http/ngx_http_autoindex_module.xml">autoindexing</link>;
 <link doc="docs/http/ngx_http_core_module.xml"
        id="open_file_cache">open file descriptor cache</link>;
