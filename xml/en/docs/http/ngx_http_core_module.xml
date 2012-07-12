@@ -2198,23 +2198,29 @@ Before 0.8.48, the machine's hostname was used by default.
 </para>
 
 <para>
-The name checking order is as follows:
+When searching for a virtual server by name,
+if name matches more than one of the specified variants,
+e.g. both mask and regular expression match, the first matching
+variant will be choosen, in the following order of precedence:
 <list type="enum">
 
 <listitem>
-full names
+full name
 </listitem>
 
 <listitem>
-names with the prefix mask, e.g. “<literal>*.example.com</literal>”
+longest name with a prefix mask,
+e.g. “<literal>*.example.com</literal>”
 </listitem>
 
 <listitem>
-names with the suffix mask, e.g. “<literal>mail.*</literal>”
+longest name with a suffix mask,
+e.g. “<literal>mail.*</literal>”
 </listitem>
 
 <listitem>
-regular expressions
+first matching regular expression
+(in order of appearance in a configuration file)
 </listitem>
 
 </list>

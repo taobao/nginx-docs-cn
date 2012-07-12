@@ -57,11 +57,13 @@ exact names;
 </listitem>
 
 <listitem>
-wildcard names starting with an asterisk: <url>*.example.org</url>;
+wildcard names starting with an asterisk: <url>*.example.org</url>
+(longest first);
 </listitem>
 
 <listitem>
-wildcard names ending with an asterisk: <url>mail.*</url>;
+wildcard names ending with an asterisk: <url>mail.*</url>
+(longest first);
 </listitem>
 
 <listitem>
