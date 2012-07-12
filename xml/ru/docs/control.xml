@@ -44,6 +44,9 @@
 <tr><td width="20%">TERM, INT</td><td>быстрое завершение</td></tr>
 <tr><td width="20%">QUIT</td><td>плавное завершение</td></tr>
 <tr><td width="20%">USR1</td><td>переоткрытие лог-файлов</td></tr>
+<tr><td width="20%">WINCH</td><td>аварийное завершение для отладки
+(требует включения <link doc="ngx_core_module.xml" id="debug_points"/>)
+</td></tr>
 
 </table>
 </note>
