@@ -67,7 +67,7 @@
            width        CDATA #IMPLIED
 >
 <!ELEMENT  tr           (td+) >
-<!ELEMENT  td           (#PCDATA | literal | i)* >
+<!ELEMENT  td           (#PCDATA | literal | i | link)* >
 <!ATTLIST  td
            width        CDATA #IMPLIED
 >
