@@ -42,6 +42,7 @@ ARTICLE_DEPS =								\
 		xml/i18n.xml						\
 		dtd/article.dtd						\
 		dtd/content.dtd						\
+		dtd/module.dtd						\
 		xslt/article.xslt					\
 		xslt/dirname.xslt					\
 		xslt/link.xslt						\
