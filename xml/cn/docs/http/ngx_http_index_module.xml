@@ -1,4 +1,7 @@
 <?xml version="1.0"?>
+<!--
+  Copyright (c) litianqing
+-->
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
@@ -38,7 +41,7 @@ location / {
 <context>location</context>
 
 <para>
-定义将要被作为索引的文件
+定义将要被作为首页的文件
 文件 <value>file</value> 的名字可以包含变量。
 文件以指定的顺序被检查。
 列表中的最后一个元素可以是一个带有绝对路径的文件
@@ -49,8 +52,8 @@ index index.$geo.html index.0.html /index.html;
 </para>
 
 <para>
-需要注意的地方是，如果有一个内部重定向，并且请求可以被不同的location处理
-比如,下面这个例子
+需要注意的地方是，index文件会引发一个内部重定向，请求可能被转发到不同的location里处理。
+比如，下面这个例子：
 <example>
 location = / {
     index index.html;
@@ -60,7 +63,7 @@ location / {
     ...
 }
 </example>
-一个有“<literal>/</literal>”的请求将会在第二个location中以“<literal>/index.html</literal>”的形式被处理。
+请求“<literal>/</literal>”实际上将会在第二个location中作为“<literal>/index.html</literal>”被处理。
 </para>
 
 </directive>
