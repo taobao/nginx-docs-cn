@@ -41,7 +41,7 @@ location / {
 <context>location</context>
 
 <para>
-定义将要被作为首页的文件
+定义将要被作为首页的文件。
 文件 <value>file</value> 的名字可以包含变量。
 文件以指定的顺序被检查。
 列表中的最后一个元素可以是一个带有绝对路径的文件
