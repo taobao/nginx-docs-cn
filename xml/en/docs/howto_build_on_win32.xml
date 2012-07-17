@@ -8,7 +8,8 @@
 
 <article name="How to build nginx on the Win32 Platform with Visual C"
          link="/en/docs/howto_build_on_win32.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 <section name="Prerequisites">
 

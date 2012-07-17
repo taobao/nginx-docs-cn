@@ -8,7 +8,8 @@
                &ldquo;accept() failed (53: Software caused connection abort)
                while accepting new connection on 0.0.0.0:80&rdquo;?"
          link="/en/docs/faq/accept_failed.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 <section>
 

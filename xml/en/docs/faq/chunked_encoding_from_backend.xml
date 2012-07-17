@@ -7,7 +7,8 @@
 <article name="Why nginx doesn't handle chunked encoding
                responses from my backend properly?"
          link="/en/docs/faq/chunked_encoding_from_backend.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 <section>
 

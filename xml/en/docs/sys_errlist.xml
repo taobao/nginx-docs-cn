@@ -10,7 +10,8 @@
                 use &lsquo;strerror&rsquo; or &lsquo;strerror_r&rsquo;
                 instead&nbsp;&rdquo;"
          link="/en/docs/sys_errlist.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 
 <section>

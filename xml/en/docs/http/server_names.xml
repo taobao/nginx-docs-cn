@@ -8,6 +8,7 @@
 <article name="Server names"
          link="/en/docs/http/server_names.html"
          lang="en"
+         rev="1"
          author="Igor Sysoev"
          editor="Brian Mercer">
 

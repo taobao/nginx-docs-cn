@@ -8,7 +8,8 @@
 
 <article name="Setting up development environment with nginx on Amazon EC2"
          link="/en/docs/howto_setup_development_environment_on_ec2.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 <section>
 

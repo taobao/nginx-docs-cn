@@ -8,6 +8,7 @@
 <article name="Configuring HTTPS servers"
          link="/en/docs/http/configuring_https_servers.html"
          lang="en"
+         rev="1"
          author="Igor Sysoev"
          editor="Brian Mercer">
 

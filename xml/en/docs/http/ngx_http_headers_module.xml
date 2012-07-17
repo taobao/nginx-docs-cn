@@ -9,7 +9,8 @@
 
 <module name="Module ngx_http_headers_module"
         link="/en/docs/http/ngx_http_headers_module.html"
-        lang="en">
+        lang="en"
+        rev="1">
 
 <section id="summary">
 

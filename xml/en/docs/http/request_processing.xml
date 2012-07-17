@@ -8,6 +8,7 @@
 <article name="How nginx processes a request"
          link="/en/docs/http/request_processing.html"
          lang="en"
+         rev="1"
          author="Igor Sysoev"
          editor="Brian Mercer">
 

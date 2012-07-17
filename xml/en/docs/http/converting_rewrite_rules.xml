@@ -7,7 +7,8 @@
 
 <article name="Converting rewrite rules"
          link="/en/docs/http/converting_rewrite_rules.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 
 <section name="A redirect to a main site">

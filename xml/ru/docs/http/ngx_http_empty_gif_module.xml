@@ -9,7 +9,8 @@
 
 <module name="Модуль ngx_http_empty_gif_module"
         link="/ru/docs/http/ngx_http_empty_gif_module.html"
-        lang="ru">
+        lang="ru"
+        rev="1">
 
 <section id="summary">
 
