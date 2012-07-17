@@ -9,6 +9,7 @@
             name        CDATA #REQUIRED
             link        CDATA #REQUIRED
             lang        CDATA #REQUIRED
+            rev         CDATA #IMPLIED
 >
 
 <!ELEMENT   section     (directive | para)+ >
