@@ -11,7 +11,7 @@
 >
 
 <!ELEMENT  para         (#PCDATA | link | links | br | list | note |
-                         i | b | nobr | table | url | literal | command |
+                         i | b | nobr | table | literal | command |
                          path | header | value | programlisting |
                          initial | development_version | stable_version |
                          registered | c-func)* >
@@ -34,7 +34,6 @@
 <!ELEMENT  literal      (#PCDATA | value)* >
 <!ELEMENT  header       (#PCDATA) >
 <!ELEMENT  initial      (#PCDATA) >
-<!ELEMENT  url          (#PCDATA) >
 <!ELEMENT  value        (#PCDATA) >
 <!ELEMENT  var          (#PCDATA) >
 
@@ -52,12 +51,12 @@
            compact      (yes | no) "yes"
 >
 
-<!ELEMENT  listitem     (#PCDATA | para | br | nobr | list | i | b | url |
+<!ELEMENT  listitem     (#PCDATA | para | br | nobr | list | i | b |
                          path | literal | value | var | programlisting |
                          link | registered)* >
 
 <!ELEMENT  note         (#PCDATA | para | br | list | i | b | link |
-                         nobr | table | url | literal | command | path |
+                         nobr | table | literal | command | path |
                          header | programlisting | initial | paypal |
                          development_version | stable_version )* >
 

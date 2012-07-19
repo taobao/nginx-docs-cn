@@ -140,12 +140,6 @@ X:stylesheet {
         !{@code} X:text { (} !{@text} X:text{)}
     }
 
-    X:template = "url[/*[@lang='he']]" {
-        <i><span class="ltr"> !!; </span></i>
-    }
-
-    X:template = "url" { <i> !!;</i> }
-
     X:template = "value" { <code><i> !!; </i></code> }
 
     X:template = "registered" { !!; <sup> X:text {&#174;} </sup> }
