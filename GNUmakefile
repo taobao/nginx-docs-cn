@@ -238,14 +238,16 @@ copy:
 	$(RSYNC) --delete $(foreach lang, $(LANGS), $(ZIP)/$(lang))	\
 		$(NGINX_ORG)/
 
-dev:	xslt/development.xslt sign
-dev:	NGINX=$(shell xsltproc xslt/development.xslt xml/versions.xml)
+dev:	xslt/version.xslt sign
+dev:	NGINX:=$(shell xsltproc xslt/version.xslt xml/versions.xml)
 
-stable:	xslt/stable.xslt sign
-stable:	NGINX=$(shell xsltproc xslt/stable.xslt xml/versions.xml)
+stable:	xslt/version.xslt sign
+stable:	NGINX:=$(shell xsltproc --stringparam VERSION stable		\
+	xslt/version.xslt xml/versions.xml)
 
-legacy:	xslt/legacy_stable.xslt sign
-legacy:	NGINX=$(shell xsltproc xslt/legacy_stable.xslt xml/versions.xml)
+legacy:	xslt/version.xslt sign
+legacy:	NGINX:=$(shell xsltproc --stringparam VERSION legacy_stable	\
+	xslt/version.xslt xml/versions.xml)
 
 any:	sign
 any:	NGINX=0.7.69
