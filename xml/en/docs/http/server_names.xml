@@ -1,8 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article name="Server names"
          link="/en/docs/http/server_names.html"
          lang="en"
+         rev="1"
          author="Igor Sysoev"
          editor="Brian Mercer">
 
@@ -52,11 +58,13 @@ exact names;
 </listitem>
 
 <listitem>
-wildcard names starting with an asterisk: <url>*.example.org</url>;
+wildcard names starting with an asterisk: <url>*.example.org</url>
+(longest first);
 </listitem>
 
 <listitem>
-wildcard names ending with an asterisk: <url>mail.*</url>;
+wildcard names ending with an asterisk: <url>mail.*</url>
+(longest first);
 </listitem>
 
 <listitem>

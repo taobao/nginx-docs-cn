@@ -1,8 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../dtd/article.dtd">
 
 <article name="nginx"
          link="/ru/"
-         lang="ru">
+         lang="ru"
+         rev="1">
 
 
 <section>
@@ -27,7 +33,7 @@ nginx [engine x]&mdash;это HTTP-сервер и обратный прокси
 </para>
 
 <para>
-Исходные тексты распространяются под
+Исходные тексты и документация распространяются под
 <link url="../LICENSE">BSD-подобной лицензией из 2 пунктов</link>.
 </para>
 

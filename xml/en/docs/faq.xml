@@ -1,8 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
 <article name="nginx faq"
          link="/en/docs/faq.html"
-         lang="en">
+         lang="en"
+         rev="2">
 
 
 <section>

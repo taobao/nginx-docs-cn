@@ -1,3 +1,7 @@
+<!--
+  Copyright (C) Nginx, Inc.
+  -->
+
 X:stylesheet {
 
 X:template ga () {

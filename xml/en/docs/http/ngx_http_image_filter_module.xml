@@ -1,10 +1,16 @@
 <?xml version="1.0"?>
 
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Module ngx_http_image_filter_module"
         link="/en/docs/http/ngx_http_image_filter_module.html"
-        lang="en">
+        lang="en"
+        rev="1">
 
 <section id="summary">
 

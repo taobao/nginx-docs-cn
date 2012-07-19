@@ -1,10 +1,16 @@
 <?xml version="1.0"?>
 
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE module SYSTEM "../../../dtd/module.dtd">
 
 <module name="Основная функциональность"
         link="/ru/docs/ngx_core_module.html"
-        lang="ru">
+        lang="ru"
+        rev="1">
 
 <section id="example" name="Пример конфигурации">
 

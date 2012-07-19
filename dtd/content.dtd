@@ -1,3 +1,8 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!ELEMENT  section      (para | list | book | download | security | note |
                          programlisting)* >
 <!ATTLIST  section
@@ -62,7 +67,7 @@
            width        CDATA #IMPLIED
 >
 <!ELEMENT  tr           (td+) >
-<!ELEMENT  td           (#PCDATA | literal | i)* >
+<!ELEMENT  td           (#PCDATA | literal | i | link)* >
 <!ATTLIST  td
            width        CDATA #IMPLIED
 >

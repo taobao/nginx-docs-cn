@@ -1,14 +1,21 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../dtd/article.dtd">
 
 <article name="nginx: download"
          link="/en/download.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 
 <section name="Development version">
 
 <download last="1" changes="CHANGES">
 
+<item ver="1.3.3" pgp="yes" win="yes" />
 <item ver="1.3.2" pgp="yes" win="yes" />
 <item ver="1.3.1" pgp="yes" win="yes" />
 <item ver="1.3.0" pgp="yes" win="yes" />
