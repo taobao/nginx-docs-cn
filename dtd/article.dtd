@@ -12,6 +12,7 @@
            author       CDATA #IMPLIED
            editor       CDATA #IMPLIED
            translator   CDATA #IMPLIED
+           toc          (yes | no) "yes"
 >
 
 <!ENTITY % content      SYSTEM  "content.dtd" >
