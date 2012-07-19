@@ -46,11 +46,11 @@ server {
 </listitem>
 
 <listitem>
-アスタリスクで始まるワイルドカード名: <url>*.example.org</url>
+アスタリスクで始まるワイルドカード名: <literal>*.example.org</literal>
 </listitem>
 
 <listitem>
-アスタリスクで終わるワイルドカード名: <url>mail.*</url>
+アスタリスクで終わるワイルドカード名: <literal>mail.*</literal>
 </listitem>
 
 <listitem>
@@ -68,7 +68,7 @@ server {
         name="ワイルドカード名">
 
 <para>
-ワイルドカード名にはそのサーバ名の最初か最後のみ、そしてドットに隣接したところのみにアスタリスクが含まれます。サーバ名 <literal>www.*.example.org</literal> や <literal>w*.example.org</literal> は無効です。しかし、これらのサーバ名は正規表現を使用して、例えば  <literal>~^www\..+\.example\.org$</literal> や <literal>~^w.*\.example\.org$</literal> として指定することができます。アスタリスクは複数部分にマッチさせることができます。<literal>*.example.org</literal> は <url>www.example.org</url> だけでなく <url>www.sub.example.org</url> にもマッチします。
+ワイルドカード名にはそのサーバ名の最初か最後のみ、そしてドットに隣接したところのみにアスタリスクが含まれます。サーバ名 <literal>www.*.example.org</literal> や <literal>w*.example.org</literal> は無効です。しかし、これらのサーバ名は正規表現を使用して、例えば  <literal>~^www\..+\.example\.org$</literal> や <literal>~^w.*\.example\.org$</literal> として指定することができます。アスタリスクは複数部分にマッチさせることができます。<literal>*.example.org</literal> は <literal>www.example.org</literal> だけでなく <literal>www.sub.example.org</literal> にもマッチします。
 </para>
 
 <para>
@@ -245,7 +245,7 @@ server {
 </para>
 
 <para>
-これらの理由から、可能な場合は完全一致名を利用するのがよいでしょう。例えば、もっとも頻繁にリクエストされるサーバ名が <url>example.org</url> と <url>www.example.org</url> だとすると、これらを明示的に定義するとより効率的です:
+これらの理由から、可能な場合は完全一致名を利用するのがよいでしょう。例えば、もっとも頻繁にリクエストされるサーバ名が <literal>example.org</literal> と <literal>www.example.org</literal> だとすると、これらを明示的に定義するとより効率的です:
 
 <programlisting>
 server {
@@ -331,15 +331,15 @@ or server_names_hash_bucket_size: 32
 </listitem>
 
 <listitem>
-ワイルドカードの形式 <url>example.*</url> のサポートは 0.6.0 からです。
+ワイルドカードの形式 <literal>example.*</literal> のサポートは 0.6.0 からです。
 </listitem>
 
 <listitem>
-特別な形式 <url>.example.org</url> のサポートは 0.3.18 からです。
+特別な形式 <literal>.example.org</literal> のサポートは 0.3.18 からです。
 </listitem>
 
 <listitem>
-ワイルドカードの形式 <url>*.example.org</url> のサポートは 0.1.13 からです。
+ワイルドカードの形式 <literal>*.example.org</literal> のサポートは 0.1.13 からです。
 </listitem>
 
 </list>

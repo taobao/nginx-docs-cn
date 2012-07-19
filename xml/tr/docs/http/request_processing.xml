@@ -106,7 +106,7 @@ server {
 
 Bu yapılandırmada, nginx <literal>server</literal> bloklarında yer alan <literal>listen</literal> yönergelerini ilk olarak IP adresi ve port üzerinde test eder. Daha sonra, gelen taleplerin header bilgisinde yer alan &ldquo;Host&rdquo; datasını, IP ve port ile eşleşen <literal>server</literal> bloklarında yer alan <literal>server_name</literal> girdileri ile kontrol eder.
 
-Eğer sunucu bulunamazsa varsayılan sunucu tarafından işlenir. Örneğin, <url>www.example.com</url> için 192.168.1.1:80 adres ve portuna gelen bir talep, eğer bu adres ve port için <url>www.example.com</url> tanımlanmamışsa, 192.168.1.1:80&rsquo;e ait varsayılan sunucu tarafından işlenir.
+Eğer sunucu bulunamazsa varsayılan sunucu tarafından işlenir. Örneğin, <literal>www.example.com</literal> için 192.168.1.1:80 adres ve portuna gelen bir talep, eğer bu adres ve port için <literal>www.example.com</literal> tanımlanmamışsa, 192.168.1.1:80&rsquo;e ait varsayılan sunucu tarafından işlenir.
 </para>
 
 <para>

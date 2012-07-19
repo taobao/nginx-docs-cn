@@ -140,10 +140,10 @@ blocks that matched
 the IP address and port.
 If the server name is not found, the request will be processed by
 the default server.
-For example, a request for <url>www.example.com</url> received on
+For example, a request for <literal>www.example.com</literal> received on
 the 192.168.1.1:80 port will be handled by the default server
 of the 192.168.1.1:80 port, i.e., by the first server,
-since there is no <url>www.example.com</url> defined for this port.
+since there is no <literal>www.example.com</literal> defined for this port.
 </para>
 
 <para>
