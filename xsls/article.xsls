@@ -34,24 +34,7 @@ X:include href = "versions.xslt";
 X:template = "/article | /module" {
     <html>
 
-    <head>
-
-    <title> !{@name} </title>
-
-    !style (lang="@lang")
-
-    !ga ()
-
-    </head>
-
-    !body (lang="@lang")
-
-    </html>
-}
-
-
-X:template = "/article[@lang='he'] | /module[@lang='he']" {
-    <html dir="rtl">
+    X:if "@lang = 'he'" { X:attribute "dir" { X:text{rtl} } }
 
     <head>
 
