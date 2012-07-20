@@ -23,10 +23,10 @@ endef
 define	XSLT
 	xmllint --noout --valid $2
 	xsltproc -o $3							\
-		$(shell f=`echo $2 | sed 's;^xml/[^/]*/;xml/en/;'`;	\
-		[ -f $$f ] && echo --stringparam ORIGIN "../$$f")	\
-		$(shell echo $4						\
-		| sed -e "s/\([^= ]*\)=\([^= ]*\)/--param \1 \"'\2'\"/g") \
+		$(shell f=`echo $2 | sed 's,^xml/,,;s,[^/]*/,en/,'`;	\
+		[ -f xml/$$f ] && echo --stringparam ORIGIN "$$f")	\
+		$(shell p="$4"; [ -n "$$p" ] &&				\
+		echo --stringparam $${p%%=*} $${p#*=})			\
 		$1 $2
 endef
 

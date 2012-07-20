@@ -39,8 +39,10 @@ X:template body (lang) {
 
     <tr><td valign="top">
 
-        X:if "$ORIGIN and document($ORIGIN)/*/@rev and
-              (not(@rev) or @rev != document($ORIGIN)/*/@rev)" {
+        X:if "$ORIGIN and document(concat($XML, '/', $ORIGIN))/*/@rev and
+              (not(@rev) or
+              @rev != document(concat($XML, '/', $ORIGIN))/*/@rev)"
+        {
             <span>
 
             X:if "@lang = 'he'" { X:attribute "class" { X:text{ltr} } }
