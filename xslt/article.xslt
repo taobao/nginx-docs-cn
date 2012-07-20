@@ -9,6 +9,8 @@
 
    <xsl:param name="YEAR"/>
 
+   <xsl:param name="ORIGIN"/>
+
    <xsl:variable select="/article/@link | /module/@link" name="LINK"/>
 
    <xsl:variable select="/article/@lang | /module/@lang" name="LANG"/>

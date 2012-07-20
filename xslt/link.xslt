@@ -7,6 +7,13 @@
       </img>
    </xsl:template>
 
+   <xsl:template match="origin">
+
+      <a href="{document($ORIGIN)/*/@link}">
+         <xsl:apply-templates/>
+      </a>
+   </xsl:template>
+
    <xsl:template match="link[@url]">
 
       <a href="{@url}">
