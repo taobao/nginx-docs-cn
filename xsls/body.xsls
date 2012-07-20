@@ -55,12 +55,14 @@ X:template body (lang) {
 
         !!;
 
-        X:if "@author" {
+        X:if "@author or @editor or @translator" {
             <table width="100%"><tr><td align="right">
 
-            !{document(concat($XML, '/i18n.xml'))
-                       /i18n/text[@lang = $lang]/item[@id='author']}
-            X:text { } !{@author} <br/>
+            X:if "@author" {
+                !{document(concat($XML, '/i18n.xml'))
+                           /i18n/text[@lang = $lang]/item[@id='author']}
+                X:text { } !{@author} <br/>
+            }
 
             X:if "@editor" {
                 !{document(concat($XML, '/i18n.xml'))
