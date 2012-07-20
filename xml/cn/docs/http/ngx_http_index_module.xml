@@ -7,7 +7,9 @@
 
 <module name="Module ngx_http_index_module"
         link="/en/docs/http/ngx_http_index_module.html"
-        lang="cn">
+        lang="cn"
+        translator="litianqing"
+        >
 
 <section id="summary">
 
