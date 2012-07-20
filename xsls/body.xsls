@@ -39,6 +39,27 @@ X:template body (lang) {
 
     <tr><td valign="top">
 
+        X:if "$ORIGIN and document($ORIGIN)/*/@rev and
+              (not(@rev) or @rev != document($ORIGIN)/*/@rev)" {
+            <span>
+
+            X:if "@lang = 'he'" { X:attribute "class" { X:text{ltr} } }
+
+            <blockquote class="note">
+
+            X:if "document(concat($XML, '/i18n.xml'))
+                           /i18n/text[@lang = $lang]/item[@id='outdated']" {
+                !! "document(concat($XML, '/i18n.xml'))
+                             /i18n/text[@lang = $lang]/item[@id='outdated']";
+            } else {
+                !! "document(concat($XML, '/i18n.xml'))
+                             /i18n/text[@lang = 'en']/item[@id='outdated']";
+            }
+
+            </blockquote>
+            </span>
+        }
+
         X:if "@toc = 'yes' and section[@id and @name]" {
             <table width="100%"><tr><td align="{$INDEX_ALIGN}">
             X:for-each "section[@id and @name]" {

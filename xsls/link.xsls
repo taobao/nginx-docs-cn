@@ -7,6 +7,10 @@ X:stylesheet {
 
 X:template = "img" { <img src="{@href}"> !!; </img> }
 
+X:template = "origin" {
+    <a href="{document($ORIGIN)/*/@link}"> !!; </a>
+}
+
 X:template = "link[@url]" {
     <a href="{@url}">
     X:if "count(node()) != 0" { !!; } else { !{@url} }
