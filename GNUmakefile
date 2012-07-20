@@ -38,84 +38,47 @@ define 	JPEGNORM
 endef
 
 
-ARTICLE_DEPS =								\
+COMMON_DEPS =								\
 		xml/menu.xml						\
 		xml/versions.xml					\
 		xml/i18n.xml						\
-		dtd/article.dtd						\
 		dtd/content.dtd						\
+		xslt/dirname.xslt					\
+		xslt/link.xslt						\
+		xslt/style.xslt						\
+		xslt/body.xslt						\
+		xslt/menu.xslt						\
+		xslt/ga.xslt						\
+		xslt/content.xslt					\
+
+ARTICLE_DEPS =								\
+		$(COMMON_DEPS)						\
+		dtd/article.dtd						\
 		dtd/module.dtd						\
 		xslt/article.xslt					\
-		xslt/dirname.xslt					\
-		xslt/link.xslt						\
-		xslt/style.xslt						\
-		xslt/body.xslt						\
-		xslt/menu.xslt						\
 		xslt/donate.xslt					\
-		xslt/ga.xslt						\
 		xslt/directive.xslt					\
-		xslt/content.xslt					\
-		xslt/versions.xslt
+		xslt/versions.xslt					\
 
 NEWS_DEPS =								\
-		xml/menu.xml						\
-		xml/versions.xml					\
-		xml/i18n.xml						\
+		$(COMMON_DEPS)						\
 		dtd/news.dtd						\
-		dtd/content.dtd						\
 		xslt/news.xslt						\
-		xslt/dirname.xslt					\
-		xslt/link.xslt						\
-		xslt/style.xslt						\
-		xslt/body.xslt						\
-		xslt/menu.xslt						\
-		xslt/ga.xslt						\
-		xslt/content.xslt
 
 DOWNLOAD_DEPS =								\
-		xml/menu.xml						\
-		xml/versions.xml					\
-		xml/i18n.xml						\
+		$(COMMON_DEPS)						\
 		dtd/article.dtd						\
-		dtd/content.dtd						\
 		xslt/download.xslt					\
-		xslt/dirname.xslt					\
-		xslt/link.xslt						\
-		xslt/style.xslt						\
-		xslt/body.xslt						\
-		xslt/menu.xslt						\
-		xslt/ga.xslt						\
-		xslt/content.xslt
 
 SECURITY_DEPS =								\
-		xml/menu.xml						\
-		xml/versions.xml					\
-		xml/i18n.xml						\
+		$(COMMON_DEPS)						\
 		dtd/article.dtd						\
-		dtd/content.dtd						\
 		xslt/security.xslt					\
-		xslt/dirname.xslt					\
-		xslt/link.xslt						\
-		xslt/style.xslt						\
-		xslt/body.xslt						\
-		xslt/menu.xslt						\
-		xslt/ga.xslt						\
-		xslt/content.xslt
 
 BOOK_DEPS =								\
-		xml/menu.xml						\
-		xml/versions.xml					\
-		xml/i18n.xml						\
+		$(COMMON_DEPS)						\
 		dtd/article.dtd						\
-		dtd/content.dtd						\
 		xslt/books.xslt						\
-		xslt/dirname.xslt					\
-		xslt/link.xslt						\
-		xslt/style.xslt						\
-		xslt/body.xslt						\
-		xslt/menu.xslt						\
-		xslt/ga.xslt						\
-		xslt/content.xslt
 
 LANGS =		en ru cn he ja tr
 
