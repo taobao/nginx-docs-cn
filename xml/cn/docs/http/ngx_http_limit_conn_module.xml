@@ -8,7 +8,8 @@
 
 <module name="ngx_http_limit_conn_module 模块"
         link="/cn/docs/http/ngx_http_limit_conn_module.html"
-        lang="cn">
+        lang="cn"
+        translator="G_will">
 
 <section id="summary">
 
@@ -17,7 +18,7 @@
 </para>
 
 <para>
-并不是所有的连接都会被模块计数；只有那些被处理的请求所在的连接才会被计数，也就是那些头信息已被完全读入的请求。
+并不是所有的连接都会被模块计数；只有那些正在被处理的请求（这些请求的头信息已被完全读入）所在的连接才会被计数。
 </para>
 
 </section>
@@ -55,9 +56,9 @@ http {
 <context>location</context>
 
 <para>
-指定一块已经设定的共享内存空间，以及给定键值的最大连接数。当连接数超过最大连接数时，服务器将会返回
+指定一块已经设定的共享内存空间，以及每个给定键值的最大连接数。当连接数超过最大连接数时，服务器将会返回
 <http-status code="503" text="Service Temporarily Unavailable"/>
-错误。比如，如下指令配置
+错误。比如，如下配置
 <example>
 limit_conn_zone $binary_remote_addr zone=addr:10m;
 
@@ -104,7 +105,7 @@ server {
 <appeared-in>0.8.18</appeared-in>
 
 <para>
-设定当连接数超过设定的最大连接数，服务器限制连接时的日志等级。
+指定当连接数超过设定的最大连接数，服务器限制连接时的日志等级。
 </para>
 
 </directive>
@@ -123,7 +124,7 @@ server {
 <example>
 limit_conn_zone $binary_remote_addr zone=addr:10m;
 </example>
-这里，设置客户端的IP地址作为键。注意，这里使用的是<var>$binary_remote_addr</var>变量，而不是<var>$remote_addr</var>变量。<var>$remote_addr</var>变量的长度为7字节到15字节不等，而存储状态在32位平台中占用32字节或64字节，在64位平台中占用64字节。而<var>$binary_remote_addr</var>变量的长度是固定的4字节，存储状态在32位平台中占用32字节或64字节，在64位平台中占用64字节。一兆字节的共享内存空间可以保存3.2万个32 位的状态，1.6万个64位的状态。如果共享内存空间被耗尽，服务器将会对后续所有的请求返回
+这里，设置客户端的IP地址作为键。注意，这里使用的是<var>$binary_remote_addr</var>变量，而不是<var>$remote_addr</var>变量。<var>$remote_addr</var>变量的长度为7字节到15字节不等，而存储状态在32位平台中占用32字节或64字节，在64位平台中占用64字节。而<var>$binary_remote_addr</var>变量的长度是固定的4字节，存储状态在32位平台中占用32字节或64字节，在64位平台中占用64字节。一兆字节的共享内存空间可以保存3.2万个32位的状态，1.6万个64位的状态。如果共享内存空间被耗尽，服务器将会对后续所有的请求返回
 <http-status code="503" text="Service Temporarily Unavailable"/>
 错误。
 </para>
