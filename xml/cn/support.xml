@@ -1,0 +1,129 @@
+<!DOCTYPE article SYSTEM "../../dtd/article.dtd">
+
+<article name="nginx: support"
+         link="/en/support.html"
+         lang="en">
+
+
+<section name="Wiki">
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link url="http://wiki.nginx.org">wiki.nginx.org</link>
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="Mailing Lists">
+
+<para>
+You can
+<link url="http://nginx.org/mailman/listinfo">
+browse</link>
+the mailing lists.
+To post to a mailing list, you must first
+<link url="http://nginx.org/mailman/listinfo">
+subscribe</link>
+an e-mail address that you will use for posting.
+</para>
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link url="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</link>
+list (English),
+<link url="http://nginx.org/pipermail/nginx/">
+archive</link>,
+<link url="http://dir.gmane.org/gmane.comp.web.nginx.english">
+Gmane archive</link>,
+<link url="http://marc.info/?l=nginx">
+MARC archive</link>
+</listitem>
+
+<listitem>
+<link url="http://nginx.org/mailman/listinfo/nginx-ru">nginx-ru@nginx.org</link>
+list (Russian),
+<link url="http://nginx.org/pipermail/nginx-ru/">
+archive</link>,
+<link url="http://dir.gmane.org/gmane.comp.web.nginx.russian">
+Gmane archive</link>
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="Forums">
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link url="http://forum.nginx.org">forum.nginx.org</link>
+(with mailing lists integration)
+</listitem>
+
+<listitem>
+<link url="http://www.ruby-forum.com/forum/nginx">
+Ruby Forum</link>
+(with
+<link url="http://nginx.org/mailman/listinfo/nginx">nginx@nginx.org</link>
+mailing list integration)
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="Development">
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link url="http://nginx.org/mailman/listinfo/nginx-devel">nginx-devel@nginx.org</link>
+mailing list for developers (English),
+<link url="http://nginx.org/pipermail/nginx-devel/">
+archive</link>
+</listitem>
+
+<listitem>
+<link url="http://trac.nginx.org/nginx/browser">
+Browse a Source Code</link>
+</listitem>
+
+<listitem>
+<link url="http://trac.nginx.org/nginx/report">
+Report a Bug</link>
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="Commercial Support">
+
+<para>
+If you're looking for a commercial support option
+please refer to
+<link url="http://nginx.com/support.html">
+the support page on our nginx.com web site.</link>
+</para>
+
+</section>
+
+
+</article>

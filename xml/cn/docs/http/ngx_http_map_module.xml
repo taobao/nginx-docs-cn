@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_map_module"
+        link="/en/docs/http/ngx_http_map_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_map_module</literal> module creates variables
+whose values depend on values of other variables.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+map $http_host $name {
+    hostnames;
+
+    default       0;
+
+    example.com   1;
+    *.example.com 1;
+    example.org   2;
+    *.example.org 2;
+    .example.net  3;
+    wap.*         4;
+}
+
+map $http_user_agent $mobile {
+    default       0;
+    "~Opera Mini" 1;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="map">
+<syntax block="yes">
+    <value>string</value>
+    <value>$variable</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+Creates a new variable whose value
+depends on values of one or more of the source variables
+specified in the first parameter.
+<note>
+Before version 0.9.0 only a single variable could be
+specified in the first parameter.
+</note>
+</para>
+
+<para>
+Parameters inside the <literal>map</literal> block specify a mapping
+between source and resulting values.
+</para>
+
+<para>
+Source values are specified as strings or regular expressions (0.9.6).
+</para>
+
+<para>
+A regular expression should either start from the “<literal>~</literal>”
+symbol for a case-sensitive matching, or from the “<literal>~*</literal>”
+symbols (1.0.4) for case-insensitive matching.
+A regular expression can contain named and positional captures
+that can later be used in other directives along with the
+resulting variable.
+</para>
+
+<para>
+If a source value matches one of the names of special parameters
+(see below), it should be prefixed with the “<literal>\</literal>” symbol.
+</para>
+
+<para>
+The resulting value can be a string
+or another variable (0.9.0).
+</para>
+
+<para>
+The directive also supports three special parameters:
+<list type="tag">
+<tag-name><literal>default</literal> <value>value</value></tag-name>
+<tag-desc>
+sets the resulting value if the source value matches none
+of the specified variants.
+When <literal>default</literal> is not specified, the default
+resulting value will be an empty string.
+</tag-desc>
+
+<tag-name><literal>hostnames</literal></tag-name>
+<tag-desc>
+allows to specify hostnames with a prefix or suffix mask, as source
+values, for example,
+<example>
+*.example.com 1;
+example.*     1;
+</example>
+The following two records
+<example>
+example.com   1;
+*.example.com 1;
+</example>
+can be combined:
+<example>
+.example.com  1;
+</example>
+This parameter should be specified before the list of values.
+</tag-desc>
+
+<tag-name><literal>include</literal> <value>file</value></tag-name>
+<tag-desc>
+includes a file with values.
+There can be several inclusions.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+If the source value matches more than one of the specified variants,
+e.g. both mask and regular expression match, the first matching
+variant will be choosen, in the following order of precedence:
+<list type="enum">
+
+<listitem>
+string value without a mask
+</listitem>
+
+<listitem>
+longest string value with a prefix mask,
+e.g. “<literal>*.example.com</literal>”
+</listitem>
+
+<listitem>
+longest string value with a suffix mask,
+e.g. “<literal>mail.*</literal>”
+</listitem>
+
+<listitem>
+first matching regular expression
+(in order of appearance in a configuration file)
+</listitem>
+
+<listitem>
+default value
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="map_hash_bucket_size">
+<syntax><value>size</value></syntax>
+<default>32|64|128</default>
+<context>http</context>
+
+<para>
+Sets the bucket size for the <link id="map"/> variables hash tables.
+Default value depends on the size of the processor's cache line.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
+<directive name="map_hash_max_size">
+<syntax><value>size</value></syntax>
+<default>2048</default>
+<context>http</context>
+
+<para>
+Sets the maximum <value>size</value> of the <link id="map"/> variables
+hash tables.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+</section>
+
+</module>

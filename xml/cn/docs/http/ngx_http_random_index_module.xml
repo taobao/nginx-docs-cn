@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_random_index_module"
+        link="/en/docs/http/ngx_http_random_index_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The module <literal>ngx_http_random_index_module</literal> picks a random
+file in a directory as an index file.
+It works before the
+<link doc="ngx_http_index_module.xml">ngx_http_index_module</link>
+module.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_random_index_module</literal>
+configuration parameter.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location / {
+    random_index on;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="random_index">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>location</context>
+
+<para>
+Enables or disables module processing in a surrounding location.
+</para>
+
+</directive>
+
+</section>
+
+</module>

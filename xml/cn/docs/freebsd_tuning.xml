@@ -1,0 +1,366 @@
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="Tuning FreeBSD for the highload"
+         link="/en/docs/tuning_freebsd.html"
+         lang="en">
+
+
+<section name="Syncache and syncookies">
+
+<para>
+We look at how various kernel settings affect ability of the kernel
+to process requests. Let&rsquo;s start with TCP/IP connection establishment.
+</para>
+
+<para>
+[ syncache, syncookies ]
+</para>
+
+</section>
+
+
+<section id="listen_queues"
+        name="Listen queues">
+
+<para>
+After the connection has been established it is placed in the listen queue
+of the listen socket.
+To see the current listen queues state, you may run the command
+“<command>netstat -Lan</command>”:
+
+<programlisting>
+Current listen queue sizes (qlen/incqlen/maxqlen)
+Proto Listen         Local Address
+tcp4  <b>10</b>/0/128       *.80
+tcp4  0/0/128        *.22
+</programlisting>
+
+This is a normal case: the listen queue of the port *:80 contains
+just 10 unaccepted connections.
+If the web server is not able to handle the load, you may see
+something like this:
+
+<programlisting>
+Current listen queue sizes (qlen/incqlen/maxqlen)
+Proto Listen         Local Address
+tcp4  <b>192/</b>0/<b>128</b>      *.80
+tcp4  0/0/128        *.22
+</programlisting>
+
+Here are 192 unaccepted connections and most likely new coming connections
+are discarding. Although the limit is 128 connections, FreeBSD allows
+to receive 1.5 times connections than the limit before it starts to discard
+the new connections. You may increase the limit using
+
+<programlisting>
+sysctl kern.ipc.somaxconn=4096
+</programlisting>
+
+However, note that the queue is only a damper to quench bursts.
+If it is always overflowed, this means that you need to improve the web server,
+but not to continue to increase the limit.
+You may also change the listen queue maximum size in nginx configuration:
+
+<programlisting>
+listen  80  backlog=1024;
+</programlisting>
+
+However, you may not set it more than the current
+<path>kern.ipc.somaxconn</path> value.
+By default nginx uses the maximum value of FreeBSD kernel.
+</para>
+
+<para>
+<programlisting>
+</programlisting>
+</para>
+
+<para>
+<programlisting>
+</programlisting>
+</para>
+
+</section>
+
+
+<section id="sockets_and_files"
+        name="Sockets and files">
+
+<para>
+[ sockets, files ]
+</para>
+
+</section>
+
+
+<section id="socket_buffers"
+        name="Socket buffers">
+
+<para>
+When a client sends a data, the data first is received by the kernel
+which places the data in the socket receiving buffer.
+Then an application such as the web server
+may call <c-func>recv</c-func> or <c-func>read</c-func> system calls
+to get the data from the buffer.
+When the application wants to send a data, it calls
+<c-func>send</c-func> or <c-func>write</c-func>
+system calls to place the data in the socket sending buffer.
+Then the kernel manages to send the data from the buffer to the client.
+In modern FreeBSD versions the default sizes of the socket receiving
+and sending buffers are respectively 64K and 32K.
+You may change them on the fly using the sysctls
+<path>net.inet.tcp.recvspace</path> and
+<path>net.inet.tcp.sendspace</path>.
+Of course the bigger buffer sizes may increase throughput,
+because connections may use bigger TCP sliding windows sizes.
+And on the Internet you may see recomendations to increase
+the buffer sizes to one or even several megabytes.
+However, such large buffer sizes are suitable for local networks
+or for networks under your control.
+Since on the Internet a slow modem client may ask a large file
+and then it will download the file during several minutes if not hours.
+All this time the megabyte buffer will be bound to the slow client,
+although we may devote just several kilobytes to it.
+</para>
+
+<para>
+There is one more advantage of the large sending buffers for
+the web servers such as Apache which use the blocking I/O system calls.
+The server may place a whole large response in the sending buffer, then may
+close the connection, and let the kernel to send the response to a slow client,
+while the server is ready to serve other requests.
+You should decide what is it better to bind to a client in your case:
+a tens megabytes Apache/mod_perl process
+or the hundreds kilbytes socket sending buffer.
+Note that nginx uses non-blocking I/O system calls
+and devotes just tens kilobytes to connections,
+therefore it does not require the large buffer sizes.
+</para>
+
+<para>
+[ dynamic buffers ]
+</para>
+
+</section>
+
+
+<section id="mbufs"
+        name="mbufs, mbuf clusters, etc.">
+
+<para>
+Inside the kernel the buffers are stored in the form of chains of
+memory chunks linked using the <i>mbuf</i> structures.
+The mbuf size is 256 bytes and it can be used to store a small amount
+of data, for example, TCP/IP header. However, the mbufs point mostly
+to other data stored in the <i>mbuf clusters</i> or <i>jumbo clusters</i>,
+and in this kind they are used as the chain links only.
+The mbuf cluster size is 2K.
+The jumbo cluster size can be equal to a CPU page size (4K for i386 and amd64),
+9K, or 16K.
+The 9K and 16K jumbo clusters are used mainly in local networks with Ethernet
+frames larger than usual 1500 bytes, and they are beyond the scope of
+this article.
+The page size jumbo clusters are usually used for sending only,
+while the mbuf clusters are used for both sending and receiving.
+
+To see the current usage of the mbufs and clusters and their limits,
+you may run the command <nobr>“<command>netstat -m</command>”.</nobr>
+Here is a sample from FreeBSD 7.2/amd64 with the default settings:
+
+<programlisting>
+1477/<b>3773/5250 mbufs</b> in use (current/cache/total)
+771/2203/<b>2974/25600 mbuf clusters</b> in use (current/cache/total/max)
+771/1969 mbuf+clusters out of packet secondary zone in use
+   (current/cache)
+296/863/<b>1159/12800 4k (page size) jumbo clusters</b> in use
+   (current/cache/total/max)
+0/0/0/6400 9k jumbo clusters in use (current/cache/total/max)
+0/0/0/3200 16k jumbo clusters in use (current/cache/total/max)
+3095K/8801K/11896K bytes allocated to network(current/cache/total)
+0/0/0 requests for mbufs denied (mbufs/clusters/mbuf+clusters)
+0/0/0 requests for jumbo clusters denied (4k/9k/16k)
+0/0/0 sfbufs in use (current/peak/max)
+0 requests for sfbufs denied
+0 requests for sfbufs delayed
+523590 requests for I/O initiated by sendfile
+0 calls to protocol drain routines
+</programlisting>
+
+There are 12800 page size jumbo clusters,
+therefore they can store only 50M of data.
+If you set the <path>net.inet.tcp.sendspace</path> to 1M,
+then merely 50 slow clients will take all jumbo clusters
+requesting large files.
+</para>
+
+<para>
+You may increase the clusters limits on the fly using:
+
+<programlisting>
+sysctl kern.ipc.nmbclusters=200000
+sysctl kern.ipc.nmbjumbop=100000
+</programlisting>
+
+The former command increases the mbuf clusters limit
+and the latter increases page size jumbo clusters limit.
+Note that all allocated mbufs clusters will take about 440M physical memory:
+(200000 &times; (2048 + 256)) because each mbuf cluster requires also the mbuf.
+All allocated page size jumbo clusters will take yet about 415M physical memory:
+(100000 &times; (4096 + 256)).
+And together they may take 845M.
+
+<note>
+The page size jumbo clusters have been introduced in FreeBSD 7.0.
+In earlier versions you should tune only 2K mbuf clusters.
+Prior to FreeBSD 6.2, the <path>kern.ipc.nmbclusters</path> value can be
+set only on the boot time via loader tunnable.
+</note>
+</para>
+
+<para>
+On the amd64 architecture FreeBSD kernel can use for sockets buffers
+almost all physical memory,
+while on the i386 architecture no more than 2G memory can be used,
+regardless of the available physical memory.
+We will discuss the i386 specific tunning later.
+</para>
+
+<para>
+There is way not to use the jumbo clusters while serving static files:
+the <i>sendfile()</i> system call.
+The sendfile allows to send a file or its part to a socket directly
+without reading the parts in an application buffer.
+It creates the mbufs chain where the mufs point to the file pages that are
+already present in FreeBSD cache memory, and passes the chain to
+the TCP/IP stack.
+Thus, sendfile decreases both CPU usage by omitting two memory copy operations,
+and memory usage by using the cached file pages.
+</para>
+
+<para>
+And again, the amd64 sendfile implementation is the best:
+the zeros in the <nobr>“<literal>netstat -m</literal>”</nobr> output
+<programlisting>
+...
+<b>0/0/0</b> sfbufs in use (current/peak/max)
+...
+</programlisting>
+mean that there is no <i>sfbufs</i> limit,
+while on i386 architecture you should to tune them.
+</para>
+
+<!--
+
+<para>
+
+<programlisting>
+vm.pmap.pg_ps_enabled=1
+
+vm.kmem_size=3G
+
+net.inet.tcp.tcbhashsize=32768
+
+net.inet.tcp.hostcache.cachelimit=40960
+net.inet.tcp.hostcache.hashsize=4096
+net.inet.tcp.hostcache.bucketlimit=10
+
+net.inet.tcp.syncache.hashsize=1024
+net.inet.tcp.syncache.bucketlimit=100
+</programlisting>
+
+<programlisting>
+
+net.inet.tcp.syncookies=0
+net.inet.tcp.rfc1323=0
+net.inet.tcp.sack.enable=1
+net.inet.tcp.fast_finwait2_recycle=1
+
+net.inet.tcp.rfc3390=0
+net.inet.tcp.slowstart_flightsize=2
+
+net.inet.tcp.recvspace=8192
+net.inet.tcp.recvbuf_auto=0
+
+net.inet.tcp.sendspace=16384
+net.inet.tcp.sendbuf_auto=1
+net.inet.tcp.sendbuf_inc=8192
+net.inet.tcp.sendbuf_max=131072
+
+# 797M
+kern.ipc.nmbjumbop=192000
+# 504M
+kern.ipc.nmbclusters=229376
+# 334M
+kern.ipc.maxsockets=204800
+# 8M
+net.inet.tcp.maxtcptw=163840
+# 24M
+kern.maxfiles=204800
+</programlisting>
+
+</para>
+
+<para>
+
+<programlisting>
+sysctl net.isr.direct=0
+</programlisting>
+
+<programlisting>
+sysctl net.inet.ip.intr_queue_maxlen=2048
+</programlisting>
+
+</para>
+
+-->
+
+</section>
+
+
+<section id="proxying"
+        name="Proxying">
+
+
+<programlisting>
+net.inet.ip.portrange.randomized=0
+net.inet.ip.portrange.first=1024
+net.inet.ip.portrange.last=65535
+</programlisting>
+
+</section>
+
+
+<section id="finalizing_connection"
+        name="Finalizing connection">
+
+<programlisting>
+net.inet.tcp.fast_finwait2_recycle=1
+</programlisting>
+
+</section>
+
+
+<section id="i386_specific_tuning"
+        name="i386 specific tuning">
+
+<para>
+[ KVA, KVM, nsfbufs ]
+</para>
+
+</section>
+
+
+<section id="minor_optmizations"
+        name="Minor optimizations">
+
+<para>
+
+<programlisting>
+sysctl kern.random.sys.harvest.ethernet=0
+</programlisting>
+
+</para>
+
+</section>
+
+</article>

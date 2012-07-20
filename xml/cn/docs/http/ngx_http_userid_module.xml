@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_userid_module"
+        link="/en/docs/http/ngx_http_userid_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_userid_module</literal> module sets cookies
+suitable for client identification.
+Received and set cookies can be logged using the embedded variables
+<var>$uid_got</var> and <var>$uid_set</var>.
+This module is compatible with the
+<link url="http://www.lexa.ru/programs/mod-uid-eng.html">mod_uid</link>
+module for Apache.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+userid         on;
+userid_name    uid;
+userid_domain  example.com;
+userid_path    /;
+userid_expires 365d;
+userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="userid">
+<syntax>
+    <literal>on</literal> |
+    <literal>v1</literal> |
+    <literal>log</literal> |
+    <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Allows or prohibits to set cookies and log the received cookies:
+<list type="tag">
+
+<tag-name><literal>on</literal></tag-name>
+<tag-desc>
+allows to set version 2 cookies
+and log the received cookies;
+</tag-desc>
+
+<tag-name><literal>v1</literal></tag-name>
+<tag-desc>
+allows to set version 1 cookies
+and log the received cookies;
+</tag-desc>
+
+<tag-name><literal>log</literal></tag-name>
+<tag-desc>
+prohibits to set cookies
+but allows to log the received cookies;
+</tag-desc>
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+prohibits to set cookies and log the received cookies.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="userid_domain">
+<syntax><value>name</value> | <literal>none</literal></syntax>
+<default>none</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Defines a domain for which the cookie is set.
+The parameter <literal>none</literal> disables setting a domain for a cookie.
+</para>
+
+</directive>
+
+
+<directive name="userid_expires">
+<syntax><value>time</value> | <literal>max</literal></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a time during which a browser should keep the cookie.
+The parameter <literal>max</literal> sets the time to
+“<literal>31 Dec 2037 23:55:55 GMT</literal>”.
+This is the maximum time understood by old browsers.
+</para>
+
+</directive>
+
+
+<directive name="userid_name">
+<syntax><value>name</value></syntax>
+<default>uid</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a cookie name.
+</para>
+
+</directive>
+
+
+<directive name="userid_p3p">
+<syntax><value>string</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a value for the <header>P3P</header> header field that will be
+sent along with a cookie.
+</para>
+
+</directive>
+
+
+<directive name="userid_path">
+<syntax><value>path</value></syntax>
+<default>/</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Defines a path for which the cookie is set.
+</para>
+
+</directive>
+
+
+<directive name="userid_service">
+<syntax><value>number</value></syntax>
+<default>IP address of the server</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Identifies the service that set a cookie.
+For version 1 cookies the default value is zero.
+For version 2 cookies the default value is an IP address of the server.
+</para>
+
+</directive>
+
+</section>
+
+</module>

@@ -1,0 +1,104 @@
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="Connection processing methods"
+         link="/en/docs/events.html"
+         lang="en">
+
+<section>
+
+<para>
+nginx supports a variety of connection processing methods.
+The availability of a particular method depends on the platform used.
+On platforms that support several methods nginx will normally
+select the most efficient method automatically.
+However, if needed, a connection processing method can be selected
+explicitly with the
+<link doc="ngx_core_module.xml" id="use"/> directive.
+</para>
+
+<para>
+The following connection processing methods are supported:
+<list type="bullet">
+
+<listitem>
+<para>
+<literal>select</literal>&mdash;standard method.
+The supporting module is built automatically on platforms that lack
+more efficient methods.
+The <literal>--with-select_module</literal> and
+<literal>--without-select_module</literal> configuration parameters
+can be used to forcibly enable or disable the build of this module.
+</para>
+</listitem>
+
+<listitem>
+<para>
+<literal>poll</literal>&mdash;standard method.
+The supporting module is built automatically on platforms that lack
+more efficient methods.
+The <literal>--with-poll_module</literal> and
+<literal>--without-poll_module</literal> configuration parameters
+can be used to forcibly enable or disable the build of this module.
+</para>
+</listitem>
+
+<listitem>
+<para>
+<literal>kqueue</literal>&mdash;efficient method used on
+FreeBSD 4.1+, OpenBSD 2.9+, NetBSD 2.0, and Mac OS X.
+</para>
+</listitem>
+
+<listitem>
+<para>
+<literal>epoll</literal>&mdash;efficient method used on
+Linux 2.6+.
+<note>
+Some older distributions like SuSE 8.2 provide patches
+that add epoll support to 2.4 kernels.
+</note>
+</para>
+</listitem>
+
+<listitem>
+<para>
+<literal>rtsig</literal>&mdash;real time signals, efficient method
+used on Linux 2.2.19+.
+By default,
+the system-wide event queue is limited by 1024 signals.
+On loaded servers it may become necessary to increase this limit
+by changing the <path>/proc/sys/kernel/rtsig-max</path> kernel parameter.
+However, in Linux 2.6.6-mm2 this parameter is gone, and each process
+now has its own event queue.
+The size of each queue is limited by <literal>RLIMIT_SIGPENDING</literal>
+(see also <link doc="ngx_core_module.xml" id="worker_rlimit_sigpending"/>).
+</para>
+
+<para>
+On queue overflow, nginx discards the queue and falls back to
+<literal>poll</literal> connection processing method until
+the situation gets back to normal.
+</para>
+</listitem>
+
+<listitem>
+<para>
+<literal>/dev/poll</literal>&mdash;efficient method used on
+Solaris 7 11/99+, HP/UX 11.22+ (eventport), IRIX 6.5.15+,
+and Tru64 UNIX 5.1A+.
+</para>
+</listitem>
+
+<listitem>
+<para>
+<literal>eventport</literal>&mdash;event ports, efficient method
+used on Solaris 10.
+</para>
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</article>

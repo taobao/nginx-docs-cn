@@ -1,0 +1,623 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../dtd/module.dtd">
+
+<module name="Core functionality"
+        link="/en/docs/ngx_core_module.html"
+        lang="en">
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+user www www;
+worker_processes 2;
+
+error_log /var/log/nginx-error.log info;
+
+events {
+    use kqueue;
+    worker_connections 2048;
+}
+
+...
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="accept_mutex">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>events</context>
+
+<para>
+If enabled,
+accepts of new connections by multiple worker processes will be serialized.
+Otherwise, all worker processes will be notified about new connections,
+and if volume of new connections is low, some of the worker processes
+may just waste system resources.
+<note>
+The use of <link doc="events.xml" id="rtsig"/>
+connection processing method
+requires <literal>accept_mutex</literal> to be enabled.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="accept_mutex_delay">
+<syntax><value>time</value></syntax>
+<default>500ms</default>
+<context>events</context>
+
+<para>
+If <link id="accept_mutex"/> is enabled, specifies the maximum time
+during which a worker process will try to restart accepting new
+connections if another worker process is already doing this
+currently.
+</para>
+
+</directive>
+
+
+<directive name="daemon">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>main</context>
+
+<para>
+Determines whether nginx should become a daemon.
+Mainly used during development.
+</para>
+
+</directive>
+
+
+<directive name="debug_connection">
+<syntax>
+    <value>address</value> |
+    <value>CIDR</value> |
+    <literal>unix:</literal></syntax>
+<default/>
+<context>events</context>
+
+<para>
+Enables debugging log for selected client connections.
+Other connections will use logging level set by the
+<link id="error_log"/> directive.
+Debugged connections are specified by IPv4 or IPv6 (1.3.0, 1.2.1)
+address or network.
+A connection may also be specified using a hostname, in which case the
+first IPv4 address corresponding to a name is used.
+For connections using UNIX-domain sockets (1.3.0, 1.2.1),
+debugging log is enabled by the “<literal>unix:</literal>” parameter.
+<example>
+events {
+    debug_connection 127.0.0.1;
+    debug_connection localhost;
+    debug_connection 192.0.2.0/24;
+    debug_connection ::1;
+    debug_connection 2001:0db8::/32;
+    debug_connection unix:;
+    ...
+}
+</example>
+<note>
+For this directive to work, nginx needs to
+be built with <literal>--with-debug</literal>.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="debug_points">
+<syntax><literal>abort</literal> | <literal>stop</literal></syntax>
+<default/>
+<context>main</context>
+
+<para>
+This directive is used for debugging.
+</para>
+
+<para>
+When internal error is detected, e.g. the leak of sockets on
+restart of working processes, enabling <literal>debug_points</literal>
+leads to a core file creation (<literal>abort</literal>)
+or stopping a process (<literal>stop</literal>) for further
+analysis using a system debugger.
+</para>
+
+</directive>
+
+
+<directive name="error_log">
+<syntax>
+<value>file</value> | <literal>stderr</literal>
+[<literal>debug</literal> |
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal> |
+<literal>crit</literal> |
+<literal>alert</literal> |
+<literal>emerg</literal>]</syntax>
+<default>logs/error.log error</default>
+<context>main</context>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Configures logging.
+</para>
+
+<para>
+The first parameter defines a file that will store the log.
+<!--
+If filename is not absolute, it is prefixed with the prefix path.
+-->
+The special value <literal>stderr</literal> selects the standard error file.
+</para>
+
+<para>
+The second parameter determines the level of logging.
+Log levels above are listed in the order of increasing severity.
+Setting a certain log level will cause all messages of
+the specified and more severe log levels to be logged.
+For example, the default level <literal>error</literal> will
+cause <literal>error</literal>, <literal>crit</literal>,
+<literal>alert</literal>, and <literal>emerg</literal> messages
+to be logged.
+If this parameter is omitted then <literal>error</literal> is used.
+<note>
+For <literal>debug</literal> logging to work, nginx needs to
+be built with <literal>--with-debug</literal>.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="env">
+<syntax><value>variable</value>[=<value>value</value>]</syntax>
+<default>TZ</default>
+<context>main</context>
+
+<para>
+Allows to limit a set of environment variables, change their values,
+or create new environment variables, for the following cases:
+<list type="bullet">
+
+<listitem>
+variable inheritance during a
+<link doc="control.xml" id="upgrade">live upgrade</link>
+of an executable file;
+</listitem>
+
+<listitem>
+use of variables by the module
+<link doc="http/ngx_http_perl_module.xml">ngx_http_perl_module</link>;
+</listitem>
+
+<listitem>
+use of variables by worker processes.
+Please bear in mind that controlling system libraries in this way
+is not always possible as it is not uncommon for libraries to check
+variables only during initialization, well before they can be set
+using this directive.
+An exception from this is an above mentioned
+<link doc="control.xml" id="upgrade">live upgrade</link>
+of an executable file.
+</listitem>
+
+</list>
+</para>
+
+<para>
+The TZ variable is always inherited and made available to the module
+<link doc="http/ngx_http_perl_module.xml">ngx_http_perl_module</link>,
+unless configured explicitly.
+</para>
+
+<para>
+Usage example:
+<example>
+env MALLOC_OPTIONS;
+env PERL5LIB=/data/site/modules;
+env OPENSSL_ALLOW_PROXY_CERTS=1;
+</example>
+</para>
+
+<para>
+<note>
+The NGINX environment variable is used internally by nginx
+and should not be set directly by the user.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="events">
+<syntax block="yes"/>
+<default/>
+<context>main</context>
+
+<para>
+Provides a configuration file context in which the directives that
+affect connection processing are specified.
+</para>
+
+</directive>
+
+
+<directive name="include">
+<syntax><value>file</value> | <value>mask</value></syntax>
+<default/>
+<context/>
+
+<para>
+Includes another <value>file</value>, or files matching the
+specified <value>mask</value>, into configuration.
+Included files should consist of
+syntactically correct directives and blocks.
+</para>
+
+<para>
+Usage example:
+<example>
+include mime.types;
+include vhosts/*.conf;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="lock_file">
+<syntax><value>file</value></syntax>
+<default>logs/nginx.lock</default>
+<context>main</context>
+
+<para>
+nginx uses the locking mechanism to implement <link id="accept_mutex"/>
+and serialize accesses to shared memory.
+On most systems the locks are implemented using atomic operations,
+and this directive is ignored.
+On other systems the “lock file” mechanism is used.
+This directive specifies a prefix for the names of lock files.
+</para>
+
+</directive>
+
+
+<directive name="master_process">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>main</context>
+
+<para>
+Determines whether worker processes are started.
+This directive is intended for nginx developers.
+</para>
+
+</directive>
+
+
+<directive name="multi_accept">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>events</context>
+
+<para>
+If disabled, a worker process
+will accept one new connection at a time.
+Otherwise, a worker process
+will accept all new connections at a time.
+<note>
+The directive is ignored if <link doc="events.xml" id="kqueue"/>
+connection processing method is used because it can report
+the number of new connections waiting to be accepted.
+</note>
+<note>
+The use of <link doc="events.xml" id="rtsig"/>
+connection processing method
+automatically enables <literal>multi_accept</literal>.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="pcre_jit">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>main</context>
+<appeared-in>1.1.12</appeared-in>
+
+<para>
+Enables or disables the use of “just-in-time compilation” (PCRE JIT)
+for regular expressions known at configuration parse time.
+</para>
+
+<para>
+PCRE JIT can speed up processing of regular expressions significantly.
+<note>
+The JIT is available in PCRE libraries starting from version 8.20
+built with the <literal>--enable-jit</literal> configuration parameter.
+When building the PCRE library with nginx (<literal>--with-pcre=</literal>),
+the JIT support should be enabled with the
+<literal>--with-pcre-jit</literal> configuration parameter.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="pid">
+<syntax><value>file</value></syntax>
+<default>nginx.pid</default>
+<context>main</context>
+
+<para>
+Defines a <value>file</value> that will store the process ID of the main process.
+</para>
+
+</directive>
+
+
+<directive name="ssl_engine">
+<syntax><value>device</value></syntax>
+<default/>
+<context>main</context>
+
+<para>
+Defines the name of the hardware SSL accelerator.
+</para>
+
+</directive>
+
+
+<directive name="timer_resolution">
+<syntax><value>interval</value></syntax>
+<default/>
+<context>main</context>
+
+<para>
+Reduces timer resolution in worker processes, thus reducing the
+number of <c-func>gettimeofday</c-func> system calls made.
+By default, <c-func>gettimeofday</c-func> is called each time
+on receiving a kernel event.
+With reduced resolution, <c-func>gettimeofday</c-func> is only
+called once per specified <value>interval</value>.
+</para>
+
+<para>
+Example:
+<example>
+timer_resolution 100ms;
+</example>
+</para>
+
+<para>
+An internal implementation of interval depends on the method used:
+<list type="bullet">
+
+<listitem>
+an <c-def>EVFILT_TIMER</c-def> filter if <literal>kqueue</literal> is used;
+</listitem>
+
+<listitem>
+<c-func>timer_create</c-func> if <literal>eventport</literal> is used;
+</listitem>
+
+<listitem>
+<c-func>setitimer</c-func> otherwise.
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="use">
+<syntax><value>method</value></syntax>
+<default/>
+<context>events</context>
+
+<para>
+Specifies the <link doc="events.xml">connection processing</link>
+<value>method</value> to use.
+There is normally no need to specify it explicitly because nginx will
+by default use the most efficient method.
+</para>
+
+</directive>
+
+
+<directive name="user">
+<syntax><value>user</value> [<value>group</value>]</syntax>
+<default>nobody nobody</default>
+<context>main</context>
+
+<para>
+Defines <value>user</value> and <value>group</value>
+credentials used by worker processes.
+If <value>group</value> is omitted, a group whose name equals
+that of <value>user</value> is used.
+</para>
+
+</directive>
+
+
+<directive name="worker_connections">
+<syntax><value>number</value></syntax>
+<default>512</default>
+<context>events</context>
+
+<para>
+Sets the maximum number of simultaneous connections that
+can be opened by a worker process.
+</para>
+
+<para>
+It should be kept in mind that this number includes all connections
+(e.g. connections with proxied servers, among other things),
+not only connections with clients.
+Another consideration is that the actual number of simultaneous
+connections may not exceed the current limit on
+the maximum number of open files, see
+<link id="worker_rlimit_nofile"/>.
+</para>
+
+</directive>
+
+
+<directive name="worker_cpu_affinity">
+<syntax><value>cpumask</value> ...</syntax>
+<default/>
+<context>main</context>
+
+<para>
+Binds worker processes to the sets of CPUs.
+Each CPU set is represented by a bitmask of allowed to use CPUs.
+There should be a separate set defined for each of the worker processes.
+By default, worker processes are not bound to any specific CPUs.
+</para>
+
+<para>
+For example,
+<example>
+worker_processes    4;
+worker_cpu_affinity 0001 0010 0100 1000;
+</example>
+binds each worker process to a separate CPU, while
+<example>
+worker_processes    2;
+worker_cpu_affinity 0101 1010;
+</example>
+binds the first worker process to CPU0/CPU2,
+and the second worker process to CPU1/CPU3.
+The second example is suitable for hyper-threading.
+</para>
+
+<para>
+<note>
+The directive is only available on FreeBSD and Linux.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="worker_priority">
+<syntax><value>number</value></syntax>
+<default>0</default>
+<context>main</context>
+
+<para>
+Defines a scheduling priority for worker processes like is
+done by the <command>nice</command> command: a negative
+<value>number</value>
+means higher priority.
+Allowed range normally varies from -20 to 20.
+</para>
+
+<para>
+Example:
+<example>
+worker_priority -10;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="worker_processes">
+<syntax><value>number</value></syntax>
+<default>1</default>
+<context>main</context>
+
+<para>
+Defines the number of worker processes.
+</para>
+
+<para>
+The optimal value depends on many factors including (but not
+limited to) the number of CPU cores, the number of hard disk
+drives that store data, and load pattern.
+When in doubt, setting it to the number of available CPU cores
+would be a good start.
+</para>
+
+</directive>
+
+
+<directive name="worker_rlimit_core">
+<syntax><value>size</value></syntax>
+<default/>
+<context>main</context>
+
+<para>
+Changes the limit on the largest size of a core file
+(<c-def>RLIMIT_CORE</c-def>) for worker processes.
+Used to increase the limit without restarting the main process.
+</para>
+
+</directive>
+
+
+<directive name="worker_rlimit_nofile">
+<syntax><value>number</value></syntax>
+<default/>
+<context>main</context>
+
+<para>
+Changes the limit on the maximum number of open files
+(<c-def>RLIMIT_NOFILE</c-def>) for worker processes.
+Used to increase the limit without restarting the main process.
+</para>
+
+</directive>
+
+
+<directive name="worker_rlimit_sigpending">
+<syntax><value>number</value></syntax>
+<default/>
+<context>main</context>
+
+<para>
+On systems that support <link doc="events.xml" id="rtsig"/>
+connection processing method,
+changes the limit on the number of signals that may be queued
+(<c-def>RLIMIT_SIGPENDING</c-def>) for worker processes.
+Used to increase the limit without restarting the main process.
+</para>
+
+</directive>
+
+
+<directive name="working_directory">
+<syntax><value>directory</value></syntax>
+<default/>
+<context>main</context>
+
+<para>
+Defines a current working directory for a worker process.
+It is primarily used when writing a core-file, in which case
+a worker process should have write permission for the
+specified directory.
+</para>
+
+</directive>
+
+</section>
+
+</module>

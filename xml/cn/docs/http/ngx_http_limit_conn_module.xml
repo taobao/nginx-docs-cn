@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_limit_conn_module"
+        link="/en/docs/http/ngx_http_limit_conn_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_limit_conn_module</literal> module allows
+to limit the number of connections per defined key, in
+particular, the number of connections from a single IP address.
+</para>
+
+<para>
+Not all connections are counted; only those that have requests
+currently being processed by the server, in which request header has
+been fully read.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+http {
+    limit_conn_zone $binary_remote_addr zone=addr:10m;
+
+    ...
+
+    server {
+
+        ...
+
+        location /download/ {
+            limit_conn addr 1;
+        }
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="limit_conn">
+<syntax><value>zone</value> <value>number</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a shared memory zone
+and the maximum allowed number of connections for a given key value.
+When this limit is exceeded, the server will return error
+<http-status code="503" text="Service Temporarily Unavailable"/>
+in reply to a request.
+For example, the directives
+<example>
+limit_conn_zone $binary_remote_addr zone=addr:10m;
+
+server {
+    location /download/ {
+        limit_conn addr 1;
+    }
+</example>
+allow for only a single connection at a time, per unique IP address.
+</para>
+
+<para>
+When several <literal>limit_conn</literal> directives are specified,
+any configured limit will apply.
+For example, the following configuration will limit the number
+of connections to the server per client IP and at the same time
+will limit the total number of connections to the virtual host:
+<example>
+limit_conn_zone $binary_remote_addr zone=perip:10m;
+limit_conn_zone $server_name zone=perserver:10m;
+
+server {
+    ...
+    limit_conn perip 10;
+    limit_conn perserver 100;
+}
+</example>
+
+</para>
+
+<para>
+These directives are inherited from the previous level if and
+only if there are no
+<literal>limit_conn</literal>
+directives on the current level.
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_log_level">
+<syntax>
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal></syntax>
+<default>error</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.8.18</appeared-in>
+
+<para>
+Sets the desired logging level for cases when the server
+limits the number of connections.
+</para>
+
+</directive>
+
+
+<directive name="limit_conn_zone">
+<syntax>
+    <value>$variable</value>
+    <literal>zone</literal>=<value>name</value>:<value>size</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+Sets parameters of a shared memory zone that keeps states
+for various keys.
+This state stores the current number of connections in particular.
+The key is any non-empty value of the specified variable
+(empty values are not accounted).
+Example usage:
+<example>
+limit_conn_zone $binary_remote_addr zone=addr:10m;
+</example>
+Here, an IP address of the client serves as a key.
+Note that instead of <var>$remote_addr</var>, the
+<var>$binary_remote_addr</var> variable is used here.
+The length of the <var>$remote_addr</var> variable's value can
+range from 7 to 15 bytes, and the stored state occupies either
+32 or 64 bytes of memory on 32-bit platforms, and always 64
+bytes on 64-bit platforms.
+The length of the <var>$binary_remote_addr</var> variable's value
+is always 4 bytes, and the stored state always occupies 32 bytes
+on 32-bit platforms, and 64 bytes on 64-bit platforms.
+One megabyte zone can keep about 32 thousand 32-bit states,
+and about 16 thousand 64-byte states.
+If the storage for a zone is exhausted, the server will return error
+<http-status code="503" text="Service Temporarily Unavailable"/>
+to all further requests.
+</para>
+
+</directive>
+
+
+<directive name="limit_zone">
+<syntax>
+    <value>name</value>
+    <value>$variable</value>
+    <value>size</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+This directive is made obsolete in version 1.1.8,
+an equivalent <link id="limit_conn_zone"/> directive
+with a changed syntax should be used instead:
+<note>
+<literal>limit_conn_zone</literal>
+<value>$variable</value>
+<literal>zone</literal>=<value>name</value>:<value>size</value>;
+</note>
+</para>
+
+</directive>
+
+</section>
+
+</module>

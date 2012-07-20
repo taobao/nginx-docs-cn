@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_addition_module"
+        link="/en/docs/http/ngx_http_addition_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_addition_module</literal> module is a filter
+that adds a text before and after a response.
+This module is not built by default, it should be enabled with the
+<literal>--with-http_addition_module</literal>
+configuration parameter.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location / {
+    add_before_body /before_action;
+    add_after_body  /after_action;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="add_before_body">
+<syntax><value>uri</value></syntax>
+<default/>
+<context>location</context>
+
+<para>
+Adds a text returned as a result of processing a given subrequest,
+before the response body.
+</para>
+
+</directive>
+
+
+<directive name="add_after_body">
+<syntax><value>uri</value></syntax>
+<default/>
+<context>location</context>
+
+<para>
+Adds a text returned as a result of processing a given subrequest,
+after the response body.
+</para>
+
+</directive>
+
+
+<directive name="addition_types">
+<syntax><value>mime-type</value> ...</syntax>
+<default>text/html</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.7.9</appeared-in>
+
+<para>
+Allows to add text in responses with the specified MIME types,
+in addition to “<literal>text/html</literal>”.
+The special value “<literal>*</literal>” matches any MIME type (0.8.29).
+</para>
+
+</directive>
+
+</section>
+
+</module>

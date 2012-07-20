@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_image_filter_module"
+        link="/en/docs/http/ngx_http_image_filter_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_image_filter_module</literal> module (0.7.54+) is a filter
+that transforms images in JPEG, GIF, and PNG formats.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_image_filter_module</literal>
+configuration parameter.
+<note>
+This module utilizes the
+<link url="http://libgd.org">libgd</link> library.
+It is recommended to use the latest available version of the library;
+it is version 2.0.35 as of this writing.
+</note>
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location /img/ {
+    proxy_pass   http://backend;
+    image_filter resize 150 100;
+    image_filter rotate 90;
+    error_page   415 = /empty;
+}
+
+location = /empty {
+    empty_gif;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="image_filter">
+<syntax><literal>off</literal></syntax>
+<syntax><literal>test</literal></syntax>
+<syntax><literal>size</literal></syntax>
+<syntax>
+    <literal>rotate</literal>
+    <literal>90</literal> | <literal>180</literal> |
+    <literal>270</literal></syntax>
+<syntax>
+    <literal>resize</literal>
+    <value>width</value>
+    <value>height</value></syntax>
+<syntax>
+    <literal>crop</literal>
+    <value>width</value>
+    <value>height</value></syntax>
+<default/>
+<context>location</context>
+
+<para>
+Sets the type of transformation to perform on images:
+<list type="tag">
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+turns off module processing in a surrounding location.
+</tag-desc>
+
+<tag-name><literal>test</literal></tag-name>
+<tag-desc>
+ensures that responses are images in either JPEG, GIF, or PNG format.
+Otherwise, the error
+<http-status code="415" text="Unsupported Media Type"/>
+is returned.
+</tag-desc>
+
+<tag-name><literal>size</literal></tag-name>
+<tag-desc>
+outputs information about images in a JSON format, e.g.:
+<example>
+{ "img" : { "width": 100, "height": 100, "type": "gif" } }
+</example>
+In case of an error, the following is output:
+<example>
+{}
+</example>
+</tag-desc>
+
+<tag-name><literal>rotate</literal>
+<literal>90</literal>|<literal>180</literal>|<literal>270</literal>
+</tag-name>
+<tag-desc>
+rotates images counter-clockwise by the specified number of degrees.
+Value of the parameter can contain variables.
+Can be used either alone, or along with the
+<literal>resize</literal> and <literal>crop</literal> transformations.
+</tag-desc>
+
+<tag-name><literal>resize</literal>
+<value>width</value>
+<value>height</value>
+</tag-name>
+<tag-desc>
+proportionally reduces an image to the specified sizes.
+To reduce by only one dimension, another dimension can be specified as
+“<literal>-</literal>”.
+In case of an error, the server will return code
+<http-status code="415" text="Unsupported Media Type"/>.
+Values of parameters can contain variables.
+When used along with the <literal>rotate</literal> parameter,
+the rotation happens <emphasis>after</emphasis> reduction.
+</tag-desc>
+
+<tag-name><literal>crop</literal>
+<value>width</value>
+<value>height</value>
+</tag-name>
+<tag-desc>
+proportionally reduces an image to the size of the largest side
+and crops extraneous edges by another side.
+To reduce by only one dimension, another dimension can be specified as
+“<literal>-</literal>”.
+In case of an error, the server will return code
+<http-status code="415" text="Unsupported Media Type"/>.
+Values of parameters can contain variables.
+When used along with the <literal>rotate</literal> parameter,
+the rotation happens <emphasis>before</emphasis> reduction.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="image_filter_buffer">
+<syntax><value>size</value></syntax>
+<default>1M</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the maximum size of the buffer used for reading images.
+When a size is exceeded the server will return error
+<http-status code="415" text="Unsupported Media Type"/>.
+</para>
+
+</directive>
+
+
+<directive name="image_filter_jpeg_quality">
+<syntax><value>quality</value></syntax>
+<default>75</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the desired <value>quality</value> of the transformed JPEG images.
+Acceptable values are in the 1..100 range.
+Lesser values usually imply both lower image quality and less data to transfer.
+The maximum recommended value is 95.
+Value of the parameter can contain variables.
+</para>
+
+</directive>
+
+
+<directive name="image_filter_sharpen">
+<syntax><value>percent</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Increases sharpness of the final image.
+The sharpness percentage can exceed 100.
+The value of 0 disables sharpening.
+Value of the parameter can contain variables.
+</para>
+
+</directive>
+
+
+<directive name="image_filter_transparency">
+<syntax><literal>on</literal>|<literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Defines whether transparency should be preserved when transforming
+PNG images with colors specified by a palette, or in GIF images.
+The loss of transparency allows to obtain images of a better quality.
+The alpha channel transparency in PNG is always preserved.
+</para>
+
+</directive>
+
+</section>
+
+</module>

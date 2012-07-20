@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_browser_module"
+        link="/en/docs/http/ngx_http_browser_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_browser_module</literal> module creates variables
+whose values depend on the value of the <header>User-Agent</header>
+request header field:
+<list type="tag">
+
+<tag-name><var>$modern_browser</var></tag-name>
+<tag-desc>
+equals to the value set by the <link id="modern_browser_value"/> directive,
+if a browser was identified as modern;
+</tag-desc>
+
+<tag-name><var>$ancient_browser</var></tag-name>
+<tag-desc>
+equals to the value set by the <link id="ancient_browser_value"/> directive,
+if a browser was identified as ancient;
+</tag-desc>
+
+<tag-name><var>$msie</var></tag-name>
+<tag-desc>
+equals “1” if a browser was identified as MSIE of any version.
+</tag-desc>
+
+</list>
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+Choosing an index file:
+<example>
+modern_browser_value "modern.";
+
+modern_browser msie      5.5;
+modern_browser gecko     1.0.0;
+modern_browser opera     9.0;
+modern_browser safari    413;
+modern_browser konqueror 3.0;
+
+index index.${modern_browser}html index.html;
+</example>
+</para>
+
+<para>
+Redirection for old browsers:
+<example>
+modern_browser msie      5.0;
+modern_browser gecko     0.9.1;
+modern_browser opera     8.0;
+modern_browser safari    413;
+modern_browser konqueror 3.0;
+
+modern_browser unlisted;
+
+ancient_browser Links Lynx netscape4;
+
+if ($ancient_browser) {
+    rewrite ^ /ancient.html;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="ancient_browser">
+<syntax><value>string</value> ...</syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+If any of the specified substrings is found in the <header>User-Agent</header>
+request header field, a browser will be considered ancient.
+The special string “<literal>netscape4</literal>” corresponds to the
+regular expression “<literal>^Mozilla/[1-4]</literal>”.
+</para>
+
+</directive>
+
+
+<directive name="ancient_browser_value">
+<syntax><value>string</value></syntax>
+<default>1</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a value for the <var>$ancient_browser</var> variables.
+</para>
+
+</directive>
+
+
+<directive name="modern_browser">
+<syntax><value>browser</value> <value>version</value></syntax>
+<syntax><literal>unlisted</literal></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Specifies a version starting from which a browser is considered modern.
+A browser can be any one of the following: <literal>msie</literal>,
+<literal>gecko</literal> (browsers based on Mozilla),
+<literal>opera</literal>, <literal>safari</literal>,
+or <literal>konqueror</literal>.
+</para>
+
+<para>
+Versions can be specified in the following formats: X, X.X, X.X.X, or X.X.X.X.
+The maximum values for each of the format are
+4000, 4000.99, 4000.99.99, and 4000.99.99.99, respectively.
+</para>
+
+<para>
+The special value <literal>unlisted</literal> specifies to consider
+a browser as modern if it was not listed by the
+<literal>modern_browser</literal> and <link id="ancient_browser"/>
+directives.
+Otherwise such a browser is considered ancient.
+If a request does not provide the <header>User-Agent</header> field
+in the header, a browser is treated as not being listed.
+</para>
+
+</directive>
+
+
+<directive name="modern_browser_value">
+<syntax><value>string</value></syntax>
+<default>1</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a value for the <var>$modern_browser</var> variables.
+</para>
+
+</directive>
+
+</section>
+
+</module>
