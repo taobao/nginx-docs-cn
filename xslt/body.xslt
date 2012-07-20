@@ -104,17 +104,20 @@
 
                   <xsl:apply-templates/>
 
-                  <xsl:if test="@author">
+                  <xsl:if test="@author or @editor or @translator">
 
                      <table width="100%">
                         <tr>
                            <td align="right">
 
-                              <xsl:value-of select="document(concat($XML, '/i18n.xml'))                        /i18n/text[@lang = $lang]/item[@id='author']"/>
+                              <xsl:if test="@author">
 
-                              <xsl:text> </xsl:text>
-                              <xsl:value-of select="@author"/>
-                              <br/>
+                                 <xsl:value-of select="document(concat($XML, '/i18n.xml'))                            /i18n/text[@lang = $lang]/item[@id='author']"/>
+
+                                 <xsl:text> </xsl:text>
+                                 <xsl:value-of select="@author"/>
+                                 <br/>
+                              </xsl:if>
 
                               <xsl:if test="@editor">
 
