@@ -19,6 +19,9 @@
 <item id="directive.version">This directive appeared in version</item>
 <item id="directive.versions">This directive appeared in versions</item>
 <item id="dirindex">Alphabetical Index of Directives</item>
+<item id="outdated">This translation may be out of date.
+Check the <origin>English version</origin>
+for recent changes.</item>
 </text>
 
 <text lang="ru">
@@ -33,6 +36,9 @@
 <item id="directive.version">Эта директива появилась в версии</item>
 <item id="directive.versions">Эта директива появилась в версиях</item>
 <item id="dirindex">Алфавитный указатель директив</item>
+<item id="outdated">Этот перевод может быть устаревшим.
+Смотрите <origin>английскую версию</origin>
+для ознакомления с последними изменениями.</item>
 </text>
 
 <text lang="cn">
