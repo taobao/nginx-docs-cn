@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_dav_module"
+        link="/en/docs/http/ngx_http_dav_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_dav_module</literal> module processes HTTP and WebDAV
+methods PUT, DELETE, MKCOL, COPY, and MOVE.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_dav_module</literal>
+configuration parameter.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location / {
+    root                  /data/www;
+
+    client_body_temp_path /data/client_temp;
+
+    dav_methods PUT DELETE MKCOL COPY MOVE;
+
+    create_full_put_path  on;
+    dav_access            group:rw  all:r;
+
+    limit_except GET {
+        allow 192.168.1.0/32;
+        deny  all;
+    }
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="dav_access">
+<syntax><value>users</value>:<value>permissions</value> ...</syntax>
+<default>user:rw</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets access permissions for newly created files and directories, e.g.:
+<example>
+dav_access user:rw group:rw all:r;
+</example>
+</para>
+
+<para>
+If any <literal>group</literal> or <literal>all</literal> access permissions
+are specified then <literal>user</literal> permissions may be omitted:
+<example>
+dav_access group:rw all:r;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="dav_methods">
+<syntax>
+    <literal>off</literal> | <literal>put</literal> |
+    <literal>delete</literal> | <literal>mkcol</literal> |
+    <literal>copy</literal> | <literal>move</literal>
+    ...</syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Allows the specified HTTP and WebDAV methods.
+The parameter <literal>off</literal> denies all methods processed
+by this module, ignoring other parameters;
+</para>
+
+<para>
+A file uploaded with the PUT method is first written to a temporary file,
+then a file is renamed.
+Starting from version 0.8.9 temporary files and the persistent store
+can be put on different file systems but be aware that in this case
+a file is copied across two file systems instead of the cheap rename operation.
+It is thus recommended that for any given location both saved files and a
+directory holding temporary files set by the
+<link doc="ngx_http_core_module.xml" id="client_body_temp_path"/>
+directive are put on the same file system.
+</para>
+
+<para>
+When creating a file with the PUT method, it is possible to specify
+the modification date by passing it in the <header>Date</header>
+header field.
+</para>
+
+</directive>
+
+
+<directive name="create_full_put_path">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+The WebDAV specification only allows to create files in already
+existing directories.
+This directive allows to create all needed intermediate directories.
+</para>
+
+</directive>
+
+
+<directive name="min_delete_depth">
+<syntax><value>number</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Allows the DELETE method to remove files provided that
+the number of elements in a request path is not less than the specified.
+For example, the directive
+<example>
+min_delete_depth 4;
+</example>
+allows to remove files on requests
+<example>
+/users/00/00/name
+/users/00/00/name/pic.jpg
+/users/00/00/page.html
+</example>
+and denies the removal of
+<example>
+/users/00/00
+</example>
+</para>
+
+</directive>
+
+</section>
+
+</module>

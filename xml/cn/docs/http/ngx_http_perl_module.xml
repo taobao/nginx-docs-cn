@@ -1,0 +1,501 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_perl_module"
+        link="/en/docs/http/ngx_http_perl_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_perl_module</literal> module allows to implement
+location and variable handlers in Perl, and to insert Perl calls into SSI.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_perl_module</literal>
+configuration parameter.
+<note>
+This module requires Perl version 5.6.1 or higher.
+The C compiler should be compatible with that used to build Perl.
+</note>
+</para>
+
+</section>
+
+
+<section id="bugs" name="Known Bugs">
+
+<para>
+The module is experimental, caveat emptor applies.
+</para>
+
+<para>
+In order for Perl to recompile the modified modules during
+reconfiguration, it needs to be built with the parameters
+<literal>-Dusemultiplicity=yes</literal> or
+<literal>-Dusethreads=yes</literal>.
+Also, in order for Perl to leak less memory at run time,
+it needs to be built with the
+<literal>-Dusemymalloc=no</literal> parameter.
+To check the values of these parameters in an already built
+Perl (preferred values are specified in the example), run:
+<example>
+$ perl -V:usemultiplicity -V:usemymalloc
+usemultiplicity='define';
+usemymalloc='n';
+</example>
+</para>
+
+<para>
+Note that after rebuilding Perl with the new parameters
+<literal>-Dusemultiplicity=yes</literal> or
+<literal>-Dusethreads=yes</literal>,
+all binary Perl modules will have to be rebuilt as well —
+they will just stop working with the new Perl.
+</para>
+
+<para>
+It is possible for the main process and then worker processes
+to grow in size after every reconfiguration.
+If the main process grows to an unacceptable size, the
+<link doc="../control.xml" id="upgrade">live upgrade</link>
+procedure can be applied without changing an executable file.
+</para>
+
+<para>
+While a Perl module performs long term operation, for example, resolves
+a domain name, connects to another server, queries a database,
+other requests assigned to this worker process will not be processed.
+It is thus recommended to limit the work done to operations
+that have predictable and short execution time, for example,
+access local file system.
+</para>
+
+<para>
+The below mentioned issues only affect versions of nginx before 0.6.22.
+
+<note>
+Data returned by the <literal>$r</literal> request object methods
+only has a text value, and the value itself is stored in memory
+allocated by nginx from its own pools, not by Perl.
+This allows to reduce the number of copy operations involved in
+most cases, however it can lead to errors in some cases.
+For example, a worker process trying to use such a data in the
+numeric context will terminate with an error (FreeBSD):
+<example>
+nginx in realloc(): warning: pointer to wrong page
+Out of memory!
+Callback called exit.
+</example>
+or (Linux):
+<example>
+*** glibc detected *** realloc(): invalid pointer: ... ***
+Out of memory!
+Callback called exit.
+</example>
+The workaround is simple — a method’s value should be assigned
+to a variable.
+For example, the following code
+<example>
+my $i = $r->variable('counter') + 1;
+</example>
+should be replaced by
+<example>
+my $i = $r->variable('counter');
+$i++;
+</example>
+</note>
+
+<note>
+Since most strings inside nginx are stored without a terminating null
+character, they are similarly returned by the <literal>$r</literal> request
+object methods (except for the <literal>$r->filename</literal> and
+<literal>$r->request_body_file</literal> methods).
+Thus, such values cannot be used as filenames and the likes.
+The workaround is similar to a previous case — the value should either be
+assigned to a variable (this results in data copying that in turn adds
+the necessary null character) or used in an expression, for example:
+<example>
+open FILE, '/path/' . $r->variable('name');
+</example>
+</note>
+
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+http {
+
+    perl_modules perl/lib;
+    perl_require hello.pm;
+
+    perl_set $msie6 '
+
+        sub {
+            my $r = shift;
+            my $ua = $r->header_in("User-Agent");
+
+            return "" if $ua =~ /Opera/;
+            return "1" if $ua =~ / MSIE [6-9]\.\d+/;
+            return "";
+        }
+
+    ';
+
+    server {
+        location / {
+            perl hello::handler;
+        }
+    }
+</example>
+</para>
+
+<para>
+The <path>perl/lib/hello.pm</path> module:
+<example>
+package hello;
+
+use nginx;
+
+sub handler {
+    my $r = shift;
+
+    $r->send_http_header("text/html");
+    return OK if $r->header_only;
+
+    $r->print("hello!\n&lt;br/&gt;");
+
+    if (-f $r->filename or -d _) {
+        $r->print($r->uri, " exists!\n");
+    }
+
+    return OK;
+}
+
+1;
+__END__
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="perl">
+<syntax><value>module</value>::<value>function</value>|'sub { ... }'</syntax>
+<default/>
+<context>location</context>
+<context>limit_except</context>
+
+<para>
+Installs a Perl handler for the given location.
+</para>
+
+</directive>
+
+
+<directive name="perl_modules">
+<syntax><value>path</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+Sets an additional path for Perl modules.
+</para>
+
+</directive>
+
+
+<directive name="perl_require">
+<syntax><value>module</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+Defines the name of a module that will be loaded during each
+reconfiguration.
+There could be several <literal>perl_require</literal> directives.
+</para>
+
+</directive>
+
+
+<directive name="perl_set">
+<syntax>
+    <value>$variable</value>
+    <value>module</value>::<value>function</value>|'sub { ... }'</syntax>
+<default/>
+<context>http</context>
+
+<para>
+Installs a Perl handler for the specified variable.
+</para>
+
+</directive>
+
+</section>
+
+
+<section id="ssi" name="Calling Perl from SSI">
+
+<para>
+An SSI command calling Perl has the following format:
+<example>
+&lt;!--# perl sub="<value>module</value>::<value>function</value>" arg="<value>parameter1</value>" arg="<value>parameter2</value>" ...
+--&gt;
+</example>
+</para>
+
+</section>
+
+
+<section id="methods" name="The $r Request Object Methods">
+
+<para>
+<list type="tag">
+
+<tag-name><literal>$r->args</literal></tag-name>
+<tag-desc>
+returns request arguments.
+</tag-desc>
+
+<tag-name><literal>$r->filename</literal></tag-name>
+<tag-desc>
+returns a filename corresponding to the request URI.
+</tag-desc>
+
+<tag-name>
+    <literal>$r->has_request_body(<value>handler</value>)</literal>
+</tag-name>
+<tag-desc>
+returns 0 if there is no body in a request.
+If there is a body, the specified handler is installed
+and 1 is returned.
+After reading the request body, nginx will call the installed handler.
+Note that the handler function should be passed by reference.
+Example:
+<example>
+package hello;
+
+use nginx;
+
+sub handler {
+    my $r = shift;
+
+    if ($r->request_method ne "POST") {
+        return DECLINED;
+    }
+
+    if ($r->has_request_body(<emphasis>\&amp;post</emphasis>)) {
+        return OK;
+    }
+
+    return HTTP_BAD_REQUEST;
+}
+
+sub <emphasis>post</emphasis> {
+    my $r = shift;
+
+    $r->send_http_header;
+
+    $r->print("request_body: \"", $r->request_body, "\"&lt;br/&gt;");
+    $r->print("request_body_file: \"", $r->request_body_file, "\"&lt;br/&gt;\n");
+
+    return OK;
+}
+
+1;
+
+__END__
+</example>
+</tag-desc>
+
+<tag-name><literal>$r->allow_ranges</literal></tag-name>
+<tag-desc>
+enables the use of byte ranges when sending responses.
+</tag-desc>
+
+<tag-name><literal>$r->discard_request_body</literal></tag-name>
+<tag-desc>
+instructs nginx to discard a request body.
+</tag-desc>
+
+<tag-name><literal>$r->header_in(<value>field</value>)</literal></tag-name>
+<tag-desc>
+returns value of the specified client request header field.
+</tag-desc>
+
+<tag-name><literal>$r->header_only</literal></tag-name>
+<tag-desc>
+determines should the whole response or only its header be sent to a client.
+</tag-desc>
+
+<tag-name>
+    <literal>$r->header_out(<value>field</value>,
+    <value>value</value>)</literal>
+</tag-name>
+<tag-desc>
+sets a value for the specified response header field.
+</tag-desc>
+
+<tag-name>
+    <literal>$r->internal_redirect(<value>uri</value>)</literal>
+</tag-name>
+<tag-desc>
+does an internal redirect to the speicified <value>uri</value>.
+An actual redirect happens after the Perl handler has completed.
+</tag-desc>
+
+<tag-name><literal>$r->print(<value>text</value>, ...)</literal></tag-name>
+<tag-desc>
+passes data to a client.
+</tag-desc>
+
+<tag-name><literal>$r->request_body</literal></tag-name>
+<tag-desc>
+returns a client request body if it was not
+written to a temporary file.
+To ensure that a client request body is in memory,
+its size should be limited with
+<link doc="ngx_http_core_module.xml" id="client_max_body_size"/>,
+and a sufficient buffer size should be set with
+<link doc="ngx_http_core_module.xml" id="client_body_buffer_size"/>.
+</tag-desc>
+
+<tag-name><literal>$r->request_body_file</literal></tag-name>
+<tag-desc>
+returns the name of a file with the client request body.
+At the end of processing, the file needs to be removed.
+To always write a request body to a file,
+<link doc="ngx_http_core_module.xml" id="client_body_in_file_only"/>
+needs to be enabled.
+</tag-desc>
+
+<tag-name><literal>$r->request_method</literal></tag-name>
+<tag-desc>
+returns client request HTTP method.
+</tag-desc>
+
+<tag-name><literal>$r->remote_addr</literal></tag-name>
+<tag-desc>
+returns client IP address.
+</tag-desc>
+
+<tag-name><literal>$r->flush</literal></tag-name>
+<tag-desc>
+immediately sends data to a client.
+</tag-desc>
+
+<tag-name>
+    <literal>$r->sendfile(<value>name</value>[,
+    <value>offset</value>[,
+    <value>length</value>]])</literal>
+</tag-name>
+<tag-desc>
+sends the specified file content to a client.
+Optional parameters
+specify an initial offset and length of data to be transmitted.
+The actual data transmission happens after the Perl handler
+has completed.
+It should be noted that when using this method in a subrequest,
+and <link doc="ngx_http_core_module.xml" id="sendfile"/>
+is enabled, the file content will not be passed through the
+<link doc="ngx_http_gzip_module.xml">gzip</link>,
+<link doc="ngx_http_ssi_module.xml">SSI</link>, and
+<link doc="ngx_http_charset_module.xml">charset</link>
+filters.
+</tag-desc>
+
+<tag-name>
+    <literal>$r->send_http_header([<value>type</value>])</literal>
+</tag-name>
+<tag-desc>
+sends the response header to a client.
+An optional <value>type</value> parameter sets the value of
+the <header>Content-Type</header> response header field.
+If the value is an empty string, the <header>Content-Type</header>
+header field will not be passed.
+</tag-desc>
+
+<tag-name><literal>$r->status(<value>code</value>)</literal></tag-name>
+<tag-desc>
+sets a response code.
+</tag-desc>
+
+<tag-name>
+    <literal>$r->sleep(<value>milliseconds</value>,
+    <value>handler</value>)</literal>
+</tag-name>
+<tag-desc>
+sets the specified handler
+and stops request processing for the specified time.
+In the mean time, nginx continues to process other requests.
+After the specified time has elapsed, nginx will call the installed handler.
+Note that the handler function should be passed by reference.
+In order to pass data between handlers,
+<literal>$r->variable()</literal> should be used.
+Example:
+<example>
+package hello;
+
+use nginx;
+
+sub handler {
+    my $r = shift;
+
+    $r->discard_request_body;
+    $r->variable("var", "OK");
+    $r->sleep(1000, <emphasis>\&amp;next</emphasis>);
+
+    return OK;
+}
+
+sub <emphasis>next</emphasis> {
+    my $r = shift;
+
+    $r->send_http_header;
+    $r->print($r->variable("var"));
+
+    return OK;
+}
+
+1;
+
+__END__
+</example>
+</tag-desc>
+
+<tag-name><literal>$r->unescape(<value>text</value>)</literal></tag-name>
+<tag-desc>
+decodes a text encoded in the “%XX” form.
+</tag-desc>
+
+<tag-name><literal>$r->uri</literal></tag-name>
+<tag-desc>
+returns a request URI.
+</tag-desc>
+
+<tag-name>
+    <literal>$r->variable(<value>name</value>[,
+    <value>value</value>])</literal>
+</tag-name>
+<tag-desc>
+returns or sets a value of the specified variable.
+Variables are local to each request.
+</tag-desc>
+
+</list>
+</para>
+
+</section>
+
+</module>

@@ -1,0 +1,37 @@
+<!DOCTYPE article SYSTEM "../../dtd/article.dtd">
+
+<article name="PGP public keys"
+         link="/en/pgp_keys.html"
+                  lang="en">
+
+<section>
+<para>
+<list type="bullet">
+<listitem>
+<link url="http://nginx.org/keys/aalexeev.key">Andrew Alexeev&rsquo;s
+PGP public key</link>
+</listitem>
+<listitem>
+<link url="http://nginx.org/keys/is.key">Igor Sysoev&rsquo;s
+PGP public key</link>
+</listitem>
+<listitem>
+<link url="http://nginx.org/keys/mdounin.key">Maxim Dounin&rsquo;s
+PGP public key</link>
+</listitem>
+<listitem>
+<link url="http://nginx.org/keys/maxim.key">Maxim Konovalov&rsquo;s
+PGP public key</link>
+</listitem>
+<listitem>
+<link url="http://nginx.org/keys/sb.key">Sergey Budnevitch&rsquo;s
+PGP public key</link>
+</listitem>
+<listitem>
+<link url="http://nginx.org/keys/nginx_signing.key">nginx
+public key (used for signing packages and repositories)</link>
+</listitem>
+</list>
+</para>
+</section>
+</article>

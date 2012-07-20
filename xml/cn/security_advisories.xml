@@ -1,0 +1,105 @@
+<!DOCTYPE article SYSTEM "../../dtd/article.dtd">
+
+<article name="nginx security advisories"
+         link="/en/security_advisories.html"
+         lang="en">
+
+<section>
+
+<para>
+All nginx security issues should be reported to
+<link url="mailto:security-alert@nginx.org">security-alert@nginx.org</link>.
+</para>
+
+<para>
+Patches are signed using one of the
+<link doc="pgp_keys.xml">PGP public keys</link>.
+</para>
+
+<security>
+
+<item name="Vulnerabilities with Windows directory aliases"
+      severity="medium"
+      cve="2011-4963"
+      good="1.3.1+, 1.2.1+"
+      vulnerable="nginx/Windows 0.7.52-1.3.0" />
+
+<item name="Buffer overflow in the ngx_http_mp4_module"
+      severity="major"
+      cve="2012-2089"
+      good="1.1.19+, 1.0.15+"
+      vulnerable="1.1.3-1.1.18, 1.0.7-1.0.14"
+      patch="patch.2012.mp4.txt" />
+
+<item name="Memory disclosure with specially crafted backend responses"
+      severity="major"
+      cve="2012-1180"
+      good="1.1.17+, 1.0.14+"
+      vulnerable="0.1.0-1.1.16"
+      patch="patch.2012.memory.txt" />
+
+<item name="Buffer overflow in resolver"
+      severity="medium"
+      cve="2011-4315"
+      good="1.1.8+, 1.0.10+"
+      vulnerable="0.6.18-1.1.7" />
+
+<item name="Vulnerabilities with invalid UTF-8 sequence on Windows"
+      severity="major"
+      cve="2010-2266"
+      good="0.8.41+, 0.7.67+"
+      vulnerable="nginx/Windows 0.7.52-0.8.40" />
+
+<item name="Vulnerabilities with Windows file default stream"
+      severity="major"
+      cve="2010-2263"
+      good="0.8.40+, 0.7.66+"
+      vulnerable="nginx/Windows 0.7.52-0.8.39" />
+
+<item name="Vulnerabilities with Windows 8.3 filename pseudonyms"
+      severity="major"
+      core="CORE-2010-0121"
+      href="http://www.coresecurity.com/content/filename-pseudonyms-vulnerabilities"
+      good="0.8.33+, 0.7.65+"
+      vulnerable="nginx/Windows 0.7.52-0.8.32" />
+
+<item name="An error log data are not sanitized"
+      severity="none"
+      cve="2009-4487"
+      good="none"
+      vulnerable="all" />
+
+<item name="The renegotiation vulnerability in SSL protocol"
+      severity="major"
+      cert="120541"
+      cve="2009-3555"
+      good="0.8.23+, 0.7.64+"
+      vulnerable="0.1.0-0.8.22"
+      patch="patch.cve-2009-3555.txt" />
+
+<item name="Directory traversal vulnerability"
+      severity="minor"
+      cve="2009-3898"
+      good="0.8.17+, 0.7.63+"
+      vulnerable="0.1.0-0.8.16" />
+
+<item name="Buffer underflow vulnerability"
+      severity="major"
+      cert="180065"
+      cve="2009-2629"
+      good="0.8.15+, 0.7.62+, 0.6.39+, 0.5.38+"
+      vulnerable="0.1.0-0.8.14"
+      patch="patch.180065.txt" />
+
+<item name="Null pointer dereference vulnerability"
+      severity="major"
+      cve="2009-3896"
+      good="0.8.14+, 0.7.62+, 0.6.39+, 0.5.38+"
+      vulnerable="0.1.0-0.8.13"
+      patch="patch.null.pointer.txt" />
+
+</security>
+
+</section>
+
+</article>

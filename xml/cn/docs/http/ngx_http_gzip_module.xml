@@ -1,0 +1,267 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_gzip_module"
+        link="/en/docs/http/ngx_http_gzip_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_gzip_module</literal> module is a filter
+that compresses responses using the “gzip” method.
+This often allows to reduce the size of transmitted data by half or even more.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+gzip            on;
+gzip_min_length 1000;
+gzip_proxied    expired no-cache no-store private auth;
+gzip_types      text/plain application/xml;
+</example>
+</para>
+
+<para>
+The <var>$gzip_ratio</var> variable can be used to log the
+achieved compression ratio.
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="gzip">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if in location</context>
+
+<para>
+Enables or disables gzipping of responses.
+</para>
+
+</directive>
+
+
+<directive name="gzip_buffers">
+<syntax><value>number</value> <value>size</value></syntax>
+<default>32 4k|16 8k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the <value>number</value> and <value>size</value> of buffers
+used to compress a response.
+By default, the buffer size is equal to one memory page.
+This is either 4K or 8K, depending on a platform.
+<note>
+Until version 0.7.28, four 4K or 8K buffers were used by default.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="gzip_comp_level">
+
+<syntax><value>level</value></syntax>
+<default>1</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a gzip compression <value>level</value> of a response.
+Acceptable values are in the 1..9 range.
+</para>
+
+</directive>
+
+
+<directive name="gzip_disable">
+<syntax><value>regex</value> ...</syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.6.23</appeared-in>
+
+<para>
+Disables gzipping of responses for requests with
+<header>User-Agent</header> header fields matching
+any of the specified regular expressions.
+</para>
+
+<para>
+The special mask “<literal>msie6</literal>” (0.7.12) corresponds to
+the regular expression “<literal>MSIE [4-6]\.</literal>” but works faster.
+Starting from version 0.8.11, “<literal>MSIE 6.0; ... SV1</literal>”
+is excluded from this mask.
+</para>
+
+</directive>
+
+
+<directive name="gzip_min_length">
+<syntax><value>length</value></syntax>
+<default>20</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the minimum length of a response that will be gzipped.
+The length is determined only from the <header>Content-Length</header>
+response header field.
+</para>
+
+</directive>
+
+
+<directive name="gzip_http_version">
+<syntax><literal>1.0</literal> | <literal>1.1</literal></syntax>
+<default>1.1</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the minimum HTTP version of a request required to compress a response.
+</para>
+
+</directive>
+
+
+<directive name="gzip_proxied">
+<syntax>
+    <literal>off</literal> |
+    <literal>expired</literal> |
+    <literal>no-cache</literal> |
+    <literal>no-store</literal> |
+    <literal>private</literal> |
+    <literal>no_last_modified</literal> |
+    <literal>no_etag</literal> |
+    <literal>auth</literal> |
+    <literal>any</literal>
+    ...</syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables gzipping of responses for proxied
+requests depending on the request and response.
+The fact that the response is proxied is determined based on
+the presence of the <header>Via</header> request header field.
+A directive accepts multiple parameters:
+<list type="tag">
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+disables compression for all proxied requests,
+ignoring other parameters;
+</tag-desc>
+
+<tag-name><literal>expired</literal></tag-name>
+<tag-desc>
+enables compression if a response header includes the field
+<header>Expires</header> with a value that disables caching;
+</tag-desc>
+
+<tag-name><literal>no-cache</literal></tag-name>
+<tag-desc>
+enables compression if a response header includes the field
+<header>Cache-Control</header> with the parameter “<literal>no-cache</literal>”;
+</tag-desc>
+
+<tag-name><literal>no-store</literal></tag-name>
+<tag-desc>
+enables compression if a response header includes the field
+<header>Cache-Control</header> with the parameter
+“<literal>no-store</literal>”;
+</tag-desc>
+
+<tag-name><literal>private</literal></tag-name>
+<tag-desc>
+enables compression if a response header includes the field
+<header>Cache-Control</header> with the parameter “<literal>private</literal>”;
+</tag-desc>
+
+<tag-name><literal>no_last_modified</literal></tag-name>
+<tag-desc>
+enables compression if a response header does not include the field
+<header>Last-Modified</header>;
+</tag-desc>
+
+<tag-name><literal>no_etag</literal></tag-name>
+<tag-desc>
+enables compression if a response header does not include the field
+<header>ETag</header>;
+</tag-desc>
+
+<tag-name><literal>auth</literal></tag-name>
+<tag-desc>
+enables compression if a request header includes the field
+<header>Authorization</header>;
+</tag-desc>
+
+<tag-name><literal>any</literal></tag-name>
+<tag-desc>
+enables compression for all proxied requests.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="gzip_types">
+<syntax><value>mime-type</value> ...</syntax>
+<default>text/html</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables gzipping of responses for the specified MIME types in addition
+to “<literal>text/html</literal>”.
+The special value “<literal>*</literal>” matches any MIME type (0.8.29).
+Responses with the type “<literal>text/html</literal>” are always compressed.
+</para>
+
+</directive>
+
+
+<directive name="gzip_vary">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables emitting the <header>Vary: Accept-Encoding</header>
+response header field if the directives
+<link id="gzip"/> or
+<link doc="ngx_http_gzip_static_module.xml" id="gzip_static"/>
+are active.
+</para>
+
+</directive>
+
+</section>
+
+</module>

@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_memcached_module"
+        link="/en/docs/http/ngx_http_memcached_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_memcached_module</literal> module allows to obtain
+responses from a memcached server.
+The key is set in the <var>$memcached_key</var> variable.
+A response should be put in memcached in advance via means that are
+external to nginx.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+server {
+    location / {
+        set            $memcached_key "$uri?$args";
+        memcached_pass host:11211;
+        error_page     404 502 504 = @fallback;
+    }
+
+    location @fallback {
+        proxy_pass     http://backend;
+    }
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="memcached_buffer_size">
+<syntax><value>size</value></syntax>
+<default>4k|8k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets <value>size</value> of the buffer used for reading a response
+received from the memcached server.
+A response is passed to a client synchronously, immediately as it is received.
+</para>
+
+</directive>
+
+
+<directive name="memcached_connect_timeout">
+<syntax><value>time</value></syntax>
+<default>60s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Defines a timeout for establishing a connection with the memcached server.
+It should be noted that this timeout cannot usually exceed 75 seconds.
+</para>
+
+</directive>
+
+
+<directive name="memcached_next_upstream">
+<syntax>
+    <literal>error</literal> |
+    <literal>timeout</literal> |
+    <literal>invalid_response</literal> |
+    <literal>not_found</literal> |
+    <literal>off</literal>
+    ...</syntax>
+<default>error timeout</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Specifies in which cases a request should be passed to the next server:
+<list type="tag">
+
+<tag-name><literal>error</literal></tag-name>
+<tag-desc>an error occurred while establishing a connection with the
+server, passing it a request, or reading the response header;</tag-desc>
+
+<tag-name><literal>timeout</literal></tag-name>
+<tag-desc>a timeout has occurred while establishing a connection with the
+server, passing it a request, or reading the response header;</tag-desc>
+
+<tag-name><literal>invalid_response</literal></tag-name>
+<tag-desc>a server returned empty or invalid response;</tag-desc>
+
+<tag-name><literal>not_found</literal></tag-name>
+<tag-desc>a response was not found on the server;</tag-desc>
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>disables passing a request to the next server.</tag-desc>
+
+</list>
+</para>
+
+<para>
+It should be understood that passing a request to the next server is
+only possible if a client was not sent anything yet.
+That is, if an error or a timeout occurs in the middle of
+transferring a response, fixing this is impossible.
+</para>
+
+</directive>
+
+
+<directive name="memcached_pass">
+<syntax><value>address</value></syntax>
+<default/>
+<context>location</context>
+<context>if in location</context>
+
+<para>
+Sets an address of the memcached server.
+An address can be specified as a domain name or an address, and a port,
+for example,
+<example>
+memcached_pass localhost:11211;
+</example>
+</para>
+
+<para>
+If a domain name resolves to several addresses, all of them will be
+used in a round-robin fashion.
+In addition, an address can be specified as a
+<link doc="ngx_http_upstream_module.xml">server group</link>.
+</para>
+
+</directive>
+
+
+<directive name="memcached_read_timeout">
+<syntax><value>time</value></syntax>
+<default>60s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Defines a timeout for reading a response from the memcached server.
+A timeout is only set between two successive read operations,
+not for the transmission of the whole response.
+If a memcached server does not transmit anything within this time,
+a connection is closed.
+</para>
+
+</directive>
+
+
+<directive name="memcached_send_timeout">
+<syntax><value>time</value></syntax>
+<default>60s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a timeout for transmitting a request to the memcached server.
+A timeout is only set between two successive write operations,
+not for the transmission of the whole request.
+If a memcached server does not receive anything within this time,
+a connection is closed.
+</para>
+
+</directive>
+
+</section>
+
+</module>

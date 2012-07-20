@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_flv_module"
+        link="/en/docs/http/ngx_http_flv_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The module <literal>ngx_http_flv_module</literal> provides pseudo-streaming
+server-side support for Flash Video (FLV) files.
+</para>
+
+<para>
+It handles requests with the <literal>start</literal> argument in
+the request URI’s query string specially, by sending back the contents
+of a file starting from the requested byte offset, and with the FLV
+header prepended.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_flv_module</literal>
+configuration parameter.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location ~ \.flv$ {
+    flv;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="flv">
+<syntax/>
+<default/>
+<context>location</context>
+
+<para>
+Turns on module processing in a surrounding location.
+</para>
+
+</directive>
+
+</section>
+
+</module>

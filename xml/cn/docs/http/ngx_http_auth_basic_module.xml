@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_auth_basic_module"
+        link="/en/docs/http/ngx_http_auth_basic_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_auth_basic_module</literal> module allows
+to limit access to resources by validating the user name and password
+using the “HTTP Basic Authentication” protocol.
+</para>
+
+<para>
+Access can also be limited by
+<link doc="ngx_http_auth_basic_module.xml">address</link>.
+Simultaneous limitation of access by address and by password is controlled
+by the <link doc="ngx_http_core_module.xml" id="satisfy"/> directive.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location / {
+    auth_basic           "closed site";
+    auth_basic_user_file conf/htpasswd;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="auth_basic">
+<syntax><value>string</value> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
+
+<para>
+Enables validation of user name and password using the
+“HTTP Basic Authentication” protocol.
+The specified parameter is used as a <value>realm</value>.
+The parameter <literal>off</literal> allows to cancel the effect of the
+<literal>auth_basic</literal> directive inherited from the previous
+configuration level.
+</para>
+
+</directive>
+
+
+<directive name="auth_basic_user_file">
+<syntax><value>file</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
+
+<para>
+Specifies a file that keeps user names and passwords,
+in the following format:
+<example>
+# comment
+name1:password1
+name2:password2:comment
+name3:password3
+</example>
+</para>
+
+<para>
+Passwords should be encrypted with the <c-func>crypt</c-func> function.
+The <command>htpasswd</command> command from the Apache web server
+distribution can be used to create such a file.
+</para>
+
+</directive>
+
+</section>
+
+</module>

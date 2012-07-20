@@ -1,0 +1,51 @@
+<!DOCTYPE article SYSTEM "../../dtd/article.dtd">
+
+<article name="nginx: links"
+         link="/en/links.html"
+         lang="en">
+
+<section name="nginx internals">
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link url="http://www.aosabook.org/en/nginx.html">The Architecture of Open
+Source Applications: nginx</link>
+</listitem>
+
+<listitem>
+<link url="http://www.evanmiller.org/nginx-modules-guide.html">Emiller&rsquo;s
+Guide To Nginx Module Development</link>
+</listitem>
+
+<listitem>
+<link url="http://www.evanmiller.org/nginx-modules-guide-advanced.html">Emiller&rsquo;s
+Advanced Topics In Nginx Module Development</link>
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="miscellanea">
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link url="http://planet.nginx.org">Planet nginx</link>
+</listitem>
+
+<listitem>
+<link url="http://php-fpm.org">php-fpm: PHP FastCGI Process Manager</link>
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</article>

@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_limit_req_module"
+        link="/en/docs/http/ngx_http_limit_req_module.html"
+        lang="en">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_limit_req_module</literal> module (0.7.21) allows
+to limit the request processing rate per defined key,
+in particular, the processing rate of requests coming
+from a single IP address.
+The limitation is done using the “leaky bucket” method.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+http {
+    limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
+
+    ...
+
+    server {
+
+        ...
+
+        location /search/ {
+            limit_req zone=one burst=5;
+        }
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="limit_req">
+<syntax>
+    <literal>zone</literal>=<value>name</value>
+    [<literal>burst</literal>=<value>number</value>]
+    [<literal>nodelay</literal>]</syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a shared memory zone
+and the maximum allowed burst of requests.
+If the rate of requests exceeds the rate configured for a zone,
+request processing is delayed such as that they are processed
+at a defined rate.
+Excessive requests are delayed until their number exceeds the
+defined number of bursts.
+When exceeded, the request is terminated with an error
+<http-status code="503" text="Service Temporarily Unavailable"/>.
+By default, the number of bursts is equal to zero.
+For example, the directives
+<example>
+limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
+
+server {
+    location /search/ {
+        limit_req zone=one burst=5;
+    }
+</example>
+allow not more than 1 request per second at an average,
+with bursts not exceeding 5 requests.
+</para>
+
+<para>
+If delaying of excessive requests while requests are being limited is not
+desired, the parameter <literal>nodelay</literal> should be used:
+<example>
+limit_req zone=one burst=5 nodelay;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="limit_req_log_level">
+<syntax>
+<literal>info</literal> |
+<literal>notice</literal> |
+<literal>warn</literal> |
+<literal>error</literal></syntax>
+<default>error</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.8.18</appeared-in>
+
+<para>
+Sets the desired logging level
+for cases when the server refuses to process requests
+due to rate being exceeded,
+or delays request processing.
+Delays are logged with the level one less than refusals; for example,
+if “<literal>limit_req_log_level notice</literal>” is specified,
+delays are logged with the <literal>info</literal> level.
+</para>
+
+</directive>
+
+
+<directive name="limit_req_zone">
+<syntax>
+    <value>$variable</value>
+    <literal>zone</literal>=<value>name</value>:<value>size</value>
+    <literal>rate</literal>=<value>rate</value></syntax>
+<default/>
+<context>http</context>
+
+<para>
+Sets parameters of a shared memory zone
+that keeps states for various keys.
+The state stores the current number of excessive requests in particular.
+The key is any non-empty value of the specified variable
+(empty values are not accounted).
+Example usage:
+<example>
+limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
+</example>
+</para>
+
+<para>
+Here, the states are kept in a 10 megabyte zone “one”, and an
+average request processing rate for this zone cannot exceed
+1 request per second.
+</para>
+
+<para>
+An IP address of the client serves as a key.
+Note that instead of <var>$remote_addr</var>, the
+<var>$binary_remote_addr</var> variable is used here,
+allowing to lower the size of a state down to 64 bytes.
+One megabyte zone can keep about 16 thousand 64-byte states.
+If the storage for a zone is exhausted, the server will return error
+<http-status code="503" text="Service Temporarily Unavailable"/>
+to all further requests.
+</para>
+
+<para>
+The rate is specified in requests per second (r/s).
+If a rate of less than one request per second is desired,
+it is specified in request per minute (r/m).
+For example, half-request per second is 30r/m.
+</para>
+
+</directive>
+
+</section>
+
+</module>

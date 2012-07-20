@@ -1,0 +1,2851 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_core_module"
+        link="/en/docs/http/ngx_http_core_module.html"
+        lang="en">
+
+<section id="directives" name="Directives">
+
+<directive name="aio">
+<syntax>
+    <literal>on</literal> |
+    <literal>off</literal> |
+    <literal>sendfile</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.8.11</appeared-in>
+
+<para>
+Enables or disables the use of asynchronous file I/O (AIO)
+on FreeBSD and Linux.
+</para>
+
+<para>
+On FreeBSD, AIO is usable starting from FreeBSD&nbsp;4.3.
+AIO can either be linked statically into a kernel:
+<example>
+options VFS_AIO
+</example>
+or loaded dynamically as a kernel loadable module:
+<example>
+kldload aio
+</example>
+</para>
+
+<para>
+In FreeBSD versions 5 and 6, enabling AIO statically, or dynamically
+when booting the kernel, will cause the entire networking subsystem
+to use the Giant lock that can impact overall performance negatively.
+This limitation has been removed in FreeBSD&nbsp;6.4-STABLE in 2009, and in
+FreeBSD&nbsp;7.
+However, starting from FreeBSD&nbsp;5.3 it is possible to enable AIO
+without the penalty of running the networking subsystem under a
+Giant lock&mdash;for this to work, the AIO module needs to be loaded
+after the kernel has booted.
+In this case, the following message will appear in
+<path>/var/log/messages</path>
+<example>
+WARNING: Network stack Giant-free, but aio requires Giant.
+Consider adding 'options NET_WITH_GIANT' or setting debug.mpsafenet=0
+</example>
+and can safely be ignored.
+<note>
+The requirement to use the Giant lock with AIO is related to the
+fact that FreeBSD supports asynchronous calls
+<c-func>aio_read</c-func>
+and
+<c-func>aio_write</c-func>
+when working with sockets.
+However, since nginx only uses AIO for disk I/O, no problems should arise.
+</note>
+</para>
+
+<para>
+For AIO to work,
+<link id="sendfile"/>
+needs to be disabled:
+<example>
+location /video/ {
+    sendfile       off;
+    aio            on;
+    output_buffers 1 64k;
+}
+</example>
+</para>
+
+<para>
+In addition, starting from FreeBSD&nbsp;5.2.1 and nginx&nbsp;0.8.12, AIO can
+also be used to pre-load data for <c-func>sendfile</c-func>:
+<example>
+location /video/ {
+    sendfile       on;
+    tcp_nopush     on;
+    aio            sendfile;
+}
+</example>
+In this configuration, <c-func>sendfile</c-func> is called with
+the <c-def>SF_NODISKIO</c-def> flag which causes it not to
+block on disk I/O and instead report back when the data are not in
+memory; nginx then initiates an asynchronous data load by reading
+one byte.
+The FreeBSD kernel then loads the first 128K bytes
+of a file into memory, however next reads will only load data
+in 16K chunks.
+This can be tuned using the
+<link id="read_ahead"/>
+directive.
+</para>
+
+<para>
+On Linux, AIO is usable starting from kernel version 2.6.22;
+plus, it is also necessary to enable
+<link id="directio"/>,
+otherwise reading will be blocking:
+<example>
+location /video/ {
+    aio            on;
+    directio       512;
+    output_buffers 1 128k;
+}
+</example>
+</para>
+
+<para>
+On Linux,
+<link id="directio"/>
+can only be used for reading blocks that are aligned on 512-byte
+boundaries (or 4K for XFS).
+Reading of unaligned file's end is still made in blocking mode.
+The same holds true for byte range requests, and for FLV requests
+not from the beginning of a file: reading of unaligned data at the
+beginning and end of a file will be blocking.
+There is no need to turn off
+<link id="sendfile"/>
+explicitly as it is turned off automatically when
+<link id="directio"/>
+is used.
+</para>
+
+</directive>
+
+
+<directive name="alias">
+<syntax><value>path</value></syntax>
+<default/>
+<context>location</context>
+
+<para>
+Defines a replacement for the specified location.
+For example, with the following configuration
+<example>
+location /i/ {
+    alias /data/w3/images/;
+}
+</example>
+the request of
+“<literal>/i/top.gif</literal>” will be responded
+with the file
+<path>/data/w3/images/top.gif</path>.
+</para>
+
+<para>
+The <value>path</value> value can contain variables
+except <var>$document_root</var> and <var>$realpath_root</var>.
+</para>
+
+<para>
+If <literal>alias</literal> is used inside a location defined
+with a regular expression then such regular expression should
+contain captures and <literal>alias</literal> should refer to
+these captures (0.7.40), for example:
+<example>
+location ~ ^/users/(.+\.(?:gif|jpe?g|png))$ {
+    alias /data/w3/images/$1;
+}
+</example>
+</para>
+
+<para>
+When location matches the last part of the directive's value:
+<example>
+location /images/ {
+    alias /data/w3/images/;
+}
+</example>
+it is better to use the
+<link id="root"/>
+directive instead:
+<example>
+location /images/ {
+    root /data/w3;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="chunked_transfer_encoding">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Allows disabling chunked transfer encoding in HTTP/1.1.
+It may come in handy when using a software failing to support
+chunked encoding though the standard requires it.
+</para>
+
+</directive>
+
+
+<directive name="client_body_buffer_size">
+
+<syntax><value>size</value></syntax>
+<default>8k|16k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets buffer size for reading client request body.
+In case request body is larger than the buffer,
+the whole body or only its part is written to a
+<link id="client_body_temp_path">temporary file</link>.
+By default, buffer size is equal to two memory pages.
+This is 8K on x86, other 32-bit platforms, and x86-64.
+It is usually 16K on other 64-bit platforms.
+</para>
+
+</directive>
+
+
+<directive name="client_body_in_file_only">
+<syntax>
+    <literal>on</literal> |
+    <literal>clean</literal> |
+    <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Determines whether nginx should save the entire client request body
+into a file.
+This directive can be used during debugging, or when using the
+<var>$request_body_file</var>
+variable, or the
+<link doc="ngx_http_perl_module.xml" id="methods">$r->request_body_file</link>
+method of the module
+<link doc="ngx_http_perl_module.xml">ngx_http_perl_module</link>.
+</para>
+
+<para>
+When set to the value <literal>on</literal>, temporary files are not
+removed after request processing.
+</para>
+
+<para>
+The value <literal>clean</literal> will cause the temporary files
+left after request processing to be removed.
+</para>
+
+</directive>
+
+
+<directive name="client_body_in_single_buffer">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Determines whether nginx should save the entire client request body
+in a single buffer.
+The directive is recommended when using the
+<var>$request_body</var>
+variable, to save the number of copy operations involved.
+</para>
+
+</directive>
+
+
+<directive name="client_body_temp_path">
+<syntax>
+    <value>path</value>
+    [<value>level1</value>
+    [<value>level2</value>
+    [<value>level3</value>]]]</syntax>
+<default>client_body_temp</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Defines a directory for storing temporary files holding client request bodies.
+Up to three-level subdirectory hierarchy can be used underneath the specified
+directory.
+For example, in the following configuration
+<example>
+client_body_temp_path /spool/nginx/client_temp 1 2;
+</example>
+a temporary file might look like this:
+<example>
+/spool/nginx/client_temp/7/45/00000123457
+</example>
+</para>
+
+</directive>
+
+
+<directive name="client_body_timeout">
+<syntax><value>time</value></syntax>
+<default>60s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Defines a timeout for reading client request body.
+A timeout is only set between two successive read operations,
+not for the transmission of the whole request body.
+If a client does not transmit anything within this time,
+the client error
+<http-status code="408" text="Request Time-out"/>
+is returned.
+</para>
+
+</directive>
+
+
+<directive name="client_header_buffer_size">
+<syntax><value>size</value></syntax>
+<default>1k</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Sets buffer size for reading client request header.
+For most requests, a buffer of 1K bytes is enough.
+However, if a request includes long cookies, or comes from a WAP client,
+it may not fit into 1K.
+If a request line, or a request header field do not fit entirely into
+this buffer then larger buffers are allocated, configured by the
+<link id="large_client_header_buffers"/>
+directive.
+</para>
+
+</directive>
+
+
+<directive name="client_header_timeout">
+<syntax><value>time</value></syntax>
+<default>60s</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Defines a timeout for reading client request header.
+If a client does not transmit the entire header within this time,
+the client error
+<http-status code="408" text="Request Time-out"/>
+is returned.
+</para>
+
+</directive>
+
+
+<directive name="client_max_body_size">
+<syntax><value>size</value></syntax>
+<default>1m</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the maximum allowed size of the client request body,
+specified in the
+<header>Content-Length</header>
+request header field.
+If it exceeds the configured value, the client error
+<http-status code="413" text="Request Entity Too Large"/>
+is returned.
+Please be aware that
+<!--link doc="/web/upload.xml"-->browsers cannot correctly display
+this error<!--/link-->.
+Setting <value>size</value> to 0 disables client
+request body size checking.
+</para>
+
+</directive>
+
+
+<directive name="connection_pool_size">
+<syntax><value>size</value></syntax>
+<default>256</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Allows to fine tune per-connection memory allocations.
+This directive has minimal impact on performance,
+and should not generally be used.
+</para>
+
+</directive>
+
+
+<directive name="default_type">
+<syntax><value>mime-type</value></syntax>
+<default>text/plain</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Defines a default MIME-type of a response.
+See also the <link id="types"/> directive.
+</para>
+
+</directive>
+
+
+<directive name="directio">
+<syntax><value>size</value> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.7.7</appeared-in>
+
+<para>
+Enables the use of
+the <c-def>O_DIRECT</c-def> flag (FreeBSD, Linux),
+the <c-def>F_NOCACHE</c-def> flag (Mac OS X),
+or the <c-func>directio</c-func> function (Solaris),
+when reading files that are larger than or equal to
+the specified <value>size</value>.
+It automatically disables (0.7.15) the use of
+<link id="sendfile"/>
+for a given request.
+It could be useful for serving large files:
+<example>
+directio 4m;
+</example>
+or when using <link id="aio"/> on Linux.
+</para>
+
+</directive>
+
+
+<directive name="directio_alignment">
+<syntax><value>size</value></syntax>
+<default>512</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.8.11</appeared-in>
+
+<para>
+Sets an alignment for
+<link id="directio"/>.
+In most cases, a 512-byte alignment is enough, however, when
+using XFS under Linux, it needs to be increased to 4K.
+</para>
+
+</directive>
+
+
+<directive name="disable_symlinks">
+<syntax><literal>off</literal></syntax>
+<syntax>
+    <literal>on</literal> |
+    <literal>if_not_owner</literal>
+    [<literal>from</literal>=<value>part</value>]</syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.15</appeared-in>
+
+<para>
+Determines how symbolic links should be treated when opening files:
+<list type="tag">
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+Symbolic links in the pathname are allowed and not checked.
+This is the default behavior.
+</tag-desc>
+
+<tag-name><literal>on</literal></tag-name>
+<tag-desc>
+If any component of the pathname is a symbolic link,
+access to a file is denied.
+</tag-desc>
+
+<tag-name><literal>if_not_owner</literal></tag-name>
+<tag-desc>
+Access to a file is denied if any component of the pathname
+is a symbolic link, and the link and object that the link
+points to have different owners.
+</tag-desc>
+
+<tag-name><literal>from</literal>=<value>part</value></tag-name>
+<tag-desc>
+When checking symbolic links
+(parameters <literal>on</literal> and <literal>if_not_owner</literal>),
+all components of the pathname are normally checked.
+Checking of symbolic links in the initial part of the pathname
+may be avoided by also specifying the
+<literal>from</literal>=<value>part</value> parameter.
+In this case, symbolic links are checked only from
+the component of the pathname following the specified initial part.
+If a value is not an initial part of the checked pathname, the whole
+pathname is checked as if this parameter was not specified at all.
+If a value fully matches the file name,
+symbolic links are not checked.
+The parameter value can contain variables.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+Example:
+<example>
+disable_symlinks on from=$document_root;
+</example>
+</para>
+
+<para>
+This directive is only available on systems that have the
+<c-func>openat</c-func> and <c-func>fstatat</c-func> interfaces.
+This includes modern versions of FreeBSD, Linux, and Solaris.
+</para>
+
+<para>
+Parameters <literal>on</literal> and <literal>if_not_owner</literal>
+add a processing overhead.
+<note>
+On systems that do not support opening directories for search only,
+the use of these parameters requires that worker processes
+have read permissions for all checked directories.
+</note>
+</para>
+
+<para>
+<note>
+The
+<link doc="ngx_http_autoindex_module.xml">ngx_http_autoindex_module</link>,
+<link doc="ngx_http_random_index_module.xml">ngx_http_random_index_module</link>,
+and <link doc="ngx_http_dav_module.xml">ngx_http_dav_module</link>
+modules currently ignore this directive.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="error_page">
+<syntax>
+    <value>code</value> ...
+    [<literal>=</literal>[<value>response</value>]]
+    <value>uri</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if in location</context>
+
+<para>
+Defines the URI that will be shown for the specified errors.
+These directives are inherited from the previous level if and
+only if there are no
+<literal>error_page</literal>
+directives on
+the current level.
+A URI value can contain variables.
+</para>
+
+<para>
+Example:
+<example>
+error_page 404         /404.html;
+error_page 502 503 504 /50x.html;
+error_page 403         http://example.com/forbidden.html;
+</example>
+</para>
+
+<para>
+Furthermore, it is possible to change the response code to another, for example:
+<example>
+error_page 404 =200 /empty.gif;
+</example>
+</para>
+
+<para>
+If an error response is processed by a proxied server, or a FastCGI server,
+and the server may return different response codes (e.g., 200, 302, 401
+or 404), it is possible to respond with a returned code:
+<example>
+error_page 404 = /404.php;
+</example>
+</para>
+
+<para>
+If there is no need to change URI during redirection it is possible to redirect
+error processing into a named location:
+<example>
+location / {
+    error_page 404 = @fallback;
+}
+
+location @fallback {
+    proxy_pass http://backend;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="if_modified_since">
+<syntax>
+    <literal>off</literal> |
+    <literal>exact</literal> |
+    <literal>before</literal></syntax>
+<default>exact</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.7.24</appeared-in>
+
+<para>
+Specifies how to compare modification time of a response
+with the time in the
+<header>If-Modified-Since</header>
+request header field:
+
+<list type="tag">
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+the
+<header>If-Modified-Since</header> request header field is ignored (0.7.34);
+</tag-desc>
+
+<tag-name><literal>exact</literal></tag-name>
+<tag-desc>
+exact match;
+</tag-desc>
+
+<tag-name><literal>before</literal></tag-name>
+<tag-desc>
+modification time of a response is
+less than or equal to the time in the <header>If-Modified-Since</header>
+request header field.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="ignore_invalid_headers">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Controls whether header fields with invalid names should be ignored.
+Valid names are composed of English letters, digits, hyphens, and possibly
+underscores (as controlled by the <link id="underscores_in_headers"/>
+directive).
+</para>
+
+<para>
+A directive can be specified on the <link id="server"/> level
+in a default server.
+In this case, its value will cover all virtual servers
+listening on the same address and port.
+</para>
+
+</directive>
+
+
+<directive name="internal">
+<syntax/>
+<default/>
+<context>location</context>
+
+<para>
+Specifies that a given location can only be used for internal requests.
+For external requests, the client error
+<http-status code="404" text="Not Found"/>
+is returned.
+Internal requests are the following:
+
+<list type="bullet">
+
+<listitem>
+requests redirected by the
+<link id="error_page"/>,
+<link doc="ngx_http_index_module.xml" id="index"/>,
+<link doc="ngx_http_random_index_module.xml" id="random_index"/>, and
+<link id="try_files"/> directives;
+</listitem>
+
+<listitem>
+requests redirected by the <header>X-Accel-Redirect</header>
+response header field from an upstream server;
+</listitem>
+
+<listitem>
+subrequests formed by the
+“<command>include virtual</command>”
+command of the
+<link doc="ngx_http_ssi_module.xml">ngx_http_ssi_module</link>
+module and by the
+<link doc="ngx_http_addition_module.xml">ngx_http_addition_module</link>
+module directives;
+</listitem>
+
+<listitem>
+requests changed by the
+<link doc="ngx_http_rewrite_module.xml" id="rewrite"/> directive.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Example:
+<example>
+error_page 404 /404.html;
+
+location /404.html {
+    internal;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="keepalive_disable">
+<syntax><literal>none</literal> | <value>browser</value> ...</syntax>
+<default>msie6</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Disables keep-alive connections with misbehaving browsers.
+The <value>browser</value> parameters specify which
+browsers will be affected.
+The value <literal>msie6</literal> disables keep-alive connections
+with old versions of MSIE, after seeing a POST request.
+The value <literal>safari</literal> disables keep-alive connections
+with Safari and Safari-like browsers on Mac OS X and Mac OS X-like
+operating systems.
+The value <literal>none</literal> enables keep-alive connections
+with all browsers.
+<note>
+Prior to version 1.1.18, the value <literal>safari</literal> matched
+all Safari and Safari-like browsers on all operating systems, and
+keep-alive connections with them were disabled by default.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="keepalive_requests">
+<syntax><value>number</value></syntax>
+<default>100</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.8.0</appeared-in>
+
+<para>
+Sets the maximum number of requests that can be
+made through one keep-alive connection.
+After this many requests are made, the connection is closed.
+</para>
+
+</directive>
+
+
+<directive name="keepalive_timeout">
+<syntax>
+    <value>timeout</value>
+    [<value>header_timeout</value>]</syntax>
+<default>75s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+The first parameter sets a timeout during which a keep-alive
+client connection will stay open on the server side.
+The optional second parameter sets a value in the
+<header>Keep-Alive: timeout=<value>time</value></header>
+response header field.
+Two parameters may differ.
+</para>
+
+<para>
+The
+<header>Keep-Alive: timeout=<value>time</value></header>
+header field is understood by Mozilla and Konqueror.
+MSIE will close keep-alive connection in about 60 seconds.
+</para>
+
+</directive>
+
+
+<directive name="large_client_header_buffers">
+<syntax><value>number</value> <value>size</value></syntax>
+<default>4 8k</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Sets the maximum <value>number</value> and <value>size</value> of
+buffers used when reading large client request header.
+A request line cannot exceed the size of one buffer, or the client error
+<http-status code="414" text="Request-URI Too Large"/>
+is returned.
+A request header field cannot exceed the size of one buffer as well, or the
+client error
+<http-status code="400" text="Bad Request"/>
+is returned.
+Buffers are allocated only on demand.
+By default, the buffer size is equal to 8K bytes.
+If after the end of request processing a connection is transitioned
+into the keep-alive state, these buffers are freed.
+</para>
+
+</directive>
+
+
+<directive name="limit_except">
+<syntax block="yes"><value>method</value> ...</syntax>
+<default/>
+<context>location</context>
+
+<para>
+Limits allowed HTTP methods inside a location.
+The <value>method</value> parameter can be one of the following:
+<literal>GET</literal>,
+<literal>HEAD</literal>,
+<literal>POST</literal>,
+<literal>PUT</literal>,
+<literal>DELETE</literal>,
+<literal>MKCOL</literal>,
+<literal>COPY</literal>,
+<literal>MOVE</literal>,
+<literal>OPTIONS</literal>,
+<literal>PROPFIND</literal>,
+<literal>PROPPATCH</literal>,
+<literal>LOCK</literal>,
+<literal>UNLOCK</literal>,
+or
+<literal>PATCH</literal>.
+Allowing the <literal>GET</literal> method also allows the
+<literal>HEAD</literal> method.
+Access to other methods can be limited using the
+<link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
+and
+<link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>
+modules directives:
+<example>
+limit_except GET {
+    allow 192.168.1.0/32;
+    deny  all;
+}
+</example>
+Please note that this will limit access to all methods
+<emphasis>except</emphasis> GET and HEAD.
+</para>
+
+</directive>
+
+
+<directive name="limit_rate">
+<syntax><value>rate</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if in location</context>
+
+<para>
+Rate limits the transmission of a response to a client.
+The <value>rate</value> is specified in bytes per second.
+Value 0 (the default) disables rate limiting.
+<!--
+The smaller the rate, the more accurate will be the limitation.
+-->
+The limit is per connection, so if a single client opens 2 connections,
+an overall rate will be 2x more than specified by this directive.
+</para>
+
+<para>
+This directive is not applicable if one wants to rate limit
+a group of clients on the
+<link id="server"/>
+level.
+If that is the case, the desired limit can be specified in the
+<var>$limit_rate</var>
+variable:
+<example>
+server {
+
+    if ($slow) {
+        set $limit_rate 4k;
+    }
+
+    ...
+}
+</example>
+</para>
+
+<para>
+In addition, rate limit can also be set in the
+<header>X-Accel-Limit-Rate</header> response header field.
+This ability can be disabled using the
+<link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>
+and
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_ignore_headers"/>
+directives.
+</para>
+
+</directive>
+
+
+<directive name="limit_rate_after">
+<syntax><value>size</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if in location</context>
+<appeared-in>0.8.0</appeared-in>
+
+<para>
+Sets the initial amount after which the further transmission
+of a response to a client will be rate limited.
+</para>
+
+<para>
+Example:
+<example>
+location /flv/ {
+    flv;
+    limit_rate_after 500k;
+    limit_rate       50k;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="lingering_close">
+<syntax>
+    <literal>off</literal> |
+    <literal>on</literal> |
+    <literal>always</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.0</appeared-in>
+<appeared-in>1.0.6</appeared-in>
+
+<para>
+Controls how nginx closes client connections.
+</para>
+
+<para>
+The default value “<literal>on</literal>” instructs nginx to
+<link id="lingering_timeout">wait for</link> and
+<link id="lingering_time">process</link> additional data from a client
+before fully closing a connection, but only
+if heuristics suggests that a client may be sending more data.
+</para>
+
+<para>
+The value “<literal>always</literal>” will cause nginx to unconditionally
+wait for and process additional client data.
+</para>
+
+<para>
+The value “<literal>off</literal>” tells nginx to never wait for
+more data and close the connection immediately.
+This breaks the protocol and should not be used under normal circumstances.
+</para>
+
+</directive>
+
+
+<directive name="lingering_time">
+<syntax><value>time</value></syntax>
+<default>30s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+When <link id="lingering_close"/> is in effect,
+this directive specifies a maximum time during which nginx
+will process (read and ignore) additional data coming from a client.
+After that, the connection is closed, even if there are more data.
+</para>
+
+</directive>
+
+
+<directive name="lingering_timeout">
+<syntax><value>time</value></syntax>
+<default>5s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+When <link id="lingering_close"/> is in effect, this directive specifies
+a maximum waiting time for more client data to arrive.
+If data are not received during this time, the connection is closed.
+Otherwise, data are read and ignored, then nginx waits again for more data.
+The “wait-read-ignore” cycle is repeated, but no longer than specified by the
+<link id="lingering_time"/> directive.
+</para>
+
+</directive>
+
+
+<directive name="listen">
+<syntax>
+    <value>address</value>[:<value>port</value>]
+    [<literal>default_server</literal>]
+    [<literal>setfib</literal>=<value>number</value>]
+    [<literal>backlog</literal>=<value>number</value>]
+    [<literal>rcvbuf</literal>=<value>size</value>]
+    [<literal>sndbuf</literal>=<value>size</value>]
+    [<literal>accept_filter</literal>=<value>filter</value>]
+    [<literal>deferred</literal>]
+    [<literal>bind</literal>]
+    [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
+    [<literal>ssl</literal>]
+    [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
+<syntax>
+    <value>port</value>
+    [<literal>default_server</literal>]
+    [<literal>setfib</literal>=<value>number</value>]
+    [<literal>backlog</literal>=<value>number</value>]
+    [<literal>rcvbuf</literal>=<value>size</value>]
+    [<literal>sndbuf</literal>=<value>size</value>]
+    [<literal>accept_filter</literal>=<value>filter</value>]
+    [<literal>deferred</literal>]
+    [<literal>bind</literal>]
+    [<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>]
+    [<literal>ssl</literal>]
+    [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
+<syntax>
+    <literal>unix:</literal><value>path</value>
+    [<literal>default_server</literal>]
+    [<literal>backlog</literal>=<value>number</value>]
+    [<literal>rcvbuf</literal>=<value>size</value>]
+    [<literal>sndbuf</literal>=<value>size</value>]
+    [<literal>accept_filter</literal>=<value>filter</value>]
+    [<literal>deferred</literal>]
+    [<literal>bind</literal>]
+    [<literal>ssl</literal>]
+    [<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]]</syntax>
+<default>*:80 | *:8000</default>
+<context>server</context>
+
+<para>
+Sets an <value>address</value> and a <value>port</value> for IP,
+or a <value>path</value> for a UNIX-domain socket, on which
+the server will accept requests.
+Only one of <value>address</value> or <value>port</value> may be
+specified.
+An <value>address</value> may also be a hostname, for example:
+<example>
+listen 127.0.0.1:8000;
+listen 127.0.0.1;
+listen 8000;
+listen *:8000;
+listen localhost:8000;
+</example>
+IPv6 addresses (0.7.36) are specified in square brackets:
+<example>
+listen [::]:8000;
+listen [fe80::1];
+</example>
+UNIX-domain sockets (0.8.21) are specified with the “<literal>unix:</literal>”
+prefix:
+<example>
+listen unix:/var/run/nginx.sock;
+</example>
+</para>
+
+<para>
+If only <value>address</value> is given, the port 80 is used.
+</para>
+
+<para>
+If directive is not present then either the <literal>*:80</literal> is used
+if nginx runs with superuser privileges, or <literal>*:8000</literal> otherwise.
+</para>
+
+<para>
+The <literal>default_server</literal> parameter, if present,
+will cause the server to become the default server for the specified
+<value>address</value>:<value>port</value> pair.
+If none of the directives have the <literal>default_server</literal>
+parameter then the first server with the
+<value>address</value>:<value>port</value> pair will be
+the default server for this pair.
+<note>
+In versions prior to 0.8.21 this parameter is named simply
+<literal>default</literal>.
+</note>
+</para>
+
+<para>
+A <literal>listen</literal> directive
+can have several additional parameters specific to system calls
+<c-func>listen</c-func> and <c-func>bind</c-func>.
+They can be specified in any
+<literal>listen</literal> directive, but only once for the given
+<value>address</value>:<value>port</value> pair.
+<note>
+In versions prior to 0.8.21, they could only be
+specified in the <literal>listen</literal> directive with the
+<literal>default</literal> parameter.
+</note>
+<list type="tag">
+
+<tag-name>
+<literal>setfib</literal>=<value>number</value>
+</tag-name>
+<tag-desc>
+this parameter (0.8.44) sets the associated FIB (routing table)
+for the listening socket.
+This currently works only on FreeBSD.
+</tag-desc>
+
+<tag-name>
+<literal>backlog</literal>=<value>number</value>
+</tag-name>
+<tag-desc>
+sets the <literal>backlog</literal> parameter in the
+<c-func>listen</c-func> call.
+By default, <literal>backlog</literal> equals -1 on FreeBSD
+and 511 on other platforms.
+</tag-desc>
+
+<tag-name>
+<literal>rcvbuf</literal>=<value>size</value>
+</tag-name>
+<tag-desc>
+sets the <c-def>SO_RCVBUF</c-def> parameter for the listening socket.
+</tag-desc>
+
+<tag-name>
+<literal>sndbuf</literal>=<value>size</value>
+</tag-name>
+<tag-desc>
+sets the <c-def>SO_SNDBUF</c-def> parameter for the listening socket.
+</tag-desc>
+
+<tag-name>
+<literal>accept_filter</literal>=<value>filter</value>
+</tag-name>
+<tag-desc>
+sets the name of the accept filter.
+This works only on FreeBSD, acceptable values are <literal>dataready</literal>
+and <literal>httpready</literal>.
+On receipt of the <c-def>SIGHUP</c-def> signal, an accept filter can only be
+changed in recent versions of FreeBSD, starting from 6.0, 5.4-STABLE
+and 4.11-STABLE.
+</tag-desc>
+
+<tag-name>
+<literal>deferred</literal>
+</tag-name>
+<tag-desc>
+instructs to use a deferred <c-func>accept</c-func> on Linux
+using the <c-def>TCP_DEFER_ACCEPT</c-def> option.
+</tag-desc>
+
+<tag-name>
+<literal>bind</literal>
+</tag-name>
+<tag-desc>
+instructs to make a separate <c-func>bind</c-func> call for a given
+<value>address</value>:<value>port</value> pair.
+This is because nginx will <c-func>bind</c-func> only to
+<literal>*:</literal><value>port</value>
+if there are several <literal>listen</literal> directives with
+the same port but different addresses, and one of the
+<literal>listen</literal> directives listens on all addresses
+for the given port (<literal>*:</literal><value>port</value>).
+It should be noted that in this case a <c-func>getsockname</c-func>
+system call will be made to determine an address that accepted a
+connection.
+If parameters <literal>backlog</literal>, <literal>rcvbuf</literal>,
+<literal>sndbuf</literal>, <literal>accept_filter</literal>,
+<literal>deferred</literal>, or <literal>so_keepalive</literal>
+are used then for a given
+<value>address</value>:<value>port</value> pair
+a separate <c-func>bind</c-func> call will always be made.
+</tag-desc>
+
+<tag-name>
+<literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>
+</tag-name>
+<tag-desc>
+this parameter (0.7.42) sets the value of the <c-def>IPV6_V6ONLY</c-def>
+parameter for the listening socket.
+This parameter can only be set once on start.
+</tag-desc>
+
+<tag-name>
+<literal>ssl</literal>
+</tag-name>
+<tag-desc>
+this parameter (0.7.14) does not relate to system calls
+<c-func>listen</c-func> and <c-func>bind</c-func>, but allows to
+specify that all connections accepted on this port should work in
+the SSL mode.
+This allows for a more compact configuration for the server operating
+in both HTTP and HTTPS modes simultaneously.
+<example>
+listen 80;
+listen 443 ssl;
+</example>
+</tag-desc>
+
+<tag-name>
+<literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]
+</tag-name>
+<tag-desc>
+this parameter (1.1.11) configures the “TCP keepalive” behavior
+for the listening socket.
+If this parameter is omitted then the system default setting will be
+in effect for the socket.
+If set to the value “<literal>on</literal>”, the <c-def>SO_KEEPALIVE</c-def>
+socket option is turned on for the socket.
+If set to the value “<literal>off</literal>”, the <c-def>SO_KEEPALIVE</c-def>
+socket option is turned off for the socket.
+Some operating systems support tuning TCP keepalive parameters on a per-socket
+basis using the <c-def>TCP_KEEPIDLE</c-def>, <c-def>TCP_KEEPINTVL</c-def>,
+and <c-def>TCP_KEEPCNT</c-def> socket options.
+On such systems (currently, Linux 2.4+, NetBSD 5+, and
+FreeBSD 9.0-STABLE) they can be configured
+using the <value>keepidle</value>, <value>keepintvl</value>, and
+<value>keepcnt</value> parameters.
+One or two parameters may be omitted, in which case the system default setting
+for the corresponding socket option will be in effect.
+For example,
+<example>so_keepalive=30m::10</example>
+will set idle timeout (<c-def>TCP_KEEPIDLE</c-def>) to 30 minutes,
+leave probe interval (<c-def>TCP_KEEPINTVL</c-def>) at its system default,
+and set probes count (<c-def>TCP_KEEPCNT</c-def>) to 10 probes.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+Example:
+<example>
+listen 127.0.0.1 default accept_filter=dataready backlog=1024;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="location">
+<syntax block="yes">[
+    <literal>=</literal> |
+    <literal>~</literal> |
+    <literal>~*</literal> |
+    <literal>^~</literal>
+    ] <value>uri</value></syntax>
+<syntax block="yes"><literal>@</literal><value>name</value></syntax>
+<default/>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a configuration based on a request URI.
+</para>
+
+<para>
+The matching is performed against a normalized URI,
+after decoding a text encoded in the “<literal>%XX</literal>” form,
+resolving references to relative path components “<literal>.</literal>”
+and “<literal>..</literal>”, and possible
+<link id="merge_slashes">compression</link> of two or more
+adjacent slashes into a single slash.
+</para>
+
+<para>
+A location can either be defined by a prefix string, or by a regular expression.
+Regular expressions are specified by prepending them with the
+“<literal>~*</literal>” prefix (for case-insensitive matching), or with the
+“<literal>~</literal>” prefix (for case-sensitive matching).
+To find a location matching a given request, nginx first checks
+locations defined using the prefix strings (prefix locations).
+Among them, the most specific one is searched.
+Then regular expressions are checked, in the order of their appearance
+in a configuration file.
+A search of regular expressions terminates on the first match,
+and the corresponding configuration is used.
+If no match with a regular expression is found then a
+configuration of the most specific prefix location is used.
+</para>
+
+<para>
+Locations can be nested, with some exceptions mentioned below.
+</para>
+
+<para>
+For case-insensitive operating systems such as Mac OS X and Cygwin,
+matching with prefix strings ignores a case (0.7.7).
+However, comparison is limited to one-byte locales.
+</para>
+
+<para>
+Regular expressions can contain captures (0.7.40) that can later
+be used in other directives.
+</para>
+
+<para>
+If the most specific prefix location has the “<literal>^~</literal>” prefix
+then regular expressions are not checked.
+</para>
+
+<para>
+Also, using the “<literal>=</literal>” prefix it is possible to define
+an exact match of URI and location.
+If an exact match is found, the search terminates.
+For example, if a “<literal>/</literal>” request happens frequently,
+defining “<literal>location = /</literal>” will speed up the processing
+of these requests, as search terminates right after the first
+comparison.
+Such a location cannot obviously contain nested locations.
+</para>
+
+<para>
+<note>
+In versions from 0.7.1 to 0.8.41, if a request matched the prefix
+location without the “<literal>=</literal>” and “<literal>^~</literal>”
+prefixes, the search also terminated and regular expressions were
+not checked.
+</note>
+</para>
+
+<para>
+Let's illustrate the above by example:
+<example>
+location = / {
+    [ configuration A ]
+}
+
+location / {
+    [ configuration B ]
+}
+
+location ^~ /images/ {
+    [ configuration C ]
+}
+
+location ~* \.(gif|jpg|jpeg)$ {
+    [ configuration D ]
+}
+</example>
+The “<literal>/</literal>” request will match configuration A,
+the “<literal>/documents/document.html</literal>” request will match
+configuration B,
+the “<literal>/images/1.gif</literal>” request will match configuration C, and
+the “<literal>/documents/1.jpg</literal>” request will match configuration D.
+</para>
+
+<para>
+The “<literal>@</literal>” prefix defines a named location.
+Such a location is not used for a regular request processing, but instead
+used for request redirection.
+They cannot be nested, and cannot contain nested locations.
+</para>
+
+<!--
+<migration from="Apache" directive="Location" />
+-->
+
+</directive>
+
+
+<directive name="log_not_found">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables logging of errors about not found files into the
+<link doc="../ngx_core_module.xml" id="error_log"/>.
+</para>
+
+</directive>
+
+
+<directive name="log_subrequest">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables logging of subrequests into the
+<link doc="ngx_http_log_module.xml" id="access_log"/>.
+</para>
+
+</directive>
+
+
+<directive name="max_ranges">
+<syntax><value>number</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.1.2</appeared-in>
+
+<para>
+Limits the maximum allowed number of ranges in byte-range requests.
+Requests that exceed the limit are processed as if there were no
+byte ranges specified.
+By default, there is no limit.
+The value of zero disables the byte-range support completely.
+</para>
+
+</directive>
+
+
+<directive name="merge_slashes">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Enables or disables compression of two or more adjacent slashes
+in a URI into a single slash.
+</para>
+
+<para>
+Note that compression is essential for the correct prefix string
+and regular expressions location matching.
+Without it, the “<literal>//scripts/one.php</literal>” request would not match
+<example>
+location /scripts/ {
+    ...
+}
+</example>
+and might be processed as a static file,
+so it gets converted to “<literal>/scripts/one.php</literal>”.
+</para>
+
+<para>
+Turning the compression <literal>off</literal> can become necessary if a URI
+contains base64-encoded names, since base64 uses the “<literal>/</literal>”
+character internally.
+However, for security considerations, it is better to avoid turning off
+the compression.
+</para>
+
+<para>
+A directive can be specified on the <link id="server"/> level
+in a default server.
+In this case, its value will cover all virtual servers
+listening on the same address and port.
+</para>
+
+</directive>
+
+
+<directive name="msie_padding">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables adding of comments to responses with status
+greater than 400 for MSIE clients, to pad the response size to 512 bytes.
+</para>
+
+</directive>
+
+
+<directive name="msie_refresh">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables issuing refreshes instead of redirects, for MSIE clients.
+</para>
+
+</directive>
+
+
+<directive name="open_file_cache">
+<syntax><literal>off</literal></syntax>
+<syntax>
+<literal>max</literal>=<value>N</value>
+[<literal>inactive</literal>=<value>time</value>]</syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Configures a cache that can store:
+<list type="bullet">
+
+<listitem>
+open file descriptors, their sizes and modification times;
+</listitem>
+
+<listitem>
+directory lookups;
+</listitem>
+
+<listitem>
+file lookup errors, such as “file not found”, “no read permission”,
+and so on.
+<note>
+Caching of errors should be enabled separately by the
+<link id="open_file_cache_errors"/>
+directive.
+</note>
+</listitem>
+
+</list>
+</para>
+
+<para>
+The directive has the following parameters:
+<list type="tag">
+
+<tag-name>
+<literal>max</literal>
+</tag-name>
+<tag-desc>
+sets the maximum number of elements in the cache;
+on cache overflow the least recently used (LRU) elements get removed;
+</tag-desc>
+
+<tag-name>
+<literal>inactive</literal>
+</tag-name>
+<tag-desc>
+defines a time, after which an element gets removed from the cache
+if there were no accesses to it during this time;
+by default, it is 60 seconds;
+</tag-desc>
+
+<tag-name>
+<literal>off</literal>
+</tag-name>
+<tag-desc>
+disables the cache.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+Example:
+<example>
+open_file_cache          max=1000 inactive=20s;
+open_file_cache_valid    30s;
+open_file_cache_min_uses 2;
+open_file_cache_errors   on;<!--
+open_file_cache_events   on;
+-->
+</example>
+</para>
+
+</directive>
+
+
+<directive name="open_file_cache_errors">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables caching of file lookup errors by
+<link id="open_file_cache"/>.
+</para>
+
+</directive>
+
+
+<!--
+
+<directive name="open_file_cache_events">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables to use kernel events to validate
+<link id="open_file_cache"/>
+elements.
+This directive works with the
+<link doc="../events.xml" id="kqueue"/>
+method only.
+Note that only NetBSD&nbsp;2.0+ and FreeBSD&nbsp;6.0+
+support events for arbitrary file system types.
+Other operating systems support events only for essential
+file systems such as UFS or FFS.
+</para>
+
+</directive>
+
+-->
+
+
+<directive name="open_file_cache_min_uses">
+<syntax><value>number</value></syntax>
+<default>1</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the minimum <value>number</value> of file accesses during
+the period configured by the <literal>inactive</literal> parameter
+of the <link id="open_file_cache"/> directive,
+after which a file descriptor will remain open in the cache.
+</para>
+
+</directive>
+
+
+<directive name="open_file_cache_valid">
+<syntax><value>time</value></syntax>
+<default>60s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a time after which
+<link id="open_file_cache"/>
+elements should be validated.
+<!--
+When
+<link id="open_file_cache_events"/>
+is enabled, open file descriptors
+are checked only once, and then updated right after they get changed.
+-->
+</para>
+
+</directive>
+
+
+<directive name="optimize_server_names">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+This directive is made obsolete by the
+<link id="server_name_in_redirect"/> directive.
+</para>
+
+<!--
+<para>
+Enables or disables optimization of hostname checking in name-based
+virtual servers.
+In particular, the checking affects hostnames used in redirects.
+If optimization is enabled, and all name-based servers listening on
+the same address:port pair have identical configuration, then
+names are not checked during request processing, and the first
+server name is used in redirects.
+In case redirects should use hostnames sent by clients,
+optimization needs to be disabled.
+</para>
+-->
+
+</directive>
+
+
+<directive name="port_in_redirect">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables specifying the port in redirects issued by nginx.
+</para>
+
+<para>
+See also the <link id="server_name_in_redirect"/> directive.
+</para>
+
+</directive>
+
+
+<directive name="postpone_output">
+<syntax><value>size</value></syntax>
+<default>1460</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+If possible, the output of client data will be postponed until
+nginx has at least <value>size</value> bytes of data to send.
+Value of zero disables postponing.
+</para>
+
+</directive>
+
+
+<directive name="read_ahead">
+<syntax><value>size</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the amount of pre-reading when working with files, in the kernel.
+</para>
+
+<para>
+On Linux, the
+<literal>posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL)</literal>
+system call is used, so the <value>size</value> parameter is ignored.
+</para>
+
+<para>
+On FreeBSD, the
+<literal>fcntl(O_READAHEAD,</literal>
+<value>size</value><literal>)</literal>
+system call is used, supported in FreeBSD&nbsp;9.0-CURRENT.
+FreeBSD&nbsp;7 needs to be
+<link url="http://sysoev.ru/freebsd/patch.readahead.txt">patched</link>.
+</para>
+
+</directive>
+
+
+<directive name="recursive_error_pages">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables doing several redirects using the
+<link id="error_page"/>
+directive.
+</para>
+
+</directive>
+
+
+<directive name="request_pool_size">
+<syntax><value>size</value></syntax>
+<default>4k</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Allows to fine tune per-request memory allocations.
+This directive has minimal impact on performance,
+and should not generally be used.
+</para>
+
+</directive>
+
+
+<directive name="reset_timedout_connection">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables resetting of timed out connections.
+The reset is performed as follows: before closing a socket, the
+<c-def>SO_LINGER</c-def>
+option is set on it with a timeout value of 0.
+When the socket is closed, a client is sent TCP RST, and all memory
+occupied by this socket is freed.
+This avoids keeping of an already closed socket with filled buffers
+for a long time, in a FIN_WAIT1 state.
+</para>
+
+<para>
+It should be noted that timed out keep-alive connections are still
+closed normally.
+</para>
+
+</directive>
+
+
+<directive name="resolver">
+<syntax>
+<value>address</value> ...
+[<literal>valid</literal>=<value>time</value>]</syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Configures name servers used to resolve names of upstream servers
+into addresses, for example:
+<example>
+resolver 127.0.0.1 [::1]:5353;
+</example>
+An address can be specified as a domain name or IP address,
+and an optional port (1.3.1, 1.2.2).
+If port is not specified, the port 53 is used.
+Name servers are queried in a round-robin fashion.
+<note>
+Before version 1.1.7, only a single name server could be configured.
+Specifying name servers using IPv6 addresses is supported
+starting from versions 1.3.1 and 1.2.2.
+</note>
+By default, nginx caches answers using the TTL value of a response.
+An optional <literal>valid</literal> parameter allows to override it:
+<example>
+resolver 127.0.0.1 [::1]:5353 valid=30s;
+</example>
+<note>
+Before version 1.1.9, tuning of caching time was not possible,
+and nginx always cached answers for the duration of 5 minutes.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="resolver_timeout">
+<syntax><value>time</value></syntax>
+<default>30s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a timeout for name resolution, for example:
+<example>
+resolver_timeout 5s;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="root">
+<syntax><value>path</value></syntax>
+<default>html</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if in location</context>
+
+<para>
+Sets the root directory for requests.
+For example, with the following configuration
+<example>
+location /i/ {
+    root /data/w3;
+}
+</example>
+“<literal>/i/top.gif</literal>” will be responded
+with the file
+<path>/data/w3/i/top.gif</path>.
+</para>
+
+<para>
+The <value>path</value> value can contain variables
+except <var>$document_root</var> and <var>$realpath_root</var>.
+</para>
+
+<para>
+A path to the file is constructed by merely adding a URI to the value
+of the <literal>root</literal> directive.
+If a URI need to be modified, the
+<link id="alias"/> directive should be used.
+</para>
+
+</directive>
+
+
+<directive name="satisfy">
+<syntax><literal>all</literal> | <literal>any</literal></syntax>
+<default>all</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Allows access if <literal>all</literal> or <literal>any</literal> of the
+<link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
+or <link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>
+modules grant access.
+</para>
+
+<para>
+Example:
+<example>
+location / {
+    satisfy any;
+
+    allow 192.168.1.0/32;
+    deny  all;
+
+    auth_basic           "closed site";
+    auth_basic_user_file conf/htpasswd;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="satisfy_any">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+This directive has been replaced by the <literal>any</literal>
+parameter of the <link id="satisfy"/> directive.
+</para>
+
+</directive>
+
+
+<directive name="send_lowat">
+<syntax><value>size</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+If set to a non-zero value, nginx will try to minimize the number
+of send operations on client sockets by using either
+<c-def>NOTE_LOWAT</c-def> flag of the
+<link doc="../events.xml" id="kqueue"/> method,
+or the <c-def>SO_SNDLOWAT</c-def> socket option,
+with the specified <value>size</value>.
+</para>
+
+<para>
+This directive is ignored on Linux, Solaris, and Windows.
+</para>
+
+</directive>
+
+
+<directive name="send_timeout">
+<syntax><value>time</value></syntax>
+<default>60s</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets a timeout for transmitting a response to the client.
+A timeout is only set between two successive write operations,
+not for the transmission of the whole response.
+If a client does not receive anything within this time,
+a connection is closed.
+</para>
+
+</directive>
+
+
+<directive name="sendfile">
+
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if in location</context>
+
+<para>
+Enables or disables the use of
+<c-func>sendfile</c-func>.
+</para>
+
+</directive>
+
+
+<directive name="sendfile_max_chunk">
+
+<syntax><value>size</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+When set to a non-zero value, limits the amount of data that can be
+transferred in a single <c-func>sendfile</c-func> call.
+Without the limit, one fast connection may seize the worker process.
+</para>
+
+</directive>
+
+
+<directive name="server">
+<syntax block="yes"/>
+<default/>
+<context>http</context>
+
+<para>
+Sets a configuration for the virtual server.
+There is no clean separation between IP-based (based on the IP address)
+and name-based (based on the <header>Host</header> request header field)
+virtual servers.
+Instead, the <link id="listen"/> directives describe all
+addresses and ports that should accept connections for a server, and the
+<link id="server_name"/> directive lists all server names.
+Example configurations are provided in the
+“<link doc="request_processing.xml"/>” document.
+</para>
+
+</directive>
+
+
+<directive name="server_name">
+<syntax><value>name</value> ...</syntax>
+<default>""</default>
+<context>server</context>
+
+<para>
+Sets names of the virtual server, for example:
+<example>
+server {
+    server_name example.com www.example.com;
+}
+</example>
+</para>
+
+<para>
+The first name becomes the primary server name.
+Server names can include an asterisk (“<literal>*</literal>”)
+to replace the first or last part of a name:
+<example>
+server {
+    server_name example.com *.example.com www.example.*;
+}
+</example>
+</para>
+
+<para>
+The first two of the above mentioned names can be combined:
+<example>
+server {
+    server_name .example.com;
+}
+</example>
+</para>
+
+<para>
+If the parameter equals “<var>$hostname</var>” (0.9.4), the
+machine's hostname is substituted.
+</para>
+
+<para>
+It is also possible to use regular expressions in server names,
+prepending the name with a tilde (“<literal>~</literal>”):
+<example>
+server {
+    server_name www.example.com ~^www\d+\.example\.com$;
+}
+</example>
+</para>
+
+<para>
+Regular expressions can contain captures (0.7.40) that can later
+be used in other directives:
+<example>
+server {
+    server_name ~^(www\.)?(.+)$;
+
+    location / {
+        root /sites/$2;
+    }
+}
+
+server {
+    server_name _;
+
+    location / {
+        root /sites/default;
+    }
+}
+</example>
+</para>
+
+<para>
+Named captures in regular expressions create variables (0.8.25)
+that can later be used in other directives:
+<example>
+server {
+    server_name ~^(www\.)?(?&lt;domain&gt;.+)$;
+
+    location / {
+        root /sites/$domain;
+    }
+}
+
+server {
+    server_name _;
+
+    location / {
+        root /sites/default;
+    }
+}
+</example>
+</para>
+
+<para>
+It is also possible to specify an empty server name (0.7.11):
+<example>
+server {
+    server_name www.example.com "";
+}
+</example>
+It allows this server to process requests without the <header>Host</header>
+header field, instead of the default server for the given address:port pair.
+This is the default setting.
+<note>
+Before 0.8.48, the machine's hostname was used by default.
+</note>
+</para>
+
+<para>
+The name checking order is as follows:
+<list type="enum">
+
+<listitem>
+full names
+</listitem>
+
+<listitem>
+names with the prefix mask, e.g. “<literal>*.example.com</literal>”
+</listitem>
+
+<listitem>
+names with the suffix mask, e.g. “<literal>mail.*</literal>”
+</listitem>
+
+<listitem>
+regular expressions
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="server_name_in_redirect">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables the use of the primary server name, specified by the
+<link id="server_name"/>
+directive, in redirects issued by nginx.
+When disabled, the name from the <header>Host</header> request header field
+is used.
+If this field is not present, an IP address of the server is used.
+</para>
+
+<para>
+See also the <link id="port_in_redirect"/> directive.
+</para>
+
+</directive>
+
+
+<directive name="server_names_hash_bucket_size">
+<syntax><value>size</value></syntax>
+<default>32|64|128</default>
+<context>http</context>
+
+<para>
+Sets the bucket size for the server names hash tables.
+Default value depends on the size of the processor's cache line.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
+<directive name="server_names_hash_max_size">
+<syntax><value>size</value></syntax>
+<default>512</default>
+<context>http</context>
+
+<para>
+Sets the maximum <value>size</value> of the server names hash tables.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
+<directive name="server_tokens">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables emitting of nginx version in error messages and in the
+<header>Server</header> response header field.
+</para>
+
+</directive>
+
+
+<directive name="tcp_nodelay">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables the use of the <c-def>TCP_NODELAY</c-def> option.
+The option is enabled only when a connection is transitioned into the
+keep-alive state.
+</para>
+
+</directive>
+
+
+<directive name="tcp_nopush">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables the use of
+the <c-def>TCP_NOPUSH</c-def> socket option on FreeBSD
+or the <c-def>TCP_CORK</c-def> socket option on Linux.
+Options are enabled only when <link id="sendfile"/> is used.
+Enabling the option allows to
+<list type="bullet">
+
+<listitem>
+send the response header and the beginning of a file in one packet,
+on Linux and FreeBSD&nbsp;4.*;
+</listitem>
+
+<listitem>
+send a file in full packets.
+</listitem>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="try_files">
+<syntax><value>file</value> ... <value>uri</value></syntax>
+<syntax><value>file</value> ... =<value>code</value></syntax>
+<default/>
+<context>server</context>
+<context>location</context>
+
+<para>
+Checks the existence of files in the specified order, and uses
+the first found file for request processing; the processing
+is performed in the current context.
+A path to the file is constructed from the
+<value>file</value> parameter
+according to the
+<link id="root"/> and <link id="alias"/> directives.
+It is possible to check the directory existence by specifying
+a slash at the end of a name, e.g. “<literal>$uri/</literal>”.
+If none of the files were found, an internal redirect to the
+<value>uri</value> specified by the last parameter is made.
+For example:
+<example>
+location /images/ {
+    try_files $uri /images/default.gif;
+}
+
+location = /images/default.gif {
+    expires 30s;
+}
+</example>
+The last parameter can also point to a named location,
+see examples below.
+As of version 0.7.51, the last parameter can also be a
+<value>code</value>:
+<example>
+location / {
+    try_files $uri $uri/index.html $uri.html =404;
+}
+</example>
+</para>
+
+<para>
+Example when proxying Mongrel:
+<example>
+location / {
+    try_files /system/maintenance.html
+              $uri $uri/index.html $uri.html
+              @mongrel;
+}
+
+location @mongrel {
+    proxy_pass http://mongrel;
+}
+</example>
+</para>
+
+<para>
+Example for Drupal/FastCGI:
+<example>
+location / {
+    try_files $uri $uri/ @drupal;
+}
+
+location ~ \.php$ {
+    try_files $uri @drupal;
+
+    fastcgi_pass ...;
+
+    fastcgi_param SCRIPT_FILENAME /path/to$fastcgi_script_name;
+    fastcgi_param SCRIPT_NAME     $fastcgi_script_name;
+    fastcgi_param QUERY_STRING    $args;
+
+    ... other fastcgi_param's
+}
+
+location @drupal {
+    fastcgi_pass ...;
+
+    fastcgi_param SCRIPT_FILENAME /path/to/index.php;
+    fastcgi_param SCRIPT_NAME     /index.php;
+    fastcgi_param QUERY_STRING    q=$uri&amp;$args;
+
+    ... other fastcgi_param's
+}
+</example>
+In the following example,
+<example>
+location / {
+    try_files $uri $uri/ @drupal;
+}
+</example>
+the <literal>try_files</literal> directive is equivalent to
+<example>
+location / {
+    error_page 404 = @drupal;
+    log_not_found off;
+}
+</example>
+And here,
+<example>
+location ~ \.php$ {
+    try_files $uri @drupal;
+
+    fastcgi_pass ...;
+
+    fastcgi_param SCRIPT_FILENAME /path/to$fastcgi_script_name;
+
+    ...
+}
+</example>
+<literal>try_files</literal> checks the existence of the PHP file
+before passing the request to the FastCGI server.
+</para>
+
+<para>
+Example for Wordpress and Joomla:
+<example>
+location / {
+    try_files $uri $uri/ @wordpress;
+}
+
+location ~ \.php$ {
+    try_files $uri @wordpress;
+
+    fastcgi_pass ...;
+
+    fastcgi_param SCRIPT_FILENAME /path/to$fastcgi_script_name;
+    ... other fastcgi_param's
+}
+
+location @wordpress {
+    fastcgi_pass ...;
+
+    fastcgi_param SCRIPT_FILENAME /path/to/index.php;
+    ... other fastcgi_param's
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="types">
+<syntax block="yes"/>
+<default>
+    text/html  html;
+    image/gif  gif;
+    image/jpeg jpg;
+</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Maps file name extensions to MIME types of responses.
+Extensions are case-insensitive.
+Several extensions can map to one type, for example:
+<example>
+types {
+    application/octet-stream bin exe dll;
+    application/octet-stream deb;
+    application/octet-stream dmg;
+}
+</example>
+</para>
+
+<para>
+A sufficiently full mapping table is distributed with nginx in the
+<path>conf/mime.types</path> file.
+</para>
+
+<para>
+To make a particular location emit the
+“<literal>application/octet-stream</literal>”
+MIME type for all requests, try the following:
+<example>
+location /download/ {
+    types        { }
+    default_type application/octet-stream;
+}
+</example>
+</para>
+
+</directive>
+
+
+<directive name="types_hash_bucket_size">
+<syntax><value>size</value></syntax>
+<default>32|64|128</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the bucket size for the types hash tables.
+Default value depends on the size of the processor's cache line.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
+<directive name="types_hash_max_size">
+<syntax><value>size</value></syntax>
+<default>1024</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the maximum <value>size</value> of the types hash tables.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
+<directive name="underscores_in_headers">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+
+<para>
+Enables or disables the use of underscores in client request header fields.
+When disabled, request header fields whose names contain underscores are
+marked as invalid and are subject to the <link id="ignore_invalid_headers"/>
+directive.
+</para>
+
+<para>
+A directive can be specified on the <link id="server"/> level
+in a default server.
+In this case, its value will cover all virtual servers
+listening on the same address and port.
+</para>
+
+</directive>
+
+
+<directive name="variables_hash_bucket_size">
+<syntax><value>size</value></syntax>
+<default>64</default>
+<context>http</context>
+
+<para>
+Sets the bucket size for the variables hash table.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+
+<directive name="variables_hash_max_size">
+<syntax><value>size</value></syntax>
+<default>512</default>
+<context>http</context>
+
+<para>
+Sets the maximum <value>size</value> of the variables hash table.
+For more information, please refer to
+<link doc="../hash.xml">Setting Up Hashes</link>.
+</para>
+
+</directive>
+
+</section>
+
+
+<section id="variables" name="Embedded Variables">
+
+<para>
+The module <literal>ngx_http_core_module</literal> supports embedded variables
+with names matching those of the Apache Server.
+First of all, these are variables representing client request header
+fields, such as <var>$http_user_agent</var>, <var>$http_cookie</var>,
+and so on.
+It also supports other variables:
+<list type="tag">
+
+<tag-name><var>$arg_</var><value>name</value></tag-name>
+<tag-desc>
+argument <value>name</value> in the request line
+</tag-desc>
+
+<tag-name><var>$args</var></tag-name>
+<tag-desc>
+arguments in the request line
+</tag-desc>
+
+<tag-name><var>$binary_remote_addr</var></tag-name>
+<tag-desc>
+client address in a binary form, value's length is always 4 bytes
+</tag-desc>
+
+<tag-name><var>$body_bytes_sent</var></tag-name>
+<tag-desc>
+number of bytes sent to a client, not counting the response header
+</tag-desc>
+
+<tag-name><var>$content_length</var></tag-name>
+<tag-desc>
+<header>Content-Length</header> request header field
+</tag-desc>
+
+<tag-name><var>$content_type</var></tag-name>
+<tag-desc>
+<header>Content-Type</header> request header field
+</tag-desc>
+
+<tag-name><var>$cookie_</var><value>name</value></tag-name>
+<tag-desc>
+the <value>name</value> cookie
+</tag-desc>
+
+<tag-name><var>$document_root</var></tag-name>
+<tag-desc>
+<link id="root"/> or <link id="alias"/> directive's value
+for the current request
+</tag-desc>
+
+<tag-name><var>$document_uri</var></tag-name>
+<tag-desc>
+same as <var>$uri</var>
+</tag-desc>
+
+<tag-name><var>$host</var></tag-name>
+<tag-desc>
+<header>Host</header> request header field,
+or the server name matching a request if this field is not present
+</tag-desc>
+
+<tag-name><var>$hostname</var></tag-name>
+<tag-desc>
+host name
+</tag-desc>
+
+<tag-name><var>$http_</var><value>name</value></tag-name>
+<tag-desc>
+arbitrary request header field;
+the last part of a variable name is the field name converted
+to lower case with dashes replaced by underscores
+</tag-desc>
+
+<tag-name><var>$https</var></tag-name>
+<tag-desc>
+“<literal>on</literal>”
+if connection operates in SSL mode,
+or an empty string otherwise
+</tag-desc>
+
+<tag-name><var>$is_args</var></tag-name>
+<tag-desc>
+“<literal>?</literal>” if a request line has arguments,
+or an empty string otherwise
+</tag-desc>
+
+<tag-name><var>$limit_rate</var></tag-name>
+<tag-desc>
+allows for connection rate limiting
+</tag-desc>
+
+<tag-name><var>$nginx_version</var></tag-name>
+<tag-desc>
+nginx version
+</tag-desc>
+
+<tag-name><var>$pid</var></tag-name>
+<tag-desc>
+PID of the worker process
+</tag-desc>
+
+<tag-name><var>$query_string</var></tag-name>
+<tag-desc>
+same as <var>$args</var>
+</tag-desc>
+
+<tag-name><var>$realpath_root</var></tag-name>
+<tag-desc>
+an absolute pathname corresponding to the
+<link id="root"/> or <link id="alias"/> directive's value
+for the current request,
+with all symbolic links resolved to real paths
+</tag-desc>
+
+<tag-name><var>$remote_addr</var></tag-name>
+<tag-desc>
+client address
+</tag-desc>
+
+<tag-name><var>$remote_port</var></tag-name>
+<tag-desc>
+client port
+</tag-desc>
+
+<tag-name><var>$remote_user</var></tag-name>
+<tag-desc>
+user name supplied with the Basic authentication
+</tag-desc>
+
+<tag-name><var>$request</var></tag-name>
+<tag-desc>
+full original request line
+</tag-desc>
+
+<tag-name><var>$request_body</var></tag-name>
+<tag-desc>
+request body
+<para>
+The variable's value is made available in locations
+processed by the
+<link doc="ngx_http_proxy_module.xml" id="proxy_pass"/>
+and
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass"/>
+directives.
+</para>
+</tag-desc>
+
+<tag-name><var>$request_body_file</var></tag-name>
+<tag-desc>
+name of a temporary file with the request body
+<para>
+At the end of processing, the file needs to be removed.
+To always write a request body to a file,
+<link id="client_body_in_file_only"/> needs to be enabled.
+When passing the name of a temporary file in a proxied request,
+or in a request to a FastCGI server,
+passing of the request body should be disabled by the
+<link doc="ngx_http_proxy_module.xml" id="proxy_pass_request_body">
+proxy_pass_request_body off</link>
+and
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass_request_body">
+fastcgi_pass_request_body off</link>
+directives, respectively.
+</para>
+</tag-desc>
+
+<tag-name><var>$request_completion</var></tag-name>
+<tag-desc>
+“<literal>OK</literal>” if a request has completed,
+or an empty string otherwise
+</tag-desc>
+
+<tag-name><var>$request_filename</var></tag-name>
+<tag-desc>
+file path for the current request, based on the
+<link id="root"/> or <link id="alias"/>
+directives, and the request URI
+</tag-desc>
+
+<tag-name><var>$request_method</var></tag-name>
+<tag-desc>
+request method, usually
+“<literal>GET</literal>” or “<literal>POST</literal>”
+</tag-desc>
+
+<tag-name><var>$request_uri</var></tag-name>
+<tag-desc>
+full original request URI (with arguments)
+</tag-desc>
+
+<tag-name><var>$scheme</var></tag-name>
+<tag-desc>
+request scheme, “<literal>http</literal>” or “<literal>https</literal>”
+</tag-desc>
+
+<tag-name><var>$sent_http_</var><value>name</value></tag-name>
+<tag-desc>
+arbitrary response header field;
+the last part of a variable name is the field name converted
+to lower case with dashes replaced by underscores
+</tag-desc>
+
+<tag-name><var>$server_addr</var></tag-name>
+<tag-desc>
+an address of the server which accepted a request
+<para>
+Computing a value of this variable usually requires one system call.
+To avoid a system call, the <link id="listen"/> directives
+must specify addresses and use the <literal>bind</literal> parameter.
+</para>
+</tag-desc>
+
+<tag-name><var>$server_name</var></tag-name>
+<tag-desc>
+name of the server which accepted a request
+</tag-desc>
+
+<tag-name><var>$server_port</var></tag-name>
+<tag-desc>
+port of the server which accepted a request
+</tag-desc>
+
+<tag-name><var>$server_protocol</var></tag-name>
+<tag-desc>
+request protocol, usually
+“<literal>HTTP/1.0</literal>”
+or
+“<literal>HTTP/1.1</literal>”
+</tag-desc>
+
+<tag-name><var>$status</var></tag-name>
+<tag-desc>
+response status
+</tag-desc>
+
+<tag-name>
+<var>$tcpinfo_rtt</var>,
+<var>$tcpinfo_rttvar</var>,
+<var>$tcpinfo_snd_cwnd</var>,
+<var>$tcpinfo_rcv_space</var>
+</tag-name>
+<tag-desc>
+information about the client TCP connection; available on systems
+that support the <c-def>TCP_INFO</c-def> socket option
+</tag-desc>
+
+<tag-name><var>$uri</var></tag-name>
+<tag-desc>
+current URI in request, <link id="location">normalized</link>
+<para>
+The value of <var>$uri</var> may change during request processing,
+e.g. when doing internal redirects, or when using index files.
+</para>
+</tag-desc>
+
+</list>
+</para>
+
+</section>
+
+</module>
