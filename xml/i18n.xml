@@ -43,9 +43,9 @@ for recent changes.</item>
 
 <text lang="cn">
 <item id="and">和</item>
-<item id="author">作者</item>
-<item id="editor">编辑</item>
-<item id="translator">翻译</item>
+<item id="author">作者:</item>
+<item id="editor">编辑:</item>
+<item id="translator">翻译:</item>
 <item id="syntax">语法</item>
 <item id="default">默认值</item>
 <item id="context">上下文</item>
@@ -53,6 +53,9 @@ for recent changes.</item>
 <item id="directive.version">这个指令出现在版本</item>
 <item id="directive.versions">这个指令出现在版本</item>
 <item id="dirindex">指令目录</item>
+<item id="outdated">翻译内容可能已经过旧。
+你可以通过 <origin>英文版本</origin>
+查看最近的更新。</item>
 </text>
 
 <text lang="ja">
