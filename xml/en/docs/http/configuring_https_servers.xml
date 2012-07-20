@@ -204,7 +204,7 @@ Certificate chain
 </programlisting>
 
 In this example the subject (&ldquo;<i>s</i>&rdquo;) of the
-<url>www.GoDaddy.com</url> server certificate #0 is signed by an issuer
+<literal>www.GoDaddy.com</literal> server certificate #0 is signed by an issuer
 (&ldquo;<i>i</i>&rdquo;) which itself is the subject of the certificate #1,
 which is signed by an issuer which itself is the subject of the certificate #2,
 which signed by the well-known issuer <i>ValiCert, Inc.</i>
@@ -281,7 +281,7 @@ server {
 </programlisting>
 
 With this configuration a browser receives the certificate of the default
-server, i.e., <url>www.example.com</url> regardless of the requested server name.
+server, i.e., <literal>www.example.com</literal> regardless of the requested server name.
 This is caused by SSL protocol behaviour. The SSL connection is established
 before the browser sends an HTTP request and nginx does not know
 the name of the requested server. Therefore, it may only offer the certificate
@@ -321,18 +321,18 @@ server {
 There are other ways to share a single IP address between several
 HTTPS servers, however, all of them have drawbacks.
 One way is to use a certificate with several names in
-the SubjectAltName certificate field, for example, <url>www.example.com</url>
-and <url>www.example.org</url>.
+the SubjectAltName certificate field, for example, <literal>www.example.com</literal>
+and <literal>www.example.org</literal>.
 However, the SubjectAltName field length is limited.
 </para>
 
 <para>
 Another way is to use a certificate with a wildcard name, for example,
-<url>*.example.org</url>. This certificate matches
-<url>www.example.org</url>, but does not match <url>example.org</url>
-and <url>www.sub.example.org</url>. These two methods can also be combined.
+<literal>*.example.org</literal>. This certificate matches
+<literal>www.example.org</literal>, but does not match <literal>example.org</literal>
+and <literal>www.sub.example.org</literal>. These two methods can also be combined.
 A certificate may contain exact and wildcard names in the SubjectAltName field,
-for example, <url>example.org</url> and <url>*.example.org</url>.
+for example, <literal>example.org</literal> and <literal>*.example.org</literal>.
 </para>
 
 <para>

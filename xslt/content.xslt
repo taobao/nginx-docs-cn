@@ -349,21 +349,6 @@
       <xsl:text>)</xsl:text>
    </xsl:template>
 
-   <xsl:template match="url[/*[@lang='he']]">
-
-      <i>
-         <span class="ltr">
-            <xsl:apply-templates/>
-         </span>
-      </i>
-   </xsl:template>
-
-   <xsl:template match="url"> 
-      <i>
-         <xsl:apply-templates/>
-      </i>
-   </xsl:template>
-
    <xsl:template match="value"> 
       <code>
          <i>

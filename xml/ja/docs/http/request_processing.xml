@@ -101,7 +101,7 @@ server {
 
 この設定では、nginx はまず最初に <literal>server</literal> ブロックの <literal>listen</literal> ディレクティブに対してリクエストの IP アドレスとポートを考査します。次に、その IP アドレスとポートにマッチする <literal>server</literal> ブロックの <literal>server_name</literal> ディレクティブに対して、その HTTP リクエストの &ldquo;Host&rdquo; ヘッダを考査します。
 
-もしサーバ名が見つからなければ、そのリクエストはデフォルトサーバによって処理されます。例えば、192.168.1.1:80 ポートで受信された <url>www.example.com</url> へのリクエストは 192.168.1.1:80 ポートのデフォルトサーバ、つまり最初のサーバで処理されます。これはこのポートでは <url>www.example.com</url> は定義されていないからです。
+もしサーバ名が見つからなければ、そのリクエストはデフォルトサーバによって処理されます。例えば、192.168.1.1:80 ポートで受信された <literal>www.example.com</literal> へのリクエストは 192.168.1.1:80 ポートのデフォルトサーバ、つまり最初のサーバで処理されます。これはこのポートでは <literal>www.example.com</literal> は定義されていないからです。
 </para>
 
 <para>

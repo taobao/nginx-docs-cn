@@ -202,7 +202,7 @@ server {
 }
 </programlisting>
 
-使用上面的配置，不论浏览器请求哪个主机，都只会收到默认主机的证书，比方说就是<url>www.nginx.com</url>。这是由SSL协议本身的行为引起的。因为SSL规定在建立SSL连接以后，才能发送HTTP请求，所以nginx建立SSL连接时不知道所请求主机的名字，因此，它只会返回默认主机的证书。
+使用上面的配置，不论浏览器请求哪个主机，都只会收到默认主机的证书，比方说就是<literal>www.nginx.com</literal>。这是由SSL协议本身的行为引起的。因为SSL规定在建立SSL连接以后，才能发送HTTP请求，所以nginx建立SSL连接时不知道所请求主机的名字，因此，它只会返回默认主机的证书。
 </para>
 
 <para>
@@ -234,11 +234,11 @@ server {
         name="带有多个主机名的SSL证书">
 
 <para>
-也有其他一些方法可以实现多个HTTPS主机共享一个IP地址，但都有不足。其中一种方法是使用在“SubjectAltName”字段中存放多个名字的证书，比如<url>www.nginx.com</url>和<url>www.nginx.org</url>。这种方法的限制是“SubjectAltName”字段的长度。
+也有其他一些方法可以实现多个HTTPS主机共享一个IP地址，但都有不足。其中一种方法是使用在“SubjectAltName”字段中存放多个名字的证书，比如<literal>www.nginx.com</literal>和<literal>www.nginx.org</literal>。这种方法的限制是“SubjectAltName”字段的长度。
 </para>
 
 <para>
-另一种方式是使用主机名中含有通配符的证书，比如<url>*.nginx.org</url>。这个证书匹配<url>www.nginx.org</url>，但是不匹配<url>nginx.org</url>和<url>www.sub.nginx.org</url>。这两种方法可以结合在一起——使用在“SubjectAltName”字段中存放的多个名字的证书，这些名字既可以是确切的名字，也可以是通配符，比如<url>nginx.org</url>和<url>*.nginx.org</url>。
+另一种方式是使用主机名中含有通配符的证书，比如<literal>*.nginx.org</literal>。这个证书匹配<literal>www.nginx.org</literal>，但是不匹配<literal>nginx.org</literal>和<literal>www.sub.nginx.org</literal>。这两种方法可以结合在一起——使用在“SubjectAltName”字段中存放的多个名字的证书，这些名字既可以是确切的名字，也可以是通配符，比如<literal>nginx.org</literal>和<literal>*.nginx.org</literal>。
 </para>
 
 <para>

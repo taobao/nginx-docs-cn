@@ -10,6 +10,7 @@
             link        CDATA #REQUIRED
             lang        CDATA #REQUIRED
             rev         CDATA #IMPLIED
+            toc         (yes | no) "yes"
 >
 
 <!ELEMENT   section     (directive | para)+ >

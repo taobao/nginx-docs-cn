@@ -70,7 +70,7 @@
             <tr>
                <td valign="top">
 
-                  <xsl:if test="section[@name]">
+                  <xsl:if test="@toc = 'yes' and section[@id and @name]">
 
                      <table width="100%">
                         <tr>

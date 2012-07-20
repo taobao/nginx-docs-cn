@@ -37,30 +37,11 @@
 
       <html>
 
-         <head>
-
-            <title>
-               <xsl:value-of select="@name"/>
-            </title>
-
-            <xsl:call-template name="style">
-               <xsl:with-param select="@lang" name="lang"/>
-            </xsl:call-template>
-
-            <xsl:call-template name="ga"/>
-
-         </head>
-
-         <xsl:call-template name="body">
-            <xsl:with-param select="@lang" name="lang"/>
-         </xsl:call-template>
-
-      </html>
-   </xsl:template>
-
-   <xsl:template match="/article[@lang='he'] | /module[@lang='he']">
-
-      <html dir="rtl">
+         <xsl:if test="@lang = 'he'">
+            <xsl:attribute name="dir">
+               <xsl:text>rtl</xsl:text>
+            </xsl:attribute>
+         </xsl:if>
 
          <head>
 

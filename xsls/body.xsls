@@ -39,7 +39,7 @@ X:template body (lang) {
 
     <tr><td valign="top">
 
-        X:if "section[@name]" {
+        X:if "@toc = 'yes' and section[@id and @name]" {
             <table width="100%"><tr><td align="{$INDEX_ALIGN}">
             X:for-each "section[@id and @name]" {
                 <a href="#{@id}"> !{@name} </a><br/>

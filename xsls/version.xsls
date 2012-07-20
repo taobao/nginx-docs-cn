@@ -1,0 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+X:stylesheet {
+
+X:param VERSION = "'development'";
+
+X:output method="text";
+
+X:template = "/versions" { !{ normalize-space(*[local-name() = $VERSION]) } };
+
+}

@@ -30,7 +30,7 @@ server {
 </para>
 
 <para>
-这种做法是错的，复杂而且低效。正确的方式是为<url>nginx.org</url>定义一个单独的服务器：
+这种做法是错的，复杂而且低效。正确的方式是为<literal>nginx.org</literal>定义一个单独的服务器：
 
 <programlisting>
 server {
@@ -61,7 +61,7 @@ server {
 <section>
 
 <para>
-再举一个例子，处理一个和刚才相反的逻辑：既不是来自<url>nginx.com</url>，又不是来自<url>www.nginx.com</url>：
+再举一个例子，处理一个和刚才相反的逻辑：既不是来自<literal>nginx.com</literal>，又不是来自<literal>www.nginx.com</literal>：
 
 <programlisting>
 RewriteCond  %{HTTP_HOST}  !nginx.com
@@ -69,7 +69,7 @@ RewriteCond  %{HTTP_HOST}  !www.nginx.com
 RewriteRule  (.*)          http://www.nginx.com$1
 </programlisting>
 
-应该按下面这样分开定义<url>nginx.com</url>、<url>www.nginx.com</url>和其他站点：
+应该按下面这样分开定义<literal>nginx.com</literal>、<literal>www.nginx.com</literal>和其他站点：
 
 <programlisting>
 server {
