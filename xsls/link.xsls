@@ -8,7 +8,13 @@ X:stylesheet {
 X:template = "img" { <img src="{@href}"> !!; </img> }
 
 X:template = "origin" {
-    <a href="{document($ORIGIN)/*/@link}"> !!; </a>
+    <a>
+    X:attribute "href" {
+        !root(path = "$ORIGIN")
+        !{ concat(substring-before($ORIGIN, '.xml'), '.html') }
+    }
+    !!;
+    </a>
 }
 
 X:template = "link[@url]" {

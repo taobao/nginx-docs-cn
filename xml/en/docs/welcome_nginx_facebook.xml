@@ -101,10 +101,12 @@ type in "ipconfig /flushdns" and hit Enter.
 
 <listitem>
 Click the "page reload" button in your browser. Clear browser
-data (cache, cookies etc.). E.g. in Chrome find and click
-"Clear Browsing Data" (Settings > Under the Hood). <b>Caution:</b>
-you may be deleting saved passwords information here,
-so do it carefully and check what exact actions you are performing.
+data (cache, cookies etc.). E.g. with Chrome find and click
+"Clear Browsing Data" (Settings > Under the Hood). With Internet
+Explorer find Tools > Internet Options > General.
+<b>Caution:</b> you may be deleting saved passwords information
+here, so do it carefully and check what exact actions you are
+performing.
 </listitem>
 
 <listitem>
@@ -143,6 +145,21 @@ your preferred anti-virus and anti-malware tools.
 
 <para>
 Additional articles that might be helpful:
+</para>
+
+<para>
+DCWG.org:
+</para>
+<para>
+<link url="http://www.dcwg.org/detect/">
+How can you detect if your computer has been violated and infected
+with DNS Changer?</link>
+</para>
+
+<para>
+<link url="http://www.dcwg.org/fix/">
+How to clean up or fix malicious software (&ldquo;malware&rdquo;)
+associated with DNS Changer</link>
 </para>
 
 <para>

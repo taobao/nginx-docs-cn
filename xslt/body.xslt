@@ -70,7 +70,7 @@
             <tr>
                <td valign="top">
 
-                  <xsl:if test="$ORIGIN and document($ORIGIN)/*/@rev and               (not(@rev) or @rev != document($ORIGIN)/*/@rev)">
+                  <xsl:if test="$ORIGIN and document(concat($XML, '/', $ORIGIN))/*/@rev and               (not(@rev) or               @rev != document(concat($XML, '/', $ORIGIN))/*/@rev)">
 
                      <span>
 
