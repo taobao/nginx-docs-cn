@@ -1,8 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../dtd/article.dtd">
 
 <article name="nginx: support"
          link="/en/support.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 
 <section name="Wiki">
@@ -118,12 +124,11 @@ Report a Bug</link>
 
 <para>
 If you're looking for a commercial support option
-please refer to
+please refer to the
 <link url="http://nginx.com/support.html">
-the support page on our nginx.com web site.</link>
+support page on our nginx.com web site</link>.
 </para>
 
 </section>
-
 
 </article>

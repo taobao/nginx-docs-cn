@@ -1,8 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
 <article name="Connection processing methods"
          link="/en/docs/events.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 <section>
 
