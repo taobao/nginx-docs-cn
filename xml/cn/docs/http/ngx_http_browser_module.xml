@@ -20,17 +20,17 @@
 
 <tag-name><var>$modern_browser</var></tag-name>
 <tag-desc>
-如果浏览器被为识别常规版本浏览器时，该值等于<link id="modern_browser_value"/> 指令设置的值；
+如果浏览器被为识别为常规版本浏览器，该值等于<link id="modern_browser_value"/> 指令设置的值；
 </tag-desc>
 
 <tag-name><var>$ancient_browser</var></tag-name>
 <tag-desc>
-如果浏览器被识别为骨灰浏览器时，该值等于<link id="ancient_browser_value"/>指令设置的值；
+如果浏览器被识别为骨灰浏览器，该值等于<link id="ancient_browser_value"/>指令设置的值；
 </tag-desc>
 
 <tag-name><var>$msie</var></tag-name>
 <tag-desc>
-如果浏览器被识别为MSIE版本的时候，该值等于“1”。
+如果浏览器被识别为MSIE，该值等于“1”。
 </tag-desc>
 
 </list>
@@ -119,21 +119,21 @@ if ($ancient_browser) {
 
 <para>
 指定一个版本，在此版之后浏览器都被认定为常规浏览器。
-一个浏览器可是下列之一： <literal>msie</literal>,
+一个浏览器可以是下列之一： <literal>msie</literal>,
 <literal>gecko</literal> (基于Mozilla),
 <literal>opera</literal>，<literal>safari</literal>,
 或者 <literal>konqueror</literal>。
 </para>
 
 <para>
-版本可被指定为一下形式：X, X.X, X.X.X, or X.X.X.X。
+版本可被指定为以下形式：X, X.X, X.X.X, or X.X.X.X。
 每一形式的最大值分别是4000, 4000.99, 4000.99.99, and 4000.99.99.99。
 </para>
 
 <para>
 特殊值<literal>unlisted</literal>指定浏览器为常规浏览器，如果它没有出现在
 <literal>modern_browser</literal>和 <link id="ancient_browser"/>指令中。
-否则的话浏览器被认定为骨灰浏览器。
+否则的话浏览器被认定为旧版浏览器。
 如果请求头部没有<header>User-Agent</header>域，浏览器以没有处于列表中来对待。
 </para>
 
@@ -148,7 +148,7 @@ if ($ancient_browser) {
 <context>location</context>
 
 <para>
-设定一个值给 变量<var>$modern_browser</var>。
+设定一个值给变量<var>$modern_browser</var>。
 </para>
 
 </directive>
