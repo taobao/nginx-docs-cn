@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <!--
-  Copyright (c) moonbingbing@gmail.com
+Copyright (C) Igor Sysoev
+Copyright (C) Nginx, Inc.
+Copyright (c) moonbingbing@gmail.com
 -->
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Module ngx_http_gzip_static_module"
-        link="/en/docs/http/ngx_http_gzip_static_module.html"
+        link="/cn/docs/http/ngx_http_gzip_static_module.html"
         lang="cn"
 		translator="WenMing"
 		>
@@ -13,11 +15,11 @@
 <section id="summary">
 
 <para>
-模块 <literal>ngx_http_gzip_static_module</literal> 允许发送以“<literal>.gz</literal>”作为文件扩展名的预压缩文件，而不是常规文件。
+模块 <literal>ngx_http_gzip_static_module</literal> 允许发送以“<literal>.gz</literal>”作为文件扩展名的预压缩文件，以替代发送普通文件。
 </para>
 
 <para>
-这个模块不是默认安装的，因此需要指定
+这个模块不是默认编译的，因此需要指定
 <literal>--with-http_gzip_static_module</literal>
 编译选项。
 </para>
@@ -47,8 +49,8 @@ gzip_proxied expired no-cache no-store private auth;
 <context>location</context>
 
 <para>
-启用或者禁用检查预压缩文件的存在。
-以下指令也可以一起考虑:
+启用或者禁用检查预压缩文件是否存在。
+与以下指令共同确定功能开启:
 <link doc="ngx_http_gzip_module.xml" id="gzip_http_version"/>,
 <link doc="ngx_http_gzip_module.xml" id="gzip_proxied"/>,
 <link doc="ngx_http_gzip_module.xml" id="gzip_disable"/>,
