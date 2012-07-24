@@ -1,8 +1,6 @@
 DOC_LANG =	ru
 
 DOCS =									\
-		introduction						\
-		howto							\
 		faq							\
 		install							\
 		windows							\
@@ -13,22 +11,12 @@ DOCS =									\
 		control							\
 		hash							\
 		dirindex						\
+		http/request_processing					\
+		http/configuring_https_servers				\
+		debugging_log						\
 
 DOCS_XML =	$(foreach name, $(DOCS), xml/$(DOC_LANG)/docs/$(name).xml)
 DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
-
-INTRO =									\
-		http/request_processing					\
-		http/configuring_https_servers				\
-
-INTRO_XML =	$(foreach name, $(INTRO), xml/$(DOC_LANG)/docs/$(name).xml)
-INTRO_HTML =	$(foreach name, $(INTRO), $(OUT)/$(DOC_LANG)/docs/$(name).html)
-
-HOWTO =									\
-		debugging_log						\
-
-HOWTO_XML =	$(foreach name, $(HOWTO), xml/$(DOC_LANG)/docs/$(name).xml)
-HOWTO_HTML =	$(foreach name, $(HOWTO), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 
 FAQ =									\
 		sys_errlist						\
@@ -110,12 +98,6 @@ xml/$(DOC_LANG)/docs/dirindex.xml:					\
 	--stringparam LANG $(patsubst xml/%/docs/dirindex.xml,%,$@)	\
 	xslt/dirindex.xslt - |						\
 	sed 's;xml/[^/]*/docs/;;g' > $@
-
-$(OUT)/$(DOC_LANG)/docs/introduction.html:				\
-		$(INTRO_XML)						\
-
-$(OUT)/$(DOC_LANG)/docs/howto.html:					\
-		$(HOWTO_XML)						\
 
 $(OUT)/$(DOC_LANG)/docs/faq.html:					\
 		$(FAQ_XML)						\

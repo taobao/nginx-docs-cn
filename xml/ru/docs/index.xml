@@ -8,28 +8,11 @@
 <article name="nginx: документация"
          link="/ru/docs/"
          lang="ru"
-         rev="1">
+         rev="2"
+         toc="no">
 
 
-<section>
-
-<para>
-<list type="bullet">
-
-<listitem>
-<link doc="introduction.xml"/>
-</listitem>
-
-<listitem>
-<link doc="howto.xml"/>
-</listitem>
-
-<listitem>
-<link doc="faq.xml"/>
-</listitem>
-
-</list>
-</para>
+<section id="introduction" name="Введение">
 
 <para>
 <list type="bullet">
@@ -39,11 +22,23 @@
 </listitem>
 
 <listitem>
-<link doc="windows.xml"/>
+<link doc="http/request_processing.xml"/>
 </listitem>
 
 <listitem>
 <link doc="events.xml"/>
+</listitem>
+
+<listitem>
+<link doc="windows.xml"/>
+</listitem>
+
+<listitem>
+<link doc="control.xml"/>
+</listitem>
+
+<listitem>
+<link doc="http/configuring_https_servers.xml"/>
 </listitem>
 
 <listitem>
@@ -59,17 +54,18 @@
 </listitem>
 
 <listitem>
-<link doc="control.xml"/>
+<link doc="hash.xml"/>
 </listitem>
 
 <listitem>
-<link doc="hash.xml"/>
+<link doc="debugging_log.xml"/>
 </listitem>
 
 </list>
 </para>
 
 </section>
+
 
 <section name="Справочник по модулям">
 

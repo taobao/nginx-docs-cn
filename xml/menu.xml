@@ -26,8 +26,6 @@
 <item href="/en/download.html" lang="en"> 下载 </item>
 <item href="/en/security_advisories.html" lang="en"> 安全漏洞 </item>
 <item href="/cn/docs/"> 文档 </item>
-<item href="/cn/docs/introduction.html"> 入门 </item>
-<item href="/cn/docs/howto.html"> How to </item>
 <item href="/cn/docs/faq.html"> FAQ </item>
 <item href="http://trac.nginx.org/nginx" lang="en"> trac </item>
 <item href="http://wiki.nginx.org" lang="en"> wiki </item>
@@ -66,12 +64,10 @@
 -->
 <item href="/en/security_advisories.html"> security advisories </item>
 <item href="/en/docs/"> documentation </item>
-<item href="/en/docs/introduction.html"> introduction </item>
 <item href="/en/pgp_keys.html"> pgp keys </item>
 <!--
 <item href="/en/docs/reference.html"> reference </item>
 -->
-<item href="/en/docs/howto.html"> howto </item>
 <item href="/en/docs/faq.html"> faq </item>
 <item href="http://trac.nginx.org/nginx"> trac </item>
 <item href="http://wiki.nginx.org"> wiki </item>
@@ -104,8 +100,6 @@
 <item href="/en/download.html" lang="אנגלית"> הורדה </item>
 <item href="/en/security_advisories.html" lang="אנגלית"> דיווחי אבטחה </item>
 <item href="/he/docs/"> תיעוד </item>
-<item href="/he/docs/introduction.html"> הקדמה </item>
-<item href="/he/docs/howto.html"> איך עושים... </item>
 <item href="/en/docs/faq.html" lang="אנגלית"> שאלות נפוצות </item>
 <item href="http://wiki.nginx.org" lang="אנגלית"> ויקי </item>
 <item href="/en/links.html" lang="אנגלית"> קישורים </item>
@@ -135,8 +129,6 @@
 <item href="/en/download.html" lang="en"> ダウンロード </item>
 <item href="/en/security_advisories.html" lang="en"> セキュリティ情報 </item>
 <item href="/ja/docs/"> ドキュメント </item>
-<item href="/ja/docs/introduction.html"> 入門 </item>
-<item href="/ja/docs/howto.html"> ハウツー </item>
 <item href="/ja/docs/faq.html"> faq </item>
 <item href="/en/links.html" lang="en"> リンク </item>
 <item href="/en/books.html" lang="en"> 本 </item>
@@ -167,8 +159,6 @@
 <item href="/en/security_advisories.html" lang="en"> безопасность </item>
 <item href="/en/pgp_keys.html" lang="en"> pgp ключи </item>
 <item href="/ru/docs/"> документация </item>
-<item href="/ru/docs/introduction.html"> введение </item>
-<item href="/ru/docs/howto.html"> howto </item>
 <item href="/ru/docs/faq.html"> faq </item>
 <item href="http://trac.nginx.org/nginx"> trac </item>
 <item href="http://wiki.nginx.org/"> wiki </item>
@@ -202,8 +192,6 @@
 <item href="/en/security_advisories.html" lang="ing">
       güvenlik tavsiyeleri </item>
 <item href="/tr/docs/"> dökümantasyon </item>
-<item href="/tr/docs/introduction.html"> giriş </item>
-<item href="/tr/docs/howto.html"> kılavuz </item>
 <item href="/tr/docs/faq.html"> sss </item>
 <item href="http://wiki.nginx.org/NginxTr"> wiki </item>
 <item href="/en/links.html" lang="ing"> bağlantılar </item>
