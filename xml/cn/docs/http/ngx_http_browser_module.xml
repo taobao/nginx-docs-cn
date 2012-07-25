@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0"?>
 
 <!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
   Copyright (c) litianqing
   -->
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Module ngx_http_browser_module"
-        link="/en/docs/http/ngx_http_browser_module.html"
-        lang="en"
+        link="/cn/docs/http/ngx_http_browser_module.html"
+        lang="cn"
         rev="1">
 
 <section id="summary">
@@ -20,17 +22,17 @@
 
 <tag-name><var>$modern_browser</var></tag-name>
 <tag-desc>
-如果浏览器被为识别为常规版本浏览器，该值等于<link id="modern_browser_value"/> 指令设置的值；
+如果浏览器被为识别为新式浏览器，该值等于<link id="modern_browser_value"/> 指令设置的值；
 </tag-desc>
 
 <tag-name><var>$ancient_browser</var></tag-name>
 <tag-desc>
-如果浏览器被识别为骨灰浏览器，该值等于<link id="ancient_browser_value"/>指令设置的值；
+如果浏览器被识别为老式浏览器，该值等于<link id="ancient_browser_value"/>指令设置的值；
 </tag-desc>
 
 <tag-name><var>$msie</var></tag-name>
 <tag-desc>
-如果浏览器被识别为MSIE，该值等于“1”。
+如果浏览器被识别为任何版本的MSIE，该值等于“1”。
 </tag-desc>
 
 </list>
@@ -39,10 +41,10 @@
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置示例">
 
 <para>
-Choosing an index file:
+选择一个默认页:
 <example>
 modern_browser_value "modern.";
 
@@ -57,7 +59,7 @@ index index.${modern_browser}html index.html;
 </para>
 
 <para>
-Redirection for old browsers:
+旧式浏览器的重定向：
 <example>
 modern_browser msie      5.0;
 modern_browser gecko     0.9.1;
@@ -78,7 +80,7 @@ if ($ancient_browser) {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="ancient_browser">
 <syntax><value>string</value> ...</syntax>
@@ -88,8 +90,8 @@ if ($ancient_browser) {
 <context>location</context>
 
 <para>
-如果任一指定的子串在请求域<header>User-Agent</header>中被发现，浏览器将被认定为旧版浏览器。
-特殊字符串“<literal>netscape4</literal>” 相当于正则字符串“<literal>^Mozilla/[1-4]</literal>”。
+如果任一指定的子串在请求头的<header>User-Agent</header>域中被发现，浏览器将被认定为旧式浏览器。
+特殊字符串“<literal>netscape4</literal>” 相当于正则表达式“<literal>^Mozilla/[1-4]</literal>”。
 </para>
 
 </directive>
@@ -103,7 +105,7 @@ if ($ancient_browser) {
 <context>location</context>
 
 <para>
-设定一个值给变量<var>$ancient_browser</var>。
+给变量<var>$ancient_browser</var>设定值。
 </para>
 
 </directive>
@@ -118,23 +120,23 @@ if ($ancient_browser) {
 <context>location</context>
 
 <para>
-指定一个版本，在此版之后浏览器都被认定为常规浏览器。
-一个浏览器可以是下列之一： <literal>msie</literal>,
+指定一个版本，此版及后续版本的浏览器都被认定为新式的浏览器。
+浏览器可以是下列之一： <literal>msie</literal>,
 <literal>gecko</literal> (基于Mozilla),
 <literal>opera</literal>，<literal>safari</literal>,
 或者 <literal>konqueror</literal>。
 </para>
 
 <para>
-版本可被指定为以下形式：X, X.X, X.X.X, or X.X.X.X。
-每一形式的最大值分别是4000, 4000.99, 4000.99.99, and 4000.99.99.99。
+版本可被指定为以下形式：X, X.X, X.X.X, 或 X.X.X.X。
+每一形式的最大值分别是4000, 4000.99, 4000.99.99, 和 4000.99.99.99。
 </para>
 
 <para>
-特殊值<literal>unlisted</literal>指定浏览器为常规浏览器，如果它没有出现在
-<literal>modern_browser</literal>和 <link id="ancient_browser"/>指令中。
-否则的话浏览器被认定为旧版浏览器。
-如果请求头部没有<header>User-Agent</header>域，浏览器以没有处于列表中来对待。
+浏览器既没有在<literal>modern_browser</literal>中列出，又没有在<link id="ancient_browser"/>中
+列出时，如果配置了特殊值<literal>unlisted</literal>，那么浏览器将被认定为新式的浏览器，否则
+认定为旧式的浏览器。
+如果请求头中没有<header>User-Agent</header>域，浏览器以没有列出对待。
 </para>
 
 </directive>
@@ -148,7 +150,7 @@ if ($ancient_browser) {
 <context>location</context>
 
 <para>
-设定一个值给变量<var>$modern_browser</var>。
+给变量<var>$modern_browser</var>设定值。
 </para>
 
 </directive>
