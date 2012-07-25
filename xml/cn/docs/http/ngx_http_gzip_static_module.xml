@@ -54,7 +54,7 @@ gzip_proxied expired no-cache no-store private auth;
 <link doc="ngx_http_gzip_module.xml" id="gzip_http_version"/>,
 <link doc="ngx_http_gzip_module.xml" id="gzip_proxied"/>,
 <link doc="ngx_http_gzip_module.xml" id="gzip_disable"/>,
-and <link doc="ngx_http_gzip_module.xml" id="gzip_vary"/>.
+和<link doc="ngx_http_gzip_module.xml" id="gzip_vary"/>.
 </para>
 
 <para>
