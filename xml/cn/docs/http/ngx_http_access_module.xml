@@ -6,14 +6,17 @@ Copyright (c) moonbingbing@gmail.com
 -->
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_access_module"
+<module name="ngx_http_access_module模块"
         link="/cn/docs/http/ngx_http_access_module.html"
-        lang="cn">
+        lang="cn"
+        rev="1"
+        translator="WenMing"
+        >
 
 <section id="summary">
 
 <para>
-模块 <literal>ngx_http_access_module</literal> 允许对某些客户端的IP地址限制访问。
+模块 <literal>ngx_http_access_module</literal> 允许限制某些IP地址的客户端访问。
 </para>
 
 <para>
