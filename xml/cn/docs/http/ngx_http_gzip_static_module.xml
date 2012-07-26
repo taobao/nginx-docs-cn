@@ -6,11 +6,12 @@ Copyright (c) moonbingbing@gmail.com
 -->
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_gzip_static_module"
+<module name="ngx_http_gzip_static_module模块"
         link="/cn/docs/http/ngx_http_gzip_static_module.html"
         lang="cn"
-		translator="WenMing"
-		>
+        rev="1"
+        translator="WenMing"
+        >
 
 <section id="summary">
 
