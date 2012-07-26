@@ -154,7 +154,7 @@ bytes on 64-bit platforms.
 The length of the <var>$binary_remote_addr</var> variable's value
 is always 4 bytes, and the stored state always occupies 32 bytes
 on 32-bit platforms, and 64 bytes on 64-bit platforms.
-One megabyte zone can keep about 32 thousand 32-bit states,
+One megabyte zone can keep about 32 thousand 32-byte states,
 and about 16 thousand 64-byte states.
 If the storage for a zone is exhausted, the server will return error
 <http-status code="503" text="Service Temporarily Unavailable"/>
