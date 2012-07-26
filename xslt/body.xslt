@@ -112,6 +112,16 @@
                                  </a>
                                  <br/>
 
+                                 <xsl:for-each select="section[@id and @name]">
+
+                                    <xsl:text>     </xsl:text>
+
+                                    <a href="#{@id}">
+                                       <xsl:value-of select="@name"/>
+                                    </a>
+                                    <br/>
+                                 </xsl:for-each>
+
                                  <xsl:if test="@id = 'directives'">
 
                                     <xsl:for-each select="directive[@name]">
