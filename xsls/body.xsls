@@ -66,6 +66,10 @@ X:template body (lang) {
             <table width="100%"><tr><td align="{$INDEX_ALIGN}">
             X:for-each "section[@id and @name]" {
                 <a href="#{@id}"> !{@name} </a><br/>
+                X:for-each "section[@id and @name]" {
+                    X:text{&#160;&#160;&#160;&#160;&#160;}
+                    <a href="#{@id}"> !{@name} </a><br/>
+                }
                 X:if "@id = 'directives'" {
                     X:for-each "directive[@name]" {
                         X:text{&#160;&#160;&#160;&#160;&#160;}

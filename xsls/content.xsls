@@ -10,6 +10,11 @@ X:stylesheet {
         !!;
     }
 
+    X:template = "section/section[@id and @name]" {
+        <a name="{@id}" /> <center><h5> !{@name} </h5></center>
+        !!;
+    }
+
     X:template = "section[@id and not(@name)]" {
         <a name="{@id}" />
         !!;
@@ -17,6 +22,11 @@ X:stylesheet {
 
     X:template = "section[not(@id) and @name]" {
         <center><h4> !{@name} </h4></center>
+        !!;
+    }
+
+    X:template = "section/section[not(@id) and @name]" {
+        <center><h5> !{@name} </h5></center>
         !!;
     }
 
