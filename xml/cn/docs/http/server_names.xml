@@ -48,11 +48,11 @@ nginx将以下面顺序检测名字：
 </listitem>
 
 <listitem>
-以星号起始的通配符名字：<url>*.nginx.org</url>；
+以星号起始的通配符名字：<literal>*.nginx.org</literal>；
 </listitem>
 
 <listitem>
-以星号结束的通配符名字：<url>mail.*</url>；
+以星号结束的通配符名字：<literal>mail.*</literal>；
 </listitem>
 
 <listitem>
@@ -70,7 +70,7 @@ nginx将以下面顺序检测名字：
         name="通配符名字">
 
 <para>
-通配符名字只可以在名字的起始处或结尾处包含一个星号，并且星号与其他字符之间用点分隔。所以，<literal>www.*.nginx.org</literal>和<literal>w*.nginx.org</literal>都是非法的。不过，上面的两个名字可以使用正则表达式描述：<literal>~^www\..+\.nginx\.org$</literal>和<literal>~^w.*\.nginx\.org$</literal>。星号可以匹配名字的多个节（各节都是以点号分隔的），比如<literal>*.nginx.org</literal>不仅匹配<url>www.nginx.org</url>，也匹配<url>www.sub.nginx.org</url>。
+通配符名字只可以在名字的起始处或结尾处包含一个星号，并且星号与其他字符之间用点分隔。所以，<literal>www.*.nginx.org</literal>和<literal>w*.nginx.org</literal>都是非法的。不过，上面的两个名字可以使用正则表达式描述：<literal>~^www\..+\.nginx\.org$</literal>和<literal>~^w.*\.nginx\.org$</literal>。星号可以匹配名字的多个节（各节都是以点号分隔的），比如<literal>*.nginx.org</literal>不仅匹配<literal>www.nginx.org</literal>，也匹配<literal>www.sub.nginx.org</literal>。
 </para>
 
 <para>
@@ -244,7 +244,7 @@ server {
 </para>
 
 <para>
-鉴于以上原因，请尽可能使用确切的名字。举个例子，如果使用<url>nginx.org</url>和<url>www.nginx.org</url>来访问服务器是最频繁的，那么将它们明确的定义出来就更为有效：
+鉴于以上原因，请尽可能使用确切的名字。举个例子，如果使用<literal>nginx.org</literal>和<literal>www.nginx.org</literal>来访问服务器是最频繁的，那么将它们明确的定义出来就更为有效：
 
 <programlisting>
 server {
@@ -329,15 +329,15 @@ or server_names_hash_bucket_size: 32
 </listitem>
 
 <listitem>
-从0.6.0版本开始，支持形如<url>nginx.*</url>的通配符名字。
+从0.6.0版本开始，支持形如<literal>nginx.*</literal>的通配符名字。
 </listitem>
 
 <listitem>
-从0.3.18版本开始，支持形如<url>.nginx.org</url>的特殊通配符名字。
+从0.3.18版本开始，支持形如<literal>.nginx.org</literal>的特殊通配符名字。
 </listitem>
 
 <listitem>
-从0.1.13版本开始，支持形如<url>*.nginx.org</url>的通配符名字。
+从0.1.13版本开始，支持形如<literal>*.nginx.org</literal>的通配符名字。
 </listitem>
 
 </list>

@@ -133,7 +133,7 @@ Certificate chain
 ...
 </programlisting>
 
-この例では、<url>www.GoDaddy.com</url> サーバ証明書 #0 の対象 (&ldquo;<i>s</i>&rdquo;) はそれ自身が証明書 #1 の対象である発行者 (&ldquo;<i>i</i>&rdquo;) によって署名されています。そして、証明書 #1はそれ自身が証明書 #2 の対象である発行者によって署名され、証明書 #2 は有名な発行者である <i>ValiCert, Inc.</i> によって署名されていて、<i>ValiCert, Inc.</i> の証明書はブラウザに組み込まれている証明書ベースに保持されています（こうして連鎖します）。
+この例では、<literal>www.GoDaddy.com</literal> サーバ証明書 #0 の対象 (&ldquo;<i>s</i>&rdquo;) はそれ自身が証明書 #1 の対象である発行者 (&ldquo;<i>i</i>&rdquo;) によって署名されています。そして、証明書 #1はそれ自身が証明書 #2 の対象である発行者によって署名され、証明書 #2 は有名な発行者である <i>ValiCert, Inc.</i> によって署名されていて、<i>ValiCert, Inc.</i> の証明書はブラウザに組み込まれている証明書ベースに保持されています（こうして連鎖します）。
 </para>
 
 <para>
@@ -193,7 +193,7 @@ server {
 }
 </programlisting>
 
-この設定では、ブラウザはリクエストされたサーバ名に関わらずデフォルトサーバ、すなわちここでは <url>www.example.com</url> の証明書を受信します。これは SSL プロトコルの作用によるものです。この SSL 接続はブラウザが HTTP リクエストを送る前に確立されるので、nginx にはリクエストされたサーバ名は分かりません。したがって、デフォルトサーバの証明書を送ることしかできません。
+この設定では、ブラウザはリクエストされたサーバ名に関わらずデフォルトサーバ、すなわちここでは <literal>www.example.com</literal> の証明書を受信します。これは SSL プロトコルの作用によるものです。この SSL 接続はブラウザが HTTP リクエストを送る前に確立されるので、nginx にはリクエストされたサーバ名は分かりません。したがって、デフォルトサーバの証明書を送ることしかできません。
 </para>
 
 <para>
@@ -225,11 +225,11 @@ server {
         name="複数サーバ名をもつ SSL 証明書">
 
 <para>
-単一の IP アドレスを複数の HTTPS サーバ間で共有する方法は他にもありますが、どれも欠点があります。ひとつは、SubjectAltName フィールドに複数サーバ名（例えば、<url>www.example.com</url> と <url>www.example.org</url>）をもつ単一の証明書を使用する方法です。しかし、SubjectAltName の長さには制限があります。
+単一の IP アドレスを複数の HTTPS サーバ間で共有する方法は他にもありますが、どれも欠点があります。ひとつは、SubjectAltName フィールドに複数サーバ名（例えば、<literal>www.example.com</literal> と <literal>www.example.org</literal>）をもつ単一の証明書を使用する方法です。しかし、SubjectAltName の長さには制限があります。
 </para>
 
 <para>
-もうひとつの方法は、例えば <url>*.example.org</url> のようにワイルドカード名を持った証明書を使用する方法です。この証明書は <url>www.example.org</url> にマッチしますが <url>example.org</url> や <url>www.sub.example.org</url> にはマッチしません。以上の二つの方法は組み合わせることもできます。証明書には、例えば <url>example.org</url> と <url>*.example.org</url> のように SubjectAltName フィールドに完全一致名とワイルドカード名を含ませることができます。
+もうひとつの方法は、例えば <literal>*.example.org</literal> のようにワイルドカード名を持った証明書を使用する方法です。この証明書は <literal>www.example.org</literal> にマッチしますが <literal>example.org</literal> や <literal>www.sub.example.org</literal> にはマッチしません。以上の二つの方法は組み合わせることもできます。証明書には、例えば <literal>example.org</literal> と <literal>*.example.org</literal> のように SubjectAltName フィールドに完全一致名とワイルドカード名を含ませることができます。
 </para>
 
 <para>

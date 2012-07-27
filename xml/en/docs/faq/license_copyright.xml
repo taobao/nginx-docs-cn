@@ -1,10 +1,15 @@
+<!--
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article name="How can nginx copyright be acknowledged
                when using nginx as part of a proprietary
                software distibution?"
          link="/en/docs/faq/license_copyright.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 <section>
 

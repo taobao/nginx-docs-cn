@@ -49,11 +49,11 @@ server {
 </listitem>
 
 <listitem>
-שמות Wildcard המתחילים בכוכבית: <url>*.example.org</url>;
+שמות Wildcard המתחילים בכוכבית: <literal>*.example.org</literal>;
 </listitem>
 
 <listitem>
-שמות Wildcard המסתיימים בכוכבית: <url>mail.*</url>;
+שמות Wildcard המסתיימים בכוכבית: <literal>mail.*</literal>;
 </listitem>
 
 <listitem>
@@ -79,7 +79,7 @@ server {
 <literal>~^w.*\.example\.org$</literal>.
 סימן הכוכבית יכול להחליף מספר חלקי שם.
 השם <literal>*.example.org</literal> מתאים לא רק ל
-<url>www.example.org</url> אלא גם ל <url>www.sub.example.org</url>.
+<literal>www.example.org</literal> אלא גם ל <literal>www.sub.example.org</literal>.
 </para>
 
 <para>
@@ -252,9 +252,9 @@ nginx בגירסאות עד 0.6.25 תמך בשם המיוחד &ldquo;*&rdquo;
 זוהי תכונה של המאפיין <literal>listen</literal> ולא של המאפיין <literal>server_name</literal>.
 ראו גם &ldquo;<link doc="../../../en/docs/http/request_processing.xml" />&rdquo;.
 
-באפשרותכם להגדיר שרתים המאזינים על פורטים <url>*:80</url> ו <url>*:8080</url>,
+באפשרותכם להגדיר שרתים המאזינים על פורטים <literal>*:80</literal> ו <literal>*:8080</literal>,
 ולהגדיר שרת אחת שהוא ברירת המחדל עבור פורט
- <url>*:8080</url>, בעוד שהשני יהיה ברירת מחדל עבור פורט <url>*:80</url>:
+ <literal>*:8080</literal>, בעוד שהשני יהיה ברירת מחדל עבור פורט <literal>*:80</literal>:
 
 <programlisting>
 server {
@@ -302,7 +302,7 @@ server {
 
 <para>
 בהתחשב בנסיבות אלה, הכי טוב להשתמש בשמות מדוייקים בכל מקום שהדבר אפשרי.
-לדוגמה, אם השמות הנפוצים ביותר לשרת הם <url>example.org</url> ו <url>www.example.org</url>,
+לדוגמה, אם השמות הנפוצים ביותר לשרת הם <literal>example.org</literal> ו <literal>www.example.org</literal>,
 יותר יעיל להגדיר אותם באופן מפורש:
 
 <programlisting>
@@ -400,15 +400,15 @@ nginx חייב לבצע את הביטוי כדי לקבל את מה שנלכד �
 </listitem>
 
 <listitem>
-צורות Wildcard מסוג <url>example.*</url> נתמכו החל מגירסה 0.6.0.
+צורות Wildcard מסוג <literal>example.*</literal> נתמכו החל מגירסה 0.6.0.
 </listitem>
 
 <listitem>
-הצורה המיוחדת <url>.example.org</url> נתמכה החל מגירסה 0.3.18.
+הצורה המיוחדת <literal>.example.org</literal> נתמכה החל מגירסה 0.3.18.
 </listitem>
 
 <listitem>
-הצורה <url>*.example.org</url> נתמכה החל מגירסה 0.1.13.
+הצורה <literal>*.example.org</literal> נתמכה החל מגירסה 0.1.13.
 </listitem>
 
 </list>

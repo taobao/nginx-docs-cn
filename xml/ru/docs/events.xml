@@ -1,8 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
 <article name="Методы обработки соединений"
          link="/ru/docs/events.html"
-         lang="ru">
+         lang="ru"
+         rev="1">
 
 <section>
 

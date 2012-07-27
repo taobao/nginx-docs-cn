@@ -1,3 +1,8 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
 <article name="Сообщение &ldquo;&nbsp;&lsquo;sys_errlist&rsquo;
@@ -5,7 +10,8 @@
                 use &lsquo;strerror&rsquo; or &lsquo;strerror_r&rsquo;
                 instead&nbsp;&rdquo;"
          link="/ru/docs/sys_errlist.html"
-         lang="ru">
+         lang="ru"
+         rev="1">
 
 
 <section>

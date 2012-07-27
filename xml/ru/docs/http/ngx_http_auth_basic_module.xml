@@ -1,10 +1,16 @@
 <?xml version="1.0"?>
 
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Модуль ngx_http_auth_basic_module"
         link="/ru/docs/http/ngx_http_auth_basic_module.html"
-        lang="ru">
+        lang="ru"
+        rev="1">
 
 <section id="summary">
 

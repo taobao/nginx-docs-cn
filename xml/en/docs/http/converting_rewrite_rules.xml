@@ -1,8 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article name="Converting rewrite rules"
          link="/en/docs/http/converting_rewrite_rules.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 
 <section name="A redirect to a main site">
@@ -33,7 +39,7 @@ server {
 
 <para>
 This is a wrong, cumbersome, and ineffective way.
-The right way is to define a separate server for <url>example.org</url>:
+The right way is to define a separate server for <literal>example.org</literal>:
 
 <programlisting>
 server {
@@ -66,7 +72,7 @@ On versions prior to 0.9.1, redirects can be made with:
 <para>
 Another example.
 Instead of the &ldquo;upside-down&rdquo; logic &ldquo;all that is not
-<url>example.com</url> and is not <url>www.example.com</url>&rdquo;:
+<literal>example.com</literal> and is not <literal>www.example.com</literal>&rdquo;:
 
 <programlisting>
 RewriteCond  %{HTTP_HOST}  !example.com
@@ -74,7 +80,7 @@ RewriteCond  %{HTTP_HOST}  !www.example.com
 RewriteRule  (.*)          http://www.example.com$1
 </programlisting>
 
-one should simply define <url>example.com</url>, <url>www.example.com</url>,
+one should simply define <literal>example.com</literal>, <literal>www.example.com</literal>,
 and &ldquo;everything else&rdquo;:
 
 <programlisting>

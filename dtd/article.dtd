@@ -1,11 +1,18 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!ELEMENT  article      (section+) >
 <!ATTLIST  article
            name         CDATA #REQUIRED
            link         CDATA #REQUIRED
            lang         CDATA #REQUIRED
+           rev          CDATA #IMPLIED
            author       CDATA #IMPLIED
            editor       CDATA #IMPLIED
            translator   CDATA #IMPLIED
+           toc          (yes | no) "yes"
 >
 
 <!ENTITY % content      SYSTEM  "content.dtd" >

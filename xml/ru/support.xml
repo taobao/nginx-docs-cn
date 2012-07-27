@@ -1,8 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../dtd/article.dtd">
 
 <article name="nginx: поддержка"
          link="/ru/support.html"
-         lang="ru">
+         lang="ru"
+         rev="1">
 
 
 <section name="Wiki">
@@ -117,6 +123,17 @@
 </listitem>
 
 </list>
+</para>
+
+</section>
+
+
+<section name="Коммерческая поддержка">
+
+<para>
+Варианты коммерческой поддержки можно найти на
+<link url="http://nginx.com/support.html">странице поддержки
+на нашем сайте nginx.com</link>.
 </para>
 
 </section>

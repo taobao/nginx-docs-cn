@@ -46,11 +46,11 @@ gerçek adlar;
 </listitem>
 
 <listitem>
-* ile başlayan wildcard adlar: <url>*.example.org</url>;
+* ile başlayan wildcard adlar: <literal>*.example.org</literal>;
 </listitem>
 
 <listitem>
-* ile biten wildcard adlar: <url>mail.*</url>;
+* ile biten wildcard adlar: <literal>mail.*</literal>;
 </listitem>
 
 <listitem>
@@ -68,7 +68,7 @@ ve düzenli ifadeler (regular expressions).
         name="Wildcard adlar">
 
 <para>
-Bir wildcard ad ancak başlangıçta veya bitişte * ifadesini içerir ve nokta ile sınırlandırılır. <literal>www.*.example.org</literal> ve <literal>w*.example.org</literal> adları geçersizdir. Ancak bu adlar düzenli ifadeler ile geçerli hale getirilebilir, örneğin, <literal>~^www\..+\.example\.org$</literal> ve <literal>~^w.*\.example\.org$</literal>. Buradaki * bir çok eşleşmeyi tanımlayabilir. <literal>*.example.org</literal> ifadesi <url>www.example.org</url> ve <url>www.sub.example.org</url> adlarına karşılık gelebilir.
+Bir wildcard ad ancak başlangıçta veya bitişte * ifadesini içerir ve nokta ile sınırlandırılır. <literal>www.*.example.org</literal> ve <literal>w*.example.org</literal> adları geçersizdir. Ancak bu adlar düzenli ifadeler ile geçerli hale getirilebilir, örneğin, <literal>~^www\..+\.example\.org$</literal> ve <literal>~^w.*\.example\.org$</literal>. Buradaki * bir çok eşleşmeyi tanımlayabilir. <literal>*.example.org</literal> ifadesi <literal>www.example.org</literal> ve <literal>www.sub.example.org</literal> adlarına karşılık gelebilir.
 </para>
 
 <para>
@@ -252,7 +252,7 @@ Gerçek ve wildcard adlar çırpılarda (hash) depolanır. Çırpılar listen po
 </para>
 
 <para>
-Bu nedenlerden dolayı, imkanlar el veriyorsa gerçek adları kullanmak en iyisidir. Örneğin, bir sunucunun en sık talep edilen adları <url>example.org</url> ve <url>www.example.org</url> ise bunları açıkca belirtmek daha etkili olacaktır:
+Bu nedenlerden dolayı, imkanlar el veriyorsa gerçek adları kullanmak en iyisidir. Örneğin, bir sunucunun en sık talep edilen adları <literal>example.org</literal> ve <literal>www.example.org</literal> ise bunları açıkca belirtmek daha etkili olacaktır:
 
 <programlisting>
 server {
@@ -335,15 +335,15 @@ Düzenli ifade sunucu adları 0.6.7 versiyonundan beri destekleniyor.
 </listitem>
 
 <listitem>
-<url>example.*</url> wildcard formu 0.6.0 versiyonundan beri destekleniyor.
+<literal>example.*</literal> wildcard formu 0.6.0 versiyonundan beri destekleniyor.
 </listitem>
 
 <listitem>
-<url>.example.org</url> özel formu 0.3.18 versiyonundan beri destekleniyor.
+<literal>.example.org</literal> özel formu 0.3.18 versiyonundan beri destekleniyor.
 </listitem>
 
 <listitem>
-<url>*.example.org</url> wildcard formu 0.1.13 versiyonundan beri destekleniyor.
+<literal>*.example.org</literal> wildcard formu 0.1.13 versiyonundan beri destekleniyor.
 </listitem>
 
 </list>

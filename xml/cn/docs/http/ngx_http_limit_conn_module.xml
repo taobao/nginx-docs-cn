@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 
 <!-- 
- Copyright (C) G_will <g_will@ieqi.com>
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  Copyright (C) G_will <g_will@ieqi.com>
 -->
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
@@ -9,6 +11,7 @@
 <module name="ngx_http_limit_conn_module Ä£¿é"
         link="/cn/docs/http/ngx_http_limit_conn_module.html"
         lang="cn"
+        rev="1"
         translator="G_will">
 
 <section id="summary">

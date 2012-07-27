@@ -1,8 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article name="Server names"
          link="/en/docs/http/server_names.html"
          lang="en"
+         rev="1"
          author="Igor Sysoev"
          editor="Brian Mercer">
 
@@ -52,11 +58,13 @@ exact names;
 </listitem>
 
 <listitem>
-wildcard names starting with an asterisk: <url>*.example.org</url>;
+wildcard names starting with an asterisk: <literal>*.example.org</literal>
+(longest first);
 </listitem>
 
 <listitem>
-wildcard names ending with an asterisk: <url>mail.*</url>;
+wildcard names ending with an asterisk: <literal>mail.*</literal>
+(longest first);
 </listitem>
 
 <listitem>
@@ -82,7 +90,7 @@ for example, “<literal>~^www\..+\.example\.org$</literal>” and
 “<literal>~^w.*\.example\.org$</literal>”.
 An asterisk can match several name parts.
 The name “<literal>*.example.org</literal>” matches not only
-<url>www.example.org</url> but <url>www.sub.example.org</url> as well.
+<literal>www.example.org</literal> but <literal>www.sub.example.org</literal> as well.
 </para>
 
 <para>
@@ -321,7 +329,7 @@ and therefore are the slowest method and are non-scalable.
 <para>
 For these reasons, it is better to use exact names where possible.
 For example, if the most frequently requested names of a server
-are <url>example.org</url> and <url>www.example.org</url>,
+are <literal>example.org</literal> and <literal>www.example.org</literal>,
 it is more efficient to define them explicitly:
 
 <programlisting>
@@ -433,15 +441,15 @@ Regular expression server names have been supported since 0.6.7.
 </listitem>
 
 <listitem>
-Wildcard form <url>example.*</url> has been supported since 0.6.0.
+Wildcard form <literal>example.*</literal> has been supported since 0.6.0.
 </listitem>
 
 <listitem>
-The special form <url>.example.org</url> has been supported since 0.3.18.
+The special form <literal>.example.org</literal> has been supported since 0.3.18.
 </listitem>
 
 <listitem>
-Wildcard form <url>*.example.org</url> has been supported since 0.1.13.
+Wildcard form <literal>*.example.org</literal> has been supported since 0.1.13.
 </listitem>
 
 </list>

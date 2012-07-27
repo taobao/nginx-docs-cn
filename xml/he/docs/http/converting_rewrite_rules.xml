@@ -34,7 +34,7 @@ server {
 
 <para>
 צורה זו היא שגוייה, מסובכת, ולא יעילה.
-הדרך הנכונה היא להגדיר שרת נפרד עבור <url>example.org</url>:
+הדרך הנכונה היא להגדיר שרת נפרד עבור <literal>example.org</literal>:
 
 <programlisting>
 server {
@@ -58,7 +58,7 @@ server {
 
 <para>
 דוגמה נוספת, במקום הגיון הפוך: כל מה שהוא לא 
-<url>example.com</url> וגם לא <url>www.example.com</url>:
+<literal>example.com</literal> וגם לא <literal>www.example.com</literal>:
 
 <programlisting>
 RewriteCond  %{HTTP_HOST}  !example.com
@@ -66,7 +66,7 @@ RewriteCond  %{HTTP_HOST}  !www.example.com
 RewriteRule  (.*)          http://www.example.com$1
 </programlisting>
 
-עלייך רק להגדיר את <url>example.com</url>, <url>www.example.com</url>,
+עלייך רק להגדיר את <literal>example.com</literal>, <literal>www.example.com</literal>,
 וכל דבר אחר:
 
 <programlisting>

@@ -29,7 +29,7 @@ server {
 </para>
 
 <para>
-これは間違っていて面倒で非効率的な方法です。正しい方法は <url>example.org</url> 用に別のサーバを定義します:
+これは間違っていて面倒で非効率的な方法です。正しい方法は <literal>example.org</literal> 用に別のサーバを定義します:
 
 <programlisting>
 server {
@@ -52,7 +52,7 @@ server {
 <section>
 
 <para>
-別の例として、<url>example.com</url> 以外と <url>www.example.com</url> 以外のすべて、という後方ロジックの代わりの例です:
+別の例として、<literal>example.com</literal> 以外と <literal>www.example.com</literal> 以外のすべて、という後方ロジックの代わりの例です:
 
 <programlisting>
 RewriteCond  %{HTTP_HOST}  !example.com
@@ -60,7 +60,7 @@ RewriteCond  %{HTTP_HOST}  !www.example.com
 RewriteRule  (.*)          http://www.example.com$1
 </programlisting>
 
-この場合、単に <url>example.com</url>、<url>www.example.com</url>、そしてそれ以外を定義します:
+この場合、単に <literal>example.com</literal>、<literal>www.example.com</literal>、そしてそれ以外を定義します:
 
 
 <programlisting>
