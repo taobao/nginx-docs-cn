@@ -1,8 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
 <article name="Controlling nginx"
          link="/en/docs/control.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 <section>
 
@@ -42,6 +48,9 @@ The supported signals are:
 <tr><td width="20%">TERM, INT</td><td>fast shutdown</td></tr>
 <tr><td width="20%">QUIT</td><td>graceful shutdown</td></tr>
 <tr><td width="20%">USR1</td><td>re-opening log files</td></tr>
+<tr><td width="20%">WINCH</td><td>abnormal termination for debugging
+(requires <link doc="ngx_core_module.xml" id="debug_points"/> to be enabled)
+</td></tr>
 
 </table>
 </note>

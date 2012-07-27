@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!--
-Copyright (C) Igor Sysoev
-Copyright (C) Nginx, Inc.
-Copyright (c) moonbingbing@gmail.com
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  Copyright (C) moonbingbing@gmail.com
 -->
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
