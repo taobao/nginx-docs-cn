@@ -49,7 +49,7 @@ location / {
 <literal>10.1.1.0/16</literal> 和 <literal>192.168.1.0/24</literal>允许访问，但
 <literal>192.168.1.1</literal>除外,
 对于IPv6的网络，只有<literal>2001:0db8::/32</literal>允许访问。
-在很多规则的情况下，使用
+在规则很多的情况下，使用
 <link doc="ngx_http_geo_module.xml">ngx_http_geo_module</link>
 模块变量更合适。
 </para>
