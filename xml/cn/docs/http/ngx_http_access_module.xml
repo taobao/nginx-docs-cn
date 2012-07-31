@@ -1,35 +1,35 @@
 <?xml version="1.0"?>
-
 <!--
   Copyright (C) Igor Sysoev
   Copyright (C) Nginx, Inc.
-  -->
-
+  Copyright (C) moonbingbing@gmail.com
+-->
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_access_module"
-        link="/en/docs/http/ngx_http_access_module.html"
-        lang="en"
-        rev="1">
+<module name="ngx_http_access_module模块"
+        link="/cn/docs/http/ngx_http_access_module.html"
+        lang="cn"
+        rev="1"
+        translator="WenMing"
+        >
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_access_module</literal> module allows
-to limit access to certain client IP addresses.
+模块 <literal>ngx_http_access_module</literal> 允许限制某些IP地址的客户端访问。
 </para>
 
 <para>
-Access can also be limited by
-<link doc="ngx_http_auth_basic_module.xml">password</link>.
-Simultaneous limitation of access by address and by password is controlled
-by the <link doc="ngx_http_core_module.xml" id="satisfy"/> directive.
+也可以通过
+<link doc="ngx_http_auth_basic_module.xml">密码</link>来限制访问。
+使用
+ <link doc="ngx_http_core_module.xml" id="satisfy"/> 指令就能同时通过IP地址和密码来限制访问。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置范例">
 
 <para>
 <example>
@@ -44,20 +44,20 @@ location / {
 </para>
 
 <para>
-The rules are checked in sequence until the first match is found.
-In this example, an access is allowed only for IPv4 networks
-<literal>10.1.1.0/16</literal> and <literal>192.168.1.0/24</literal>
-excluding the address <literal>192.168.1.1</literal>,
-and for IPv6 network <literal>2001:0db8::/32</literal>.
-In case of a lot of rules, the use of the
+规则按照顺序依次检测，直到匹配到第一条规则。
+在这个例子里，IPv4的网络中只有
+<literal>10.1.1.0/16</literal> 和 <literal>192.168.1.0/24</literal>允许访问，但
+<literal>192.168.1.1</literal>除外,
+对于IPv6的网络，只有<literal>2001:0db8::/32</literal>允许访问。
+在规则很多的情况下，使用
 <link doc="ngx_http_geo_module.xml">ngx_http_geo_module</link>
-module variables is preferable.
+模块变量更合适。
 </para>
 
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="allow">
 <syntax>
@@ -71,7 +71,7 @@ module variables is preferable.
 <context>limit_except</context>
 
 <para>
-Allows access for the specified network or address.
+允许指定的网络地址访问。
 </para>
 
 </directive>
@@ -89,7 +89,7 @@ Allows access for the specified network or address.
 <context>limit_except</context>
 
 <para>
-Denies access for the specified network or address.
+拒绝指定的网络地址访问。
 </para>
 
 </directive>
