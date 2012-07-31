@@ -98,11 +98,7 @@ Other connections will use logging level set by the
 <link id="error_log"/> directive.
 Debugged connections are specified by IPv4 or IPv6 (1.3.0, 1.2.1)
 address or network.
-A connection may also be specified using a hostname, in which case
-all IPv4 addresses corresponding to a name are used.
-<note>
-Prior to version 1.3.4 only the first IPv4 address was used in this case.
-</note>
+A connection may also be specified using a hostname.
 For connections using UNIX-domain sockets (1.3.0, 1.2.1),
 debugging log is enabled by the “<literal>unix:</literal>” parameter.
 <example>
