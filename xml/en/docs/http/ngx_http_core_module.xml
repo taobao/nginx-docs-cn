@@ -1246,7 +1246,13 @@ a separate <c-func>bind</c-func> call will always be made.
 <tag-desc>
 this parameter (0.7.42) sets the value of the <c-def>IPV6_V6ONLY</c-def>
 parameter for the listening socket.
+It is turned on by default.
 This parameter can only be set once on start.
+<note>
+Prior to version 1.3.4, if parameter was not set explicitly,
+operating system’s setting was used.
+</note>
+
 </tag-desc>
 
 <tag-name>
