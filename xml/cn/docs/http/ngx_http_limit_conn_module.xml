@@ -1,35 +1,33 @@
 <?xml version="1.0"?>
 
-<!--
+<!-- 
   Copyright (C) Igor Sysoev
   Copyright (C) Nginx, Inc.
-  -->
+  Copyright (C) G_will <g_will@ieqi.com>
+-->
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_limit_conn_module"
-        link="/en/docs/http/ngx_http_limit_conn_module.html"
-        lang="en"
-        rev="1">
+<module name="ngx_http_limit_conn_module 模块"
+        link="/cn/docs/http/ngx_http_limit_conn_module.html"
+        lang="cn"
+        rev="1"
+        translator="G_will">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_limit_conn_module</literal> module allows
-to limit the number of connections per defined key, in
-particular, the number of connections from a single IP address.
+<literal>ngx_http_limit_conn_module</literal> 模块可以按照定义的键限定每个键值的连接数。特别的，可以设定单一 IP 来源的连接数。
 </para>
 
 <para>
-Not all connections are counted; only those that have requests
-currently being processed by the server, in which request header has
-been fully read.
+并不是所有的连接都会被模块计数；只有那些正在被处理的请求（这些请求的头信息已被完全读入）所在的连接才会被计数。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置范例">
 
 <para>
 <example>
@@ -51,7 +49,7 @@ http {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="limit_conn">
 <syntax><value>zone</value> <value>number</value></syntax>
@@ -61,12 +59,9 @@ http {
 <context>location</context>
 
 <para>
-Sets a shared memory zone
-and the maximum allowed number of connections for a given key value.
-When this limit is exceeded, the server will return error
+指定一块已经设定的共享内存空间，以及每个给定键值的最大连接数。当连接数超过最大连接数时，服务器将会返回
 <http-status code="503" text="Service Temporarily Unavailable"/>
-in reply to a request.
-For example, the directives
+错误。比如，如下配置
 <example>
 limit_conn_zone $binary_remote_addr zone=addr:10m;
 
@@ -75,15 +70,11 @@ server {
         limit_conn addr 1;
     }
 </example>
-allow for only a single connection at a time, per unique IP address.
+表示，同一 IP 同一时间只允许有一个连接。
 </para>
 
 <para>
-When several <literal>limit_conn</literal> directives are specified,
-any configured limit will apply.
-For example, the following configuration will limit the number
-of connections to the server per client IP and at the same time
-will limit the total number of connections to the virtual host:
+当多个 <literal>limit_conn</literal> 指令被配置时，所有的连接数限制都会生效。比如，下面配置不仅会限制单一IP来源的连接数，同时也会限制单一虚拟服务器的总连接数：
 <example>
 limit_conn_zone $binary_remote_addr zone=perip:10m;
 limit_conn_zone $server_name zone=perserver:10m;
@@ -98,10 +89,7 @@ server {
 </para>
 
 <para>
-These directives are inherited from the previous level if and
-only if there are no
-<literal>limit_conn</literal>
-directives on the current level.
+如果当前配置层级没有<literal>limit_conn</literal>指令，将会从更高层级继承连接限制配置。
 </para>
 
 </directive>
@@ -120,8 +108,7 @@ directives on the current level.
 <appeared-in>0.8.18</appeared-in>
 
 <para>
-Sets the desired logging level for cases when the server
-limits the number of connections.
+指定当连接数超过设定的最大连接数，服务器限制连接时的日志等级。
 </para>
 
 </directive>
@@ -135,30 +122,14 @@ limits the number of connections.
 <context>http</context>
 
 <para>
-Sets parameters of a shared memory zone that keeps states
-for various keys.
-This state stores the current number of connections in particular.
-The key is any non-empty value of the specified variable
-(empty values are not accounted).
-Example usage:
+设定保存各个键的状态的共享内存空间的参数。键的状态中保存了当前连接数。键的值可以是特定变量的任何非空值（空值将不会被考虑）。
+使用范例：
 <example>
 limit_conn_zone $binary_remote_addr zone=addr:10m;
 </example>
-Here, an IP address of the client serves as a key.
-Note that instead of <var>$remote_addr</var>, the
-<var>$binary_remote_addr</var> variable is used here.
-The length of the <var>$remote_addr</var> variable's value can
-range from 7 to 15 bytes, and the stored state occupies either
-32 or 64 bytes of memory on 32-bit platforms, and always 64
-bytes on 64-bit platforms.
-The length of the <var>$binary_remote_addr</var> variable's value
-is always 4 bytes, and the stored state always occupies 32 bytes
-on 32-bit platforms, and 64 bytes on 64-bit platforms.
-One megabyte zone can keep about 32 thousand 32-bit states,
-and about 16 thousand 64-byte states.
-If the storage for a zone is exhausted, the server will return error
+这里，设置客户端的IP地址作为键。注意，这里使用的是<var>$binary_remote_addr</var>变量，而不是<var>$remote_addr</var>变量。<var>$remote_addr</var>变量的长度为7字节到15字节不等，而存储状态在32位平台中占用32字节或64字节，在64位平台中占用64字节。而<var>$binary_remote_addr</var>变量的长度是固定的4字节，存储状态在32位平台中占用32字节或64字节，在64位平台中占用64字节。一兆字节的共享内存空间可以保存3.2万个32位的状态，1.6万个64位的状态。如果共享内存空间被耗尽，服务器将会对后续所有的请求返回
 <http-status code="503" text="Service Temporarily Unavailable"/>
-to all further requests.
+错误。
 </para>
 
 </directive>
@@ -173,9 +144,7 @@ to all further requests.
 <context>http</context>
 
 <para>
-This directive is made obsolete in version 1.1.8,
-an equivalent <link id="limit_conn_zone"/> directive
-with a changed syntax should be used instead:
+这条指令在 1.1.8 版本中已经被废弃，应该使用等效的<link id="limit_conn_zone"/>指令。该指令的语法也有变化：
 <note>
 <literal>limit_conn_zone</literal>
 <value>$variable</value>
