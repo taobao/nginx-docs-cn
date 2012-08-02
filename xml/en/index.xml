@@ -287,7 +287,7 @@ and sendfilev (Solaris 8 7/01+) support;
 </listitem>
 
 <listitem>
-Accept-filters (FreeBSD 4.1+) and TCP_DEFER_ACCEPT (Linux 2.4+)
+Accept-filters (FreeBSD 4.1+, NetBSD 5.0+) and TCP_DEFER_ACCEPT (Linux 2.4+)
 <link doc="docs/http/ngx_http_core_module.xml" id="listen">support</link>;
 </listitem>
 

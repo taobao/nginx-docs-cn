@@ -1134,14 +1134,14 @@ listen unix:/var/run/nginx.sock;
 
 <para>
 В директиве <literal>listen</literal> можно также указать несколько
-дополнительных параметров, специфичных для системных вызовов
-<c-func>listen</c-func> и <c-func>bind</c-func>.
+дополнительных параметров, специфичных для связанных с сокетами
+системных вызовов.
 Эти параметры можно задать в любой директиве <literal>listen</literal>,
 но только один раз для указанной пары
 <value>адрес</value>:<value>порт</value>.
 <note>
 До версии 0.8.21 их можно было указывать лишь в директиве
-<literal>listen</literal> с параметром <literal>default</literal>.
+<literal>listen</literal> совместно с параметром <literal>default</literal>.
 </note>
 <list type="tag">
 
@@ -1149,8 +1149,8 @@ listen unix:/var/run/nginx.sock;
 <literal>setfib</literal>=<value>число</value>
 </tag-name>
 <tag-desc>
-этот параметр (0.8.44) задаёт для слушающего сокета соответствующую
-таблицу маршрутизации (FIB).
+этот параметр (0.8.44) задаёт таблицу маршрутизации, FIB
+(параметр <c-def>SO_SETFIB</c-def>) для слушающего сокета.
 В настоящий момент это работает только на FreeBSD.
 </tag-desc>
 
@@ -1159,8 +1159,9 @@ listen unix:/var/run/nginx.sock;
 </tag-name>
 <tag-desc>
 задаёт параметр <literal>backlog</literal> в вызове
-<c-func>listen</c-func>.
-По умолчанию <literal>backlog</literal> равен -1 для FreeBSD
+<c-func>listen</c-func>, который ограничивает
+максимальный размер очереди ожидающих приёма соединений.
+По умолчанию <literal>backlog</literal> устанавливается равным -1 для FreeBSD
 и 511 для других платформ.
 </tag-desc>
 
@@ -1168,33 +1169,39 @@ listen unix:/var/run/nginx.sock;
 <literal>rcvbuf</literal>=<value>размер</value>
 </tag-name>
 <tag-desc>
-задаёт параметр <c-def>SO_RCVBUF</c-def> для слушающего сокета
+задаёт размер буфера приёма
+(параметр <c-def>SO_RCVBUF</c-def>) для слушающего сокета.
 </tag-desc>
 
 <tag-name>
 <literal>sndbuf</literal>=<value>размер</value>
 </tag-name>
 <tag-desc>
-задаёт параметр <c-def>SO_SNDBUF</c-def> для слушающего сокета
+задаёт размер буфера передачи
+(параметр <c-def>SO_SNDBUF</c-def>) для слушающего сокета.
 </tag-desc>
 
 <tag-name>
 <literal>accept_filter</literal>=<value>фильтр</value>
 </tag-name>
 <tag-desc>
-задаёт название accept-фильтра.
-Работает только на FreeBSD, можно использовать два фильтра —
-<literal>dataready</literal> и <literal>httpready</literal>.
-По сигналу <c-def>SIGHUP</c-def> accept-фильтр можно менять только в
-последних версиях FreeBSD, начиная с 6.0, 5.4-STABLE и 4.11-STABLE.
+задаёт название accept-фильтра
+(параметр <c-def>SO_ACCEPTFILTER</c-def>) для слушающего сокета,
+который включается для фильтрации входящих соединений
+перед передачей их в <c-func>accept</c-func>.
+Работает только на FreeBSD и NetBSD 5.0+.
+Можно использовать два фильтра —
+<link url="http://man.freebsd.org/accf_data">dataready</link>
+и
+<link url="http://man.freebsd.org/accf_http">httpready</link>.
 </tag-desc>
 
 <tag-name>
 <literal>deferred</literal>
 </tag-name>
 <tag-desc>
-указывает использовать отложенный <c-func>accept</c-func> на Linux
-с помощью опции <c-def>TCP_DEFER_ACCEPT</c-def>.
+указывает использовать отложенный <c-func>accept</c-func>
+(параметр <c-def>TCP_DEFER_ACCEPT</c-def> сокета) на Linux.
 </tag-desc>
 
 <tag-name>
@@ -1223,12 +1230,15 @@ listen unix:/var/run/nginx.sock;
 <literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>
 </tag-name>
 <tag-desc>
-параметр (0.7.42) задаёт значение параметра <c-def>IPV6_V6ONLY</c-def>
-для слушающего сокета.
+этот параметр (0.7.42) определяет
+(через параметр сокета <c-def>IPV6_V6ONLY</c-def>),
+будет ли слушающий на wildcard-адресе <literal>[::]</literal> IPv6-сокет
+принимать только IPv6-соединения, или же одновременно IPv6- и IPv4-соединения.
 По умолчанию параметр включён.
-Установить этот параметр можно только один раз на старте.
+Установить его можно только один раз на старте.
 <note>
-До версии 1.3.4, если параметр не был задан явно, использовались
+До версии 1.3.4,
+если этот параметр не был задан явно, то для сокета действовали
 настройки операционной системы.
 </note>
 </tag-desc>
@@ -1237,16 +1247,12 @@ listen unix:/var/run/nginx.sock;
 <literal>ssl</literal>
 </tag-name>
 <tag-desc>
-этот параметр (0.7.14) не имеет отношения к системным вызовам
-<c-func>listen</c-func> и <c-func>bind</c-func>, а позволяет указать,
-что все соединения, принимаемые на этом порту, должны работать
-в режиме SSL.
-Это позволяет задать компактную конфигурацию для сервера,
+этот параметр (0.7.14) не имеет отношения к связанным с сокетами системным
+вызовам, а позволяет указать, что все соединения, принимаемые на этом порту,
+должны работать в режиме SSL.
+Это позволяет задать компактную <link doc="configuring_https_servers.xml"
+id="single_http_https_server">конфигурацию</link> для сервера,
 работающего сразу в двух режимах — HTTP и HTTPS.
-<example>
-listen 80;
-listen 443 ssl;
-</example>
 </tag-desc>
 
 <tag-name>
@@ -1256,13 +1262,13 @@ listen 443 ssl;
 этот параметр (1.1.11) конфигурирует для слушающего сокета
 поведение “TCP keepalive”.
 Если этот параметр опущен, то для сокета будут действовать
-стандартные системные настройки.
+настройки операционной системы.
 Если он установлен в значение “<literal>on</literal>”, то для сокета
-включается опция <c-def>SO_KEEPALIVE</c-def>.
+включается параметр <c-def>SO_KEEPALIVE</c-def>.
 Если он установлен в значение “<literal>off</literal>”, то для сокета
-опция <c-def>SO_KEEPALIVE</c-def> выключается.
+параметр <c-def>SO_KEEPALIVE</c-def> выключается.
 Некоторые операционные системы поддерживают настройку параметров
-“TCP keepalive” на уровне сокета посредством опций
+“TCP keepalive” на уровне сокета посредством параметров
 <c-def>TCP_KEEPIDLE</c-def>, <c-def>TCP_KEEPINTVL</c-def> и
 <c-def>TCP_KEEPCNT</c-def>.
 На таких системах (в настоящий момент это Linux 2.4+, NetBSD 5+ и
@@ -1270,7 +1276,7 @@ FreeBSD 9.0-STABLE)
 их можно сконфигурировать с помощью параметров <value>keepidle</value>,
 <value>keepintvl</value> и <value>keepcnt</value>.
 Один или два параметра могут быть опущены, в таком случае для
-соответствующей опции сокета будут действовать стандартные
+соответствующего параметра сокета будут действовать стандартные
 системные настройки.
 Например,
 <example>so_keepalive=30m::10</example>
@@ -1286,7 +1292,7 @@ FreeBSD 9.0-STABLE)
 <para>
 Пример:
 <example>
-listen 127.0.0.1 default accept_filter=dataready backlog=1024;
+listen 127.0.0.1 default_server accept_filter=dataready backlog=1024;
 </example>
 </para>
 
@@ -1829,7 +1835,7 @@ open_file_cache_events   on;
 <para>
 Разрешает или запрещает сброс соединений по таймауту.
 Сброс делается следующим образом — перед закрытием сокета для него
-ставится опция
+ставится параметр
 <c-def>SO_LINGER</c-def>
 с таймаутом 0.
 После чего при закрытии сокета клиенту отсылается TCP RST, а вся память,
@@ -1997,7 +2003,7 @@ location / {
 число операций отправки на клиентских сокетах либо при помощи флага
 <c-def>NOTE_LOWAT</c-def> метода
 <link doc="../events.xml" id="kqueue"/>,
-либо при помощи опции сокета <c-def>SO_SNDLOWAT</c-def>,
+либо при помощи параметра сокета <c-def>SO_SNDLOWAT</c-def>,
 с указанным размером.
 </para>
 
@@ -2295,8 +2301,8 @@ server {
 <context>location</context>
 
 <para>
-Разрешает или запрещает использование опции <c-def>TCP_NODELAY</c-def>.
-Опция включаются только при переходе соединения в состояние keep-alive.
+Разрешает или запрещает использование параметра <c-def>TCP_NODELAY</c-def>.
+Параметр включаются только при переходе соединения в состояние keep-alive.
 </para>
 
 </directive>
@@ -2310,11 +2316,11 @@ server {
 <context>location</context>
 
 <para>
-Разрешает или запрещает использование опции сокета
+Разрешает или запрещает использование параметра сокета
 <c-def>TCP_NOPUSH</c-def> во FreeBSD или
 <c-def>TCP_CORK</c-def> в Linux.
-Опции включаются только при использовании <link id="sendfile"/>.
-Включение опции позволяет
+Параметр включаются только при использовании <link id="sendfile"/>.
+Включение параметра  позволяет
 <list type="bullet">
 
 <listitem>
@@ -2845,7 +2851,7 @@ fastcgi_pass_request_body off</link>
 </tag-name>
 <tag-desc>
 информация о клиентском TCP-соединении; доступна на системах,
-поддерживающих опцию сокета <c-def>TCP_INFO</c-def>
+поддерживающих параметр сокета <c-def>TCP_INFO</c-def>
 </tag-desc>
 
 <tag-name><var>$uri</var></tag-name>

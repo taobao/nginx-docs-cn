@@ -1152,14 +1152,13 @@ In versions prior to 0.8.21 this parameter is named simply
 
 <para>
 A <literal>listen</literal> directive
-can have several additional parameters specific to system calls
-<c-func>listen</c-func> and <c-func>bind</c-func>.
+can have several additional parameters specific to socket-related system calls.
 They can be specified in any
 <literal>listen</literal> directive, but only once for the given
 <value>address</value>:<value>port</value> pair.
 <note>
 In versions prior to 0.8.21, they could only be
-specified in the <literal>listen</literal> directive with the
+specified in the <literal>listen</literal> directive along with the
 <literal>default</literal> parameter.
 </note>
 <list type="tag">
@@ -1168,8 +1167,8 @@ specified in the <literal>listen</literal> directive with the
 <literal>setfib</literal>=<value>number</value>
 </tag-name>
 <tag-desc>
-this parameter (0.8.44) sets the associated FIB (routing table)
-for the listening socket.
+this parameter (0.8.44) sets an associated routing table, FIB 
+(the <c-def>SO_SETFIB</c-def> option) for the listening socket.
 This currently works only on FreeBSD.
 </tag-desc>
 
@@ -1178,43 +1177,49 @@ This currently works only on FreeBSD.
 </tag-name>
 <tag-desc>
 sets the <literal>backlog</literal> parameter in the
-<c-func>listen</c-func> call.
-By default, <literal>backlog</literal> equals -1 on FreeBSD
-and 511 on other platforms.
+<c-func>listen</c-func> call that limits
+the maximum length for the queue of pending connections.
+By default, <literal>backlog</literal> is set to -1 on FreeBSD,
+and to 511 on other platforms.
 </tag-desc>
 
 <tag-name>
 <literal>rcvbuf</literal>=<value>size</value>
 </tag-name>
 <tag-desc>
-sets the <c-def>SO_RCVBUF</c-def> parameter for the listening socket.
+sets receive buffer size
+(the <c-def>SO_RCVBUF</c-def> option) for the listening socket.
 </tag-desc>
 
 <tag-name>
 <literal>sndbuf</literal>=<value>size</value>
 </tag-name>
 <tag-desc>
-sets the <c-def>SO_SNDBUF</c-def> parameter for the listening socket.
+sets send buffer size
+(the <c-def>SO_SNDBUF</c-def> option) for the listening socket.
 </tag-desc>
 
 <tag-name>
 <literal>accept_filter</literal>=<value>filter</value>
 </tag-name>
 <tag-desc>
-sets the name of the accept filter.
-This works only on FreeBSD, acceptable values are <literal>dataready</literal>
-and <literal>httpready</literal>.
-On receipt of the <c-def>SIGHUP</c-def> signal, an accept filter can only be
-changed in recent versions of FreeBSD, starting from 6.0, 5.4-STABLE
-and 4.11-STABLE.
+sets the name of accept filter
+(the <c-def>SO_ACCEPTFILTER</c-def> option) for the listening socket
+that filters incoming connections before presenting them to
+<c-func>accept</c-func>.
+This works only on FreeBSD and NetBSD 5.0+.
+Acceptable values are
+<link url="http://man.freebsd.org/accf_data">dataready</link>
+and
+<link url="http://man.freebsd.org/accf_http">httpready</link>.
 </tag-desc>
 
 <tag-name>
 <literal>deferred</literal>
 </tag-name>
 <tag-desc>
-instructs to use a deferred <c-func>accept</c-func> on Linux
-using the <c-def>TCP_DEFER_ACCEPT</c-def> option.
+instructs to use a deferred <c-func>accept</c-func>
+(the <c-def>TCP_DEFER_ACCEPT</c-def> socket option) on Linux.
 </tag-desc>
 
 <tag-name>
@@ -1244,31 +1249,29 @@ a separate <c-func>bind</c-func> call will always be made.
 <literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>
 </tag-name>
 <tag-desc>
-this parameter (0.7.42) sets the value of the <c-def>IPV6_V6ONLY</c-def>
-parameter for the listening socket.
-It is turned on by default.
-This parameter can only be set once on start.
+this parameter (0.7.42) determines
+(via the <c-def>IPV6_V6ONLY</c-def> socket option)
+whether IPv6 socket listening on a wildcard address <literal>[::]</literal>
+will accept only IPv6 connections, or both IPv6 and IPv4 connections.
+This parameter is turned on by default.
+It can only be set once on start.
 <note>
-Prior to version 1.3.4, if parameter was not set explicitly,
-operating system’s setting was used.
+Prior to version 1.3.4,
+if this parameter was omitted then the operating system’s settings were
+in effect for the socket.
 </note>
-
 </tag-desc>
 
 <tag-name>
 <literal>ssl</literal>
 </tag-name>
 <tag-desc>
-this parameter (0.7.14) does not relate to system calls
-<c-func>listen</c-func> and <c-func>bind</c-func>, but allows to
-specify that all connections accepted on this port should work in
-the SSL mode.
-This allows for a more compact configuration for the server operating
-in both HTTP and HTTPS modes simultaneously.
-<example>
-listen 80;
-listen 443 ssl;
-</example>
+this parameter (0.7.14) does not relate to socket-related system calls,
+but allows to specify that all connections accepted on this port
+should work in SSL mode.
+This allows for a more compact <link doc="configuring_https_servers.xml"
+id="single_http_https_server">configuration</link> for the server that
+handles both HTTP and HTTPS requests.
 </tag-desc>
 
 <tag-name>
@@ -1277,7 +1280,7 @@ listen 443 ssl;
 <tag-desc>
 this parameter (1.1.11) configures the “TCP keepalive” behavior
 for the listening socket.
-If this parameter is omitted then the system default setting will be
+If this parameter is omitted then the operating system’s settings will be
 in effect for the socket.
 If set to the value “<literal>on</literal>”, the <c-def>SO_KEEPALIVE</c-def>
 socket option is turned on for the socket.
@@ -1305,7 +1308,7 @@ and set probes count (<c-def>TCP_KEEPCNT</c-def>) to 10 probes.
 <para>
 Example:
 <example>
-listen 127.0.0.1 default accept_filter=dataready backlog=1024;
+listen 127.0.0.1 default_server accept_filter=dataready backlog=1024;
 </example>
 </para>
 

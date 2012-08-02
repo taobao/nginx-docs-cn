@@ -290,7 +290,7 @@ AIO</link> (FreeBSD 4.3+, Linux 2.6.22+);
 
 <listitem>
 <link doc="docs/http/ngx_http_core_module.xml" id="listen">Поддержка</link>
-accept-фильтров (FreeBSD 4.1+) и TCP_DEFER_ACCEPT (Linux 2.4+);
+accept-фильтров (FreeBSD 4.1+, NetBSD 5.0+) и TCP_DEFER_ACCEPT (Linux 2.4+);
 </listitem>
 
 <listitem>
