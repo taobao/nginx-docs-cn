@@ -70,7 +70,36 @@
             <tr>
                <td valign="top">
 
-                  <xsl:if test="section[@name]">
+                  <xsl:if test="$ORIGIN and document(concat($XML, '/', $ORIGIN))/*/@rev and               (not(@rev) or               @rev != document(concat($XML, '/', $ORIGIN))/*/@rev)">
+
+                     <span>
+
+                        <xsl:if test="@lang = 'he'">
+                           <xsl:attribute name="class">
+                              <xsl:text>ltr</xsl:text>
+                           </xsl:attribute>
+                        </xsl:if>
+
+                        <blockquote class="note">
+                           <xsl:choose>
+
+                              <xsl:when test="document(concat($XML, '/i18n.xml'))                            /i18n/text[@lang = $lang]/item[@id='outdated']">
+
+                                 <xsl:apply-templates select="document(concat($XML, '/i18n.xml'))                              /i18n/text[@lang = $lang]/item[@id='outdated']"/>
+                              </xsl:when>
+
+                              <xsl:otherwise>
+
+                                 <xsl:apply-templates select="document(concat($XML, '/i18n.xml'))                              /i18n/text[@lang = 'en']/item[@id='outdated']"/>
+                              </xsl:otherwise>
+                           </xsl:choose>
+
+                        </blockquote>
+
+                     </span>
+                  </xsl:if>
+
+                  <xsl:if test="@toc = 'yes' and section[@id and @name]">
 
                      <table width="100%">
                         <tr>
@@ -104,17 +133,20 @@
 
                   <xsl:apply-templates/>
 
-                  <xsl:if test="@author">
+                  <xsl:if test="@author or @editor or @translator">
 
                      <table width="100%">
                         <tr>
                            <td align="right">
 
-                              <xsl:value-of select="document(concat($XML, '/i18n.xml'))                        /i18n/text[@lang = $lang]/item[@id='author']"/>
+                              <xsl:if test="@author">
 
-                              <xsl:text> </xsl:text>
-                              <xsl:value-of select="@author"/>
-                              <br/>
+                                 <xsl:value-of select="document(concat($XML, '/i18n.xml'))                            /i18n/text[@lang = $lang]/item[@id='author']"/>
+
+                                 <xsl:text> </xsl:text>
+                                 <xsl:value-of select="@author"/>
+                                 <br/>
+                              </xsl:if>
 
                               <xsl:if test="@editor">
 

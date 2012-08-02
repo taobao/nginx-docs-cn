@@ -1,3 +1,8 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 X:stylesheet {
 
     X:template = "section[@id and @name]" {
@@ -134,12 +139,6 @@ X:stylesheet {
     X:template = "http-status" {
         !{@code} X:text { (} !{@text} X:text{)}
     }
-
-    X:template = "url[/*[@lang='he']]" {
-        <i><span class="ltr"> !!; </span></i>
-    }
-
-    X:template = "url" { <i> !!;</i> }
 
     X:template = "value" { <code><i> !!; </i></code> }
 

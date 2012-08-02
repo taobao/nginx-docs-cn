@@ -100,7 +100,7 @@ server {
 }
 </programlisting>
 
-这个配置中，nginx根据"<literal>server</literal>"配置块中的"<literal>listen</literal>"指令首先测试请求的IP地址和端口是否匹配某个定义的值。如果匹配成功，则继续测试请求的Host头是否匹配这个块中的"<literal>server_name</literal>"的值。如果主机名匹配失败，这个请求将被交给默认的虚拟主机处理。例如，一个从192.168.1.1:80端口收到的访问<url>www.nginx.com</url>的请求将被监听192.168.1.1:80端口的默认服务器处理，本例中就是第一个服务器，因为这个端口上没有定义域名为<url>www.nginx.com</url>的服务器。
+这个配置中，nginx根据"<literal>server</literal>"配置块中的"<literal>listen</literal>"指令首先测试请求的IP地址和端口是否匹配某个定义的值。如果匹配成功，则继续测试请求的Host头是否匹配这个块中的"<literal>server_name</literal>"的值。如果主机名匹配失败，这个请求将被交给默认的虚拟主机处理。例如，一个从192.168.1.1:80端口收到的访问<literal>www.nginx.com</literal>的请求将被监听192.168.1.1:80端口的默认服务器处理，本例中就是第一个服务器，因为这个端口上没有定义域名为<literal>www.nginx.com</literal>的服务器。
 </para>
 
 <para>

@@ -1,6 +1,21 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 X:stylesheet {
 
 X:template = "img" { <img src="{@href}"> !!; </img> }
+
+X:template = "origin" {
+    <a>
+    X:attribute "href" {
+        !root(path = "$ORIGIN")
+        !{ concat(substring-before($ORIGIN, '.xml'), '.html') }
+    }
+    !!;
+    </a>
+}
 
 X:template = "link[@url]" {
     <a href="{@url}">

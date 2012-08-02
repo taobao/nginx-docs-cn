@@ -1,8 +1,15 @@
-﻿<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  Copyright (C) Cfsego
+  -->
+
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
 <article name="调试日志"
          link="/cn/docs/debugging_log.html"
-         lang="cn">
+         lang="cn"
+         rev="1">
 
 
 <section>
@@ -24,7 +31,7 @@ nginx的windows二进制版本总是将调试日志开启的，因此只需要�
 </para>
 
 <para>
-注意，在其他级别定义日志，如在<i>server</i>层次，会关闭该主机的日志：
+注意，重新定义错误日志时，如过没有指定<literal>debug</literal>级别，调试日志会被屏蔽。下面的例子里，在<link doc="http/ngx_http_core_module.xml" id="server"/>层中重新定义的日志就屏蔽了这个虚拟主机的调试日志：
 <programlisting>
 error_log  /path/to/log  debug;
 
@@ -33,7 +40,7 @@ http {
         error_log  /path/to/log;
         ...
 </programlisting>
-应该注释掉这条server日志，或者也增加<literal>debug</literal>标志：
+为了避免这个问题，注释这行重新定义日志的配置，或者也给日志指定<literal>debug</literal>级别：
 <programlisting>
 error_log  /path/to/log  debug;
 
@@ -45,7 +52,7 @@ http {
 </para>
 
 <para>
-另外，也可以只针对某些地址开启调试日志：
+另外，也可以只针对<link doc="ngx_core_module.xml" id="debug_connection">选定的客户端地址</link>开启调试日志：
 
 <programlisting>
 error_log  /path/to/log;

@@ -134,7 +134,7 @@ Certificate chain
 ...
 </programlisting>
 
-Bu örnekte <url>www.GoDaddy.com</url> sunucu sertifikasının (server certificate #0) &ldquo;<i>s</i>&rdquo; ile belirtilen konusu (subject), &ldquo;<i>i</i>&rdquo; ile gösterilen ve aynı zamanda kendisi de sonraki sertifikanın (certificate #1) konusu (subject) olan, sertifikayı veren/yayınlayan (issuer) tarafından imzalanır. Sonraki sertifika (certificate #1) ise bir sonraki sertifika (certificate #2) tarafından imzalanmıştır ve bu son sertifika <i>ValiCert, Inc.</i> tarafından imzalanmıştır. Bu firmanın sertifikası, tarayıcının kurulumuyla gelen sertifika veritabanında bulunur.
+Bu örnekte <literal>www.GoDaddy.com</literal> sunucu sertifikasının (server certificate #0) &ldquo;<i>s</i>&rdquo; ile belirtilen konusu (subject), &ldquo;<i>i</i>&rdquo; ile gösterilen ve aynı zamanda kendisi de sonraki sertifikanın (certificate #1) konusu (subject) olan, sertifikayı veren/yayınlayan (issuer) tarafından imzalanır. Sonraki sertifika (certificate #1) ise bir sonraki sertifika (certificate #2) tarafından imzalanmıştır ve bu son sertifika <i>ValiCert, Inc.</i> tarafından imzalanmıştır. Bu firmanın sertifikası, tarayıcının kurulumuyla gelen sertifika veritabanında bulunur.
 </para>
 
 <para>
@@ -194,7 +194,7 @@ server {
 }
 </programlisting>
 
-Bu yapılandırmada, bir tarayıcı talep edilen sunucuya bakmadan, varsayılan sunucunun sertifikasını alır, örneğin: <url>www.example.com</url>. Bu SSL protokolüne özgü bir durumdan kaynaklanır. SSL bağlantısı, tarayıcının HTTP talebi göndermesinden önce kurulur ve nginx talep edilen sunucunun adını bilmez. Bu nedenle yalnızca varsayılan sunucunun sertifikasını önerir.
+Bu yapılandırmada, bir tarayıcı talep edilen sunucuya bakmadan, varsayılan sunucunun sertifikasını alır, örneğin: <literal>www.example.com</literal>. Bu SSL protokolüne özgü bir durumdan kaynaklanır. SSL bağlantısı, tarayıcının HTTP talebi göndermesinden önce kurulur ve nginx talep edilen sunucunun adını bilmez. Bu nedenle yalnızca varsayılan sunucunun sertifikasını önerir.
 </para>
 
 <para>
@@ -226,11 +226,11 @@ server {
         name="Birçok ad içeren SSL sertifikası">
 
 <para>
-Bir tekil IP&rsquo;yi birçok HTTPS sunucu arasında paylaştırmanın başka yolları da vardır, ancak bunların hepsi dezavantajlara sahiptir. Bunlardan biri, birçok ad içeren bir sertifikanın, SubjectAltName sertifika alanında kullanılmasıdır. Örneğin: <url>www.example.com</url> ve <url>www.example.org</url>. Ancak SubjectAltName alan uzunluğu sınırlandırılmıştır.
+Bir tekil IP&rsquo;yi birçok HTTPS sunucu arasında paylaştırmanın başka yolları da vardır, ancak bunların hepsi dezavantajlara sahiptir. Bunlardan biri, birçok ad içeren bir sertifikanın, SubjectAltName sertifika alanında kullanılmasıdır. Örneğin: <literal>www.example.com</literal> ve <literal>www.example.org</literal>. Ancak SubjectAltName alan uzunluğu sınırlandırılmıştır.
 </para>
 
 <para>
-Diğer bir yol ise bir sertifikayı bir wildcard adı ile birlikte kullanmaktır. Örneğin: <url>*.example.org</url>. Bu sertifika <url>www.example.org</url> ile eşleşir ancak <url>example.org</url> ve <url>www.sub.example.org</url> ile eşleşmez. Bu iki method birlikte de kullanılabilir. Bir sertifika SubjectAltName alanı içerisinde gerçek ve wildcard adlarını içerebilir. Örneğin: <url>example.org</url> ve <url>*.example.org</url>.
+Diğer bir yol ise bir sertifikayı bir wildcard adı ile birlikte kullanmaktır. Örneğin: <literal>*.example.org</literal>. Bu sertifika <literal>www.example.org</literal> ile eşleşir ancak <literal>example.org</literal> ve <literal>www.sub.example.org</literal> ile eşleşmez. Bu iki method birlikte de kullanılabilir. Bir sertifika SubjectAltName alanı içerisinde gerçek ve wildcard adlarını içerebilir. Örneğin: <literal>example.org</literal> ve <literal>*.example.org</literal>.
 </para>
 
 <para>

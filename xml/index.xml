@@ -1,6 +1,18 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE news SYSTEM "../dtd/news.dtd">
 
 <news name="nginx news" link="/" lang="en">
+
+<event date="2012-07-10">
+<para>
+<link doc="en/download.xml">nginx-1.3.3</link>
+development version has been released.
+</para>
+</event>
 
 <event date="2012-07-03">
 <para>

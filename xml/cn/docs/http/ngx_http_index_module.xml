@@ -5,9 +5,11 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_index_module"
-        link="/en/docs/http/ngx_http_index_module.html"
-        lang="en">
+<module name="ngx_http_index_module模块"
+        link="/cn/docs/http/ngx_http_index_module.html"
+        lang="cn"
+        rev="1" 
+        translator="litianqing">
 
 <section id="summary">
 
@@ -18,7 +20,7 @@
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置范例">
 
 <para>
 <example>
@@ -31,7 +33,7 @@ location / {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="index">
 <syntax><value>file</value> ...</syntax>

@@ -52,7 +52,7 @@ server {
 <section>
 
 <para>
-Diğer bir örnek ile aşağıdaki geri kalmış mantık yerine (<url>example.com</url> olmayan her şey ve <url>www.example.com</url> olmayan her şey):
+Diğer bir örnek ile aşağıdaki geri kalmış mantık yerine (<literal>example.com</literal> olmayan her şey ve <literal>www.example.com</literal> olmayan her şey):
 
 <programlisting>
 RewriteCond  %{HTTP_HOST}  !example.com
@@ -60,7 +60,7 @@ RewriteCond  %{HTTP_HOST}  !www.example.com
 RewriteRule  (.*)          http://www.example.com$1
 </programlisting>
 
-sadece <url>example.com</url>, <url>www.example.com</url> ve diğer her şeyi ayrı ayrı tanımlamalısınız:
+sadece <literal>example.com</literal>, <literal>www.example.com</literal> ve diğer her şeyi ayrı ayrı tanımlamalısınız:
 
 <programlisting>
 server {

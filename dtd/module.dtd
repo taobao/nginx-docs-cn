@@ -1,9 +1,17 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 
 <!ELEMENT   module      (section+) >
 <!ATTLIST   module
             name        CDATA #REQUIRED
             link        CDATA #REQUIRED
             lang        CDATA #REQUIRED
+            rev         CDATA #IMPLIED
+            translator  CDATA #IMPLIED
+            toc         (yes | no) "yes"
 >
 
 <!ELEMENT   section     (directive | para)+ >

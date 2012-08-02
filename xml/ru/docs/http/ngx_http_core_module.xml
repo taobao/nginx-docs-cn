@@ -1,10 +1,16 @@
 <?xml version="1.0"?>
 
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
-        lang="ru">
+        lang="ru"
+        rev="1">
 
 <section id="directives" name="Директивы">
 
@@ -601,6 +607,22 @@ location @fallback {
     proxy_pass http://backend;
 }
 </example>
+</para>
+
+</directive>
+
+
+<directive name="etag">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.3.3</appeared-in>
+
+<para>
+Разрешает или запрещает автоматическую генерацию поля <header>ETag</header>
+заголовка ответа для статических ресурсов.
 </para>
 
 </directive>
@@ -2162,23 +2184,29 @@ server {
 </para>
 
 <para>
-Порядок проверки имён следующий:
+При поиске виртуального сервера по имени,
+если имени соответствует несколько из указанных вариантов,
+например, одновременно подходят и маска, и регулярное выражение,
+будет выбран первый подходящий вариант в следующем порядке приоритета:
 <list type="enum">
 
 <listitem>
-полные имена
+полное имя
 </listitem>
 
 <listitem>
-имена с маской в начале имени, например “<literal>*.example.com</literal>”
+самое длинное имя с маской в начале,
+например “<literal>*.example.com</literal>”
 </listitem>
 
 <listitem>
-имена с маской в конце имени, например “<literal>mail.*</literal>”
+самое длинное имя с маской в конце,
+например “<literal>mail.*</literal>”
 </listitem>
 
 <listitem>
-регулярные выражения
+первое подходящее регулярное выражение
+(в порядке следования в конфигурационном файле)
 </listitem>
 
 </list>

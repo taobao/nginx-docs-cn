@@ -1,3 +1,8 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 X:stylesheet {
 
 X:output method="html" version="4.0" indent="no" encoding="utf-8";
@@ -10,6 +15,7 @@ X:strip-space elements = "article section";
   -->
 X:param XML = "'../xml'"; 
 X:param YEAR;
+X:param ORIGIN;
 
 X:var LINK = "/article/@link | /module/@link";
 X:var LANG = "/article/@lang | /module/@lang";
@@ -29,24 +35,7 @@ X:include href = "versions.xslt";
 X:template = "/article | /module" {
     <html>
 
-    <head>
-
-    <title> !{@name} </title>
-
-    !style (lang="@lang")
-
-    !ga ()
-
-    </head>
-
-    !body (lang="@lang")
-
-    </html>
-}
-
-
-X:template = "/article[@lang='he'] | /module[@lang='he']" {
-    <html dir="rtl">
+    X:if "@lang = 'he'" { X:attribute "dir" { X:text{rtl} } }
 
     <head>
 

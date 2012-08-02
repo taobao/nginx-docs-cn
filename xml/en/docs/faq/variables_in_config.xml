@@ -1,3 +1,7 @@
+<!--
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article name="Is there a proper way to use nginx variables to
@@ -5,7 +9,8 @@
                using them as macros for making
                parts of configuration work as templates?"
          link="/en/docs/faq/variables_in_config.html"
-         lang="en">
+         lang="en"
+         rev="1">
 
 <section>
 

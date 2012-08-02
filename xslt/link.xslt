@@ -7,6 +7,24 @@
       </img>
    </xsl:template>
 
+   <xsl:template match="origin">
+
+      <a>
+
+         <xsl:attribute name="href">
+
+            <xsl:call-template name="root">
+               <xsl:with-param select="$ORIGIN" name="path"/>
+            </xsl:call-template>
+
+            <xsl:value-of select=" concat(substring-before($ORIGIN, '.xml'), '.html')"/>
+         </xsl:attribute>
+
+         <xsl:apply-templates/>
+
+      </a>
+   </xsl:template>
+
    <xsl:template match="link[@url]">
 
       <a href="{@url}">

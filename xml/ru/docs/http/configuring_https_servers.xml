@@ -1,8 +1,14 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
 <!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article name="Настройка HTTPS-серверов"
          link="/ru/docs/http/configuring_https_servers.html"
          lang="ru"
+         rev="1"
          author="Игорь Сысоев"
          editor="Brian Mercer">
 
@@ -198,7 +204,7 @@ Certificate chain
 </programlisting>
 
 В этом примере субъект (&ldquo;<i>s</i>&rdquo;) сертификата №0 сервера
-<url>www.GoDaddy.com</url> подписан издателем (&ldquo;<i>i</i>&rdquo;),
+<literal>www.GoDaddy.com</literal> подписан издателем (&ldquo;<i>i</i>&rdquo;),
 который в свою очередь является субъектом сертификата №1, подписанного
 издателем, который в свою очередь является субъектом сертификата №2,
 подписанного общеизвестным издателем <i>ValiCert, Inc.</i>,
@@ -276,7 +282,7 @@ server {
 </programlisting>
 
 В такой конфигурации браузер получит сертификат первого сервера, т.е.
-<url>www.example.com</url>, независимо от запрашиваемого имени сервера.
+<literal>www.example.com</literal>, независимо от запрашиваемого имени сервера.
 Это связано с поведением протокола SSL.
 SSL-соединение устанавливается до того, как браузер посылает HTTP-запрос,
 и nginx не знает имени запрашиваемого сервера.
@@ -317,21 +323,21 @@ server {
 IP-адрес сразу для нескольких HTTPS-серверов.
 Все они, однако, имеют свои недостатки.
 Одним из таких способов является использование сертификата с несколькими
-именами в поле SubjectAltName сертификата, например <url>www.example.com</url>
-и <url>www.example.org</url>.
+именами в поле SubjectAltName сертификата, например <literal>www.example.com</literal>
+и <literal>www.example.org</literal>.
 Однако, длина поля SubjectAltName ограничена.
 </para>
 
 <para>
 Другим способом является использование wildcard-сертификата, например
-<url>*.example.org</url>.
+<literal>*.example.org</literal>.
 Такой сертификат защищает все поддомены указанного домена, но только
 на заданном уровне.
-Под такой сертификат подходит <url>www.example.org</url>, но не подходят
-<url>example.org</url> и <url>www.sub.example.org</url>.
+Под такой сертификат подходит <literal>www.example.org</literal>, но не подходят
+<literal>example.org</literal> и <literal>www.sub.example.org</literal>.
 Два вышеуказанных способа можно комбинировать.
 Сертификат может одновременно содержать и точное, и wildcard имена в поле
-SubjectAltName, например <url>example.org</url> и <url>*.example.org</url>.
+SubjectAltName, например <literal>example.org</literal> и <literal>*.example.org</literal>.
 </para>
 
 <para>
