@@ -313,15 +313,24 @@ may have up to three hashes: an exact names hash, a wildcard names hash
 starting with an asterisk, and a wildcard names hash ending with an asterisk.
 The sizes of the hashes are optimized at the configuration phase so that
 a name can be found with the fewest CPU cache misses.
+</para>
+
+<para>
 The exact names hash is searched first.
 If a name is not found using the exact name hash, then the wildcard names hash
 starting with an asterisk is searched.
 If the name is not found there, the wildcard names hash
 ending with an asterisk is searched.
+</para>
+
+<para>
 Searching wildcard names hashes is slower than searching exact name hash
 because names are searched by domain parts.
 Note that the special wildcard form “<literal>.example.org</literal>”
 is stored in a wildcard names hash and not in an exact names hash.
+</para>
+
+<para>
 Regular expressions are tested sequentially
 and therefore are the slowest method and are non-scalable.
 </para>
