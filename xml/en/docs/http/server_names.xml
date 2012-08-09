@@ -72,7 +72,7 @@ longest wildcard name ending with an asterisk, e.g. “<literal>mail.*</literal>
 
 <listitem>
 first matching regular expression
-(in order of appearance in a configuration file).
+(in order of appearance in a configuration file)
 </listitem>
 
 </list>
