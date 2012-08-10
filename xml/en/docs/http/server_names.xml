@@ -224,9 +224,11 @@ If no
 is defined in a <link doc="ngx_http_core_module.xml" id="server"/> block
 then nginx uses the empty name as the server name.
 <note>
-nginx versions up to 0.8.48 used the <i>hostname</i> as the server name
+nginx versions up to 0.8.48 used the machine’s hostname as the server name
 in this case.
 </note>
+If a server name is defined as “<literal>$hostname</literal>” (0.9.4), the
+machine’s hostname is used.
 </para>
 
 <para>
@@ -432,6 +434,11 @@ then nginx has to execute the expression to get the captures.
 
 <para>
 <list type="bullet">
+
+<listitem>
+The special server name “<literal>$hostname</literal>” has been supported
+since 0.9.4.
+</listitem>
 
 <listitem>
 A default server name value is an empty name “” since 0.8.48.
