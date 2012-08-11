@@ -178,7 +178,7 @@ default value
 
 <para>
 Sets the bucket size for the <link id="map"/> variables hash tables.
-Default value depends on the size of the processor's cache line.
+Default value depends on the size of the processor’s cache line.
 For more information, please refer to
 <link doc="../hash.xml">Setting Up Hashes</link>.
 </para>

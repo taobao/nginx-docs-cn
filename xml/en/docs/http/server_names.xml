@@ -85,7 +85,7 @@ first matching regular expression
         name="Wildcard names">
 
 <para>
-A wildcard name may contain an asterisk only on the name's start or end,
+A wildcard name may contain an asterisk only on the name’s start or end,
 and only on a dot border. The names “<literal>www.*.example.org</literal>”
 and “<literal>w*.example.org</literal>” are invalid.
 However, these names can be specified using regular expressions,

@@ -147,11 +147,11 @@ limit_conn_zone $binary_remote_addr zone=addr:10m;
 Here, an IP address of the client serves as a key.
 Note that instead of <var>$remote_addr</var>, the
 <var>$binary_remote_addr</var> variable is used here.
-The length of the <var>$remote_addr</var> variable's value can
+The length of the <var>$remote_addr</var> variable’s value can
 range from 7 to 15 bytes, and the stored state occupies either
 32 or 64 bytes of memory on 32-bit platforms, and always 64
 bytes on 64-bit platforms.
-The length of the <var>$binary_remote_addr</var> variable's value
+The length of the <var>$binary_remote_addr</var> variable’s value
 is always 4 bytes, and the stored state always occupies 32 bytes
 on 32-bit platforms, and 64 bytes on 64-bit platforms.
 One megabyte zone can keep about 32 thousand 32-byte states,

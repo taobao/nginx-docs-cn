@@ -43,14 +43,14 @@ open source</link> web server software. A web page saying
 &ldquo;Welcome to nginx!&rdquo; is just a diagnostics response that
 can be produced by any of the websites out there, running nginx
 web server. Currently, nginx is the 2nd most popular open source
-web server in the world, it's being used by over 70,000,000 (or
+web server in the world, it’s being used by over 70,000,000 (or
 10% of the Internet) websites. Most of these websites are
-legitimate, but some aren't. Our software was created with a good
+legitimate, but some aren’t. Our software was created with a good
 reason of enabling performance and scalability on the Internet,
 it is licensed under <link url="http://nginx.org/LICENSE">
 popular open source license</link>, and has nothing to do with any
 kind of threatening or malicious activity per se &#8212;
-nginx is NOT a malware, and it is NOT on your computer. But someone's
+nginx is NOT a malware, and it is NOT on your computer. But someone’s
 malware could have indeed tampered with your computer or router,
 redirecting you to a fraudulent Internet server.
 </para>
@@ -65,7 +65,7 @@ help of your ISP, or another support personnel:
 (Disclaimer: at nginx we are not responsible for any negative
 impact or effects that the actions below might cause. Use the
 following recommendations at your own risk, especially if
-you aren't an experienced user of your operating system and/or
+you aren’t an experienced user of your operating system and/or
 Internet applications. In no event shall nginx be liable for
 any direct, indirect, incidental, special, exemplary, or
 consequential damages, including, but not limited to loss of
@@ -82,7 +82,7 @@ service provider or IT support personnel).
 
 <listitem>
 Use <link url="http://code.google.com/speed/public-dns/">Google
-Public DNS</link>, and see if it fixes the problem. From Google's
+Public DNS</link>, and see if it fixes the problem. From Google’s
 description of its Public DNS &#8212; "Google Public DNS is a free,
 global Domain Name System (DNS) resolution service,
 that you can use as an alternative to your current DNS
@@ -110,11 +110,11 @@ performing.
 </listitem>
 
 <listitem>
-Check if the "hosts" file doesn't contain entries other
+Check if the "hosts" file doesn’t contain entries other
 than "127.0.0.1 localhost", and if so &#8212; if these entries are for
-the web site you're trying to reach. The "hosts" files is located in
+the web site you’re trying to reach. The "hosts" files is located in
 C:\WINDOWS\system32\drivers\etc directory. Typically there should
-be just one entry in it, for "127.0.0.1 localhost", that's it. The
+be just one entry in it, for "127.0.0.1 localhost", that’s it. The
 "hosts" file can be viewed and edited with your standard
 Notepad application.
 </listitem>
@@ -138,7 +138,7 @@ clean and safe.
 <para>
 If changing DNS servers to Google Public DNS, flushing DNS resolver
 cache, fixing your browser configuration, or cleaning "hosts" file
-(when applicable) have helped, it might be that there's a malware
+(when applicable) have helped, it might be that there’s a malware
 somewhere on your PC or around. Find and clean it using
 your preferred anti-virus and anti-malware tools.
 </para>

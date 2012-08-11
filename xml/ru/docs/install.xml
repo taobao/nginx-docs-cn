@@ -178,7 +178,7 @@ HTTPS</link>.
 Дистрибутив библиотеки (версию
 4.4&mdash;8.30) нужно взять на сайте <link url="http://www.pcre.org">PCRE</link>
 и распаковать.
-Всё остальное сделают ./configure nginx'а и make.
+Всё остальное сделают ./configure nginx’а и make.
 Библиотека нужна для использования регулярных выражений в директиве
 <link doc="http/ngx_http_core_module.xml" id="location"/>
 и для модуля
@@ -200,7 +200,7 @@ HTTPS</link>.
 путь к исходным текстам библиотеки zlib. Дистрибутив библиотеки (версию
 1.1.3&mdash;1.2.5) нужно взять на сайте
 <link url="http://www.gzip.org/zlib/">zlib</link> и распаковать.
-Всё остальное сделают ./configure nginx'а и make.
+Всё остальное сделают ./configure nginx’а и make.
 Библиотека нужна для модуля
 <link doc="http/ngx_http_gzip_module.xml">ngx_http_gzip_module</link>.
 </para>

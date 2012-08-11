@@ -125,7 +125,7 @@ On Linux,
 <link id="directio"/>
 can only be used for reading blocks that are aligned on 512-byte
 boundaries (or 4K for XFS).
-Reading of unaligned file's end is still made in blocking mode.
+Reading of unaligned file’s end is still made in blocking mode.
 The same holds true for byte range requests, and for FLV requests
 not from the beginning of a file: reading of unaligned data at the
 beginning and end of a file will be blocking.
@@ -176,7 +176,7 @@ location ~ ^/users/(.+\.(?:gif|jpe?g|png))$ {
 </para>
 
 <para>
-When location matches the last part of the directive's value:
+When location matches the last part of the directive’s value:
 <example>
 location /images/ {
     alias /data/w3/images/;
@@ -1167,7 +1167,7 @@ specified in the <literal>listen</literal> directive along with the
 <literal>setfib</literal>=<value>number</value>
 </tag-name>
 <tag-desc>
-this parameter (0.8.44) sets an associated routing table, FIB 
+this parameter (0.8.44) sets an associated routing table, FIB
 (the <c-def>SO_SETFIB</c-def> option) for the listening socket.
 This currently works only on FreeBSD.
 </tag-desc>
@@ -1397,7 +1397,7 @@ not checked.
 </para>
 
 <para>
-Let's illustrate the above by example:
+Let’s illustrate the above by example:
 <example>
 location = / {
     [ configuration A ]
@@ -2135,7 +2135,7 @@ server {
 
 <para>
 If the parameter equals “<var>$hostname</var>” (0.9.4), the
-machine's hostname is substituted.
+machine’s hostname is substituted.
 </para>
 
 <para>
@@ -2203,7 +2203,7 @@ It allows this server to process requests without the <header>Host</header>
 header field, instead of the default server for the given address:port pair.
 This is the default setting.
 <note>
-Before 0.8.48, the machine's hostname was used by default.
+Before 0.8.48, the machine’s hostname was used by default.
 </note>
 </para>
 
@@ -2269,7 +2269,7 @@ See also the <link id="port_in_redirect"/> directive.
 
 <para>
 Sets the bucket size for the server names hash tables.
-Default value depends on the size of the processor's cache line.
+Default value depends on the size of the processor’s cache line.
 For more information, please refer to
 <link doc="../hash.xml">Setting Up Hashes</link>.
 </para>
@@ -2546,7 +2546,7 @@ location /download/ {
 
 <para>
 Sets the bucket size for the types hash tables.
-Default value depends on the size of the processor's cache line.
+Default value depends on the size of the processor’s cache line.
 For more information, please refer to
 <link doc="../hash.xml">Setting Up Hashes</link>.
 </para>
@@ -2646,7 +2646,7 @@ arguments in the request line
 
 <tag-name><var>$binary_remote_addr</var></tag-name>
 <tag-desc>
-client address in a binary form, value's length is always 4 bytes
+client address in a binary form, value’s length is always 4 bytes
 </tag-desc>
 
 <tag-name><var>$body_bytes_sent</var></tag-name>
@@ -2671,7 +2671,7 @@ the <value>name</value> cookie
 
 <tag-name><var>$document_root</var></tag-name>
 <tag-desc>
-<link id="root"/> or <link id="alias"/> directive's value
+<link id="root"/> or <link id="alias"/> directive’s value
 for the current request
 </tag-desc>
 
@@ -2734,7 +2734,7 @@ same as <var>$args</var>
 <tag-name><var>$realpath_root</var></tag-name>
 <tag-desc>
 an absolute pathname corresponding to the
-<link id="root"/> or <link id="alias"/> directive's value
+<link id="root"/> or <link id="alias"/> directive’s value
 for the current request,
 with all symbolic links resolved to real paths
 </tag-desc>
@@ -2763,7 +2763,7 @@ full original request line
 <tag-desc>
 request body
 <para>
-The variable's value is made available in locations
+The variable’s value is made available in locations
 processed by the
 <link doc="ngx_http_proxy_module.xml" id="proxy_pass"/>
 and

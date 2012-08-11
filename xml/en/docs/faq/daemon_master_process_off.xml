@@ -30,7 +30,7 @@ intended to be used primarily for nginx code development.
 </para>
 
 <para>
-While many people use "daemon off" in production it wasn't really meant for
+While many people use "daemon off" in production it wasn’t really meant for
 that. Since version 1.0.9 it is now quite safe to run nginx in production
 with "daemon off", though. Bear in mind that non-stop upgrade is not an
 option with "daemon off".
