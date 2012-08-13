@@ -1212,9 +1212,9 @@ listen unix:/var/run/nginx.sock;
 <value>адрес</value>:<value>порт</value> нужно делать
 <c-func>bind</c-func> отдельно.
 Дело в том, что если описаны несколько директив <literal>listen</literal>
-с одинаковым портом, но разными адресами и одна из директив
+с одинаковым портом, но разными адресами, и одна из директив
 <literal>listen</literal> слушает на всех адресах для данного порта
-(<literal>*:</literal><value>порт</value>, то nginx сделает
+(<literal>*:</literal><value>порт</value>), то nginx сделает
 <c-func>bind</c-func> только на <literal>*:</literal><value>порт</value>.
 Необходимо заметить, что в этом случае для определения адреса, на которой
 пришло соединение, делается системный вызов <c-func>getsockname</c-func>.
