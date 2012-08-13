@@ -11,7 +11,8 @@
 <module name="ngx_http_browser_module模块"
         link="/cn/docs/http/ngx_http_browser_module.html"
         lang="cn"
-        rev="1">
+        rev="1"
+        translator="litianqing">
 
 <section id="summary">
 
