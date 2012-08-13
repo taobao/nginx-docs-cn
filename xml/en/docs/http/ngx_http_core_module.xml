@@ -2211,7 +2211,7 @@ Before 0.8.48, the machine’s hostname was used by default.
 When searching for a virtual server by name,
 if name matches more than one of the specified variants,
 e.g. both mask and regular expression match, the first matching
-variant will be choosen, in the following order of precedence:
+variant will be chosen, in the following order of precedence:
 <list type="enum">
 
 <listitem>
