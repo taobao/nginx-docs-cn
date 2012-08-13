@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="directives" name="Directives">
 
@@ -2115,6 +2115,9 @@ server {
 
 <para>
 The first name becomes the primary server name.
+</para>
+
+<para>
 Server names can include an asterisk (“<literal>*</literal>”)
 to replace the first or last part of a name:
 <example>
@@ -2122,6 +2125,7 @@ server {
     server_name example.com *.example.com www.example.*;
 }
 </example>
+Such names are called wildcard names.
 </para>
 
 <para>
@@ -2131,11 +2135,6 @@ server {
     server_name .example.com;
 }
 </example>
-</para>
-
-<para>
-If the parameter equals “<var>$hostname</var>” (0.9.4), the
-machine’s hostname is substituted.
 </para>
 
 <para>
@@ -2193,6 +2192,11 @@ server {
 </para>
 
 <para>
+If the parameter equals “<var>$hostname</var>” (0.9.4), the
+machine’s hostname is substituted.
+</para>
+
+<para>
 It is also possible to specify an empty server name (0.7.11):
 <example>
 server {
@@ -2210,21 +2214,21 @@ Before 0.8.48, the machine’s hostname was used by default.
 <para>
 When searching for a virtual server by name,
 if name matches more than one of the specified variants,
-e.g. both mask and regular expression match, the first matching
+e.g. both wildcard name and regular expression match, the first matching
 variant will be chosen, in the following order of precedence:
 <list type="enum">
 
 <listitem>
-full name
+exact name
 </listitem>
 
 <listitem>
-longest name with a prefix mask,
+longest wildcard name starting with an asterisk,
 e.g. “<literal>*.example.com</literal>”
 </listitem>
 
 <listitem>
-longest name with a suffix mask,
+longest wildcard name ending with an asterisk,
 e.g. “<literal>mail.*</literal>”
 </listitem>
 
@@ -2234,6 +2238,11 @@ first matching regular expression
 </listitem>
 
 </list>
+</para>
+
+<para>
+For more information, please refer to the
+<link doc="server_names.xml"/> document.
 </para>
 
 </directive>
