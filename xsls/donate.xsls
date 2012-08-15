@@ -12,11 +12,11 @@ X:template = "paypal" {
         <input type="hidden" name="hosted_button_id" value="ZJK5JR3ZSBUFC" />
 
         <input type="image" border="0" name="submit"
-	       src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
-	       alt="PayPal - The safer, easier way to pay online!" />
+               src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
+               alt="PayPal - The safer, easier way to pay online!" />
 
         <img src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"
-	       alt="" border="0" width="1" height="1" />
+               alt="" border="0" width="1" height="1" />
     </form>
 
 }
