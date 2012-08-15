@@ -48,6 +48,11 @@ X:template = "link[@id and @doc]" {
 X:template = "links" {
     X:for-each "link", X:sort "@id" {
         <a href="{substring-before(@doc, '.xml')}.html#{@id}">!{@id}</a>
+        X:if "count(../link[@id = current()/@id]) > 1" {
+            X:text{ (}
+            !{substring-before(substring-after(@doc, '/'), '.xml')}
+            X:text{)}
+        }
         <br/>
     }
 }
