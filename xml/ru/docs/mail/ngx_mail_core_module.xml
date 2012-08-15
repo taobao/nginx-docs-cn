@@ -47,8 +47,6 @@ mail {
     server {
         listen   25;
         protocol smtp;
-        # По RFC 2821 таймаут должен быть 300 секунд
-        timeout  300s;
     }
     server {
         listen   110;
@@ -64,7 +62,6 @@ mail {
     server {
         listen   587;
         protocol smtp;
-        timeout  300s;
     }
 }
 </example>
