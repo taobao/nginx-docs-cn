@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Anton Yuzhaninov 2006,2007
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Модуль ngx_mail_proxy_module"
+        link="/ru/docs/mail/ngx_mail_proxy_module.html"
+        lang="ru"
+        rev="1">
+
+<section id="directives" name="Директивы">
+
+<!--
+<directive name="proxy">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+В текущей версии нигде не проверяется.
+</para>
+
+</directive>
+-->
+
+
+<directive name="proxy_buffer">
+<syntax><value>размер</value></syntax>
+<default>4k|8k</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт размер буфера, используемого при проксировании.
+По умолчанию размер одного буфера равен размеру страницы.
+В зависимости от платформы это или 4K, или 8K.
+</para>
+
+</directive>
+
+
+<directive name="proxy_pass_error_message">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Определяет, передавать ли клиенту сообщение об ошибке,
+полученное при авторизации на бэкенде.
+</para>
+
+<para>
+Обычно, если авторизация в nginx прошла успешно,
+бэкенд не может вернуть ошибку, и если она всё же есть,
+значит есть какая-то ошибка внутри системы.
+В таких случаях сообщение бэкенда может содержать информацию,
+которую нельзя показывать клиенту.
+Однако для некоторых POP3-серверов ошибка в ответ на правильный пароль
+является штатным поведением.
+Например, CommuniGatePro извещает пользователя о
+<link url="http://www.stalker.com/CommuniGatePro/Alerts.html#Quota">переполнении
+ящика</link> или других событиях, периодически выдавая
+<link url="http://www.stalker.com/CommuniGatePro/POP.html#Alerts">ошибку
+авторизации</link>.
+В этом случае директиву стоит включить.
+</para>
+
+</directive>
+
+
+<directive name="proxy_timeout">
+<syntax><value>время</value></syntax>
+<default>24h</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт таймаут, который используется после начала проксирования на бэкенд.
+</para>
+
+</directive>
+
+
+<directive name="xclient">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Разрешает или запрещает передачу команды <literal>XCLIENT</literal>
+при подключении к SMTP-бэкенду.
+Для работы команды <literal>XCLIENT</literal> необходим Postfix с
+<link url="http://citrin.ru/nginx:xclient-login-patch">патчем</link>,
+который добавляет параметр <literal>LOGIN</literal>.
+Если не использовать <literal>XCLIENT</literal>, то MTA не сможет писать в лог
+<literal>IP</literal>/<literal>HELO</literal>/<literal>LOGIN</literal>
+клиента и применять различные ограничения на основе этих данных.
+</para>
+
+<para>
+Если <literal>xclient</literal> включено,
+то при подключении к бэкенду nginx сначала передаёт
+<example>
+EHLO server_name
+</example>
+потом
+<example>
+XCLIENT PROTO=ESMTP HELO=client_hello ADDR=192.168.1.1 LOGIN=good_user NAME=[UNAVAILABLE]
+</example>
+Если клиент при подключении к nginx передал <literal>EHLO</literal>, то в
+команде <literal>XCLIENT</literal> передаётся <literal>PROTO=ESMTP</literal>.
+В противном случае передаётся <literal>PROTO=SMTP</literal>.
+В параметре <literal>ADDR</literal> указывается IP-адрес клиента,
+а поскольку nginx не обращается к DNS для получения имени хоста,
+то указывается <literal>NAME=[UNAVAILABLE]</literal>.
+</para>
+
+<para>
+Если же <literal>xclient</literal> выключено,
+то при подключении к бэкенду nginx передаёт
+<literal>EHLO</literal>, если его передал клиент,
+и <literal>HELO</literal> в остальных случаях.
+</para>
+
+</directive>
+
+</section>
+
+</module>

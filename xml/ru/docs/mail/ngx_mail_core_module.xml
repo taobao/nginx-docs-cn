@@ -1,0 +1,394 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Anton Yuzhaninov 2006,2007
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Модуль ngx_mail_core_module"
+        link="/ru/docs/mail/ngx_mail_core_module.html"
+        lang="ru"
+        rev="1">
+
+<section id="summary">
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-mail</literal>.
+</para>
+
+</section>
+
+
+<section id="example" name="Пример конфигурации">
+
+<para>
+<example>
+worker_processes 1;
+
+error_log /var/log/nginx/error.log info;
+
+mail {
+    server_name       mail.example.com;
+    auth_http         localhost:9000/cgi-bin/nginxauth.cgi;
+
+    imap_capabilities IMAP4rev1 UIDPLUS IDLE LITERAL+ QUOTA;
+
+    pop3_auth         plain apop cram-md5;
+    pop3_capabilities LAST TOP USER PIPELINING UIDL;
+
+    smtp_auth         login plain cram-md5;
+    smtp_capabilities "SIZE 10485760" ENHANCEDSTATUSCODES 8BITMIME DSN;
+    xclient           off;
+
+    server {
+        listen   25;
+        protocol smtp;
+        # По RFC 2821 таймаут должен быть 300 секунд
+        timeout  300s;
+    }
+    server {
+        listen   110;
+        protocol pop3;
+        proxy    on;
+        proxy_pass_error_message on;
+    }
+    server {
+        listen   143;
+        protocol imap;
+        proxy    on;
+    }
+    server {
+        listen   587;
+        protocol smtp;
+        timeout  300s;
+    }
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Директивы">
+
+<directive name="imap_capabilities">
+<syntax><value>расширение</value> ...</syntax>
+<default>IMAP4 IMAP4rev1 UIDPLUS</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Позволяет указать список расширений
+<link url="http://tools.ietf.org/html/rfc3501">протокола IMAP</link>,
+выдаваемый клиенту по команде
+<literal>CAPABILITY</literal>.
+К этому списку автоматически добавляется
+<link url="http://tools.ietf.org/html/rfc2595">STARTTLS</link>,
+если включена директива <link doc="ngx_mail_ssl_module.xml" id="starttls"/>.
+</para>
+
+<para>
+В данной директиве имеет смысл указать расширения,
+поддерживаемые IMAP-бэкендами,
+на которые проксируются клиенты (если эти расширения относятся к командам,
+используемым после авторизации, когда nginx прозрачно проксирует подключение
+клиента на бэкенд).
+</para>
+
+<para>
+Текущий список стандартизованных расширений опубликован на
+<link url="http://www.iana.org/assignments/imap4-capabilities">www.iana.org</link>.
+</para>
+
+</directive>
+
+
+<directive name="imap_client_buffer">
+<syntax><value>размер</value></syntax>
+<default>4k|8k</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт размер буфера для чтения IMAP-команд.
+По умолчанию размер одного буфера равен размеру страницы.
+В зависимости от платформы это или 4K, или 8K.
+</para>
+
+</directive>
+
+
+<directive name="listen">
+<syntax>
+    <value>адрес</value>:<value>порт</value>
+    [<literal>bind</literal>]</syntax>
+<default/>
+<context>server</context>
+
+<para>
+Задаёт <value>адрес</value> и <value>порт</value> сокета, на котором сервер
+будет принимать запросы.
+Можно указать только порт.
+Кроме того, адрес может быть именем сервера, например:
+<example>
+listen 127.0.0.1:110;
+listen *:110;
+listen 110;     # то же, что и *:110
+listen localhost:110;
+</example>
+</para>
+
+<para>
+Необязательный параметр <literal>bind</literal>
+указывает, что для данной пары
+<value>адрес</value>:<value>порт</value> нужно делать
+<c-func>bind</c-func> отдельно.
+Дело в том, что если описаны несколько директив <literal>listen</literal>
+с одинаковым портом, но разными адресами и одна из директив
+<literal>listen</literal> слушает на всех адресах для данного порта
+(<literal>*:</literal><value>порт</value>, то nginx сделает
+<c-func>bind</c-func> только на <literal>*:</literal><value>порт</value>.
+Необходимо заметить, что в этом случае для определения адреса, на которой
+пришло соединение, делается системный вызов <c-func>getsockname</c-func>.
+</para>
+
+<para>
+Разные виртуальные серверы должны слушать на разных парах
+<value>адрес</value>:<value>порт</value>.
+</para>
+
+</directive>
+
+
+<directive name="pop3_auth">
+<syntax><value>метод</value> ...</syntax>
+<default>plain</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт разрешённые методы аутентификации POP3-клиентов.
+Поддерживаемые методы:
+<list type="tag">
+
+<tag-name><literal>plain</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc1939">USER/PASS</link>,
+<link url="http://tools.ietf.org/html/rfc2595">AUTH PLAIN</link>,
+<link url="http://tools.ietf.org/html/draft-murchison-sasl-login-00">AUTH LOGIN</link>.
+Данные методы отключить нельзя.
+</tag-desc>
+
+<tag-name><literal>apop</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc1939">APOP</link>.
+Для работы этого метода пароль должен храниться в незашифрованном виде.
+</tag-desc>
+
+<tag-name><literal>cram-md5</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc2195">AUTH CRAM-MD5</link>.
+Для работы этого метода пароль должен храниться в незашифрованном виде.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="pop3_capabilities">
+<syntax><value>расширение</value> ...</syntax>
+<default>TOP USER UIDL</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Позволяет указать список расширений
+<link url="http://tools.ietf.org/html/rfc2449">протокола POP3</link>,
+выдаваемый клиенту по команде
+<literal>CAPA</literal>.
+К этому списку автоматически добавляются
+методы авторизации, указанные в директиве <link id="pop3_auth"/>
+(расширение <link url="http://tools.ietf.org/html/rfc2449">SASL</link>) и
+<link url="http://tools.ietf.org/html/rfc2595">STLS</link>,
+если включена директива <link doc="ngx_mail_ssl_module.xml" id="starttls"/>.
+</para>
+
+<para>
+В данной директиве имеет смысл указать расширения,
+поддерживаемые POP3-бэкендами,
+на которые проксируются клиенты (если эти расширения относятся к командам,
+используемым после авторизации, когда nginx прозрачно проксирует подключение
+клиента на бэкенд).
+</para>
+
+<para>
+Текущий список стандартизованных расширений опубликован на
+<link url="http://www.iana.org/assignments/pop3-extension-mechanism">www.iana.org</link>.
+</para>
+
+</directive>
+
+
+<directive name="protocol">
+<syntax>
+  <literal>imap</literal> |
+  <literal>pop3</literal> |
+  <literal>smtp</literal></syntax>
+<default/>
+<context>server</context>
+
+<para>
+</para>
+
+</directive>
+
+
+<directive name="server">
+<syntax block="yes"/>
+<default/>
+<context>mail</context>
+
+<para>
+Задаёт конфигурацию для виртуального сервера.
+</para>
+
+</directive>
+
+
+<directive name="server_name">
+<syntax><value>имя</value></syntax>
+<default>имя хоста</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт имя сервера, используемое:
+
+<list type="bullet">
+
+<listitem>
+в начальном приветствии POP3/SMTP-сервера;
+</listitem>
+
+<listitem>
+в salt при авторизации SASL-методом CRAM-MD5;
+</listitem>
+
+<listitem>
+в команде <literal>EHLO</literal> при подключении к SMTP-бэкенду,
+если включена команда <link doc="ngx_mail_proxy_module.xml" id="xclient"/>.
+</listitem>
+
+</list>
+
+</para>
+
+</directive>
+
+
+<directive name="smtp_auth">
+<syntax><value>метод</value> ...</syntax>
+<default>login plain</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт разрешённые методы
+<link url="http://tools.ietf.org/html/rfc2554">SASL-аутентификации</link>
+SMTP-клиентов.
+Поддерживаемые методы:
+<list type="tag">
+
+<tag-name><literal>login</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/draft-murchison-sasl-login-00">AUTH LOGIN</link>
+</tag-desc>
+
+<tag-name><literal>plain</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc2595">AUTH PLAIN</link>
+</tag-desc>
+
+<tag-name><literal>cram-md5</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc2195">AUTH CRAM-MD5</link>.
+Для работы этого метода пароль должен храниться в незашифрованном виде.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="smtp_capabilities">
+<syntax><value>расширение</value> ...</syntax>
+<default/>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Позволяет указать список расширений протокола SMTP,
+выдаваемый клиенту в ответе на команду
+<literal>EHLO</literal>.
+К этому списку автоматически добавляются
+методы авторизации, указанные в директиве <link id="smtp_auth"/>.
+</para>
+
+<para>
+В данной директиве имеет смысл указать расширения,
+поддерживаемые MTA,
+на который проксируются клиенты (если эти расширения относятся к командам,
+используемым после авторизации, когда nginx прозрачно проксирует подключение
+клиента на бэкенд).
+</para>
+
+<para>
+Текущий список стандартизованных расширений опубликован на
+<link url="http://www.iana.org/assignments/mail-parameters">www.iana.org</link>.
+</para>
+
+</directive>
+
+
+<directive name="so_keepalive">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+При подключении к IMAP/POP3-бэкенду определяет для сокета поведение
+“TCP keepalive”.
+Если директива не указана, то для сокета будут действовать
+настройки операционной системы.
+Если включено, то для сокета
+включается параметр <c-def>SO_KEEPALIVE</c-def>.
+Если выключено, то для сокета
+параметр <c-def>SO_KEEPALIVE</c-def> выключается.
+</para>
+
+</directive>
+
+
+<directive name="timeout">
+<syntax><value>время</value></syntax>
+<default>60s</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт таймаут, который используется до начала проксирования на бэкенд.
+</para>
+
+</directive>
+
+</section>
+
+</module>

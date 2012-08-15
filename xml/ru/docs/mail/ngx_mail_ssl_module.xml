@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Anton Yuzhaninov 2006,2007
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Модуль ngx_mail_ssl_module"
+        link="/ru/docs/mail/ngx_mail_ssl_module.html"
+        lang="ru"
+        rev="1">
+
+<section id="directives" name="Директивы">
+
+<directive name="ssl">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Включает протокол SSL/TLS для данного виртуального сервера.
+</para>
+
+</directive>
+
+
+<directive name="ssl_certificate">
+<syntax><value>файл</value></syntax>
+<default/>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Указывает файл с сертификатом в формате PEM
+для данного виртуального сервера.
+Если вместе с основным сертификатом нужно указать промежуточные,
+то они должны находиться в этом же файле в следующем порядке — сначала
+основной сертификат, а затем промежуточные.
+В этом же файле может находиться секретный ключ в формате PEM.
+</para>
+
+</directive>
+
+
+<directive name="ssl_certificate_key">
+<syntax><value>файл</value></syntax>
+<default/>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Указывает файл с секретным ключом в формате PEM
+для данного виртуального сервера.
+</para>
+
+</directive>
+
+
+<directive name="ssl_prefer_server_ciphers">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Указывает, чтобы при использовании протоколов SSLv3 и TLS
+серверные шифры были более приоритетны, чем клиентские.
+</para>
+
+</directive>
+
+
+<directive name="ssl_protocols">
+<syntax>
+    [<literal>SSLv2</literal>]
+    [<literal>SSLv3</literal>]
+    [<literal>TLSv1</literal>]
+    [<literal>TLSv1.1</literal>]
+    [<literal>TLSv1.2</literal>]</syntax>
+<default>SSLv3 TLSv1 TLSv1.1 TLSv1.2</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Разрешает указанные протоколы.
+Параметры <literal>TLSv1.1</literal> и <literal>TLSv1.2</literal> работают
+только при использовании библиотеки OpenSSL версии 1.0.1 и выше.
+<note>
+Параметры <literal>TLSv1.1</literal> и <literal>TLSv1.2</literal> поддерживаются
+только начиная с версий 1.1.13 и 1.0.12,
+поэтому при использовании OpenSSL версии 1.0.1
+и выше на старых версиях nginx эти протоколы работать будут, однако их нельзя
+будет отключить.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="ssl_session_cache">
+<syntax>
+    <literal>off</literal> |
+    <literal>none</literal> |
+    [<literal>builtin</literal>[:<value>размер</value>]]
+    [<literal>shared</literal>:<value>название</value>:<value>размер</value>]</syntax>
+<default>none</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт тип и размеры кэшей для хранения параметров сессий.
+Тип кэша может быть следующим:
+<list type="tag" compact="no">
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+жёсткое запрещение использования кэша сессий:
+nginx явно говорит клиенту, что сессии не могут использоваться повторно.
+</tag-desc>
+
+<tag-name><literal>none</literal></tag-name>
+<tag-desc>
+мягкое запрещение использования кэша сессий:
+nginx говорит клиенту, что сессии могут использоваться повторно, но
+на самом деле не используются.
+</tag-desc>
+
+<tag-name><literal>builtin</literal></tag-name>
+<tag-desc>
+встроенный в OpenSSL кэш, используется в рамках только одного рабочего процесса.
+Размер кэша задаётся в сессиях.
+Если размер не задан, то он равен 20480 сессиям.
+Использование встроенного кэша может вести к фрагментации памяти.
+</tag-desc>
+
+<tag-name><literal>shared</literal></tag-name>
+<tag-desc>
+разделяемый между всеми рабочими процессами.
+Размер кэша задаётся в байтах, в 1 мегабайт может поместиться
+около 4000 сессий.
+У каждого разделяемого кэша должно быть произвольное название.
+Кэш с одинаковым названием может использоваться в нескольких
+виртуальных серверах.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+Можно использовать одновременно оба типа кэша, например:
+<example>
+ssl_session_cache builtin:1000 shared:SSL:10m;
+</example>
+однако использование только разделяемого кэша без встроенного должно
+быть более эффективным.
+</para>
+
+</directive>
+
+
+<directive name="ssl_session_timeout">
+<syntax><value>время</value></syntax>
+<default>5m</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт время, в течение которого клиент может повторно
+использовать параметры сессии, хранящейся в кэше.
+</para>
+
+</directive>
+
+
+<directive name="starttls">
+<syntax>
+  <literal>on</literal> |
+  <literal>off</literal> |
+  <literal>only</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+<list type="tag">
+
+<tag-name><literal>on</literal></tag-name>
+<tag-desc>
+разрешить использование команд <literal>STLS</literal> для POP3
+и <literal>STARTTLS</literal> для IMAP;
+</tag-desc>
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+запретить использование команд <literal>STLS</literal>
+и <literal>STARTTLS</literal>;
+</tag-desc>
+
+<tag-name><literal>only</literal></tag-name>
+<tag-desc>
+требовать предварительного перехода на TLS.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+</section>
+
+</module>
