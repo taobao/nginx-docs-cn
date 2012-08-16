@@ -12,6 +12,26 @@
         lang="ru"
         rev="1">
 
+<section id="summary">
+
+<para>
+Модуль <literal>ngx_mail_ssl_module</literal> обеспечивает работу
+почтового прокси-сервера по протоколу SSL/TLS.
+</para>
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-mail_ssl_module</literal>.
+<note>
+Для сборки и работы этого модуля нужна библиотека
+<link url="http://www.openssl.org">OpenSSL</link>.
+</note>
+</para>
+
+</section>
+
+
 <section id="directives" name="Директивы">
 
 <directive name="ssl">
