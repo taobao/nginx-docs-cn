@@ -65,9 +65,12 @@ REFS =									\
 		http/ngx_http_upstream_module				\
 		http/ngx_http_userid_module				\
 		http/ngx_http_xslt_module				\
-		mail/ngx_mail_core_module				\
 		mail/ngx_mail_auth_http_module				\
+		mail/ngx_mail_core_module				\
+		mail/ngx_mail_imap_module				\
+		mail/ngx_mail_pop3_module				\
 		mail/ngx_mail_proxy_module				\
+		mail/ngx_mail_smtp_module				\
 		mail/ngx_mail_ssl_module				\
 
 REFS_XML =	$(foreach name, $(REFS), xml/$(DOC_LANG)/docs/$(name).xml)

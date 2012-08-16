@@ -72,53 +72,6 @@ mail {
 
 <section id="directives" name="Директивы">
 
-<directive name="imap_capabilities">
-<syntax><value>расширение</value> ...</syntax>
-<default>IMAP4 IMAP4rev1 UIDPLUS</default>
-<context>mail</context>
-<context>server</context>
-
-<para>
-Позволяет указать список расширений
-<link url="http://tools.ietf.org/html/rfc3501">протокола IMAP</link>,
-выдаваемый клиенту по команде
-<literal>CAPABILITY</literal>.
-К этому списку автоматически добавляется
-<link url="http://tools.ietf.org/html/rfc2595">STARTTLS</link>,
-если включена директива <link doc="ngx_mail_ssl_module.xml" id="starttls"/>.
-</para>
-
-<para>
-В данной директиве имеет смысл указать расширения,
-поддерживаемые IMAP-бэкендами,
-на которые проксируются клиенты (если эти расширения относятся к командам,
-используемым после авторизации, когда nginx прозрачно проксирует подключение
-клиента на бэкенд).
-</para>
-
-<para>
-Текущий список стандартизованных расширений опубликован на
-<link url="http://www.iana.org/assignments/imap4-capabilities">www.iana.org</link>.
-</para>
-
-</directive>
-
-
-<directive name="imap_client_buffer">
-<syntax><value>размер</value></syntax>
-<default>4k|8k</default>
-<context>mail</context>
-<context>server</context>
-
-<para>
-Задаёт размер буфера для чтения IMAP-команд.
-По умолчанию размер одного буфера равен размеру страницы.
-В зависимости от платформы это или 4K, или 8K.
-</para>
-
-</directive>
-
-
 <directive name="listen">
 <syntax>
     <value>адрес</value>:<value>порт</value>
@@ -161,77 +114,6 @@ listen localhost:110;
 </directive>
 
 
-<directive name="pop3_auth">
-<syntax><value>метод</value> ...</syntax>
-<default>plain</default>
-<context>mail</context>
-<context>server</context>
-
-<para>
-Задаёт разрешённые методы аутентификации POP3-клиентов.
-Поддерживаемые методы:
-<list type="tag">
-
-<tag-name><literal>plain</literal></tag-name>
-<tag-desc>
-<link url="http://tools.ietf.org/html/rfc1939">USER/PASS</link>,
-<link url="http://tools.ietf.org/html/rfc2595">AUTH PLAIN</link>,
-<link url="http://tools.ietf.org/html/draft-murchison-sasl-login-00">AUTH LOGIN</link>.
-Данные методы отключить нельзя.
-</tag-desc>
-
-<tag-name><literal>apop</literal></tag-name>
-<tag-desc>
-<link url="http://tools.ietf.org/html/rfc1939">APOP</link>.
-Для работы этого метода пароль должен храниться в незашифрованном виде.
-</tag-desc>
-
-<tag-name><literal>cram-md5</literal></tag-name>
-<tag-desc>
-<link url="http://tools.ietf.org/html/rfc2195">AUTH CRAM-MD5</link>.
-Для работы этого метода пароль должен храниться в незашифрованном виде.
-</tag-desc>
-
-</list>
-</para>
-
-</directive>
-
-
-<directive name="pop3_capabilities">
-<syntax><value>расширение</value> ...</syntax>
-<default>TOP USER UIDL</default>
-<context>mail</context>
-<context>server</context>
-
-<para>
-Позволяет указать список расширений
-<link url="http://tools.ietf.org/html/rfc2449">протокола POP3</link>,
-выдаваемый клиенту по команде
-<literal>CAPA</literal>.
-К этому списку автоматически добавляются
-методы авторизации, указанные в директиве <link id="pop3_auth"/>
-(расширение <link url="http://tools.ietf.org/html/rfc2449">SASL</link>) и
-<link url="http://tools.ietf.org/html/rfc2595">STLS</link>,
-если включена директива <link doc="ngx_mail_ssl_module.xml" id="starttls"/>.
-</para>
-
-<para>
-В данной директиве имеет смысл указать расширения,
-поддерживаемые POP3-бэкендами,
-на которые проксируются клиенты (если эти расширения относятся к командам,
-используемым после авторизации, когда nginx прозрачно проксирует подключение
-клиента на бэкенд).
-</para>
-
-<para>
-Текущий список стандартизованных расширений опубликован на
-<link url="http://www.iana.org/assignments/pop3-extension-mechanism">www.iana.org</link>.
-</para>
-
-</directive>
-
-
 <directive name="protocol">
 <syntax>
   <literal>imap</literal> |
@@ -241,6 +123,11 @@ listen localhost:110;
 <context>server</context>
 
 <para>
+Задаёт протокол проксируемого сервера.
+Возможные протоколы:
+<link doc="ngx_mail_imap_module.xml">IMAP</link>,
+<link doc="ngx_mail_pop3_module.xml">POP3</link> и
+<link doc="ngx_mail_smtp_module.xml">SMTP</link>.
 </para>
 
 </directive>
@@ -284,71 +171,6 @@ listen localhost:110;
 
 </list>
 
-</para>
-
-</directive>
-
-
-<directive name="smtp_auth">
-<syntax><value>метод</value> ...</syntax>
-<default>login plain</default>
-<context>mail</context>
-<context>server</context>
-
-<para>
-Задаёт разрешённые методы
-<link url="http://tools.ietf.org/html/rfc2554">SASL-аутентификации</link>
-SMTP-клиентов.
-Поддерживаемые методы:
-<list type="tag">
-
-<tag-name><literal>login</literal></tag-name>
-<tag-desc>
-<link url="http://tools.ietf.org/html/draft-murchison-sasl-login-00">AUTH LOGIN</link>
-</tag-desc>
-
-<tag-name><literal>plain</literal></tag-name>
-<tag-desc>
-<link url="http://tools.ietf.org/html/rfc2595">AUTH PLAIN</link>
-</tag-desc>
-
-<tag-name><literal>cram-md5</literal></tag-name>
-<tag-desc>
-<link url="http://tools.ietf.org/html/rfc2195">AUTH CRAM-MD5</link>.
-Для работы этого метода пароль должен храниться в незашифрованном виде.
-</tag-desc>
-
-</list>
-</para>
-
-</directive>
-
-
-<directive name="smtp_capabilities">
-<syntax><value>расширение</value> ...</syntax>
-<default/>
-<context>mail</context>
-<context>server</context>
-
-<para>
-Позволяет указать список расширений протокола SMTP,
-выдаваемый клиенту в ответе на команду
-<literal>EHLO</literal>.
-К этому списку автоматически добавляются
-методы авторизации, указанные в директиве <link id="smtp_auth"/>.
-</para>
-
-<para>
-В данной директиве имеет смысл указать расширения,
-поддерживаемые MTA,
-на который проксируются клиенты (если эти расширения относятся к командам,
-используемым после авторизации, когда nginx прозрачно проксирует подключение
-клиента на бэкенд).
-</para>
-
-<para>
-Текущий список стандартизованных расширений опубликован на
-<link url="http://www.iana.org/assignments/mail-parameters">www.iana.org</link>.
 </para>
 
 </directive>
