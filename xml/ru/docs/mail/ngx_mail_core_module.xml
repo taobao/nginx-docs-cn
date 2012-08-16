@@ -161,7 +161,7 @@ listen localhost:110;
 </listitem>
 
 <listitem>
-в salt при авторизации SASL-методом CRAM-MD5;
+в salt при аутентификации SASL-методом CRAM-MD5;
 </listitem>
 
 <listitem>

@@ -14,6 +14,39 @@
 
 <section id="directives" name="Директивы">
 
+<directive name="imap_auth">
+<syntax><value>метод</value> ...</syntax>
+<default>plain</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт разрешённые методы аутентификации IMAP-клиентов.
+Поддерживаемые методы:
+<list type="tag">
+
+<tag-name><literal>login</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/draft-murchison-sasl-login-00">AUTH=LOGIN</link>
+</tag-desc>
+
+<tag-name><literal>plain</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc4616">AUTH=PLAIN</link>
+</tag-desc>
+
+<tag-name><literal>cram-md5</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc2195">AUTH=CRAM-MD5</link>.
+Для работы этого метода пароль должен храниться в незашифрованном виде.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
 <directive name="imap_capabilities">
 <syntax><value>расширение</value> ...</syntax>
 <default>IMAP4 IMAP4rev1 UIDPLUS</default>
@@ -25,7 +58,8 @@
 <link url="http://tools.ietf.org/html/rfc3501">протокола IMAP</link>,
 выдаваемый клиенту по команде
 <literal>CAPABILITY</literal>.
-К этому списку автоматически добавляется
+К этому списку автоматически добавляются
+методы аутентификации, указанные в директиве <link id="imap_auth"/> и
 <link url="http://tools.ietf.org/html/rfc2595">STARTTLS</link>,
 если включена директива <link doc="ngx_mail_ssl_module.xml" id="starttls"/>.
 </para>
@@ -34,7 +68,7 @@
 В данной директиве имеет смысл указать расширения,
 поддерживаемые IMAP-бэкендами,
 на которые проксируются клиенты (если эти расширения относятся к командам,
-используемым после авторизации, когда nginx прозрачно проксирует подключение
+используемым после аутентификации, когда nginx прозрачно проксирует подключение
 клиента на бэкенд).
 </para>
 

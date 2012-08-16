@@ -28,7 +28,7 @@
 <tag-name><literal>plain</literal></tag-name>
 <tag-desc>
 <link url="http://tools.ietf.org/html/rfc1939">USER/PASS</link>,
-<link url="http://tools.ietf.org/html/rfc2595">AUTH PLAIN</link>,
+<link url="http://tools.ietf.org/html/rfc4616">AUTH PLAIN</link>,
 <link url="http://tools.ietf.org/html/draft-murchison-sasl-login-00">AUTH LOGIN</link>.
 Данные методы отключить нельзя.
 </tag-desc>
@@ -63,7 +63,7 @@
 выдаваемый клиенту по команде
 <literal>CAPA</literal>.
 К этому списку автоматически добавляются
-методы авторизации, указанные в директиве <link id="pop3_auth"/>
+методы аутентификации, указанные в директиве <link id="pop3_auth"/>
 (расширение <link url="http://tools.ietf.org/html/rfc2449">SASL</link>) и
 <link url="http://tools.ietf.org/html/rfc2595">STLS</link>,
 если включена директива <link doc="ngx_mail_ssl_module.xml" id="starttls"/>.
@@ -73,7 +73,7 @@
 В данной директиве имеет смысл указать расширения,
 поддерживаемые POP3-бэкендами,
 на которые проксируются клиенты (если эти расширения относятся к командам,
-используемым после авторизации, когда nginx прозрачно проксирует подключение
+используемым после аутентификации, когда nginx прозрачно проксирует подключение
 клиента на бэкенд).
 </para>
 
