@@ -51,13 +51,11 @@ mail {
     server {
         listen   110;
         protocol pop3;
-        proxy    on;
         proxy_pass_error_message on;
     }
     server {
         listen   143;
         protocol imap;
-        proxy    on;
     }
     server {
         listen   587;
