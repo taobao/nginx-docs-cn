@@ -227,6 +227,9 @@ then nginx uses the empty name as the server name.
 nginx versions up to 0.8.48 used the machine’s hostname as the server name
 in this case.
 </note>
+</para>
+
+<para>
 If a server name is defined as “<literal>$hostname</literal>” (0.9.4), the
 machine’s hostname is used.
 </para>
@@ -380,7 +383,7 @@ and <link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>
 directives at the <i>http</i> level may become necessary.
 The default value of the
 <link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>
-may be equal to 32, or 64, or another value,
+directive may be equal to 32, or 64, or another value,
 depending on CPU cache line size.
 If the default value is 32 and server name is defined as
 “<literal>too.long.server.name.example.org</literal>”
@@ -420,9 +423,7 @@ or if nginx’s start time is unacceptably long, try to increase
 If a server is the only server for a listen port, then nginx will not test
 server names at all (and will not build the hash tables for the listen port).
 However, there is one exception.
-If a
-<link doc="ngx_http_core_module.xml" id="server_name"/>
-is a regular expression with captures,
+If a server name is a regular expression with captures,
 then nginx has to execute the expression to get the captures.
 </para>
 
