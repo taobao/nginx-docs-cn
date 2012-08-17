@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="directives" name="Директивы">
 
@@ -2102,6 +2102,9 @@ server {
 
 <para>
 Первое имя становится основным именем сервера.
+</para>
+
+<para>
 В именах серверов можно использовать звёздочку (“<literal>*</literal>”)
 для замены первой или последней части имени:
 <example>
@@ -2109,6 +2112,7 @@ server {
     server_name example.com *.example.com www.example.*;
 }
 </example>
+Такие имена называются именами с маской.
 </para>
 
 <para>
@@ -2118,11 +2122,6 @@ server {
     server_name .example.com;
 }
 </example>
-</para>
-
-<para>
-Если параметр равен “<var>$hostname</var>” (0.9.4), то
-подставляется имя хоста (hostname) машины.
 </para>
 
 <para>
@@ -2180,6 +2179,11 @@ server {
 </para>
 
 <para>
+Если параметр равен “<var>$hostname</var>” (0.9.4), то
+подставляется имя хоста (hostname) машины.
+</para>
+
+<para>
 Возможно также указать пустое имя сервера (0.7.11):
 <example>
 server {
@@ -2197,12 +2201,12 @@ server {
 <para>
 При поиске виртуального сервера по имени,
 если имени соответствует несколько из указанных вариантов,
-например, одновременно подходят и маска, и регулярное выражение,
+например, одновременно подходят и имя с маской, и регулярное выражение,
 будет выбран первый подходящий вариант в следующем порядке приоритета:
 <list type="enum">
 
 <listitem>
-полное имя
+точное имя
 </listitem>
 
 <listitem>
@@ -2221,6 +2225,11 @@ server {
 </listitem>
 
 </list>
+</para>
+
+<para>
+Подробнее смотрите в документе, описывающем
+<link doc="server_names.xml">имена серверов</link>.
 </para>
 
 </directive>
