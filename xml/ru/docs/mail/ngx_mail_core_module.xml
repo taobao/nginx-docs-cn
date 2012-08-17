@@ -88,6 +88,16 @@ listen *:110;
 listen 110;     # то же, что и *:110
 listen localhost:110;
 </example>
+IPv6-адреса (0.7.58) задаются в квадратных скобках:
+<example>
+listen [::1]:110;
+listen [::]:110;
+</example>
+UNIX-сокеты (1.3.5) задаются при помощи префикса “<literal>unix:</literal>”:
+<example>
+listen unix:/var/run/nginx.sock;
+</example>
+
 </para>
 
 <para>
