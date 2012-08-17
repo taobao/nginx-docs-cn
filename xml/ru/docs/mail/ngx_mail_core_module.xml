@@ -122,10 +122,38 @@ listen localhost:110;
 
 <para>
 Задаёт протокол проксируемого сервера.
-Возможные протоколы:
+Поддерживаются протоколы
 <link doc="ngx_mail_imap_module.xml">IMAP</link>,
 <link doc="ngx_mail_pop3_module.xml">POP3</link> и
 <link doc="ngx_mail_smtp_module.xml">SMTP</link>.
+</para>
+
+<para>
+Если директива не указана, то протокол может быть определён автоматически
+по общеизвестному порту, указанному в директиве <link id="listen"/>:
+<list type="bullet">
+
+<listitem>
+<literal>imap</literal>: 143, 993
+</listitem>
+
+<listitem>
+<literal>pop3</literal>: 110, 995
+</listitem>
+
+<listitem>
+<literal>smtp</literal>: 25, 587, 465
+</listitem>
+
+</list>
+</para>
+
+<para>
+Поддержку ненужных протоколов можно отключить с помощью
+<link doc="../install.xml">конфигурационных</link>
+параметров <literal>--without-mail_imap_module</literal>,
+<literal>--without-mail_pop3_module</literal> и
+<literal>--without-mail_smtp_module</literal>.
 </para>
 
 </directive>
