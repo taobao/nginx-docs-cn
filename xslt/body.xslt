@@ -59,8 +59,6 @@
 
                   <br/>
 
-                  <br/>
-
                   <xsl:apply-templates select="document(concat($XML, '/menu.xml'))                          /menus/menu[@lang = $lang]/item"/>
 
                </td>
