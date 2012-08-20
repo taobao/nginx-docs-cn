@@ -29,7 +29,6 @@ X:template body (lang) {
             </a><br/>
 
             <br/>
-            <br/>
 
             !! "document(concat($XML, '/menu.xml'))
                          /menus/menu[@lang = $lang]/item";

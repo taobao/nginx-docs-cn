@@ -20,19 +20,19 @@
 <item />
 
 <item href="/" lang="en"> 新闻 </item>
-<item />
-
 <item href="/cn/"> nginx 介绍 </item>
 <item href="/en/download.html" lang="en"> 下载 </item>
 <item href="/en/security_advisories.html" lang="en"> 安全漏洞 </item>
 <item href="/cn/docs/"> 文档 </item>
 <item href="/cn/docs/faq.html"> FAQ </item>
-<item href="http://trac.nginx.org/nginx" lang="en"> trac </item>
-<item href="http://wiki.nginx.org" lang="en"> wiki </item>
 <item href="/en/links.html" lang="en"> 外部连接 </item>
 <item href="/en/books.html" lang="en"> 书籍 </item>
 <item href="/en/support.html" lang="en"> 支持 </item>
 <item href="/en/donation.html" lang="en"> 捐献 </item>
+<item />
+
+<item href="http://trac.nginx.org/nginx"> trac </item>
+<item href="http://wiki.nginx.org/"> wiki </item>
 <item href="http://www.nginx.com/"> nginx.com </item>
 <item href="https://twitter.com/nginxorg"> @nginxorg </item>
 
@@ -55,7 +55,7 @@
 <item href="2011.html" year="2011" />
 <item href="2010.html" year="2010" />
 <item href="2009.html" year="2009" />
-<item />
+<item year="" />
 
 <item href="/en/"> about </item>
 <item href="/en/download.html"> download </item>
@@ -69,12 +69,14 @@
 <item href="/en/docs/reference.html"> reference </item>
 -->
 <item href="/en/docs/faq.html"> faq </item>
-<item href="http://trac.nginx.org/nginx"> trac </item>
-<item href="http://wiki.nginx.org"> wiki </item>
 <item href="/en/links.html"> links </item>
 <item href="/en/books.html"> books </item>
 <item href="/en/support.html"> support </item>
 <item href="/en/donation.html"> donation </item>
+<item />
+
+<item href="http://trac.nginx.org/nginx"> trac </item>
+<item href="http://wiki.nginx.org/"> wiki </item>
 <item href="http://www.nginx.com/"> nginx.com </item>
 <item href="https://twitter.com/nginxorg"> @nginxorg </item>
 
@@ -94,16 +96,17 @@
 <item />
 
 <item href="/" lang="אנגלית"> חדשות </item>
-<item />
-
 <item href="/he/"> אודות </item>
 <item href="/en/download.html" lang="אנגלית"> הורדה </item>
 <item href="/en/security_advisories.html" lang="אנגלית"> דיווחי אבטחה </item>
 <item href="/he/docs/"> תיעוד </item>
 <item href="/en/docs/faq.html" lang="אנגלית"> שאלות נפוצות </item>
-<item href="http://wiki.nginx.org" lang="אנגלית"> ויקי </item>
 <item href="/en/links.html" lang="אנגלית"> קישורים </item>
 <item href="/en/support.html" lang="אנגלית"> תמיכה </item>
+<item />
+
+<item href="http://trac.nginx.org/nginx"> trac </item>
+<item href="http://wiki.nginx.org/"> wiki </item>
 <item href="http://www.nginx.com/"> nginx.com </item>
 <item href="https://twitter.com/nginxorg"> @nginxorg </item>
 
@@ -123,8 +126,6 @@
 <item />
 
 <item href="/" lang="en"> ニュース </item>
-<item />
-
 <item href="/ja/"> nginx について </item>
 <item href="/en/download.html" lang="en"> ダウンロード </item>
 <item href="/en/security_advisories.html" lang="en"> セキュリティ情報 </item>
@@ -133,6 +134,10 @@
 <item href="/en/links.html" lang="en"> リンク </item>
 <item href="/en/books.html" lang="en"> 本 </item>
 <item href="/en/support.html" lang="en"> サポート </item>
+<item />
+
+<item href="http://trac.nginx.org/nginx"> trac </item>
+<item href="http://wiki.nginx.org/"> wiki </item>
 <item href="http://www.nginx.com/"> nginx.com </item>
 <item href="https://twitter.com/nginxorg"> @nginxorg </item>
 
@@ -152,20 +157,20 @@
 <item />
 
 <item href="/" lang="en"> новости </item>
-<item />
-
 <item href="/ru/"> об nginx </item>
 <item href="/ru/download.html"> скачать </item>
 <item href="/en/security_advisories.html" lang="en"> безопасность </item>
 <item href="/en/pgp_keys.html" lang="en"> pgp ключи </item>
 <item href="/ru/docs/"> документация </item>
 <item href="/ru/docs/faq.html"> faq </item>
-<item href="http://trac.nginx.org/nginx"> trac </item>
-<item href="http://wiki.nginx.org/"> wiki </item>
 <item href="/en/links.html" lang="en"> ссылки </item>
 <item href="/en/books.html" lang="en"> книги </item>
 <item href="/ru/support.html"> поддержка </item>
 <item href="/en/donation.html" lang="en"> пожертвования </item>
+<item />
+
+<item href="http://trac.nginx.org/nginx"> trac </item>
+<item href="http://wiki.nginx.org/"> wiki </item>
 <item href="http://www.nginx.com/"> nginx.com </item>
 <item href="https://twitter.com/nginxorg"> @nginxorg </item>
 
@@ -185,18 +190,19 @@
 <item />
 
 <item href="/" lang="ing"> haberler </item>
-<item />
-
 <item href="/tr/"> hakkında </item>
 <item href="/en/download.html" lang="ing"> indir </item>
 <item href="/en/security_advisories.html" lang="ing">
       güvenlik tavsiyeleri </item>
 <item href="/tr/docs/"> dökümantasyon </item>
 <item href="/tr/docs/faq.html"> sss </item>
-<item href="http://wiki.nginx.org/NginxTr"> wiki </item>
 <item href="/en/links.html" lang="ing"> bağlantılar </item>
 <item href="/en/books.html" lang="ing"> kitaplar </item>
 <item href="/en/support.html" lang="ing"> destek </item>
+<item />
+
+<item href="http://trac.nginx.org/nginx"> trac </item>
+<item href="http://wiki.nginx.org/"> wiki </item>
 <item href="http://www.nginx.com/"> nginx.com </item>
 <item href="https://twitter.com/nginxorg"> @nginxorg </item>
 
