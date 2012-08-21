@@ -6,7 +6,7 @@
 <!DOCTYPE versions SYSTEM "../dtd/versions.dtd">
 
 <versions>
-<development> 1.3.4 </development>
+<development> 1.3.5 </development>
 <stable> 1.2.3 </stable>
 <legacy_stable> 1.0.15 </legacy_stable>
 </versions>
