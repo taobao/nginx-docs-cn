@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
         lang="ru"
-        rev="2">
+        rev="3">
 
 <section id="directives" name="Директивы">
 
@@ -623,6 +623,19 @@ location @fallback {
 <para>
 Разрешает или запрещает автоматическую генерацию поля <header>ETag</header>
 заголовка ответа для статических ресурсов.
+</para>
+
+</directive>
+
+
+<directive name="http">
+<syntax block="yes"/>
+<default/>
+<context>main</context>
+
+<para>
+Предоставляет контекст конфигурационного файла, в котором указываются
+директивы HTTP-сервера.
 </para>
 
 </directive>

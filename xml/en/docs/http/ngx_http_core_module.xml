@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="2">
+        rev="3">
 
 <section id="directives" name="Directives">
 
@@ -635,6 +635,19 @@ location @fallback {
 <para>
 Enables or disables automatic generation of the <header>ETag</header>
 response header field for static resources.
+</para>
+
+</directive>
+
+
+<directive name="http">
+<syntax block="yes"/>
+<default/>
+<context>main</context>
+
+<para>
+Provides a configuration file context in which the HTTP server directives
+are specified.
 </para>
 
 </directive>
