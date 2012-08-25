@@ -243,16 +243,14 @@ Activates cache of connections to upstream servers.
 
 <para>
 The <value>connections</value> parameter sets the maximum number of
-keepalive connections to upstream servers that are retained in
+idle keepalive connections to upstream servers that are retained in
 the cache per one worker process.
-If there are more idle connections to retain to an upstream than
-are specified by this number, the least recently used ones will
-be closed.
+When this number is exceeded, the least recently used connections
+are closed.
 <note>
-It should be noted that <literal>keepalive</literal> directive
-does not limit the total number of connections that nginx worker
-process can open to upstream servers.
-The new connections are always created on demand.
+It should be particularly noted that <literal>keepalive</literal> directive
+does not limit the total number of connections that nginx worker process
+can open to upstream servers.
 The <value>connections</value> parameter should be set low enough
 to allow upstream servers to process additional new incoming
 connections as well.
