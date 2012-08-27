@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_log_module"
         link="/ru/docs/http/ngx_http_log_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -71,7 +71,7 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 
 <para>
 Размер буфера должен быть не больше размера атомарной записи в дисковый файл.
-Для FreeBSD 3.0-6.0 этот размер неограничен.
+Для FreeBSD 3.0+ этот размер неограничен.
 </para>
 
 <para>
