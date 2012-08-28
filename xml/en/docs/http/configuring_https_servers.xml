@@ -8,7 +8,7 @@
 <article name="Configuring HTTPS servers"
          link="/en/docs/http/configuring_https_servers.html"
          lang="en"
-         rev="1"
+         rev="2"
          author="Igor Sysoev"
          editor="Brian Mercer">
 
@@ -377,6 +377,7 @@ However, SNI has limited browser support.
 Currently it is supported starting with the following browsers versions:
 </para>
 
+<para>
 <list type="bullet">
 
 <listitem>
@@ -400,6 +401,11 @@ and Chrome (Windows version supports SNI on Vista or higher, too).
 </listitem>
 
 </list>
+<note>
+If a server is accessed by an IP address, most browsers will
+not pass it as a server name during the SSL handshake.
+</note>
+</para>
 
 <para>
 In order to use SNI in nginx, it must be supported in both the
