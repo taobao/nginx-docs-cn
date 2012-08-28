@@ -21,13 +21,13 @@
 
 <programlisting>
 server {
-    listen               443;
-    server_name          www.example.com;
-    ssl                  on;
-    ssl_certificate      www.example.com.crt;
-    ssl_certificate_key  www.example.com.key;
-    ssl_protocols        SSLv3 TLSv1 TLSv1.1 TLSv1.2;
-    ssl_ciphers          HIGH:!aNULL:!MD5;
+    listen              443;
+    server_name         www.example.com;
+    ssl                 <b>on</b>;
+    ssl_certificate     <b>www.example.com.crt</b>;
+    ssl_certificate_key <b>www.example.com.key</b>;
+    ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
     ...
 }
 </programlisting>
@@ -39,8 +39,8 @@ server {
 Секретный ключ можно также хранить в одном файле с сертификатом:
 
 <programlisting>
-    ssl_certificate      www.example.com.cert;
-    ssl_certificate_key  www.example.com.cert;
+    ssl_certificate     www.example.com.cert;
+    ssl_certificate_key www.example.com.cert;
 </programlisting>
 
 при этом права доступа к файлу следует также ограничить.
@@ -85,7 +85,7 @@ SSL-операции потребляют дополнительные ресу�
 Наиболее ресурсоёмкой для процессора является операция SSL handshake, в рамках
 которой формируются криптографические параметры сессии.
 Существует два способа уменьшения числа этих операций, производимых для каждого
-клиента: включение постоянных (keepalive) соединений, позволяющих в рамках
+клиента: использование постоянных (keepalive) соединений, позволяющих в рамках
 одного соединения обрабатывать сразу несколько запросов, и повторное
 использование параметров SSL-сессии для предотвращения необходимости выполнения
 SSL handshake для параллельных и последующих соединений.
@@ -97,25 +97,25 @@ SSL handshake для параллельных и последующих соед
 Он может быть увеличен с помощью директивы
 <link doc="ngx_http_ssl_module.xml" id="ssl_session_timeout"/>.
 Вот пример конфигурации, оптимизированной под 4-ядерную систему
-с 10M разделяемого кэша сессий:
+с 10-мегабайтным разделяемым кэшем сессий:
 
 <programlisting>
-<b>worker_processes  4</b>;
+<b>worker_processes 4</b>;
 
 http {
-    <b>ssl_session_cache    shared:SSL:10m</b>;
-    <b>ssl_session_timeout  10m</b>;
+    <b>ssl_session_cache   shared:SSL:10m</b>;
+    <b>ssl_session_timeout 10m</b>;
 
     server {
-        listen               443;
-        server_name          www.example.com;
-        <b>keepalive_timeout    70</b>;
+        listen              443;
+        server_name         www.example.com;
+        <b>keepalive_timeout   70</b>;
 
-        ssl                  on;
-        ssl_certificate      www.example.com.crt;
-        ssl_certificate_key  www.example.com.key;
-        ssl_protocols        SSLv3 TLSv1 TLSv1.1 TLSv1.2;
-        ssl_ciphers          HIGH:!aNULL:!MD5;
+        ssl                 on;
+        ssl_certificate     www.example.com.crt;
+        ssl_certificate_key www.example.com.key;
+        ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
         ...
 </programlisting>
 </para>
@@ -147,11 +147,11 @@ $ cat www.example.com.crt bundle.crt > www.example.com.chained.crt
 
 <programlisting>
 server {
-    listen               443;
-    server_name          www.example.com;
-    ssl                  on;
-    ssl_certificate      www.example.com.chained.crt;
-    ssl_certificate_key  www.example.com.key;
+    listen              443;
+    server_name         www.example.com;
+    ssl                 on;
+    ssl_certificate     www.example.com.chained.crt;
+    ssl_certificate_key www.example.com.key;
     ...
 }
 </programlisting>
@@ -203,8 +203,8 @@ Certificate chain
 ...
 </programlisting>
 
-В этом примере субъект (&ldquo;<i>s</i>&rdquo;) сертификата №0 сервера
-<literal>www.GoDaddy.com</literal> подписан издателем (&ldquo;<i>i</i>&rdquo;),
+В этом примере субъект (“<i>s</i>”) сертификата №0 сервера
+<literal>www.GoDaddy.com</literal> подписан издателем (“<i>i</i>”),
 который в свою очередь является субъектом сертификата №1, подписанного
 издателем, который в свою очередь является субъектом сертификата №2,
 подписанного общеизвестным издателем <i>ValiCert, Inc.</i>,
@@ -224,18 +224,18 @@ Certificate chain
 
 <para>
 Если серверы HTTP и HTTPS идентичны,
-можно настроить единый сервер, который обслуживает
-как HTTP-, так и HTTPS-запросы.
+можно настроить единый сервер, который обслуживает как HTTP-,
+так и HTTPS-запросы.
 Для этого следует исключить директиву “<literal>ssl on</literal>”
 и добавить параметр <literal>ssl</literal> к порту *:443:
 
 <programlisting>
 server {
-    listen               80;
-    listen               443  ssl;
-    server_name          www.example.com;
-    ssl_certificate      www.example.com.crt;
-    ssl_certificate_key  www.example.com.key;
+    listen              80;
+    listen              443 ssl;
+    server_name         www.example.com;
+    ssl_certificate     www.example.com.crt;
+    ssl_certificate_key www.example.com.key;
     ...
 }
 </programlisting>
@@ -260,23 +260,23 @@ listen  443  default  ssl;
 
 <programlisting>
 server {
-    listen           443;
-    server_name      www.example.com;
-    ssl              on;
-    ssl_certificate  www.example.com.crt;
+    listen          443;
+    server_name     www.example.com;
+    ssl             on;
+    ssl_certificate www.example.com.crt;
     ...
 }
 
 server {
-    listen           443;
-    server_name      www.example.org;
-    ssl              on;
-    ssl_certificate  www.example.org.crt;
+    listen          443;
+    server_name     www.example.org;
+    ssl             on;
+    ssl_certificate www.example.org.crt;
     ...
 }
 </programlisting>
 
-В такой конфигурации браузер получит сертификат первого сервера, т.е.
+В такой конфигурации браузер получит сертификат сервера по умолчанию, т.е.
 <literal>www.example.com</literal>, независимо от запрашиваемого имени сервера.
 Это связано с поведением протокола SSL.
 SSL-соединение устанавливается до того, как браузер посылает HTTP-запрос,
@@ -290,18 +290,18 @@ SSL-соединение устанавливается до того, как б
 
 <programlisting>
 server {
-    listen           192.168.1.1:443;
-    server_name      www.example.com;
-    ssl              on;
-    ssl_certificate  www.example.com.crt;
+    listen          192.168.1.1:443;
+    server_name     www.example.com;
+    ssl             on;
+    ssl_certificate www.example.com.crt;
     ...
 }
 
 server {
-    listen           192.168.1.2:443;
-    server_name      www.example.org;
-    ssl              on;
-    ssl_certificate  www.example.org.crt;
+    listen          192.168.1.2:443;
+    server_name     www.example.org;
+    ssl             on;
+    ssl_certificate www.example.org.crt;
     ...
 }
 </programlisting>
@@ -311,15 +311,15 @@ server {
 
 
 <section id="certificate_with_several_names"
-        name="SSL-сертификат с несколькими именами">
+         name="SSL-сертификат с несколькими именами">
 
 <para>
 Существуют и другие способы, которые позволяют использовать один и тот же
 IP-адрес сразу для нескольких HTTPS-серверов.
 Все они, однако, имеют свои недостатки.
 Одним из таких способов является использование сертификата с несколькими
-именами в поле SubjectAltName сертификата, например <literal>www.example.com</literal>
-и <literal>www.example.org</literal>.
+именами в поле SubjectAltName сертификата, например
+<literal>www.example.com</literal> и <literal>www.example.org</literal>.
 Однако, длина поля SubjectAltName ограничена.
 </para>
 
@@ -332,7 +332,8 @@ IP-адрес сразу для нескольких HTTPS-серверов.
 <literal>example.org</literal> и <literal>www.sub.example.org</literal>.
 Два вышеуказанных способа можно комбинировать.
 Сертификат может одновременно содержать и точное, и wildcard имена в поле
-SubjectAltName, например <literal>example.org</literal> и <literal>*.example.org</literal>.
+SubjectAltName, например
+<literal>example.org</literal> и <literal>*.example.org</literal>.
 </para>
 
 <para>
@@ -341,20 +342,20 @@ SubjectAltName, например <literal>example.org</literal> и <literal>*.ex
 все серверы унаследовали их единственную копию в памяти:
 
 <programlisting>
-ssl_certificate      common.crt;
-ssl_certificate_key  common.key;
+ssl_certificate     common.crt;
+ssl_certificate_key common.key;
 
 server {
-    listen           443;
-    server_name      www.example.com;
-    ssl              on;
+    listen          443;
+    server_name     www.example.com;
+    ssl             on;
     ...
 }
 
 server {
-    listen           443;
-    server_name      www.example.org;
-    ssl              on;
+    listen          443;
+    server_name     www.example.org;
+    ssl             on;
     ...
 }
 </programlisting>
@@ -410,13 +411,12 @@ Safari 3.2.1 (Windows-версия поддерживает SNI только н�
 <para>
 Чтобы использовать SNI в nginx, соответствующая поддержка должна
 присутствовать как в библиотеке OpenSSL, использованной при сборке
-бинарного файла nginx, так и в библиотеке, подгружаемой в момент
-работы.
+бинарного файла nginx, так и в библиотеке, подгружаемой в момент работы.
 OpenSSL поддерживает SNI начиная с версии 0.9.8f, если она была
-собрана с опцией конфигурации <nobr>&ldquo;--enable-tlsext&rdquo;.</nobr>
+собрана с опцией конфигурации <nobr>“--enable-tlsext”.</nobr>
 Начиная с OpenSSL 0.9.8j эта опция включена по умолчанию.
 Если nginx был собран с поддержкой SNI, то при запуске nginx с ключом
-&ldquo;-V&rdquo; об этом сообщается:
+“-V” об этом сообщается:
 
 <programlisting>
 $ nginx -V
@@ -444,7 +444,7 @@ therefore SNI is not available
 <list type="bullet">
 
 <listitem>
-Статус поддержки SNI отображается по ключу &ldquo;-V&rdquo;
+Статус поддержки SNI отображается по ключу “-V”
 начиная с версий 0.8.21 и 0.7.62.
 </listitem>
 

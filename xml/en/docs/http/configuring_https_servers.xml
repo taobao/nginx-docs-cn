@@ -21,13 +21,13 @@ and private key files should be specified:
 
 <programlisting>
 server {
-    listen               443;
-    server_name          www.example.com;
-    ssl                  on;
-    ssl_certificate      www.example.com.crt;
-    ssl_certificate_key  www.example.com.key;
-    ssl_protocols        SSLv3 TLSv1 TLSv1.1 TLSv1.2;
-    ssl_ciphers          HIGH:!aNULL:!MD5;
+    listen              443;
+    server_name         www.example.com;
+    ssl                 <b>on</b>;
+    ssl_certificate     <b>www.example.com.crt</b>;
+    ssl_certificate_key <b>www.example.com.key</b>;
+    ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
     ...
 }
 </programlisting>
@@ -35,12 +35,12 @@ server {
 The server certificate is a public entity.
 It is sent to every client that connects to the server.
 The private key is a secure entity and should be stored in a file with
-restricted access, however, it must be readable by nginx&rsquo;s master process.
+restricted access, however, it must be readable by nginx’s master process.
 The private key may alternately be stored in the same file as the certificate:
 
 <programlisting>
-    ssl_certificate      www.example.com.cert;
-    ssl_certificate_key  www.example.com.cert;
+    ssl_certificate     www.example.com.cert;
+    ssl_certificate_key www.example.com.cert;
 </programlisting>
 
 in which case the file access rights should also be restricted.
@@ -53,7 +53,8 @@ The directives <link doc="ngx_http_ssl_module.xml" id="ssl_protocols"/> and
 <link doc="ngx_http_ssl_module.xml" id="ssl_ciphers"/>
 can be used to limit connections
 to include only the strong versions and ciphers of SSL/TLS.
-Since version 1.0.5, nginx uses “<literal>ssl_protocols SSLv3 TLSv1</literal>”
+Since version 1.0.5, nginx uses
+“<literal>ssl_protocols SSLv3 TLSv1</literal>”
 and “<literal>ssl_ciphers HIGH:!aNULL:!MD5</literal>” by default,
 so configuring them explicitly only makes sense for the earlier nginx versions.
 Since versions 1.1.13 and 1.0.12, nginx uses
@@ -96,25 +97,25 @@ It can be increased by using the
 <link doc="ngx_http_ssl_module.xml" id="ssl_session_timeout"/>
 directive.
 Here is a sample configuration optimized for a quad core system
-with 10M shared session cache:
+with 10 megabyte shared session cache:
 
 <programlisting>
-<b>worker_processes  4</b>;
+<b>worker_processes 4</b>;
 
 http {
-    <b>ssl_session_cache    shared:SSL:10m</b>;
-    <b>ssl_session_timeout  10m</b>;
+    <b>ssl_session_cache   shared:SSL:10m</b>;
+    <b>ssl_session_timeout 10m</b>;
 
     server {
-        listen               443;
-        server_name          www.example.com;
-        <b>keepalive_timeout    70</b>;
+        listen              443;
+        server_name         www.example.com;
+        <b>keepalive_timeout   70</b>;
 
-        ssl                  on;
-        ssl_certificate      www.example.com.crt;
-        ssl_certificate_key  www.example.com.key;
-        ssl_protocols        SSLv3 TLSv1 TLSv1.1 TLSv1.2;
-        ssl_ciphers          HIGH:!aNULL:!MD5;
+        ssl                 on;
+        ssl_certificate     www.example.com.crt;
+        ssl_certificate_key www.example.com.key;
+        ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
         ...
 </programlisting>
 </para>
@@ -142,16 +143,15 @@ $ cat www.example.com.crt bundle.crt > www.example.com.chained.crt
 </programlisting>
 
 The resulting file should be used in the
-<link doc="ngx_http_ssl_module.xml" id="ssl_certificate"/>
-directive:
+<link doc="ngx_http_ssl_module.xml" id="ssl_certificate"/> directive:
 
 <programlisting>
 server {
-    listen               443;
-    server_name          www.example.com;
-    ssl                  on;
-    ssl_certificate      www.example.com.chained.crt;
-    ssl_certificate_key  www.example.com.key;
+    listen              443;
+    server_name         www.example.com;
+    ssl                 on;
+    ssl_certificate     www.example.com.chained.crt;
+    ssl_certificate_key www.example.com.key;
     ...
 }
 </programlisting>
@@ -165,7 +165,7 @@ SSL_CTX_use_PrivateKey_file(" ... /www.example.com.key") failed
     X509_check_private_key:key values mismatch)
 </programlisting>
 
-because nginx has tried to use the private key with the bundle&rsquo;s
+because nginx has tried to use the private key with the bundle’s
 first certificate instead of the server certificate.
 </para>
 
@@ -203,12 +203,12 @@ Certificate chain
 ...
 </programlisting>
 
-In this example the subject (&ldquo;<i>s</i>&rdquo;) of the
+In this example the subject (“<i>s</i>”) of the
 <literal>www.GoDaddy.com</literal> server certificate #0 is signed by an issuer
-(&ldquo;<i>i</i>&rdquo;) which itself is the subject of the certificate #1,
+(“<i>i</i>”) which itself is the subject of the certificate #1,
 which is signed by an issuer which itself is the subject of the certificate #2,
 which signed by the well-known issuer <i>ValiCert, Inc.</i>
-whose certificate is stored in the browsers&rsquo; built-in
+whose certificate is stored in the browsers’ built-in
 certificate base (that lay in the house that Jack built).
 </para>
 
@@ -230,11 +230,11 @@ and adding the <literal>ssl</literal> parameter for *:443 port:
 
 <programlisting>
 server {
-    listen               80;
-    listen               443  ssl;
-    server_name          www.example.com;
-    ssl_certificate      www.example.com.crt;
-    ssl_certificate_key  www.example.com.key;
+    listen              80;
+    listen              443 ssl;
+    server_name         www.example.com;
+    ssl_certificate     www.example.com.crt;
+    ssl_certificate_key www.example.com.key;
     ...
 }
 </programlisting>
@@ -243,7 +243,7 @@ server {
 Prior to 0.8.21, nginx only allows the <literal>ssl</literal> parameter
 to be set on listen sockets with the <literal>default</literal> parameter:
 <programlisting>
-listen  443  default  ssl;
+listen 443 default ssl;
 </programlisting>
 </note>
 </para>
@@ -259,28 +259,28 @@ listening on a single IP address:
 
 <programlisting>
 server {
-    listen           443;
-    server_name      www.example.com;
-    ssl              on;
-    ssl_certificate  www.example.com.crt;
+    listen          443;
+    server_name     www.example.com;
+    ssl             on;
+    ssl_certificate www.example.com.crt;
     ...
 }
 
 server {
-    listen           443;
-    server_name      www.example.org;
-    ssl              on;
-    ssl_certificate  www.example.org.crt;
+    listen          443;
+    server_name     www.example.org;
+    ssl             on;
+    ssl_certificate www.example.org.crt;
     ...
 }
 </programlisting>
 
-With this configuration a browser receives the certificate of the default
-server, i.e., <literal>www.example.com</literal> regardless of the requested server name.
-This is caused by SSL protocol behaviour. The SSL connection is established
-before the browser sends an HTTP request and nginx does not know
-the name of the requested server. Therefore, it may only offer the certificate
-of the default server.
+With this configuration a browser receives the default server’s certificate,
+i.e. <literal>www.example.com</literal> regardless of the requested server name.
+This is caused by SSL protocol behaviour.
+The SSL connection is established before the browser sends an HTTP request
+and nginx does not know the name of the requested server.
+Therefore, it may only offer the default server’s certificate.
 </para>
 
 <para>
@@ -289,18 +289,18 @@ is to assign a separate IP address for every HTTPS server:
 
 <programlisting>
 server {
-    listen           192.168.1.1:443;
-    server_name      www.example.com;
-    ssl              on;
-    ssl_certificate  www.example.com.crt;
+    listen          192.168.1.1:443;
+    server_name     www.example.com;
+    ssl             on;
+    ssl_certificate www.example.com.crt;
     ...
 }
 
 server {
-    listen           192.168.1.2:443;
-    server_name      www.example.org;
-    ssl              on;
-    ssl_certificate  www.example.org.crt;
+    listen          192.168.1.2:443;
+    server_name     www.example.org;
+    ssl             on;
+    ssl_certificate www.example.org.crt;
     ...
 }
 </programlisting>
@@ -310,24 +310,26 @@ server {
 
 
 <section id="certificate_with_several_names"
-        name="A SSL certificate with several names">
+         name="An SSL certificate with several names">
 
 <para>
 There are other ways to share a single IP address between several
 HTTPS servers, however, all of them have drawbacks.
 One way is to use a certificate with several names in
-the SubjectAltName certificate field, for example, <literal>www.example.com</literal>
-and <literal>www.example.org</literal>.
+the SubjectAltName certificate field, for example,
+<literal>www.example.com</literal> and <literal>www.example.org</literal>.
 However, the SubjectAltName field length is limited.
 </para>
 
 <para>
 Another way is to use a certificate with a wildcard name, for example,
-<literal>*.example.org</literal>. This certificate matches
-<literal>www.example.org</literal>, but does not match <literal>example.org</literal>
-and <literal>www.sub.example.org</literal>. These two methods can also be combined.
-A certificate may contain exact and wildcard names in the SubjectAltName field,
-for example, <literal>example.org</literal> and <literal>*.example.org</literal>.
+<literal>*.example.org</literal>.
+This certificate matches <literal>www.example.org</literal>, but does not match
+<literal>example.org</literal> and <literal>www.sub.example.org</literal>.
+These two methods can also be combined.
+A certificate may contain exact and wildcard names in the
+SubjectAltName field, for example,
+<literal>example.org</literal> and <literal>*.example.org</literal>.
 </para>
 
 <para>
@@ -336,20 +338,20 @@ its private key file at the <i>http</i> level of configuration
 to inherit their single memory copy in all servers:
 
 <programlisting>
-ssl_certificate      common.crt;
-ssl_certificate_key  common.key;
+ssl_certificate     common.crt;
+ssl_certificate_key common.key;
 
 server {
-    listen           443;
-    server_name      www.example.com;
-    ssl              on;
+    listen          443;
+    server_name     www.example.com;
+    ssl             on;
     ...
 }
 
 server {
-    listen           443;
-    server_name      www.example.org;
-    ssl              on;
+    listen          443;
+    server_name     www.example.org;
+    ssl             on;
     ...
 }
 </programlisting>
@@ -407,10 +409,10 @@ In order to use SNI in nginx, it must be supported in both the
 OpenSSL library with which the nginx binary has been built as well as
 the library to which it is being dynamically linked at run time.
 OpenSSL supports SNI since 0.9.8f version if it was built with config option
-<nobr>&ldquo;--enable-tlsext&rdquo;.</nobr>
+<nobr>“--enable-tlsext”.</nobr>
 Since OpenSSL 0.9.8j this option is enabled by default.
 If nginx was built with SNI support, then nginx will show this
-when run with the &ldquo;-V&rdquo; switch:
+when run with the “-V” switch:
 
 <programlisting>
 $ nginx -V
@@ -438,7 +440,7 @@ therefore SNI is not available
 <list type="bullet">
 
 <listitem>
-The SNI support status has been shown by the &ldquo;-V&rdquo; switch
+The SNI support status has been shown by the “-V” switch
 since 0.8.21 and 0.7.62.
 </listitem>
 
