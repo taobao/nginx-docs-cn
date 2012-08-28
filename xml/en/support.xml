@@ -29,14 +29,12 @@
 <section name="Mailing Lists">
 
 <para>
-You can
+Mailing lists can be
 <link url="http://nginx.org/mailman/listinfo">
-browse</link>
-the mailing lists.
-To post to a mailing list, you must first
-<link url="http://nginx.org/mailman/listinfo">
-subscribe</link>
-an e-mail address that you will use for posting.
+browsed</link>.
+To post to a mailing list,
+an e-mail address that will be used for posting must first be
+<link url="http://nginx.org/mailman/listinfo">subscribed</link>.
 </para>
 
 <para>
@@ -123,8 +121,7 @@ Report a Bug</link>
 <section name="Commercial Support">
 
 <para>
-If you’re looking for a commercial support option
-please refer to the
+For a commercial support option please refer to the
 <link url="http://nginx.com/support.html">
 support page on our nginx.com web site</link>.
 </para>

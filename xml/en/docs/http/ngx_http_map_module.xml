@@ -88,7 +88,7 @@ resulting variable.
 
 <para>
 If a source value matches one of the names of special parameters
-(see below), it should be prefixed with the “<literal>\</literal>” symbol.
+described below, it should be prefixed with the “<literal>\</literal>” symbol.
 </para>
 
 <para>
@@ -179,8 +179,8 @@ default value
 <para>
 Sets the bucket size for the <link id="map"/> variables hash tables.
 Default value depends on the size of the processor’s cache line.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
 </para>
 
 </directive>
@@ -194,8 +194,8 @@ For more information, please refer to
 <para>
 Sets the maximum <value>size</value> of the <link id="map"/> variables
 hash tables.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
 </para>
 
 </directive>

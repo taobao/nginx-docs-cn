@@ -327,7 +327,8 @@ and wildcard names ending with an asterisk are stored
 in three hash tables bound to the listen ports.
 The sizes of hash tables are optimized at the configuration phase
 so that a name can be found with the fewest CPU cache misses.
-See also “<link doc="../hash.xml"/>”.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
 </para>
 
 <para>

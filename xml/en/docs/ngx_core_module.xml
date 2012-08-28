@@ -478,7 +478,7 @@ It should be kept in mind that this number includes all connections
 not only connections with clients.
 Another consideration is that the actual number of simultaneous
 connections may not exceed the current limit on
-the maximum number of open files, see
+the maximum number of open files that can be changed by
 <link id="worker_rlimit_nofile"/>.
 </para>
 

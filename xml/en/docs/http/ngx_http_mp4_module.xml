@@ -82,7 +82,7 @@ This module is not built by default, it should be enabled with the
 <literal>--with-http_mp4_module</literal>
 configuration parameter.
 <note>
-If you were using the third-party mp4 module, be sure to disable it.
+If a third-party mp4 module was previously used, it needs to be disabled.
 </note>
 </para>
 

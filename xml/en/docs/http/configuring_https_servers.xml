@@ -15,9 +15,9 @@
 <section>
 
 <para>
-To configure an HTTPS server you must enable the SSL protocol
-in the server block, and specify the locations of the server certificate
-and private key files:
+To configure an HTTPS server, the SSL protocol must be enabled
+in the server block, and the locations of the server certificate
+and private key files should be specified:
 
 <programlisting>
 server {
@@ -79,7 +79,7 @@ Configuration of ciphers can be adjusted to prefer RC4-SHA as the following:
 
 <para>
 SSL operations consume extra CPU resources.
-On multi-processor systems you should run several worker processes:
+On multi-processor systems several worker processes should be run,
 no less than the number of available CPU cores.
 The most CPU-intensive operation is the SSL handshake.
 There are two ways to minimize the number of these operations per client:
@@ -175,7 +175,7 @@ and which are signed by trusted authorities, so actively used browsers
 may already have the required intermediate certificates and
 may not complain about a certificate sent without a chained bundle.
 To ensure the server sends the complete certificate chain,
-you may use the <command>openssl</command> command-line utility, for example:
+the <command>openssl</command> command-line utility may be used, for example:
 
 <programlisting>
 $ openssl s_client -connect www.godaddy.com:443
@@ -213,8 +213,8 @@ certificate base (that lay in the house that Jack built).
 </para>
 
 <para>
-If you have not added the certificates bundle, you will see only your server
-certificate #0.
+If a certificate bundle has not been added, only the server certificate #0
+will be shown.
 </para>
 
 </section>
@@ -223,13 +223,8 @@ certificate #0.
 <section id="single_http_https_server" name="A single HTTP/HTTPS server">
 
 <para>
-It is good practice to configure separate servers for HTTP and HTTPS
-protocols from the very start. Although their functionalities currently
-seem equal, this may change significantly in the future
-and using a consolidated server may become problematic.
-However, if HTTP and HTTPS servers are equal,
-and you prefer not to think about the future,
-you may configure a single server that handles both HTTP and HTTPS requests
+If HTTP and HTTPS servers are equal,
+a single server that handles both HTTP and HTTPS requests may be configured
 by deleting the directive “<literal>ssl on</literal>”
 and adding the <literal>ssl</literal> parameter for *:443 port:
 

@@ -195,8 +195,8 @@ module.
 <listitem>
 <para>
 <literal>--with-pcre-jit</literal>&mdash;builds the PCRE library with
-“just-in-time compilation” support (1.1.12, see
-<link doc="ngx_core_module.xml" id="pcre_jit"/>).
+“just-in-time compilation” support (1.1.12, the
+<link doc="ngx_core_module.xml" id="pcre_jit"/> directive).
 </para>
 </listitem>
 
