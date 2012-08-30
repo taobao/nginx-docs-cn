@@ -8,7 +8,7 @@
 <article name="Configuring HTTPS servers"
          link="/en/docs/http/configuring_https_servers.html"
          lang="en"
-         rev="2"
+         rev="3"
          author="Igor Sysoev"
          editor="Brian Mercer">
 
@@ -365,8 +365,8 @@ server {
 <para>
 A more generic solution for running several HTTPS servers on a single
 IP address is
-<link url="http://en.wikipedia.org/wiki/Server_Name_Indication">TLSv1.1
-Server Name Indication extension</link> (SNI, RFC3546),
+<link url="http://en.wikipedia.org/wiki/Server_Name_Indication">TLS
+Server Name Indication extension</link> (SNI, RFC 6066),
 which allows a browser to pass a requested server name during the SSL handshake
 and, therefore, the server will know which certificate it should use
 for the connection.
@@ -399,8 +399,10 @@ and Chrome (Windows version supports SNI on Vista or higher, too).
 
 </list>
 <note>
-If a server is accessed by an IP address, most browsers will
-not pass it as a server name during the SSL handshake.
+Only domain names can be passed in SNI,
+however some browsers may erroneously pass an IP address of the server
+as its name if a request includes literal IP address.
+One should not rely on this.
 </note>
 </para>
 
