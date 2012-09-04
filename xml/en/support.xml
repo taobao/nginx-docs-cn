@@ -8,7 +8,18 @@
 <article name="nginx: support"
          link="/en/support.html"
          lang="en"
-         rev="1">
+         rev="2">
+
+
+<section name="Commercial Support">
+
+<para>
+For a commercial support option please refer to the
+<link url="http://nginx.com/support.html">
+support page on our nginx.com web site</link>.
+</para>
+
+</section>
 
 
 <section name="Wiki">
@@ -113,17 +124,6 @@ Report a Bug</link>
 </listitem>
 
 </list>
-</para>
-
-</section>
-
-
-<section name="Commercial Support">
-
-<para>
-For a commercial support option please refer to the
-<link url="http://nginx.com/support.html">
-support page on our nginx.com web site</link>.
 </para>
 
 </section>

@@ -8,7 +8,18 @@
 <article name="nginx: поддержка"
          link="/ru/support.html"
          lang="ru"
-         rev="1">
+         rev="2">
+
+
+<section name="Коммерческая поддержка">
+
+<para>
+Варианты коммерческой поддержки можно найти на
+<link url="http://nginx.com/support.html">странице поддержки
+на нашем сайте nginx.com</link>.
+</para>
+
+</section>
 
 
 <section name="Wiki">
@@ -121,17 +132,6 @@
 </listitem>
 
 </list>
-</para>
-
-</section>
-
-
-<section name="Коммерческая поддержка">
-
-<para>
-Варианты коммерческой поддержки можно найти на
-<link url="http://nginx.com/support.html">странице поддержки
-на нашем сайте nginx.com</link>.
 </para>
 
 </section>
