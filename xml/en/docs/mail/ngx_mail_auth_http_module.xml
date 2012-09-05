@@ -8,8 +8,8 @@
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Module ngx_mail_auth_http_module"
-        link="/ru/docs/mail/ngx_mail_auth_http_module.html"
-        lang="ru"
+        link="/en/docs/mail/ngx_mail_auth_http_module.html"
+        lang="en"
         rev="1">
 
 <section id="directives" name="Directives">
