@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) 2006, 2007 Anton Yuzhaninov
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_mail_core_module"
+        link="/en/docs/mail/ngx_mail_core_module.html"
+        lang="en"
+        rev="1">
+
+<section id="summary">
+
+<para>
+This module is not built by default, it should be
+enabled with
+the <literal>--with-mail</literal> configuration parameter.
+</para>
+
+</section>
+
+
+<section id="example" name="Example configuration">
+
+<para>
+<example>
+worker_processes 1;
+
+error_log /var/log/nginx/error.log info;
+
+mail {
+    server_name       mail.example.com;
+    auth_http         localhost:9000/cgi-bin/nginxauth.cgi;
+
+    imap_capabilities IMAP4rev1 UIDPLUS IDLE LITERAL+ QUOTA;
+
+    pop3_auth         plain apop cram-md5;
+    pop3_capabilities LAST TOP USER PIPELINING UIDL;
+
+    smtp_auth         login plain cram-md5;
+    smtp_capabilities "SIZE 10485760" ENHANCEDSTATUSCODES 8BITMIME DSN;
+    xclient           off;
+
+    server {
+        listen   25;
+        protocol smtp;
+    }
+    server {
+        listen   110;
+        protocol pop3;
+        proxy_pass_error_message on;
+    }
+    server {
+        listen   143;
+        protocol imap;
+    }
+    server {
+        listen   587;
+        protocol smtp;
+    }
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="listen">
+<syntax>
+    <value>address</value>:<value>port</value>
+    [<literal>bind</literal>]</syntax>
+<default/>
+<context>server</context>
+
+<para>
+Sets an <value>address</value> and a <value>port</value> for for a socket,
+on which the server will accept requests.
+Only port may be specified.
+An address may also be a hostname, for example:
+<example>
+listen 127.0.0.1:110;
+listen *:110;
+listen 110;     # то же, что и *:110
+listen localhost:110;
+</example>
+IPv6 addresses (0.7.58) are specified in square brackets:
+<example>
+listen [::1]:110;
+listen [::]:110;
+</example>
+UNIX-domain sockets (1.3.5) are specified with the “<literal>unix:</literal>”
+prefix:
+<example>
+listen unix:/var/run/nginx.sock;
+</example>
+
+</para>
+
+<para>
+The optional <literal>bind</literal> parameter
+instructs to make a separate <c-func>bind</c-func>
+call for a given address:port pair.
+The fact is that nginx will <c-func>bind</c-func> only to
+<literal>*:</literal><value>port</value>
+if there are several <literal>listen</literal> directives with
+the same port but different addresses, and one of the
+<literal>listen</literal> directives listens on all addresses
+for the given port (<literal>*:</literal><value>port</value>).
+It should be noted that the <c-func>getsockname</c-func> system call will be
+made in this case to determine an address that accepted a connection.
+</para>
+
+<para>
+Different virtual servers must listen on different
+<value>address</value>:<value>port</value> pairs.
+</para>
+
+</directive>
+
+
+<directive name="protocol">
+<syntax>
+  <literal>imap</literal> |
+  <literal>pop3</literal> |
+  <literal>smtp</literal></syntax>
+<default/>
+<context>server</context>
+
+<para>
+Sets the protocol of a proxied server.
+Supported protocols are
+<link doc="ngx_mail_imap_module.xml">IMAP</link>,
+<link doc="ngx_mail_pop3_module.xml">POP3</link> and
+<link doc="ngx_mail_smtp_module.xml">SMTP</link>.
+</para>
+
+<para>
+If the directive is not set, the protocol can be detected automatically
+basing on the well-known port specified in the <link id="listen"/>
+directive:
+<list type="bullet">
+
+<listitem>
+<literal>imap</literal>: 143, 993
+</listitem>
+
+<listitem>
+<literal>pop3</literal>: 110, 995
+</listitem>
+
+<listitem>
+<literal>smtp</literal>: 25, 587, 465
+</listitem>
+
+</list>
+</para>
+
+<para>
+Unnecessary protocols can be disabled using the
+<link doc="../install.xml">configuration</link>
+parameters <literal>--without-mail_imap_module</literal>,
+<literal>--without-mail_pop3_module</literal> and
+<literal>--without-mail_smtp_module</literal>.
+</para>
+
+</directive>
+
+
+<directive name="server">
+<syntax block="yes"/>
+<default/>
+<context>mail</context>
+
+<para>
+Sets a configuration for the virtual server.
+</para>
+
+</directive>
+
+
+<directive name="server_name">
+<syntax><value>name</value></syntax>
+<default>hostname</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Sets a name of the virtual server, used:
+
+<list type="bullet">
+
+<listitem>
+in the initial POP3/SMTP server greeting;
+</listitem>
+
+<listitem>
+in the salt during the SASL CRAM-MD5 authentication;
+</listitem>
+
+<listitem>
+in the <literal>EHLO</literal> command on the SMTP backend connection,
+if the <link doc="ngx_mail_proxy_module.xml" id="xclient"/> command
+is turned on.
+</listitem>
+
+</list>
+
+</para>
+
+</directive>
+
+
+<directive name="so_keepalive">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Controls if the “TCP keepalive” mode should be enabled on the client’s
+connection (<c-def>SO_KEEPALIVE</c-def> socket parameter) on the
+proxied server connection.
+</para>
+
+</directive>
+
+
+<directive name="timeout">
+<syntax><value>time</value></syntax>
+<default>60s</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Sets the timeout which is used before proxying to the backend started.
+</para>
+
+</directive>
+
+</section>
+
+</module>
