@@ -309,6 +309,21 @@ ngx_mail_core_module</link>
 </listitem>
 
 <listitem>
+<link doc="mail/ngx_mail_pop3_module.xml">
+ngx_mail_pop3_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_imap_module.xml">
+ngx_mail_imap_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_smtp_module.xml">
+ngx_mail_smtp_module</link>
+</listitem>
+
+<listitem>
 <link doc="mail/ngx_mail_auth_http_module.xml">
 ngx_mail_auth_http_module</link>
 </listitem>
