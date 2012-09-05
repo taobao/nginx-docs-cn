@@ -7,7 +7,7 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Модуль ngx_mail_core_module"
+<module name="Модуль ngx_mail_smtp_module"
         link="/ru/docs/mail/ngx_mail_smtp_module.html"
         lang="ru"
         rev="1">
