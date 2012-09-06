@@ -111,7 +111,7 @@ the <header>Auth-Wait</header> header after 10-20 attempts
 </para>
 
 <para>
-When using the APOP or CRAM-MD5 request-reponses will look like:
+When using the APOP or CRAM-MD5 request-response will look like:
 <example>
 GET /auth HTTP/1.0
 Host: localhost
