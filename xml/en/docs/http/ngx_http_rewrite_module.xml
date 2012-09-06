@@ -324,6 +324,23 @@ in single or double quotes.
 </directive>
 
 
+<directive name="rewrite_log">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if</context>
+
+<para>
+Enables or disables logging of <literal>ngx_http_rewrite_module</literal>
+module directives processing to the error log at
+the <literal>notice</literal> level.
+</para>
+
+</directive>
+
+
 <directive name="set">
 <syntax><value>variable</value> <value>value</value></syntax>
 <default/>

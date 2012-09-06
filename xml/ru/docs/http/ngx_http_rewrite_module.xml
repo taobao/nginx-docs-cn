@@ -322,6 +322,23 @@ rewrite ^/users/(.*)$ /show?user=$1? last;
 </directive>
 
 
+<directive name="rewrite_log">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>if</context>
+
+<para>
+Включает или выключает журналирование обработки директив модуля
+<literal>ngx_http_rewrite_module</literal> в лог-файл ошибок на
+уровне <literal>notice</literal>.
+</para>
+
+</directive>
+
+
 <directive name="set">
 <syntax><value>переменная</value> <value>значение</value></syntax>
 <default/>
