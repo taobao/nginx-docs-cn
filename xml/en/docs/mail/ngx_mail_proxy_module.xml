@@ -57,7 +57,7 @@ an authentication on the backend to the client.
 
 <para>
 Usually, if the authentication in nginx was successful,
-backend can't return an error, but if it nonetheless exists,
+backend can’t return an error, but if it nonetheless exists,
 this means there is some problem inside.
 In such cases the backend message can contain the information
 that should not be shown to the client.
@@ -101,7 +101,7 @@ Postfix with the
 <link url="http://citrin.ru/nginx:xclient-login-patch">patch</link>,
 which adds the <literal>LOGIN</literal> parameter.
 If the <literal>XCLIENT</literal> command is not used, the MTA will be unable
-to write the client's
+to write the client’s
 <literal>IP</literal>/<literal>HELO</literal>/<literal>LOGIN</literal>
 to the log and apply various limitations based on this data.
 </para>
