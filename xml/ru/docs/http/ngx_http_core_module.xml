@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
         lang="ru"
-        rev="3">
+        rev="4">
 
 <section id="directives" name="Директивы">
 
@@ -759,6 +759,15 @@ location /404.html {
     internal;
 }
 </example>
+<note>
+Для предотвращения зацикливания, которое может возникнуть при
+использовании некорректных конфигураций, количество внутренних
+перенаправлений ограничено десятью.
+По достижении этого ограничения будет возвращена ошибка
+<http-status code="500" text="Internal Server Error"/>.
+В таком случае в лог-файле ошибок можно увидеть сообщение
+“rewrite or internal redirection cycle”.
+</note>
 </para>
 
 </directive>
@@ -1819,6 +1828,8 @@ open_file_cache_events   on;
 <para>
 Разрешает или запрещает делать несколько перенаправлений через директиву
 <link id="error_page"/>.
+Количество таких перенаправлений
+<link doc="ngx_http_core_module.xml" id="internal">ограничено</link>.
 </para>
 
 </directive>

@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_rewrite_module"
         link="/ru/docs/http/ngx_http_rewrite_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -38,8 +38,10 @@
 выполняются директивы этого модуля, описанные в выбранном
 <link doc="ngx_http_core_module.xml" id="location"/>,
 и если они изменяли URI, то ищется новый location для уже нового URI.
-Этот цикл может повторяться до 10 раз, после чего возвращается
-ошибка <http-status code="500" text="Internal Server Error"/>.
+Этот цикл может повторяться до
+<link doc="ngx_http_core_module.xml" id="internal">10 раз</link>,
+после чего возвращается ошибка
+<http-status code="500" text="Internal Server Error"/>.
 </listitem>
 
 </list>
