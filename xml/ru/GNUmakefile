@@ -40,6 +40,7 @@ REFS =									\
 		http/ngx_http_flv_module				\
 		http/ngx_http_geo_module				\
 		http/ngx_http_geoip_module				\
+		http/ngx_http_gunzip_module				\
 		http/ngx_http_gzip_module				\
 		http/ngx_http_gzip_static_module			\
 		http/ngx_http_headers_module				\

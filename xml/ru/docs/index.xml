@@ -162,6 +162,11 @@ ngx_http_geoip_module</link>
 </listitem>
 
 <listitem>
+<link doc="http/ngx_http_gunzip_module.xml">
+ngx_http_gunzip_module</link>
+</listitem>
+
+<listitem>
 <link doc="http/ngx_http_gzip_module.xml">
 ngx_http_gzip_module</link>
 </listitem>

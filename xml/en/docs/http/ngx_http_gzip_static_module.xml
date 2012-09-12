@@ -44,19 +44,31 @@ gzip_proxied expired no-cache no-store private auth;
 <section id="directives" name="Directives">
 
 <directive name="gzip_static">
-<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<syntax>
+    <literal>on</literal> |
+    <literal>off</literal> |
+    <literal>always</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
 
 <para>
-Enables or disables checking the existence of precompressed files.
+Enables (“<literal>on</literal>”) or disables (“<literal>off</literal>”)
+checking the existence of precompressed files.
 The following directives are also taken into account:
 <link doc="ngx_http_gzip_module.xml" id="gzip_http_version"/>,
 <link doc="ngx_http_gzip_module.xml" id="gzip_proxied"/>,
 <link doc="ngx_http_gzip_module.xml" id="gzip_disable"/>,
 and <link doc="ngx_http_gzip_module.xml" id="gzip_vary"/>.
+</para>
+
+<para>
+With the “<literal>always</literal>” value (1.3.6), gzipped file is used
+in all cases, without checking if the client supports it.
+It is useful if there are no uncompressed files on the disk anyway
+or the <link doc="ngx_http_gunzip_module.xml">ngx_http_gunzip_module</link>
+is used.
 </para>
 
 <para>
