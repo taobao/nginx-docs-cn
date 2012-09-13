@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="4">
+        rev="5">
 
 <section id="directives" name="Directives">
 
@@ -580,20 +580,20 @@ only if there are no
 <literal>error_page</literal>
 directives on
 the current level.
-A URI value can contain variables.
+A <literal>uri</literal> value can contain variables.
 </para>
 
 <para>
 Example:
 <example>
-error_page 404         /404.html;
-error_page 502 503 504 /50x.html;
-error_page 403         http://example.com/forbidden.html;
+error_page   404              /404.html;
+error_page   500 502 503 504  /50x.html;
 </example>
 </para>
 
 <para>
-Furthermore, it is possible to change the response code to another, for example:
+Furthermore, it is possible to change the response code to another
+using the “<literal>=code</literal>” syntax, for example:
 <example>
 error_page 404 =200 /empty.gif;
 </example>
@@ -609,8 +609,19 @@ error_page 404 = /404.php;
 </para>
 
 <para>
-If there is no need to change URI during redirection it is possible to redirect
-error processing into a named location:
+It is also possible to use redirects for error processing:
+<example>
+error_page 403         http://example.com/forbidden.html;
+error_page 404 =301    http://example.com/notfound.html;
+</example>
+In this case, the response code 302 is returned to the client.
+It can only be changed to one of the redirect status
+codes (301, 302, 303 and 307).
+</para>
+
+<para>
+If there is no need to change URI during internal redirection it is
+possible to pass error processing into a named location:
 <example>
 location / {
     error_page 404 = @fallback;
@@ -620,6 +631,14 @@ location @fallback {
     proxy_pass http://backend;
 }
 </example>
+</para>
+
+<para>
+<note>
+If the <literal>uri</literal> processing led to an error,
+the HTTP status code indicating last occurred problem
+will be returned.
+</note>
 </para>
 
 </directive>

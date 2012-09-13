@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
         lang="ru"
-        rev="4">
+        rev="5">
 
 <section id="directives" name="Директивы">
 
@@ -568,20 +568,20 @@ disable_symlinks on from=$document_root;
 Директивы <literal>error_page</literal> наследуются с предыдущего уровня
 при условии, что на данном уровне не описаны свои директивы
 <literal>error_page</literal>.
-В значении URI можно использовать переменные.
+В значении <literal>uri</literal> можно использовать переменные.
 </para>
 
 <para>
 Пример:
 <example>
-error_page 404         /404.html;
-error_page 502 503 504 /50x.html;
-error_page 403         http://example.com/forbidden.html;
+error_page   404              /404.html;
+error_page   500 502 503 504  /50x.html;
 </example>
 </para>
 
 <para>
-Кроме того, можно поменять код ответа на другой, например:
+Кроме того, можно поменять код ответа на другой,
+используя синтаксис вида “<literal>=code</literal>”, например:
 <example>
 error_page 404 =200 /empty.gif;
 </example>
@@ -597,7 +597,19 @@ error_page 404 = /404.php;
 </para>
 
 <para>
-Если при перенаправлении не нужно менять URI, то можно перенаправить
+Также существует возможность использовать перенаправления для обработки
+ошибок:
+<example>
+error_page 403         http://example.com/forbidden.html;
+error_page 404 =301    http://example.com/notfound.html;
+</example>
+В этому случае клиенту возвращается код ответа 302.
+Его можно изменить только на один из кодов статуса, относящихся к
+перенаправлениям (301, 302, 303 and 307).
+</para>
+
+<para>
+Если при внутреннем перенаправлении не нужно менять URI, то можно передать
 обработку ошибки в именованный location:
 <example>
 location / {
@@ -608,6 +620,14 @@ location @fallback {
     proxy_pass http://backend;
 }
 </example>
+</para>
+
+<para>
+<note>
+В случае возникновения ошибки при обработке <literal>uri</literal>
+будет возвращен ответ с кодом HTTP статуса, отражающим последнюю
+возникшую проблему.
+</note>
 </para>
 
 </directive>
