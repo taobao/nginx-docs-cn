@@ -5,6 +5,7 @@ DOCS =									\
 		install							\
 		windows							\
 		events							\
+		syntax							\
 		control							\
 		hash							\
 		dirindex						\
