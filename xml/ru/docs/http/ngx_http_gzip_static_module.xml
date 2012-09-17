@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_gzip_static_module"
         link="/ru/docs/http/ngx_http_gzip_static_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -44,19 +44,30 @@ gzip_proxied expired no-cache no-store private auth;
 <section id="directives" name="Директивы">
 
 <directive name="gzip_static">
-<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<syntax>
+    <literal>on</literal> |
+    <literal>off</literal> |
+    <literal>always</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
 <context>location</context>
 
 <para>
-Разрешает или запрещает проверку готового сжатого файла.
+Разрешает (“<literal>on</literal>”) или запрещает (“<literal>off</literal>”)
+проверку готового сжатого файла.
 При использовании также учитываются директивы
 <link doc="ngx_http_gzip_module.xml" id="gzip_http_version"/>,
 <link doc="ngx_http_gzip_module.xml" id="gzip_proxied"/>,
 <link doc="ngx_http_gzip_module.xml" id="gzip_disable"/>
 и <link doc="ngx_http_gzip_module.xml" id="gzip_vary"/>.
+</para>
+
+<para>
+Со значением “<literal>always</literal>” (1.3.6) во всех случаях будет
+использоваться сжатый файл, без проверки поддержки на стороне клиента.
+Это полезно, если на диске всё равно нет несжатых файлов, или используется
+модуль <link doc="ngx_http_gunzip_module.xml">ngx_http_gunzip_module</link>.
 </para>
 
 <para>

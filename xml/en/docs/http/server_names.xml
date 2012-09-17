@@ -8,7 +8,7 @@
 <article name="Server names"
          link="/en/docs/http/server_names.html"
          lang="en"
-         rev="1"
+         rev="2"
          author="Igor Sysoev"
          editor="Brian Mercer">
 
@@ -19,8 +19,9 @@
 Server names are defined using the
 <link doc="ngx_http_core_module.xml" id="server_name"/>
 directive
-and determine which server block is used for a given request.
-See also &ldquo;<link doc="request_processing.xml"/>&rdquo;.
+and determine which <link doc="ngx_http_core_module.xml" id="server"/> block
+is used for a given request.
+See also “<link doc="request_processing.xml"/>”.
 They may be defined using exact names, wildcard names, or regular expressions:
 
 <programlisting>
@@ -48,31 +49,33 @@ server {
     ...
 }
 </programlisting>
+</para>
 
-The names are tested in the following order:
-
+<para>
+When searching for a virtual server by name, if name matches more than one of
+the specified variants, e.g. both wildcard name and regular expression match,
+the first matching variant will be chosen, in the following order of precedence:
 <list type="enum">
 
 <listitem>
-exact names;
+exact name
 </listitem>
 
 <listitem>
-wildcard names starting with an asterisk: <literal>*.example.org</literal>
-(longest first);
+longest wildcard name starting with an asterisk, e.g.
+“<literal>*.example.org</literal>”
 </listitem>
 
 <listitem>
-wildcard names ending with an asterisk: <literal>mail.*</literal>
-(longest first);
+longest wildcard name ending with an asterisk, e.g. “<literal>mail.*</literal>”
 </listitem>
 
 <listitem>
-and regular expressions in the order listed in the configuration file.
+first matching regular expression
+(in order of appearance in a configuration file)
 </listitem>
 
 </list>
-The first match stops the search.
 </para>
 
 </section>
@@ -82,7 +85,7 @@ The first match stops the search.
         name="Wildcard names">
 
 <para>
-A wildcard name may contain an asterisk only on the name's start or end,
+A wildcard name may contain an asterisk only on the name’s start or end,
 and only on a dot border. The names “<literal>www.*.example.org</literal>”
 and “<literal>w*.example.org</literal>” are invalid.
 However, these names can be specified using regular expressions,
@@ -94,8 +97,8 @@ The name “<literal>*.example.org</literal>” matches not only
 </para>
 
 <para>
-A special wildcard in the form “<literal>.example.org</literal>” can be used
-to match both the exact name “<literal>example.org</literal>”
+A special wildcard name in the form “<literal>.example.org</literal>” can be
+used to match both the exact name “<literal>example.org</literal>”
 and the wildcard name “<literal>*.example.org</literal>”.
 </para>
 
@@ -117,11 +120,11 @@ server_name  ~^www\d+\.example\.net$;
 
 otherwise it will be treated as an exact name, or if the expression contains
 an asterisk, as a wildcard name (and most likely as an invalid one).
-Do not forget to set &ldquo;^&rdquo; and &ldquo;$&rdquo; anchors.
+Do not forget to set “<literal>^</literal>” and “<literal>$</literal>” anchors.
 They are not required syntactically, but logically.
 Also note that domain name dots should be escaped with a backslash.
-A regular expression containing the characters &ldquo;{&rdquo;
-and &ldquo;}&rdquo; should be quoted:
+A regular expression containing the characters “<literal>{</literal>”
+and “<literal>}</literal>” should be quoted:
 
 <programlisting>
 server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.example\.net$";
@@ -172,8 +175,8 @@ If nginx fails to start and displays the error message:
 pcre_compile() failed: unrecognized character after (?&lt; in ...
 </programlisting>
 
-this means that the PCRE library is old
-and you should try the syntax “<literal>?P&lt;<value>name</value>&gt;</literal>”.
+this means that the PCRE library is old and the syntax
+“<literal>?P&lt;<value>name</value>&gt;</literal>” should be tried instead.
 The captures can also be used in digital form:
 
 <programlisting>
@@ -198,8 +201,13 @@ since the digital references can easily be overwritten.
         name="Miscellaneous names">
 
 <para>
-If you want to process requests without a &ldquo;Host&rdquo; header line
-in a server block which is not the default, you should specify an empty name:
+There are some server names that are treated specially.
+</para>
+
+<para>
+If it is required to process requests without the <header>Host</header>
+header field in a <link doc="ngx_http_core_module.xml" id="server"/>
+block which is not the default, an empty name should be specified:
 
 <programlisting>
 server {
@@ -213,18 +221,23 @@ server {
 <para>
 If no
 <link doc="ngx_http_core_module.xml" id="server_name"/>
-is defined in a server block,
+is defined in a <link doc="ngx_http_core_module.xml" id="server"/> block
 then nginx uses the empty name as the server name.
 <note>
-nginx versions up to 0.8.48 used the <i>hostname</i> as the server name
+nginx versions up to 0.8.48 used the machine’s hostname as the server name
 in this case.
 </note>
 </para>
 
 <para>
+If a server name is defined as “<literal>$hostname</literal>” (0.9.4), the
+machine’s hostname is used.
+</para>
+
+<para>
 If someone makes a request using an IP address instead of a server name,
-the request&rsquo;s &ldquo;Host&rdquo; header line will contain the IP address
-and you can handle the request using the IP address as the server name:
+the <header>Host</header> request header field will contain the IP address
+and the request can be handled using the IP address as the server name:
 
 <programlisting>
 server {
@@ -240,7 +253,8 @@ server {
 </para>
 
 <para>
-In catch-all server examples you may see the strange name &ldquo;_&rdquo;:
+In catch-all server examples the strange name “<literal>_</literal>” can
+be seen:
 
 <programlisting>
 server {
@@ -252,23 +266,24 @@ server {
 
 There is nothing special about this name, it is just one of a myriad
 of invalid domain names which never intersect with any real name.
-You may also use something like &ldquo;--&rdquo;, &ldquo;!@#&rdquo;, and so on.
+Other invalid names like “<literal>--</literal>” and “<literal>!@#</literal>”
+may equally be used.
 </para>
 
 <para>
-nginx versions up to 0.6.25 supported the special name &ldquo;*&rdquo;
+nginx versions up to 0.6.25 supported the special name “<literal>*</literal>”
 which was erroneously interpreted to be a catch-all name.
 It never functioned as a catch-all or wildcard server name.
 Instead, it supplied the functionality that is now provided
 by the
 <link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/>
 directive.
-The special name &ldquo;*&rdquo; is now deprecated
+The special name “<literal>*</literal>” is now deprecated
 and the
 <link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/>
 directive should be used.
 Note that there is no way to specify the catch-all name or
-the <i>default</i> server using the
+the default server using the
 <link doc="ngx_http_core_module.xml" id="server_name"/>
 directive.
 This is a property of the
@@ -277,8 +292,8 @@ directive
 and not of the
 <link doc="ngx_http_core_module.xml" id="server_name"/>
 directive.
-See also &ldquo;<link doc="request_processing.xml"/>&rdquo;.
-You can define servers listening on ports *:80 and *:8080,
+See also “<link doc="request_processing.xml"/>”.
+It is possible to define servers listening on ports *:80 and *:8080,
 and direct that one will be the default server for port *:8080,
 while the other will be the default for port *:80:
 
@@ -307,21 +322,31 @@ server {
         name="Optimization">
 
 <para>
-Exact names and wildcard names are stored in hashes.
-The hashes are bound to the listen ports and every listen port
-may have up to three hashes: an exact names hash, a wildcard names hash
-starting with an asterisk, and a wildcard names hash ending with an asterisk.
-The sizes of the hashes are optimized at the configuration phase so that
-a name can be found with the fewest CPU cache misses.
-The exact names hash is searched first.
-If a name is not found using the exact name hash, then the wildcard names hash
+Exact names, wildcard names starting with an asterisk,
+and wildcard names ending with an asterisk are stored
+in three hash tables bound to the listen ports.
+The sizes of hash tables are optimized at the configuration phase
+so that a name can be found with the fewest CPU cache misses.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
+</para>
+
+<para>
+The exact names hash table is searched first.
+If a name is not found, the hash table with wildcard names
 starting with an asterisk is searched.
-If the name is not found there, the wildcard names hash
+If the name is not found there, the hash table with wildcard names
 ending with an asterisk is searched.
-Searching wildcard names hashes is slower than searching exact name hash
-because names are searched by domain parts.
+</para>
+
+<para>
+Searching wildcard names hash table is slower than searching exact names hash
+table because names are searched by domain parts.
 Note that the special wildcard form “<literal>.example.org</literal>”
-is stored in a wildcard names hash and not in an exact names hash.
+is stored in a wildcard names hash table and not in an exact names hash table.
+</para>
+
+<para>
 Regular expressions are tested sequentially
 and therefore are the slowest method and are non-scalable.
 </para>
@@ -352,17 +377,17 @@ server {
 </para>
 
 <para>
-If you have defined a large number of server names,
-or defined unusually long server names, you may need to tune
+If a large number of server names are defined,
+or unusually long server names are defined, tuning
 the <link doc="ngx_http_core_module.xml" id="server_names_hash_max_size"/>
 and <link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>
-directives at the <i>http</i> level.
+directives at the <i>http</i> level may become necessary.
 The default value of the
 <link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>
-may be equal to 32, or 64, or another value,
-depending on your CPU cache line size.
-If the default value is 32 and you define
-&ldquo;too.long.server.name.example.org&rdquo; as a server name,
+directive may be equal to 32, or 64, or another value,
+depending on CPU cache line size.
+If the default value is 32 and server name is defined as
+“<literal>too.long.server.name.example.org</literal>”
 then nginx will fail to start and display the error message:
 
 <programlisting>
@@ -370,7 +395,7 @@ could not build the server_names_hash,
 you should increase server_names_hash_bucket_size: 32
 </programlisting>
 
-In this case, you should set the directive value to the next power of 2:
+In this case, the directive value should be increased to the next power of two:
 
 <programlisting>
 http {
@@ -378,8 +403,8 @@ http {
     ...
 </programlisting>
 
-If you have defined a large number of server names,
-you will get another error message:
+If a large number of server names are defined,
+another error message will appear:
 
 <programlisting>
 could not build the server_names_hash,
@@ -387,22 +412,19 @@ you should increase either server_names_hash_max_size: 512
 or server_names_hash_bucket_size: 32
 </programlisting>
 
-You should first try to set
+In such a case, first try to set
 <link doc="ngx_http_core_module.xml" id="server_names_hash_max_size"/>
 to a number close to the number of server names.
 Only if this does not help,
-or if nginx&rsquo;s start time is unacceptably long,
-should you try to increase
+or if nginx’s start time is unacceptably long, try to increase
 <link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>.
 </para>
 
 <para>
 If a server is the only server for a listen port, then nginx will not test
-server names at all (and will not build the hashes for the listen port).
+server names at all (and will not build the hash tables for the listen port).
 However, there is one exception.
-If a
-<link doc="ngx_http_core_module.xml" id="server_name"/>
-is a regular expression with captures,
+If a server name is a regular expression with captures,
 then nginx has to execute the expression to get the captures.
 </para>
 
@@ -416,7 +438,12 @@ then nginx has to execute the expression to get the captures.
 <list type="bullet">
 
 <listitem>
-A default server name value is an empty name &ldquo;&rdquo; since 0.8.48.
+The special server name “<literal>$hostname</literal>” has been supported
+since 0.9.4.
+</listitem>
+
+<listitem>
+A default server name value is an empty name “” since 0.8.48.
 </listitem>
 
 <listitem>
@@ -428,7 +455,7 @@ Regular expression server name captures have been supported since 0.7.40.
 </listitem>
 
 <listitem>
-An empty server name &ldquo;&rdquo; has been supported since 0.7.12.
+An empty server name “” has been supported since 0.7.12.
 </listitem>
 
 <listitem>

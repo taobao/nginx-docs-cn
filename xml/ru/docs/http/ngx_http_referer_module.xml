@@ -58,8 +58,8 @@ if ($invalid_referer) {
 
 <para>
 Задаёт размер корзины хэш-таблиц со значениями <header>Referer</header>.
-Подробнее смотрите в документе по
-<link doc="../hash.xml">настройке хэшей</link>.
+Подробнее настройка хэш-таблиц обсуждается в отдельном
+<link doc="../hash.xml">документе</link>.
 </para>
 
 </directive>
@@ -75,8 +75,8 @@ if ($invalid_referer) {
 <para>
 Задаёт максимальный <value>размер</value> хэш-таблиц со значениями
 <header>Referer</header>.
-Подробнее смотрите в документе по
-<link doc="../hash.xml">настройке хэшей</link>.
+Подробнее настройка хэш-таблиц обсуждается в отдельном
+<link doc="../hash.xml">документе</link>.
 </para>
 
 </directive>

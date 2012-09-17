@@ -5,36 +5,24 @@
 
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article name="Синтаксис конфигурационного файла"
+<article name="Единицы измерения в конфигурационном файле"
          link="/ru/docs/syntax.html"
          lang="ru"
-         rev="1">
+         rev="2">
 
 <section>
 
-<!--
-
-<para lang="ru">
-<programlisting>
-    директива  параметр  [параметр ...];
-</programlisting>
-</para>
-
--->
-
 <para>
-Размеры можно указывать в килобайтах и мегабайтах:
-<table width="30%">
-<tr><td width="20%">k,K</td><td>килобайты</td></tr>
-<tr><td width="20%">m,M</td><td>мегабайты</td></tr>
-</table>
-например, "8k", "1m". По умолчанию размер в байтах.
+Размеры можно указывать в килобайтах (<literal>k</literal>,
+<literal>K</literal>) и мегабайтах (<literal>m</literal>,
+<literal>M</literal>), например, “<literal>8k</literal>”,
+“<literal>1m</literal>”.
+Если суффикс не указан, то значение задано в байтах.
 </para>
 
 <para>
 Время можно указывать в минутах, часах, днях и так далее:
 <table width="30%">
-<tr><td width="20%">ms</td><td>миллисекунды</td></tr>
 <tr><td width="20%">s</td><td>секунды</td></tr>
 <tr><td width="20%">m</td><td>минуты</td></tr>
 <tr><td width="20%">h</td><td>часы</td></tr>
@@ -43,7 +31,13 @@
 <tr><td width="20%">M</td><td>месяцы, 30 дней</td></tr>
 <tr><td width="20%">y</td><td>годы, 365 дней</td></tr>
 </table>
-например, "1h 30m", "1y 6M". По умолчанию время в секундах.
+</para>
+
+<para>
+например, “<literal>1h 30m</literal>”, “<literal>1y 6M</literal>”.
+Также в некоторых директивах возможно указать время
+с точностью до миллисекунд (<literal>ms</literal>).
+Если суффикс не указан, то значение задано в секундах.
 </para>
 
 </section>

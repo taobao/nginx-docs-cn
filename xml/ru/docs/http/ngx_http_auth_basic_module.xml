@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_auth_basic_module"
         link="/ru/docs/http/ngx_http_auth_basic_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -85,9 +85,32 @@ location / {
 </para>
 
 <para>
-Пароли должны быть зашифрованы функцией <c-func>crypt</c-func>.
-Для создания файла с паролями можно воспользоваться командой
-<command>htpasswd</command> из дистрибутива веб-сервера Apache.
+Поддерживаются следующие типы паролей:
+<list type="bullet">
+
+<listitem>
+зашифрованные функцией <c-func>crypt</c-func>; могут быть созданы
+с помощью утилиты “<command>htpasswd</command>” из дистрибутива HTTP-сервера
+Apache или команды “<command>openssl passwd</command>”;
+</listitem>
+
+<listitem>
+хэшированные с помощью алгоритма, основанного на MD5, по версии Apache (apr1);
+могут быть созданы теми же инструментами;
+</listitem>
+
+<listitem>
+заданные согласно синтаксису
+“<literal>{</literal><value>схема</value><literal>}</literal><value>данные</value>”
+(1.0.3+) как описано в
+<link url="http://tools.ietf.org/html/rfc2307#section-5.3">RFC 2307</link>;
+в настоящий момент реализованы схемы <literal>PLAIN</literal> (в качестве
+примера, не следует применять) и <literal>SSHA</literal> (SHA1 хэширование
+с солью, используется в некоторых программах, в частности OpenLDAP
+и Dovecot).
+</listitem>
+
+</list>
 </para>
 
 </directive>

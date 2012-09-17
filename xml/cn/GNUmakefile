@@ -1,8 +1,6 @@
 DOC_LANG =	cn
 
 DOCS =									\
-		introduction						\
-		howto							\
 		faq							\
 		install							\
 		windows							\
@@ -18,19 +16,14 @@ INTRO =									\
 		http/request_processing					\
 		http/server_names					\
 		http/configuring_https_servers				\
-
-INTRO_XML =	$(foreach name, $(INTRO), xml/$(DOC_LANG)/docs/$(name).xml)
-INTRO_HTML =	$(foreach name, $(INTRO), $(OUT)/$(DOC_LANG)/docs/$(name).html)
-
-HOWTO =									\
 		debugging_log						\
 		http/converting_rewrite_rules				\
 		howto_build_on_win32					\
 		freebsd_tuning						\
 		howto_setup_development_environment_on_ec2		\
 
-HOWTO_XML =	$(foreach name, $(HOWTO), xml/$(DOC_LANG)/docs/$(name).xml)
-HOWTO_HTML =	$(foreach name, $(HOWTO), $(OUT)/$(DOC_LANG)/docs/$(name).html)
+DOCS_XML =	$(foreach name, $(DOCS), xml/$(DOC_LANG)/docs/$(name).xml)
+DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 
 FAQ =									\
 		welcome_nginx_facebook					\
@@ -127,12 +120,6 @@ xml/$(DOC_LANG)/docs/dirindex.xml:					\
 	--stringparam LANG $(patsubst xml/%/docs/dirindex.xml,%,$@)	\
 	xslt/dirindex.xslt - |						\
 	sed 's;xml/[^/]*/docs/;;g' > $@
-
-$(OUT)/$(DOC_LANG)/docs/introduction.html:				\
-		$(INTRO_XML)						\
-
-$(OUT)/$(DOC_LANG)/docs/howto.html:					\
-		$(HOWTO_XML)						\
 
 $(OUT)/$(DOC_LANG)/docs/faq.html:					\
 		$(FAQ_XML)						\

@@ -15,7 +15,7 @@
 
 <para>
 <initial>Q:</initial>
-I'd like to use nginx distribution as part of my proprietary
+I’d like to use nginx distribution as part of my proprietary
 software package. How can nginx copyright be acknowledged
 when using nginx as part of a proprietary software distribution?
 </para>
@@ -38,7 +38,7 @@ This product contains software provided by Nginx, Inc. and its contributors.
 
 <para>
 Also, if your build of nginx includes any of the following 3rd party
-products: zlib, PCRE, OpenSSL &#8212; it's worth including their
+products: zlib, PCRE, OpenSSL &#8212; it’s worth including their
 copyright acknowledgements and disclaimers as well.
 </para>
 

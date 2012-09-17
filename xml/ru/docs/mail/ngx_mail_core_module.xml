@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) 2006, 2007 Anton Yuzhaninov
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Модуль ngx_mail_core_module"
+        link="/ru/docs/mail/ngx_mail_core_module.html"
+        lang="ru"
+        rev="1">
+
+<section id="summary">
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-mail</literal>.
+</para>
+
+</section>
+
+
+<section id="example" name="Пример конфигурации">
+
+<para>
+<example>
+worker_processes 1;
+
+error_log /var/log/nginx/error.log info;
+
+mail {
+    server_name       mail.example.com;
+    auth_http         localhost:9000/cgi-bin/nginxauth.cgi;
+
+    imap_capabilities IMAP4rev1 UIDPLUS IDLE LITERAL+ QUOTA;
+
+    pop3_auth         plain apop cram-md5;
+    pop3_capabilities LAST TOP USER PIPELINING UIDL;
+
+    smtp_auth         login plain cram-md5;
+    smtp_capabilities "SIZE 10485760" ENHANCEDSTATUSCODES 8BITMIME DSN;
+    xclient           off;
+
+    server {
+        listen   25;
+        protocol smtp;
+    }
+    server {
+        listen   110;
+        protocol pop3;
+        proxy_pass_error_message on;
+    }
+    server {
+        listen   143;
+        protocol imap;
+    }
+    server {
+        listen   587;
+        protocol smtp;
+    }
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Директивы">
+
+<directive name="listen">
+<syntax>
+    <value>адрес</value>:<value>порт</value>
+    [<literal>bind</literal>]</syntax>
+<default/>
+<context>server</context>
+
+<para>
+Задаёт <value>адрес</value> и <value>порт</value> сокета, на котором сервер
+будет принимать запросы.
+Можно указать только порт.
+Кроме того, адрес может быть именем сервера, например:
+<example>
+listen 127.0.0.1:110;
+listen *:110;
+listen 110;     # то же, что и *:110
+listen localhost:110;
+</example>
+IPv6-адреса (0.7.58) задаются в квадратных скобках:
+<example>
+listen [::1]:110;
+listen [::]:110;
+</example>
+UNIX-сокеты (1.3.5) задаются при помощи префикса “<literal>unix:</literal>”:
+<example>
+listen unix:/var/run/nginx.sock;
+</example>
+
+</para>
+
+<para>
+Необязательный параметр <literal>bind</literal>
+указывает, что для данной пары
+<value>адрес</value>:<value>порт</value> нужно делать
+<c-func>bind</c-func> отдельно.
+Дело в том, что если описаны несколько директив <literal>listen</literal>
+с одинаковым портом, но разными адресами и одна из директив
+<literal>listen</literal> слушает на всех адресах для данного порта
+(<literal>*:</literal><value>порт</value>, то nginx сделает
+<c-func>bind</c-func> только на <literal>*:</literal><value>порт</value>.
+Необходимо заметить, что в этом случае для определения адреса, на которой
+пришло соединение, делается системный вызов <c-func>getsockname</c-func>.
+</para>
+
+<para>
+Разные виртуальные серверы должны слушать на разных парах
+<value>адрес</value>:<value>порт</value>.
+</para>
+
+</directive>
+
+
+<directive name="protocol">
+<syntax>
+  <literal>imap</literal> |
+  <literal>pop3</literal> |
+  <literal>smtp</literal></syntax>
+<default/>
+<context>server</context>
+
+<para>
+Задаёт протокол проксируемого сервера.
+Поддерживаются протоколы
+<link doc="ngx_mail_imap_module.xml">IMAP</link>,
+<link doc="ngx_mail_pop3_module.xml">POP3</link> и
+<link doc="ngx_mail_smtp_module.xml">SMTP</link>.
+</para>
+
+<para>
+Если директива не указана, то протокол может быть определён автоматически
+по общеизвестному порту, указанному в директиве <link id="listen"/>:
+<list type="bullet">
+
+<listitem>
+<literal>imap</literal>: 143, 993
+</listitem>
+
+<listitem>
+<literal>pop3</literal>: 110, 995
+</listitem>
+
+<listitem>
+<literal>smtp</literal>: 25, 587, 465
+</listitem>
+
+</list>
+</para>
+
+<para>
+Поддержку ненужных протоколов можно отключить с помощью
+<link doc="../install.xml">конфигурационных</link>
+параметров <literal>--without-mail_imap_module</literal>,
+<literal>--without-mail_pop3_module</literal> и
+<literal>--without-mail_smtp_module</literal>.
+</para>
+
+</directive>
+
+
+<directive name="server">
+<syntax block="yes"/>
+<default/>
+<context>mail</context>
+
+<para>
+Задаёт конфигурацию для виртуального сервера.
+</para>
+
+</directive>
+
+
+<directive name="server_name">
+<syntax><value>имя</value></syntax>
+<default>имя хоста</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт имя сервера, используемое:
+
+<list type="bullet">
+
+<listitem>
+в начальном приветствии POP3/SMTP-сервера;
+</listitem>
+
+<listitem>
+в salt при аутентификации SASL-методом CRAM-MD5;
+</listitem>
+
+<listitem>
+в команде <literal>EHLO</literal> при подключении к SMTP-бэкенду,
+если включена команда <link doc="ngx_mail_proxy_module.xml" id="xclient"/>.
+</listitem>
+
+</list>
+
+</para>
+
+</directive>
+
+
+<directive name="so_keepalive">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Определяет, включать ли на клиентском соединении режим “TCP keepalive”
+(параметр сокета <c-def>SO_KEEPALIVE</c-def>)
+при подключении к проксируемому серверу.
+</para>
+
+</directive>
+
+
+<directive name="timeout">
+<syntax><value>время</value></syntax>
+<default>60s</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Задаёт таймаут, который используется до начала проксирования на бэкенд.
+</para>
+
+</directive>
+
+</section>
+
+</module>

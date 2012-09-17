@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="1">
+        rev="5">
 
 <section id="directives" name="Directives">
 
@@ -125,7 +125,7 @@ On Linux,
 <link id="directio"/>
 can only be used for reading blocks that are aligned on 512-byte
 boundaries (or 4K for XFS).
-Reading of unaligned file's end is still made in blocking mode.
+Reading of unaligned file’s end is still made in blocking mode.
 The same holds true for byte range requests, and for FLV requests
 not from the beginning of a file: reading of unaligned data at the
 beginning and end of a file will be blocking.
@@ -176,7 +176,7 @@ location ~ ^/users/(.+\.(?:gif|jpe?g|png))$ {
 </para>
 
 <para>
-When location matches the last part of the directive's value:
+When location matches the last part of the directive’s value:
 <example>
 location /images/ {
     alias /data/w3/images/;
@@ -418,7 +418,8 @@ and should not generally be used.
 
 <para>
 Defines a default MIME-type of a response.
-See also the <link id="types"/> directive.
+Mapping of file name extensions to MIME types can be set
+with the <link id="types"/> directive.
 </para>
 
 </directive>
@@ -579,20 +580,20 @@ only if there are no
 <literal>error_page</literal>
 directives on
 the current level.
-A URI value can contain variables.
+A <literal>uri</literal> value can contain variables.
 </para>
 
 <para>
 Example:
 <example>
-error_page 404         /404.html;
-error_page 502 503 504 /50x.html;
-error_page 403         http://example.com/forbidden.html;
+error_page   404              /404.html;
+error_page   500 502 503 504  /50x.html;
 </example>
 </para>
 
 <para>
-Furthermore, it is possible to change the response code to another, for example:
+Furthermore, it is possible to change the response code to another
+using the “<literal>=code</literal>” syntax, for example:
 <example>
 error_page 404 =200 /empty.gif;
 </example>
@@ -608,8 +609,19 @@ error_page 404 = /404.php;
 </para>
 
 <para>
-If there is no need to change URI during redirection it is possible to redirect
-error processing into a named location:
+It is also possible to use redirects for error processing:
+<example>
+error_page 403         http://example.com/forbidden.html;
+error_page 404 =301    http://example.com/notfound.html;
+</example>
+In this case, the response code 302 is returned to the client.
+It can only be changed to one of the redirect status
+codes (301, 302, 303 and 307).
+</para>
+
+<para>
+If there is no need to change URI during internal redirection it is
+possible to pass error processing into a named location:
 <example>
 location / {
     error_page 404 = @fallback;
@@ -619,6 +631,14 @@ location @fallback {
     proxy_pass http://backend;
 }
 </example>
+</para>
+
+<para>
+<note>
+If the <literal>uri</literal> processing led to an error,
+the HTTP status code indicating last occurred problem
+will be returned.
+</note>
 </para>
 
 </directive>
@@ -635,6 +655,19 @@ location @fallback {
 <para>
 Enables or disables automatic generation of the <header>ETag</header>
 response header field for static resources.
+</para>
+
+</directive>
+
+
+<directive name="http">
+<syntax block="yes"/>
+<default/>
+<context>main</context>
+
+<para>
+Provides a configuration file context in which the HTTP server directives
+are specified.
 </para>
 
 </directive>
@@ -760,6 +793,14 @@ location /404.html {
     internal;
 }
 </example>
+<note>
+There is a limit of 10 internal redirects per request to prevent
+request processing cycles that can occur in incorrect configurations.
+If this limit is reached, the error
+<http-status code="500" text="Internal Server Error"/> is returned.
+In such cases, the “rewrite or internal redirection cycle” message
+can be seen in the error log.
+</note>
 </para>
 
 </directive>
@@ -1152,14 +1193,13 @@ In versions prior to 0.8.21 this parameter is named simply
 
 <para>
 A <literal>listen</literal> directive
-can have several additional parameters specific to system calls
-<c-func>listen</c-func> and <c-func>bind</c-func>.
+can have several additional parameters specific to socket-related system calls.
 They can be specified in any
 <literal>listen</literal> directive, but only once for the given
 <value>address</value>:<value>port</value> pair.
 <note>
 In versions prior to 0.8.21, they could only be
-specified in the <literal>listen</literal> directive with the
+specified in the <literal>listen</literal> directive along with the
 <literal>default</literal> parameter.
 </note>
 <list type="tag">
@@ -1168,8 +1208,8 @@ specified in the <literal>listen</literal> directive with the
 <literal>setfib</literal>=<value>number</value>
 </tag-name>
 <tag-desc>
-this parameter (0.8.44) sets the associated FIB (routing table)
-for the listening socket.
+this parameter (0.8.44) sets an associated routing table, FIB
+(the <c-def>SO_SETFIB</c-def> option) for the listening socket.
 This currently works only on FreeBSD.
 </tag-desc>
 
@@ -1178,43 +1218,49 @@ This currently works only on FreeBSD.
 </tag-name>
 <tag-desc>
 sets the <literal>backlog</literal> parameter in the
-<c-func>listen</c-func> call.
-By default, <literal>backlog</literal> equals -1 on FreeBSD
-and 511 on other platforms.
+<c-func>listen</c-func> call that limits
+the maximum length for the queue of pending connections.
+By default, <literal>backlog</literal> is set to -1 on FreeBSD,
+and to 511 on other platforms.
 </tag-desc>
 
 <tag-name>
 <literal>rcvbuf</literal>=<value>size</value>
 </tag-name>
 <tag-desc>
-sets the <c-def>SO_RCVBUF</c-def> parameter for the listening socket.
+sets receive buffer size
+(the <c-def>SO_RCVBUF</c-def> option) for the listening socket.
 </tag-desc>
 
 <tag-name>
 <literal>sndbuf</literal>=<value>size</value>
 </tag-name>
 <tag-desc>
-sets the <c-def>SO_SNDBUF</c-def> parameter for the listening socket.
+sets send buffer size
+(the <c-def>SO_SNDBUF</c-def> option) for the listening socket.
 </tag-desc>
 
 <tag-name>
 <literal>accept_filter</literal>=<value>filter</value>
 </tag-name>
 <tag-desc>
-sets the name of the accept filter.
-This works only on FreeBSD, acceptable values are <literal>dataready</literal>
-and <literal>httpready</literal>.
-On receipt of the <c-def>SIGHUP</c-def> signal, an accept filter can only be
-changed in recent versions of FreeBSD, starting from 6.0, 5.4-STABLE
-and 4.11-STABLE.
+sets the name of accept filter
+(the <c-def>SO_ACCEPTFILTER</c-def> option) for the listening socket
+that filters incoming connections before presenting them to
+<c-func>accept</c-func>.
+This works only on FreeBSD and NetBSD 5.0+.
+Acceptable values are
+<link url="http://man.freebsd.org/accf_data">dataready</link>
+and
+<link url="http://man.freebsd.org/accf_http">httpready</link>.
 </tag-desc>
 
 <tag-name>
 <literal>deferred</literal>
 </tag-name>
 <tag-desc>
-instructs to use a deferred <c-func>accept</c-func> on Linux
-using the <c-def>TCP_DEFER_ACCEPT</c-def> option.
+instructs to use a deferred <c-func>accept</c-func>
+(the <c-def>TCP_DEFER_ACCEPT</c-def> socket option) on Linux.
 </tag-desc>
 
 <tag-name>
@@ -1244,25 +1290,29 @@ a separate <c-func>bind</c-func> call will always be made.
 <literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>
 </tag-name>
 <tag-desc>
-this parameter (0.7.42) sets the value of the <c-def>IPV6_V6ONLY</c-def>
-parameter for the listening socket.
-This parameter can only be set once on start.
+this parameter (0.7.42) determines
+(via the <c-def>IPV6_V6ONLY</c-def> socket option)
+whether IPv6 socket listening on a wildcard address <literal>[::]</literal>
+will accept only IPv6 connections, or both IPv6 and IPv4 connections.
+This parameter is turned on by default.
+It can only be set once on start.
+<note>
+Prior to version 1.3.4,
+if this parameter was omitted then the operating system’s settings were
+in effect for the socket.
+</note>
 </tag-desc>
 
 <tag-name>
 <literal>ssl</literal>
 </tag-name>
 <tag-desc>
-this parameter (0.7.14) does not relate to system calls
-<c-func>listen</c-func> and <c-func>bind</c-func>, but allows to
-specify that all connections accepted on this port should work in
-the SSL mode.
-This allows for a more compact configuration for the server operating
-in both HTTP and HTTPS modes simultaneously.
-<example>
-listen 80;
-listen 443 ssl;
-</example>
+this parameter (0.7.14) does not relate to socket-related system calls,
+but allows to specify that all connections accepted on this port
+should work in SSL mode.
+This allows for a more compact <link doc="configuring_https_servers.xml"
+id="single_http_https_server">configuration</link> for the server that
+handles both HTTP and HTTPS requests.
 </tag-desc>
 
 <tag-name>
@@ -1271,7 +1321,7 @@ listen 443 ssl;
 <tag-desc>
 this parameter (1.1.11) configures the “TCP keepalive” behavior
 for the listening socket.
-If this parameter is omitted then the system default setting will be
+If this parameter is omitted then the operating system’s settings will be
 in effect for the socket.
 If set to the value “<literal>on</literal>”, the <c-def>SO_KEEPALIVE</c-def>
 socket option is turned on for the socket.
@@ -1299,7 +1349,7 @@ and set probes count (<c-def>TCP_KEEPCNT</c-def>) to 10 probes.
 <para>
 Example:
 <example>
-listen 127.0.0.1 default accept_filter=dataready backlog=1024;
+listen 127.0.0.1 default_server accept_filter=dataready backlog=1024;
 </example>
 </para>
 
@@ -1388,7 +1438,7 @@ not checked.
 </para>
 
 <para>
-Let's illustrate the above by example:
+Let’s illustrate the above by example:
 <example>
 location = / {
     [ configuration A ]
@@ -1749,7 +1799,8 @@ Enables or disables specifying the port in redirects issued by nginx.
 </para>
 
 <para>
-See also the <link id="server_name_in_redirect"/> directive.
+The use of a primary server name in redirects is controlled by
+the <link id="server_name_in_redirect"/> directive.
 </para>
 
 </directive>
@@ -1811,6 +1862,8 @@ FreeBSD&nbsp;7 needs to be
 Enables or disables doing several redirects using the
 <link id="error_page"/>
 directive.
+There is a <link doc="ngx_http_core_module.xml" id="internal">
+limit</link> on a number of such redirects.
 </para>
 
 </directive>
@@ -2106,6 +2159,9 @@ server {
 
 <para>
 The first name becomes the primary server name.
+</para>
+
+<para>
 Server names can include an asterisk (“<literal>*</literal>”)
 to replace the first or last part of a name:
 <example>
@@ -2113,6 +2169,7 @@ server {
     server_name example.com *.example.com www.example.*;
 }
 </example>
+Such names are called wildcard names.
 </para>
 
 <para>
@@ -2122,11 +2179,6 @@ server {
     server_name .example.com;
 }
 </example>
-</para>
-
-<para>
-If the parameter equals “<var>$hostname</var>” (0.9.4), the
-machine's hostname is substituted.
 </para>
 
 <para>
@@ -2184,6 +2236,11 @@ server {
 </para>
 
 <para>
+If the parameter equals “<var>$hostname</var>” (0.9.4), the
+machine’s hostname is substituted.
+</para>
+
+<para>
 It is also possible to specify an empty server name (0.7.11):
 <example>
 server {
@@ -2194,28 +2251,28 @@ It allows this server to process requests without the <header>Host</header>
 header field, instead of the default server for the given address:port pair.
 This is the default setting.
 <note>
-Before 0.8.48, the machine's hostname was used by default.
+Before 0.8.48, the machine’s hostname was used by default.
 </note>
 </para>
 
 <para>
 When searching for a virtual server by name,
 if name matches more than one of the specified variants,
-e.g. both mask and regular expression match, the first matching
-variant will be choosen, in the following order of precedence:
+e.g. both wildcard name and regular expression match, the first matching
+variant will be chosen, in the following order of precedence:
 <list type="enum">
 
 <listitem>
-full name
+exact name
 </listitem>
 
 <listitem>
-longest name with a prefix mask,
+longest wildcard name starting with an asterisk,
 e.g. “<literal>*.example.com</literal>”
 </listitem>
 
 <listitem>
-longest name with a suffix mask,
+longest wildcard name ending with an asterisk,
 e.g. “<literal>mail.*</literal>”
 </listitem>
 
@@ -2225,6 +2282,11 @@ first matching regular expression
 </listitem>
 
 </list>
+</para>
+
+<para>
+Detailed description of server names is provided in a separate
+<link doc="server_names.xml"/> document.
 </para>
 
 </directive>
@@ -2247,7 +2309,8 @@ If this field is not present, an IP address of the server is used.
 </para>
 
 <para>
-See also the <link id="port_in_redirect"/> directive.
+The use of a port in redirects is controlled by
+the <link id="port_in_redirect"/> directive.
 </para>
 
 </directive>
@@ -2260,9 +2323,9 @@ See also the <link id="port_in_redirect"/> directive.
 
 <para>
 Sets the bucket size for the server names hash tables.
-Default value depends on the size of the processor's cache line.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+Default value depends on the size of the processor’s cache line.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
 </para>
 
 </directive>
@@ -2275,8 +2338,8 @@ For more information, please refer to
 
 <para>
 Sets the maximum <value>size</value> of the server names hash tables.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
 </para>
 
 </directive>
@@ -2373,7 +2436,7 @@ location = /images/default.gif {
 }
 </example>
 The last parameter can also point to a named location,
-see examples below.
+as shown in examples below.
 As of version 0.7.51, the last parameter can also be a
 <value>code</value>:
 <example>
@@ -2537,9 +2600,9 @@ location /download/ {
 
 <para>
 Sets the bucket size for the types hash tables.
-Default value depends on the size of the processor's cache line.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+Default value depends on the size of the processor’s cache line.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
 </para>
 
 </directive>
@@ -2554,8 +2617,8 @@ For more information, please refer to
 
 <para>
 Sets the maximum <value>size</value> of the types hash tables.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
 </para>
 
 </directive>
@@ -2591,8 +2654,8 @@ listening on the same address and port.
 
 <para>
 Sets the bucket size for the variables hash table.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
 </para>
 
 </directive>
@@ -2605,8 +2668,8 @@ For more information, please refer to
 
 <para>
 Sets the maximum <value>size</value> of the variables hash table.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
 </para>
 
 </directive>
@@ -2637,7 +2700,7 @@ arguments in the request line
 
 <tag-name><var>$binary_remote_addr</var></tag-name>
 <tag-desc>
-client address in a binary form, value's length is always 4 bytes
+client address in a binary form, value’s length is always 4 bytes
 </tag-desc>
 
 <tag-name><var>$body_bytes_sent</var></tag-name>
@@ -2662,7 +2725,7 @@ the <value>name</value> cookie
 
 <tag-name><var>$document_root</var></tag-name>
 <tag-desc>
-<link id="root"/> or <link id="alias"/> directive's value
+<link id="root"/> or <link id="alias"/> directive’s value
 for the current request
 </tag-desc>
 
@@ -2725,7 +2788,7 @@ same as <var>$args</var>
 <tag-name><var>$realpath_root</var></tag-name>
 <tag-desc>
 an absolute pathname corresponding to the
-<link id="root"/> or <link id="alias"/> directive's value
+<link id="root"/> or <link id="alias"/> directive’s value
 for the current request,
 with all symbolic links resolved to real paths
 </tag-desc>
@@ -2754,7 +2817,7 @@ full original request line
 <tag-desc>
 request body
 <para>
-The variable's value is made available in locations
+The variable’s value is made available in locations
 processed by the
 <link doc="ngx_http_proxy_module.xml" id="proxy_pass"/>
 and

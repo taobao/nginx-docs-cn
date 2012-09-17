@@ -57,8 +57,8 @@ if ($invalid_referer) {
 
 <para>
 Sets the bucket size for the valid referers hash tables.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
 </para>
 
 </directive>
@@ -73,8 +73,8 @@ For more information, please refer to
 
 <para>
 Sets the maximum <value>size</value> of the valid referers hash tables.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
 </para>
 
 </directive>

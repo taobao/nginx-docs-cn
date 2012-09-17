@@ -7,6 +7,46 @@
 
 <news name="nginx news" link="/" lang="en">
 
+<event date="2012-09-12">
+<para>
+<link doc="en/download.xml">nginx-1.3.6</link>
+development version has been released,
+with <link doc="en/docs/http/ngx_http_gunzip_module.xml">gunzip filter</link>
+included.
+</para>
+</event>
+
+<event date="2012-08-22">
+<para>
+W3Techs reports that
+<link url="http://w3techs.com/technologies/cross/web_server/ranking">12.2%
+of the top 1 million and 19.1% of the top 100k sites on the web</link>
+(according to Alexa) use nginx.
+Compare where we were only <link url="2010.html#2010-07-28">two years ago</link>.
+</para>
+</event>
+
+<event date="2012-08-21">
+<para>
+<link doc="en/download.xml">nginx-1.3.5</link>
+development version has been released.
+</para>
+</event>
+
+<event date="2012-08-07">
+<para>
+<link doc="en/download.xml">nginx-1.2.3</link>
+stable version has been released.
+</para>
+</event>
+
+<event date="2012-07-31">
+<para>
+<link doc="en/download.xml">nginx-1.3.4</link>
+development version has been released.
+</para>
+</event>
+
 <event date="2012-07-10">
 <para>
 <link doc="en/download.xml">nginx-1.3.3</link>

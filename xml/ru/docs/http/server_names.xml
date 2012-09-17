@@ -1,0 +1,499 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
+
+<article name="Имена сервера"
+         link="/ru/docs/http/server_names.html"
+         lang="ru"
+         rev="2"
+         author="Игорь Сысоев"
+         editor="Brian Mercer">
+
+
+<section>
+
+<para>
+Имена сервера задаются с помощью директивы
+<link doc="ngx_http_core_module.xml" id="server_name"/>
+и определяют, в каком блоке <link doc="ngx_http_core_module.xml" id="server"/>
+будет обрабатываться тот или иной запрос.
+См. также “<link doc="request_processing.xml"/>”.
+Имена могут быть заданы точно, с помощью маски или регулярного
+выражения:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  example.org  www.example.org;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  *.example.org;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  mail.*;
+    ...
+}
+
+server {
+    listen       80;
+    server_name  ~^(?&lt;user&gt;.+)\.example\.net$;
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+При поиске виртуального сервера по имени,
+если имени соответствует несколько из указанных вариантов,
+например, одновременно подходят и имя с маской, и регулярное выражение,
+будет выбран первый подходящий вариант в следующем порядке приоритета:
+<list type="enum">
+
+<listitem>
+точное имя
+</listitem>
+
+<listitem>
+самое длинное имя с маской в начале, например
+“<literal>*.example.org</literal>”
+</listitem>
+
+<listitem>
+самое длинное имя с маской в конце, например “<literal>mail.*</literal>”
+</listitem>
+
+<listitem>
+первое подходящее регулярное выражение
+(в порядке следования в конфигурационном файле)
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section id="wildcard_names"
+        name="Имена с масками">
+
+<para>
+Имя с маской может содержать звёздочку (“<literal>*</literal>”) только в начале
+или в конце имени, и только на границе, определяемой точкой.
+Имена “<literal>www.*.example.org</literal>” и
+“<literal>w*.example.org</literal>” являются некорректными,
+но их можно задать с помощью регулярных выражений,
+например, “<literal>~^www\..+\.example\.org$</literal>” и
+“<literal>~^w.*\.example\.org$</literal>”.
+Звёздочка может соответствовать нескольким частям имени.
+Имени с маской “<literal>*.example.org</literal>” соответствует не только
+<literal>www.example.org</literal>, но и
+<literal>www.sub.example.org</literal>.
+</para>
+
+<para>
+Специальное имя с маской вида “<literal>.example.org</literal>”
+соответствует как точному имени “<literal>example.org</literal>”,
+так и маске “<literal>*.example.org</literal>”.
+</para>
+
+</section>
+
+
+<section id="regex_names"
+        name="Имена, заданные регулярными выражениями">
+
+<para>
+Регулярные выражения, используемые в nginx, совместимы
+с используемыми в языке программирования Perl (PCRE).
+Имя сервера, заданное регулярным выражением,
+должно начинаться с символа тильды:
+
+<programlisting>
+server_name  ~^www\d+\.example\.net$;
+</programlisting>
+
+в противном случае оно будет рассматриваться как точное, или же, если
+выражение содержит звёздочку (“<literal>*</literal>”), то как имя с маской
+(и, скорее всего, некорректное).
+Не забывайте ставить специальные символы начала (“<literal>^</literal>”)
+и конца (“<literal>$</literal>”) строки.
+По синтаксису они не требуются, но логически они могут быть нужны.
+Также заметьте, что все точки в доменных именах должны быть экранированы
+символом обратной косой черты.
+Регулярное выражение, содержащее символы “<literal>{</literal>”
+и “<literal>}</literal>”, необходимо экранировать:
+
+<programlisting>
+server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.example\.net$";
+</programlisting>
+
+иначе nginx откажется запускаться и выдаст сообщение об ошибке:
+
+<programlisting>
+directive "server_name" is not terminated by ";" in ...
+</programlisting>
+
+К именованному выделению в регулярном выражении можно впоследствии
+обратиться через переменную:
+
+<programlisting>
+server {
+    server_name   ~^(www\.)?(<b>?&lt;domain&gt;</b>.+)$;
+
+    location / {
+        root   /sites/<b>$domain</b>;
+    }
+}
+</programlisting>
+
+Библиотека PCRE поддерживает именованные выделения, используя следующий
+синтаксис:
+
+<table note="yes">
+
+<tr>
+<td><literal>?&lt;<value>name</value>&gt;</literal></td>
+<td>Совместимый с Perl 5.10 синтаксис, поддерживается начиная с PCRE-7.0</td>
+</tr>
+
+<tr>
+<td><literal>?'<value>name</value>'</literal></td>
+<td>Совместимый с Perl 5.10 синтаксис, поддерживается начиная с PCRE-7.0</td>
+</tr>
+
+<tr>
+<td><literal>?P&lt;<value>name</value>&gt;</literal></td>
+<td>Python-совместимый синтаксис, поддерживается начиная с PCRE-4.0</td>
+</tr>
+
+</table>
+
+Если nginx отказывается запускаться и выдаёт сообщение об ошибке:
+
+<programlisting>
+pcre_compile() failed: unrecognized character after (?&lt; in ...
+</programlisting>
+
+то это значит, что используется старая версия библиотеки PCRE и следует
+вместо этого попробовать синтаксис
+“<literal>?P&lt;<value>name</value>&gt;</literal>”.
+Также можно использовать нумерованные выделения:
+
+<programlisting>
+server {
+    server_name   ~^(www\.)?(.+)$;
+
+    location / {
+        root   /sites/<b>$2</b>;
+    }
+}
+</programlisting>
+
+Однако такое использование должно ограничиваться простыми случаями как в
+примере выше, поскольку нумерованные выделения легко могут быть перезаписаны.
+</para>
+
+
+</section>
+
+
+<section id="miscellaneous_names"
+        name="Прочие имена">
+
+<para>
+Некоторые имена имеют специальное значение.
+</para>
+
+<para>
+Если необходимо обрабатывать запросы без поля <header>Host</header> в заголовке
+в блоке <link doc="ngx_http_core_module.xml" id="server"/>, который не
+является сервером по умолчанию, следует указать пустое имя:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  example.org  www.example.org  "";
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+Если директива
+<link doc="ngx_http_core_module.xml" id="server_name"/>
+не задана в блоке <link doc="ngx_http_core_module.xml" id="server"/>,
+то nginx будет использовать пустое имя в качестве имени сервера.
+<note>
+Версии nginx вплоть до 0.8.48 в этом случае использовали имя хоста (hostname)
+машины в качестве имени сервера.
+</note>
+</para>
+
+<para>
+Если имя сервера задано как “<literal>$hostname</literal>” (0.9.4), то
+используется имя хоста (hostname) машины.
+</para>
+
+<para>
+Если в запросе вместо имени сервера указан IP-адрес,
+то поле <header>Host</header> заголовка запроса будет содержать
+IP-адрес, и запрос можно обработать, используя IP-адрес как имя сервера:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  example.org
+                 www.example.org
+                 ""
+                 <b>192.168.1.1</b>
+                 ;
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+В примерах конфигурации серверов, обрабатывающих все запросы, встречается
+странное имя “<literal>_</literal>”:
+
+<programlisting>
+server {
+    listen       80  default_server;
+    server_name  _;
+    return       444;
+}
+</programlisting>
+
+Оно не является каким-то особенным, это просто одно из множества
+некорректных доменных имён, которые никогда не пересекутся ни с одним из
+реальных имён.
+С тем же успехом можно использовать имена типа “<literal>--</literal>”
+и “<literal>!@#</literal>”.
+</para>
+
+<para>
+Версии nginx вплоть до 0.6.25 поддерживали специальное имя
+“<literal>*</literal>”, которое многими неверно воспринималось как
+имя сервера для обработки всех запросов.
+Оно никогда так не работало, и не работало как имя с маской.
+Это имя действовало так же, как сейчас действует директива
+<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/>.
+Специальное имя “<literal>*</literal>” объявлено устаревшим, а вместо него
+следует использовать директиву
+<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/>.
+Заметьте, что с помощью директивы
+<link doc="ngx_http_core_module.xml" id="server_name"/>
+нельзя задать ни имя сервера для обработки всех запросов,
+ни сервер по умолчанию.
+Это является свойством директивы
+<link doc="ngx_http_core_module.xml" id="listen"/>,
+а не
+<link doc="ngx_http_core_module.xml" id="server_name"/>.
+См. также “<link doc="request_processing.xml"/>”.
+Можно настроить серверы, слушающие на портах *:80 и *:8080,
+и указать, что один из них будет сервером по умолчанию для порта *:8080,
+а другой — для порта *:80:
+<programlisting>
+server {
+    listen       80;
+    listen       8080  default_server;
+    server_name  example.net;
+    ...
+}
+
+server {
+    listen       80  default_server;
+    listen       8080;
+    server_name  example.org;
+    ...
+}
+</programlisting>
+</para>
+
+
+</section>
+
+
+<section id="optimization"
+        name="Оптимизация">
+
+<para>
+Точные имена, имена с масками, начинающиеся со звёздочки,
+и имена с масками, заканчивающиеся на звёздочку, хранятся
+в трёх хэш-таблицах, привязанных к слушающим портам.
+Размеры хэш-таблиц оптимизируются на фазе конфигурации таким образом,
+что имя может быть найдено с минимальным числом непопаданий в кэш процессора.
+Подробнее настройка хэш-таблиц обсуждается в отдельном
+<link doc="../hash.xml">документе</link>.
+</para>
+
+<para>
+В первую очередь имя ищется в хэш-таблице точных имён.
+Если имя не было найдено, то имя ищется в хэш-таблице имён с масками,
+начинающихся со звёздочки.
+Если и там поиск не дал результата, то имя ищется в хэш-таблице имён с масками,
+оканчивающихся на звёздочку.
+</para>
+
+<para>
+Поиск в хэш-таблице имён с масками медленнее, чем поиск в хэш-таблице точных
+имён, поскольку имена сравниваются по доменным частям.
+Заметьте, что специальное имя с маской вида “<literal>.example.org</literal>”
+хранится в хэш-таблице имён с масками, а не в хэш-таблице точных имён.
+</para>
+
+<para>
+Регулярные выражения проверяются последовательно,
+а значит являются самым медленным и плохо масштабируемым методом.
+</para>
+
+<para>
+По вышеизложенным причинам предпочтительнее использовать точные имена,
+где это только возможно.
+Например, если к серверу наиболее часто обращаются по именам
+<literal>example.org</literal> и <literal>www.example.org</literal>,
+то эффективнее будет указать их явно:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  example.org  www.example.org  *.example.org;
+    ...
+}
+</programlisting>
+
+нежели чем использовать упрощённую форму:
+
+<programlisting>
+server {
+    listen       80;
+    server_name  .example.org;
+    ...
+}
+</programlisting>
+</para>
+
+<para>
+Если задано большое число имён серверов, либо заданы необычно
+длинные имена, возможно потребуется скорректировать значения директив
+<link doc="ngx_http_core_module.xml" id="server_names_hash_max_size"/>
+и <link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>
+на уровне <i>http</i>.
+Значение по умолчанию директивы
+<link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>
+может быть равно 32, 64, либо другой величине,
+в зависимости от размера строки кэша процессора.
+Если значение по умолчанию равно 32 и имя сервера задано как
+“<literal>too.long.server.name.example.org</literal>”,
+то nginx откажется запускаться и выдаст сообщение об ошибке:
+
+<programlisting>
+could not build the server_names_hash,
+you should increase server_names_hash_bucket_size: 32
+</programlisting>
+
+В этом случае следует увеличить значение директивы до следующей степени двойки:
+
+<programlisting>
+http {
+    server_names_hash_bucket_size  64;
+    ...
+</programlisting>
+
+Если задано большое число имён серверов, то будет выдано другое
+сообщение об ошибке:
+
+<programlisting>
+could not build the server_names_hash,
+you should increase either server_names_hash_max_size: 512
+or server_names_hash_bucket_size: 32
+</programlisting>
+
+В таком случае сначала следует попробовать установить
+<link doc="ngx_http_core_module.xml" id="server_names_hash_max_size"/>
+в величину, близкую к числу имён серверов,
+и только если это не поможет
+или время запуска nginx станет неприемлемо большим, следует попытаться увеличить
+<link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>.
+</para>
+
+<para>
+Если сервер является единственным сервером для слушающего порта,
+то nginx не будет проверять имена сервера вообще (а также не будет
+строить хэш-таблицы для слушающего порта).
+За одним исключением: если имя сервера задано регулярным выражением
+с выделениями, то nginx’у придётся выполнить это выражение,
+чтобы получить значения выделений.
+</para>
+
+</section>
+
+
+<section id="compatibility"
+        name="Совместимость">
+
+<para>
+<list type="bullet">
+
+<listitem>
+Специальное имя сервера “<literal>$hostname</literal>” поддерживается начиная с
+версии 0.9.4.
+</listitem>
+
+<listitem>
+Имя сервера по умолчанию является пустой строкой “” начиная с версии 0.8.48.
+</listitem>
+
+<listitem>
+Именованные выделения в именах серверов, заданных с помощью регулярных
+выражений, поддерживаются начиная с версии 0.8.25.
+</listitem>
+
+<listitem>
+Выделения в именах серверов, заданных с помощью регулярных выражений,
+поддерживаются начиная с версии 0.7.40.
+</listitem>
+
+<listitem>
+Пустое имя сервера “” поддерживается начиная с версии 0.7.12.
+</listitem>
+
+<listitem>
+В качестве первого имени сервера можно задать маску или регулярное выражение
+начиная с версии 0.6.25.
+</listitem>
+
+<listitem>
+Регулярные выражения в имени сервера поддерживаются начиная с версии 0.6.7.
+</listitem>
+
+<listitem>
+Имена с маской вида <literal>example.*</literal> поддерживаются начиная
+с версии 0.6.0.
+</listitem>
+
+<listitem>
+Специальная форма имени вида <literal>.example.org</literal> поддерживается
+начиная с версии 0.3.18.
+</listitem>
+
+<listitem>
+Имена с маской вида <literal>*.example.org</literal> поддерживаются начиная
+с версии 0.1.13.
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+</article>
