@@ -6,88 +6,52 @@
 <!DOCTYPE article SYSTEM "../../dtd/article.dtd">
 
 <article name="nginx"
-         link="/en/"
-         lang="en"
+         link="/cn/"
+         lang="cn"
          rev="1">
 
 
 <section>
 
 <para>
-nginx [engine x] is an HTTP and reverse proxy server,
-as well as a mail proxy server,
-written by <link url="http://sysoev.ru/en/">Igor Sysoev</link>.
-For a long time, it has been running
-on many heavily loaded Russian sites including
-<link url="http://www.yandex.ru">Yandex</link>,
-<link url="http://www.mail.ru">Mail.Ru</link>,
-<link url="http://vkontakte.ru">VKontakte</link>, and
-<link url="http://www.rambler.ru">Rambler</link>.
-According to Netcraft nginx served or proxied
-<link url="http://news.netcraft.com/archives/2012/07/03/july-2012-web-server-survey.html">12.49%
-busiest sites in July 2012</link>.
-Here are some of the success stories:
-<link url="https://signup.netflix.com/openconnect/software">Netflix</link>,
-<link url="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</link>,
-<link url="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</link>.
+nginx [engine x]是<link url="http://sysoev.ru/en/">Igor Sysoev</link>编写的一个HTTP和反向代理服务器，另外它也可以作为邮件代理服务器。
+它已经在众多流量很大的俄罗斯网站上使用了很长时间，这些网站包括<link url="http://www.yandex.ru">Yandex</link>、<link url="http://www.mail.ru">Mail.Ru</link>、<link url="http://www.vkontakte.ru">VKontakte</link>，以及<link url="http://www.rambler.ru">Rambler</link>。据Netcraft统计，在2012年7月份，<link url="link url="http://news.netcraft.com/archives/2012/07/03/july-2012-web-server-survey.html">世界上最繁忙的网站中有12.49%</link>使用Nginx作为其服务器或者代理服务器。部分成功案例请见：
+<link url="https://signup.netflix.com/openconnect/software">Netflix</link>，
+<link url="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</link>，
+<link url="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</link>。
 </para>
 
 <para>
-The sources and documentation are distributed under the
-<link url="../LICENSE">2-clause BSD-like license</link>.
+Nginx的源码使用的许可为<link url="http://nginx.org/LICENSE">两条款类BSD协议</link>。
 </para>
 
 </section>
 
 
 <section id="basic_http_features"
-        name="Basic HTTP server features">
+        name="基本的HTTP服务器特性">
 
 <para>
 <list type="bullet">
 
 <listitem>
-Serving static and
-<link doc="docs/http/ngx_http_index_module.xml">index</link>
-files,
-<link doc="docs/http/ngx_http_autoindex_module.xml">autoindexing</link>;
-<link doc="docs/http/ngx_http_core_module.xml"
-       id="open_file_cache">open file descriptor cache</link>;
+处理静态文件，<link doc="docs/http/ngx_http_index_module.xml">索引</link>文件以及<link doc="docs/http/ngx_http_autoindex_module.xml">自动索引</link>；<link doc="docs/http/ngx_http_core_module.xml" id="open_file_cache">打开文件描述符缓存</link>；
 </listitem>
 
 <listitem>
-<link doc="docs/http/ngx_http_proxy_module.xml">Accelerated
-reverse proxying with caching</link>;
-<link doc="docs/http/ngx_http_upstream_module.xml">simple
-load balancing and fault tolerance</link>;
+<link doc="docs/http/ngx_http_proxy_module.xml">使用缓存加速反向代理</link>；<link doc="docs/http/ngx_http_upstream_module.xml">简单负载均衡以及容错</link>；
 </listitem>
 
 <listitem>
-Accelerated support with caching of
-<link doc="docs/http/ngx_http_fastcgi_module.xml">FastCGI</link>,
-uwsgi, SCGI, and
-<link doc="docs/http/ngx_http_memcached_module.xml">memcached</link>
-servers;
-<link doc="docs/http/ngx_http_upstream_module.xml">simple
-load balancing and fault tolerance</link>;
+远程<link doc="docs/http/ngx_http_fastcgi_module.xml">FastCGI</link>，uwsgi，SCGI，和<link doc="docs/http/ngx_http_memcached_module.xml">memcached</link>服务的缓存加速支持；<link doc="docs/http/ngx_http_upstream_module.xml">简单的负载均衡以及容错</link>；
 </listitem>
 
 <listitem>
-Modular architecture.
-Filters include
-<link doc="docs/http/ngx_http_gzip_module.xml">gzipping</link>,
-byte ranges, chunked responses,
-<link doc="docs/http/ngx_http_xslt_module.xml">XSLT</link>,
-<link doc="docs/http/ngx_http_ssi_module.xml">SSI</link>,
-and <link doc="docs/http/ngx_http_image_filter_module.xml">image
-transformation</link> filter.
-Multiple SSI inclusions within a single page can be processed in
-parallel if they are handled by proxied or FastCGI servers;
+模块化的架构。过滤器包括<link doc="docs/http/ngx_http_gzip_module.xml">gzip压缩</link>、ranges支持、chunked响应、<link doc="docs/http/ngx_http_xslt_module.xml">XSLT</link>，<link doc="docs/http/ngx_http_ssi_module.xml">SSI</link>以及<link doc="docs/http/ngx_http_image_filter_module.xml">图像缩放</link>。在SSI 过滤器中，一个包含多个SSI的页面，如果经由FastCGI或反向代理处理，可被并行处理；
 </listitem>
 
 <listitem>
-<link doc="docs/http/ngx_http_ssl_module.xml">SSL and
-TLS SNI support</link>.
+<link doc="docs/http/ngx_http_ssl_module.xml">支持SSL，TLS SNI</link>。
 </listitem>
 
 </list>
@@ -97,97 +61,69 @@ TLS SNI support</link>.
 
 
 <section id="other_http_features"
-        name="Other HTTP server features">
+        name="其他的HTTP服务器特性">
 
 <para>
 <list type="bullet">
 
 <listitem>
-Name-based and IP-based
-<link doc="docs/http/request_processing.xml">virtual servers</link>;
+基于名字和IP的<link doc="docs/http/request_processing.xml">虚拟主机</link>；
 </listitem>
 
 <listitem>
-<link doc="docs/http/ngx_http_core_module.xml"
-       id="keepalive_timeout">Keep-alive</link>
-and pipelined connections support;
+<link doc="docs/http/ngx_http_core_module.xml" id="keepalive_timeout">Keep-alive</link>和pipelined连接支持；
 </listitem>
 
 <listitem>
-Flexible configuration;
+灵活的配置；
 </listitem>
 
 <listitem>
-<link doc="docs/control.xml" id="reconfiguration">Reconfiguration</link>
-and <link doc="docs/control.xml" id="upgrade">upgrade of an
-executable</link> without interruption of the client servicing;
+<link doc="docs/control.xml" id="reconfiguration">重新加载配置</link>以及<link doc="docs/control.xml" id="upgrade">在线升级</link>时，不需要中断正在处理的请求；
 </listitem>
 
 <listitem>
-<link doc="docs/http/ngx_http_log_module.xml" id="log_format">Access
-log formats</link>,
-<link doc="docs/http/ngx_http_log_module.xml" id="access_log">buffered
-log writing</link>, and
-<link doc="docs/control.xml" id="logs">fast log rotation</link>;
+<link doc="docs/http/ngx_http_log_module.xml" id="log_format">自定义访问日志格式</link>，<link doc="docs/http/ngx_http_log_module.xml" id="access_log">带缓存的日志写操作</link>以及<link doc="docs/control.xml" id="logs">快速日志轮转</link>；
 </listitem>
 
 <listitem>
-3xx-5xx error codes
-<link doc="docs/http/ngx_http_core_module.xml"
-       id="error_page">redirection</link>;
+<link doc="docs/http/ngx_http_core_module.xml" id="error_page">3xx-5xx错误代码重定向</link>；
 </listitem>
 
 <listitem>
-The rewrite module:
-<link doc="docs/http/ngx_http_rewrite_module.xml">URI changing
-using regular expressions</link>;
+<link doc="docs/http/ngx_http_rewrite_module.xml">重写（rewrite）模块</link>；
 </listitem>
 
 <listitem>
-<link doc="docs/http/ngx_http_rewrite_module.xml" id="if">Executing
-different functions</link> depending on the
-<link doc="docs/http/ngx_http_geo_module.xml">client address</link>;
+根据<link doc="docs/http/ngx_http_geo_module.xml">客户端地址</link><link doc="docs/http/ngx_http_rewrite_module.xml" id="if">执行不同的功能</link>；
 </listitem>
 
 <listitem>
-Access control based on
-<link doc="docs/http/ngx_http_access_module.xml">client IP address</link>
-and <link doc="docs/http/ngx_http_auth_basic_module.xml">HTTP
-Basic authentication</link>;
+基于<link doc="docs/http/ngx_http_access_module.xml">客户端IP地址</link>和<link doc="docs/http/ngx_http_auth_basic_module.xml">HTTP基本认证机制</link>的访问控制；
 </listitem>
 
 <listitem>
-Validation of
-<link doc="docs/http/ngx_http_referer_module.xml">HTTP referer</link>;
+支持验证<link doc="docs/http/ngx_http_referer_module.xml">HTTP referer</link>；
 </listitem>
 
 <listitem>
-The <link doc="docs/http/ngx_http_dav_module.xml">PUT, DELETE, MKCOL, COPY,
-and MOVE</link> methods;
+支持<link doc="docs/http/ngx_http_dav_module.xml">PUT、DELETE、MKCOL、COPY以及MOVE</link>方法；
 </listitem>
 
 <listitem>
-<link doc="docs/http/ngx_http_flv_module.xml">FLV</link>
-and
-<link doc="docs/http/ngx_http_mp4_module.xml">MP4</link>
-streaming;
+支持<link doc="docs/http/ngx_http_flv_module.xml">FLV流</link>和<link doc="docs/http/ngx_http_mp4_module.xml">MP4流</link>；
 </listitem>
 
 <listitem>
-<link doc="docs/http/ngx_http_core_module.xml"
-       id="limit_rate">Response rate limiting</link>;
+<link doc="docs/http/ngx_http_core_module.xml" id="limit_rate">速度限制</link>；
 </listitem>
 
 <listitem>
-Limiting the number of simultaneous
-<link doc="docs/http/ngx_http_limit_conn_module.xml">connections</link>
-or
-<link doc="docs/http/ngx_http_limit_req_module.xml">requests</link>
-coming from one address;
+来自同一地址的同时<link doc="docs/http/ngx_http_limit_conn_module.xml">连接数</link>或<link doc="docs/http/ngx_http_limit_req_module.xml">请求数</link>限制；
 </listitem>
 
 <listitem>
-<link doc="docs/http/ngx_http_perl_module.xml">Embedded Perl</link>.
+<link doc="docs/http/ngx_http_perl_module.xml">嵌入Perl语言</link>。
 </listitem>
 
 </list>
@@ -197,23 +133,21 @@ coming from one address;
 
 
 <section id="mail_proxy_server_features"
-        name="Mail proxy server features">
+        name="邮件代理服务器特性">
 
 <para>
 <list type="bullet">
 
 <listitem>
-User redirection to IMAP/POP3 backend using an external HTTP
-authentication server;
+使用外部HTTP认证服务器重定向用户到IMAP/POP3后端；
 </listitem>
 
 <listitem>
-User authentication using an external HTTP authentication server
-and connection redirection to an internal SMTP backend;
+使用外部HTTP认证服务器认证用户后重定向连接到内部SMTP后端；
 </listitem>
 
 <listitem>
-Authentication methods:
+支持的认证方式：
 
 <list type="bullet">
 
@@ -233,11 +167,11 @@ SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
 </listitem>
 
 <listitem>
-SSL support;
+SSL支持；
 </listitem>
 
 <listitem>
-STARTTLS and STLS support.
+STARTTLS和STLS支持。
 </listitem>
 
 </list>
@@ -247,38 +181,29 @@ STARTTLS and STLS support.
 
 
 <section id="architecture_and_scalability"
-        name="Architecture and scalability">
+        name="架构和扩展性">
 
 <para>
 <list type="bullet">
 
 <listitem>
-One master and several worker processes;
-worker processes run under an unprivileged user;
+一个主进程和多个工作进程，工作进程以非特权用户运行；
 </listitem>
 
 <listitem>
-<link doc="docs/events.xml">Support</link> for
-kqueue (FreeBSD 4.1+),
-epoll (Linux 2.6+), rt signals (Linux 2.2.19+),
-/dev/poll (Solaris 7 11/99+), event ports (Solaris 10),
-select, and poll;
+<link doc="docs/events.xml">支持的</link>事件机制：kqueue（FreeBSD 4.1+）、epoll（Linux 2.6+）、rt signals（Linux 2.2.19+）、/dev/poll（Solaris 7 11/99+）、event ports（Solaris 10）、select以及poll；
 </listitem>
 
 <listitem>
-The support of the various kqueue features including EV_CLEAR, EV_DISABLE
-(to temporarily disable events), NOTE_LOWAT, EV_EOF, number of available data,
-error codes;
+众多支持的kqueue特性包括EV_CLEAR、EV_DISABLE（临时禁止事件）、NOTE_LOWAT、EV_EOF，可用数据的数量，错误代码；
 </listitem>
 
 <listitem>
-sendfile (FreeBSD 3.1+, Linux 2.2+, Mac OS X 10.5+), sendfile64 (Linux 2.4.21+),
-and sendfilev (Solaris 8 7/01+) support;
+支持sendfile（FreeBSD 3.1+, Linux 2.2+, Mac OS X 10.5+）、sendfile64（Linux 2.4.21+）和sendfilev（Solaris 8 7/01+）；
 </listitem>
 
 <listitem>
-<link doc="docs/http/ngx_http_core_module.xml" id="aio">File AIO</link>
-(FreeBSD 4.3+, Linux 2.6.22+);
+<link doc="docs/http/ngx_http_core_module.xml" id="aio">文件AIO</link>（FreeBSD 4.3+, Linux 2.6.22+）；
 </listitem>
 
 <listitem>
@@ -287,16 +212,15 @@ and sendfilev (Solaris 8 7/01+) support;
 </listitem>
 
 <listitem>
-Accept-filters (FreeBSD 4.1+) and TCP_DEFER_ACCEPT (Linux 2.4+)
-<link doc="docs/http/ngx_http_core_module.xml" id="listen">support</link>;
+<link doc="docs/http/ngx_http_core_module.xml" id="listen">支持</link>Accept-filters（FreeBSD 4.1+）和 TCP_DEFER_ACCEPT（Linux 2.4+）；
 </listitem>
 
 <listitem>
-10,000 inactive HTTP keep-alive connections take about 2.5M memory;
+10000个非活跃的HTTP keep-alive连接仅占用约2.5M内存；
 </listitem>
 
 <listitem>
-Data copy operations are kept to a minimum.
+尽可能避免数据拷贝操作。
 </listitem>
 
 </list>
@@ -306,17 +230,17 @@ Data copy operations are kept to a minimum.
 
 
 <section id="tested_os_and_platforms"
-        name="Tested OS and platforms">
+        name="测试过的操作系统和平台">
 
 <para>
 <list type="bullet">
 
 <listitem>
-FreeBSD 3&mdash;10 / i386; FreeBSD 5&mdash;10 / amd64;
+FreeBSD 3 &mdash; 10 / i386; FreeBSD 5 &mdash; 10 / amd64;
 </listitem>
 
 <listitem>
-Linux 2.2&mdash;3 / i386; Linux 2.6&mdash;3 / amd64;
+Linux 2.2 &mdash; 3 / i386; Linux 2.6 &mdash; 3 / amd64;
 </listitem>
 
 <listitem>
@@ -332,7 +256,7 @@ HP-UX 11.31 / ia64;
 </listitem>
 
 <listitem>
-Mac OS X / ppc, i386;
+MacOS X / ppc, i386;
 </listitem>
 
 <listitem>
@@ -343,5 +267,6 @@ Windows XP, Windows Server 2003.
 </para>
 
 </section>
+
 
 </article>
