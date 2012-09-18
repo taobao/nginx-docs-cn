@@ -15,7 +15,7 @@
 
 <para>
 nginx [engine x]是<link url="http://sysoev.ru/en/">Igor Sysoev</link>编写的一个HTTP和反向代理服务器，另外它也可以作为邮件代理服务器。
-它已经在众多流量很大的俄罗斯网站上使用了很长时间，这些网站包括<link url="http://www.yandex.ru">Yandex</link>、<link url="http://www.mail.ru">Mail.Ru</link>、<link url="http://www.vkontakte.ru">VKontakte</link>，以及<link url="http://www.rambler.ru">Rambler</link>。据Netcraft统计，在2012年7月份，<link url="link url="http://news.netcraft.com/archives/2012/07/03/july-2012-web-server-survey.html">世界上最繁忙的网站中有12.49%</link>使用Nginx作为其服务器或者代理服务器。部分成功案例请见：
+它已经在众多流量很大的俄罗斯网站上使用了很长时间，这些网站包括<link url="http://www.yandex.ru">Yandex</link>、<link url="http://www.mail.ru">Mail.Ru</link>、<link url="http://www.vkontakte.ru">VKontakte</link>，以及<link url="http://www.rambler.ru">Rambler</link>。据Netcraft统计，在2012年7月份，<link url="http://news.netcraft.com/archives/2012/07/03/july-2012-web-server-survey.html">世界上最繁忙的网站中有12.49%</link>使用Nginx作为其服务器或者代理服务器。部分成功案例请见：
 <link url="https://signup.netflix.com/openconnect/software">Netflix</link>，
 <link url="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</link>，
 <link url="http://blog.fastmail.fm/2007/01/04/webimappop-frontend-proxies-changed-to-nginx/">FastMail.FM</link>。
