@@ -72,7 +72,7 @@ location = /empty {
     <literal>crop</literal>
     <value>ширина</value>
     <value>высота</value></syntax>
-<default/>
+<default>off</default>
 <context>location</context>
 
 <para>

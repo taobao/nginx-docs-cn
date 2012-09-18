@@ -72,7 +72,7 @@ location = /empty {
     <literal>crop</literal>
     <value>width</value>
     <value>height</value></syntax>
-<default/>
+<default>off</default>
 <context>location</context>
 
 <para>
