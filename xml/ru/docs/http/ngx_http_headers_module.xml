@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_headers_module"
         link="/ru/docs/http/ngx_http_headers_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -48,6 +48,7 @@ add_header Cache-Control private;
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<context>if в location</context>
 
 <para>
 Добавляет указанное поле в заголовок ответа при условии, что код ответа
@@ -68,6 +69,7 @@ add_header Cache-Control private;
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<context>if в location</context>
 
 <para>
 Разрешает или запрещает добавлять или менять поля <header>Expires</header>

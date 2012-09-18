@@ -10,7 +10,7 @@
 <module name="Module ngx_http_headers_module"
         link="/en/docs/http/ngx_http_headers_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -48,6 +48,7 @@ add_header Cache-Control private;
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<context>if in location</context>
 
 <para>
 Adds the specified field to a response header provided that
@@ -68,6 +69,7 @@ A value can contain variables.
 <context>http</context>
 <context>server</context>
 <context>location</context>
+<context>if in location</context>
 
 <para>
 Enables or disables adding or modifying the <header>Expires</header>
