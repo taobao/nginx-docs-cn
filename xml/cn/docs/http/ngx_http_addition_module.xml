@@ -16,8 +16,8 @@
 <section id="summary">
 
 <para>
-<literal>ngx_http_addition_module</literal> 是一个过滤模块，它可以在回复正文前面或者后面加上额外的内容。
-这个模块不会默认编译，若要开启需要加上编译选项：<literal>--with-http_addition_module</literal>。
+<literal>ngx_http_addition_module</literal> 是一个过滤模块，它可以在回复正文前后加上内容。
+这个模块默认不会编译进去，若要开启需加上编译选项：<literal>--with-http_addition_module</literal>。
 </para>
 
 </section>
@@ -45,7 +45,7 @@ location / {
 <context>location</context>
 
 <para>
-在回复正文之前加入一段内容，它会发起一个子请求去获取这些内容。
+在回复正文之前加入一段文字，nginx会发起一个子请求去获取这些文字。
 </para>
 
 </directive>
@@ -57,7 +57,7 @@ location / {
 <context>location</context>
 
 <para>
-在回复正文之后加入一段内容，它会发起一个子请求去获取这些内容。
+在回复正文之后加入一段文字，nginx会发起一个子请求去获取这些文字。
 </para>
 
 </directive>
@@ -72,7 +72,7 @@ location / {
 <appeared-in>0.7.9</appeared-in>
 
 <para>
-指定生效的回复MIME类型，默认是“<literal>text/html</literal>”。
+指定生效的回复MIME类型，默认始终包含“<literal>text/html</literal>”。
 如果设置类型为“<literal>*</literal>”，就会匹配任何类型的回复(0.8.29)。
 </para>
 
