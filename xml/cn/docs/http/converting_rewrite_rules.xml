@@ -1,7 +1,13 @@
-﻿<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article name="转换rewrite规则"
          link="/cn/docs/http/converting_rewrite_rules.html"
+         rev="1"
          lang="cn">
 
 
@@ -11,8 +17,8 @@
 共享站点的管理员，习惯于<i>只</i>在Apache下使用.htaccess文件配置<i>所有</i>信息，通常会将下面规则
 
 <programlisting>
-RewriteCond  %{HTTP_HOST}  nginx.org
-RewriteRule  (.*)          http://www.nginx.org$1
+RewriteCond  %{HTTP_HOST}  example.org
+RewriteRule  (.*)          http://www.example.org$1
 </programlisting>
 
 翻译成这样：
@@ -20,9 +26,9 @@ RewriteRule  (.*)          http://www.nginx.org$1
 <programlisting>
 server {
     listen       80;
-    server_name  www.nginx.org  nginx.org;
-    if ($http_host = nginx.org) {
-        rewrite  (.*)  http://www.nginx.org$1;
+    server_name  www.example.org  example.org;
+    if ($http_host = example.org) {
+        rewrite  (.*)  http://www.example.org$1;
     }
     ...
 }
@@ -30,18 +36,18 @@ server {
 </para>
 
 <para>
-这种做法是错的，复杂而且低效。正确的方式是为<literal>nginx.org</literal>定义一个单独的服务器：
+这种做法是错的，复杂而且低效。正确的方式是为<literal>example.org</literal>定义一个单独的服务器：
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org;
-    return       301 http://www.nginx.org$request_uri;
+    server_name  example.org;
+    return       301 http://www.example.org$request_uri;
 }
 
 server {
     listen       80;
-    server_name  www.nginx.org;
+    server_name  www.example.org;
     ...
 }
 </programlisting>
@@ -49,7 +55,7 @@ server {
 <note>
 在0.9.1版本（含）以前，可以这样实现重定向：
 <programlisting>
-    rewrite      ^ http://www.nginx.org$request_uri?;
+    rewrite      ^ http://www.example.org$request_uri?;
 </programlisting>
 </note>
 
@@ -61,34 +67,34 @@ server {
 <section>
 
 <para>
-再举一个例子，处理一个和刚才相反的逻辑：既不是来自<literal>nginx.com</literal>，又不是来自<literal>www.nginx.com</literal>：
+再举一个例子，处理一个和刚才相反的逻辑：既不是来自<literal>example.com</literal>，又不是来自<literal>www.example.com</literal>：
 
 <programlisting>
-RewriteCond  %{HTTP_HOST}  !nginx.com
-RewriteCond  %{HTTP_HOST}  !www.nginx.com
-RewriteRule  (.*)          http://www.nginx.com$1
+RewriteCond  %{HTTP_HOST}  !example.com
+RewriteCond  %{HTTP_HOST}  !www.example.com
+RewriteRule  (.*)          http://www.example.com$1
 </programlisting>
 
-应该按下面这样分开定义<literal>nginx.com</literal>、<literal>www.nginx.com</literal>和其他站点：
+应该按下面这样分开定义<literal>example.com</literal>、<literal>www.example.com</literal>和其他站点：
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.com www.nginx.com;
+    server_name  example.com www.example.com;
     ...
 }
 
 server {
     listen       80 default_server;
     server_name  _;
-    return       301 http://nginx.com$request_uri;
+    return       301 http://example.com$request_uri;
 }
 </programlisting>
 
 <note>
 在0.9.1版本（含）以前，可以这样实现重定向：
 <programlisting>
-    rewrite      ^ http://nginx.com$request_uri?;
+    rewrite      ^ http://example.com$request_uri?;
 </programlisting>
 </note>
 
