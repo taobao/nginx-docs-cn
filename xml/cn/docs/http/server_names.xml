@@ -170,7 +170,8 @@ server {
         name="其他类型的名字">
 
 <para>
-有一些主机名会被特别对待。</para>
+有一些主机名会被特别对待。
+</para>
 
 <para>
 如果需要用一个非默认的<link doc="ngx_http_core_module.xml" id="server">虚拟主机</link>处理请求头中不含<header>Host</header>字段的请求，需要指定一个空名字：
@@ -196,7 +197,7 @@ nginx 0.8.48版本以下（含）在同样的情况下会使用机器名作为�
 </para>
 
 <para>
-如果使用IP地址而不是主机名来请求服务器，那么请求头的<header>Host<header>字段包含的将是IP地址。可以将IP地址作为虚拟主机名来处理这种请求：
+如果使用IP地址而不是主机名来请求服务器，那么请求头的<header>Host</header>字段包含的将是IP地址。可以将IP地址作为虚拟主机名来处理这种请求：
 
 <programlisting>
 server {
