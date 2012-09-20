@@ -187,27 +187,19 @@ server {
 <list type="bullet" compact="no">
 
 <listitem>
-<para>
 请求"<literal>/logo.gif</literal>"首先匹配上location "<literal>/</literal>"，然后匹配上正则表达式"<literal>\.(gif|jpg|png)$</literal>"。因此，它将被后者处理。根据"<literal>root /data/www</literal>"指令，nginx将请求映射到文件<path>/data/www/logo.gif</path>"，并发送这个文件到客户端。
-</para>
 </listitem>
 
 <listitem>
-<para>
 请求"<literal>/index.php</literal>"首先也匹配上location "<literal>/</literal>"，然后匹配上正则表达式"<literal>\.(php)$</literal>"。 因此，它将被后者处理，进而被发送到监听在localhost:9000的FastCGI服务器。<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_param"/>指令将FastCGI的参数<literal>SCRIPT_FILENAME</literal>的值设置为"<literal>/data/www/index.php</literal>"，接着FastCGI服务器执行这个文件。变量<var>$document_root</var>等于<link doc="ngx_http_core_module.xml" id="root"/>指令设置的值，变量<var>$fastcgi_script_name</var>的值是请求的uri，"<literal>/index.php</literal>"。
-</para>
 </listitem>
 
 <listitem>
-<para>
 请求"<literal>/about.html</literal>"仅能匹配上location "<literal>/</literal>"，因此，它将使用此location进行处理。根据"<literal>root /data/www</literal>"指令，nginx将请求映射到文件"<path>/data/www/about.html</path>"，并发送这个文件到客户端。
-</para>
 </listitem>
 
 <listitem>
-<para>
 请求"<literal>/</literal>"的处理更为复杂。它仅能匹配上location "<literal>/</literal>"，因此，它将使用此location进行处理。然后，<link doc="ngx_http_index_module.xml" id="index"/>指令使用它的参数和"<literal>root /data/www</literal>"指令所组成的文件路径来检测对应的文件是否存在。如果文件<path>/data/www/index.html</path>不存在，而<path>/data/www/index.php</path>存在，此指令将执行一次内部重定向到"<literal>/index.php</literal>"，接着nginx将重新寻找匹配"<literal>/index.php</literal>"的location，就好像这次请求是从客户端发过来一样。正如我们之前看到的那样，这个重定向的请求最终交给FastCGI服务器来处理。
-</para>
 </listitem>
 
 </list>
