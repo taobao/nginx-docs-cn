@@ -78,7 +78,7 @@ After all clients are serviced, old worker processes are shut down.
 </para>
 
 <para>
-Let's illustrate this by example.
+Let’s illustrate this by example.
 Imagine that nginx is run on FreeBSD 4.x and the command
 <programlisting>
 ps ax -o pid,ppid,user,%cpu,vsz,wchan,command | egrep '(nginx|PID)'

@@ -10,7 +10,7 @@
 <module name="Module ngx_http_auth_basic_module"
         link="/en/docs/http/ngx_http_auth_basic_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -86,9 +86,31 @@ name3:password3
 </para>
 
 <para>
-Passwords should be encrypted with the <c-func>crypt</c-func> function.
-The <command>htpasswd</command> command from the Apache web server
-distribution can be used to create such a file.
+The following password types are supported:
+<list type="bullet">
+
+<listitem>
+encrypted with the <c-func>crypt</c-func> function; can be generated using
+the “<command>htpasswd</command>” utility from the Apache HTTP Server
+distribution or the “<command>openssl passwd</command>” command;
+</listitem>
+
+<listitem>
+hashed with the Apache variant of the MD5-based password algorithm (apr1);
+can be generated with the same tools;
+</listitem>
+
+<listitem>
+specified by the
+“<literal>{</literal><value>scheme</value><literal>}</literal><value>data</value>”
+syntax (1.0.3+) as described in
+<link url="http://tools.ietf.org/html/rfc2307#section-5.3">RFC 2307</link>;
+currently implemented schemes include <literal>PLAIN</literal> (an example one,
+should not be used) and <literal>SSHA</literal> (salted SHA-1 hashing, used
+by some software packages, notably OpenLDAP and Dovecot).
+</listitem>
+
+</list>
 </para>
 
 </directive>

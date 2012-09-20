@@ -1,0 +1,45 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="Configuration file measurement units"
+         link="/en/docs/syntax.html"
+         lang="en"
+         rev="2">
+
+<section>
+
+<para>
+Sizes can be specified in kilobytes (<literal>k</literal>,
+<literal>K</literal>) and megabytes (<literal>m</literal>,
+<literal>M</literal>), for example “<literal>8k</literal>”,
+“<literal>1m</literal>”.
+If the suffix is not specified, the value is bytes.
+</para>
+
+<para>
+Time can be specified in minutes, hours, days and so on:
+<table width="30%">
+<tr><td width="20%">s</td><td>seconds</td></tr>
+<tr><td width="20%">m</td><td>minutes</td></tr>
+<tr><td width="20%">h</td><td>hours</td></tr>
+<tr><td width="20%">d</td><td>days</td></tr>
+<tr><td width="20%">w</td><td>weeks</td></tr>
+<tr><td width="20%">M</td><td>months, 30 days</td></tr>
+<tr><td width="20%">y</td><td>years, 365 days</td></tr>
+</table>
+</para>
+
+<para>
+for example “<literal>1h 30m</literal>”, “<literal>1y 6M</literal>”.
+Additionally, it is possible to specify time with millisecond
+precision (<literal>ms</literal>) in some directives.
+If the suffix is not specified, the value is seconds.
+</para>
+
+</section>
+
+</article>

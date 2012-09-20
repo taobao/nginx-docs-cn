@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_memcached_module"
         link="/ru/docs/http/ngx_http_memcached_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -74,6 +74,23 @@ server {
 <para>
 Задаёт таймаут для установления соединения с сервером memcached.
 Необходимо иметь в виду, что этот таймаут обычно не может превышать 75 секунд.
+</para>
+
+</directive>
+
+
+<directive name="memcached_gzip_flag">
+<syntax><value>флаг</value></syntax>
+<default></default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.3.6</appeared-in>
+
+<para>
+Включает проверку  указанного <value>флага</value> в ответе
+сервера memcached и установку поля “<literal>Content-Encoding</literal>”
+заголовка ответа в “<literal>gzip</literal>”, если этот флаг установлен.
 </para>
 
 </directive>

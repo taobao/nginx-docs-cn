@@ -1,8 +1,15 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  Copyright (C) Cfsego
+  -->
+
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
 <article name="nginx Windows版使用说明"
          link="/cn/docs/windows.html"
-         lang="cn">
+         lang="cn"
+         rev="1">
 
 
 <section>

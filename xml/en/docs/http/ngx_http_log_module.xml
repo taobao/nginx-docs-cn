@@ -10,7 +10,7 @@
 <module name="Module ngx_http_log_module"
         link="/en/docs/http/ngx_http_log_module.html"
         lang="en"
-        rev="1">
+        rev="3">
 
 <section id="summary">
 
@@ -70,7 +70,7 @@ If format is not specified then the predefined format
 
 <para>
 The buffer size must not exceed the size of the atomic write to a disk file.
-For FreeBSD 3.0-6.0 this size is unlimited.
+For FreeBSD this size is unlimited.
 </para>
 
 <para>

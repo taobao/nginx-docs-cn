@@ -2,41 +2,48 @@
 
 <article name="nginx ドキュメント"
          link="/ja/docs/"
-         lang="ja">
+         lang="ja"
+         toc="no">
 
-<section>
 
-<para>
-<list type="bullet">
-
-<listitem>
-<link doc="introduction.xml"/>
-</listitem>
-
-<listitem>
-<link doc="howto.xml"/>
-</listitem>
-
-<listitem>
-<link doc="faq.xml"/>
-</listitem>
-
-</list>
-</para>
-
-<!--
+<section id="introduction" name="入門">
 
 <para>
 <list type="bullet">
 
 <listitem>
-<link doc="windows.xml"/>
+<link doc="http/request_processing.xml"/>
+</listitem>
+
+<listitem>
+<link doc="http/server_names.xml"/>
+</listitem>
+
+<listitem>
+<link doc="http/configuring_https_servers.xml"/>
+</listitem>
+
+<listitem>
+<link doc="debugging_log.xml"/>
 </listitem>
 
 </list>
 </para>
 
--->
+</section>
+
+
+<section id="howto" name="ハウツー">
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link doc="http/converting_rewrite_rules.xml"/>
+</listitem>
+
+</list>
+</para>
 
 </section>
 

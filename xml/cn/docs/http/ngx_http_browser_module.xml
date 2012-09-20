@@ -1,40 +1,39 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 
 <!--
   Copyright (C) Igor Sysoev
   Copyright (C) Nginx, Inc.
+  Copyright (c) litianqing
   -->
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_browser_module"
-        link="/en/docs/http/ngx_http_browser_module.html"
-        lang="en"
-        rev="1">
+<module name="ngx_http_browser_module模块"
+        link="/cn/docs/http/ngx_http_browser_module.html"
+        lang="cn"
+        rev="1"
+        translator="litianqing">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_browser_module</literal> module creates variables
-whose values depend on the value of the <header>User-Agent</header>
-request header field:
+模块<literal>ngx_http_browser_module</literal>创建变量，它们的值取决于
+请求头中<header>User-Agent</header>的值：
 <list type="tag">
 
 <tag-name><var>$modern_browser</var></tag-name>
 <tag-desc>
-equals to the value set by the <link id="modern_browser_value"/> directive,
-if a browser was identified as modern;
+如果浏览器被为识别为新式浏览器，该值等于<link id="modern_browser_value"/>指令设置的值；
 </tag-desc>
 
 <tag-name><var>$ancient_browser</var></tag-name>
 <tag-desc>
-equals to the value set by the <link id="ancient_browser_value"/> directive,
-if a browser was identified as ancient;
+如果浏览器被识别为旧式浏览器，该值等于<link id="ancient_browser_value"/>指令设置的值；
 </tag-desc>
 
 <tag-name><var>$msie</var></tag-name>
 <tag-desc>
-equals “1” if a browser was identified as MSIE of any version.
+如果浏览器被识别为任何版本的MSIE，该值等于“1”。
 </tag-desc>
 
 </list>
@@ -43,10 +42,10 @@ equals “1” if a browser was identified as MSIE of any version.
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置示例">
 
 <para>
-Choosing an index file:
+选择一个默认页:
 <example>
 modern_browser_value "modern.";
 
@@ -61,7 +60,7 @@ index index.${modern_browser}html index.html;
 </para>
 
 <para>
-Redirection for old browsers:
+旧式浏览器的重定向：
 <example>
 modern_browser msie      5.0;
 modern_browser gecko     0.9.1;
@@ -82,7 +81,7 @@ if ($ancient_browser) {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="ancient_browser">
 <syntax><value>string</value> ...</syntax>
@@ -92,10 +91,8 @@ if ($ancient_browser) {
 <context>location</context>
 
 <para>
-If any of the specified substrings is found in the <header>User-Agent</header>
-request header field, a browser will be considered ancient.
-The special string “<literal>netscape4</literal>” corresponds to the
-regular expression “<literal>^Mozilla/[1-4]</literal>”.
+如果任一指定的子串在请求头的<header>User-Agent</header>域中被发现，浏览器将被认定为旧式浏览器。
+特殊字符串“<literal>netscape4</literal>” 相当于正则表达式“<literal>^Mozilla/[1-4]</literal>”。
 </para>
 
 </directive>
@@ -109,7 +106,7 @@ regular expression “<literal>^Mozilla/[1-4]</literal>”.
 <context>location</context>
 
 <para>
-Sets a value for the <var>$ancient_browser</var> variables.
+设定变量<var>$ancient_browser</var>的值。
 </para>
 
 </directive>
@@ -124,27 +121,23 @@ Sets a value for the <var>$ancient_browser</var> variables.
 <context>location</context>
 
 <para>
-Specifies a version starting from which a browser is considered modern.
-A browser can be any one of the following: <literal>msie</literal>,
-<literal>gecko</literal> (browsers based on Mozilla),
-<literal>opera</literal>, <literal>safari</literal>,
-or <literal>konqueror</literal>.
+指定一个版本，此版本及后续版本的浏览器都被认定为新式浏览器。
+浏览器可以是下列之一： <literal>msie</literal>,
+<literal>gecko</literal> (基于Mozilla),
+<literal>opera</literal>，<literal>safari</literal>,
+或者 <literal>konqueror</literal>。
 </para>
 
 <para>
-Versions can be specified in the following formats: X, X.X, X.X.X, or X.X.X.X.
-The maximum values for each of the format are
-4000, 4000.99, 4000.99.99, and 4000.99.99.99, respectively.
+版本可被指定为以下形式：X, X.X, X.X.X, 或 X.X.X.X。
+每一形式的最大值分别是4000, 4000.99, 4000.99.99, 和 4000.99.99.99。
 </para>
 
 <para>
-The special value <literal>unlisted</literal> specifies to consider
-a browser as modern if it was not listed by the
-<literal>modern_browser</literal> and <link id="ancient_browser"/>
-directives.
-Otherwise such a browser is considered ancient.
-If a request does not provide the <header>User-Agent</header> field
-in the header, a browser is treated as not being listed.
+浏览器既没有在<literal>modern_browser</literal>中列出，又没有在<link id="ancient_browser"/>中
+列出时，如果配置了特殊值<literal>unlisted</literal>，那么浏览器将被认定为新式浏览器，否则
+认定为旧式浏览器。
+如果请求头中没有<header>User-Agent</header>域，浏览器以没有列出对待。
 </para>
 
 </directive>
@@ -158,7 +151,7 @@ in the header, a browser is treated as not being listed.
 <context>location</context>
 
 <para>
-Sets a value for the <var>$modern_browser</var> variables.
+设定变量<var>$modern_browser</var>的值。
 </para>
 
 </directive>

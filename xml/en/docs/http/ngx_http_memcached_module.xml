@@ -10,7 +10,7 @@
 <module name="Module ngx_http_memcached_module"
         link="/en/docs/http/ngx_http_memcached_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -74,6 +74,24 @@ A response is passed to a client synchronously, immediately as it is received.
 <para>
 Defines a timeout for establishing a connection with the memcached server.
 It should be noted that this timeout cannot usually exceed 75 seconds.
+</para>
+
+</directive>
+
+
+<directive name="memcached_gzip_flag">
+<syntax><value>flag</value></syntax>
+<default></default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>1.3.6</appeared-in>
+
+<para>
+Enables the test for the <value>flag</value> presence in the memcached
+server response and sets the request header field
+“<literal>Content-Encoding</literal>” to “<literal>gzip</literal>”
+if the flag is set.
 </para>
 
 </directive>

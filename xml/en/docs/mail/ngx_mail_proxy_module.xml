@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) 2006, 2007 Anton Yuzhaninov
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_mail_proxy_module"
+        link="/en/docs/mail/ngx_mail_proxy_module.html"
+        lang="en"
+        rev="1">
+
+<section id="directives" name="Directives">
+
+<!--
+<directive name="proxy">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Does not tested anywhere in the current version.
+</para>
+
+</directive>
+-->
+
+
+<directive name="proxy_buffer">
+<syntax><value>size</value></syntax>
+<default>4k|8k</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Sets size of the buffer used for proxying.
+The buffer size is equal to one memory page by default.
+Depending on a platform, this is either 4K or 8K.
+</para>
+
+</directive>
+
+
+<directive name="proxy_pass_error_message">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Defines whether to pass the error message obtained during
+an authentication on the backend to the client.
+</para>
+
+<para>
+Usually, if the authentication in nginx was successful,
+backend can’t return an error, but if it nonetheless exists,
+this means there is some problem inside.
+In such cases the backend message can contain the information
+that should not be shown to the client.
+However responding with an error for the correct password
+is a normal behavior of some POP3 servers.
+For example, CommuniGatePro informs user about
+<link url="http://www.stalker.com/CommuniGatePro/Alerts.html#Quota">mailbox
+overflow</link> or other events by periodically outputting the
+<link url="http://www.stalker.com/CommuniGatePro/POP.html#Alerts">authentication
+error</link>.
+The directive should be enabled in this case.
+</para>
+
+</directive>
+
+
+<directive name="proxy_timeout">
+<syntax><value>timeout</value></syntax>
+<default>24h</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Defines a timeout used after the proxying to the backend had started.
+</para>
+
+</directive>
+
+
+<directive name="xclient">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Enables or disables issuing of the <literal>XCLIENT</literal> command
+upon the connection to the SMTP backend.
+For the <literal>XCLIENT</literal> command to work it is required to have
+Postfix with the
+<link url="http://citrin.ru/nginx:xclient-login-patch">patch</link>,
+which adds the <literal>LOGIN</literal> parameter.
+If the <literal>XCLIENT</literal> command is not used, the MTA will be unable
+to write the client’s
+<literal>IP</literal>/<literal>HELO</literal>/<literal>LOGIN</literal>
+to the log and apply various limitations based on this data.
+</para>
+
+<para>
+If the <literal>xclient</literal> is enabled,
+then upon a backend connection nginx first issues
+<example>
+EHLO server_name
+</example>
+and then
+<example>
+XCLIENT PROTO=ESMTP HELO=client_hello ADDR=192.168.1.1 LOGIN=good_user NAME=[UNAVAILABLE]
+</example>
+If the client upon a connection to nginx issued the <literal>EHLO</literal>,
+then the <literal>XCLIENT</literal> command will pass
+the <literal>PROTO=ESMTP</literal>.
+Otherwise, <literal>PROTO=SMTP</literal> will be passed.
+The IP address of a client is specified in the <literal>ADDR</literal>
+parameter, and since nginx does not use DNS to resolve the hostname,
+the <literal>NAME=[UNAVAILABLE]</literal> is specified.
+</para>
+
+<para>
+If the <literal>xclient</literal> is disabled,
+then the <literal>EHLO</literal> is issued upon the connection to the backend
+if the client had passed it and the <literal>HELO</literal>
+otherwise.
+</para>
+
+</directive>
+
+</section>
+
+</module>

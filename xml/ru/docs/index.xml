@@ -8,28 +8,11 @@
 <article name="nginx: документация"
          link="/ru/docs/"
          lang="ru"
-         rev="1">
+         rev="3"
+         toc="no">
 
 
-<section>
-
-<para>
-<list type="bullet">
-
-<listitem>
-<link doc="introduction.xml"/>
-</listitem>
-
-<listitem>
-<link doc="howto.xml"/>
-</listitem>
-
-<listitem>
-<link doc="faq.xml"/>
-</listitem>
-
-</list>
-</para>
+<section id="introduction" name="Введение">
 
 <para>
 <list type="bullet">
@@ -39,11 +22,27 @@
 </listitem>
 
 <listitem>
-<link doc="windows.xml"/>
+<link doc="http/request_processing.xml"/>
+</listitem>
+
+<listitem>
+<link doc="http/server_names.xml"/>
 </listitem>
 
 <listitem>
 <link doc="events.xml"/>
+</listitem>
+
+<listitem>
+<link doc="windows.xml"/>
+</listitem>
+
+<listitem>
+<link doc="control.xml"/>
+</listitem>
+
+<listitem>
+<link doc="http/configuring_https_servers.xml"/>
 </listitem>
 
 <listitem>
@@ -59,17 +58,18 @@
 </listitem>
 
 <listitem>
-<link doc="control.xml"/>
+<link doc="hash.xml"/>
 </listitem>
 
 <listitem>
-<link doc="hash.xml"/>
+<link doc="debugging_log.xml"/>
 </listitem>
 
 </list>
 </para>
 
 </section>
+
 
 <section name="Справочник по модулям">
 
@@ -159,6 +159,11 @@ ngx_http_geo_module</link>
 <listitem>
 <link doc="http/ngx_http_geoip_module.xml">
 ngx_http_geoip_module</link>
+</listitem>
+
+<listitem>
+<link doc="http/ngx_http_gunzip_module.xml">
+ngx_http_gunzip_module</link>
 </listitem>
 
 <listitem>
@@ -284,6 +289,47 @@ ngx_http_userid_module</link>
 <listitem>
 <link doc="http/ngx_http_xslt_module.xml">
 ngx_http_xslt_module</link>
+</listitem>
+
+</list>
+</para>
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link doc="mail/ngx_mail_core_module.xml">
+ngx_mail_core_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_pop3_module.xml">
+ngx_mail_pop3_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_imap_module.xml">
+ngx_mail_imap_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_smtp_module.xml">
+ngx_mail_smtp_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_auth_http_module.xml">
+ngx_mail_auth_http_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_proxy_module.xml">
+ngx_mail_proxy_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_ssl_module.xml">
+ngx_mail_ssl_module</link>
 </listitem>
 
 </list>

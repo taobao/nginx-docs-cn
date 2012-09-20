@@ -2,28 +2,42 @@
 
 <article name="nginx文档"
          link="/cn/docs/"
-         lang="cn">
+         lang="cn"
+         toc="no">
 
 
-<section>
+<section id="introduction" name="介绍">
 
 <para>
 <list type="bullet">
 
 <listitem>
-<link doc="introduction.xml"/>
+<link doc="http/request_processing.xml"/>
 </listitem>
 
 <listitem>
-<link doc="howto.xml"/>
+<link doc="http/server_names.xml"/>
 </listitem>
 
 <listitem>
-<link doc="faq.xml"/>
+<link doc="windows.xml"/>
+</listitem>
+
+<listitem>
+<link doc="http/configuring_https_servers.xml"/>
+</listitem>
+
+<listitem>
+<link doc="debugging_log.xml"/>
 </listitem>
 
 </list>
 </para>
+
+</section>
+
+
+<section id="howto" name="howto">
 
 <para>
 <list type="bullet">
@@ -34,6 +48,10 @@
 
 <listitem>
 <link doc="windows.xml"/>
+</listitem>
+
+<listitem>
+<link doc="http/converting_rewrite_rules.xml"/>
 </listitem>
 
 <listitem>

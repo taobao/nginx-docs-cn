@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) 2006, 2007 Anton Yuzhaninov
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_mail_ssl_module"
+        link="/en/docs/mail/ngx_mail_ssl_module.html"
+        lang="en"
+        rev="1">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_mail_ssl_module</literal> provides the necessary
+support for mail proxy server for the SSL/TLS protocol.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with
+the <literal>--with-mail_ssl_module</literal>
+configuration parameter.
+<note>
+This module requires the <link url="http://www.openssl.org">OpenSSL</link>
+library.
+</note>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="ssl">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Enables the HTTPS protocol for the given virtual server.
+</para>
+
+</directive>
+
+
+<directive name="ssl_certificate">
+<syntax><value>file</value></syntax>
+<default/>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Specifies a file with a certificate in the PEM format for the given
+virtual server.
+If intermediate certificates should be specified in addition to a primary
+certificate, they should be specified in the same file in the following
+order: the primary certificate comes first, then the intermediate certificates.
+A secret key in the PEM format may be placed in the same file.
+</para>
+
+</directive>
+
+
+<directive name="ssl_certificate_key">
+<syntax><value>file</value></syntax>
+<default/>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Specifies a file with a secret key in the PEM format for the given virtual
+server.
+</para>
+
+</directive>
+
+
+<directive name="ssl_prefer_server_ciphers">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Specifies that server ciphers should be preferred over client ciphers
+when using the SSLv3 and TLS protocols.
+</para>
+
+</directive>
+
+
+<directive name="ssl_protocols">
+<syntax>
+    [<literal>SSLv2</literal>]
+    [<literal>SSLv3</literal>]
+    [<literal>TLSv1</literal>]
+    [<literal>TLSv1.1</literal>]
+    [<literal>TLSv1.2</literal>]</syntax>
+<default>SSLv3 TLSv1 TLSv1.1 TLSv1.2</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Enables the specified protocols.
+The parameters <literal>TLSv1.1</literal> and <literal>TLSv1.2</literal> work
+only when using the OpenSSL library version 1.0.1 and higher.
+<note>
+The parameters <literal>TLSv1.1</literal> and <literal>TLSv1.2</literal> are
+supported starting from versions 1.1.13 and 1.0.12
+so when using OpenSSL version 1.0.1
+and higher on older nginx versions these protocols will work but could not
+be disabled.
+</note>
+</para>
+
+</directive>
+
+
+<directive name="ssl_session_cache">
+<syntax>
+    <literal>off</literal> |
+    <literal>none</literal> |
+    [<literal>builtin</literal>[:<value>size</value>]]
+    [<literal>shared</literal>:<value>name</value>:<value>size</value>]</syntax>
+<default>none</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Sets types and sizes of caches that store session parameters.
+A cache can be any of the following types:
+<list type="tag">
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+the use of session cache is strictly prohibited:
+nginx explicitly tells a client that sessions may not be reused.
+</tag-desc>
+
+<tag-name><literal>none</literal></tag-name>
+<tag-desc>
+the use of session cache is gently disallowed:
+nginx tells a client that sessions may be reused, but does not
+actually do that.
+</tag-desc>
+
+<tag-name><literal>builtin</literal></tag-name>
+<tag-desc>
+a cache built in OpenSSL; used by one worker process only.
+The cache size is specified in sessions.
+If size is not given, it is equal to 20480 sessions.
+Use of the built-in cache can cause memory fragmentation.
+</tag-desc>
+
+<tag-name><literal>shared</literal></tag-name>
+<tag-desc>
+shared between all worker processes.
+The cache size is specified in bytes; one megabyte can store
+about 4000 sessions.
+Each shared cache should have an arbitrary name.
+A cache with the same name can be used in several
+virtual servers.
+</tag-desc>
+
+</list>
+</para>
+
+<para>
+Both cache types can be used simultaneously, for example:
+<example>
+ssl_session_cache builtin:1000 shared:SSL:10m;
+</example>
+but using only shared cache without the built-in cache should
+be more efficient.
+</para>
+
+</directive>
+
+
+<directive name="ssl_session_timeout">
+<syntax><value>time</value></syntax>
+<default>5m</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Specifies a time during which a client may reuse the
+session parameters stored in a cache.
+</para>
+
+</directive>
+
+
+<directive name="starttls">
+<syntax>
+  <literal>on</literal> |
+  <literal>off</literal> |
+  <literal>only</literal></syntax>
+<default>off</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+<list type="tag">
+
+<tag-name><literal>on</literal></tag-name>
+<tag-desc>
+Allow usage of <literal>STLS</literal> command for the POP3
+and <literal>STARTTLS</literal> command for the IMAP;
+</tag-desc>
+
+<tag-name><literal>off</literal></tag-name>
+<tag-desc>
+Deny usage of <literal>STLS</literal>
+and <literal>STARTTLS</literal> commands;
+</tag-desc>
+
+<tag-name><literal>only</literal></tag-name>
+<tag-desc>
+require preliminary TLS transition.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+</section>
+
+</module>

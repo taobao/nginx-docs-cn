@@ -8,7 +8,18 @@
 <article name="nginx: поддержка"
          link="/ru/support.html"
          lang="ru"
-         rev="1">
+         rev="2">
+
+
+<section name="Коммерческая поддержка">
+
+<para>
+Варианты коммерческой поддержки можно найти на
+<link url="http://nginx.com/support.html">странице поддержки
+на нашем сайте nginx.com</link>.
+</para>
+
+</section>
 
 
 <section name="Wiki">
@@ -29,14 +40,12 @@
 <section name="Списки рассылок">
 
 <para>
-Вы можете
-<link url="http://nginx.org/mailman/listinfo">
-просматривать</link>
+Можно
+<link url="http://nginx.org/mailman/listinfo">просматривать</link>
 списки рассылок.
 Чтобы написать в список, необходимо вначале
-<link url="http://nginx.org/mailman/listinfo">
-подписать</link>
-свой почтовый адрес, который будет использоваться для отправки сообщений.
+<link url="http://nginx.org/mailman/listinfo">подписать</link>
+почтовый адрес, который будет использоваться для отправки сообщений.
 </para>
 
 <para>
@@ -123,17 +132,6 @@
 </listitem>
 
 </list>
-</para>
-
-</section>
-
-
-<section name="Коммерческая поддержка">
-
-<para>
-Варианты коммерческой поддержки можно найти на
-<link url="http://nginx.com/support.html">странице поддержки
-на нашем сайте nginx.com</link>.
 </para>
 
 </section>

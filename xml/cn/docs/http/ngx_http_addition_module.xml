@@ -7,19 +7,17 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_addition_module"
-        link="/en/docs/http/ngx_http_addition_module.html"
-        lang="en"
+<module name="ngx_http_addition_module模块"
+        link="/cn/docs/http/ngx_http_addition_module.html"
+        lang="cn"
+		translator="Weibin Yao"
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_addition_module</literal> module is a filter
-that adds a text before and after a response.
-This module is not built by default, it should be enabled with the
-<literal>--with-http_addition_module</literal>
-configuration parameter.
+<literal>ngx_http_addition_module</literal> 是一个过滤模块，它可以在回复正文前后加上内容。
+这个模块默认不会编译进去，若要开启需加上编译选项：<literal>--with-http_addition_module</literal>。
 </para>
 
 </section>
@@ -47,8 +45,7 @@ location / {
 <context>location</context>
 
 <para>
-Adds a text returned as a result of processing a given subrequest,
-before the response body.
+在回复正文之前加入一段文字，nginx会发起一个子请求去获取这些文字。
 </para>
 
 </directive>
@@ -60,8 +57,7 @@ before the response body.
 <context>location</context>
 
 <para>
-Adds a text returned as a result of processing a given subrequest,
-after the response body.
+在回复正文之后加入一段文字，nginx会发起一个子请求去获取这些文字。
 </para>
 
 </directive>
@@ -76,9 +72,8 @@ after the response body.
 <appeared-in>0.7.9</appeared-in>
 
 <para>
-Allows to add text in responses with the specified MIME types,
-in addition to “<literal>text/html</literal>”.
-The special value “<literal>*</literal>” matches any MIME type (0.8.29).
+指定生效的回复MIME类型，默认始终包含“<literal>text/html</literal>”。
+如果设置类型为“<literal>*</literal>”，就会匹配任何类型的回复(0.8.29)。
 </para>
 
 </directive>

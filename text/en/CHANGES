@@ -1,4 +1,64 @@
 
+Changes with nginx 1.3.6                                         12 Sep 2012
+
+    *) Feature: the ngx_http_gunzip_filter_module.
+
+    *) Feature: the "memcached_gzip_flag" directive.
+
+    *) Feature: the "always" parameter of the "gzip_static" directive.
+
+    *) Bugfix: in the "limit_req" directive; the bug had appeared in 1.1.14.
+       Thanks to Charles Chen.
+
+    *) Bugfix: nginx could not be built by gcc 4.7 with -O2 optimization if
+       the --with-ipv6 option was used.
+
+
+Changes with nginx 1.3.5                                         21 Aug 2012
+
+    *) Change: the ngx_http_mp4_module module no longer skips tracks in
+       formats other than H.264 and AAC.
+
+    *) Bugfix: a segmentation fault might occur in a worker process if the
+       "map" directive was used with variables as values.
+
+    *) Bugfix: a segmentation fault might occur in a worker process if the
+       "geo" directive was used with the "ranges" parameter but without the
+       "default" parameter; the bug had appeared in 0.8.43.
+       Thanks to Zhen Chen and Weibin Yao.
+
+    *) Bugfix: in the -p command-line parameter handling.
+
+    *) Bugfix: in the mail proxy server.
+
+    *) Bugfix: of minor potential bugs.
+       Thanks to Coverity.
+
+    *) Bugfix: nginx/Windows could not be built with Visual Studio 2005
+       Express.
+       Thanks to HAYASHI Kentaro.
+
+
+Changes with nginx 1.3.4                                         31 Jul 2012
+
+    *) Change: the "ipv6only" parameter is now turned on by default for
+       listening IPv6 sockets.
+
+    *) Feature: the Clang compiler support.
+
+    *) Bugfix: extra listening sockets might be created.
+       Thanks to Roman Odaisky.
+
+    *) Bugfix: nginx/Windows might hog CPU if a worker process failed to
+       start.
+       Thanks to Ricardo Villalobos Guevara.
+
+    *) Bugfix: the "proxy_pass_header", "fastcgi_pass_header",
+       "scgi_pass_header", "uwsgi_pass_header", "proxy_hide_header",
+       "fastcgi_hide_header", "scgi_hide_header", and "uwsgi_hide_header"
+       directives might be inherited incorrectly.
+
+
 Changes with nginx 1.3.3                                         10 Jul 2012
 
     *) Feature: entity tags support and the "etag" directive.

@@ -20,7 +20,7 @@
             name        CDATA #IMPLIED
 >
 
-<!ELEMENT   directive   (syntax+, default+, context*, appeared-in*, para+) >
+<!ELEMENT   directive   (syntax+, default+, context+, appeared-in*, para+) >
 <!ATTLIST   directive
             name        ID #REQUIRED
 >

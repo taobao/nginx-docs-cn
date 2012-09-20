@@ -1,8 +1,6 @@
 DOC_LANG =	ru
 
 DOCS =									\
-		introduction						\
-		howto							\
 		faq							\
 		install							\
 		windows							\
@@ -13,22 +11,13 @@ DOCS =									\
 		control							\
 		hash							\
 		dirindex						\
+		http/request_processing					\
+		http/server_names					\
+		http/configuring_https_servers				\
+		debugging_log						\
 
 DOCS_XML =	$(foreach name, $(DOCS), xml/$(DOC_LANG)/docs/$(name).xml)
 DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
-
-INTRO =									\
-		http/request_processing					\
-		http/configuring_https_servers				\
-
-INTRO_XML =	$(foreach name, $(INTRO), xml/$(DOC_LANG)/docs/$(name).xml)
-INTRO_HTML =	$(foreach name, $(INTRO), $(OUT)/$(DOC_LANG)/docs/$(name).html)
-
-HOWTO =									\
-		debugging_log						\
-
-HOWTO_XML =	$(foreach name, $(HOWTO), xml/$(DOC_LANG)/docs/$(name).xml)
-HOWTO_HTML =	$(foreach name, $(HOWTO), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 
 FAQ =									\
 		sys_errlist						\
@@ -51,6 +40,7 @@ REFS =									\
 		http/ngx_http_flv_module				\
 		http/ngx_http_geo_module				\
 		http/ngx_http_geoip_module				\
+		http/ngx_http_gunzip_module				\
 		http/ngx_http_gzip_module				\
 		http/ngx_http_gzip_static_module			\
 		http/ngx_http_headers_module				\
@@ -77,6 +67,13 @@ REFS =									\
 		http/ngx_http_upstream_module				\
 		http/ngx_http_userid_module				\
 		http/ngx_http_xslt_module				\
+		mail/ngx_mail_auth_http_module				\
+		mail/ngx_mail_core_module				\
+		mail/ngx_mail_imap_module				\
+		mail/ngx_mail_pop3_module				\
+		mail/ngx_mail_proxy_module				\
+		mail/ngx_mail_smtp_module				\
+		mail/ngx_mail_ssl_module				\
 
 REFS_XML =	$(foreach name, $(REFS), xml/$(DOC_LANG)/docs/$(name).xml)
 REFS_HTML =	$(foreach name, $(REFS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
@@ -110,12 +107,6 @@ xml/$(DOC_LANG)/docs/dirindex.xml:					\
 	--stringparam LANG $(patsubst xml/%/docs/dirindex.xml,%,$@)	\
 	xslt/dirindex.xslt - |						\
 	sed 's;xml/[^/]*/docs/;;g' > $@
-
-$(OUT)/$(DOC_LANG)/docs/introduction.html:				\
-		$(INTRO_XML)						\
-
-$(OUT)/$(DOC_LANG)/docs/howto.html:					\
-		$(HOWTO_XML)						\
 
 $(OUT)/$(DOC_LANG)/docs/faq.html:					\
 		$(FAQ_XML)						\

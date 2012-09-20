@@ -8,7 +8,7 @@
 <article name="nginx"
          link="/en/"
          lang="en"
-         rev="1">
+         rev="3">
 
 
 <section>
@@ -24,8 +24,8 @@ on many heavily loaded Russian sites including
 <link url="http://vkontakte.ru">VKontakte</link>, and
 <link url="http://www.rambler.ru">Rambler</link>.
 According to Netcraft nginx served or proxied
-<link url="http://news.netcraft.com/archives/2012/07/03/july-2012-web-server-survey.html">12.49%
-busiest sites in July 2012</link>.
+<link url="http://news.netcraft.com/archives/2012/08/02/august-2012-web-server-survey.html">11.48%
+busiest sites in August 2012</link>.
 Here are some of the success stories:
 <link url="https://signup.netflix.com/openconnect/software">Netflix</link>,
 <link url="http://barry.wordpress.com/2008/04/28/load-balancer-update/">Wordpress.com</link>,
@@ -203,13 +203,20 @@ coming from one address;
 <list type="bullet">
 
 <listitem>
-User redirection to IMAP/POP3 backend using an external HTTP
-authentication server;
+User redirection to
+<link doc="docs/mail/ngx_mail_imap_module.xml">IMAP</link>
+or
+<link doc="docs/mail/ngx_mail_pop3_module.xml">POP3</link>
+server using an external HTTP
+<link doc="docs/mail/ngx_mail_auth_http_module.xml">authentication</link>
+server;
 </listitem>
 
 <listitem>
-User authentication using an external HTTP authentication server
-and connection redirection to an internal SMTP backend;
+User authentication using an external HTTP
+<link doc="docs/mail/ngx_mail_auth_http_module.xml">authentication</link>
+server and connection redirection to an internal
+<link doc="docs/mail/ngx_mail_smtp_module.xml">SMTP</link> server;
 </listitem>
 
 <listitem>
@@ -218,26 +225,30 @@ Authentication methods:
 <list type="bullet">
 
 <listitem>
-POP3: USER/PASS, APOP, AUTH LOGIN/PLAIN/CRAM-MD5;
+<link doc="docs/mail/ngx_mail_pop3_module.xml" id="pop3_auth">POP3</link>:
+USER/PASS, APOP, AUTH LOGIN/PLAIN/CRAM-MD5;
 </listitem>
 
 <listitem>
-IMAP: LOGIN, AUTH LOGIN/PLAIN/CRAM-MD5;
+<link doc="docs/mail/ngx_mail_imap_module.xml" id="imap_auth">IMAP</link>:
+LOGIN, AUTH LOGIN/PLAIN/CRAM-MD5;
 </listitem>
 
 <listitem>
-SMTP: AUTH LOGIN/PLAIN/CRAM-MD5;
+<link doc="docs/mail/ngx_mail_smtp_module.xml" id="smtp_auth">SMTP</link>:
+AUTH LOGIN/PLAIN/CRAM-MD5;
 </listitem>
 
 </list>
 </listitem>
 
 <listitem>
-SSL support;
+<link doc="docs/mail/ngx_mail_ssl_module.xml">SSL</link> support;
 </listitem>
 
 <listitem>
-STARTTLS and STLS support.
+<link doc="docs/mail/ngx_mail_ssl_module.xml" id="starttls">STARTTLS
+and STLS</link> support.
 </listitem>
 
 </list>
@@ -287,7 +298,7 @@ and sendfilev (Solaris 8 7/01+) support;
 </listitem>
 
 <listitem>
-Accept-filters (FreeBSD 4.1+) and TCP_DEFER_ACCEPT (Linux 2.4+)
+Accept-filters (FreeBSD 4.1+, NetBSD 5.0+) and TCP_DEFER_ACCEPT (Linux 2.4+)
 <link doc="docs/http/ngx_http_core_module.xml" id="listen">support</link>;
 </listitem>
 

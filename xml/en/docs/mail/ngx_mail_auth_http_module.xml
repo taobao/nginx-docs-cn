@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) 2006, 2007 Anton Yuzhaninov
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_mail_auth_http_module"
+        link="/en/docs/mail/ngx_mail_auth_http_module.html"
+        lang="en"
+        rev="1">
+
+<section id="directives" name="Directives">
+
+<directive name="auth_http">
+<syntax><value>URL</value></syntax>
+<default/>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Sets the URL of the HTTP authentication server.
+The protocol is described below.
+</para>
+
+</directive>
+
+
+<directive name="auth_http_header">
+<syntax><value>header</value> <value>value</value></syntax>
+<default/>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Allows to append the specified header to requests to the authentication server.
+Can be used as a shared secret to verify
+that the request came in from nginx.
+For example:
+<example>
+auth_http_header X-Auth-Key "secret_string";
+</example>
+</para>
+
+</directive>
+
+
+<directive name="auth_http_timeout">
+<syntax><value>time</value></syntax>
+<default>60s</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+</para>
+
+</directive>
+
+</section>
+
+
+<section id="protocol" name="Protocol">
+
+<para>
+The HTTP is used to communicate with the authentication server.
+The data in the response body is ignored, information is passed only in headers.
+</para>
+
+<para>
+Requests and responses examples:
+</para>
+
+<para>
+Request:
+<example>
+GET /auth HTTP/1.0
+Host: localhost
+Auth-Method: plain # plain or apop or cram-md5
+Auth-User: user
+Auth-Pass: password
+Auth-Protocol: imap # imap, pop3 or smtp
+Auth-Login-Attempt: 1 # attempt count in a single session
+Client-IP: 192.168.1.1
+</example>
+Good response:
+<example>
+HTTP/1.0 200 OK # this line is ignored
+Auth-Status: OK
+Auth-Server: 10.1.1.1
+Auth-Port: 143
+</example>
+Bad response:
+<example>
+HTTP/1.0 200 OK # this line is ignored
+Auth-Status: Invalid login or password
+Auth-Wait: 3 # wait for 3 seconds before returning an error to the client
+</example>
+</para>
+
+<para>
+If there is no the <header>Auth-Wait</header> header,
+the connection will be closed after returning an error.
+The current implementation allocates memory per each authentication attempt,
+which is freed only at the end of a session.
+Therefore a number of invalid authentication attempts in a single session
+must be limited — the server must response without
+the <header>Auth-Wait</header> header after 10-20 attempts
+(see the <header>Auth-Login-Attempt</header> header).
+</para>
+
+<para>
+When using the APOP or CRAM-MD5 request-response will look like:
+<example>
+GET /auth HTTP/1.0
+Host: localhost
+Auth-Method: apop
+Auth-User: user
+Auth-Salt: &lt;238188073.1163692009@mail.example.com&gt;
+Auth-Pass: auth_response
+Auth-Protocol: imap
+Auth-Login-Attempt: 1 # attempt count in a single session
+Client-IP: 192.168.1.1
+</example>
+Good response:
+<example>
+HTTP/1.0 200 OK # this line is ignored
+Auth-Status: OK
+Auth-Server: 10.1.1.1
+Auth-Port: 143
+Auth-Pass: plain-text-pass
+</example>
+</para>
+
+<para>
+For the SMTP, the response additionally takes into account
+the <header>Auth-Error-Code</header> header — it is used
+as a response code if exists.
+Otherwise the code 535 5.7.0 will be added to
+the <header>Auth-Status</header> by default.
+</para>
+
+<para>
+For example, if the following response is received
+from the authentication server:
+<example>
+HTTP/1.0 200 OK
+Auth-Status: Temporary server problem, try again later
+Auth-Error-Code: 451 4.3.0
+Auth-Wait: 3
+</example>
+then the SMTP client will be given an error
+<example>
+451 4.3.0 Temporary server problem, try again later
+</example>
+</para>
+
+</section>
+
+</module>

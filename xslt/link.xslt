@@ -101,6 +101,15 @@
             <xsl:value-of select="@id"/>
          </a>
 
+         <xsl:if test="count(../link[@id = current()/@id]) &gt; 1">
+
+            <xsl:text> (</xsl:text>
+
+            <xsl:value-of select="substring-before(substring-after(@doc, '/'), '.xml')"/>
+
+            <xsl:text>)</xsl:text>
+         </xsl:if>
+
          <br/>
       </xsl:for-each>
    </xsl:template>

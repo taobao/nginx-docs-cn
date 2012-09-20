@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Maxim Dounin
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Модуль ngx_http_gunzip_module"
+        link="/ru/docs/http/ngx_http_gunzip_module.html"
+        lang="ru"
+        rev="1">
+
+<section id="summary">
+
+<para>
+Модуль <literal>ngx_http_gunzip_module</literal> это фильтр, распаковывающий
+ответы, возвращаемые с “<literal>Content-Encoding: gzip</literal>”,
+для тех клиентов, которые не поддерживают данный метод.
+Это может быть полезно, если предпочтительно хранить данные сжатыми
+(чтобы сэкономить пространство или дисковые/сетевые операции
+ввода/вывода), но при этом нежелательно причинять неудобства клиентам,
+которые не поддерживают сжатие методом gzip.
+</para>
+
+<para>
+По умолчанию этот модуль не собирается, его сборку необходимо
+разрешить с помощью конфигурационного параметра
+<literal>--with-http_gunzip_module</literal>.
+</para>
+
+</section>
+
+
+<section id="example" name="Пример конфигурации">
+
+<para>
+<example>
+location /storage/ {
+    gunzip on;
+    ...
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Директивы">
+
+<directive name="gunzip">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Разрешает или запрещает распаковку ответов, сжатых методом
+<literal>“gzip”</literal>.
+</para>
+
+</directive>
+
+
+<directive name="gunzip_buffers">
+<syntax><value>число</value> <value>размер</value></syntax>
+<default>32 4k|16 8k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Задаёт число и размер буферов, доступных для распаковки.
+</para>
+
+</directive>
+
+</section>
+
+</module>

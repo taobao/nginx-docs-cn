@@ -2,38 +2,36 @@
 
 <article name="תיעוד nginx"
          link="/he/docs/"
-         lang="he">
+         lang="he"
+         toc="no">
 
 
-<section>
+<section id="introduction" name="הקדמה ל nginx">
 
 <para>
 <list type="bullet">
 
 <listitem>
-<link doc="introduction.xml"/>
+<link doc="http/server_names.xml"/>
 </listitem>
 
 <listitem>
-<link doc="howto.xml"/>
+<link doc="windows.xml"/>
 </listitem>
-
-<!--
-
-<listitem>
-<link doc="faq.xml"/>
-</listitem>
-
--->
 
 </list>
 </para>
 
+</section>
+
+
+<section id="howto" name="איך עושים ב nginx">
+
 <para>
 <list type="bullet">
 
 <listitem>
-<link doc="windows.xml"/>
+<link doc="http/converting_rewrite_rules.xml"/>
 </listitem>
 
 </list>

@@ -76,9 +76,11 @@
 
             <xsl:otherwise>
 
-               <a href="{@href}">
-                  <xsl:value-of select="@year"/>
-               </a>
+               <xsl:if test="@href"> 
+                  <a href="{@href}">
+                     <xsl:value-of select="@year"/>
+                  </a>
+               </xsl:if>
 
                <br/>
             </xsl:otherwise>
@@ -101,7 +103,7 @@
       <br/>
    </xsl:template>
 
-   <xsl:template match="menu/item[not(@href)]">
+   <xsl:template match="menu/item[not(@href) and not(@year)]">
 
       <xsl:value-of select=" normalize-space(text())"/> 
       <br/>

@@ -14,7 +14,7 @@
 
 <para>
 To quickly process static sets of data such as server names,
-<link doc="http/ngx_http_map_module.xml" id="map"/> directive's values,
+<link doc="http/ngx_http_map_module.xml" id="map"/> directive’s values,
 MIME types, names of request header strings,
 nginx uses hash tables.
 During the start and each re-configuration nginx selects the
@@ -32,10 +32,10 @@ and <link doc="http/ngx_http_core_module.xml" id="server_names_hash_bucket_size"
 
 <para>
 The hash bucket size parameter is aligned to the size that is a
-multiple of the processor's cache line size.  This speeds up
+multiple of the processor’s cache line size.  This speeds up
 key search in a hash on modern processors by reducing the number
 of memory accesses.
-If hash bucket size is equal to one processor's cache line size
+If hash bucket size is equal to one processor’s cache line size
 then the number of memory accesses during the key search will be
 two in the worst case&mdash;first to compute the bucket address,
 and second during the key search inside the bucket.

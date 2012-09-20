@@ -1,8 +1,15 @@
-﻿<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  Copyright (C) Cfsego
+  -->
+
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
 <article name="关于“&lsquo;sys_errlist&rsquo; is deprecated; use &lsquo;strerror&rsquo; or &lsquo;strerror_r&rsquo; instead”的提示"
          link="/cn/docs/sys_errlist.html"
-         lang="cn">
+         lang="cn"
+         rev="1">
 
 
 <section>

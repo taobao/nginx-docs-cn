@@ -51,7 +51,7 @@ X:template = "menu/item[@year]" {
         X:if "$YEAR=@year" {
             !{@year} <br/>
         } else {
-            <a href="{@href}"> !{@year} </a>
+            X:if "@href" { <a href="{@href}"> !{@year} </a> }
             <br/>
         }
     }
@@ -65,7 +65,7 @@ X:template = "menu/item[starts-with(@href, 'http://') or starts-with(@href, 'htt
 }
 
 
-X:template = "menu/item[not(@href)]" {
+X:template = "menu/item[not(@href) and not(@year)]" {
     !{ normalize-space(text()) } <br/>
 }
 

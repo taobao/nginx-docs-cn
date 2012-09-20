@@ -3,34 +3,33 @@
 <!--
   Copyright (C) Igor Sysoev
   Copyright (C) Nginx, Inc.
+  Copyright (C) moonbingbing@gmail.com
   -->
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_auth_basic_module"
-        link="/en/docs/http/ngx_http_auth_basic_module.html"
-        lang="en"
-        rev="1">
+<module name="ngx_http_auth_basic_module模块"
+        link="/cn/docs/http/ngx_http_auth_basic_module.html"
+        lang="cn"
+        rev="1"
+        translator="WenMing">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_auth_basic_module</literal> module allows
-to limit access to resources by validating the user name and password
-using the “HTTP Basic Authentication” protocol.
+模块<literal>ngx_http_auth_basic_module</literal> 允许使用“HTTP基本认证”协议验证用户名和密码来限制对资源的访问。
 </para>
 
 <para>
-Access can also be limited by
-<link doc="ngx_http_auth_basic_module.xml">address</link>.
-Simultaneous limitation of access by address and by password is controlled
-by the <link doc="ngx_http_core_module.xml" id="satisfy"/> directive.
+也可以通过
+<link doc="ngx_http_auth_basic_module.xml">地址</link>来限制访问。
+使用<link doc="ngx_http_core_module.xml" id="satisfy"/> 指令就能同时通过地址和密码来限制访问。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置范例">
 
 <para>
 <example>
@@ -44,7 +43,7 @@ location / {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="auth_basic">
 <syntax><value>string</value> | <literal>off</literal></syntax>
@@ -55,12 +54,10 @@ location / {
 <context>limit_except</context>
 
 <para>
-Enables validation of user name and password using the
-“HTTP Basic Authentication” protocol.
-The specified parameter is used as a <value>realm</value>.
-The parameter <literal>off</literal> allows to cancel the effect of the
-<literal>auth_basic</literal> directive inherited from the previous
-configuration level.
+开启使用“HTTP基本认证”协议的用户名密码验证。
+指定的参数被用作 <value>域</value>。
+参数<literal>off</literal>可以取消继承自上一个配置等级
+<literal>auth_basic</literal> 指令的影响。
 </para>
 
 </directive>
@@ -75,8 +72,7 @@ configuration level.
 <context>limit_except</context>
 
 <para>
-Specifies a file that keeps user names and passwords,
-in the following format:
+指定保存用户名和密码的文件，格式如下：
 <example>
 # comment
 name1:password1
@@ -86,9 +82,8 @@ name3:password3
 </para>
 
 <para>
-Passwords should be encrypted with the <c-func>crypt</c-func> function.
-The <command>htpasswd</command> command from the Apache web server
-distribution can be used to create such a file.
+密码应该使用<c-func>crypt</c-func>函数加密。
+可以用Apache发行包中的<command>htpasswd</command>命令来创建此类文件。
 </para>
 
 </directive>
