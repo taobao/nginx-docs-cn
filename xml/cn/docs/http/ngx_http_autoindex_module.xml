@@ -17,7 +17,7 @@
 
 <para>
 <literal>ngx_http_autoindex_module</literal> 模块可以列出目录中的文件。
-一般当<link doc="ngx_http_index_module.xml">ngx_http_index_module</link>模块找不到index文件的时候，会把请求转给 <literal>ngx_http_autoindex_module</literal>模块去处理。
+一般当<link doc="ngx_http_index_module.xml">ngx_http_index_module</link>模块找不到默认页的时候，会把请求转给 <literal>ngx_http_autoindex_module</literal>模块去处理。
 </para>
 
 </section>
@@ -46,7 +46,7 @@ location / {
 <context>location</context>
 
 <para>
-开启或者关闭目录列出文件功能。
+开启或者关闭列出目录中文件的功能。
 </para>
 
 </directive>
@@ -60,7 +60,7 @@ location / {
 <context>location</context>
 
 <para>
-设置目录中列出文件是显示精确大小，还是使用KB，MB，GB的近似值。
+设置目录中列出的文件是显示精确大小，还是对KB，MB，GB进行四舍五入。
 </para>
 
 </directive>
