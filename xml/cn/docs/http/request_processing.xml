@@ -70,7 +70,7 @@ server {
 </programlisting>
 
 在这里，我们设置主机名为空字符串以匹配未定义<header>Host</header>头的请求，而且返回了一个nginx特有的，非http标准的返回码444，它可以用来关闭连接。
-<note>从0.8.48版本开始，这已成为主机名的默认设置，所以可以省略<literal>server_name ""</literal>。而之前的版本使用机器的<i>hostname</i>作为主机名的默认值。
+<note>从0.8.48版本开始，这已成为主机名的默认设置，所以可以省略<literal>server_name ""</literal>。而之前的版本使用机器的<i>hostname</i>作为主机名的默认值。</note>
 </para>
 
 </section>
