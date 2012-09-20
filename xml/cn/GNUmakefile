@@ -4,15 +4,11 @@ DOCS =									\
 		faq							\
 		install							\
 		windows							\
+		syntax							\
 		events							\
 		control							\
 		hash							\
 		dirindex						\
-
-DOCS_XML =	$(foreach name, $(DOCS), xml/$(DOC_LANG)/docs/$(name).xml)
-DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
-
-INTRO =									\
 		http/request_processing					\
 		http/server_names					\
 		http/configuring_https_servers				\
