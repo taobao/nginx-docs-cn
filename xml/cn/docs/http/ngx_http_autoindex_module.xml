@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 
 <!--
   Copyright (C) Igor Sysoev
@@ -8,19 +8,16 @@
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Module ngx_http_autoindex_module"
-        link="/en/docs/http/ngx_http_autoindex_module.html"
-        lang="en"
+        link="/cn/docs/http/ngx_http_autoindex_module.html"
+        lang="cn"
+		translator="Weibin Yao"
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_autoindex_module</literal> module produces
-a directory listing.
-Usually a request is passed to the <literal>ngx_http_autoindex_module</literal>
-module when the
-<link doc="ngx_http_index_module.xml">ngx_http_index_module</link> module
-could not find an index file.
+<literal>ngx_http_autoindex_module</literal> 模块可以列出目录中的文件。
+一般当<link doc="ngx_http_index_module.xml">ngx_http_index_module</link>模块找不到默认主页的时候，会把请求转给 <literal>ngx_http_autoindex_module</literal>模块去处理。
 </para>
 
 </section>
@@ -49,7 +46,7 @@ location / {
 <context>location</context>
 
 <para>
-Enables or disables a directory listing output.
+开启或者关闭列出目录中文件的功能。
 </para>
 
 </directive>
@@ -63,8 +60,7 @@ Enables or disables a directory listing output.
 <context>location</context>
 
 <para>
-Specifies whether file sizes in the directory listing should be
-output exactly, or rounded to kilobytes, megabytes, and gigabytes.
+设置目录中列出的文件是显示精确大小，还是对KB，MB，GB进行四舍五入。
 </para>
 
 </directive>
@@ -78,8 +74,7 @@ output exactly, or rounded to kilobytes, megabytes, and gigabytes.
 <context>location</context>
 
 <para>
-Specifies whether times in the directory listing should be
-output in a local time zone or UTC.
+设置目录中列出文件的时间是本地时间还是UTC时间。
 </para>
 
 </directive>
