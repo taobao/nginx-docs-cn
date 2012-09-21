@@ -1,8 +1,14 @@
-﻿<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
 
-<article name="nginx文档"
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="Nginx文档"
          link="/cn/docs/"
-         lang="cn"
+         lang="en"
+         rev="3"
          toc="no">
 
 
@@ -10,6 +16,10 @@
 
 <para>
 <list type="bullet">
+
+<listitem>
+<link doc="install.xml"/>
+</listitem>
 
 <listitem>
 <link doc="http/request_processing.xml"/>
@@ -20,11 +30,27 @@
 </listitem>
 
 <listitem>
+<link doc="events.xml"/>
+</listitem>
+
+<listitem>
 <link doc="windows.xml"/>
 </listitem>
 
 <listitem>
+<link doc="control.xml"/>
+</listitem>
+
+<listitem>
 <link doc="http/configuring_https_servers.xml"/>
+</listitem>
+
+<listitem>
+<link doc="syntax.xml"/>
+</listitem>
+
+<listitem>
+<link doc="hash.xml"/>
 </listitem>
 
 <listitem>
@@ -37,33 +63,21 @@
 </section>
 
 
-<section id="howto" name="howto">
+<section id="howto" name="How-To">
 
 <para>
 <list type="bullet">
-
-<listitem>
-<link doc="install.xml"/>
-</listitem>
-
-<listitem>
-<link doc="windows.xml"/>
-</listitem>
 
 <listitem>
 <link doc="http/converting_rewrite_rules.xml"/>
 </listitem>
 
 <listitem>
-<link doc="events.xml"/>
+<link doc="howto_build_on_win32.xml"/>
 </listitem>
 
 <listitem>
-<link doc="control.xml"/>
-</listitem>
-
-<listitem>
-<link doc="hash.xml"/>
+<link doc="howto_setup_development_environment_on_ec2.xml"/>
 </listitem>
 
 </list>
@@ -71,7 +85,8 @@
 
 </section>
 
-<section name="Modules reference">
+
+<section name="模块参考目录">
 
 <para>
 <list type="bullet">
@@ -159,6 +174,11 @@ ngx_http_geo_module</link>
 <listitem>
 <link doc="http/ngx_http_geoip_module.xml">
 ngx_http_geoip_module</link>
+</listitem>
+
+<listitem>
+<link doc="http/ngx_http_gunzip_module.xml">
+ngx_http_gunzip_module</link>
 </listitem>
 
 <listitem>
@@ -284,6 +304,47 @@ ngx_http_userid_module</link>
 <listitem>
 <link doc="http/ngx_http_xslt_module.xml">
 ngx_http_xslt_module</link>
+</listitem>
+
+</list>
+</para>
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link doc="mail/ngx_mail_core_module.xml">
+ngx_mail_core_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_pop3_module.xml">
+ngx_mail_pop3_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_imap_module.xml">
+ngx_mail_imap_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_smtp_module.xml">
+ngx_mail_smtp_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_auth_http_module.xml">
+ngx_mail_auth_http_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_proxy_module.xml">
+ngx_mail_proxy_module</link>
+</listitem>
+
+<listitem>
+<link doc="mail/ngx_mail_ssl_module.xml">
+ngx_mail_ssl_module</link>
 </listitem>
 
 </list>
