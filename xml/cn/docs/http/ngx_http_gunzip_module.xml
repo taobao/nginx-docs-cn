@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Maxim Dounin
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_gunzip_module"
+        link="/en/docs/http/ngx_http_gunzip_module.html"
+        lang="en"
+        rev="1">
+
+<section id="summary">
+
+<para>
+The <literal>ngx_http_gunzip_module</literal> module is a filter that
+decompresses responses returned with the
+“<literal>Content-Encoding: gzip</literal>” for clients that don’t support it.
+It may be useful if it is preferred to store the data compressed
+(to save space or disk/network IO), but it is undesirable
+to penalize clients without the gzip support.
+</para>
+
+<para>
+This module is not built by default, it should be enabled with the
+<literal>--with-http_gunzip_module</literal>
+configuration parameter.
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location /storage/ {
+    gunzip on;
+    ...
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="gunzip">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Enables or disables decompression of gzipped responses.
+</para>
+
+</directive>
+
+
+<directive name="gunzip_buffers">
+<syntax><value>number</value> <value>size</value></syntax>
+<default>32 4k|16 8k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Specifies the number and size of buffers available for decompression.
+</para>
+
+</directive>
+
+</section>
+
+</module>

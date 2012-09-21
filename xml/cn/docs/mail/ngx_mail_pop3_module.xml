@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) 2006, 2007 Anton Yuzhaninov
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_mail_pop3_module"
+        link="/en/docs/mail/ngx_mail_pop3_module.html"
+        lang="en"
+        rev="1">
+
+<section id="directives" name="Directives">
+
+<directive name="pop3_auth">
+<syntax><value>method</value> ...</syntax>
+<default>plain</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Sets permitted methods of authentication for POP3 clients.
+Supported methods are:
+<list type="tag">
+
+<tag-name><literal>plain</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc1939">USER/PASS</link>,
+<link url="http://tools.ietf.org/html/rfc4616">AUTH PLAIN</link>,
+<link url="http://tools.ietf.org/html/draft-murchison-sasl-login-00">AUTH LOGIN</link>.
+It is not possible to disable this methods.
+</tag-desc>
+
+<tag-name><literal>apop</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc1939">APOP</link>.
+In order for this method to work, the password must be stored unencrypted.
+</tag-desc>
+
+<tag-name><literal>cram-md5</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc2195">AUTH CRAM-MD5</link>.
+In order for this method to work, the password must be stored unencrypted.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="pop3_capabilities">
+<syntax><value>extension</value> ...</syntax>
+<default>TOP USER UIDL</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Allows to specify the
+<link url="http://tools.ietf.org/html/rfc2449">POP3 protocol</link>
+extensions list to be passed to the client upon
+issuing the <literal>CAPA</literal> command.
+
+Authentication methods specified in the <link id="pop3_auth"/> and
+(<link url="http://tools.ietf.org/html/rfc2449">SASL</link> extension) and
+<link url="http://tools.ietf.org/html/rfc2595">STLS</link> directives,
+are automatically added to this list if the
+<link doc="ngx_mail_ssl_module.xml" id="starttls"/> directive is enabled.
+</para>
+
+<para>
+It makes sense to specify extensions
+supported by POP3 backends
+to which clients are proxied (if this extensions are related to commands
+used after the authentication, when nginx transparently proxies the client
+connection to the backend).
+</para>
+
+<para>
+The current list of standardized extensions is published at the
+<link url="http://www.iana.org/assignments/pop3-extension-mechanism">www.iana.org</link>.
+</para>
+
+</directive>
+
+</section>
+
+</module>

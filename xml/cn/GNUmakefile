@@ -4,8 +4,8 @@ DOCS =									\
 		faq							\
 		install							\
 		windows							\
-		syntax							\
 		events							\
+		syntax							\
 		control							\
 		hash							\
 		dirindex						\
@@ -35,19 +35,20 @@ FAQ_HTML =	$(foreach name, $(FAQ), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 
 REFS =									\
 		ngx_core_module						\
-		http/ngx_http_core_module				\
 		http/ngx_http_access_module				\
 		http/ngx_http_addition_module				\
 		http/ngx_http_auth_basic_module				\
 		http/ngx_http_autoindex_module				\
 		http/ngx_http_browser_module				\
 		http/ngx_http_charset_module				\
+		http/ngx_http_core_module				\
 		http/ngx_http_dav_module				\
 		http/ngx_http_empty_gif_module				\
 		http/ngx_http_fastcgi_module				\
 		http/ngx_http_flv_module				\
 		http/ngx_http_geo_module				\
 		http/ngx_http_geoip_module				\
+		http/ngx_http_gunzip_module				\
 		http/ngx_http_gzip_module				\
 		http/ngx_http_gzip_static_module			\
 		http/ngx_http_headers_module				\
@@ -73,6 +74,13 @@ REFS =									\
 		http/ngx_http_upstream_module				\
 		http/ngx_http_userid_module				\
 		http/ngx_http_xslt_module				\
+		mail/ngx_mail_auth_http_module				\
+		mail/ngx_mail_core_module				\
+		mail/ngx_mail_imap_module				\
+		mail/ngx_mail_pop3_module				\
+		mail/ngx_mail_proxy_module				\
+		mail/ngx_mail_smtp_module				\
+		mail/ngx_mail_ssl_module				\
 
 REFS_XML =	$(foreach name, $(REFS), xml/$(DOC_LANG)/docs/$(name).xml)
 REFS_HTML =	$(foreach name, $(REFS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
