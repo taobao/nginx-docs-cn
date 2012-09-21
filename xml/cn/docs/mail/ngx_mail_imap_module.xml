@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) 2006, 2007 Anton Yuzhaninov
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_mail_imap_module"
+        link="/en/docs/mail/ngx_mail_imap_module.html"
+        lang="en"
+        rev="1">
+
+<section id="directives" name="Directives">
+
+<directive name="imap_auth">
+<syntax><value>method</value> ...</syntax>
+<default>plain</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Sets permitted methods of authentication for IMAP clients.
+Supported methods are:
+<list type="tag">
+
+<tag-name><literal>login</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/draft-murchison-sasl-login-00">AUTH=LOGIN</link>
+</tag-desc>
+
+<tag-name><literal>plain</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc4616">AUTH=PLAIN</link>
+</tag-desc>
+
+<tag-name><literal>cram-md5</literal></tag-name>
+<tag-desc>
+<link url="http://tools.ietf.org/html/rfc2195">AUTH=CRAM-MD5</link>.
+In order for this method to work, the password must be stored unencrypted.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="imap_capabilities">
+<syntax><value>extension</value> ...</syntax>
+<default>IMAP4 IMAP4rev1 UIDPLUS</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Allows to specify the
+<link url="http://tools.ietf.org/html/rfc3501">IMAP protocol</link>
+extensions list to be passed to the client upon
+issuing the <literal>CAPABILITY</literal> command.
+Authentication methods specified in the <link id="imap_auth"/> and
+<link url="http://tools.ietf.org/html/rfc2595">STARTTLS</link> directives
+are automatically added to this list if the
+<link doc="ngx_mail_ssl_module.xml" id="starttls"/> directive is enabled.
+</para>
+
+<para>
+It makes sense to specify extensions
+supported by IMAP backends
+to which clients are proxied (if this extensions are related to commands
+used after the authentication, when nginx transparently proxies the client
+connection to the backend).
+</para>
+
+<para>
+The current list of standardized extensions is published at the
+<link url="http://www.iana.org/assignments/imap4-capabilities">www.iana.org</link>.
+</para>
+
+</directive>
+
+
+<directive name="imap_client_buffer">
+<syntax><value>size</value></syntax>
+<default>4k|8k</default>
+<context>mail</context>
+<context>server</context>
+
+<para>
+Sets the IMAP commands read buffer size.
+By default, the buffer size is equal to one memory page.
+This is either 4K or 8K, depending on a platform.
+</para>
+
+</directive>
+
+</section>
+
+</module>
