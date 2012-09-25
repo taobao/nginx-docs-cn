@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
+
 <!--
-  Copyright (c) litianqing
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
 -->
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">

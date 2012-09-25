@@ -10,7 +10,7 @@
 <module name="ngx_http_addition_module模块"
         link="/cn/docs/http/ngx_http_addition_module.html"
         lang="cn"
-		translator="Weibin Yao"
+        translator="Weibin Yao"
         rev="1">
 
 <section id="summary">
