@@ -209,7 +209,7 @@ if ($invalid_referer) {
 
 <tag-name><literal>redirect</literal></tag-name>
 <tag-desc>
-返回状态码为302的临时重定向；在replacement字符串未以“<literal>http://</literal>”或“<literal>https://</literal>”开头时使用；
+在replacement字符串未以“<literal>http://</literal>”或“<literal>https://</literal>”开头时，使用返回状态码为302的临时重定向；
 </tag-desc>
 
 <tag-name><literal>permanent</literal></tag-name>
@@ -358,7 +358,7 @@ rewrite ^/(download/.*)/media/(.*)\..*$ /$1/mp3/$2.mp3 break;
 <example>
 rewrite ^(<emphasis>/</emphasis>download/.*)/media/(.*)\..*$ $1/mp3/$2.mp3 break;
 </example>
-对应的内部指令集将会是这样：
+对应的内部指令将会是这样：
 <example>
 match of regular expression
 copy $1
