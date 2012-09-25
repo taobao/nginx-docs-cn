@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
+
 <!--
   Copyright (C) Igor Sysoev
   Copyright (C) Nginx, Inc.
-  Copyright (C) moonbingbing@gmail.com
 -->
+
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="ngx_http_access_module模块"
         link="/cn/docs/http/ngx_http_access_module.html"
         lang="cn"
         rev="1"
-        translator="WenMing"
-        >
+        translator="WenMing">
 
 <section id="summary">
 
