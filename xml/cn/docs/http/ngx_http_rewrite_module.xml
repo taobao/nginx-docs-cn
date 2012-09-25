@@ -7,41 +7,32 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_rewrite_module"
-        link="/en/docs/http/ngx_http_rewrite_module.html"
-        lang="en"
+<module name="ngx_http_rewrite_module模块"
+        link="/cn/docs/http/ngx_http_rewrite_module.html"
+        lang="cn"
+        translator="cfsego"
         rev="2">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_rewrite_module</literal> module allows to
-change URIs using regular expressions, return redirects, and
-conditionally select configurations.
+<literal>ngx_http_rewrite_module</literal>模块允许正则替换URI，返回页面重定向，和按条件选择配置。
 </para>
 
 <para>
-The <literal>ngx_http_rewrite_module</literal> module directives are
-processed in the following order:
+<literal>ngx_http_rewrite_module</literal>模块指令按以下顺序处理：
 <list type="bullet">
 
 <listitem>
-the directives of this module specified on the
-<link doc="ngx_http_core_module.xml" id="server"/> level are processed;
+处理在<link doc="ngx_http_core_module.xml" id="server"/>级别中定义的模块指令；
 </listitem>
 
 <listitem>
-a location for a request is searched;
+为请求查找location；
 </listitem>
 
 <listitem>
-the directives of this module specified in the selected
-<link doc="ngx_http_core_module.xml" id="location"/> are processed,
-and if they changed a URI, a new location is searched for the new URI.
-This cycle may be repeated up to
-<link doc="ngx_http_core_module.xml" id="internal">10 times</link>
-after which the error <http-status code="500" text="Internal Server Error"/>
-is returned.
+处理在选中的<link doc="ngx_http_core_module.xml" id="location"/>中定义的模块指令。如果指令改变了URI，按新的URI查找location。这个循环至多重复<link doc="ngx_http_core_module.xml" id="internal">10次</link>，之后nginx返回错误<http-status code="500" text="Internal Server Error"/>。
 </listitem>
 
 </list>
@@ -60,12 +51,11 @@ is returned.
 <context>if</context>
 
 <para>
-Stops processing the current set of
-<literal>ngx_http_rewrite_module</literal> directives.
+停止处理当前这一轮的<literal>ngx_http_rewrite_module</literal>指令集。
 </para>
 
 <para>
-Example:
+举例：
 <example>
 if ($slow) {
     limit_rate 10k;
@@ -84,66 +74,47 @@ if ($slow) {
 <context>location</context>
 
 <para>
-The specified <value>condition</value> is evaluated.
-If true, the directives of this module specified inside the braces are
-executed, and a request is assigned the configuration inside the
-<literal>if</literal> directive.
-Configurations inside the <literal>if</literal> directives are
-inherited from the previous configuration level.
+计算指定的<value>condition</value>的值。如果为真，执行定义在大括号中的rewrite模块指令，并将<literal>if</literal>指令中的配置指定给请求。<literal>if</literal>指令会从上一层配置中继承配置。
 </para>
 
 <para>
-A condition may be any of the following:
+条件可以是下列任意一种：
 <list type="bullet">
 
 <listitem>
-a variable name; false if the value of a variable is an empty string
-or any string starting with “<literal>0</literal>”;
+变量名；如果变量值为空或者是以“<literal>0</literal>”开始的字符串，则条件为假；
 </listitem>
 
 <listitem>
-comparing a variable with a string using the
-“<literal>=</literal>” and “<literal>!=</literal>” operators;
+使用“<literal>=</literal>”和“<literal>!=</literal>”运算符比较变量和字符串；
 </listitem>
 
 <listitem>
-matching a variable against a regular expression using the
-“<literal>~</literal>” (for case-sensitive matching) and
-“<literal>~*</literal>” (for case-insensitive matching) operators.
-Regular expressions can contain captures that are made available for
-later reuse in the <var>$1</var>..<var>$9</var> variables.
-Negative operators “<literal>!~</literal>” and “<literal>!~*</literal>”
-are also available.
-If a regular expression includes the characters “<literal>}</literal>”
-or “<literal>;</literal>”, the whole expressions should be enclosed
-in single or double quotes.
+使用“<literal>~</literal>”（大小写敏感）和“<literal>~*</literal>”（大小写不敏感）运算符匹配变量和正则表达式。正则表达式可以包含匹配组，匹配结果后续可以使用变量<var>$1</var>..<var>$9</var>引用。如果正则表达式中包含字符“<literal>}</literal>”或者“<literal>;</literal>”，整个表达式应该被包含在单引号或双引号的引用中。
 </listitem>
 
 <listitem>
-checking a file existence with the “<literal>-f</literal>” and
-“<literal>!-f</literal>” operators;
+使用“<literal>-f</literal>”和“<literal>!-f</literal>”运算符检查文件是否存在；
 </listitem>
 
 <listitem>
+使用“<literal>-d</literal>”和“<literal>!-d</literal>”运算符检查目录是否存在；
 checking a directory existence with the “<literal>-d</literal>” and
-“<literal>!-d</literal>” operators;
 </listitem>
 
 <listitem>
-checking a file, directory, or symbolic link existence with the
-“<literal>-e</literal>” and “<literal>!-e</literal>” operators;
+使用“<literal>-e</literal>”和“<literal>!-e</literal>”运算符检查文件、目录或符号链接是否存在；
 </listitem>
 
 <listitem>
-checking for an executable file with operators “<literal>-x</literal>”
-and “<literal>!-x</literal>” operators.
+使用“<literal>-x</literal>”和“<literal>!-x</literal>”运算符检查可执行文件；
 </listitem>
 
 </list>
 </para>
 
 <para>
-Examples:
+举例：
 <example>
 if ($http_user_agent ~ MSIE) {
     rewrite ^(.*)$ /msie/$1 break;
@@ -166,8 +137,7 @@ if ($invalid_referer) {
 }
 </example>
 <note>
-A value of the embedded variable <var>$invalid_referer</var> is set by the
-<link doc="ngx_http_referer_module.xml" id="valid_referers"/> directive.
+内嵌变量<var>$invalid_referer</var>的值是通过<link doc="ngx_http_referer_module.xml" id="valid_referers"/>指令设置的。
 </note>
 </para>
 
@@ -184,39 +154,25 @@ A value of the embedded variable <var>$invalid_referer</var> is set by the
 <context>if</context>
 
 <para>
-Stops processing and returns the specified <value>code</value> to a client.
-The non-standard code 444 closes a connection without sending
-a response header.
+停止处理并返回指定<value>code</value>给客户端。返回非标准的状态码444可以直接关闭连接而不返回响应头。
 </para>
 
 <para>
-Starting from version 0.8.42, it is possible to specify
-either the URL of redirect (for codes 301, 302, 303, and 307),
-or the <value>text</value> of a response body (for other codes).
-A response body text or URL of redirect can contain variables.
-As a special case, a URL of redirect can be specified as a URI
-local to this server, in which case the full URL of redirect
-is formed according to the request scheme (<var>$scheme</var>) and the
-<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/> and
-<link doc="ngx_http_core_module.xml" id="port_in_redirect"/> directives.
+从0.8.42版开始，可以在指令中指定重定向的URL（状态码为301、302、303和307），或者指定响应体<value>文本</value>（状态码为其它值）。响应体文本或重定向URL中可以包含变量。作为一种特殊情况，重定向URL可以简化为当前server的本地URI，那么完整的重定向URL将按照请求协议（<var>$scheme</var>）、<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/>指令和<link doc="ngx_http_core_module.xml" id="port_in_redirect"/>指令的配置进行补全。
 </para>
 
 <para>
-In addition, a <value>URL</value> for temporary redirect with the code 302
-can be specified as the sole parameter.
-Such a parameter should start with the string “<literal>http://</literal>”,
-“<literal>https://</literal>”, or “<literal>$scheme</literal>”.
-A <value>URL</value> can contain variables.
+另外，状态码为302的临时重定向使用的<value>URL</value>可以作为指令的唯一参数。该参数应该以“<literal>http://</literal>”、“<literal>https://</literal>”或者“<literal>https://</literal>”开始。<value>URL</value>中可以包含变量。
 </para>
 
 <para>
 <note>
-Only the following codes could be returned before version 0.7.51:
-204, 400, 402 — 406, 408, 410, 411, 413, 416, and 500 — 504.
+0.7.51版本以前只能返回下面状态码：
+204、400、402 — 406、408、410、411、413、416 和 500 — 504。
 </note>
 
 <note>
-The code 307 was not treated as a redirect until versions 1.1.16 and 1.0.13.
+直到1.1.16和1.0.13版，状态码307才被认为是一种重定向。
 </note>
 </para>
 
@@ -234,54 +190,39 @@ The code 307 was not treated as a redirect until versions 1.1.16 and 1.0.13.
 <context>if</context>
 
 <para>
-If the specified regular expression matches a URI, the URI is changed
-as specified in the <value>replacement</value> string.
-The <literal>rewrite</literal> directives are executed sequentially
-in order of their appearance in the configuration file.
-Flags make it possible to terminate further processing of directives.
-If a replacement string starts with “<literal>http://</literal>”
-or “<literal>https://</literal>”, the processing stops and a
-redirect is returned to a client.
+如果指定的正则表达式能匹配URI，此URI将被<value>replacement</value>参数定义的字符串改写。<literal>rewrite</literal>指令按其在配置文件中出现的顺序执行。flag可以终止后续指令的执行。如果replacement的字符串以“<literal>http://</literal>”或“<literal>https://</literal>”开头，nginx将结束执行过程，并返回给客户端一个重定向。
 </para>
 
 <para>
-An optional <value>flag</value> parameter can be one of:
+可选的<value>flag</value>参数可以是其中之一：
 <list type="tag">
 
 <tag-name><literal>last</literal></tag-name>
 <tag-desc>
-stops processing the current set of
-<literal>ngx_http_rewrite_module</literal> directives
-followed by a search for a new location matching the changed URI;
+停止执行当前这一轮的<literal>ngx_http_rewrite_module</literal>指令集，然后查找匹配改变后URI的新location；
 </tag-desc>
 
 <tag-name><literal>break</literal></tag-name>
 <tag-desc>
-stops processing the current set of
-<literal>ngx_http_rewrite_module</literal> directives;
+停止执行当前这一轮的<literal>ngx_http_rewrite_module</literal>指令集；
 </tag-desc>
 
 <tag-name><literal>redirect</literal></tag-name>
 <tag-desc>
-returns a temporary redirect with the code 302;
-used if a replacement string does not start with
-“<literal>http://</literal>” or “<literal>https://</literal>”;
+在replacement字符串未以“<literal>http://</literal>”或“<literal>https://</literal>”开头时，使用返回状态码为302的临时重定向；
 </tag-desc>
 
 <tag-name><literal>permanent</literal></tag-name>
 <tag-desc>
-returns a permanent redirect with the code 301.
+返回状态码为301的永久重定向。
 </tag-desc>
 
 </list>
-The full URL of redirects is formed according to the
-request scheme (<var>$scheme</var>) and the
-<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/> and
-<link doc="ngx_http_core_module.xml" id="port_in_redirect"/> directives.
+完整的重定向URL将按照请求协议（<var>$scheme</var>）、<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/>指令和<link doc="ngx_http_core_module.xml" id="port_in_redirect"/>指令的配置进行补全。
 </para>
 
 <para>
-Example:
+举例：
 <example>
 server {
     ...
@@ -294,10 +235,7 @@ server {
 </para>
 
 <para>
-But if these directives are put inside the “<literal>/download/</literal>”
-location, the <literal>last</literal> flag should be replaced by
-<literal>break</literal>, otherwise nginx will make 10 cycles and
-return the error 500:
+但是当上述指令写在“<literal>/download/</literal>”的location中时，应使用标志<literal>break</literal>代替<literal>last</literal>，否则nginx会重复10轮循环，然后返回错误500：
 <example>
 location /download/ {
     rewrite ^(/download/.*)/media/(.*)\..*$ $1/mp3/$2.mp3 break;
@@ -308,19 +246,14 @@ location /download/ {
 </para>
 
 <para>
-If a <value>replacement</value> string includes the new request arguments,
-the previous request arguments are appended after them.
-If this is undesired, putting a question mark at the end of a replacement
-string avoids having them appended, for example:
+如果<value>replacement</value>字符串包括新的请求参数，以往的请求参数会添加到新参数后面。如果不希望这样，在replacement字符串末尾加一个问号“？”，就可以避免，比如：
 <example>
 rewrite ^/users/(.*)$ /show?user=$1? last;
 </example>
 </para>
 
 <para>
-If a regular expression includes the characters “<literal>}</literal>”
-or “<literal>;</literal>”, the whole expressions should be enclosed
-in single or double quotes.
+如果正则表达式中包含字符“<literal>}</literal>”或者“<literal>;</literal>”，整个表达式应该被包含在单引号或双引号的引用中。
 </para>
 
 </directive>
@@ -335,9 +268,7 @@ in single or double quotes.
 <context>if</context>
 
 <para>
-Enables or disables logging of <literal>ngx_http_rewrite_module</literal>
-module directives processing to the error log at
-the <literal>notice</literal> level.
+开启或者关闭将<literal>ngx_http_rewrite_module</literal>模块指令的处理日志以<literal>notice</literal>级别记录到错误日志中。
 </para>
 
 </directive>
@@ -351,8 +282,7 @@ the <literal>notice</literal> level.
 <context>if</context>
 
 <para>
-Sets a <value>value</value> for the specified <value>variable</value>.
-A <value>value</value> can contain text, variables, and their combination.
+为指定变量<value>variable</value>设置变量值<value>value</value>。<value>value</value>可以包含文本、变量或者它们的组合。
 </para>
 
 </directive>
@@ -367,7 +297,7 @@ A <value>value</value> can contain text, variables, and their combination.
 <context>if</context>
 
 <para>
-Controls whether warnings about uninitialized variables are logged.
+控制是否记录变量未初始化的警告到日志。
 </para>
 
 </directive>
@@ -375,17 +305,14 @@ Controls whether warnings about uninitialized variables are logged.
 </section>
 
 
-<section id="internals" name="Internal Implementation">
+<section id="internals" name="内部实现">
 
 <para>
-The <literal>ngx_http_rewrite_module</literal> module directives
-are compiled during the configuration stage into internal instructions
-that are interpreted during request processing.
-An interpreter is a simple virtual stack machine.
+<literal>ngx_http_rewrite_module</literal>模块的指令在解析配置阶段被编译成nginx内部指令。这些内部指令在处理请求时被解释执行。而解释器是一个简单的堆栈机器。
 </para>
 
 <para>
-For example, the directives
+比如，下面指令
 <example>
 location /download/ {
     if ($forbidden) {
@@ -399,7 +326,7 @@ location /download/ {
     rewrite ^/(download/.*)/media/(.*)\..*$ /$1/mp3/$2.mp3 break;
 }
 </example>
-will be translated into these instructions:
+将被翻译成下面这些指令：
 <example>
 variable $forbidden
 check against zero
@@ -419,26 +346,19 @@ end of code
 </para>
 
 <para>
-Note that there are no instructions for the
-<link doc="ngx_http_core_module.xml" id="limit_rate"/>
-directive above as it is unrelated to the
-<literal>ngx_http_rewrite_module</literal> module.
-A separate configuration is created for the <link id="if"/> block.
-If the condition holds true, a request is assigned this configuration
-where <literal>limit_rate</literal> equals to 10k.
+请注意没有对应上面的<link doc="ngx_http_core_module.xml" id="limit_rate"/>指令的内部指令，因为这个指令与<literal>ngx_http_rewrite_module</literal>模块无关。nginx会为这个<link id="if"/>块单独创建一个配置，包含<literal>limit_rate</literal>等于10k。如果条件为真，nginx将把这个配置指派给请求。
 </para>
 
 <para>
-The directive
+指令
 <example>
 rewrite ^/(download/.*)/media/(.*)\..*$ /$1/mp3/$2.mp3 break;
 </example>
-can be made smaller by one instruction if the first slash in the regular expression
-is put inside the parentheses:
+可以通过将正则表达式中的第一个斜线“/”放入圆括号，来实现节约一个内部指令：
 <example>
 rewrite ^(<emphasis>/</emphasis>download/.*)/media/(.*)\..*$ $1/mp3/$2.mp3 break;
 </example>
-The corresponding instructions will then look like this:
+对应的内部指令将会是这样：
 <example>
 match of regular expression
 copy $1
