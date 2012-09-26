@@ -7,25 +7,25 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_upstream_module"
-        link="/en/docs/http/ngx_http_upstream_module.html"
-        lang="en"
+<module name="ngx_http_upstream_module模块"
+        link="/cn/docs/http/ngx_http_upstream_module.html"
+        lang="cn"
+        translator="Weibin Yao"        
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_upstream_module</literal> module
-allows to define groups of servers that can be referenced
-from the <link doc="ngx_http_proxy_module.xml" id="proxy_pass"/>,
-<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass"/>, and
-<link doc="ngx_http_memcached_module.xml" id="memcached_pass"/> directives.
+<literal>ngx_http_upstream_module</literal>模块
+允许定义一组服务器。它们可以在指令<link doc="ngx_http_proxy_module.xml" id="proxy_pass"/>、
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass"/>和
+<link doc="ngx_http_memcached_module.xml" id="memcached_pass"/>中被引用到。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置例子">
 
 <para>
 <example>
@@ -57,14 +57,13 @@ server {
 <context>http</context>
 
 <para>
-Defines a group of servers.
-Servers can listen on different ports.
-In addition, servers listening on TCP and UNIX-domain sockets
-can be mixed.
+定义一组服务器。
+这些服务器可以监听不同的端口。
+而且，监听在TCP和UNIX域套接字的服务器可以混用。
 </para>
 
 <para>
-Example:
+例子：
 <example>
 upstream backend {
     server backend1.example.com weight=5;
@@ -75,16 +74,12 @@ upstream backend {
 </para>
 
 <para>
-By default, requests are distributed between servers using a
-weighted round-robin balancing method.
-In the above example, each 7 requests will be distributed as follows:
-5 requests to <literal>backend1.example.com</literal>
-and one request to each of second and third servers.
-If an error occurs when communicating with the server, a request will
-be passed to the next server, and so on until all of the functioning
-servers will be tried.
-If a successful response could not be obtained from any of the servers,
-the client will be returned the result of contacting the last server.
+默认情况下，请求在服务器之间以有权重的轮转方式被分发。
+在上面的例子中，每七个请求会通过以下方式分发：
+5个请求分到<literal>backend1.example.com</literal>，
+第二和第三个服务器各分到一个请求。
+跟服务器通信的时候，如果出现错误，请求会被传给下一个服务器，直到所有可用的服务器都被尝试过。
+如果不能从任何一个服务器获得成功的响应，客户端将会得到最后通信那个服务器的响应结果。
 </para>
 
 </directive>
@@ -96,71 +91,55 @@ the client will be returned the result of contacting the last server.
 <context>upstream</context>
 
 <para>
-Defines an <value>address</value> and other <value>parameters</value>
-of the server.
-An address can be specified as a domain name or IP address,
-and an optional port, or as a UNIX-domain socket path
-specified after the “<literal>unix:</literal>” prefix.
-If port is not specified, the port 80 is used.
-A domain name that resolves to several IP addresses essentially defines
-multiple servers.
+定义服务器的地址<value>address</value>和其他参数<value>parameters</value>。
+该地址可以是域名或者IP地址，端口是可选的，或者是指定“<literal>unix:</literal>”前缀的UNIX域套接字的路径。如果端口没有指定，就认为是使用80端口。
+如果一个域名解析到多个IP，本质上是定义了多个server。
 </para>
 
 <para>
-The following parameters can be defined:
+你可以定义下面的参数：
 <list type="tag">
 
 <tag-name><literal>weight</literal>=<value>number</value></tag-name>
 <tag-desc>
-sets a weight of the server, by default 1.
+设定服务器的权重，默认是1。
 </tag-desc>
 
 <tag-name><literal>max_fails</literal>=<value>number</value></tag-name>
 <tag-desc>
-sets a number of unsuccessful attempts to communicate with the server
-during a time set by the <literal>fail_timeout</literal> parameter
-after which it will be considered down for a period of time also set
-by the <literal>fail_timeout</literal> parameter.
-By default, the number of unsuccessful attempts is set to 1.
-A value of zero disables accounting of attempts.
-What is considered to be an unsuccessful attempt is configured by the
-<link doc="ngx_http_proxy_module.xml" id="proxy_next_upstream"/>,
-<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_next_upstream"/>, and
-<link doc="ngx_http_memcached_module.xml" id="memcached_next_upstream"/>
-directives.
-The <literal>http_404</literal> state is not considered
-an unsuccessful attempt.
+在一段时间内，设定Nginx与服务器通信的失败尝试次数，达到这个次数，服务器就被认为是不可用。这个时间段可以通过<literal>fail_timeout</literal>参数进行设置。在<literal>fail_timeout</literal>里面，服务器就被认为是不可用的，过了这段时间，服务器又会被重新尝试。
+失败的尝试次数默认是1。设为0就会停止统计尝试次数，认为服务器是一直可用的。
+你可以通过指令<link doc="ngx_http_proxy_module.xml" id="proxy_next_upstream"/>、
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_next_upstream"/>和
+<link doc="ngx_http_memcached_module.xml" id="memcached_next_upstream"/>来配置什么是失败的尝试。
+默认配置时，<literal>http_404</literal>状态不被认为是失败的尝试。
 </tag-desc>
 
 <tag-name><literal>fail_timeout</literal>=<value>time</value></tag-name>
 <tag-desc>
-sets
+可以设定
 <list type="bullet">
 
 <listitem>
-a time during which the specified number of unsuccessful attempts to
-communicate with the server should happen for the server to be
-considered down;
+失败尝试次数的时间段，达到这个指定的尝试次数，服务器就被认为不可用。
 </listitem>
 
 <listitem>
-and a period of time the server will be considered down.
+服务器被认为不可用的时间周期。
 </listitem>
 
 </list>
-By default, timeout is set to 10 seconds.
+默认情况下，该超时时间是10秒。
 </tag-desc>
 
 <tag-name><literal>backup</literal></tag-name>
 <tag-desc>
-marks the server as a backup server.
-It will be passed requests when the primary servers are down.
+标记为备用服务器。当主服务器不可用以后，请求会被传给这些服务器。
 </tag-desc>
 
 <tag-name><literal>down</literal></tag-name>
 <tag-desc>
-marks the server as permanently down; used along with
-the <link id="ip_hash"/> directive.
+标记服务器永久不可用，可以跟<link id="ip_hash"/>指令一起使用。
 </tag-desc>
 
 </list>
@@ -188,27 +167,20 @@ upstream backend {
 <context>upstream</context>
 
 <para>
-Specifies that a group should use a load balancing method where requests
-are distributed between servers based on client IP addresses.
-The first three octets of the client IPv4 address, or the entire IPv6 address,
-are used as a hashing key.
-The method ensures that requests of the same client will always be
-passed to the same server except when this server is considered down
-in which case client requests will be passed to another server and
-most probably it will also be the same server.
+指定服务器组的负载均衡方法，请求基于客户端的IP地址在服务器间进行分发。
+IPv4地址的前三个字节或者IPv6的整个地址，会被用来作为一个散列key。
+这种方法可以确保从同一个客户端过来的请求，会被传给同一台服务器。除了当服务器被认为不可用的时候，这些客户端的请求会被传给其他服务器。很有可能，重试时也会被分到另外同一台服务器的。
 <note>
-IPv6 addresses are supported starting from versions 1.3.2 and 1.2.2.
+从1.3.2和1.2.2版本开始支持IPv6地址。
 </note>
 </para>
 
 <para>
-If one of the servers needs to be temporarily removed, it should
-be marked with the <literal>down</literal> parameter in
-order to preserve the current hashing of client IP addresses.
+如果其中一个服务器想暂时移除，可以加上<literal>down</literal>参数。这样可以保留当前对于客户端IP地址散列分布。
 </para>
 
 <para>
-Example:
+例子：
 <example>
 upstream backend {
     ip_hash;
@@ -223,8 +195,7 @@ upstream backend {
 
 <para>
 <note>
-Until versions 1.3.1 and 1.2.2 it was not possible to specify a weight for
-servers using the <literal>ip_hash</literal> load balancing method.
+直到1.3.1和1.2.2版本以后，<literal>ip_hash</literal>的负载均衡方法才支持设置服务器权重值。
 </note>
 </para>
 
@@ -238,29 +209,21 @@ servers using the <literal>ip_hash</literal> load balancing method.
 <appeared-in>1.1.4</appeared-in>
 
 <para>
-Activates cache of connections to upstream servers.
+激活对上游服务器的连接进行缓存。
 </para>
 
 <para>
-The <value>connections</value> parameter sets the maximum number of
-keepalive connections to upstream servers that are retained in
-the cache per one worker process.
-If there are more idle connections to retain to an upstream than
-are specified by this number, the least recently used ones will
-be closed.
+<value>connections</value>参数设置每个进程与后端服务器keepalive的连接数最大值，这些连接会被保留并缓存下来。
+如果连接数大于这个值时，最近最少使用的连接会被关闭。
 <note>
-It should be noted that <literal>keepalive</literal> directive
-does not limit the total number of connections that nginx worker
-process can open to upstream servers.
-The new connections are always created on demand.
-The <value>connections</value> parameter should be set low enough
-to allow upstream servers to process additional new incoming
-connections as well.
+需要注意的是，<literal>keepalive</literal>指令不会限制Nginx进程与上游服务器的连接总数。
+新的连接总会按需被创建。
+<value>connections</value>参数应该稍微设低一点，以便上游服务器也能处理额外新进来的连接。
 </note>
 </para>
 
 <para>
-Example configuration of memcached upstream with keepalive connections:
+配置memcached上游服务器连接keepalive的例子：
 <example>
 upstream memcached_backend {
     server 127.0.0.1:11211;
@@ -282,9 +245,7 @@ server {
 </para>
 
 <para>
-For HTTP, the <link doc="ngx_http_proxy_module.xml" id="proxy_http_version"/>
-directive should be set to “<literal>1.1</literal>”
-and the <header>Connection</header> header field should be cleared:
+对于HTTP代理，<link doc="ngx_http_proxy_module.xml" id="proxy_http_version"/>指令应该设置为“<literal>1.1</literal>”，同时<header>Connection</header>头的值被清空。
 <example>
 upstream http_backend {
     server 127.0.0.1:8080;
@@ -307,16 +268,14 @@ server {
 
 <para>
 <note>
-Alternatively, HTTP/1.0 persistent connections can be used by passing the
-<header>Connection: Keep-Alive</header> header field to an upstream server,
-though this is not recommended.
+另外一种选择是，HTTP/1.0协议的持久连接也可以通过发送<header>Connection: Keep-Alive</header>头来实现。不过不建议这样用。
 </note>
 </para>
 
 <para>
-For FastCGI servers, it is required to set
+对于FastCGI的服务器，需要设置
 <link doc="ngx_http_fastcgi_module.xml" id="fastcgi_keep_conn"/>
-for keepalive connections to work:
+指令来让连接keepalive工作： 
 <example>
 upstream fastcgi_backend {
     server 127.0.0.1:9000;
@@ -338,13 +297,11 @@ server {
 
 <para>
 <note>
-When using load balancer methods other than the default
-round-robin, it is necessary to activate them before
-the <literal>keepalive</literal> directive.
+当你使用的负载均衡方法不是默认的轮转法时，必须在<literal>keepalive</literal> 指令之前配置。
 </note>
 
 <note>
-SCGI and uwsgi protocols do not have a notion of keepalive connections.
+针对SCGI和uwsgi协议，还没有实现其keepalive连接的打算。
 </note>
 </para>
 
@@ -359,11 +316,8 @@ SCGI and uwsgi protocols do not have a notion of keepalive connections.
 <appeared-in>1.2.2</appeared-in>
 
 <para>
-Specifies that a group should use a load balancing method where a request
-is passed to the server with the least number of active connections,
-taking into account weights of servers.
-If there are several such servers, they are tried using a
-weighted round-robin balancing method.
+指定服务器组的负载均衡方法，根据其权重值，将请求发送到活跃连接数最少的那台服务器。
+如果这样的服务器有多台，那就采取有权重的轮转法进行尝试。
 </para>
 
 </directive>
@@ -374,43 +328,34 @@ weighted round-robin balancing method.
 <section id="variables" name="Embedded Variables">
 
 <para>
-The <literal>ngx_http_upstream_module</literal> module
-supports the following embedded variables:
+<literal>ngx_http_upstream_module</literal>模块支持以下嵌入变量：
+
 <list type="tag">
 
 <tag-name><var>$upstream_addr</var></tag-name>
 <tag-desc>
-keeps an IP address and port of the server,
-or a path to the UNIX-domain socket.
-If several servers were contacted during request processing,
-their addresses are separated by commas, e.g.
-“<literal>192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock</literal>”.
-If an internal redirect from one server group to another happened
-using
-<header>X-Accel-Redirect</header> or
-<link doc="ngx_http_core_module.xml" id="error_page"/>
-then these server groups are separated by colons, e.g.
-“<literal>192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock : 192.168.10.1:80, 192.168.10.2:80</literal>”.
+保存服务器的IP地址和端口或者是UNIX域套接字的路径。
+在请求处理过程中，如果有多台服务器被尝试了，它们的地址会被拼接起来，以逗号隔开，比如：
+“<literal>192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock</literal>”。
+如果在服务器之间通过<header>X-Accel-Redirect</header>头或者<header>X-Accel-Redirect</header>有内部跳转，那么这些服务器组之间会以冒号隔开，比如：“<literal>192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock : 192.168.10.1:80, 192.168.10.2:80</literal>”。
 </tag-desc>
 
 <tag-name><var>$upstream_response_time</var></tag-name>
 <tag-desc>
-keeps servers response times in seconds with a milliseconds resolution.
-Several responses are also separated by commas and colons.
+以毫秒的精度保留服务器的响应时间，单位是秒。
+出现多个响应时，也是以逗号和冒号隔开。
 </tag-desc>
 
 <tag-name><var>$upstream_status</var></tag-name>
 <tag-desc>
-keeps servers response codes.
-Several responses are also separated by commas and colons.
+保存服务器的响应代码。
+出现多个响应时，也是以逗号和冒号隔开。
 </tag-desc>
 
 <tag-name><var>$upstream_http_...</var></tag-name>
 <tag-desc>
-keep server response header fields.
-For example, the <header>Server</header> response header field
-is made available through the <var>$upstream_http_server</var> variable.
-Note that only the last server’s response header fields are saved.
+保存服务器的响应头的值。比如<header>Server</header>响应头的值可以通过<var>$upstream_http_server</var>变量来获取。
+需要注意的是只有最后一个响应的头会被保留下来。
 </tag-desc>
 
 </list>

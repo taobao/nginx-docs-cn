@@ -7,7 +7,7 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_autoindex_module"
+<module name="ngx_http_autoindex_module模块"
         link="/cn/docs/http/ngx_http_autoindex_module.html"
         lang="cn"
         translator="Weibin Yao"
