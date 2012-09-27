@@ -7,7 +7,7 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_autoindex_module"
+<module name="ngx_http_autoindex_module模块"
         link="/cn/docs/http/ngx_http_autoindex_module.html"
         lang="cn"
         translator="Weibin Yao"
@@ -23,7 +23,7 @@
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置示例">
 
 <para>
 <example>
@@ -36,7 +36,7 @@ location / {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="autoindex">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>

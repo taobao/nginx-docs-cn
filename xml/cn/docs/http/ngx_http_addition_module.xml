@@ -23,7 +23,7 @@
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置示例">
 
 <para>
 <example>
@@ -37,7 +37,7 @@ location / {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="add_before_body">
 <syntax><value>uri</value></syntax>
