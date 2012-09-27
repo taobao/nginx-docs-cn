@@ -7,33 +7,29 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_geoip_module"
-        link="/en/docs/http/ngx_http_geoip_module.html"
-        lang="en"
+<module name="ngx_http_geoip_module 模块"
+        link="/cn/docs/http/ngx_http_geoip_module.html"
+        lang="cn"
+        translator="cfsego"
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_geoip_module</literal> module (0.8.6+) creates variables
-whose values depend on the client IP address, using the precompiled
-<link url="http://www.maxmind.com">MaxMind</link> databases.
+<literal>ngx_http_geoip_module</literal> 模块（0.8.6+）创建变量，使用预编译的<link url="http://www.maxmind.com">MaxMind</link>数据库解析客户端IP地址，得到变量值。
 </para>
 
 <para>
-This module is not built by default, it should be enabled with the
-<literal>--with-http_geoip_module</literal>
-configuration parameter.
+nginx默认不编译这个模块，需要开启<literal>--with-http_geoip_module</literal>编译选项。
 <note>
-This module requires the
-<link url="http://www.maxmind.com/app/c">MaxMind GeoIP</link> library.
+模块依赖<link url="http://www.maxmind.com/app/c">MaxMind GeoIP</link>库。
 </note>
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置示例">
 
 <para>
 <example>
@@ -50,7 +46,7 @@ http {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="geoip_country">
 <syntax><value>database</value></syntax>
@@ -58,27 +54,26 @@ http {
 <context>http</context>
 
 <para>
-Specifies a database used to determine a country
-depending on the client IP address.
-The following variables are available when using this database:
+指定数据库，用于根据客户端IP地址得到其所在国家。
+使用这个数据库时，配置中可用下列变量：
 <list type="tag">
 
 <tag-name><var>$geoip_country_code</var></tag-name>
 <tag-desc>
-two-letter country code, for example,
-“<literal>RU</literal>”, “<literal>US</literal>”.
+双字符国家代码，比如
+“<literal>RU</literal>”，“<literal>US</literal>”。
 </tag-desc>
 
 <tag-name><var>$geoip_country_code3</var></tag-name>
 <tag-desc>
-three-letter country code, for example,
-“<literal>RUS</literal>”, “<literal>USA</literal>”.
+三字符国家代码，比如
+“<literal>RUS</literal>”，“<literal>USA</literal>”。
 </tag-desc>
 
 <tag-name><var>$geoip_country_name</var></tag-name>
 <tag-desc>
-country name, for example,
-“<literal>Russian Federation</literal>”, “<literal>United States</literal>”.
+国家名称，比如
+“<literal>Russian Federation</literal>”，“<literal>United States</literal>”。
 </tag-desc>
 
 </list>
@@ -93,45 +88,43 @@ country name, for example,
 <context>http</context>
 
 <para>
-Specifies a database used to determine a country, region, and city
-depending on the client IP address.
-The following variables are available when using this database:
+指定数据库，用于根据客户端IP地址得到其所在的国家、行政区和城市。
+使用这个数据库时，配置中可用下列变量：
 <list type="tag">
 
 <tag-name><var>$geoip_city_country_code</var></tag-name>
 <tag-desc>
-two-letter country code, for example,
-“<literal>RU</literal>”, “<literal>US</literal>”.
+双字符国家代码，比如
+“<literal>RU</literal>”，“<literal>US</literal>”。
 </tag-desc>
 
 <tag-name><var>$geoip_city_country_code3</var></tag-name>
 <tag-desc>
-three-letter country code, for example,
-“<literal>RUS</literal>”, “<literal>USA</literal>”.
+三字符国家代码，比如
+“<literal>RUS</literal>”，“<literal>USA</literal>”。
 </tag-desc>
 
 <tag-name><var>$geoip_city_country_name</var></tag-name>
 <tag-desc>
-country name, for example,
-“<literal>Russian Federation</literal>”, “<literal>United States</literal>”.
+国家名称，比如
+“<literal>Russian Federation</literal>”，“<literal>United States</literal>”。
 </tag-desc>
 
 <tag-name><var>$geoip_region</var></tag-name>
 <tag-desc>
-country region name (region, territory, state, province, federal land
-and the like), for example,
-“<literal>Moscow City</literal>”, “<literal>DC</literal>”.
+国家行政区名（行政区、直辖区、州、省、联邦管辖区，诸如此类），比如
+“<literal>Moscow City</literal>”，“<literal>DC</literal>”。
 </tag-desc>
 
 <tag-name><var>$geoip_city</var></tag-name>
 <tag-desc>
-city name, for example,
-“<literal>Moscow</literal>”, “<literal>Washington</literal>”.
+城市名称，比如
+“<literal>Moscow</literal>”，“<literal>Washington</literal>”。
 </tag-desc>
 
 <tag-name><var>$geoip_postal_code</var></tag-name>
 <tag-desc>
-postal code.
+邮编。
 </tag-desc>
 
 </list>
@@ -148,10 +141,8 @@ postal code.
 <appeared-in>1.2.1</appeared-in>
 
 <para>
-Defines trusted addresses.
-When a request comes from a trusted address,
-an address from the <header>X-Forwarded-For</header> request
-header field will be used instead.
+定义可信地址。
+如果请求来自可信地址，nginx将使用其<header>X-Forwarded-For</header>头来获得地址。
 </para>
 
 </directive>
@@ -165,12 +156,8 @@ header field will be used instead.
 <appeared-in>1.2.1</appeared-in>
 
 <para>
-If recursive search is disabled then instead of an original client
-address that matches one of the trusted addresses, the last
-address sent in <header>X-Forwarded-For</header> will be used.
-If recursive search is enabled then instead an original client
-address that matches one of the trusted addresses, the last
-non-trusted address sent in <header>X-Forwarded-For</header> will be used.
+如果关闭递归查找，在客户端地址与某个可信地址匹配时，nginx将使用<header>X-Forwarded-For</header>中的最后一个地址来代替原始客户端地址。
+如果开启递归查找，在客户端地址与某个可信地址匹配时，nginx将使用<header>X-Forwarded-For</header>中最后一个与所有可信地址都不匹配的地址来代替原始客户端地址。
 </para>
 
 </directive>
