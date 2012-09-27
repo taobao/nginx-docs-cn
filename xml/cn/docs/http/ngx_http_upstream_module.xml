@@ -49,7 +49,7 @@ server {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="upstream">
 <syntax block="yes"><value>name</value></syntax>
@@ -325,7 +325,7 @@ server {
 </section>
 
 
-<section id="variables" name="Embedded Variables">
+<section id="variables" name="嵌入的变量">
 
 <para>
 <literal>ngx_http_upstream_module</literal>模块支持以下嵌入变量：
