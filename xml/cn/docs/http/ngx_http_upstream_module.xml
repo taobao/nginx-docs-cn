@@ -107,7 +107,7 @@ upstream backend {
 
 <tag-name><literal>max_fails</literal>=<value>number</value></tag-name>
 <tag-desc>
-在一段时间内，设定Nginx与服务器通信的失败尝试次数，达到这个次数，服务器就被认为是不可用。这个时间段可以通过<literal>fail_timeout</literal>参数进行设置。在<literal>fail_timeout</literal>里面，服务器就被认为是不可用的，过了这段时间，服务器又会被重新尝试。
+设定Nginx与服务器通信的尝试失败的次数。在<literal>fail_timeout</literal>参数定义的时间段内，如果失败的次数达到此值，Nginx就认为服务器不可用。在下一个<literal>fail_timeout</literal>时间段，服务器不会再被尝试。
 失败的尝试次数默认是1。设为0就会停止统计尝试次数，认为服务器是一直可用的。
 你可以通过指令<link doc="ngx_http_proxy_module.xml" id="proxy_next_upstream"/>、
 <link doc="ngx_http_fastcgi_module.xml" id="fastcgi_next_upstream"/>和
@@ -117,7 +117,7 @@ upstream backend {
 
 <tag-name><literal>fail_timeout</literal>=<value>time</value></tag-name>
 <tag-desc>
-可以设定
+设定
 <list type="bullet">
 
 <listitem>
