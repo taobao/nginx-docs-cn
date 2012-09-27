@@ -10,7 +10,7 @@
 <module name="Module ngx_http_addition_module"
         link="/en/docs/http/ngx_http_addition_module.html"
         lang="en"
-        rev="2">
+        rev="3">
 
 <section id="summary">
 
@@ -43,7 +43,7 @@ location / {
 
 <directive name="add_before_body">
 <syntax><value>uri</value></syntax>
-<default>""</default>
+<default/>
 <context>http</context>
 <context>server</context>
 <context>location</context>
@@ -60,7 +60,7 @@ the previous configuration level.
 
 <directive name="add_after_body">
 <syntax><value>uri</value></syntax>
-<default>""</default>
+<default/>
 <context>http</context>
 <context>server</context>
 <context>location</context>
