@@ -41,7 +41,7 @@
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="break">
 <syntax/>
