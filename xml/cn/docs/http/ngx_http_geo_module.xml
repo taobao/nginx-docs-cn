@@ -46,7 +46,7 @@ geo $geo {
 <context>http</context>
 
 <para>
-address用来描述计算指定的variable所依赖的客户端IP地址。默认情况下，nginx从<var>$remote_addr</var>变量取得客户端IP地址，但也可以从其他变量获得（0.7.27版），比如：
+定义从指定的变量获取客户端的IP地址。默认情况下，nginx从<var>$remote_addr</var>变量取得客户端IP地址，但也可以从其他变量获得（0.7.27版），比如：
 <example>
 geo $arg_remote_addr $geo {
     ...;
