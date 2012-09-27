@@ -74,12 +74,12 @@ upstream backend {
 </para>
 
 <para>
-默认情况下，请求在服务器之间以有权重的轮转方式被分发。
-在上面的例子中，每七个请求会通过以下方式分发：
+默认情况下，nginx按加权轮转的方式将请求分发到各服务器。
+在上面的例子中，每7个请求会通过以下方式分发：
 5个请求分到<literal>backend1.example.com</literal>，
-第二和第三个服务器各分到一个请求。
-跟服务器通信的时候，如果出现错误，请求会被传给下一个服务器，直到所有可用的服务器都被尝试过。
-如果不能从任何一个服务器获得成功的响应，客户端将会得到最后通信那个服务器的响应结果。
+一个请求分到第二个服务器，一个请求分到第三个服务器。
+与服务器通信的时候，如果出现错误，请求会被传给下一个服务器，直到所有可用的服务器都被尝试过。
+如果所有服务器都返回失败，客户端将会得到最后通信的那个服务器的（失败）响应结果。
 </para>
 
 </directive>
@@ -92,7 +92,7 @@ upstream backend {
 
 <para>
 定义服务器的地址<value>address</value>和其他参数<value>parameters</value>。
-该地址可以是域名或者IP地址，端口是可选的，或者是指定“<literal>unix:</literal>”前缀的UNIX域套接字的路径。如果端口没有指定，就认为是使用80端口。
+地址可以是域名或者IP地址，端口是可选的，或者是指定“<literal>unix:</literal>”前缀的UNIX域套接字的路径。如果没有指定端口，就使用80端口。
 如果一个域名解析到多个IP，本质上是定义了多个server。
 </para>
 
@@ -121,11 +121,11 @@ upstream backend {
 <list type="bullet">
 
 <listitem>
-失败尝试次数的时间段，达到这个指定的尝试次数，服务器就被认为不可用。
+统计失败尝试次数的时间段。在这段时间中，服务器失败次数达到指定的尝试次数，服务器就被认为不可用。
 </listitem>
 
 <listitem>
-服务器被认为不可用的时间周期。
+服务器被认为不可用的时间段。
 </listitem>
 
 </list>
@@ -169,14 +169,14 @@ upstream backend {
 <para>
 指定服务器组的负载均衡方法，请求基于客户端的IP地址在服务器间进行分发。
 IPv4地址的前三个字节或者IPv6的整个地址，会被用来作为一个散列key。
-这种方法可以确保从同一个客户端过来的请求，会被传给同一台服务器。除了当服务器被认为不可用的时候，这些客户端的请求会被传给其他服务器。很有可能，重试时也会被分到另外同一台服务器的。
+这种方法可以确保从同一个客户端过来的请求，会被传给同一台服务器。除了当服务器被认为不可用的时候，这些客户端的请求会被传给其他服务器，而且很有可能也是同一台服务器。
 <note>
 从1.3.2和1.2.2版本开始支持IPv6地址。
 </note>
 </para>
 
 <para>
-如果其中一个服务器想暂时移除，可以加上<literal>down</literal>参数。这样可以保留当前对于客户端IP地址散列分布。
+如果其中一个服务器想暂时移除，应该加上<literal>down</literal>参数。这样可以保留当前客户端IP地址散列分布。
 </para>
 
 <para>
@@ -195,7 +195,7 @@ upstream backend {
 
 <para>
 <note>
-直到1.3.1和1.2.2版本以后，<literal>ip_hash</literal>的负载均衡方法才支持设置服务器权重值。
+从1.3.1和1.2.2版本开始，<literal>ip_hash</literal>的负载均衡方法才支持设置服务器权重值。
 </note>
 </para>
 
@@ -213,8 +213,8 @@ upstream backend {
 </para>
 
 <para>
-<value>connections</value>参数设置每个进程与后端服务器keepalive的连接数最大值，这些连接会被保留并缓存下来。
-如果连接数大于这个值时，最近最少使用的连接会被关闭。
+<value>connections</value>参数设置每个worker进程与后端服务器保持连接的最大数量。这些保持的连接会被放入缓存。
+如果连接数大于这个值时，最久未使用的连接会被关闭。
 <note>
 需要注意的是，<literal>keepalive</literal>指令不会限制Nginx进程与上游服务器的连接总数。
 新的连接总会按需被创建。
@@ -245,7 +245,7 @@ server {
 </para>
 
 <para>
-对于HTTP代理，<link doc="ngx_http_proxy_module.xml" id="proxy_http_version"/>指令应该设置为“<literal>1.1</literal>”，同时<header>Connection</header>头的值被清空。
+对于HTTP代理，<link doc="ngx_http_proxy_module.xml" id="proxy_http_version"/>指令应该设置为“<literal>1.1</literal>”，同时<header>Connection</header>头的值也应被清空。
 <example>
 upstream http_backend {
     server 127.0.0.1:8080;
@@ -297,7 +297,7 @@ server {
 
 <para>
 <note>
-当你使用的负载均衡方法不是默认的轮转法时，必须在<literal>keepalive</literal> 指令之前配置。
+当使用的负载均衡方法不是默认的轮转法时，必须在<literal>keepalive</literal> 指令之前配置。
 </note>
 
 <note>
@@ -337,12 +337,12 @@ server {
 保存服务器的IP地址和端口或者是UNIX域套接字的路径。
 在请求处理过程中，如果有多台服务器被尝试了，它们的地址会被拼接起来，以逗号隔开，比如：
 “<literal>192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock</literal>”。
-如果在服务器之间通过<header>X-Accel-Redirect</header>头或者<header>X-Accel-Redirect</header>有内部跳转，那么这些服务器组之间会以冒号隔开，比如：“<literal>192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock : 192.168.10.1:80, 192.168.10.2:80</literal>”。
+如果在服务器之间通过<header>X-Accel-Redirect</header>头或者<link doc="ngx_http_core_module.xml" id="error_page"/>有内部跳转，那么这些服务器组之间会以冒号隔开，比如：“<literal>192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock : 192.168.10.1:80, 192.168.10.2:80</literal>”。
 </tag-desc>
 
 <tag-name><var>$upstream_response_time</var></tag-name>
 <tag-desc>
-以毫秒的精度保留服务器的响应时间，单位是秒。
+以毫秒的精度保留服务器的响应时间，（输出）单位是秒。
 出现多个响应时，也是以逗号和冒号隔开。
 </tag-desc>
 
