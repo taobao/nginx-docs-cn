@@ -19,7 +19,8 @@ X:template body (lang) {
     <table width="100%">
         <tr>
         <td width="70%">
-            <div class="banner">
+            <div id="banner">
+                X:if "@lang = 'he'" { X:attribute "class" { X:text{ltr} } }
                 <center>
                 <table>
                     <tr>
@@ -39,6 +40,7 @@ X:template body (lang) {
             </div>
         </td>
         <td align="right">
+            X:if "@lang = 'he'" { X:attribute "align" { X:text{left} } }
             <a href="http://nginx.org">
                 <img src="http://nginx.org/nginx.gif" alt="nginx" border="0"/>
             </a>

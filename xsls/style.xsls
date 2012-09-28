@@ -22,7 +22,7 @@ X:template style (lang) {
                             margin:         0; }
         div.directive p   { margin:         5pt 0 0 0;
                             font-size:      80%; }
-        div.banner        { background:     #EEEEEE;
+        div#banner        { background:     #EEEEEE;
                             padding:        10pt 10pt 10pt 0; }
         span.initial      { font-size:      200%;
                             float:          left;
