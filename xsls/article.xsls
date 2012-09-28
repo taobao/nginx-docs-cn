@@ -13,9 +13,11 @@ X:strip-space elements = "article section";
   -- a current directory of a XSLT script is where the script is stored,
   -- but not where XSLT processor has been started to run the script
   -->
-X:param XML = "'../xml'"; 
+X:param XML = "'../xml'";
 X:param YEAR;
 X:param ORIGIN;
+X:param NOLANGORIGIN;
+X:param TRANS;
 
 X:var LINK = "/article/@link | /module/@link";
 X:var LANG = "/article/@lang | /module/@lang";
