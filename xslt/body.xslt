@@ -35,6 +35,76 @@
             <tr>
 
                <td width="70%">
+
+                  <div id="banner">
+
+                     <xsl:if test="@lang = 'he'">
+                        <xsl:attribute name="class">
+                           <xsl:text>ltr</xsl:text>
+                        </xsl:attribute>
+                     </xsl:if>
+
+                     <center>
+
+                        <table>
+
+                           <tr>
+
+                              <td align="center">
+
+                                 <a href="http://nginx.com/support.html">
+
+                                    <strong>nginx professional services</strong>
+
+                                 </a>
+
+                              </td>
+
+                           </tr>
+
+                           <tr>
+
+                              <td align="center">
+
+                                 <i>Prioritize. Save time. Stay focused.</i>
+
+                              </td>
+
+                           </tr>
+
+                        </table>
+
+                     </center>
+
+                  </div>
+
+               </td>
+
+               <td align="right">
+
+                  <xsl:if test="@lang = 'he'">
+                     <xsl:attribute name="align">
+                        <xsl:text>left</xsl:text>
+                     </xsl:attribute>
+                  </xsl:if>
+
+                  <a href="http://nginx.org">
+
+                     <img src="http://nginx.org/nginx.gif" alt="nginx" border="0"/>
+
+                  </a>
+
+               </td>
+
+            </tr>
+
+         </table>
+
+         <table width="100%">
+
+            <tr>
+
+               <td width="70%">
                   <center>
                      <h3>
 
@@ -49,13 +119,6 @@
                </td>
 
                <td rowspan="2" align="{$MENU_ALIGN}" valign="top">
-
-                  <a href="http://nginx.org">
-
-                     <img src="/nginx.gif" alt="nginx" border="0"/>
-
-                  </a>
-                  <br/>
 
                   <br/>
 

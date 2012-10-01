@@ -11,6 +11,10 @@
 
    <xsl:param name="ORIGIN"/>
 
+   <xsl:param name="NOLANGORIGIN"/>
+
+   <xsl:param name="TRANS"/>
+
    <xsl:variable select="/article/@link | /module/@link" name="LINK"/>
 
    <xsl:variable select="/article/@lang | /module/@lang" name="LANG"/>
