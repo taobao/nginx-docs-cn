@@ -17,6 +17,7 @@ DOCS =									\
 		howto_build_on_win32					\
 		freebsd_tuning						\
 		howto_setup_development_environment_on_ec2		\
+		nginx_dtrace_pid_provider				\
 
 DOCS_XML =	$(foreach name, $(DOCS), xml/$(DOC_LANG)/docs/$(name).xml)
 DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(DOC_LANG)/docs/$(name).html)

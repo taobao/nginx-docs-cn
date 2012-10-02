@@ -80,6 +80,10 @@
 <link doc="howto_setup_development_environment_on_ec2.xml"/>
 </listitem>
 
+<listitem>
+<link doc="nginx_dtrace_pid_provider.xml"/>
+</listitem>
+
 </list>
 </para>
 
