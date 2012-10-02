@@ -13,7 +13,6 @@
 <section>
 
 <para>
-编译过程
 The build is configured using the <command>configure</command> command.
 It defines various aspects of the system, including the methods nginx
 is allowed to use for connection processing.
