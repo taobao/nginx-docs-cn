@@ -13,6 +13,9 @@
 <section>
 
 <para>
+配置nginx编译选项是通过<command>configure</command>命令来完成的。
+该命令可以定义包括nginx使用何种方法来做连接处理等系统功能的方方面面。
+最终结果是生成一个<path>Makefile</path>文件。 <command>configure</command>命令的参数说明如下：
 The build is configured using the <command>configure</command> command.
 It defines various aspects of the system, including the methods nginx
 is allowed to use for connection processing.
