@@ -13,9 +13,9 @@
 <section>
 
 <para>
-配置nginx编译选项是通过<command>configure</command>命令来完成的。
-该命令可以定义包括nginx使用何种方法来做连接处理等系统功能的方方面面。
-最终结果是生成一个<path>Makefile</path>文件。 <command>configure</command>命令的参数说明如下：
+nginx通过<command>configure</command>命令来做编译配置。
+该命令可以定义包括nginx使用何种方法来做连接处理等系统功能的方方面面，
+其执行结果是生成一个<path>Makefile</path>文件。 <command>configure</command>命令的参数说明如下：
 The build is configured using the <command>configure</command> command.
 It defines various aspects of the system, including the methods nginx
 is allowed to use for connection processing.
@@ -25,8 +25,11 @@ The <command>configure</command> command supports the following parameters:
 
 <listitem>
 <para>
-<literal>--prefix=<value>path</value></literal>&mdash;defines
-a directory that will keep server files.
+<literal>--prefix=<value>path</value></literal>&mdash;
+定义服务器文件的存放地址，该地址同时也是<command>configure</command>命令设置的
+相对路径（除类库外）以及<path>nginx.conf</path>文件定义的相对路径的父路径。其默认
+值是<path>/usr/local/nginx</path>
+defines a directory that will keep server files.
 This same directory will also be used for all relative paths set by
 <command>configure</command> (except for paths to libraries sources)
 and in the <path>nginx.conf</path> configuration file.
@@ -36,8 +39,9 @@ It is set to the <path>/usr/local/nginx</path> directory by default.
 
 <listitem>
 <para>
-<literal>--sbin-path=<value>path</value></literal>&mdash;sets
-the name of an nginx executable file.
+<literal>--sbin-path=<value>path</value></literal>&mdash;
+设置nginx可执行文件的名称，该名称仅在安装期间使用，其默认值为<path><value>prefix</value>/sbin/nginx</path>
+sets the name of an nginx executable file.
 This name is used only during installation.
 By default the file is named
 <path><value>prefix</value>/sbin/nginx</path>.
@@ -46,8 +50,10 @@ By default the file is named
 
 <listitem>
 <para>
-<literal>--conf-path=<value>path</value></literal>&mdash;sets
-the name of an <path>nginx.conf</path> configuration file.
+<literal>--conf-path=<value>path</value></literal>&mdash;
+设置配置文件的名称。如有必要，可以通过nginx启动时的命令行参数指定一个不同的配置文件。
+该文件默认名称为<path><value>prefix</value>/conf/nginx.conf</path>
+sets the name of an <path>nginx.conf</path> configuration file.
 If needs be, nginx can always be started with a different configuration file,
 by specifying it in the command-line parameter
 <nobr><literal>-c <value>file</value></literal></nobr>.
@@ -58,7 +64,12 @@ By default the file is named
 
 <listitem>
 <para>
-<literal>--pid-path=<value>path</value></literal>&mdash;sets
+<literal>--pid-path=<value>path</value></literal>&mdash;
+设置nginx.pid文件的文件名，该文件存储了主进程的进程ID。安装完成后，该文件名可以随时通过修改
+<path>nginx.conf</path>文件使用<link doc="ngx_core_module.xml" id="pid"/> 地址来指定。
+其默认值为<path><value>prefix</value>/logs/nginx.pid</path>
+
+sets
 the name of an nginx.pid file that will store the process ID
 of the main process.
 After installation, the file name can always be changed in the
@@ -71,7 +82,12 @@ By default the file is named
 
 <listitem>
 <para>
-<literal>--error-log-path=<value>path</value></literal>&mdash;sets
+<literal>--error-log-path=<value>path</value></literal>&mdash;
+
+设置主要主要错误、警告以及调试信息的日志名称。安装完成后，该日志名可以随时通过修改
+<path>nginx.conf</path>使用<link doc="ngx_core_module.xml" id="error_log"/> 地址来指定。
+其默认值为<path><value>prefix</value>/logs/error.log</path>
+sets
 the name of the primary error, warnings, and diagnostic file.
 After installation, the file name can always be changed in the
 <path>nginx.conf</path> configuration file using the
@@ -83,7 +99,11 @@ By default the file is named
 
 <listitem>
 <para>
-<literal>--http-log-path=<value>path</value></literal>&mdash;sets
+<literal>--http-log-path=<value>path</value></literal>&mdash;
+设置记录HTTP服务器主要访问日志的名称。安装完成后，该日志名可以随时通过修改
+<link doc="http/ngx_http_log_module.xml" id="access_log"/> 地址来指定。
+其默认值为<path><value>prefix</value>/logs/access.log</path>
+sets
 the name of the primary request log file of the HTTP server.
 After installation, the file name can always be changed in the
 <path>nginx.conf</path> configuration file using the
