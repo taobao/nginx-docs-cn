@@ -160,7 +160,7 @@ By default, a group name is set to the name of an unprivileged user.
 <para>
 <literal>--with-select_module</literal><br/>
 <literal>--without-select_module</literal>&mdash;
-创建或者不创建允许服务器具有<c-func>select</c-func>方法的模块（module）。该模块会在系统平台
+创建或者不创建允许服务器具有<c-func>select</c-func>函数的模块（module）。该模块会在系统平台
 不支持kqueue,epoll，rtsig或/dev/poll方法的时候自动创建。
 
 enables or disables building a module that allows the server to work with the
@@ -173,7 +173,7 @@ to support more appropriate methods such as kqueue, epoll, rtsig, or /dev/poll.
 <para>
 <literal>--with-poll_module</literal><br/>
 <literal>--without-poll_module</literal>&mdash;
-创建或者不创建允许服务器具有<c-func>poll</c-func>方法的模块（module）。该模块会在系统平台
+创建或者不创建允许服务器具有<c-func>poll</c-func>函数的模块（module）。该模块会在系统平台
 不支持kqueue,epoll，rtsig或/dev/poll方法的时候自动创建。
 
 enables or disables
@@ -228,7 +228,7 @@ The MD5 library is required to build and run this module.
 <listitem>
 <para>
 <literal>--with-http_ssl_module</literal>&mdash;
-创建一个可为HTTP服务器添加HTTPS协议支持的模块。
+创建一个可为HTTP服务器添加<link doc="http/ngx_http_ssl_module.xml">HTTPS协议支持</link>的模块。
 该模块不是默认创建的，且需要本地安装有OpenSSL类库。
 
 enables building a module
