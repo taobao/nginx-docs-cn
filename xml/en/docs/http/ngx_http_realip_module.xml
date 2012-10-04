@@ -96,11 +96,11 @@ the address for a replacement.
 <appeared-in>1.2.1</appeared-in>
 
 <para>
-If recursive search is disabled, an original client address that
+If recursive search is disabled, the original client address that
 matches one of the trusted addresses is replaced by the last
 address sent in the request header field defined by the
 <link id="real_ip_header"/> directive.
-If recursive search is enabled, an original client address that
+If recursive search is enabled, the original client address that
 matches one of the trusted addresses is replaced by the last
 non-trusted address sent in the request header field.
 </para>
