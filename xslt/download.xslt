@@ -11,6 +11,8 @@
 
    <xsl:variable select="/article/@link" name="LINK"/>
 
+   <xsl:variable select="/article/@lang" name="LANG"/>
+
    <xsl:include href="dirname.xslt"/>
 
    <xsl:include href="link.xslt"/>

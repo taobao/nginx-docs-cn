@@ -24,7 +24,7 @@
          <xsl:otherwise>
             <xsl:choose>
 
-               <xsl:when test="@switchlang != ''">
+               <xsl:when test="$TRANS and @switchlang">
                   <xsl:choose>
 
                      <xsl:when test="contains($TRANS, @switchlang)">
@@ -32,18 +32,8 @@
                         <a>
 
                            <xsl:attribute name="href">
-                              <xsl:choose>
 
-                                 <xsl:when test="$ROOT != '' ">
-
-                                    <xsl:value-of select=" concat($ROOT, '/', @switchlang, '/', $NOLANGORIGIN)"/>
-                                 </xsl:when>
-
-                                 <xsl:otherwise>
-
-                                    <xsl:value-of select=" concat(@switchlang, '/', $NOLANGORIGIN)"/>
-                                 </xsl:otherwise>
-                              </xsl:choose>
+                              <xsl:value-of select=" concat($ROOT, '/', @switchlang, '/',                         substring-after($LINK, concat('/', $LANG, '/')))"/>
                            </xsl:attribute>
 
                            <xsl:value-of select=" normalize-space(text())"/>
