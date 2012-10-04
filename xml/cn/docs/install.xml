@@ -14,8 +14,9 @@
 
 <para>
 nginx通过<command>configure</command>命令来做编译配置。
-该命令可以定义包括nginx使用何种方法来做连接处理等系统功能的方方面面，
-其执行结果是生成一个<path>Makefile</path>文件。 <command>configure</command>命令的参数说明如下：
+该命令可以定义包括nginx允许使用何种方法来做连接处理等系统功能的方方面面。
+其执行结果是生成一个<path>Makefile</path>文件。 <command>configure</command>命令支持如下参数：
+
 The build is configured using the <command>configure</command> command.
 It defines various aspects of the system, including the methods nginx
 is allowed to use for connection processing.
@@ -27,8 +28,9 @@ The <command>configure</command> command supports the following parameters:
 <para>
 <literal>--prefix=<value>path</value></literal>&mdash;
 定义服务器文件的存放地址，该地址同时也是<command>configure</command>命令设置的
-相对路径（除类库外）以及<path>nginx.conf</path>文件定义的相对路径的父路径。其默认
-值是<path>/usr/local/nginx</path>
+相对路径（除类库源文件外）以及<path>nginx.conf</path>文件定义的相对路径的父路径。其默认
+值是<path>/usr/local/nginx</path>。
+
 defines a directory that will keep server files.
 This same directory will also be used for all relative paths set by
 <command>configure</command> (except for paths to libraries sources)
@@ -40,7 +42,9 @@ It is set to the <path>/usr/local/nginx</path> directory by default.
 <listitem>
 <para>
 <literal>--sbin-path=<value>path</value></literal>&mdash;
-设置nginx可执行文件的路径名，仅在安装期间使用，其默认值为<path><value>prefix</value>/sbin/nginx</path>
+设置nginx可执行文件的路径名，该路径名仅在安装期间使用，
+其默认值为<path><value>prefix</value>/sbin/nginx</path>。
+
 sets the name of an nginx executable file.
 This name is used only during installation.
 By default the file is named
@@ -51,8 +55,10 @@ By default the file is named
 <listitem>
 <para>
 <literal>--conf-path=<value>path</value></literal>&mdash;
-设置配置文件的路径名。如有必要，可以在nginx启动时通过命令行参数指定一个不同的配置文件路径。
-该路径名默认为<path><value>prefix</value>/conf/nginx.conf</path>
+设置配置文件<path>nginx.conf</path>的路径名。如有必要，可以
+在nginx启动时通过命令行参数的方式指定一个不同的配置文件路径。
+该路径名默认为<path><value>prefix</value>/conf/nginx.conf</path>。
+
 sets the name of an <path>nginx.conf</path> configuration file.
 If needs be, nginx can always be started with a different configuration file,
 by specifying it in the command-line parameter
@@ -65,9 +71,10 @@ By default the file is named
 <listitem>
 <para>
 <literal>--pid-path=<value>path</value></literal>&mdash;
-设置nginx.pid文件的路径名，该文件存储了主进程的进程ID。安装完成后，该路径名可以随时通过修改
-<path>nginx.conf</path>文件使用<link doc="ngx_core_module.xml" id="pid"/> 地址来指定。
-其默认值为<path><value>prefix</value>/logs/nginx.pid</path>
+设置nginx.pid文件的路径名，该文件存储了主进程的进程ID。安装完成后，
+该路径名可以随时通过修改<path>nginx.conf</path>文件
+使用<link doc="ngx_core_module.xml" id="pid"/>指令来指定。
+其默认值为<path><value>prefix</value>/logs/nginx.pid</path>。
 
 sets
 the name of an nginx.pid file that will store the process ID
@@ -84,9 +91,10 @@ By default the file is named
 <para>
 <literal>--error-log-path=<value>path</value></literal>&mdash;
 
-设置主要主要错误、警告以及调试信息日志的路径名。安装完成后，该路径名可以随时通过修改
-<path>nginx.conf</path>使用<link doc="ngx_core_module.xml" id="error_log"/> 地址来指定。
-其默认值为<path><value>prefix</value>/logs/error.log</path>
+设置记录主要错误、警告以及调试信息日志的路径名。安装完成后，
+该路径名可以随时通过修改<path>nginx.conf</path>文件
+使用<link doc="ngx_core_module.xml" id="error_log"/> 指令来指定。
+其默认值为<path><value>prefix</value>/logs/error.log</path>。
 sets
 the name of the primary error, warnings, and diagnostic file.
 After installation, the file name can always be changed in the
@@ -100,12 +108,12 @@ By default the file is named
 <listitem>
 <para>
 <literal>--http-log-path=<value>path</value></literal>&mdash;
-设置记录HTTP服务器主要请求日志的路径名。安装完成后，该路径名可以随时通过修改
-<path>nginx.conf</path>文件使用
-<link doc="http/ngx_http_log_module.xml" id="access_log"/> 地址来指定。
+设置记录HTTP服务器主要请求日志的路径名。安装完成后，
+该路径名可以随时通过修改<path>nginx.conf</path>文件使用
+<link doc="http/ngx_http_log_module.xml" id="access_log"/> 指令来指定。
 其默认值为<path><value>prefix</value>/logs/access.log</path>
-sets
-the name of the primary request log file of the HTTP server.
+
+sets the name of the primary request log file of the HTTP server.
 After installation, the file name can always be changed in the
 <path>nginx.conf</path> configuration file using the
 <link doc="http/ngx_http_log_module.xml" id="access_log"/> directive.
@@ -119,9 +127,8 @@ By default the file is named
 <literal>--user=<value>name</value></literal>&mdash;
 （不是很明白~）
 设置会被工作进程使用其证书信息的非授权用户名称。安装完成后，该名称可以随时通过修改
-<path>nginx.conf</path>文件使用
-<link doc="ngx_core_module.xml" id="user"/>地址来指定。
-其默认名称为nobody
+<path>nginx.conf</path>文件使用<link doc="ngx_core_module.xml" id="user"/>指令来指定。
+其默认值为nobody。
 
 sets the name of an unprivileged user whose credentials will be used
 by worker processes.
@@ -137,9 +144,8 @@ The default user name is nobody.
 <literal>--group=<value>name</value></literal>&mdash;
 （同上~）
 设置会被工作进程使用其证书信息的用户组名称。安装完成后，该名称可以随时通过修改
-<path>nginx.conf</path>文件使用
-<link doc="ngx_core_module.xml" id="user"/>地址来指定。
-其默认名称与未授权用户名称相同。
+<link doc="ngx_core_module.xml" id="user"/>指令来指定。
+其默认值与未授权用户名称相同。
 
 sets the name of a group whose credentials will be used
 by worker processes.
@@ -156,10 +162,9 @@ By default, a group name is set to the name of an unprivileged user.
 <literal>--without-select_module</literal>&mdash;
 创建或者不创建允许服务器具有<c-func>select</c-func>方法的模块（module）。该模块会在系统平台
 不支持kqueue,epoll，rtsig或/dev/poll方法的时候自动创建。
-enables or disables
-building a module that allows the server to work with the
-<c-func>select</c-func> method.
-This module is built automatically if the platform does not appear
+
+enables or disables building a module that allows the server to work with the
+<c-func>select</c-func> method.This module is built automatically if the platform does not appear
 to support more appropriate methods such as kqueue, epoll, rtsig, or /dev/poll.
 </para>
 </listitem>
@@ -183,7 +188,8 @@ to support more appropriate methods such as kqueue, epoll, rtsig, or /dev/poll.
 <para>
 <literal>--without-http_gzip_module</literal>&mdash;
 不创建具有<link doc="http/ngx_http_gzip_module.xml">压缩HTTP服务器响应信息</link>
-功能的模块。创建并运行该模块需要zlib类库。
+功能的模块。创建并运行该模块需要zlib类库支持。
+
 disables building a module
 that <link doc="http/ngx_http_gzip_module.xml">compresses responses</link>
 of an HTTP server.
@@ -195,7 +201,7 @@ The zlib library is required to build and run this module.
 <para>
 <literal>--without-http_rewrite_module</literal>&mdash;
 不创建具有<link doc="http/ngx_http_rewrite_module.xml">请求重定向以及改变请求URI地址</link>
-功能的模块。创建并运行该模块需要PCRE类库,该模块尚处于试验阶段，其指令在未来可能会发生改变。
+功能的模块。创建并运行该模块需要PCRE类库支持,该模块尚处于试验阶段，其指令在未来可能会发生改变。
 
 disables building a
 module that allows an HTTP server to
@@ -209,8 +215,7 @@ The module is experimental&mdash;its directives may change in the future.
 <listitem>
 <para>
 <literal>--without-http_proxy_module</literal>&mdash;
-不创建具有<link doc="http/ngx_http_proxy_module.xml">代理功能</link>
-的模块。
+不创建HTTP服务器的<link doc="http/ngx_http_proxy_module.xml">代理模块</link>。
 
 disables building an
 HTTP server <link doc="http/ngx_http_proxy_module.xml">proxying module</link>.
@@ -223,6 +228,8 @@ The MD5 library is required to build and run this module.
 <listitem>
 <para>
 <literal>--with-http_ssl_module</literal>&mdash;
+创建一个可为HTTP服务器添加HTTPS协议支持的模块。
+该模块不是默认创建的，且需要本地安装有OpenSSL类库。
 
 enables building a module
 that adds the <link doc="http/ngx_http_ssl_module.xml">HTTPS protocol
@@ -234,7 +241,13 @@ The OpenSSL library is required to build and run this module.
 
 <listitem>
 <para>
-<literal>--with-pcre=<value>path</value></literal>&mdash;sets
+<literal>--with-pcre=<value>path</value></literal>&mdash;
+设置PCRE类库源文件的路径地址。该类库的发行版(version
+4.4&mdash;8.30)需要先从<link url="http://www.pcre.org">PCRE</link>站点下载并解压缩。
+剩下的安装工作由nginx的./configure和make命令来完成。该类库应用于<link doc="http/ngx_http_core_module.xml" id="location"/>
+指令的正则表达式支持以及<link doc="http/ngx_http_rewrite_module.xml">ngx_http_rewrite_module</link>模块。
+
+sets
 the path to the sources of the PCRE library.
 The library distribution (version
 4.4&mdash;8.30) needs to be downloaded from the
@@ -250,7 +263,10 @@ module.
 
 <listitem>
 <para>
-<literal>--with-pcre-jit</literal>&mdash;builds the PCRE library with
+<literal>--with-pcre-jit</literal>&mdash;
+创建支持”实时编译“（1.1.12，详见<link doc="ngx_core_module.xml" id="pcre_jit"/>）的PCRE类库
+
+builds the PCRE library with
 “just-in-time compilation” support (1.1.12, see
 <link doc="ngx_core_module.xml" id="pcre_jit"/>).
 </para>
@@ -258,7 +274,13 @@ module.
 
 <listitem>
 <para>
-<literal>--with-zlib=<value>path</value></literal>&mdash;sets
+<literal>--with-zlib=<value>path</value></literal>&mdash;
+设置zlib类库源文件的路径地址。该类库的发行版(version
+1.1.3&mdash;1.2.5)需要先从<link url="http://www.gzip.org/zlib/">zlib</link>站点下载并解压缩。
+剩下的安装工作由nginx的./configure和make命令来完成。该类库应用于
+<link doc="http/ngx_http_gzip_module.xml">ngx_http_gzip_module</link>模块。
+
+sets
 the path to the sources of the zlib library.
 The library distribution (version
 1.1.3&mdash;1.2.5) needs to be downloaded from the
@@ -271,8 +293,13 @@ The library is required for the
 
 <listitem>
 <para>
-<literal>--with-cc-opt=<value>parameters</value></literal>&mdash;sets
-additional parameters that will be added to the CFLAGS variable.
+<literal>--with-cc-opt=<value>parameters</value></literal>&mdash;
+设置将会添加到CFLAGS变量中的额外参数。当在FreeBSD使用系统PCRE库时，需要指定
+<literal>--with-cc-opt="-I /usr/local/include"</literal>。
+如果需要增加<c-func>select</c-func>函数所支持的文件数量，也可以参照如下方式指定：
+<literal>--with-cc-opt="-D FD_SETSIZE=2048"</literal>。
+
+sets additional parameters that will be added to the CFLAGS variable.
 When using the system PCRE library under FreeBSD,
 <literal>--with-cc-opt="-I /usr/local/include"</literal>
 should be specified.
@@ -284,8 +311,12 @@ increased it can also be specified here such as this:
 
 <listitem>
 <para>
-<literal>--with-ld-opt=<value>parameters</value></literal>&mdash;sets
-additional parameters that will be used during linking.
+<literal>--with-ld-opt=<value>parameters</value></literal>&mdash;
+
+设置将会在链接（linking）过程中使用的额外参数。当在FreeBSD使用系统PCRE库时，需要指定
+<literal>--with-ld-opt="-L /usr/local/lib"</literal>
+
+sets additional parameters that will be used during linking.
 When using the system PCRE library under FreeBSD,
 <literal>--with-ld-opt="-L /usr/local/lib"</literal>
 should be specified.
@@ -297,6 +328,7 @@ should be specified.
 </para>
 
 <para>
+以下是参数使用示例（注意不应有换行）：
 Example of parameters usage (all of this needs to be typed in one line):
 <programlisting>
 ./configure
