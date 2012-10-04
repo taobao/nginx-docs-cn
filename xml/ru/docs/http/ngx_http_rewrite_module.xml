@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_rewrite_module"
         link="/ru/docs/http/ngx_http_rewrite_module.html"
         lang="ru"
-        rev="2">
+        rev="3">
 
 <section id="summary">
 
@@ -333,9 +333,10 @@ rewrite ^/users/(.*)$ /show?user=$1? last;
 <context>if</context>
 
 <para>
-Включает или выключает журналирование обработки директив модуля
-<literal>ngx_http_rewrite_module</literal> в лог-файл ошибок на
-уровне <literal>notice</literal>.
+Разрешает или запрещает записывать в
+<link doc="../ngx_core_module.xml" id="error_log"/>
+на уровне <literal>notice</literal>
+результаты обработки директив модуля <literal>ngx_http_rewrite_module</literal>.
 </para>
 
 </directive>
