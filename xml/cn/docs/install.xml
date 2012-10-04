@@ -314,7 +314,7 @@ increased it can also be specified here such as this:
 <literal>--with-ld-opt=<value>parameters</value></literal>&mdash;
 
 设置将会在链接（linking）过程中使用的额外参数。当在FreeBSD使用系统PCRE库时，需要指定
-<literal>--with-ld-opt="-L /usr/local/lib"</literal>
+<literal>--with-ld-opt="-L /usr/local/lib"</literal>。
 
 sets additional parameters that will be used during linking.
 When using the system PCRE library under FreeBSD,
