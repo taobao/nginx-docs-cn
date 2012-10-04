@@ -17,6 +17,7 @@ X:param XML = "'../xml'";
 X:param YEAR;
 
 X:var LINK = "/article/@link";
+X:var LANG = "/article/@lang";
 
 X:include href = "dirname.xslt";
 X:include href = "link.xslt";

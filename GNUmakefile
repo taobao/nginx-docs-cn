@@ -20,32 +20,17 @@ define	XSLScript
 	if [ ! -s $(2) ]; then rm $(2); fi; test -s $(2)
 endef
 
-# List of available languages
-LANGS:=$(find xml/ -mindepth 1 -maxdepth 1 -type d -not -name '.svn' \
-		-exec basename {} \; | xargs)
-
-# process xslt and create/pass some variables into XSLT processor:
-#
-# ORIGIN	 xml source of processed document ($o in shell script)
-# NOLANGORIGIN	 html document without xml/lang prefix ($ox in shell script)
-# TRANS		 list of languages to which document is translated ($trans)
-#
-# list of all languages is used to scan thorough to determine if current
-# document has translation in each of them.
-#
 define	XSLT
 	xmllint --noout --valid $2
 	xsltproc -o $3							\
-		$(shell f=`echo $2 | sed 's,^xml/,,;s,[^/]*/,en/,'`;	\
-			ox=`echo $2 | sed 's,^xml/,,;s,[^/]*/,,'`;	\
-			o=`echo $$ox | sed 's,\.xml,\.html,'`;		\
-			trans=`for LANG in $(LANGS);			\
-			do						\
-			[ -f xml/$$LANG/$$ox ] && echo -ne "$$LANG ";	\
-			done`;						\
-		[ -f xml/$$f ] && echo --stringparam ORIGIN "$$f"; 	\
-		echo --stringparam NOLANGORIGIN "$$o";			\
-		echo --stringparam TRANS \""$$trans\"")			\
+		$(shell ff=`echo $2`; ff=$${ff#xml/};			\
+		f=$${ff#*/};						\
+		if [ "$$f" != "$$ff" ]; then				\
+		[ -f xml/en/$$f ] && echo --stringparam ORIGIN "en/$$f";\
+		t=; for l in $(LANGS); do				\
+		[ -f "xml/$$l/$$f" ] && t="$$t$$l "; done;		\
+		echo --stringparam TRANS "\"$$t\"";			\
+		fi)							\
 		$(shell p="$4"; [ -n "$$p" ] &&				\
 		echo --stringparam $${p%%=*} $${p#*=})			\
 		$1 $2

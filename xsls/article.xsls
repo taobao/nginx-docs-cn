@@ -16,7 +16,6 @@ X:strip-space elements = "article section";
 X:param XML = "'../xml'";
 X:param YEAR;
 X:param ORIGIN;
-X:param NOLANGORIGIN;
 X:param TRANS;
 
 X:var LINK = "/article/@link | /module/@link";
