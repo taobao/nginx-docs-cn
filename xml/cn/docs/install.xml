@@ -161,7 +161,7 @@ By default, a group name is set to the name of an unprivileged user.
 <literal>--with-select_module</literal><br/>
 <literal>--without-select_module</literal>&mdash;
 创建或者不创建允许服务器具有<c-func>select</c-func>函数的模块（module）。该模块会在系统平台
-不支持kqueue,epoll，rtsig或/dev/poll方法的时候自动创建。
+不支持kqueue,epoll，rtsig或/dev/poll等更合适方法的时候自动创建。
 
 enables or disables building a module that allows the server to work with the
 <c-func>select</c-func> method.This module is built automatically if the platform does not appear
@@ -174,7 +174,7 @@ to support more appropriate methods such as kqueue, epoll, rtsig, or /dev/poll.
 <literal>--with-poll_module</literal><br/>
 <literal>--without-poll_module</literal>&mdash;
 创建或者不创建允许服务器具有<c-func>poll</c-func>函数的模块（module）。该模块会在系统平台
-不支持kqueue,epoll，rtsig或/dev/poll方法的时候自动创建。
+不支持kqueue,epoll，rtsig或/dev/poll等更合适方法的时候自动创建。
 
 enables or disables
 building a module that allows the server to work with the
