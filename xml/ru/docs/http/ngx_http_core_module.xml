@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
         lang="ru"
-        rev="5">
+        rev="6">
 
 <section id="directives" name="Директивы">
 
@@ -1848,8 +1848,7 @@ open_file_cache_events   on;
 <para>
 Разрешает или запрещает делать несколько перенаправлений через директиву
 <link id="error_page"/>.
-Количество таких перенаправлений
-<link doc="ngx_http_core_module.xml" id="internal">ограничено</link>.
+Число таких перенаправлений <link id="internal">ограничено</link>.
 </para>
 
 </directive>

@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="5">
+        rev="6">
 
 <section id="directives" name="Directives">
 
@@ -1862,8 +1862,7 @@ FreeBSD&nbsp;7 needs to be
 Enables or disables doing several redirects using the
 <link id="error_page"/>
 directive.
-There is a <link doc="ngx_http_core_module.xml" id="internal">
-limit</link> on a number of such redirects.
+There is a <link id="internal">limit</link> on a number of such redirects.
 </para>
 
 </directive>
