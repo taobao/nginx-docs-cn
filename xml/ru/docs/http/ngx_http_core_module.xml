@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
         lang="ru"
-        rev="6">
+        rev="7">
 
 <section id="directives" name="Директивы">
 
@@ -574,14 +574,14 @@ disable_symlinks on from=$document_root;
 <para>
 Пример:
 <example>
-error_page   404              /404.html;
-error_page   500 502 503 504  /50x.html;
+error_page 404             /404.html;
+error_page 500 502 503 504 /50x.html;
 </example>
 </para>
 
 <para>
 Кроме того, можно поменять код ответа на другой,
-используя синтаксис вида “<literal>=code</literal>”, например:
+используя синтаксис вида “<literal>=</literal><value>ответ</value>”, например:
 <example>
 error_page 404 =200 /empty.gif;
 </example>
@@ -600,12 +600,12 @@ error_page 404 = /404.php;
 Также существует возможность использовать перенаправления для обработки
 ошибок:
 <example>
-error_page 403         http://example.com/forbidden.html;
-error_page 404 =301    http://example.com/notfound.html;
+error_page 403      http://example.com/forbidden.html;
+error_page 404 =301 http://example.com/notfound.html;
 </example>
 В этому случае клиенту возвращается код ответа 302.
 Его можно изменить только на один из кодов статуса, относящихся к
-перенаправлениям (301, 302, 303 and 307).
+перенаправлениям (301, 302, 303 и 307).
 </para>
 
 <para>
@@ -624,9 +624,8 @@ location @fallback {
 
 <para>
 <note>
-В случае возникновения ошибки при обработке <literal>uri</literal>
-будет возвращен ответ с кодом HTTP статуса, отражающим последнюю
-возникшую проблему.
+Если при обработке <literal>uri</literal> происходит ошибка,
+клиенту возвращается ответ с кодом статуса последней случившейся ошибки.
 </note>
 </para>
 

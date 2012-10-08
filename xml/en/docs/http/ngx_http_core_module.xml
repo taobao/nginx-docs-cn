@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="6">
+        rev="7">
 
 <section id="directives" name="Directives">
 
@@ -586,14 +586,14 @@ A <literal>uri</literal> value can contain variables.
 <para>
 Example:
 <example>
-error_page   404              /404.html;
-error_page   500 502 503 504  /50x.html;
+error_page 404             /404.html;
+error_page 500 502 503 504 /50x.html;
 </example>
 </para>
 
 <para>
 Furthermore, it is possible to change the response code to another
-using the “<literal>=code</literal>” syntax, for example:
+using the “<literal>=</literal><value>response</value>” syntax, for example:
 <example>
 error_page 404 =200 /empty.gif;
 </example>
@@ -611,12 +611,12 @@ error_page 404 = /404.php;
 <para>
 It is also possible to use redirects for error processing:
 <example>
-error_page 403         http://example.com/forbidden.html;
-error_page 404 =301    http://example.com/notfound.html;
+error_page 403      http://example.com/forbidden.html;
+error_page 404 =301 http://example.com/notfound.html;
 </example>
 In this case, the response code 302 is returned to the client.
 It can only be changed to one of the redirect status
-codes (301, 302, 303 and 307).
+codes (301, 302, 303, and 307).
 </para>
 
 <para>
@@ -635,9 +635,8 @@ location @fallback {
 
 <para>
 <note>
-If the <literal>uri</literal> processing led to an error,
-the HTTP status code indicating last occurred problem
-will be returned.
+If <literal>uri</literal> processing leads to an error,
+the status code of the last occured error is returned to the client.
 </note>
 </para>
 
