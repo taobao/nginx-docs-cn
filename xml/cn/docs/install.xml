@@ -5,10 +5,11 @@
 
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article name="Installing nginx"
-         link="/en/docs/install.html"
-         lang="en"
-         rev="1">
+<article name="安装nginx"
+         link="/cn/docs/install.html"
+         lang="cn"
+         rev="1"
+         translator="JokerT">
 
 <section>
 
@@ -17,10 +18,6 @@ nginx通过<command>configure</command>命令来做编译配置。
 该命令可以定义包括nginx允许使用何种方法来做连接处理等系统功能的方方面面。
 其执行结果是生成一个<path>Makefile</path>文件。 <command>configure</command>命令支持如下参数：
 
-The build is configured using the <command>configure</command> command.
-It defines various aspects of the system, including the methods nginx
-is allowed to use for connection processing.
-At the end it creates a <path>Makefile</path>.
 The <command>configure</command> command supports the following parameters:
 <list type="bullet">
 
@@ -30,7 +27,6 @@ The <command>configure</command> command supports the following parameters:
 定义服务器文件的存放地址，该地址同时也是<command>configure</command>命令设置的
 相对路径（除类库源文件外）以及<path>nginx.conf</path>文件定义的相对路径的父路径。其默认
 值是<path>/usr/local/nginx</path>。
-
 defines a directory that will keep server files.
 This same directory will also be used for all relative paths set by
 <command>configure</command> (except for paths to libraries sources)
@@ -43,7 +39,7 @@ It is set to the <path>/usr/local/nginx</path> directory by default.
 <para>
 <literal>--sbin-path=<value>path</value></literal>&mdash;
 设置nginx可执行文件的路径名，该路径名仅在安装期间使用，
-其默认值为<path><value>prefix</value>/sbin/nginx</path>。
+其默认名称为<path><value>prefix</value>/sbin/nginx</path>。
 
 sets the name of an nginx executable file.
 This name is used only during installation.
@@ -56,7 +52,7 @@ By default the file is named
 <para>
 <literal>--conf-path=<value>path</value></literal>&mdash;
 设置配置文件<path>nginx.conf</path>的路径名。如有必要，可以
-在nginx启动时通过命令行参数的方式指定一个不同的配置文件路径。
+在nginx启动时通过命令行参数<nobr><literal>-c<value>file</value></literal></nobr>指定一个不同的配置文件路径。
 该路径名默认为<path><value>prefix</value>/conf/nginx.conf</path>。
 
 sets the name of an <path>nginx.conf</path> configuration file.
@@ -71,10 +67,10 @@ By default the file is named
 <listitem>
 <para>
 <literal>--pid-path=<value>path</value></literal>&mdash;
-设置nginx.pid文件的路径名，该文件存储了主进程的进程ID。安装完成后，
-该路径名可以随时通过修改<path>nginx.conf</path>文件
+设置nginx.pid文件的名称，该文件存储了主进程的进程ID。安装完成后，
+该文件名总是可以通过修改<path>nginx.conf</path>文件
 使用<link doc="ngx_core_module.xml" id="pid"/>指令来指定。
-其默认值为<path><value>prefix</value>/logs/nginx.pid</path>。
+其默认名称为<path><value>prefix</value>/logs/nginx.pid</path>。
 
 sets
 the name of an nginx.pid file that will store the process ID
@@ -91,10 +87,10 @@ By default the file is named
 <para>
 <literal>--error-log-path=<value>path</value></literal>&mdash;
 
-设置记录主要错误、警告以及调试信息日志的路径名。安装完成后，
-该路径名可以随时通过修改<path>nginx.conf</path>文件
+设置记录主要错误、警告以及调试信息日志的文件名。安装完成后，
+该文件名总是可以通过修改<path>nginx.conf</path>文件
 使用<link doc="ngx_core_module.xml" id="error_log"/> 指令来指定。
-其默认值为<path><value>prefix</value>/logs/error.log</path>。
+其默认名称为<path><value>prefix</value>/logs/error.log</path>。
 sets
 the name of the primary error, warnings, and diagnostic file.
 After installation, the file name can always be changed in the
@@ -108,8 +104,8 @@ By default the file is named
 <listitem>
 <para>
 <literal>--http-log-path=<value>path</value></literal>&mdash;
-设置记录HTTP服务器主要请求日志的路径名。安装完成后，
-该路径名可以随时通过修改<path>nginx.conf</path>文件使用
+设置记录HTTP服务器主要请求日志的文件名。安装完成后，
+该文件名总是可以通过修改<path>nginx.conf</path>文件使用
 <link doc="http/ngx_http_log_module.xml" id="access_log"/> 指令来指定。
 其默认值为<path><value>prefix</value>/logs/access.log</path>
 
@@ -125,8 +121,7 @@ By default the file is named
 <listitem>
 <para>
 <literal>--user=<value>name</value></literal>&mdash;
-（不是很明白~）
-设置会被工作进程使用其证书信息的非授权用户名称。安装完成后，该名称可以随时通过修改
+设置会被工作进程使用其证书信息的非授权用户名称。安装完成后，该名称总是可以通过修改
 <path>nginx.conf</path>文件使用<link doc="ngx_core_module.xml" id="user"/>指令来指定。
 其默认值为nobody。
 
@@ -143,7 +138,7 @@ The default user name is nobody.
 <para>
 <literal>--group=<value>name</value></literal>&mdash;
 （同上~）
-设置会被工作进程使用其证书信息的用户组名称。安装完成后，该名称可以随时通过修改
+设置会被工作进程使用其证书信息的用户组名称。安装完成后，该名称总是可以通过修改
 <link doc="ngx_core_module.xml" id="user"/>指令来指定。
 其默认值与未授权用户名称相同。
 
@@ -187,8 +182,7 @@ to support more appropriate methods such as kqueue, epoll, rtsig, or /dev/poll.
 <listitem>
 <para>
 <literal>--without-http_gzip_module</literal>&mdash;
-不创建具有<link doc="http/ngx_http_gzip_module.xml">压缩HTTP服务器响应信息</link>
-功能的模块。创建并运行该模块需要zlib类库支持。
+不编译<link doc="http/ngx_http_gzip_module.xml">ngx_http_gzip_module</link>模块，它可以压缩HTTP服务器的的回复。该模块需要zlib库才能编译和运行。
 
 disables building a module
 that <link doc="http/ngx_http_gzip_module.xml">compresses responses</link>
@@ -200,8 +194,7 @@ The zlib library is required to build and run this module.
 <listitem>
 <para>
 <literal>--without-http_rewrite_module</literal>&mdash;
-不创建具有<link doc="http/ngx_http_rewrite_module.xml">请求重定向以及改变请求URI地址</link>
-功能的模块。创建并运行该模块需要PCRE类库支持,该模块尚处于试验阶段，其指令在未来可能会发生改变。
+不编译<link doc="http/ngx_http_rewrite_module.xml">ngx_http_rewrite_module</link>，它可以做请求重定向以及改变请求URI地址。创建并运行该模块需要PCRE类库支持,该模块尚处于试验阶段，其指令在未来可能会发生改变。
 
 disables building a
 module that allows an HTTP server to
@@ -215,7 +208,7 @@ The module is experimental&mdash;its directives may change in the future.
 <listitem>
 <para>
 <literal>--without-http_proxy_module</literal>&mdash;
-不创建HTTP服务器的<link doc="http/ngx_http_proxy_module.xml">代理模块</link>。
+不编译HTTP服务器的<link doc="http/ngx_http_proxy_module.xml">代理模块</link>。
 
 disables building an
 HTTP server <link doc="http/ngx_http_proxy_module.xml">proxying module</link>.
