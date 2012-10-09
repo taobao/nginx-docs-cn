@@ -69,6 +69,14 @@ specified in the first parameter.
 </para>
 
 <para>
+<note>
+Since variables are evaluated only when used, the mere existence
+of even a large number of declared “<literal>map</literal>” variables
+does not incur any extra costs for request processing.
+</note>
+</para>
+
+<para>
 Parameters inside the <literal>map</literal> block specify a mapping
 between source and resulting values.
 </para>
