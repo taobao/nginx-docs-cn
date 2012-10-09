@@ -10,7 +10,7 @@
 <module name="Module ngx_http_ssl_module"
         link="/en/docs/http/ngx_http_ssl_module.html"
         lang="en"
-        rev="2">
+        rev="3">
 
 <section id="summary">
 
@@ -197,7 +197,7 @@ ciphers by default.
 <context>server</context>
 
 <para>
-Specifies a file with a list of CA certificates in the PEM format
+Specifies a file with trusted CA certificates in the PEM format
 used to verify client certificates and
 OCSP responses if <link id="ssl_stapling"/> is enabled.
 </para>
@@ -376,11 +376,11 @@ resolver 192.0.2.1;
 <para>
 For the OCSP stapling to work, the certificate of the issuer of the server
 certificate should be known.
-If the <link id="ssl_certificate">ssl_certificate</link> file does
+If the <link id="ssl_certificate"/> file does
 not contain intermediate certificates,
 the certificate of the issuer of the server certificate should be
 present in the
-<link id="ssl_trusted_certificate">ssl_trusted_certificate</link> file.
+<link id="ssl_trusted_certificate"/> file.
 </para>
 
 <para>
@@ -465,14 +465,14 @@ should be configured as trusted using the
 <appeared-in>1.3.7</appeared-in>
 
 <para>
-Specifies a file with a list of CA certificates in the PEM format
+Specifies a file with trusted CA certificates in the PEM format
 used to verify client certificates and
 OCSP responses if <link id="ssl_stapling"/> is enabled.
 </para>
 
 <para>
-In contrast to <link id="ssl_client_certificate"/>, these certificates
-will not be sent to clients.
+In contrast to <link id="ssl_client_certificate"/>, the list of these
+certificates will not be sent to clients.
 </para>
 
 </directive>
