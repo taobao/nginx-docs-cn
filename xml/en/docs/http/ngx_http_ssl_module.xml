@@ -10,7 +10,7 @@
 <module name="Module ngx_http_ssl_module"
         link="/en/docs/http/ngx_http_ssl_module.html"
         lang="en"
-        rev="3">
+        rev="4">
 
 <section id="summary">
 
@@ -481,17 +481,29 @@ certificates will not be sent to clients.
 <directive name="ssl_verify_client">
 <syntax>
     <literal>on</literal> | <literal>off</literal> |
-    <literal>optional</literal></syntax>
+    <literal>optional</literal> | <literal>optional_no_ca</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
 
 <para>
-Enables the client certificate verification.
-The <literal>optional</literal> parameter (0.8.7+) requests the client
-certificate and verifies it if it was present.
+Enables verification of client certificates.
 The result of verification is stored in the
 <var>$ssl_client_verify</var> variable.
+</para>
+
+<para>
+The <literal>optional</literal> parameter (0.8.7+) requests the client
+certificate, and if certificate was present, verifies it.
+</para>
+
+<para>
+The <literal>optional_no_ca</literal> parameter (1.3.8) requests the client
+certificate but does not require it to be signed by a trusted CA certificate.
+This is intended for the use in cases where actual certificate verification
+is performed by a service that is external to nginx.
+The contents of a certificate is made available through the
+<var>$ssl_client_cert</var> variable.
 </para>
 
 </directive>
