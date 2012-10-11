@@ -90,10 +90,10 @@ $(DOC_LANG):								\
 		$(OUT)/$(DOC_LANG)/index.html				\
 		$(OUT)/$(DOC_LANG)/download.html			\
 		$(OUT)/$(DOC_LANG)/security_advisories.html		\
-		$(OUT)/$(DOC_LANG)/pgp_keys.html		\
 		$(OUT)/$(DOC_LANG)/docs/index.html			\
 		$(DOCS_HTML)						\
 		$(REFS_HTML)						\
+		$(OUT)/$(DOC_LANG)/pgp_keys.html			\
 		$(FAQ_HTML)						\
 		$(OUT)/$(DOC_LANG)/links.html				\
 		$(OUT)/$(DOC_LANG)/books.html				\

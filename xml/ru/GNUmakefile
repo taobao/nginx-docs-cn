@@ -81,11 +81,11 @@ REFS_HTML =	$(foreach name, $(REFS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 $(DOC_LANG):								\
 		$(OUT)/$(DOC_LANG)/index.html				\
 		$(OUT)/$(DOC_LANG)/download.html			\
-		$(OUT)/$(DOC_LANG)/support.html				\
 		$(OUT)/$(DOC_LANG)/docs/index.html			\
 		$(DOCS_HTML)						\
 		$(REFS_HTML)						\
 		$(FAQ_HTML)						\
+		$(OUT)/$(DOC_LANG)/support.html				\
 
 $(OUT)/$(DOC_LANG)/download.html:					\
 		xml/$(DOC_LANG)/download.xml				\
