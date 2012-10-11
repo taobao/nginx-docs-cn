@@ -85,8 +85,6 @@ $(DOC_LANG):								\
 		$(OUT)/$(DOC_LANG)/docs/index.html			\
 		$(DOCS_HTML)						\
 		$(REFS_HTML)						\
-		$(INTRO_HTML)						\
-		$(HOWTO_HTML)						\
 		$(FAQ_HTML)						\
 
 $(OUT)/$(DOC_LANG)/download.html:					\

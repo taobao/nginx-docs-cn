@@ -12,8 +12,6 @@ $(DOC_LANG):								\
 		$(OUT)/$(DOC_LANG)/index.html				\
 		$(OUT)/$(DOC_LANG)/docs/index.html			\
 		$(DOCS_HTML)						\
-		$(INTRO_HTML)						\
-		$(HOWTO_HTML)						\
 
 $(OUT)/$(DOC_LANG)/docs/index.html:					\
 		$(DOCS_XML)						\
