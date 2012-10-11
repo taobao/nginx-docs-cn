@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="ngx_http_addition_module模块"
+        link="/cn/docs/http/ngx_http_addition_module.html"
+        lang="cn"
+        translator="Weibin Yao"
+        rev="1">
+
+<section id="summary">
+
+<para>
+<literal>ngx_http_addition_module</literal> 是一个过滤模块，它可以在回复正文前后加上内容。
+这个模块默认不会编译进去，若要开启需加上编译选项：<literal>--with-http_addition_module</literal>。
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location / {
+    add_before_body /before_action;
+    add_after_body  /after_action;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="add_before_body">
+<syntax><value>uri</value></syntax>
+<default/>
+<context>location</context>
+
+<para>
+在回复正文之前加入一段文字，nginx会发起一个子请求去获取这些文字。
+</para>
+
+</directive>
+
+
+<directive name="add_after_body">
+<syntax><value>uri</value></syntax>
+<default/>
+<context>location</context>
+
+<para>
+在回复正文之后加入一段文字，nginx会发起一个子请求去获取这些文字。
+</para>
+
+</directive>
+
+
+<directive name="addition_types">
+<syntax><value>mime-type</value> ...</syntax>
+<default>text/html</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.7.9</appeared-in>
+
+<para>
+指定生效的回复MIME类型，默认始终包含“<literal>text/html</literal>”。
+如果设置类型为“<literal>*</literal>”，就会匹配任何类型的回复(0.8.29)。
+</para>
+
+</directive>
+
+</section>
+
+</module>

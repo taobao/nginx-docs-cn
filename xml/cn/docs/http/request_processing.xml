@@ -1,8 +1,15 @@
-﻿<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article name="Nginx如何处理一个请求"
          link="/cn/docs/http/request_processing.html"
          lang="cn"
+         rev="1"
+         translator="Jinglong &amp; cfsego"
          author="Igor Sysoev"
          editor="Brian Mercer">
 
@@ -14,38 +21,38 @@ Nginx首先选定由哪一个<i>虚拟主机</i>来处理请求。让我们从�
 
 <programlisting>
 server {
-    listen       80;
-    server_name  nginx.org  www.nginx.org;
+    listen      80;
+    server_name example.org www.example.org;
     ...
 }
 
 server {
-    listen       80;
-    server_name  nginx.net  www.nginx.net;
+    listen      80;
+    server_name example.net www.example.net;
     ...
 }
 
 server {
-    listen       80;
-    server_name  nginx.com  www.nginx.com;
+    listen      80;
+    server_name example.com www.example.com;
     ...
 }
 </programlisting>
 </para>
 
 <para>
-在这个配置中，nginx仅仅检查请求的Host头以决定该请求应由哪个虚拟主机来处理。如果Host头没有匹配到任意一个主机名，或者请求中根本没有包含这个头，那nginx会将这个请求分发到默认的虚拟主机。在以上配置中，第一个被列出的虚拟主机即nginx的默认虚拟主机——这是nginx的标准默认行为。如果不想第一个虚拟主机成为默认主机，可以显式地在"<literal>listen</literal>"指令中设置"<literal>default_server</literal>"参数：
+在这个配置中，nginx仅仅检查请求的<header>Host</header>头以决定该请求应由哪个虚拟主机来处理。如果Host头没有匹配任意一个虚拟主机，或者请求中根本没有包含Host头，那nginx会将请求分发到定义在此端口上的默认虚拟主机。在以上配置中，第一个被列出的虚拟主机即nginx的默认虚拟主机——这是nginx的默认行为。而且，可以显式地设置某个主机为默认虚拟主机，即在"<literal>listen</literal>"指令中设置"<literal>default_server</literal>"参数：
 
 <programlisting>
 server {
-    listen       80  <b>default_server</b>;
-    server_name  nginx.net  www.nginx.net;
+    listen      80 <b>default_server</b>;
+    server_name example.net www.example.net;
     ...
 }
 </programlisting>
 
 <note>
-"<literal>default_server</literal>"参数从0.8.21版开始使用。在之前的版本中，需要使用"<literal>default</literal>"参数代替。
+"<literal>default_server</literal>"参数从0.8.21版开始可用。在之前的版本中，应该使用"<literal>default</literal>"参数代替。
 </note>
 
 请注意"<literal>default_server</literal>"是监听端口的属性，而不是主机名的属性。后面会对此有更多介绍。
@@ -58,7 +65,7 @@ server {
         name="如何防止处理未定义主机名的请求">
 
 <para>
-如果不想处理未定义<header>Host</header>头的请求，可以定义如下主机，以丢弃这些请求：
+如果不允许请求中缺少<header>Host</header>头，可以定义如下主机，丢弃这些请求：
 
 <programlisting>
 server {
@@ -68,7 +75,8 @@ server {
 }
 </programlisting>
 
-在这里，我们设置主机名为空字符串以匹配未定义<header>Host</header>头的请求，而且返回了一个nginx特有的，非http标准的返回码444，它可以用来关闭连接。从0.8.48版本开始，这已成为主机名的默认设置，所以<literal>server_name ""</literal>可以省略。而之前的版本使用机器的<i>hostname</i>作为默认主机名。
+在这里，我们设置主机名为空字符串以匹配未定义<header>Host</header>头的请求，而且返回了一个nginx特有的，非http标准的返回码444，它可以用来关闭连接。
+<note>从0.8.48版本开始，这已成为主机名的默认设置，所以可以省略<literal>server_name ""</literal>。而之前的版本使用机器的<i>hostname</i>作为主机名的默认值。</note>
 </para>
 
 </section>
@@ -82,46 +90,46 @@ server {
 
 <programlisting>
 server {
-    listen       192.168.1.1:80;
-    server_name  nginx.org  www.nginx.org;
+    listen      192.168.1.1:80;
+    server_name example.org www.example.org;
     ...
 }
 
 server {
-    listen       192.168.1.1:80;
-    server_name  nginx.net  www.nginx.net;
+    listen      192.168.1.1:80;
+    server_name example.net www.example.net;
     ...
 }
 
 server {
-    listen       192.168.1.2:80;
-    server_name  nginx.com  www.nginx.com;
+    listen      192.168.1.2:80;
+    server_name example.com www.example.com;
     ...
 }
 </programlisting>
 
-这个配置中，nginx根据"<literal>server</literal>"配置块中的"<literal>listen</literal>"指令首先测试请求的IP地址和端口是否匹配某个定义的值。如果匹配成功，则继续测试请求的Host头是否匹配这个块中的"<literal>server_name</literal>"的值。如果主机名匹配失败，这个请求将被交给默认的虚拟主机处理。例如，一个从192.168.1.1:80端口收到的访问<literal>www.nginx.com</literal>的请求将被监听192.168.1.1:80端口的默认服务器处理，本例中就是第一个服务器，因为这个端口上没有定义域名为<literal>www.nginx.com</literal>的服务器。
+这个配置中，nginx首先测试请求的IP地址和端口是否匹配某个<link doc="ngx_http_core_module.xml" id="server"/>配置块中的<link doc="ngx_http_core_module.xml" id="listen"/>指令配置。接着nginx继续测试请求的Host头是否匹配这个<link doc="ngx_http_core_module.xml" id="server"/>块中的某个<link doc="ngx_http_core_module.xml" id="server_name"/>的值。如果主机名没有找到，nginx将把这个请求交给默认虚拟主机处理。例如，一个从192.168.1.1:80端口收到的访问<literal>www.example.com</literal>的请求将被监听192.168.1.1:80端口的默认虚拟主机处理，本例中就是第一个服务器，因为这个端口上没有定义名为<literal>www.example.com</literal>的虚拟主机。
 </para>
 
 <para>
-之前已经提到默认服务器是监听端口的属性，所以不同的监听端口可以设置不同的默认服务器：
+默认服务器是监听端口的属性，所以不同的监听端口可以设置不同的默认服务器：
 
 <programlisting>
 server {
-    listen        192.168.1.1:80;
-    server_name   nginx.org  www.nginx.org;
+    listen      192.168.1.1:80;
+    server_name example.org www.example.org;
     ...
 }
 
 server {
-    listen        192.168.1.1:80  default_server;
-    server_name   nginx.net  www.nginx.net;
+    listen      192.168.1.1:80 <b>default_server</b>;
+    server_name example.net www.example.net;
     ...
 }
 
 server {
-    listen        192.168.1.2:80  default_server;
-    server_name   nginx.com  www.nginx.com;
+    listen      192.168.1.2:80 <b>default_server</b>;
+    server_name example.com www.example.com;
     ...
 }
 </programlisting>
@@ -134,38 +142,38 @@ server {
         name="一个简单PHP站点配置">
 
 <para>
-现在让我们来看一下，在一个典型的，简单的PHP站点中，nginx怎样为一个请求选择<i>location</i>来处理：
+现在我们来看在一个典型的，简单的PHP站点中，nginx怎样为一个请求选择<i>location</i>来处理：
 
 <programlisting>
 server {
-    listen        80;
-    server_name   nginx.org  www.nginx.org;
-    root          /data/www;
+    listen      80;
+    server_name example.org www.example.org;
+    root        /data/www;
 
     location / {
-        index     index.html  index.php;
+        index   index.html index.php;
     }
 
     location ~* \.(gif|jpg|png)$ {
-        expires   30d;
+        expires 30d;
     }
 
     location ~ \.php$ {
-        fastcgi_pass   localhost:9000;
-        fastcgi_param  SCRIPT_FILENAME
-                       $document_root$fastcgi_script_name;
-        include        fastcgi_params;
+        fastcgi_pass  localhost:9000;
+        fastcgi_param SCRIPT_FILENAME
+                      $document_root$fastcgi_script_name;
+        include       fastcgi_params;
     }
 }
 </programlisting>
 </para>
 
 <para>
-第一步，nginx使用字符串匹配找出最准确的location，这一步nginx会忽略location在配置文件出现的顺序。上面的配置中，只有唯一一个非正则匹配的location，也就是"<literal>/</literal>"，它可以匹配任意的请求，一般作为最后一个选择。第二步，nginx会继续匹配正则表达式的location，匹配到第一个正则表达式后停止搜索。匹配到的location将被使用。正则表达式的匹配，按照配置中的顺序进行，出现在前的优先匹配。如果没有匹配到正则表达式，则使用第一步匹配的结果。
+首先，nginx使用前缀匹配找出最准确的location，这一步nginx会忽略location在配置文件出现的顺序。上面的配置中，唯一的前缀匹配location是"<literal>/</literal>"，而且因为它可以匹配任意的请求，所以被作为最后一个选择。接着，nginx继续按照配置中的顺序依次匹配正则表达式的location，匹配到第一个正则表达式后停止搜索。匹配到的location将被使用。如果没有匹配到正则表达式的location，则使用刚刚找到的最准确的前缀匹配的location。
 </para>
 
 <para>
-请注意所有location匹配测试只使用请求的URI部分，而不使用参数部分。这是因为参数在请求串中顺序是任意的，比如：
+请注意所有location匹配测试只使用请求的URI部分，而不使用参数部分。这是因为写参数的方法很多，比如：
 
 <programlisting>
 /index.php?user=john&amp;page=1
@@ -180,32 +188,24 @@ server {
 </para>
 
 <para>
-现在让我们来看一下使用上面的配置进来的请求是怎样被处理的：
+现在让我们来看使用上面的配置，请求是怎样被处理的：
 
-<list type="bullet">
+<list type="bullet" compact="no">
 
 <listitem>
-<para>
-请求"<literal>/logo.gif</literal>"首先匹配上location "<literal>/</literal>"，然后匹配上正则表达式"<literal>\.(gif|jpg|png)$</literal>"。因此，它将被后匹配上的location处理。根据"<literal>root /data/www</literal>"指令，nginx将请求映射到文件"<literal>/data/www/logo.gif</literal>"，并发送这个文件到客户端。
-</para>
+请求"<literal>/logo.gif</literal>"首先匹配上location "<literal>/</literal>"，然后匹配上正则表达式"<literal>\.(gif|jpg|png)$</literal>"。因此，它将被后者处理。根据"<literal>root /data/www</literal>"指令，nginx将请求映射到文件<path>/data/www/logo.gif</path>"，并发送这个文件到客户端。
 </listitem>
 
 <listitem>
-<para>
-请求"<literal>/index.php</literal>"首先也匹配上location "<literal>/</literal>"，然后匹配上正则表达式"<literal>\.(php)$</literal>"。 因此，它将被后匹配上的location处理，会被发送到一个监听在localhost:9000的FastCGI服务器。"<literal>fastcgi_param</literal>"指令将FastCGI的参数SCRIPT_FILENAME的值设置为"<literal>/data/www/index.php</literal>"，接着FastCGI服务器将执行这个文件。变量$document_root等于"<literal>root</literal>"指令设置的值，变量$fastcgi_script_name的值等于请求的uri，"<literal>/index.php</literal>"。
-</para>
+请求"<literal>/index.php</literal>"首先也匹配上location "<literal>/</literal>"，然后匹配上正则表达式"<literal>\.(php)$</literal>"。 因此，它将被后者处理，进而被发送到监听在localhost:9000的FastCGI服务器。<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_param"/>指令将FastCGI的参数<literal>SCRIPT_FILENAME</literal>的值设置为"<literal>/data/www/index.php</literal>"，接着FastCGI服务器执行这个文件。变量<var>$document_root</var>等于<link doc="ngx_http_core_module.xml" id="root"/>指令设置的值，变量<var>$fastcgi_script_name</var>的值是请求的uri，"<literal>/index.php</literal>"。
 </listitem>
 
 <listitem>
-<para>
-请求"<literal>/about.html</literal>"仅能匹配上location "<literal>/</literal>"，因此，它将使用此location进行处理。根据"<literal>root /data/www</literal>"指令，nginx将请求映射到文件"<literal>/data/www/about.html</literal>"，并发送这个文件到客户端。
-</para>
+请求"<literal>/about.html</literal>"仅能匹配上location "<literal>/</literal>"，因此，它将使用此location进行处理。根据"<literal>root /data/www</literal>"指令，nginx将请求映射到文件"<path>/data/www/about.html</path>"，并发送这个文件到客户端。
 </listitem>
 
 <listitem>
-<para>
-请求"<literal>/</literal>"的处理更为复杂。它仅能匹配上location "<literal>/</literal>"，因此，它将使用此location进行处理。然后，"<literal>index</literal>"指令使用它的参数和"<literal>root /data/www</literal>"指令所组成的文件路径来检测对应的文件是否存在。如果文件"<literal>/data/www/index.php</literal>"存在，"<literal>index</literal>"指令将执行一次内部重定向到"<literal>/index.php</literal>"，接着nginx将重新寻找匹配"<literal>/index.php</literal>"的location，就好像这次请求是从客户端发过来一样。正如我们之前看到的那样，这个重定向的请求最终交给FastCGI服务器来处理。
-</para>
+请求"<literal>/</literal>"的处理更为复杂。它仅能匹配上location "<literal>/</literal>"，因此，它将使用此location进行处理。然后，<link doc="ngx_http_index_module.xml" id="index"/>指令使用它的参数和"<literal>root /data/www</literal>"指令所组成的文件路径来检测对应的文件是否存在。如果文件<path>/data/www/index.html</path>不存在，而<path>/data/www/index.php</path>存在，此指令将执行一次内部重定向到"<literal>/index.php</literal>"，接着nginx将重新寻找匹配"<literal>/index.php</literal>"的location，就好像这次请求是从客户端发过来一样。正如我们之前看到的那样，这个重定向的请求最终交给FastCGI服务器来处理。
 </listitem>
 
 </list>

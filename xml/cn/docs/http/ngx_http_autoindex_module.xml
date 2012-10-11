@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="Module ngx_http_autoindex_module"
+        link="/cn/docs/http/ngx_http_autoindex_module.html"
+        lang="cn"
+        translator="Weibin Yao"
+        rev="1">
+
+<section id="summary">
+
+<para>
+<literal>ngx_http_autoindex_module</literal> 模块可以列出目录中的文件。
+一般当<link doc="ngx_http_index_module.xml">ngx_http_index_module</link>模块找不到默认主页的时候，会把请求转给 <literal>ngx_http_autoindex_module</literal>模块去处理。
+</para>
+
+</section>
+
+
+<section id="example" name="Example Configuration">
+
+<para>
+<example>
+location / {
+    autoindex on;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="Directives">
+
+<directive name="autoindex">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+开启或者关闭列出目录中文件的功能。
+</para>
+
+</directive>
+
+
+<directive name="autoindex_exact_size">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+设置目录中列出的文件是显示精确大小，还是对KB，MB，GB进行四舍五入。
+</para>
+
+</directive>
+
+
+<directive name="autoindex_localtime">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+设置目录中列出文件的时间是本地时间还是UTC时间。
+</para>
+
+</directive>
+
+</section>
+
+</module>

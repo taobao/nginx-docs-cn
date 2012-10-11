@@ -1,0 +1,42 @@
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="配置文件中的计量单位"
+         link="/cn/docs/syntax.html"
+         lang="cn"
+         translator="cfsego"
+         rev="2">
+
+<section>
+
+<para>
+容量可以用千字节(<literal>k</literal>，<literal>K</literal>)和兆字节(<literal>m</literal>，<literal>M</literal>)来描述，比如“<literal>8k</literal>”，“<literal>1m</literal>”。
+如果没有指定单位，容量以字节为单位。
+</para>
+
+<para>
+时间可以用分钟、小时、天等来描述：
+<table width="30%">
+<tr><td width="20%">s</td><td>秒</td></tr>
+<tr><td width="20%">m</td><td>分钟</td></tr>
+<tr><td width="20%">h</td><td>小时</td></tr>
+<tr><td width="20%">d</td><td>天</td></tr>
+<tr><td width="20%">w</td><td>周</td></tr>
+<tr><td width="20%">M</td><td>月，30天</td></tr>
+<tr><td width="20%">y</td><td>年，365天</td></tr>
+</table>
+</para>
+
+<para>
+比如，“<literal>1h 30m</literal>”，“<literal>1y 6M</literal>”。
+另外，在一些指令中，描述时间可以精确到毫秒精度(<literal>ms</literal>)。
+如果没有指定单位，时间以秒为单位。
+</para>
+
+</section>
+
+</article>

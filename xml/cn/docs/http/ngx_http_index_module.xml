@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="ngx_http_index_module模块"
+        link="/cn/docs/http/ngx_http_index_module.html"
+        lang="cn"
+        translator="litianqing"
+        rev="1">
+
+<section id="summary">
+
+<para>
+模块 <literal>ngx_http_index_module</literal> 处理以斜线字符(‘<literal>/</literal>’)结尾的请求。
+</para>
+
+</section>
+
+
+<section id="example" name="配置范例">
+
+<para>
+<example>
+location / {
+    index index.$geo.html index.html;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="指令">
+
+<directive name="index">
+<syntax><value>file</value> ...</syntax>
+<default>index.html</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+定义将要被作为默认页的文件。
+文件 <value>file</value> 的名字可以包含变量。
+文件以配置中指定的顺序被nginx检查。
+列表中的最后一个元素可以是一个带有绝对路径的文件。
+例子：
+<example>
+index index.$geo.html index.0.html /index.html;
+</example>
+</para>
+
+<para>
+需要注意的是，index文件会引发内部重定向，请求可能会被其它location处理。
+比如，下面这个例子：
+<example>
+location = / {
+    index index.html;
+}
+
+location / {
+    ...
+}
+</example>
+请求“<literal>/</literal>”实际上将会在第二个location中作为“<literal>/index.html</literal>”被处理。
+</para>
+
+</directive>
+
+</section>
+
+</module>

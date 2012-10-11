@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="ngx_http_access_module模块"
+        link="/cn/docs/http/ngx_http_access_module.html"
+        lang="cn"
+        translator="WenMing"
+        rev="1">
+
+<section id="summary">
+
+<para>
+模块 <literal>ngx_http_access_module</literal> 允许限制某些IP地址的客户端访问。
+</para>
+
+<para>
+也可以通过
+<link doc="ngx_http_auth_basic_module.xml">密码</link>来限制访问。
+使用
+ <link doc="ngx_http_core_module.xml" id="satisfy"/> 指令就能同时通过IP地址和密码来限制访问。
+</para>
+
+</section>
+
+
+<section id="example" name="配置范例">
+
+<para>
+<example>
+location / {
+    deny  192.168.1.1;
+    allow 192.168.1.0/24;
+    allow 10.1.1.0/16;
+    allow 2001:0db8::/32;
+    deny  all;
+}
+</example>
+</para>
+
+<para>
+规则按照顺序依次检测，直到匹配到第一条规则。
+在这个例子里，IPv4的网络中只有
+<literal>10.1.1.0/16</literal> 和 <literal>192.168.1.0/24</literal>允许访问，但
+<literal>192.168.1.1</literal>除外,
+对于IPv6的网络，只有<literal>2001:0db8::/32</literal>允许访问。
+在规则很多的情况下，使用
+<link doc="ngx_http_geo_module.xml">ngx_http_geo_module</link>
+模块变量更合适。
+</para>
+
+</section>
+
+
+<section id="directives" name="指令">
+
+<directive name="allow">
+<syntax>
+    <value>address</value> |
+    <value>CIDR</value> |
+    <literal>all</literal></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
+
+<para>
+允许指定的网络地址访问。
+</para>
+
+</directive>
+
+
+<directive name="deny">
+<syntax>
+    <value>address</value> |
+    <value>CIDR</value> |
+    <literal>all</literal></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
+
+<para>
+拒绝指定的网络地址访问。
+</para>
+
+</directive>
+
+</section>
+
+</module>

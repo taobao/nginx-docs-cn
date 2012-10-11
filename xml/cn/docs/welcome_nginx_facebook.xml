@@ -1,14 +1,20 @@
-﻿<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
 
-<article name="我尝试打开Facebook，但得到的是一个“Welcome to nginx!”的页面"
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="我尝试打开Facebook，Yahoo!，Yandex，Tumblr，Google等等，但得到的是一个“Welcome to nginx!”的页面"
          link="/cn/docs/welcome_nginx_facebook.html"
-         lang="cn">
+         lang="cn"
+         rev="1">
 
 <section>
 
 <para>
 <initial>问：</initial>
-我尝试打开Facebook，Yahoo!，Google，或者其他一些知名网站时，但是得到的都是空白页，上面有一条与nginx相关的信息：“Welcome to nginx!”或者是“404 Not Found / nginx”。
+我尝试打开Facebook，Yahoo!，Yandex，Tumblr，Google，或者其他一些知名网站时，但是得到的都是空白页，页面上有一条与nginx相关的信息：“Welcome to nginx!”或者是“404 Not Found / nginx”。
 </para>
 
 
@@ -16,21 +22,98 @@
 我怀疑出了什么问题，而且有可能有恶意的企图要把我引导到流氓页面去（为了黑掉我的电脑，钓鱼等等）。为什么？nginx跟我想连上Facebook（Yahoo!，Google等等）有什么关系？
 </para>
 
-
 <para>
 &nbsp;
 </para>
 
 <para>
 <initial>答：</initial>
-nginx是世界上最流行的三种web服务器之一。它是一个免费的开源软件，完全合法，和任何威胁或者恶意活动毫无关系。“Welcome to nginx!”的网页是一个运行nginx的服务器可能的诊断返回之一。
+第一，你看到的“Welcome to nginx!”不是我们的网站。nginx是我们开发和分发的一个<b>免费</b>的<link url="http://en.wikipedia.org/wiki/Open-source_software">开源</link>web服务器软件。“Welcome to nginx!”的页面只是任何一个运行nginx服务器的网站都会返回的诊断响应。目前，nginx是世界上第二流行的开源web服务器，它被70,000,000网站（因特网的10%）所使用。这些网站中绝大多数都是合法的，但也有一些不是。我们的软件是本着让因特网上具备高性能和高扩展性的好意而创造的，它遵循<link url="http://nginx.org/LICENSE">流行的开源许可</link>，本质上与任何威胁和恶意行为都没有任何关系————nginx不是恶意软件，它也不在你的电脑上。但是某些恶意软件确实会篡改你的电脑或者路由器，把你引导到某个欺诈的因特网服务器上。
 </para>
-
 
 <para>
-然而，你认为你的电脑或操作系统设置一定出问题了的假设是正确的——当你尝试访问一些知名网站的时候，得到的不是熟悉的页面反而是“Welcome to nginx!”。如果你的电脑是干净且安全的，就不应该出现这种情况。我们建议你检查并且核实你的操作系统设置（可能需要ISP或者支持人员的帮助），而且在你的电脑上安装并运行杀毒软件是一个好主意。可能有些邪恶的组织正在窃听从你电脑发出的数据流，而且潜在地可能对你和Internet上的其他用户造成巨大危害。
+(免责声明: 对于下列行为造成的任何负面影响和效果，nginx不承担任何责任。按下面建议进行操作时，您需要自行承担风险。尤其是您对您的操作系统和/或因特网应用不是很有经验时，这点非常重要。对任何直接的，间接的，偶然的，特殊的，典型的，或者继发的损害，包括但不限于使用、数据、收益方面的损失，或者营业中断，nginx不负有任何责任）。
 </para>
 
+<para>
+<list type="bullet" compact="no">
+<listitem>
+检查你的TCP/IP设置，查看DNS配置是否合法（请咨询ISP或IT支持人员）
+</listitem>
+
+<listitem>
+使用<link url="http://code.google.com/speed/public-dns/">Google
+Public DNS</link>, 尝试修复这个问题。Google Public DNS的描述是：“Google Public DNS是一款免费的全球域名系统（DNS）解析服务，您可以使用它替代您当前的DNS供应服务。[..]使用Google Public DNS，你可以：加速您的浏览体验。<b>提升你的安全性</b>。”
+</listitem>
+
+<listitem>
+清除您的DNS解析缓存。在微软Windos XP上，运行“开始” > “运行”，然后输入下面指令：“ipconfig /flushdns”。在微软Vista, Windows 7和Windows 8上，点击“开始”图标，找到“所有应用” > “附件” > “命令提示符”，右击，选择“以管理员身份运行”，再输入“ipconfig /flushdns”，敲回车键。
+</listitem>
+
+<listitem>
+点击浏览器上的“刷新”按钮。清空浏览器的数据（缓存，cookie等等）。比如，使用Chrome浏览器，找到并点击“清除浏览数据”（设置 > 显示高级设置）。使用IE浏览器，找到“工具” > “Interner选项” > “常规”）。<b>注意：</b>您在这里可能删除您保存的密码信心，所以请仔细操作并检查您正在进行的究竟是何种操作。
+</listitem>
+
+<listitem>
+检查“hosts”文件中是否不包含除“127.0.0.1 localhost”以外的其他项；如果不是，那么这些项中是否有您要访问的网站。“hosts”文件位于C:\WINDOWS\system32\drivers\etc文件夹下。通常文件中应该只有一项“127.0.0.1 localhost”。“hosts”文件可以使用记事本查看和编辑。
+</listitem>
+
+<listitem>
+检查安装到您的浏览器中的插件和扩展。重新安装您的浏览器或者如果可能的话，使用其他浏览器替代。
+</listitem>
+</list>
+</para>
+
+<para>
+当你尝试访问一些知名网站的时候，得到的不是熟悉的页面反而是“Welcome to nginx!”的时候，你的<b>操作系统</b>设置，<b>家用路由器</b>设置，或者<b>浏览器</b>设置一定有问题。如果你的电脑是干净且安全的，就不应该出现这种情况。
+</para>
+
+<para>
+如果将DNS服务器换成Google Public DNS，刷新DNS解析缓存，修复您的浏览器配置，或者清理“hosts”文件（适当的）确实解决了问题，那么您的电脑上或者周边网络中可能存在着恶意软件。使用您偏好的杀毒软件和恶意软件清除工具找出并清除它们。
+</para>
+
+<para>
+其他可能有用的文章：
+</para>
+
+<para>
+DCWG.org:
+</para>
+<para>
+<link url="http://www.dcwg.org/detect/">
+如何发现您的电脑是否已经被DNS Changer侵犯和感染？</link>
+</para>
+
+<para>
+<link url="http://www.dcwg.org/fix/">
+如何清理或修复恶意软件DNS Changer</link>
+</para>
+
+<para>
+Microsoft:
+</para>
+<para>
+<link url="http://www.microsoft.com/security/pc-security/malware-removal.aspx">
+恶意软件删除工具</link>
+</para>
+
+<para>
+<link url="http://support.microsoft.com/kb/972034">
+如何将主机文件重置回默认值？</link>
+</para>
+
+<para>
+<link url="http://support.microsoft.com/kb/299357">
+如何重置 Internet 协议 (TCP/IP)</link>
+</para>
+
+<para>
+Tech-Recipes:
+</para>
+<para>
+<link url="http://www.tech-recipes.com/rx/1600/vista_dns_cache_flush/">
+在Vista，Windows 7和Windows 8系统中刷新，清除，重置DNS缓存</link>
+</para>
 
 </section>
 

@@ -1,8 +1,15 @@
-﻿<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE article SYSTEM "../../../../dtd/article.dtd">
 
 <article name="虚拟主机名"
          link="/cn/docs/http/server_names.html"
          lang="cn"
+         rev="2"
+         translator="cfsego"
          author="Igor Sysoev"
          editor="Brian Mercer">
 
@@ -11,18 +18,18 @@
 
 <para>
 
-虚拟主机名使用<literal>server_name</literal>指令定义，并用于决定某个请求应由哪台虚拟主机处理。具体请参考《<link doc="request_processing.xml">nginx如何处理一个请求</link>》。虚拟主机名可以使用确切的名字，通配符，或者是正则表达式来定义：
+虚拟主机名使用<link doc="ngx_http_core_module.xml" id="server_name"/>指令定义，用于决定由某台<link doc="ngx_http_core_module.xml" id="server">虚拟主机</link>来处理请求。具体请参考《<link doc="request_processing.xml">nginx如何处理一个请求</link>》。虚拟主机名可以使用确切的名字，通配符，或者是正则表达式来定义：
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org;
+    server_name  example.org  www.example.org;
     ...
 }
 
 server {
     listen       80;
-    server_name  *.nginx.org;
+    server_name  *.example.org;
     ...
 }
 
@@ -34,12 +41,12 @@ server {
 
 server {
     listen       80;
-    server_name  ~^(?&lt;user&gt;.+)\.nginx\.net$;
+    server_name  ~^(?&lt;user&gt;.+)\.example\.net$;
     ...
 }
 </programlisting>
 
-nginx将以下面顺序检测名字：
+nginx以名字查找虚拟主机时，如果名字可以匹配多于一个主机名定义，比如同时匹配了通配符的名字和正则表达式的名字，那么nginx按照下面的优先级别进行查找，并选中第一个匹配的虚拟主机：
 
 <list type="enum">
 
@@ -48,19 +55,18 @@ nginx将以下面顺序检测名字：
 </listitem>
 
 <listitem>
-以星号起始的通配符名字：<literal>*.nginx.org</literal>；
+最长的以星号起始的通配符名字：<literal>*.example.org</literal>；
 </listitem>
 
 <listitem>
-以星号结束的通配符名字：<literal>mail.*</literal>；
+最长的以星号结束的通配符名字：<literal>mail.*</literal>；
 </listitem>
 
 <listitem>
-正则表达式名字，按在配置文件中出现的顺序遍历。
+第一个匹配的正则表达式名字（按在配置文件中出现的顺序）。
 </listitem>
 
 </list>
-一旦匹配成功，停止搜索。
 </para>
 
 </section>
@@ -70,11 +76,11 @@ nginx将以下面顺序检测名字：
         name="通配符名字">
 
 <para>
-通配符名字只可以在名字的起始处或结尾处包含一个星号，并且星号与其他字符之间用点分隔。所以，<literal>www.*.nginx.org</literal>和<literal>w*.nginx.org</literal>都是非法的。不过，上面的两个名字可以使用正则表达式描述：<literal>~^www\..+\.nginx\.org$</literal>和<literal>~^w.*\.nginx\.org$</literal>。星号可以匹配名字的多个节（各节都是以点号分隔的），比如<literal>*.nginx.org</literal>不仅匹配<literal>www.nginx.org</literal>，也匹配<literal>www.sub.nginx.org</literal>。
+通配符名字只可以在名字的起始处或结尾处包含一个星号，并且星号与其他字符之间用点分隔。所以，“<literal>www.*.example.org</literal>”和“<literal>w*.example.org</literal>”都是非法的。不过，上面的两个名字可以使用正则表达式描述，即“<literal>~^www\..+\.example\.org$</literal>”和“<literal>~^w.*\.example\.org$</literal>”。星号可以匹配名字的多个节（各节都是以点号分隔的）。“<literal>*.example.org</literal>”不仅匹配<literal>www.example.org</literal>，也匹配<literal>www.sub.example.org</literal>。
 </para>
 
 <para>
-有一种形如<literal>.nginx.org</literal>的特殊通配符，它可以既匹配确切的名字<literal>nginx.org</literal>，又可以匹配一般的通配符名字<literal>*.nginx.org</literal>。
+有一种形如“<literal>.example.org</literal>”的特殊通配符，它可以既匹配确切的名字“<literal>example.org</literal>”，又可以匹配一般的通配符名字“<literal>*.example.org</literal>”。
 </para>
 
 </section>
@@ -84,16 +90,16 @@ nginx将以下面顺序检测名字：
         name="正则表达式名字">
 
 <para>
-nginx使用兼容PCRE的正则表达式。为了使用正则表达式，虚拟主机名必须以波浪线“~”起始：
+nginx使用的正则表达式兼容PCRE。为了使用正则表达式，虚拟主机名必须以波浪线“~”起始：
 
 <programlisting>
-server_name  ~^www\d+\.nginx\.net$;
+server_name  ~^www\d+\.example\.net$;
 </programlisting>
 
-否则该名字会被认为是确切的名字，如果表达式含星号，则会被认为是通配符名字（很可能是一个非法的通配符名字）。不要忘记设置&ldquo;^&rdquo;和&ldquo;$&rdquo;锚点，语法上不是必须的，但是逻辑上是需要的。同时需要注意的是，域名中的点&ldquo;.&rdquo;需要用反斜线&ldquo;\&rdquo;转义。正则表达式中含有&ldquo;{&rdquo;和&ldquo;}&rdquo;，那么正则表达式需要被引用，如：
+否则该名字会被认为是个确切的名字，如果表达式含星号，则会被认为是个通配符名字（而且很可能是一个非法的通配符名字）。不要忘记设置“<literal>^</literal>”和“<literal>$</literal>”锚点，语法上它们不是必须的，但是逻辑上是的。同时需要注意的是，域名中的点“.”需要用反斜线“\”转义。含有“<literal>{</literal>”和“<literal>}</literal>”的正则表达式需要被引用，如：
 
 <programlisting>
-server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.nginx\.net$";
+server_name  "~^(?&lt;name&gt;\w\d<b>{</b>1,3<b>}</b>+)\.example\.net$";
 </programlisting>
 
 否则nginx就不能启动，错误提示是：
@@ -164,26 +170,34 @@ server {
         name="其他类型的名字">
 
 <para>
-如果需要用一个非默认的虚拟主机处理请求头中不含&ldquo;Host&rdquo;字段的请求，需要指定一个空名字：
+有一些主机名会被特别对待。
+</para>
+
+<para>
+如果需要用一个非默认的<link doc="ngx_http_core_module.xml" id="server">虚拟主机</link>处理请求头中不含<header>Host</header>字段的请求，需要指定一个空名字：
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org  "";
+    server_name  example.org  www.example.org  "";
     ...
 }
 </programlisting>
 </para>
 
 <para>
-如果server块中没有定义<literal>server_name</literal>，nginx使用空名字作为虚拟主机名。
+如果<link doc="ngx_http_core_module.xml" id="server"/>块中没有定义<link doc="ngx_http_core_module.xml" id="server_name"/>，nginx使用空名字作为虚拟主机名。
 <note>
-同样的情况下，nginx 0.8.48版本以下（含）使用<i>本地主机名</i>作为虚拟主机名。
+nginx 0.8.48版本以下（含）在同样的情况下会使用机器名作为虚拟主机名。
 </note>
 </para>
 
 <para>
-如果使用IP地址而不是主机名来请求服务器，那么请求头的&ldquo;HOST&rdquo;字段包含的将是IP地址。可以将IP地址作为虚拟主机名来处理这种请求：
+如果以“<literal>$hostname</literal>”（nginx 0.9.4及以上版本）定义虚拟主机名，机器名将被使用。
+</para>
+
+<para>
+如果使用IP地址而不是主机名来请求服务器，那么请求头的<header>Host</header>字段包含的将是IP地址。可以将IP地址作为虚拟主机名来处理这种请求：
 
 <programlisting>
 server {
@@ -199,7 +213,7 @@ server {
 </para>
 
 <para>
-在匹配所有的服务器的例子中，可以见到一个奇怪的名字&ldquo;_&rdquo;：
+在匹配所有的服务器的例子中，可以见到一个奇怪的名字“<literal>_</literal>”：
 
 <programlisting>
 server {
@@ -209,24 +223,24 @@ server {
 }
 </programlisting>
 
-这没什么特别的，它只不过是成千上万的与真实的名字毫不相干的非法域名中的一个而已。当然，也可以使用&ldquo;--&rdquo;、&ldquo;!@#&rdquo;等等。
+这没什么特别的，它只不过是成千上万的与真实的名字绝无冲突的非法域名中的一个而已。当然，也可以使用“<literal>--</literal>”和“<literal>!@#</literal>”等等。
 </para>
 
 <para>
-nginx直到0.6.25版本还支持一个特殊的名字&ldquo;*&rdquo;，这个名字一直被错误地理解成是一个匹配所有的名字。但它从来没有像匹配所有的名字，或者通配符那样工作过，而是用来支持一种功能，此功能现在已经改由<literal>server_name_in_redirect</literal>指令提供支持了。所以，现在这个特殊的名字&ldquo;*&rdquo;就过时了，应该使用<literal>server_name_in_redirect</literal>指令。需要注意的是，使用<literal>server_name</literal>指令无法描述匹配所有的名字或者默认服务器，需要使用<literal>listen</literal>指令的一个属性来完成这项工作。具体请参考《<link doc="request_processing.xml">nginx如何处理一个请求</link>》。可以定义两个服务器都监听*:80和*:8080端口，然后指定一个作为端口*:8080的默认服务器，另一个作为端口*:80的默认服务器：
+nginx直到0.6.25版本还支持一个特殊的名字“<literal>*</literal>”，这个名字一直被错误地理解成是一个匹配所有的名字。但它从来没有像匹配所有的名字，或者通配符那样工作过，而是用来支持一种功能，此功能现在已经改由<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/>指令提供支持了。所以，现在这个特殊的名字“<literal>*</literal>”已经过时了，应该使用<link doc="ngx_http_core_module.xml" id="server_name_in_redirect"/>指令取代它。需要注意的是，使用<link doc="ngx_http_core_module.xml" id="server_name"/>指令无法描述匹配所有的名字或者默认服务器。这是<link doc="ngx_http_core_module.xml" id="listen"/>指令的属性，而不是<link doc="ngx_http_core_module.xml" id="server_name"/>指令的属性。具体请参考《<link doc="request_processing.xml">nginx如何处理一个请求</link>》。可以定义两个服务器都监听*:80和*:8080端口，然后指定一个作为端口*:8080的默认服务器，另一个作为端口*:80的默认服务器：
 
 <programlisting>
 server {
     listen       80;
     listen       8080  default_server;
-    server_name  nginx.net;
+    server_name  example.net;
     ...
 }
 
 server {
     listen       80  default_server;
     listen       8080;
-    server_name  nginx.org;
+    server_name  example.org;
     ...
 }
 </programlisting>
@@ -240,16 +254,28 @@ server {
         name="优化">
 
 <para>
-确切名字和通配符名字存储在哈希表中。哈希表和监听端口关联，每个端口都最多关联到三张表：确切名字的哈希表，以星号起始的通配符名字的哈希表和以星号结束的通配符名字的哈希表。哈希表的尺寸在配置阶段进行了优化，可以以最小的CPU缓存命中失败来找到名字。nginx首先搜索确切名字的哈希表，如果没有找到，搜索以星号起始的通配符名字的哈希表，如果还是没有找到，继续搜索以星号结束的通配符名字的哈希表。因为名字是按照域名的节来搜索的，所以搜索通配符名字的哈希表比搜索确切名字的哈希表慢。注意<literal>.nginx.org</literal>存储在通配符名字的哈希表中，而不在确切名字的哈希表中。正则表达式是一个一个串行的测试，所以是最慢的，而且不可扩展。
+确切名字和通配符名字存储在哈希表中。哈希表和监听端口关联。哈希表的尺寸在配置阶段进行了优化，可以以最小的CPU缓存命中失败来找到名字。设置哈希表的细节参见<link doc="../hash.xml">这篇文档</link>
 </para>
 
 <para>
-鉴于以上原因，请尽可能使用确切的名字。举个例子，如果使用<literal>nginx.org</literal>和<literal>www.nginx.org</literal>来访问服务器是最频繁的，那么将它们明确的定义出来就更为有效：
+nginx首先搜索确切名字的哈希表，如果没有找到，搜索以星号起始的通配符名字的哈希表，如果还是没有找到，继续搜索以星号结束的通配符名字的哈希表。
+</para>
+
+<para>
+因为名字是按照域名的节来搜索的，所以搜索通配符名字的哈希表比搜索确切名字的哈希表慢。注意特殊的通配符名字“<literal>.example.org</literal>”存储在通配符名字的哈希表中，而不在确切名字的哈希表中。
+</para>
+
+<para>
+正则表达式是一个一个串行的测试，所以是最慢的，而且不可扩展。
+</para>
+
+<para>
+鉴于以上原因，请尽可能使用确切的名字。举个例子，如果使用<literal>example.org</literal>和<literal>www.example.org</literal>来访问服务器是最频繁的，那么将它们明确的定义出来就更为有效：
 
 <programlisting>
 server {
     listen       80;
-    server_name  nginx.org  www.nginx.org  *.nginx.org;
+    server_name  example.org  www.example.org  *.example.org;
     ...
 }
 </programlisting>
@@ -259,20 +285,20 @@ server {
 <programlisting>
 server {
     listen       80;
-    server_name  .nginx.org;
+    server_name  .example.org;
     ...
 }
 </programlisting>
 </para>
 
 <para>
-如果定义了大量名字，或者定义了非常长的名字，那就需要在<i>http</i>配置块中调整<literal>server_names_hash_max_size</literal>和<literal>server_names_hash_bucket_size</literal>的值。<literal>server_names_hash_bucket_size</literal>的默认值可能是32，或者是64，或者是其他值，取决于CPU的缓存行的长度。如果这个值是32，那么定义&ldquo;too.long.server.name.nginx.org&rdquo;作为虚拟主机名就会失败，显示下面错误信息： 
+如果定义了大量名字，或者定义了非常长的名字，那可能需要在<i>http</i>配置块中使用<link doc="ngx_http_core_module.xml" id="server_names_hash_max_size"/>和<link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>指令进行调整。<link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>的默认值可能是32，或者是64，或者是其他值，取决于CPU的缓存行的长度。如果这个值是32，那么定义“<literal>too.long.server.name.example.org</literal>”作为虚拟主机名就会失败，而nginx显示下面错误信息： 
 <programlisting>
 could not build the server_names_hash,
 you should increase server_names_hash_bucket_size: 32
 </programlisting>
 
-出现了这种情况，那就需要将设置值扩大一倍：
+出现了这种情况，那就需要将指令的值扩大一倍：
 
 <programlisting>
 http {
@@ -288,11 +314,11 @@ you should increase either server_names_hash_max_size: 512
 or server_names_hash_bucket_size: 32
 </programlisting>
 
-那么应该先尝试设置<literal>server_names_hash_max_size</literal>的值差不多等于名字列表的名字总量。如果还不能解决问题，或者服务器启动非常缓慢，再尝试提高<literal>server_names_hash_bucket_size</literal>的值。
+那么应该先尝试设置<link doc="ngx_http_core_module.xml" id="server_names_hash_max_size"/>的值差不多等于名字列表的名字总量。如果还不能解决问题，或者服务器启动非常缓慢，再尝试提高<link doc="ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>的值。
 </para>
 
 <para>
-如果只为一个监听端口配置了唯一的主机，那么nginx就完全不会测试虚拟主机名了（也不会建立那些名字哈希表）。不过，有一个例外，如果<literal>server_name</literal>是一个含有捕获组的正则表达式，这时nginx就不得不执行这个表达式以得到捕获组。
+如果只为一个监听端口配置了唯一的主机，那么nginx就完全不会测试虚拟主机名了（也不会为监听端口建立哈希表）。不过，有一个例外，如果定义的虚拟主机名是一个含有捕获组的正则表达式，这时nginx就不得不执行这个表达式以得到捕获组。
 </para>
 
 </section>
@@ -305,7 +331,11 @@ or server_names_hash_bucket_size: 32
 <list type="bullet">
 
 <listitem>
-从0.8.48版本开始，默认的虚拟主机名是空名字&ldquo;&rdquo;。
+从0.9.4版本开始，支持特殊的虚拟主机名“<literal>$hostname</literal>”。
+</listitem>
+
+<listitem>
+从0.8.48版本开始，默认的虚拟主机名是空名字“”。
 </listitem>
 
 <listitem>
@@ -317,7 +347,7 @@ or server_names_hash_bucket_size: 32
 </listitem>
 
 <listitem>
-从0.7.12版本开始，支持空名字&ldquo;&rdquo;。
+从0.7.12版本开始，支持空名字“”。
 </listitem>
 
 <listitem>
@@ -329,15 +359,15 @@ or server_names_hash_bucket_size: 32
 </listitem>
 
 <listitem>
-从0.6.0版本开始，支持形如<literal>nginx.*</literal>的通配符名字。
+从0.6.0版本开始，支持形如<literal>example.*</literal>的通配符名字。
 </listitem>
 
 <listitem>
-从0.3.18版本开始，支持形如<literal>.nginx.org</literal>的特殊通配符名字。
+从0.3.18版本开始，支持形如<literal>.example.org</literal>的特殊通配符名字。
 </listitem>
 
 <listitem>
-从0.1.13版本开始，支持形如<literal>*.nginx.org</literal>的通配符名字。
+从0.1.13版本开始，支持形如<literal>*.example.org</literal>的通配符名字。
 </listitem>
 
 </list>

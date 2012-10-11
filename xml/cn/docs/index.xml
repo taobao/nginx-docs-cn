@@ -1,8 +1,14 @@
-﻿<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
 
-<article name="nginx文档"
+<!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
+
+<article name="Nginx文档"
          link="/cn/docs/"
          lang="cn"
+         rev="3"
          toc="no">
 
 
@@ -28,6 +34,10 @@
 </listitem>
 
 <listitem>
+<link doc="syntax.xml"/>
+</listitem>
+
+<listitem>
 <link doc="debugging_log.xml"/>
 </listitem>
 
@@ -37,13 +47,64 @@
 </section>
 
 
-<section id="howto" name="howto">
+<section id="howto" name="How-To">
 
 <para>
 <list type="bullet">
 
 <listitem>
 <link doc="http/converting_rewrite_rules.xml"/>
+</listitem>
+
+</list>
+</para>
+
+</section>
+
+
+<section name="模块参考目录">
+
+<para>
+<list type="bullet">
+
+<listitem>
+<link doc="http/ngx_http_access_module.xml">
+ngx_http_access_module</link>
+</listitem>
+
+<listitem>
+<link doc="http/ngx_http_addition_module.xml">
+ngx_http_addition_module</link>
+</listitem>
+
+<listitem>
+<link doc="http/ngx_http_auth_basic_module.xml">
+ngx_http_auth_basic_module</link>
+</listitem>
+
+<listitem>
+<link doc="http/ngx_http_autoindex_module.xml">
+ngx_http_autoindex_module</link>
+</listitem>
+
+<listitem>
+<link doc="http/ngx_http_browser_module.xml">
+ngx_http_browser_module</link>
+</listitem>
+
+<listitem>
+<link doc="http/ngx_http_gzip_static_module.xml">
+ngx_http_gzip_static_module</link>
+</listitem>
+
+<listitem>
+<link doc="http/ngx_http_index_module.xml">
+ngx_http_index_module</link>
+</listitem>
+
+<listitem>
+<link doc="http/ngx_http_limit_conn_module.xml">
+ngx_http_limit_conn_module</link>
 </listitem>
 
 </list>

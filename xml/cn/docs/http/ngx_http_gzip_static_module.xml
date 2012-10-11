@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="ngx_http_gzip_static_module模块"
+        link="/cn/docs/http/ngx_http_gzip_static_module.html"
+        lang="cn"
+        translator="WenMing"
+        rev="1">
+
+<section id="summary">
+
+<para>
+模块 <literal>ngx_http_gzip_static_module</literal> 允许发送以“<literal>.gz</literal>”作为文件扩展名的预压缩文件，以替代发送普通文件。
+</para>
+
+<para>
+这个模块不是默认编译的，因此需要指定
+<literal>--with-http_gzip_static_module</literal>
+编译选项。
+</para>
+
+</section>
+
+
+<section id="example" name="配置范例">
+
+<para>
+<example>
+gzip_static  on;
+gzip_proxied expired no-cache no-store private auth;
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="指令">
+
+<directive name="gzip_static">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+启用或者禁用检查预压缩文件是否存在。
+与以下指令共同确定功能开启:
+<link doc="ngx_http_gzip_module.xml" id="gzip_http_version"/>,
+<link doc="ngx_http_gzip_module.xml" id="gzip_proxied"/>,
+<link doc="ngx_http_gzip_module.xml" id="gzip_disable"/>,
+和<link doc="ngx_http_gzip_module.xml" id="gzip_vary"/>.
+</para>
+
+<para>
+文件可以使用 <command>gzip</command> 命令来进行压缩，或任何其他兼容的命令。
+建议压缩文件和原始文件的修改日期和时间保持一致。
+</para>
+
+</directive>
+
+</section>
+
+</module>

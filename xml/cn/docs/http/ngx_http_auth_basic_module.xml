@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+
+<!--
+  Copyright (C) Igor Sysoev
+  Copyright (C) Nginx, Inc.
+  -->
+
+<!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
+
+<module name="ngx_http_auth_basic_module模块"
+        link="/cn/docs/http/ngx_http_auth_basic_module.html"
+        lang="cn"
+        translator="WenMing"
+        rev="1">
+
+<section id="summary">
+
+<para>
+模块<literal>ngx_http_auth_basic_module</literal> 允许使用“HTTP基本认证”协议验证用户名和密码来限制对资源的访问。
+</para>
+
+<para>
+也可以通过
+<link doc="ngx_http_auth_basic_module.xml">地址</link>来限制访问。
+使用<link doc="ngx_http_core_module.xml" id="satisfy"/> 指令就能同时通过地址和密码来限制访问。
+</para>
+
+</section>
+
+
+<section id="example" name="配置范例">
+
+<para>
+<example>
+location / {
+    auth_basic           "closed site";
+    auth_basic_user_file conf/htpasswd;
+}
+</example>
+</para>
+
+</section>
+
+
+<section id="directives" name="指令">
+
+<directive name="auth_basic">
+<syntax><value>string</value> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
+
+<para>
+开启使用“HTTP基本认证”协议的用户名密码验证。
+指定的参数被用作 <value>域</value>。
+参数<literal>off</literal>可以取消继承自上一个配置等级
+<literal>auth_basic</literal> 指令的影响。
+</para>
+
+</directive>
+
+
+<directive name="auth_basic_user_file">
+<syntax><value>file</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<context>limit_except</context>
+
+<para>
+指定保存用户名和密码的文件，格式如下：
+<example>
+# comment
+name1:password1
+name2:password2:comment
+name3:password3
+</example>
+</para>
+
+<para>
+密码应该使用<c-func>crypt</c-func>函数加密。
+可以用Apache发行包中的<command>htpasswd</command>命令来创建此类文件。
+</para>
+
+</directive>
+
+</section>
+
+</module>
