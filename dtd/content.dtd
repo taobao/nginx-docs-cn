@@ -97,8 +97,8 @@
 <!ELEMENT  item         EMPTY >
 <!ATTLIST  item
            ver          CDATA #IMPLIED
-           pgp          CDATA #IMPLIED
-           win          CDATA #IMPLIED
+           pgp          (yes | no) "yes"
+           win          (yes | no) "yes"
 >
 
 <!ELEMENT  security     (item+) >
