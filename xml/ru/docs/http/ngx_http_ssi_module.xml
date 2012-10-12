@@ -55,6 +55,22 @@ location / {
 </directive>
 
 
+<directive name="ssi_min_file_chunk">
+<syntax><literal>размер</literal></syntax>
+<default>1k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Задаёт минимальный <value>размер</value> частей ответа, хранящихся
+на диске, начиная с которого имеет смысл посылать их с помощью
+<link doc="ngx_http_core_module.xml" id="sendfile"/>.
+</para>
+
+</directive>
+
+
 <directive name="ssi_silent_errors">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
@@ -83,6 +99,20 @@ location / {
 в дополнение к “<literal>text/html</literal>”.
 Специальное значение “<literal>*</literal>” соответствует любому MIME-типу
 (0.8.29).
+</para>
+
+</directive>
+
+
+<directive name="ssi_value_length">
+<syntax><value>длина</value></syntax>
+<default>256</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Задаёт максимальную длину значений параметров в SSI-командах.
 </para>
 
 </directive>

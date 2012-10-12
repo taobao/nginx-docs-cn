@@ -55,6 +55,22 @@ Enables or disables processing of SSI commands in responses.
 </directive>
 
 
+<directive name="ssi_min_file_chunk">
+<syntax><literal>size</literal></syntax>
+<default>1k</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the minimum <value>size</value> for parts of a response stored on disk,
+starting from which it makes sense to send them using
+<link doc="ngx_http_core_module.xml" id="sendfile"/>.
+</para>
+
+</directive>
+
+
 <directive name="ssi_silent_errors">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
 <default>off</default>
@@ -82,6 +98,20 @@ if an error occurred during SSI processing.
 Enables processing of SSI commands in responses with the specified MIME types
 in addition to “<literal>text/html</literal>”.
 The special value “<literal>*</literal>” matches any MIME type (0.8.29).
+</para>
+
+</directive>
+
+
+<directive name="ssi_value_length">
+<syntax><value>length</value></syntax>
+<default>256</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the maximum length for values of parameters in SSI commands.
 </para>
 
 </directive>
