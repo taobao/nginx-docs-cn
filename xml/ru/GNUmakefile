@@ -87,11 +87,6 @@ $(DOC_LANG):								\
 		$(FAQ_HTML)						\
 		$(OUT)/$(DOC_LANG)/support.html				\
 
-$(OUT)/$(DOC_LANG)/download.html:					\
-		xml/$(DOC_LANG)/download.xml				\
-		$(DOWNLOAD_DEPS)
-	$(call XSLT, xslt/download.xslt, $<, $@)
-
 $(OUT)/$(DOC_LANG)/docs/index.html:					\
 		$(DOCS_XML)						\
 		$(REFS_XML)						\

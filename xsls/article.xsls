@@ -26,10 +26,13 @@ X:include href = "link.xslt";
 X:include href = "style.xslt";
 X:include href = "body.xslt";
 X:include href = "menu.xslt";
-X:include href = "donate.xslt";
-X:include href = "directive.xslt";
-X:include href = "content.xslt";
 X:include href = "ga.xslt";
+X:include href = "content.xslt";
+X:include href = "books.xslt";
+X:include href = "directive.xslt";
+X:include href = "donate.xslt";
+X:include href = "download.xslt";
+X:include href = "security.xslt";
 X:include href = "versions.xslt";
 
 

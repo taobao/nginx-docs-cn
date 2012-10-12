@@ -46,7 +46,6 @@ endef
 
 COMMON_DEPS =								\
 		xml/menu.xml						\
-		xml/versions.xml					\
 		xml/i18n.xml						\
 		dtd/content.dtd						\
 		xslt/dirname.xslt					\
@@ -59,32 +58,21 @@ COMMON_DEPS =								\
 
 ARTICLE_DEPS =								\
 		$(COMMON_DEPS)						\
+		xml/versions.xml					\
 		dtd/article.dtd						\
 		dtd/module.dtd						\
 		xslt/article.xslt					\
-		xslt/donate.xslt					\
+		xslt/books.xslt						\
 		xslt/directive.xslt					\
+		xslt/donate.xslt					\
+		xslt/download.xslt					\
+		xslt/security.xslt					\
 		xslt/versions.xslt					\
 
 NEWS_DEPS =								\
 		$(COMMON_DEPS)						\
 		dtd/news.dtd						\
 		xslt/news.xslt						\
-
-DOWNLOAD_DEPS =								\
-		$(COMMON_DEPS)						\
-		dtd/article.dtd						\
-		xslt/download.xslt					\
-
-SECURITY_DEPS =								\
-		$(COMMON_DEPS)						\
-		dtd/article.dtd						\
-		xslt/security.xslt					\
-
-BOOK_DEPS =								\
-		$(COMMON_DEPS)						\
-		dtd/article.dtd						\
-		xslt/books.xslt						\
 
 LANGS =		en ru cn he ja tr
 
@@ -120,10 +108,11 @@ $(OUT)/2009.html:							\
 $(OUT)/404.html:							\
 		xml/404.xml						\
 		xml/menu.xml						\
-		dtd/article.dtd						\
-		dtd/content.dtd						\
-		xslt/ga.xslt						\
-		xslt/error.xslt
+		dtd/error.dtd						\
+		xslt/error.xslt						\
+		xslt/dirname.xslt					\
+		xslt/menu.xslt						\
+		xslt/ga.xslt
 	$(call XSLT, xslt/error.xslt, $<, $@)
 
 $(OUT)/%.html:	xml/%.xml						\

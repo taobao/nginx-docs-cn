@@ -100,16 +100,6 @@ $(DOC_LANG):								\
 		$(OUT)/$(DOC_LANG)/support.html				\
 		$(OUT)/$(DOC_LANG)/donation.html			\
 
-$(OUT)/$(DOC_LANG)/download.html:					\
-		xml/$(DOC_LANG)/download.xml				\
-		$(DOWNLOAD_DEPS)
-	$(call XSLT, xslt/download.xslt, $<, $@)
-
-$(OUT)/$(DOC_LANG)/security_advisories.html:				\
-		xml/$(DOC_LANG)/security_advisories.xml			\
-		$(SECURITY_DEPS)
-	$(call XSLT, xslt/security.xslt, $<, $@)
-
 $(OUT)/$(DOC_LANG)/docs/index.html:					\
 		$(DOCS_XML)						\
 		$(REFS_XML)						\
@@ -126,8 +116,3 @@ xml/$(DOC_LANG)/docs/dirindex.xml:					\
 
 $(OUT)/$(DOC_LANG)/docs/faq.html:					\
 		$(FAQ_XML)						\
-
-$(OUT)/$(DOC_LANG)/books.html:						\
-		xml/$(DOC_LANG)/books.xml				\
-		$(BOOK_DEPS)
-	$(call XSLT, xslt/books.xslt, $<, $@)
