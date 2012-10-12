@@ -10,12 +10,13 @@
 <module name="Module ngx_http_autoindex_module"
         link="/en/docs/http/ngx_http_autoindex_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_autoindex_module</literal> module produces
+The <literal>ngx_http_autoindex_module</literal> module processes requests
+ending with the slash character (‘<literal>/</literal>’) and produces
 a directory listing.
 Usually a request is passed to the <literal>ngx_http_autoindex_module</literal>
 module when the
