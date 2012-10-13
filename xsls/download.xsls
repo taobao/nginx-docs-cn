@@ -5,16 +5,32 @@
 
 X:stylesheet {
 
-X:template = "download" { <table width="100%"> !! "item"; </table> }
+X:template = "download" {
+    X:var last="@last"
+    X:for-each "document(concat($XML, '/versions.xml'))
+                /versions/download[@tag = current()/@tag]" {
+        <table width="100%">
+
+        !! "item[position() &lt;= $last]";
+
+        </table>
+    }
+}
 
 
-X:template = "download/item[position() &lt;= ../@last]" {
+X:template = "download/item" {
     <tr>
         <td width="20%">
         X:if "position() = 1" {
             <a>
-            X:attribute "href" { X:text{/} !{/article/@lang} X:text{/} !{../@changes} }
-            !{../@changes}
+            X:attribute "href" {
+                X:text{/} !{$LANG} X:text{/CHANGES}
+                X:if "$LANG != 'en'" { X:text{.} !{$LANG} }
+                X:if "../@changes != ''" { X:text{-} !{../@changes} }
+            }
+            X:text{CHANGES}
+            X:if "$LANG != 'en'" { X:text{.} !{$LANG} }
+            X:if "../@changes != ''" { X:text{-} !{../@changes} }
             </a>
         }
         </td>
@@ -61,8 +77,5 @@ X:template = "download/item[position() &lt;= ../@last]" {
 
     </tr>
 }
-
-
-X:template = "download/item[position() &gt; ../@last]" { }
 
 }

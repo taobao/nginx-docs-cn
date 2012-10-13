@@ -206,7 +206,7 @@ stable:	NGINX:=$(shell xsltproc --stringparam VERSION stable		\
 	xslt/version.xslt xml/versions.xml)
 
 legacy:	xslt/version.xslt sign
-legacy:	NGINX:=$(shell xsltproc --stringparam VERSION legacy_stable	\
+legacy:	NGINX:=$(shell xsltproc --stringparam VERSION legacy		\
 	xslt/version.xslt xml/versions.xml)
 
 any:	sign

@@ -88,21 +88,15 @@
            translator   CDATA #IMPLIED
 >
 
-<!ELEMENT  download     (item+) >
+<!ELEMENT  download     EMPTY >
 <!ATTLIST  download
            last         CDATA #REQUIRED
-           changes      CDATA #REQUIRED
->
-
-<!ELEMENT  item         EMPTY >
-<!ATTLIST  item
-           ver          CDATA #IMPLIED
-           pgp          (yes | no) "yes"
-           win          (yes | no) "yes"
+           tag          (development | stable | legacy) #REQUIRED
 >
 
 <!ELEMENT  security     (item+) >
 
+<!ELEMENT  item         EMPTY >
 <!ATTLIST  item
            name         CDATA #IMPLIED
            severity     CDATA #IMPLIED
