@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-   <xsl:template match="download"> 
-      <table width="100%">
-         <xsl:apply-templates select="item"/>
-      </table>
+   <xsl:template match="download">
+
+      <xsl:variable select="@last" name="last"/>
+
+      <xsl:for-each select="document(concat($XML, '/versions.xml'))                 /versions/download[@tag = current()/@tag]">
+
+         <table width="100%">
+
+            <xsl:apply-templates select="item[position() &lt;= $last]"/>
+
+         </table>
+      </xsl:for-each>
    </xsl:template>
 
-   <xsl:template match="download/item[position() &lt;= ../@last]">
+   <xsl:template match="download/item">
 
       <tr>
 
@@ -18,13 +26,33 @@
                <a>
 
                   <xsl:attribute name="href">
+
                      <xsl:text>/</xsl:text>
-                     <xsl:value-of select="/article/@lang"/>
-                     <xsl:text>/</xsl:text>
-                     <xsl:value-of select="../@changes"/>
+                     <xsl:value-of select="$LANG"/>
+                     <xsl:text>/CHANGES</xsl:text>
+
+                     <xsl:if test="$LANG != 'en'">
+                        <xsl:text>.</xsl:text>
+                        <xsl:value-of select="$LANG"/>
+                     </xsl:if>
+
+                     <xsl:if test="../@changes != ''">
+                        <xsl:text>-</xsl:text>
+                        <xsl:value-of select="../@changes"/>
+                     </xsl:if>
                   </xsl:attribute>
 
-                  <xsl:value-of select="../@changes"/>
+                  <xsl:text>CHANGES</xsl:text>
+
+                  <xsl:if test="$LANG != 'en'">
+                     <xsl:text>.</xsl:text>
+                     <xsl:value-of select="$LANG"/>
+                  </xsl:if>
+
+                  <xsl:if test="../@changes != ''">
+                     <xsl:text>-</xsl:text>
+                     <xsl:value-of select="../@changes"/>
+                  </xsl:if>
 
                </a>
             </xsl:if>
@@ -108,7 +136,5 @@
 
       </tr>
    </xsl:template>
-
-   <xsl:template match="download/item[position() &gt; ../@last]"/>
 
 </xsl:stylesheet>
