@@ -103,7 +103,7 @@ svn co svn://svn.nginx.org/tags/release-1.1.6
 
 <listitem>
 ##这个不太通顺##
-创建编译和lib目录，并解压缩zlib,PCRE以及OpenSSL库到lib地址。
+创建编译和lib目录，并解压缩zlib,PCRE以及OpenSSL库到lib目录下。
 
 Create a build and lib directories, and unpack zlib, PCRE and OpenSSL libraries
 sources into lib directory:
@@ -164,4 +164,5 @@ nmake -f objs/Makefile
 </para>
 
 </section>
+
 </article>
