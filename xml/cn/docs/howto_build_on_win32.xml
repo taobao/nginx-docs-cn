@@ -13,7 +13,7 @@
          translator="JokerT"
          >
 
-<section name="先决条件Prerequisites">
+<section name="准备条件">
 
 <para>
 
@@ -102,8 +102,8 @@ svn co svn://svn.nginx.org/tags/release-1.1.6
 </listitem>
 
 <listitem>
-##不通顺
-创建一个编译以及lib地址，并解压缩zlib,PCRE以及OpenSSL库到lib地址。
+##这个不太通顺##
+创建编译和lib目录，并解压缩zlib,PCRE以及OpenSSL库到lib地址。
 
 Create a build and lib directories, and unpack zlib, PCRE and OpenSSL libraries
 sources into lib directory:
@@ -151,7 +151,7 @@ nmake -f objs/Makefile
 </section>
 
 <section id="see_also"
-         name="See also">
+         name="参见">
 
 <para>
 <list type="bullet">
