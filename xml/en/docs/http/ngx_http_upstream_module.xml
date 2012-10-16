@@ -10,7 +10,7 @@
 <module name="Module ngx_http_upstream_module"
         link="/en/docs/http/ngx_http_upstream_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -391,16 +391,36 @@ then these server groups are separated by colons, e.g.
 “<literal>192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock : 192.168.10.1:80, 192.168.10.2:80</literal>”.
 </tag-desc>
 
+<tag-name><var>$upstream_cache_status</var></tag-name>
+<tag-desc>
+keeps status of accessing a response cache (0.8.3).
+The status can be one of “<literal>MISS</literal>”, 
+“<literal>BYPASS</literal>”, “<literal>EXPIRED</literal>”,
+“<literal>STALE</literal>”, “<literal>UPDATING</literal>” or
+“<literal>HIT</literal>”.
+</tag-desc>
+
+<tag-name><var>$upstream_response_length</var></tag-name>
+<tag-desc>
+keeps lengths of responses obtained from upstream servers (0.7.27);
+lengths are kept in bytes.
+Several responses are separated by commas and colons
+like in the <var>$upstream_addr</var> variable.
+</tag-desc>
+
 <tag-name><var>$upstream_response_time</var></tag-name>
 <tag-desc>
-keeps servers response times in seconds with a milliseconds resolution.
-Several responses are also separated by commas and colons.
+keeps times of responses obtained from upstream servers;
+times are kept in seconds with a milliseconds resolution.
+Several responses are separated by commas and colons
+like in the <var>$upstream_addr</var> variable.
 </tag-desc>
 
 <tag-name><var>$upstream_status</var></tag-name>
 <tag-desc>
-keeps servers response codes.
-Several responses are also separated by commas and colons.
+keeps codes of responses obtained from upstream servers.
+Several responses are separated by commas and colons
+like in the <var>$upstream_addr</var> variable.
 </tag-desc>
 
 <tag-name><var>$upstream_http_...</var></tag-name>
@@ -408,7 +428,10 @@ Several responses are also separated by commas and colons.
 keep server response header fields.
 For example, the <header>Server</header> response header field
 is made available through the <var>$upstream_http_server</var> variable.
-Note that only the last server’s response header fields are saved.
+The rules of converting header field names to variable names are the same
+as for variables starting with the
+“<link doc="ngx_http_core_module.xml" id="variables">$http_</link>” prefix.
+Only the last server’s response header fields are saved.
 </tag-desc>
 
 </list>

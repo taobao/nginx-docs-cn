@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_upstream_module"
         link="/ru/docs/http/ngx_http_upstream_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -392,16 +392,36 @@ server {
 “<literal>192.168.1.1:80, 192.168.1.2:80, unix:/tmp/sock : 192.168.10.1:80, 192.168.10.2:80</literal>”.
 </tag-desc>
 
+<tag-name><var>$upstream_cache_status</var></tag-name>
+<tag-desc>
+хранит статус доступа к кэшу ответов (0.8.3).
+Статус может быть одним из “<literal>MISS</literal>”, 
+“<literal>BYPASS</literal>”, “<literal>EXPIRED</literal>”,
+“<literal>STALE</literal>”, “<literal>UPDATING</literal>” или
+“<literal>HIT</literal>”.
+</tag-desc>
+
+<tag-name><var>$upstream_response_length</var></tag-name>
+<tag-desc>
+хранит длины ответов, полученных от серверов группы (0.7.27);
+длины хранятся в байтах.
+Несколько ответов разделяются запятыми и двоеточиями,
+подобно переменной <var>$upstream_addr</var>.
+</tag-desc>
+
 <tag-name><var>$upstream_response_time</var></tag-name>
 <tag-desc>
-хранит времена ответов серверов в секундах с точностью до миллисекунд.
-Несколько ответов также разделяются запятыми и двоеточиями.
+хранит времена ответов, полученных от серверов группы;
+времена хранятся в секундах с точностью до миллисекунд.
+Несколько ответов разделяются запятыми и двоеточиями,
+подобно переменной <var>$upstream_addr</var>.
 </tag-desc>
 
 <tag-name><var>$upstream_status</var></tag-name>
 <tag-desc>
-хранит коды ответов серверов.
-Несколько ответов также разделяются запятыми и двоеточиями.
+хранит коды ответов, полученных от серверов группы.
+Несколько ответов разделяются запятыми и двоеточиями,
+подобно переменной <var>$upstream_addr</var>.
 </tag-desc>
 
 <tag-name><var>$upstream_http_...</var></tag-name>
@@ -409,6 +429,9 @@ server {
 хранят поля заголовка ответа сервера.
 Например, поле заголовка ответа <header>Server</header>
 доступно в переменной <var>$upstream_http_server</var>.
+Правила преобразования имён полей заголовка ответа в имена переменных
+такие же, как для переменных с префиксом
+“<link doc="ngx_http_core_module.xml" id="variables">$http_</link>”.
 Необходимо иметь в виду, что запоминаются только поля заголовка ответа
 последнего сервера.
 </tag-desc>
