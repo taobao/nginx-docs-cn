@@ -1,5 +1,3 @@
-DOC_LANG =	en
-
 DOCS =									\
 		faq							\
 		install							\
@@ -19,9 +17,6 @@ DOCS =									\
 		howto_setup_development_environment_on_ec2		\
 		nginx_dtrace_pid_provider				\
 
-DOCS_XML =	$(foreach name, $(DOCS), xml/$(DOC_LANG)/docs/$(name).xml)
-DOCS_HTML =	$(foreach name, $(DOCS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
-
 FAQ =									\
 		welcome_nginx_facebook					\
 		faq/license_copyright					\
@@ -30,9 +25,6 @@ FAQ =									\
 		faq/daemon_master_process_off				\
 		faq/chunked_encoding_from_backend			\
 		sys_errlist						\
-
-FAQ_XML =	$(foreach name, $(FAQ), xml/$(DOC_LANG)/docs/$(name).xml)
-FAQ_HTML =	$(foreach name, $(FAQ), $(OUT)/$(DOC_LANG)/docs/$(name).html)
 
 REFS =									\
 		ngx_core_module						\
@@ -83,36 +75,11 @@ REFS =									\
 		mail/ngx_mail_smtp_module				\
 		mail/ngx_mail_ssl_module				\
 
-REFS_XML =	$(foreach name, $(REFS), xml/$(DOC_LANG)/docs/$(name).xml)
-REFS_HTML =	$(foreach name, $(REFS), $(OUT)/$(DOC_LANG)/docs/$(name).html)
-
-$(DOC_LANG):								\
-		$(OUT)/$(DOC_LANG)/index.html				\
-		$(OUT)/$(DOC_LANG)/download.html			\
-		$(OUT)/$(DOC_LANG)/security_advisories.html		\
-		$(OUT)/$(DOC_LANG)/docs/index.html			\
-		$(DOCS_HTML)						\
-		$(REFS_HTML)						\
-		$(OUT)/$(DOC_LANG)/pgp_keys.html			\
-		$(FAQ_HTML)						\
-		$(OUT)/$(DOC_LANG)/links.html				\
-		$(OUT)/$(DOC_LANG)/books.html				\
-		$(OUT)/$(DOC_LANG)/support.html				\
-		$(OUT)/$(DOC_LANG)/donation.html			\
-
-$(OUT)/$(DOC_LANG)/docs/index.html:					\
-		$(DOCS_XML)						\
-		$(REFS_XML)						\
-
-xml/$(DOC_LANG)/docs/dirindex.xml:					\
-		$(REFS_XML)						\
-		xslt/dirindex.xslt
-	echo "<modules>$(patsubst %,					\
-	<module name=\"%\"/>, $(filter %.xml,$^))</modules>" |		\
-	xsltproc -o -							\
-	--stringparam LANG $(patsubst xml/%/docs/dirindex.xml,%,$@)	\
-	xslt/dirindex.xslt - |						\
-	sed 's;xml/[^/]*/docs/;;g' > $@
-
-$(OUT)/$(DOC_LANG)/docs/faq.html:					\
-		$(FAQ_XML)						\
+TOP =									\
+		download						\
+		security_advisories					\
+		pgp_keys						\
+		links							\
+		books							\
+		support							\
+		donation						\

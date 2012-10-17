@@ -83,8 +83,38 @@ arx:		$(OUT)/2011.html $(OUT)/2010.html $(OUT)/2009.html
 404:		$(OUT)/404.html
 
 
-include 	$(foreach lang, $(LANGS), xml/$(lang)/GNUmakefile)
+define lang-specific
 
+TOP=
+DOCS=
+REFS=
+FAQ=
+include xml/$(lang)/GNUmakefile
+
+$(lang):								\
+		$$(foreach f,index $$(TOP),$(OUT)/$(lang)/$$(f).html)	\
+		$$(foreach f,index $$(DOCS) $$(REFS) $$(FAQ),		\
+		$(OUT)/$(lang)/docs/$$(f).html)
+
+$(OUT)/$(lang)/docs/index.html:						\
+		$$(foreach f,$$(DOCS) $$(REFS),				\
+		$(OUT)/$(lang)/docs/$$(f).html)
+
+$(OUT)/$(lang)/docs/faq.html:						\
+		$$(foreach f,$$(FAQ),$(OUT)/$(lang)/docs/$$(f).html)
+
+xml/$(lang)/docs/dirindex.xml:						\
+		$$(foreach f,$$(REFS),xml/$(lang)/docs/$$(f).xml)	\
+		xslt/dirindex.xslt
+	echo "<modules>$$(patsubst %,					\
+	<module name=\"%\"/>, $$(filter %.xml,$$^))</modules>" |	\
+	xsltproc -o - --stringparam LANG $(lang)			\
+	xslt/dirindex.xslt - |						\
+	sed 's;xml/[^/]*/docs/;;g' > $$@
+
+endef
+
+$(foreach lang, $(LANGS), $(eval $(call lang-specific)))
 
 $(OUT)/index.html:							\
 		xml/index.xml						\
