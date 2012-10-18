@@ -83,6 +83,8 @@ arx:		$(OUT)/2011.html $(OUT)/2010.html $(OUT)/2009.html
 404:		$(OUT)/404.html
 
 
+DIRIND_DEPS =
+
 define lang-specific
 
 TOP=
@@ -103,6 +105,8 @@ $(OUT)/$(lang)/docs/index.html:						\
 $(OUT)/$(lang)/docs/faq.html:						\
 		$$(foreach f,$$(FAQ),$(OUT)/$(lang)/docs/$$(f).html)
 
+ifneq (,$$(filter dirindex,$$(DOCS)))
+DIRIND_DEPS +=	xml/$(lang)/docs/dirindex.xml
 xml/$(lang)/docs/dirindex.xml:						\
 		$$(foreach f,$$(REFS),xml/$(lang)/docs/$$(f).xml)	\
 		xslt/dirindex.xslt
@@ -111,10 +115,13 @@ xml/$(lang)/docs/dirindex.xml:						\
 	xsltproc -o - --stringparam LANG $(lang)			\
 	xslt/dirindex.xslt - |						\
 	sed 's;xml/[^/]*/docs/;;g' > $$@
+endif
 
 endef
 
 $(foreach lang, $(LANGS), $(eval $(call lang-specific)))
+
+$(foreach lang, $(LANGS), $(OUT)/$(lang)/docs/dirindex.html): $(DIRIND_DEPS)
 
 $(OUT)/index.html:							\
 		xml/index.xml						\
