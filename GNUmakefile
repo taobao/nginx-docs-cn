@@ -285,4 +285,7 @@ copy_dirmap:
 	/usr/local/bin/copy_dirmap.sh dir.map
 endif
 
+clean:
+	rm -rf $(ZIP) $(OUT) xml/*/docs/dirindex.xml
+
 .DELETE_ON_ERROR:
