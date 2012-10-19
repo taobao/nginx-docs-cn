@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="7">
+        rev="8">
 
 <section id="directives" name="Directives">
 
@@ -1447,19 +1447,24 @@ location / {
     [ configuration B ]
 }
 
-location ^~ /images/ {
+location /documents/ {
     [ configuration C ]
 }
 
-location ~* \.(gif|jpg|jpeg)$ {
+location ^~ /images/ {
     [ configuration D ]
+}
+
+location ~* \.(gif|jpg|jpeg)$ {
+    [ configuration E ]
 }
 </example>
 The “<literal>/</literal>” request will match configuration A,
+the “<literal>/index.html</literal>” request will match configuration B,
 the “<literal>/documents/document.html</literal>” request will match
-configuration B,
-the “<literal>/images/1.gif</literal>” request will match configuration C, and
-the “<literal>/documents/1.jpg</literal>” request will match configuration D.
+configuration C,
+the “<literal>/images/1.gif</literal>” request will match configuration D, and
+the “<literal>/documents/1.jpg</literal>” request will match configuration E.
 </para>
 
 <para>

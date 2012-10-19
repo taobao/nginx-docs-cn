@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
         lang="ru"
-        rev="7">
+        rev="8">
 
 <section id="directives" name="Директивы">
 
@@ -1434,18 +1434,23 @@ location / {
     [ конфигурация Б ]
 }
 
-location ^~ /images/ {
+location /documents/ {
     [ конфигурация В ]
 }
 
-location ~* \.(gif|jpg|jpeg)$ {
+location ^~ /images/ {
     [ конфигурация Г ]
+}
+
+location ~* \.(gif|jpg|jpeg)$ {
+    [ конфигурация Д ]
 }
 </example>
 Для запроса “<literal>/</literal>” будет выбрана конфигурация А,
-для запроса “<literal>/documents/document.html</literal>” — конфигурация Б,
-для запроса “<literal>/images/1.gif</literal>” — конфигурация В,
-а для запроса “<literal>/documents/1.jpg</literal>” — конфигурация Г.
+для запроса “<literal>/index.html</literal>” — конфигурация Б,
+для запроса “<literal>/documents/document.html</literal>” — конфигурация В,
+для запроса “<literal>/images/1.gif</literal>” — конфигурация Г,
+а для запроса “<literal>/documents/1.jpg</literal>” — конфигурация Д.
 </para>
 
 <para>
