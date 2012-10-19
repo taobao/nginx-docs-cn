@@ -7,34 +7,32 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_image_filter_module"
-        link="/en/docs/http/ngx_http_image_filter_module.html"
-        lang="en"
+<module name="ngx_http_image_filter_module模块"
+        link="/cn/docs/http/ngx_http_image_filter_module.html"
+        lang="cn"
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_image_filter_module</literal> module (0.7.54+) is a filter
-that transforms images in JPEG, GIF, and PNG formats.
+<literal>ngx_http_image_filter_module</literal> 模块（0.7.54+）是一个
+过滤器，它可以为JPEG,GIF和PNG等图像做格式转换。
 </para>
 
 <para>
-This module is not built by default, it should be enabled with the
-<literal>--with-http_image_filter_module</literal>
-configuration parameter.
+这个模块并不是默认编译的，需要通过
+<literal>--with-http_image_filter_module</literal>编译选项来启用。
 <note>
-This module utilizes the
-<link url="http://libgd.org">libgd</link> library.
-It is recommended to use the latest available version of the library;
-it is version 2.0.35 as of this writing.
+这个模块使用了
+<link url="http://libgd.org">libgd</link> 库。
+推荐使用这个库可用的最新版本；在写这个文档时的最新版本是2.0.35。
 </note>
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置例子">
 
 <para>
 <example>
@@ -54,7 +52,7 @@ location = /empty {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="image_filter">
 <syntax><literal>off</literal></syntax>
@@ -76,29 +74,28 @@ location = /empty {
 <context>location</context>
 
 <para>
-Sets the type of transformation to perform on images:
+设置图像转换的操作：
 <list type="tag">
 
 <tag-name><literal>off</literal></tag-name>
 <tag-desc>
-turns off module processing in a surrounding location.
+在所在location关闭模块处理。
 </tag-desc>
 
 <tag-name><literal>test</literal></tag-name>
 <tag-desc>
-ensures that responses are images in either JPEG, GIF, or PNG format.
-Otherwise, the error
+确保应答时JPEG，GIF或PNG格式的图像。否则错误
 <http-status code="415" text="Unsupported Media Type"/>
-is returned.
+将被返回。
 </tag-desc>
 
 <tag-name><literal>size</literal></tag-name>
 <tag-desc>
-outputs information about images in a JSON format, e.g.:
+以JSON格式返回图像的相关信息。例如：
 <example>
 { "img" : { "width": 100, "height": 100, "type": "gif" } }
 </example>
-In case of an error, the following is output:
+如果有错误发送，将会返回如下：
 <example>
 {}
 </example>
@@ -108,10 +105,10 @@ In case of an error, the following is output:
 <literal>90</literal>|<literal>180</literal>|<literal>270</literal>
 </tag-name>
 <tag-desc>
-rotates images counter-clockwise by the specified number of degrees.
-Value of the parameter can contain variables.
-Can be used either alone, or along with the
-<literal>resize</literal> and <literal>crop</literal> transformations.
+将图像逆时针旋转指定角度。
+参数的值可以包含变量。
+可以单独使用，或与
+<literal>resize</literal> 和 <literal>crop</literal> 转换同时使用.
 </tag-desc>
 
 <tag-name><literal>resize</literal>
@@ -119,14 +116,14 @@ Can be used either alone, or along with the
 <value>height</value>
 </tag-name>
 <tag-desc>
-proportionally reduces an image to the specified sizes.
-To reduce by only one dimension, another dimension can be specified as
-“<literal>-</literal>”.
-In case of an error, the server will return code
+按比例缩小图像至指定大小。
+如果想只指定其中一维，另一维可以指定为：
+“<literal>-</literal>”。
+如果有错误发生，服务器会返回
 <http-status code="415" text="Unsupported Media Type"/>.
-Values of parameters can contain variables.
-When used along with the <literal>rotate</literal> parameter,
-the rotation happens <emphasis>after</emphasis> reduction.
+参数的值可以包含变量。
+当与 <literal>rotate</literal> 参数同时使用时,
+旋转发生在缩放 <emphasis>之后</emphasis>。
 </tag-desc>
 
 <tag-name><literal>crop</literal>
@@ -134,15 +131,14 @@ the rotation happens <emphasis>after</emphasis> reduction.
 <value>height</value>
 </tag-name>
 <tag-desc>
-proportionally reduces an image to the size of the largest side
-and crops extraneous edges by another side.
-To reduce by only one dimension, another dimension can be specified as
-“<literal>-</literal>”.
-In case of an error, the server will return code
+按比例以图像的最短边为准对图像大小进行缩小，然后裁剪另一边多出来的部分。
+如果想只指定其中一维，另一维可以指定为：
+“<literal>-</literal>”。
+如果有错误发生，服务器会返回
 <http-status code="415" text="Unsupported Media Type"/>.
-Values of parameters can contain variables.
-When used along with the <literal>rotate</literal> parameter,
-the rotation happens <emphasis>before</emphasis> reduction.
+参数的值可以包含变量。
+当与 <literal>rotate</literal> 参数同时使用时,
+旋转发生在裁剪 <emphasis>之前</emphasis>。
 </tag-desc>
 
 </list>
@@ -159,8 +155,8 @@ the rotation happens <emphasis>before</emphasis> reduction.
 <context>location</context>
 
 <para>
-Sets the maximum size of the buffer used for reading images.
-When a size is exceeded the server will return error
+设置用来读图像的缓冲区的最大值。
+若超过这个大小，服务器会返回
 <http-status code="415" text="Unsupported Media Type"/>.
 </para>
 
@@ -175,11 +171,11 @@ When a size is exceeded the server will return error
 <context>location</context>
 
 <para>
-Sets the desired <value>quality</value> of the transformed JPEG images.
-Acceptable values are in the 1..100 range.
-Lesser values usually imply both lower image quality and less data to transfer.
-The maximum recommended value is 95.
-Value of the parameter can contain variables.
+设置转换后的JPEG图像的 <value>质量</value> 。
+可配置值： 1 ~ 100 。
+更小的值意味着更差的图像质量以及更少需要传输的数据。
+推荐的最大值是95.
+参数的值可以包含变量。
 </para>
 
 </directive>
@@ -193,10 +189,10 @@ Value of the parameter can contain variables.
 <context>location</context>
 
 <para>
-Increases sharpness of the final image.
-The sharpness percentage can exceed 100.
-The value of 0 disables sharpening.
-Value of the parameter can contain variables.
+增加最终图像的锐度。
+锐度百分比可以超过100.
+0为关闭锐化。
+参数的值可以包含变量。
 </para>
 
 </directive>
@@ -210,10 +206,9 @@ Value of the parameter can contain variables.
 <context>location</context>
 
 <para>
-Defines whether transparency should be preserved when transforming
-PNG images with colors specified by a palette, or in GIF images.
-The loss of transparency allows to obtain images of a better quality.
-The alpha channel transparency in PNG is always preserved.
+定义当在为PNG（或GIF）图像做颜色转换时是否需要保留透明度。
+损失透明度有可能可以获得更高的图像质量。
+PNG图像中的alpha通道的透明度默认会一直被保留。
 </para>
 
 </directive>
