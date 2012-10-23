@@ -286,6 +286,6 @@ copy_dirmap:
 endif
 
 clean:
-	rm -rf $(ZIP) $(OUT) xml/*/docs/dirindex.xml
+	rm -rf $(ZIP) $(OUT) xml/*/docs/dirindex.xml dir.map
 
 .DELETE_ON_ERROR:
