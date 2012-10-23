@@ -10,7 +10,7 @@
 <module name="Основная функциональность"
         link="/ru/docs/ngx_core_module.html"
         lang="ru"
-        rev="2">
+        rev="3">
 
 <section id="example" name="Пример конфигурации">
 
@@ -560,6 +560,10 @@ worker_priority -10;
 с установки его равным числу процессорных ядер
 (значение “<literal>auto</literal>” пытается определить его
 автоматически).
+<note>
+Параметр <literal>auto</literal> поддерживается только начиная
+с версии 1.3.8.
+</note>
 </para>
 
 </directive>
