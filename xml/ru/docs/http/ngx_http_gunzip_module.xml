@@ -10,18 +10,16 @@
 <module name="Модуль ngx_http_gunzip_module"
         link="/ru/docs/http/ngx_http_gunzip_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
 <para>
-Модуль <literal>ngx_http_gunzip_module</literal> это фильтр, распаковывающий
-ответы, возвращаемые с “<literal>Content-Encoding: gzip</literal>”,
-для тех клиентов, которые не поддерживают данный метод.
-Это может быть полезно, если предпочтительно хранить данные сжатыми
-(чтобы сэкономить пространство или дисковые/сетевые операции
-ввода/вывода), но при этом нежелательно причинять неудобства клиентам,
-которые не поддерживают сжатие методом gzip.
+Модуль <literal>ngx_http_gunzip_module</literal> — это фильтр,
+распаковывающий ответы с “<literal>Content-Encoding: gzip</literal>”
+для тех клиентов, которые не поддерживают метод сжатия “gzip”.
+Модуль будет полезен, когда данные желательно хранить сжатыми
+для экономии места и сокращения затрат на ввод-вывод.
 </para>
 
 <para>
@@ -57,8 +55,14 @@ location /storage/ {
 <context>location</context>
 
 <para>
-Разрешает или запрещает распаковку ответов, сжатых методом
-<literal>“gzip”</literal>.
+Разрешает или запрещает распаковку ответов, сжатых методом gzip,
+для тех клиентов, которые его не поддерживают.
+Если разрешено, то для определения, поддерживает ли клиент gzip,
+также учитываются следующие директивы:
+<link doc="ngx_http_gzip_module.xml" id="gzip_http_version"/>,
+<link doc="ngx_http_gzip_module.xml" id="gzip_proxied"/> и
+<link doc="ngx_http_gzip_module.xml" id="gzip_disable"/>.
+См. также директиву <link doc="ngx_http_gzip_module.xml" id="gzip_vary"/>.
 </para>
 
 </directive>
@@ -72,7 +76,10 @@ location /storage/ {
 <context>location</context>
 
 <para>
-Задаёт число и размер буферов, доступных для распаковки.
+Задаёт <value>число</value> и <value>размер</value> буферов,
+в которые будет разжиматься ответ.
+По умолчанию размер одного буфера равен размеру страницы.
+В зависимости от платформы это или 4K, или 8K.
 </para>
 
 </directive>
