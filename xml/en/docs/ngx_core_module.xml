@@ -10,7 +10,7 @@
 <module name="Core functionality"
         link="/en/docs/ngx_core_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="example" name="Example Configuration">
 
@@ -546,7 +546,7 @@ worker_priority -10;
 
 
 <directive name="worker_processes">
-<syntax><value>number</value></syntax>
+<syntax><value>number</value> | <literal>auto</literal></syntax>
 <default>1</default>
 <context>main</context>
 
@@ -559,7 +559,8 @@ The optimal value depends on many factors including (but not
 limited to) the number of CPU cores, the number of hard disk
 drives that store data, and load pattern.
 When in doubt, setting it to the number of available CPU cores
-would be a good start.
+would be a good start (the value “<literal>auto</literal>”
+will try to autodetect it).
 </para>
 
 </directive>

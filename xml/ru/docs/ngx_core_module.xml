@@ -10,7 +10,7 @@
 <module name="Основная функциональность"
         link="/ru/docs/ngx_core_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="example" name="Пример конфигурации">
 
@@ -544,7 +544,7 @@ worker_priority -10;
 
 
 <directive name="worker_processes">
-<syntax><value>число</value></syntax>
+<syntax><value>число</value> | <literal>auto</literal></syntax>
 <default>1</default>
 <context>main</context>
 
@@ -557,7 +557,9 @@ worker_priority -10;
 (но не ограничиваясь ими) число процессорных ядер, число
 жёстких дисков с данными и картину нагрузок.
 Если затрудняетесь в выборе правильного значения, можно начать
-с установки его равным числу процессорных ядер.
+с установки его равным числу процессорных ядер
+(значение “<literal>auto</literal>” пытается определить его
+автоматически).
 </para>
 
 </directive>
