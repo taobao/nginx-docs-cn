@@ -10,13 +10,14 @@
 <module name="ngx_http_image_filter_module模块"
         link="/cn/docs/http/ngx_http_image_filter_module.html"
         lang="cn"
+	translator="Cen Zheng"
         rev="1">
 
 <section id="summary">
 
 <para>
 <literal>ngx_http_image_filter_module</literal> 模块（0.7.54+）是一个
-过滤器，它可以为JPEG,GIF和PNG等图像做格式转换。
+过滤器，它可以对JPEG,GIF和PNG等图像进行变换。
 </para>
 
 <para>
@@ -25,7 +26,7 @@
 <note>
 这个模块使用了
 <link url="http://libgd.org">libgd</link> 库。
-推荐使用这个库可用的最新版本；在写这个文档时的最新版本是2.0.35。
+推荐使用这个库可用的最新版本；在写这个文档时它的最新版本是2.0.35。
 </note>
 </para>
 
@@ -74,7 +75,7 @@ location = /empty {
 <context>location</context>
 
 <para>
-设置图像转换的操作：
+设置图像变换的操作：
 <list type="tag">
 
 <tag-name><literal>off</literal></tag-name>
@@ -84,18 +85,18 @@ location = /empty {
 
 <tag-name><literal>test</literal></tag-name>
 <tag-desc>
-确保应答时JPEG，GIF或PNG格式的图像。否则错误
+确保应答是JPEG，GIF或PNG格式的图像。否则错误
 <http-status code="415" text="Unsupported Media Type"/>
 将被返回。
 </tag-desc>
 
 <tag-name><literal>size</literal></tag-name>
 <tag-desc>
-以JSON格式返回图像的相关信息。例如：
+以JSON格式返回图像信息。例如：
 <example>
 { "img" : { "width": 100, "height": 100, "type": "gif" } }
 </example>
-如果有错误发送，将会返回如下：
+如果有错误发生，将会返回如下：
 <example>
 {}
 </example>
@@ -108,7 +109,7 @@ location = /empty {
 将图像逆时针旋转指定角度。
 参数的值可以包含变量。
 可以单独使用，或与
-<literal>resize</literal> 和 <literal>crop</literal> 转换同时使用.
+<literal>resize</literal> 和 <literal>crop</literal> 变换同时使用.
 </tag-desc>
 
 <tag-name><literal>resize</literal>
@@ -156,7 +157,7 @@ location = /empty {
 
 <para>
 设置用来读图像的缓冲区的最大值。
-若超过这个大小，服务器会返回
+若图像超过这个大小，服务器会返回
 <http-status code="415" text="Unsupported Media Type"/>.
 </para>
 
@@ -171,7 +172,7 @@ location = /empty {
 <context>location</context>
 
 <para>
-设置转换后的JPEG图像的 <value>质量</value> 。
+设置变换后的JPEG图像的 <value>质量</value> 。
 可配置值： 1 ~ 100 。
 更小的值意味着更差的图像质量以及更少需要传输的数据。
 推荐的最大值是95.
@@ -206,7 +207,7 @@ location = /empty {
 <context>location</context>
 
 <para>
-定义当在为PNG（或GIF）图像做颜色转换时是否需要保留透明度。
+定义当对PNG，或者GIF图像进行颜色变换时是否需要保留透明度。
 损失透明度有可能可以获得更高的图像质量。
 PNG图像中的alpha通道的透明度默认会一直被保留。
 </para>
