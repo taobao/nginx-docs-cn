@@ -78,7 +78,7 @@ mail {
 <context>server</context>
 
 <para>
-Sets an <value>address</value> and a <value>port</value> for for a socket,
+Sets an <value>address</value> and a <value>port</value> for a socket,
 on which the server will accept requests.
 Only port may be specified.
 An address may also be a hostname, for example:

@@ -636,7 +636,7 @@ location @fallback {
 <para>
 <note>
 If <literal>uri</literal> processing leads to an error,
-the status code of the last occured error is returned to the client.
+the status code of the last occurred error is returned to the client.
 </note>
 </para>
 

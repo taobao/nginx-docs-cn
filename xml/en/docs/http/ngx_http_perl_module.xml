@@ -357,7 +357,7 @@ sets a value for the specified response header field.
     <literal>$r->internal_redirect(<value>uri</value>)</literal>
 </tag-name>
 <tag-desc>
-does an internal redirect to the speicified <value>uri</value>.
+does an internal redirect to the specified <value>uri</value>.
 An actual redirect happens after the Perl handler has completed.
 </tag-desc>
 
