@@ -10,7 +10,7 @@
 <module name="ngx_http_image_filter_module模块"
         link="/cn/docs/http/ngx_http_image_filter_module.html"
         lang="cn"
-	translator="Cen Zheng"
+        translator="Cen Zheng"
         rev="1">
 
 <section id="summary">
