@@ -10,7 +10,7 @@
 <module name="Основная функциональность"
         link="/ru/docs/ngx_core_module.html"
         lang="ru"
-        rev="3">
+        rev="4">
 
 <section id="example" name="Пример конфигурации">
 
@@ -454,6 +454,22 @@ nginx сам выбирает наиболее эффективный метод
 рабочие процессы.
 Если <value>группа</value> не задана, то используется группа, имя
 которой совпадает с именем пользователя.
+</para>
+
+</directive>
+
+
+<directive name="worker_aio_requests">
+<syntax><value>число</value></syntax>
+<default>32</default>
+<context>events</context>
+
+<para>
+При использовании <link doc="http/ngx_http_core_module.xml" id="aio"/>
+совместно с методом обработки соединений
+<link doc="../docs/events.xml" id="epoll"/>,
+задаёт максимальное <value>число</value> ожидающих обработки операций
+асинхронного ввода-вывода для одного рабочего процесса.
 </para>
 
 </directive>
