@@ -466,6 +466,8 @@ that of <value>user</value> is used.
 <syntax><value>number</value></syntax>
 <default>32</default>
 <context>events</context>
+<appeared-in>1.1.4</appeared-in>
+<appeared-in>1.0.7</appeared-in>
 
 <para>
 When using <link doc="http/ngx_http_core_module.xml" id="aio"/>

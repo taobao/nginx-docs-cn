@@ -463,6 +463,8 @@ nginx сам выбирает наиболее эффективный метод
 <syntax><value>число</value></syntax>
 <default>32</default>
 <context>events</context>
+<appeared-in>1.1.4</appeared-in>
+<appeared-in>1.0.7</appeared-in>
 
 <para>
 При использовании <link doc="http/ngx_http_core_module.xml" id="aio"/>
