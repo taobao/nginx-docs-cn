@@ -10,7 +10,7 @@
 <module name="Module ngx_mail_core_module"
         link="/en/docs/mail/ngx_mail_core_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -118,6 +118,19 @@ made in this case to determine an address that accepted a connection.
 <para>
 Different virtual servers must listen on different
 <value>address</value>:<value>port</value> pairs.
+</para>
+
+</directive>
+
+
+<directive name="mail">
+<syntax block="yes"/>
+<default/>
+<context>main</context>
+
+<para>
+Provides a configuration file context in which the mail server directives
+are specified.
 </para>
 
 </directive>
