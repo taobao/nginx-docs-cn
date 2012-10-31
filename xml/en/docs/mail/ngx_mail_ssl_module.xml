@@ -10,7 +10,7 @@
 <module name="Module ngx_mail_ssl_module"
         link="/en/docs/mail/ngx_mail_ssl_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -41,7 +41,7 @@ library.
 <context>server</context>
 
 <para>
-Enables the HTTPS protocol for the given virtual server.
+Enables the SSL/TLS protocol for the given server.
 </para>
 
 </directive>
@@ -55,7 +55,7 @@ Enables the HTTPS protocol for the given virtual server.
 
 <para>
 Specifies a file with a certificate in the PEM format for the given
-virtual server.
+server.
 If intermediate certificates should be specified in addition to a primary
 certificate, they should be specified in the same file in the following
 order: the primary certificate comes first, then the intermediate certificates.
@@ -72,7 +72,7 @@ A secret key in the PEM format may be placed in the same file.
 <context>server</context>
 
 <para>
-Specifies a file with a secret key in the PEM format for the given virtual
+Specifies a file with a secret key in the PEM format for the given
 server.
 </para>
 
@@ -163,7 +163,7 @@ The cache size is specified in bytes; one megabyte can store
 about 4000 sessions.
 Each shared cache should have an arbitrary name.
 A cache with the same name can be used in several
-virtual servers.
+servers.
 </tag-desc>
 
 </list>

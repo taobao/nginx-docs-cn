@@ -116,7 +116,7 @@ made in this case to determine an address that accepted a connection.
 </para>
 
 <para>
-Different virtual servers must listen on different
+Different servers must listen on different
 <value>address</value>:<value>port</value> pairs.
 </para>
 
@@ -190,7 +190,7 @@ parameters <literal>--without-mail_imap_module</literal>,
 <context>mail</context>
 
 <para>
-Sets a configuration for the virtual server.
+Sets a configuration for the server.
 </para>
 
 </directive>
@@ -203,7 +203,7 @@ Sets a configuration for the virtual server.
 <context>server</context>
 
 <para>
-Sets a name of the virtual server, used:
+Sets a name of the server, used:
 
 <list type="bullet">
 

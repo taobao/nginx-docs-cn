@@ -115,7 +115,7 @@ listen unix:/var/run/nginx.sock;
 </para>
 
 <para>
-Разные виртуальные серверы должны слушать на разных парах
+Разные серверы должны слушать на разных парах
 <value>адрес</value>:<value>порт</value>.
 </para>
 
@@ -188,7 +188,7 @@ listen unix:/var/run/nginx.sock;
 <context>mail</context>
 
 <para>
-Задаёт конфигурацию для виртуального сервера.
+Задаёт конфигурацию для сервера.
 </para>
 
 </directive>
