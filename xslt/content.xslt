@@ -196,6 +196,13 @@
       <xsl:text disable-output-escaping="yes">&lt;p&gt; </xsl:text>
    </xsl:template>
 
+   <xsl:template match="listitem[@id]"> 
+      <a name="{@id}"/>
+      <li>
+         <xsl:apply-templates/>
+      </li>
+   </xsl:template>
+
    <xsl:template match="listitem"> 
       <li>
          <xsl:apply-templates/>
