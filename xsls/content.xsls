@@ -88,6 +88,7 @@ X:stylesheet {
         X:text disable-output-escaping="yes" {&lt;p&gt; }
     }
 
+    X:template = "listitem[@id]" { <a name="{@id}" /> <li> !!; </li> }
     X:template = "listitem" { <li> !!; </li> }
     
     X:template = "list[@type='tag']" {

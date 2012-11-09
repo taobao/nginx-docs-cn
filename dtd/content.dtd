@@ -54,6 +54,9 @@
 <!ELEMENT  listitem     (#PCDATA | para | br | nobr | list | i | b |
                          path | literal | value | var | programlisting |
                          link | registered)* >
+<!ATTLIST  listitem
+           id           ID #IMPLIED
+>
 
 <!ELEMENT  note         (#PCDATA | para | br | list | i | b | link |
                          nobr | table | literal | command | path |
