@@ -7,22 +7,22 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_proxy_module"
-        link="/en/docs/http/ngx_http_proxy_module.html"
-        lang="en"
+<module name="ngx_http_proxy_module 模块"
+        link="/cn/docs/http/ngx_http_proxy_module.html"
+        lang="cn"
+        translator="cfsego"
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_proxy_module</literal> module allows to pass
-requests to another server.
+<literal>ngx_http_proxy_module</literal> 模块允许传送请求到其它服务器。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置示例">
 
 <para>
 <example>
@@ -37,7 +37,7 @@ location / {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="proxy_buffer_size">
 <syntax><value>size</value></syntax>
@@ -47,12 +47,7 @@ location / {
 <context>location</context>
 
 <para>
-Sets <value>size</value> of the buffer used for reading the first part
-of a response received from the proxied server.
-This part usually contains a small response header.
-By default, the buffer size is equal to the size of one
-buffer set by the <link id="proxy_buffers"/> directive.
-It can be made smaller however.
+设置缓冲区的大小为<value>size</value>。nginx从被代理的服务器读取响应时，使用该缓冲区保存响应的开始部分。这部分通常包含着一个小小的响应头。该缓冲区大小默认等于<link id="proxy_buffers"/>指令设置的一块缓冲区的大小，但它也可以被设置得更小。
 </para>
 
 </directive>
@@ -66,34 +61,20 @@ It can be made smaller however.
 <context>location</context>
 
 <para>
-Enables or disables buffering of responses from the proxied server.
+开启或关闭缓冲被代理服务器的响应。
 </para>
 
 <para>
-When buffering is enabled, nginx receives a response from the proxied server
-as soon as possible, saving it into buffers set by the
-<link id="proxy_buffer_size"/> and <link id="proxy_buffers"/> directives.
-If the whole response does not fit into memory, part of it can be saved
-to a <link id="proxy_temp_path">temporary file</link> on disk.
-Writes to temporary files are controlled by the
-<link id="proxy_max_temp_file_size"/> and
-<link id="proxy_temp_file_write_size"/> directives.
+当开启缓冲时，nginx尽可能快地从被代理的服务器接收响应，再将它存入<link id="proxy_buffer_size"/>和<link id="proxy_buffers"/>指令设置的缓冲区中。如果响应无法整个纳入内存，那么其中一部分将存入磁盘上的<link id="proxy_temp_path">临时文件</link>。<link id="proxy_max_temp_file_size"/>和<link id="proxy_temp_file_write_size"/>指令可以控制临时文件的写入。
 </para>
 
 <para>
-When buffering is disabled, a response is passed to a client synchronously,
-immediately as it is received.
-nginx will not try to read the whole response from the proxied server.
-The maximum size of the data that nginx can receive from the server
-at a time is set by the <link id="proxy_buffer_size"/> directive.
+当关闭缓冲时，收到响应后，nginx将其同步传给客户端。nginx不会尝试从被代理的服务器读取整个请求，而是将<link id="proxy_buffer_size"/>指令设定的大小作为一次读取的最大长度。
 </para>
 
 <para>
-Buffering can also be enabled or disabled by passing
-“<literal>yes</literal>” or “<literal>no</literal>” in the
-<header>X-Accel-Buffering</header> response header field.
-This ability can be disabled using the
-<link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/> directive.
+缓冲也可以通过在响应头<header>X-Accel-Buffering</header>中传递“<literal>yes</literal>”或“<literal>no</literal>”来开启或关闭。
+这个能力可以通过<link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>指令关闭。
 </para>
 
 </directive>
@@ -107,11 +88,7 @@ This ability can be disabled using the
 <context>location</context>
 
 <para>
-Sets the <value>number</value> and <value>size</value> of
-buffers used for reading a response from the proxied server,
-for a single connection.
-By default, the buffer size is equal to one memory page.
-This is either 4K or 8K, depending on a platform.
+为每个连接设置缓冲区的数量为<value>number</value>，每块缓冲区的大小为<value>size</value>。这些缓冲区用于保存从被代理的服务器读取的响应。每块缓冲区的大小默认等于一个内存页的大小。这个值是4K还是8K，取决于平台。
 </para>
 
 </directive>
@@ -125,14 +102,8 @@ This is either 4K or 8K, depending on a platform.
 <context>location</context>
 
 <para>
-When <link id="proxy_buffering">buffering</link> of responses from the proxied
-server is enabled, limits the total <value>size</value> of buffers that
-can be busy sending a response to the client while the response is not
-yet fully read.
-In the mean time, the rest of the buffers can be used for reading a response
-and, if needed, buffering part of a response to a temporary file.
-By default, <value>size</value> is limited by two buffers set by the
-<link id="proxy_buffer_size"/> and <link id="proxy_buffers"/> directives.
+当开启<link id="proxy_buffering">缓冲<link>响应的功能以后，在没有读到全部响应的情况下，缓冲到达一定<value>数量</value>时，nginx一定会向客户端发送响应，直到缓冲小于此值。这条指令用来设置此值。
+同时，剩余的缓冲区可以用于接收响应，如果需要，一部分内容将缓冲到临时文件。默认情况下，该<value>数量</value>是<link id="proxy_buffer_size"/>和<link id="proxy_buffers"/>指令设置单块缓冲大小的两倍。
 </para>
 
 </directive>
@@ -146,10 +117,7 @@ By default, <value>size</value> is limited by two buffers set by the
 <context>location</context>
 
 <para>
-Defines a shared memory zone used for caching.
-The same zone can be used in several places.
-The <literal>off</literal> parameter disables caching inherited
-from the previous configuration level.
+指定用于页面缓存的共享内存。同一块共享内存可以在多个地方使用。<literal>off</literal>参数可以屏蔽从上层配置继承的缓存功能。
 </para>
 
 </directive>
@@ -163,14 +131,12 @@ from the previous configuration level.
 <context>location</context>
 
 <para>
-Defines conditions under which the response will not be taken from a cache.
-If at least one value of the string parameters is not empty and is not
-equal to “0” then the response will not be taken from the cache:
+定义nginx不进行从缓存中取得响应的过程的条件。如果至少一个字符串条件非空而且非“0”，nginx就不会从缓存中去取响应：
 <example>
 proxy_cache_bypass $cookie_nocache $arg_nocache$arg_comment;
 proxy_cache_bypass $http_pragma    $http_authorization;
 </example>
-Can be used along with the <link id="proxy_no_cache"/> directive.
+本指令可和与<link id="proxy_no_cache"/>共同使用。
 </para>
 
 </directive>
@@ -184,11 +150,11 @@ Can be used along with the <link id="proxy_no_cache"/> directive.
 <context>location</context>
 
 <para>
-Defines a key for caching, for example
+定义如何生成缓存的键，比如
 <example>
 proxy_cache_key "$host$request_uri $cookie_user";
 </example>
-By default, the directive’s value is close to the string
+这条指令的默认值近似于下面字符串
 <example>
 proxy_cache_key $scheme$proxy_host$uri$is_args$args;
 </example>
@@ -206,13 +172,8 @@ proxy_cache_key $scheme$proxy_host$uri$is_args$args;
 <appeared-in>1.1.12</appeared-in>
 
 <para>
-When enabled, only one request at a time will be allowed to populate
-a new cache element identified according to the <link id="proxy_cache_key"/>
-directive by passing a request to a proxied server.
-Other requests of the same cache element will either wait
-for a response to appear in the cache, or the cache lock for
-this element to be released, up to the time set by the
-<link id="proxy_cache_lock_timeout"/> directive.
+开启此功能，则同时只允许一个请求发往后端，并根据<link id="proxy_cache_key"/>指令的设置在缓存中植入一个新条目。
+其他请求相同条目的请求将一直等待，直到缓存中出现相应的内容，或者锁在<link id="proxy_cache_lock_timeout"/>指令设置的超时后被释放。
 </para>
 
 </directive>
@@ -227,7 +188,7 @@ this element to be released, up to the time set by the
 <appeared-in>1.1.12</appeared-in>
 
 <para>
-Sets a timeout for <link id="proxy_cache_lock"/>.
+为<link id="proxy_cache_lock"/>指令设置锁的超时。
 </para>
 
 </directive>
@@ -241,8 +202,7 @@ Sets a timeout for <link id="proxy_cache_lock"/>.
 <context>location</context>
 
 <para>
-Sets the <value>number</value> of requests after which the response
-will be cached.
+设置响应被缓存的最小请求<value>次数</value>。
 </para>
 
 </directive>
@@ -262,59 +222,32 @@ will be cached.
 <context>http</context>
 
 <para>
-Sets path and other parameters of a cache.
-Cache data are stored in files.
-Both the key and file name in a cache are a result of
-applying the MD5 function to the proxied URL.
+设置缓存的路径和其他参数。缓存数据是保存在文件中的，缓存的键和文件名都是在代理URL上执行MD5的结果。
 
-The <literal>levels</literal> parameter defines hierarchy levels of a cache.
-For example, in the following configuration
+<literal>levels</literal>参数定义了缓存的层次结构。比如，下面配置
 <example>
 proxy_cache_path /data/nginx/cache levels=1:2 keys_zone=one:10m;
 </example>
-file names in a cache will look like this:
+缓存中文件名看起来是这样的：
 <example>
 /data/nginx/cache/<emphasis>c</emphasis>/<emphasis>29</emphasis>/b7f54b2df7773722d382f4809d650<emphasis>29c</emphasis>
 </example>
 </para>
 
 <para>
-A cached response is first written to a temporary file, then a file is renamed.
-Starting from version 0.8.9 temporary files and the cache can be put on
-different file systems but be aware that in this case a file is copied
-across two file systems instead of the cheap rename operation.
-It is thus recommended that for any given location both cache and a directory
-holding temporary files set by the <link id="proxy_temp_path"/> directive
-are put on the same file system.
+被缓存的响应首先写入一个临时文件，然后进行重命名。从0.8.9版本开始，临时文件和缓存可以放在不同的文件系统。但请注意，这将导致文件在这两个文件系统中进行拷贝，而不是廉价的重命名操作。因此，针对任何地址，都建议将缓存和<link id="proxy_temp_path"/>指令设置的临时文件目录放在同一文件系统。
 </para>
 
 <para>
-In addition, all active keys and information about data are stored
-in a shared memory zone, whose <value>name</value> and <value>size</value>
-are configured by the <literal>keys_zone</literal> parameter.
-Cached data that are not accessed during the time specified by the
-<literal>inactive</literal> parameter get removed from the cache
-regardless of their freshness.
-By default, <literal>inactive</literal> is set to 10 minutes.
+此外，所有活动的键和缓存数据相关的信息都被存放在共享内存中。共享内存通过<literal>keys_zone</literal>参数的<value>name</value>和<value>size</value>来定义。被缓存的数据如果在<literal>inactive</literal>参数指定的时间内未被访问，就会被从缓存中移除，不论它是否是刚产生的。<literal>inactive</literal>的默认值是10分钟。
 </para>
 
 <para>
-The special process “cache manager” monitors the maximum cache size set
-by the <literal>max_size</literal> parameter;
-when this size is exceeded it removes the least recently used data.
+特殊进程“cache manager”监控缓存的条目数量，如果超过<literal>max_size</literal>参数设置的最大值，使用LRU算法移除缓存数据。
 </para>
 
 <para>
-A minute after the start the special process “cache loader” is activated
-that loads information about previously cached data stored on file system
-into a cache zone.
-A load is done in iterations.
-During one iteration no more than <literal>loader_files</literal> items
-are loaded (by default, 100).
-Besides, the duration of one iteration is limited by the
-<literal>loader_threshold</literal> parameter (by default, 200 milliseconds).
-A pause is made between iterations, configured by the
-<literal>loader_sleep</literal> parameter (by default, 50 milliseconds).
+nginx新启动后不就，特殊进程“cache loader”就被启动。该进程将文件系统上保存的过去缓存的数据的相关信息重新加载到共享内存。加载过程分多次迭代完成，每次迭代，进程只加载不多于<literal>loader_files</literal>参数指定的文件数量（默认值为100）。此外，每次迭代过程的持续时间不能超过<literal>loader_threshold</literal>参数的值（默认200毫秒）。每次迭代之间，nginx的暂停时间由<literal>loader_sleep</literal>参数指定（默认50毫秒）。
 </para>
 
 </directive>
@@ -339,24 +272,15 @@ A pause is made between iterations, configured by the
 <context>location</context>
 
 <para>
-If an error occurs while working with the proxied server it is possible
-to use a stale cached response.
-This directives determines in which cases it is permitted.
-The directive’s parameters match those of the
-<link id="proxy_next_upstream"/> directive.
+如果后端服务器出现状况，nginx是可以使用陈旧的响应缓存的。这条指令就是定义何种条件下允许开启此机制。这条指令的参数与<link id="proxy_next_upstream"/>指令对应。
 </para>
 
 <para>
-Additionally, the <literal>updating</literal> parameter permits
-to use a stale cached response if it is currently being updated.
-This allows to minimize the number of accesses to proxied servers
-when updating cached data.
+此外，<literal>updating</literal>参数允许nginx在正在更新缓存的情况下使用陈旧的缓存作为响应。这样做可以在更新缓存时最小化访问源服务器的次数。
 </para>
 
 <para>
-To minimize the number of accesses to proxied servers when
-populating a new cache element, the <link id="proxy_cache_lock"/>
-directive can be used.
+如果需要在植入一个新的缓存条目时最小化访问源服务器的次数，可以使用<link id="proxy_cache_lock"/>指令。
 </para>
 
 </directive>
@@ -370,27 +294,24 @@ directive can be used.
 <context>location</context>
 
 <para>
-Sets caching time for different response codes.
-For example, the following directives
+为不同的响应状态码设置不同的缓存时间。比如，下面指令
 <example>
 proxy_cache_valid 200 302 10m;
 proxy_cache_valid 404      1m;
 </example>
-set 10 minutes of caching for responses with codes 200 and 302,
-and 1 minute for responses with code 404.
+设置状态码为200和302的响应的缓存时间为10分钟，为404的响应的缓存时间为1分钟。
 </para>
 
 <para>
-If only caching <value>time</value> is specified
+如果仅仅指定了<value>time</value>，
 <example>
 proxy_cache_valid 5m;
 </example>
-then only 200, 301, and 302 responses are cached.
+那么只用状态码为200、300和302的响应会被缓存。
 </para>
 
 <para>
-In addition, it can be specified to cache any responses using the
-<literal>any</literal> parameter:
+如果使用了<literal>any</literal>参数，那么就可以缓存任何响应：
 <example>
 proxy_cache_valid 200 302 10m;
 proxy_cache_valid 301      1h;
@@ -399,21 +320,11 @@ proxy_cache_valid any      1m;
 </para>
 
 <para>
-Parameters of caching can also be set directly
-in the response header.
-This has a higher precedence than setting of caching time using the directive.
-The <header>X-Accel-Expires</header> header field sets caching time of a
-response in seconds.
-The value 0 disables to cache a response.
-If a value starts with the prefix <literal>@</literal>, it sets an absolute
-time in seconds since Epoch, up to which the response may be cached.
-If header does not include the <header>X-Accel-Expires</header> field,
-parameters of caching may be set in the header fields
-<header>Expires</header> or <header>Cache-Control</header>.
-If a header includes the <header>Set-Cookie</header> field, such a
-response will not be cached.
-Processing of one or more of these response header fields can be disabled
-using the <link id="proxy_ignore_headers"/> directive.
+缓存参数也可以直接在响应头中设定。这种方式的优先级高于使用这条指令设置缓存时间。
+<header>X-Accel-Expires</header>响应头可以以秒为单位设置响应的缓存时间，如果值为0，表示禁止缓存响应，如果值以<literal>@</literal>开始，表示缓存响应知道公元后多少秒。
+如果不含<header>X-Accel-Expires</header>响应头，缓存参数仍可能被<header>Expires</header>或者<header>Cache-Control</header>响应头设置。
+如果响应头含有<header>Set-Cookie</header>，响应将不能被缓存。
+可以使用<link id="proxy_ignore_headers"/>指令屏蔽对其中一个或多个响应头的处理过程。
 </para>
 
 </directive>
@@ -427,8 +338,7 @@ using the <link id="proxy_ignore_headers"/> directive.
 <context>location</context>
 
 <para>
-Defines a timeout for establishing a connection with the proxied server.
-It should be noted that this timeout cannot usually exceed 75 seconds.
+设置与后端服务器建立连接的超时时间。应该注意这个超时一般不可能大于75秒。
 </para>
 
 </directive>
@@ -444,48 +354,35 @@ It should be noted that this timeout cannot usually exceed 75 seconds.
 <appeared-in>1.1.15</appeared-in>
 
 <para>
-Sets a text that should be changed in the <literal>domain</literal>
-attribute of the <header>Set-Cookie</header> header fields of a
-proxied server response.
-Suppose a proxied server returned the header field
-<header>Set-Cookie</header> with the attribute
-“<literal>domain=localhost</literal>”.
-The directive
+设置<header>Set-Cookie</header>响应头中的<literal>domain</literal>属性的变换文本。
+假设后端服务器返回的<header>Set-Cookie</header>响应头含有属性“<literal>domain=localhost</literal>”，那么指令
 <example>
 proxy_cookie_domain localhost example.org;
 </example>
-will rewrite this attribute to
-“<literal>domain=example.org</literal>”.
+将这个属性改写为“<literal>domain=example.org</literal>”。
 </para>
 
 <para>
-A dot at the beginning of the <value>domain</value> and
-<value>replacement</value> strings, and the <literal>domain</literal>
-attribute is ignored.
-Matching is case-insensitive.
+<value>domain</value>和<value>replacement</value>配置字符串，以及<literal>domain</literal>属性中起始的点将被忽略。
+匹配过程大小写不敏感。
 </para>
 
 <para>
-The strings <value>domain</value> and <value>replacement</value>
-can contain variables:
+<value>domain</value>和<value>replacement</value>配置字符串中可以包含变量：
 <example>
 proxy_cookie_domain www.$host $host;
 </example>
 </para>
 
 <para>
-A directive can also be specified using regular expressions.
-In this case, <value>domain</value> should start from
-the “<literal>~</literal>” symbol.
-A regular expression can contain named and positional captures,
-and <value>replacement</value> can reference them:
+这条指令同样可以使用正则表达式。如果使用，<value>domain</value>应以“<literal>~</literal>”标志开始，且可以使用命名匹配组和位置匹配组，而<value>replacement</value>可以引用这些匹配组：
 <example>
 proxy_cookie_domain ~\.(?P&lt;sl_domain&gt;[-0-9a-z]+\.[a-z]+)$ $sl_domain;
 </example>
 </para>
 
 <para>
-There could be several <literal>proxy_cookie_domain</literal> directives:
+可以同时定义多条<literal>proxy_cookie_domain</literal>指令：
 <example>
 proxy_cookie_domain localhost example.org;
 proxy_cookie_domain ~\.([a-z]+\.[a-z]+)$ $1;
@@ -493,8 +390,7 @@ proxy_cookie_domain ~\.([a-z]+\.[a-z]+)$ $1;
 </para>
 
 <para>
-The <literal>off</literal> parameter cancels all
-<literal>proxy_cookie_domain</literal> directives on the current level:
+<literal>off</literal>参数可以取消当前配置级别的所有<literal>proxy_cookie_domain</literal>指令：
 <example>
 proxy_cookie_domain off;
 proxy_cookie_domain localhost example.org;
@@ -515,43 +411,30 @@ proxy_cookie_domain www.example.org example.org;
 <appeared-in>1.1.15</appeared-in>
 
 <para>
-Sets a text that should be changed in the <literal>path</literal>
-attribute of the <header>Set-Cookie</header> header fields of a
-proxied server response.
-Suppose a proxied server returned the header field
-<header>Set-Cookie</header> with the attribute
-“<literal>path=/two/some/uri/</literal>”.
-The directive
+设置<header>Set-Cookie</header>响应头中的<literal>path</literal>属性的变换文本。
+假设后端服务器返回的<header>Set-Cookie</header>响应头含有属性“<literal>path=/two/some/uri/</literal>”，那么指令
 <example>
 proxy_cookie_path /two/ /;
 </example>
-will rewrite this attribute to
-“<literal>path=/some/uri/</literal>”.
+将这个属性改写为“<literal>path=/some/uri/</literal>”。
 </para>
 
 <para>
-The strings <value>path</value> and <value>replacement</value>
-can contain variables:
+<value>path</value>和<value>replacement</value>配置字符串可以包含变量：
 <example>
 proxy_cookie_path $uri /some$uri;
 </example>
 </para>
 
 <para>
-A directive can also be specified using regular expressions.
-In this case, <value>path</value> should either start from
-the “<literal>~</literal>” symbol for a case-sensitive matching,
-or from the “<literal>~*</literal>” symbols for case-insensitive
-matching.
-A regular expression can contain named and positional captures,
-and <value>replacement</value> can reference them:
+这条指令同样可以使用正则表达式。如果使用大小写敏感的匹配，<value>path</value>应以“<literal>~</literal>”标志开始，如果使用大小写不敏感的匹配，<value>path</value>应以“<literal>~*</literal>”标志开始。<value>path</value>可以使用命名匹配组和位置匹配组，<value>replacement</value>可以引用这些匹配组：
 <example>
 proxy_cookie_path ~*^/user/([^/]+) /u/$1;
 </example>
 </para>
 
 <para>
-There could be several <literal>proxy_cookie_path</literal> directives:
+可以同时定义多条<literal>proxy_cookie_path</literal>指令：
 <example>
 proxy_cookie_path /one/ /;
 proxy_cookie_path / /two/;
@@ -559,8 +442,7 @@ proxy_cookie_path / /two/;
 </para>
 
 <para>
-The <literal>off</literal> parameter cancels all
-<literal>proxy_cookie_path</literal> directives on the current level:
+<literal>off</literal>参数可以取消当前配置级别的所有<literal>proxy_cookie_path</literal>指令：
 <example>
 proxy_cookie_path off;
 proxy_cookie_path /two/ /;
@@ -579,15 +461,7 @@ proxy_cookie_path ~*^/user/([^/]+) /u/$1;
 <context>location</context>
 
 <para>
-By default,
-nginx does not pass the header fields <header>Date</header>,
-<header>Server</header>, <header>X-Pad</header>, and
-<header>X-Accel-...</header> from the response of a proxied
-server to a client.
-The <literal>proxy_hide_header</literal> directive sets additional fields
-that will not be passed.
-If, on the contrary, the passing of fields needs to be permitted,
-the <link id="proxy_pass_header"/> directive can be used.
+nginx默认不会将<header>Date</header>、<header>Server</header>、<header>X-Pad</header>，和<header>X-Accel-...</header>响应头发送给客户端。<literal>proxy_hide_header</literal>指令则可以设置额外的响应头，这些响应头也不会发送给客户端。相反的，如果希望允许传递某些响应头给客户端，可以使用<link id="proxy_pass_header"/>指令。
 </para>
 
 </directive>
@@ -602,11 +476,7 @@ the <link id="proxy_pass_header"/> directive can be used.
 <appeared-in>1.1.4</appeared-in>
 
 <para>
-Sets the HTTP protocol version for proxying.
-By default, version 1.0 is used.
-Version 1.1 is recommended for use with
-<link doc="ngx_http_upstream_module.xml" id="keepalive"/>
-connections.
+设置代理使用的HTTP协议版本。默认使用的版本是1.0，而1.1版本则推荐在使用<link doc="ngx_http_upstream_module.xml" id="keepalive"/>连接时一起使用。
 </para>
 
 </directive>
@@ -620,9 +490,7 @@ connections.
 <context>location</context>
 
 <para>
-Determines should the connection with a proxied server be
-closed if a client closes a connection without waiting
-for a response.
+决定当客户端在响应传输完成前就关闭连接时，nginx是否应关闭后端连接。
 </para>
 
 </directive>
@@ -636,45 +504,34 @@ for a response.
 <context>location</context>
 
 <para>
-Disables processing of certain response header fields from the proxied server.
-The following fields can be ignored: <header>X-Accel-Redirect</header>,
-<header>X-Accel-Expires</header>, <header>X-Accel-Limit-Rate</header> (1.1.6),
-<header>X-Accel-Buffering</header> (1.1.6),
-<header>X-Accel-Charset</header> (1.1.6), <header>Expires</header>,
-<header>Cache-Control</header>, and <header>Set-Cookie</header> (0.8.44).
+不处理后端服务器返回的指定响应头。下面的响应头可以被设置：
+<header>X-Accel-Redirect</header>，<header>X-Accel-Expires</header>，<header>X-Accel-Limit-Rate</header> (1.1.6)，<header>X-Accel-Buffering</header> (1.1.6)，
+<header>X-Accel-Charset</header> (1.1.6)，<header>Expires</header>，<header>Cache-Control</header>，和<header>Set-Cookie</header> (0.8.44)。
 </para>
 
 <para>
-If not disabled, processing of these header fields has the following effect:
+如果不被取消，这些头部的处理可能产生下面结果：
 <list type="bullet" compact="no">
 
 <listitem>
-<header>X-Accel-Expires</header>, <header>Expires</header>,
-<header>Cache-Control</header>, and <header>Set-Cookie</header>
-set parameters of response <link id="proxy_cache_valid">caching</link>;
+<header>X-Accel-Expires</header>，<header>Expires</header>，<header>Cache-Control</header>，和<header>Set-Cookie</header>
+设置响应<link id="proxy_cache_valid">缓存</link>的参数；
 </listitem>
 
 <listitem>
-<header>X-Accel-Redirect</header> performs an
-<link doc="ngx_http_core_module.xml" id="internal">internal
-redirect</link> to the specified URI;
+<header>X-Accel-Redirect</header>执行到指令URI的<link doc="ngx_http_core_module.xml" id="internal">内部跳转</link>；
 </listitem>
 
 <listitem>
-<header>X-Accel-Limit-Rate</header> sets a
-<link doc="ngx_http_core_module.xml" id="limit_rate">rate
-limit</link> for transmission of a response to a client;
+<header>X-Accel-Limit-Rate</header>设置传输响应到客户端的<link doc="ngx_http_core_module.xml" id="limit_rate">速率限制</link>；
 </listitem>
 
 <listitem>
-<header>X-Accel-Buffering</header> enables or disables
-<link id="proxy_buffering">buffering</link> of a response;
+<header>X-Accel-Buffering</header>启动或者关闭响应<link id="proxy_buffering">缓冲</link>；
 </listitem>
 
 <listitem>
-<header>X-Accel-Charset</header> sets the desired
-<link doc="ngx_http_charset_module.xml" id="charset"/>
-of a response.
+<header>X-Accel-Charset</header>设置响应所需的<link doc="ngx_http_charset_module.xml" id="charset">字符集</link>。
 </listitem>
 
 </list>
@@ -691,9 +548,7 @@ of a response.
 <context>location</context>
 
 <para>
-Determines whether proxied responses with codes greater than or equal
-to 400 should be passed to a client or be redirected to nginx for processing
-using the <link doc="ngx_http_core_module.xml" id="error_page"/> directive.
+决定当后端服务器的响应状态码大于等于400时，直接将响应发送给客户端，亦或将响应转发给nginx由<link doc="ngx_http_core_module.xml" id="error_page"/>指令来处理。
 </para>
 
 </directive>
@@ -707,17 +562,12 @@ using the <link doc="ngx_http_core_module.xml" id="error_page"/> directive.
 <context>location</context>
 
 <para>
-When <link id="proxy_buffering">buffering</link> of responses from the proxied
-server is enabled, and the whole response does not fit into memory buffers
-set by the <link id="proxy_buffer_size"/> and <link id="proxy_buffers"/>
-directives, part of a response can be saved to a temporary file.
-This directive sets the maximum <value>size</value> of a temporary file.
-The size of data written to a temporary file at a time is set
-by the <link id="proxy_temp_file_write_size"/> directive.
+打开响应<link id="proxy_buffering">缓冲</link>以后，如果整个响应不能存放在<link id="proxy_buffer_size"/>和<link id="proxy_buffers"/>指令设置的缓冲区内，部分响应可以存放在临时文件中。
+这条指令可以设置临时文件的最大<value>容量</value>。而每次写入临时文件的数据量则由<link id="proxy_temp_file_write_size"/>指令定义。
 </para>
 
 <para>
-Value of zero disables buffering of responses to temporary files.
+将此值设置为0将禁止响应写入临时文件。
 </para>
 
 </directive>
@@ -741,46 +591,41 @@ Value of zero disables buffering of responses to temporary files.
 <context>location</context>
 
 <para>
-Specifies in which cases a request should be passed to the next server:
+指定在何种情况下一个失败的请求应该被发送到下一台后端服务器：
 <list type="tag">
 
 <tag-name><literal>error</literal></tag-name>
-<tag-desc>an error occurred while establishing a connection with the
-server, passing it a request, or reading the response header;</tag-desc>
+<tag-desc>和后端服务器建立连接时，或者向后端服务器发送请求时，或者从后端服务器接收响应头时，出现错误；</tag-desc>
 
 <tag-name><literal>timeout</literal></tag-name>
-<tag-desc>a timeout has occurred while establishing a connection with the
-server, passing it a request, or reading the response header;</tag-desc>
+<tag-desc>和后端服务器建立连接时，或者向后端服务器发送请求时，或者从后端服务器接收响应头时，出现超时；</tag-desc>
 
 <tag-name><literal>invalid_header</literal></tag-name>
-<tag-desc>a server returned empty or invalid response;</tag-desc>
+<tag-desc>后端服务器返回空响应或者非法响应头；</tag-desc>
 
 <tag-name><literal>http_500</literal></tag-name>
-<tag-desc>a server returned a response with the code 500;</tag-desc>
+<tag-desc>后端服务器返回的响应状态码为500；</tag-desc>
 
 <tag-name><literal>http_502</literal></tag-name>
-<tag-desc>a server returned a response with the code 502;</tag-desc>
+<tag-desc>后端服务器返回的响应状态码为502；</tag-desc>
 
 <tag-name><literal>http_503</literal></tag-name>
-<tag-desc>a server returned a response with the code 503;</tag-desc>
+<tag-desc>后端服务器返回的响应状态码为503；</tag-desc>
 
 <tag-name><literal>http_504</literal></tag-name>
-<tag-desc>a server returned a response with the code 504;</tag-desc>
+<tag-desc>后端服务器返回的响应状态码为504；</tag-desc>
 
 <tag-name><literal>http_404</literal></tag-name>
-<tag-desc>a server returned a response with the code 404;</tag-desc>
+<tag-desc>后端服务器返回的响应状态码为404；</tag-desc>
 
 <tag-name><literal>off</literal></tag-name>
-<tag-desc>disables passing a request to the next server.</tag-desc>
+<tag-desc>停止将请求发送给下一台后端服务器。</tag-desc>
 
 </list>
 </para>
 
 <para>
-It should be understood that passing a request to the next server is
-only possible if a client was not sent anything yet.
-That is, if an error or a timeout occurs in the middle of
-transferring a response, fixing this is impossible.
+需要理解一点，将请求发送给下一台后端服务器仅仅在没有向客户端发送任何数据以前是可行的。也就是说，如果在传输响应到客户端时出现错误或者超时，这类错误是不可能恢复的。
 </para>
 
 </directive>
@@ -794,14 +639,12 @@ transferring a response, fixing this is impossible.
 <context>location</context>
 
 <para>
-Defines conditions under which the response will not be saved to a cache.
-If at least one value of the string parameters is not empty and is not
-equal to “0” then the response will not be saved:
+定义nginx不将响应写入缓存的条件。如果至少一个字符串条件非空而且非“0”，nginx就不将响应存入缓存：
 <example>
 proxy_no_cache $cookie_nocache $arg_nocache$arg_comment;
 proxy_no_cache $http_pragma    $http_authorization;
 </example>
-Can be used along with the <link id="proxy_cache_bypass"/> directive.
+这条指令可以和<link id="proxy_cache_bypass"/>指令一起使用。
 </para>
 
 </directive>
@@ -815,39 +658,27 @@ Can be used along with the <link id="proxy_cache_bypass"/> directive.
 <context>limit_except</context>
 
 <para>
-Sets the protocol and address of a proxied server, and an optional URI
-to which a location should be mapped.
-A protocol can be specified as
-“<literal>http</literal>” or “<literal>https</literal>”.
-An address can be specified as a domain name or IP address,
-and an optional port:
+设置后端服务器的协议和地址，还可以设置可选的URI以定义本地路径和后端服务器的映射关系。
+这条指令可以设置的协议是“<literal>http</literal>”或者“<literal>https</literal>”，而地址既可以使用域名或者IP地址加端口（可选）的形式来定义：
 <example>
 proxy_pass http://localhost:8000/uri/;
 </example>
-or as a UNIX-domain socket path specified after the word
-“<literal>unix</literal>” and enclosed in colons:
+又可以使用UNIX域套接字路径来定义。该路径接在“<literal>unix</literal>”字符串后面，两端由冒号所包围，比如：
 <example>
 proxy_pass http://unix:/tmp/backend.socket:/uri/;
 </example>
 </para>
 
 <para>
-If a domain name resolves to several addresses, all of them will be
-used in a round-robin fashion.
-In addition, an address can be specified as a
-<link doc="ngx_http_upstream_module.xml">server group</link>.
+如果解析一个域名得到多个地址，所有的地址都会以轮转的方式被使用。当然，也可以使用<link doc="ngx_http_upstream_module.xml">服务器组</link>来定义地址。
 </para>
 
 <para>
-A request URI is passed to the server as follows:
+请求URI按下面规则传送给后端服务器：
 <list type="bullet" compact="no">
 
 <listitem>
-If <literal>proxy_pass</literal> is specified with URI,
-when passing a request to the server, part of a
-<link doc="ngx_http_core_module.xml" id="location">normalized</link>
-request URI matching the location is replaced by a URI
-specified in the directive:
+如果<literal>proxy_pass</literal>使用了URI，当传送请求到后端服务器时，<link doc="ngx_http_core_module.xml" id="location">正常化</link>以后的请求路径与配置中的路径的匹配部分将被替换为指令中定义的URI：
 <example>
 location /name/ {
     proxy_pass http://127.0.0.1/remote/;
@@ -856,42 +687,32 @@ location /name/ {
 </listitem>
 
 <listitem>
-If <literal>proxy_pass</literal> is specified without URI,
-a request URI is passed to the server in the same form
-as sent by a client when processing an original request,
-or the full normalized request URI is passed
-when processing the changed URI:
+如果<literal>proxy_pass</literal>没有使用URI，传送到后端服务器的请求URI一般客户端发起的原始URI，如果nginx有改变请求URI，则传送的URI是nginx改变以后的正常化URI：
 <example>
 location /some/path/ {
     proxy_pass http://127.0.0.1;
 }
 </example>
 <note>
-Before version 1.1.12,
-if <literal>proxy_pass</literal> is specified without a URI,
-an original request URI might be passed
-instead of the changed URI in some cases.
+在1.1.12版以前，如果<literal>proxy_pass</literal>没有使用URI，某些情况下，nginx改变URI以后，会错误地将原始URI而不是改变以后的URI发送到后端服务器。
 </note>
 </listitem>
 </list>
 </para>
 
 <para>
-In some cases, part of a request URI to be replaced cannot be determined:
+某些情况下，无法确定请求URI中应该被替换的部分：
 <list type="bullet" compact="no">
 
 <listitem>
-When location is specified using a regular expression.
+使用正则表达式定义路径。
 <para>
-In this case, the directive should be specified without URI.
+这种情况下，指令不应该使用URI。
 </para>
 </listitem>
 
 <listitem>
-When URI is changed inside a proxied location using the
-<link doc="ngx_http_rewrite_module.xml" id="rewrite"/> directive,
-and this same configuration will be used to process a request
-(<literal>break</literal>):
+在需要被代理的路径中使用<link doc="ngx_http_rewrite_module.xml" id="rewrite"/>指令改变URI，但仍使用相同配置处理请求(<literal>break</literal>)：
 <example>
 location /name/ {
     rewrite    /name/([^/]+) /users?name=$1 break;
@@ -899,29 +720,25 @@ location /name/ {
 }
 </example>
 <para>
-In this case, a URI specified in the directive is ignored and
-the full changed request URI is passed to the server.
+这种情况下，本指令设置的URI会被忽略，改变后的URI将被发送给后端服务器。
 </para>
 </listitem>
 </list>
 </para>
 
 <para>
-A server name, its port and passed URI can also be specified using variables:
+后端服务器的地址，端口和URI中都可以使用变量：
 <example>
 proxy_pass http://$host$uri;
 </example>
-or even like this:
+甚至像这样：
 <example>
 proxy_pass $request;
 </example>
 </para>
 
 <para>
-In this case the server name is searched among the described
-<link doc="ngx_http_upstream_module.xml">server groups</link>,
-and if not found is determined using a
-<link doc="ngx_http_core_module.xml" id="resolver"/>.
+这种情况下，后端服务器的地址将会在定义的<link doc="ngx_http_upstream_module.xml">服务器组</link>中查找。如果查找不到，nginx使用<link doc="ngx_http_core_module.xml" id="resolver"/>来查找该地址。
 </para>
 
 </directive>
@@ -935,8 +752,7 @@ and if not found is determined using a
 <context>location</context>
 
 <para>
-Permits to pass <link id="proxy_hide_header">otherwise disabled</link> header
-fields from a proxied server to a client.
+允许传送<link id="proxy_hide_header">被屏蔽</link>的后端服务器响应头到客户端。
 </para>
 
 </directive>
@@ -950,11 +766,7 @@ fields from a proxied server to a client.
 <context>location</context>
 
 <para>
-Defines a timeout for reading a response from the proxied server.
-A timeout is only set between two successive read operations,
-not for the transmission of the whole response.
-If a proxied server does not transmit anything within this time,
-a connection is closed.
+定义从后端服务器读取响应的超时。此超时是指相邻两次读操作之间的最长时间间隔，而不是整个响应传输完成的最长时间。如果后端服务器在超时时间段内没有传输任何数据，连接将被关闭。
 </para>
 
 </directive>
@@ -970,34 +782,26 @@ a connection is closed.
 <context>location</context>
 
 <para>
-Sets a text that should be changed in the header fields
-<header>Location</header> and <header>Refresh</header> of a response
-from the proxied server.
-Suppose a proxied server returned the header field
-“<literal>Location: http://localhost:8000/two/some/uri/</literal>”.
-The directive
+设置后端服务器<header>Location</header>响应头和<header>Refresh</header>响应头的变换文本。
+假设后端服务器返回的响应头是
+“<literal>Location: http://localhost:8000/two/some/uri/</literal>”，那么指令
 <example>
 proxy_redirect http://localhost:8000/two/ http://frontend/one/;
 </example>
-will rewrite this string to
-“<literal>Location: http://frontend/one/some/uri/</literal>”.
+将把字符串改写为
+“<literal>Location: http://frontend/one/some/uri/</literal>”。
 </para>
 
 <para>
-A server name may be omitted from the <value>replacement</value> string:
+<value>replacement</value>字符串可以省略服务器名：
 <example>
 proxy_redirect http://localhost:8000/two/ /;
 </example>
-then the primary server’s name and a port, if different from 80,
-will be substituted.
+此时将使用代理服务器的主域名，以及端口号，如果端口异于80，来替换。
 </para>
 
 <para>
-The default replacement specified by the <literal>default</literal> parameter
-uses the parameters of the
-<link doc="ngx_http_core_module.xml" id="location"/> and
-<link id="proxy_pass"/> directives.
-Hence, the two configurations below are equivalent:
+用<literal>default</literal>参数指定的默认替换使用了<link doc="ngx_http_core_module.xml" id="location"/>和<link id="proxy_pass"/>指令的参数。因此，下面两例配置等价：
 <example>
 location /one/ {
     proxy_pass     http://upstream:port/two/;
@@ -1009,32 +813,25 @@ location /one/ {
     proxy_pass     http://upstream:port/two/;
     proxy_redirect http://upstream:port/two/ /one/;
 </example>
-The <literal>default</literal> parameter is not permitted if
-<link id="proxy_pass"/> is specified using variables.
+而且因为同样的原因，使用<literal>default</literal>参数时，不允许<link id="proxy_pass"/>指令使用变量。
 </para>
 
 <para>
-A <value>replacement</value> string can contain variables:
+<value>replacement</value>字符串可以包含变量：
 <example>
 proxy_redirect http://localhost:8000/ http://$host:$server_port/;
 </example>
 </para>
 
 <para>
-A <value>redirect</value> can also contain (1.1.11) variables:
+而<value>redirect</value>字符串从1.1.11版本开始也可以包含变量：
 <example>
 proxy_redirect http://$proxy_host:8000/ /;
 </example>
 </para>
 
 <para>
-A directive can be specified (1.1.11) using regular expressions.
-In this case, <value>redirect</value> should either start from
-the “<literal>~</literal>” symbol for a case-sensitive matching,
-or from the “<literal>~*</literal>” symbols for case-insensitive
-matching.
-A regular expression can contain named and positional captures,
-and <value>replacement</value> can reference them:
+同时，从1.1.11版本开始，指令支持正则表达式。使用正则表达式的话，如果是大小写敏感的匹配，<value>redirect</value>以“<literal>~</literal>”作为开始，如果是大小写不敏感的匹配，<value>redirect</value>以“<literal>~*</literal>”作为开始。而且<value>redirect</value>的正则表达式中可以包含命名匹配组和位置匹配组，而在<value>replacement</value>中可以引用这些匹配组的值：
 <example>
 proxy_redirect ~^(http://[^:]+):\d+(/.+)$ $1$2;
 proxy_redirect ~*/user/([^/]+)/(.+)$      http://$1.example.com/$2;
@@ -1042,7 +839,7 @@ proxy_redirect ~*/user/([^/]+)/(.+)$      http://$1.example.com/$2;
 </para>
 
 <para>
-There could be several <literal>proxy_redirect</literal> directives:
+除此以外，可以同时定义多个<literal>proxy_redirect</literal>指令：
 <example>
 proxy_redirect default;
 proxy_redirect http://localhost:8000/  /;
@@ -1051,8 +848,7 @@ proxy_redirect http://www.example.com/ /;
 </para>
 
 <para>
-The <literal>off</literal> parameter cancels all
-<literal>proxy_redirect</literal> directives on the current level:
+另外，<literal>off</literal>参数可以使所有相同配置级别的<literal>proxy_redirect</literal>指令无效：
 <example>
 proxy_redirect off;
 proxy_redirect default;
@@ -1062,8 +858,7 @@ proxy_redirect http://www.example.com/ /;
 </para>
 
 <para>
-Using this directive it is also possible to add host names to relative
-redirects issued by a proxied server:
+最后，使用这条指令也可以为地址为相对地址的重定向添加域名：
 <example>
 proxy_redirect / /;
 </example>
@@ -1080,11 +875,7 @@ proxy_redirect / /;
 <context>location</context>
 
 <para>
-Sets a timeout for transmitting a request to the proxied server.
-A timeout is only set between two successive write operations,
-not for the transmission of the whole request.
-If a proxied server does not receive anything within this time,
-a connection is closed.
+定义向后端服务器传输请求的超时。此超时是指相邻两次写操作之间的最长时间间隔，而不是整个请求传输完成的最长时间。如果后端服务器在超时时间段内没有接收到任何数据，连接将被关闭。
 </para>
 
 </directive>
@@ -1099,14 +890,9 @@ a connection is closed.
 <context>location</context>
 
 <para>
-Allows to redefine or append fields to the request header
-passed to the proxied server.
-A <value>value</value> can contain text, variables, and their combination.
-These directives are inherited from the previous level if and
-only if there are no
-<literal>proxy_set_header</literal>
-directives defined on the current level.
-By default, only two fields are redefined:
+允许重新定义或者添加发往后端服务器的请求头。<value>value</value>可以包含文本、变量或者它们的组合。
+当且仅当当前配置级别中没有定义<literal>proxy_set_header</literal>指令时，会从上面的级别继承配置。
+默认情况下，只有两个请求头会被重新定义：
 <example>
 proxy_set_header Host       $proxy_host;
 proxy_set_header Connection close;
@@ -1114,34 +900,29 @@ proxy_set_header Connection close;
 </para>
 
 <para>
-An unchanged <header>Host</header> request header field can be passed like this:
+如果不想改变请求头<header>Host</header>的值，可以这样来设置：
 <example>
 proxy_set_header Host       $http_host;
 </example>
 </para>
 
 <para>
-However, if this field is not present in a client request header then
-nothing will be passed.
-In such a case it is better to use the <var>$host</var> variable&mdash;its
-value equals the server name in the <header>Host</header> request header
-field, or the primary server name if this field is not present:
+但是，如果客户端请求头中没有携带这个头部，那么传递到后端服务器的请求也不含这个头部。
+这种情况下，更好的方式是使用<var>$host</var>变量——它的值在请求包含<header>Host</header>请求头时为<header>Host</header>字段的值，在请求未携带<header>Host</header>请求头时为虚拟主机的主域名：
 <example>
 proxy_set_header Host       $host;
 </example>
 </para>
 
 <para>
-In addition, a server name can be passed together with a port of the
-proxied server:
+此外，服务器名可以和后端服务器的端口一起传送：
 <example>
 proxy_set_header Host       $host:$proxy_port;
 </example>
 </para>
 
 <para>
-If the value of a header field is an empty string then this
-field will not be passed to a proxied server:
+如果某个请求头的值为空，那么这个请求头将不会传送给后端服务器：
 <example>
 proxy_set_header Accept-Encoding "";
 </example>
@@ -1158,11 +939,7 @@ proxy_set_header Accept-Encoding "";
 <context>location</context>
 
 <para>
-Determines whether SSL sessions can be reused when working with
-the proxied server.
-If the errors
-“<literal>SSL3_GET_FINISHED:digest check failed</literal>”
-appear in the logs, try to disable session reuse.
+决定是否重用与后端服务器的SSL会话。如果日志中出现“<literal>SSL3_GET_FINISHED:digest check failed</literal>”错误，请尝试关闭会话重用。
 </para>
 
 </directive>
@@ -1179,34 +956,18 @@ appear in the logs, try to disable session reuse.
 <context>location</context>
 
 <para>
-Enables saving of files to a disk.
-The <literal>on</literal> parameter saves files with paths
-corresponding to the directives
-<link doc="ngx_http_core_module.xml" id="alias"/> or
-<link doc="ngx_http_core_module.xml" id="root"/>.
-The <literal>off</literal> parameter disables saving of files.
-In addition, the file name can be set explicitly using the
-<value>string</value> with variables:
+开启将文件保存到磁盘上的功能。如果设置为<literal>on</literal>，nginx将文件保存在<link doc="ngx_http_core_module.xml" id="alias"/>指令或<link doc="ngx_http_core_module.xml" id="root"/>指令设置的路径中。如果设置为<literal>off</literal>，nginx将关闭文件保存的功能。此外，保存的文件名也可以使用含变量的<value>string</value>参数来指定：
 <example>
 proxy_store /data/www$original_uri;
 </example>
 </para>
 
 <para>
-The modification time of files is set according to the received
-<header>Last-Modified</header> response header field.
-A response is first written to a temporary file, then a file is renamed.
-Starting from version 0.8.9 temporary files and the persistent store
-can be put on different file systems but be aware that in this case
-a file is copied across two file systems instead of the cheap rename operation.
-It is thus recommended that for any given location both saved files and a
-directory holding temporary files set by the <link id="proxy_temp_path"/>
-directive are put on the same file system.
+保存文件的修改时间根据接收到的<header>Last-Modified</header>响应头来设置。响应都是先写到临时文件，然后进行重命名来生成的。从0.8.9版本开始，临时文件和持久化存储可以放在不同的文件系统，但是需要注意这时文件执行的是在两个文件系统间拷贝操作，而不是廉价的重命名操作。因此建议保存文件的路径和<link id="proxy_temp_path"/>指令设置的临时文件的路径在同一个文件系统中。
 </para>
 
 <para>
-This directive can be used to create local copies of static unchangeable
-files, e.g.:
+这条指令可以用于创建静态无更改文件的本地拷贝，比如：
 <example>
 location /images/ {
     root                   /data/www;
@@ -1228,7 +989,7 @@ location /fetch/ {
 </para>
 
 <para>
-or like this:
+或者像这样：
 <example>
 location /images/ {
     root               /data/www;
@@ -1259,15 +1020,14 @@ location @fetch {
 <context>location</context>
 
 <para>
-Sets access permissions for newly created files and directories, e.g.:
+设置新创建的文件和目录的访问权限，比如：
 <example>
 proxy_store_access user:rw group:rw all:r;
 </example>
 </para>
 
 <para>
-If any <literal>group</literal> or <literal>all</literal> access permissions
-are specified then <literal>user</literal> permissions may be omitted:
+如果指定了任何<literal>group</literal>或者<literal>all</literal>的访问权限，那么可以略去<literal>user</literal>的访问权限：
 <example>
 proxy_store_access group:rw all:r;
 </example>
@@ -1308,15 +1068,12 @@ The maximum size of a temporary file is set by the
 <context>location</context>
 
 <para>
-Defines a directory for storing temporary files
-with data received from proxied servers.
-Up to three-level subdirectory hierarchy can be used underneath the specified
-directory.
-For example, in the following configuration
+定义从后端服务器接收的临时文件的存放路径，可以为临时文件路径定义至多三层子目录的目录树。
+比如，下面配置
 <example>
 proxy_temp_path /spool/nginx/proxy_temp 1 2;
 </example>
-a temporary file might look like this:
+那么临时文件的路径看起来会是这样：
 <example>
 /spool/nginx/proxy_temp/<emphasis>7</emphasis>/<emphasis>45</emphasis>/00000123<emphasis>457</emphasis>
 </example>
@@ -1327,26 +1084,21 @@ a temporary file might look like this:
 </section>
 
 
-<section id="variables" name="Embedded Variables">
+<section id="variables" name="内嵌变量">
 
 <para>
-The <literal>ngx_http_proxy_module</literal> module supports embedded variables
-that can be used to compose headers using the
-<link id="proxy_set_header"/> directive:
+<literal>ngx_http_proxy_module</literal>支持内嵌变量，可以用于在<link id="proxy_set_header"/>指令中构造请求头：
 <list type="tag">
 
 <tag-name><var>$proxy_host</var></tag-name>
-<tag-desc>name and port of a proxied server;</tag-desc>
+<tag-desc>后端服务器的主机名和端口；</tag-desc>
 
 <tag-name><var>$proxy_port</var></tag-name>
-<tag-desc>port of a proxied server;</tag-desc>
+<tag-desc>后端服务器的端口；</tag-desc>
 
 <tag-name><var>$proxy_add_x_forwarded_for</var></tag-name>
-<tag-desc>the <header>X-Forwarded-For</header> client request header field
-with the <var>$remote_addr</var> variable appended to it, separated by a comma.
-If the <header>X-Forwarded-For</header> field is not present in the client
-request header, the <var>$proxy_add_x_forwarded_for</var> variable is equal
-to the <var>$remote_addr</var> variable.</tag-desc>
+<tag-desc>将<var>$remote_addr</var>变量值添加在客户端<header>X-Forwarded-For</header>请求头的后面，并以逗号分隔。
+如果客户端请求未携带<header>X-Forwarded-For</header>请求头，<var>$proxy_add_x_forwarded_for</var>变量值将与<var>$remote_addr</var>变量相同。</tag-desc>
 </list>
 </para>
 
