@@ -196,15 +196,14 @@
       <xsl:text disable-output-escaping="yes">&lt;p&gt; </xsl:text>
    </xsl:template>
 
-   <xsl:template match="listitem[@id]"> 
-      <a name="{@id}"/>
+   <xsl:template match="listitem"> 
       <li>
          <xsl:apply-templates/>
       </li>
    </xsl:template>
 
-   <xsl:template match="listitem"> 
-      <li>
+   <xsl:template match="listitem[@id]"> 
+      <li id="{@id}">
          <xsl:apply-templates/>
       </li>
    </xsl:template>
@@ -253,6 +252,12 @@
 
    <xsl:template match="tag-name"> 
       <dt>
+         <xsl:apply-templates/>
+      </dt>
+   </xsl:template>
+
+   <xsl:template match="tag-name[@id]"> 
+      <dt id="{@id}">
          <xsl:apply-templates/>
       </dt>
    </xsl:template>
