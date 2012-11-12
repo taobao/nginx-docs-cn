@@ -85,7 +85,7 @@ An address may also be a hostname, for example:
 <example>
 listen 127.0.0.1:110;
 listen *:110;
-listen 110;     # то же, что и *:110
+listen 110;     # same as *:110
 listen localhost:110;
 </example>
 IPv6 addresses (0.7.58) are specified in square brackets:
