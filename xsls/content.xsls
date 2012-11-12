@@ -109,6 +109,8 @@ X:stylesheet {
     }
 
     X:template = "tag-name" { <dt> !!; </dt> }
+    X:template = "tag-name[@id]" { <dt id="{@id}"> !!; </dt> }
+
     X:template = "tag-desc" { <dd> !!; </dd> }
 
     X:template = "table[@note and @width]" {
