@@ -10,26 +10,23 @@
 <module name="Module ngx_http_referer_module"
         link="/en/docs/http/ngx_http_referer_module.html"
         lang="en"
+        translator="nigelzeng"
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_referer_module</literal> module allows to block
-access to a site for requests with invalid values in the
-<header>Referer</header> header field.
-It should be kept in mind that fabricating a request with an appropriate
-<header>Referer</header> field value is quite easy, and so the intended
-purpose of this module is not to block such requests thoroughly but to block
-the mass flow of requests sent by regular browsers.
-It should also be taken into consideration that regular browsers may
-not send the <header>Referer</header> field even for valid requests.
+<literal>ngx_http_referer_module</literal>模块允许您根据请求头里<header>Referer</header>字段的值作出相应行为，
+如果该字段里的包含不合法的值，则阻止该请求访问站点。
+需要注意的是伪造一个有效的<header>Referer</header>头部信息是相当容易的，
+所以这个模块的预期目的不在于彻底地阻止这些请求，而是为了阻止由正常浏览器发出的大规模此类请求。
+还有一点需要注意，即使正常的浏览器也可能在发送一个有效请求的时候不携带<header>Referer</header>信息。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置实例">
 
 <para>
 <example>
@@ -46,7 +43,7 @@ if ($invalid_referer) {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="referer_hash_bucket_size">
 <syntax><value>size</value></syntax>
@@ -56,9 +53,8 @@ if ($invalid_referer) {
 <appeared-in>1.0.5</appeared-in>
 
 <para>
-Sets the bucket size for the valid referers hash tables.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+设置用来存储有效referers的哈希表的表项长度。
+详细的哈希表设置在一份单独的<link doc="../hash.xml">文档</link>里提供。
 </para>
 
 </directive>
@@ -72,9 +68,8 @@ For more information, please refer to
 <appeared-in>1.0.5</appeared-in>
 
 <para>
-Sets the maximum <value>size</value> of the valid referers hash tables.
-For more information, please refer to
-<link doc="../hash.xml">Setting Up Hashes</link>.
+设置用来存储有效referers的哈希表最大<value>size</value>。
+详细的哈希表设置在一份单独的<link doc="../hash.xml">文档</link>里提供。
 </para>
 
 </directive>
@@ -92,57 +87,47 @@ For more information, please refer to
 <context>location</context>
 
 <para>
-Specifies values of the <header>Referer</header> request header field
-that will cause the embedded variable <var>$invalid_referer</var> to
-be set to an empty string.
-Otherwise, the variable will be set to “<literal>1</literal>”.
-Search for a match is case-insensitive.
+<header>Referer</header>请求头字段里的指定值会使内嵌变量<var>$invalid_referer</var>被设置为空字符串，
+否则这个变量会被置成“<literal>1</literal>”。且匹配的查找是不区分大小写的。
 </para>
 
 <para>
-Parameters can be as follows:
+该指令的参数可以为下面的内容：
 <list type="tag">
 
 <tag-name><literal>none</literal></tag-name>
 <tag-desc>
-the <header>Referer</header> field is missing in the request header;
+请求头中缺少<header>Referer</header>字段；
 </tag-desc>
 
 <tag-name><literal>blocked</literal></tag-name>
 <tag-desc>
-the <header>Referer</header> field is present in the request header,
-but its value was deleted by a firewall or proxy server;
-such values are strings that do not start from
-“<literal>http://</literal>” or “<literal>https://</literal>”;
+<header>Referer</header>字段存在于请求头中，但是它的值被防火墙或者代理服务器删除；
+这些值都不以“<literal>http://</literal>” 或者 “<literal>https://</literal>”字符串作为开头；
 </tag-desc>
 
 <tag-name><literal>server_names</literal></tag-name>
 <tag-desc>
-the <header>Referer</header> request header field contains
-one of the server names;
+<header>Referer</header> 请求头字段包含服务器名中的一个；
 </tag-desc>
 
-<tag-name>arbitrary string</tag-name>
+<tag-name>任意字符串</tag-name>
 <tag-desc>
-defines a server name and an optional URI prefix.
-A server name can have an “<literal>*</literal>” at the beginning or end.
-When checking, the server’s port in the <header>Referer</header> field
-is ignored;
+定义一个服务器名和可选的URI前缀。服务器名允许在开头或结尾使用“<literal>*</literal>”符号。
+当nginx检查时，<header>Referer</header>字段里的服务器端口将被忽略。
 </tag-desc>
 
-<tag-name>regular expression</tag-name>
+<tag-name>正则表达式</tag-name>
 <tag-desc>
-the first symbol should be a “<literal>~</literal>”.
-It should be noted that an expression will be matched against
-the text starting after the “<literal>http://</literal>”
-or “<literal>https://</literal>”.
+必须以“<literal>~</literal>”标记作为开头。
+需要注意的是表达式会从“<literal>http://</literal>”或者“<literal>https://</literal>”之后的文本开始匹配。
 </tag-desc>
 
 </list>
 </para>
 
 <para>
-Example:
+实例:
 <example>
 valid_referers none blocked server_names
                *.example.com example.* www.example.org/galleries/
