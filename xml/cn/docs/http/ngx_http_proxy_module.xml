@@ -61,7 +61,7 @@ location / {
 <context>location</context>
 
 <para>
-开启或关闭缓冲被代理服务器的响应。
+代理的时候，开启或关闭缓冲后端服务器的响应。
 </para>
 
 <para>
@@ -69,11 +69,11 @@ location / {
 </para>
 
 <para>
-当关闭缓冲时，收到响应后，nginx将其同步传给客户端。nginx不会尝试从被代理的服务器读取整个请求，而是将<link id="proxy_buffer_size"/>指令设定的大小作为一次读取的最大长度。
+当关闭缓冲时，收到响应后，nginx立即将其同步传给客户端。nginx不会尝试从被代理的服务器读取整个请求，而是将<link id="proxy_buffer_size"/>指令设定的大小作为一次读取的最大长度。
 </para>
 
 <para>
-缓冲也可以通过在响应头<header>X-Accel-Buffering</header>中传递“<literal>yes</literal>”或“<literal>no</literal>”来开启或关闭。
+响应头<header>X-Accel-Buffering</header>传递“<literal>yes</literal>”或“<literal>no</literal>”可以动态地开启或关闭代理的缓冲功能。
 这个能力可以通过<link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>指令关闭。
 </para>
 
@@ -88,7 +88,7 @@ location / {
 <context>location</context>
 
 <para>
-为每个连接设置缓冲区的数量为<value>number</value>，每块缓冲区的大小为<value>size</value>。这些缓冲区用于保存从被代理的服务器读取的响应。每块缓冲区的大小默认等于一个内存页的大小。这个值是4K还是8K，取决于平台。
+为每个连接设置缓冲区的数量为<value>number</value>，每块缓冲区的大小为<value>size</value>。这些缓冲区用于保存从被代理的服务器读取的响应。每块缓冲区默认等于一个内存页的大小。这个值是4K还是8K，取决于平台。
 </para>
 
 </directive>
@@ -102,8 +102,8 @@ location / {
 <context>location</context>
 
 <para>
-当开启<link id="proxy_buffering">缓冲<link>响应的功能以后，在没有读到全部响应的情况下，缓冲到达一定<value>数量</value>时，nginx一定会向客户端发送响应，直到缓冲小于此值。这条指令用来设置此值。
-同时，剩余的缓冲区可以用于接收响应，如果需要，一部分内容将缓冲到临时文件。默认情况下，该<value>数量</value>是<link id="proxy_buffer_size"/>和<link id="proxy_buffers"/>指令设置单块缓冲大小的两倍。
+当开启<link id="proxy_buffering">缓冲<link>响应的功能以后，在没有读到全部响应的情况下，写缓冲到达一定<value>大小</value>时，nginx一定会向客户端发送响应，直到缓冲小于此值。这条指令用来设置此值。
+同时，剩余的缓冲区可以用于接收响应，如果需要，一部分内容将缓冲到临时文件。该<value>大小</value>默认是<link id="proxy_buffer_size"/>和<link id="proxy_buffers"/>指令设置单块缓冲大小的两倍。
 </para>
 
 </directive>
@@ -131,12 +131,12 @@ location / {
 <context>location</context>
 
 <para>
-定义nginx不进行从缓存中取得响应的过程的条件。如果至少一个字符串条件非空而且非“0”，nginx就不会从缓存中去取响应：
+定义nginx不从缓存取响应的条件。如果至少一个字符串条件非空而且非“0”，nginx就不会从缓存中去取响应：
 <example>
 proxy_cache_bypass $cookie_nocache $arg_nocache$arg_comment;
 proxy_cache_bypass $http_pragma    $http_authorization;
 </example>
-本指令可和与<link id="proxy_no_cache"/>共同使用。
+本指令可和与<link id="proxy_no_cache"/>一起使用。
 </para>
 
 </directive>
@@ -154,7 +154,7 @@ proxy_cache_bypass $http_pragma    $http_authorization;
 <example>
 proxy_cache_key "$host$request_uri $cookie_user";
 </example>
-这条指令的默认值近似于下面字符串
+这条指令的默认值类似于下面字符串
 <example>
 proxy_cache_key $scheme$proxy_host$uri$is_args$args;
 </example>
@@ -172,7 +172,7 @@ proxy_cache_key $scheme$proxy_host$uri$is_args$args;
 <appeared-in>1.1.12</appeared-in>
 
 <para>
-开启此功能，则同时只允许一个请求发往后端，并根据<link id="proxy_cache_key"/>指令的设置在缓存中植入一个新条目。
+开启此功能时，对于相同的请求，同时只允许一个请求发往后端，并根据<link id="proxy_cache_key"/>指令的设置在缓存中植入一个新条目。
 其他请求相同条目的请求将一直等待，直到缓存中出现相应的内容，或者锁在<link id="proxy_cache_lock_timeout"/>指令设置的超时后被释放。
 </para>
 
@@ -235,7 +235,7 @@ proxy_cache_path /data/nginx/cache levels=1:2 keys_zone=one:10m;
 </para>
 
 <para>
-被缓存的响应首先写入一个临时文件，然后进行重命名。从0.8.9版本开始，临时文件和缓存可以放在不同的文件系统。但请注意，这将导致文件在这两个文件系统中进行拷贝，而不是廉价的重命名操作。因此，针对任何地址，都建议将缓存和<link id="proxy_temp_path"/>指令设置的临时文件目录放在同一文件系统。
+被缓存的响应首先写入一个临时文件，然后进行重命名。从0.8.9版本开始，临时文件和缓存可以放在不同的文件系统。但请注意，这将导致文件在这两个文件系统中进行拷贝，而不是廉价的重命名操作。因此，针对任何路径，都建议将缓存和<link id="proxy_temp_path"/>指令设置的临时文件目录放在同一文件系统。
 </para>
 
 <para>
@@ -272,15 +272,15 @@ nginx新启动后不就，特殊进程“cache loader”就被启动。该进程
 <context>location</context>
 
 <para>
-如果后端服务器出现状况，nginx是可以使用陈旧的响应缓存的。这条指令就是定义何种条件下允许开启此机制。这条指令的参数与<link id="proxy_next_upstream"/>指令对应。
+如果后端服务器出现状况，nginx是可以使用过期的响应缓存的。这条指令就是定义何种条件下允许开启此机制。这条指令的参数与<link id="proxy_next_upstream"/>指令的参数相同。
 </para>
 
 <para>
-此外，<literal>updating</literal>参数允许nginx在正在更新缓存的情况下使用陈旧的缓存作为响应。这样做可以在更新缓存时最小化访问源服务器的次数。
+此外，<literal>updating</literal>参数允许nginx在正在更新缓存的情况下使用过期的缓存作为响应。这样做可以使更新缓存数据时，访问源服务器的次数最少。
 </para>
 
 <para>
-如果需要在植入一个新的缓存条目时最小化访问源服务器的次数，可以使用<link id="proxy_cache_lock"/>指令。
+在植入新的缓存条目时，如果想使访问源服务器的次数最少，可以使用<link id="proxy_cache_lock"/>指令。
 </para>
 
 </directive>
@@ -299,7 +299,7 @@ nginx新启动后不就，特殊进程“cache loader”就被启动。该进程
 proxy_cache_valid 200 302 10m;
 proxy_cache_valid 404      1m;
 </example>
-设置状态码为200和302的响应的缓存时间为10分钟，为404的响应的缓存时间为1分钟。
+设置状态码为200和302的响应的缓存时间为10分钟，状态码为404的响应的缓存时间为1分钟。
 </para>
 
 <para>
@@ -307,7 +307,7 @@ proxy_cache_valid 404      1m;
 <example>
 proxy_cache_valid 5m;
 </example>
-那么只用状态码为200、300和302的响应会被缓存。
+那么只有状态码为200、300和302的响应会被缓存。
 </para>
 
 <para>
@@ -321,10 +321,10 @@ proxy_cache_valid any      1m;
 
 <para>
 缓存参数也可以直接在响应头中设定。这种方式的优先级高于使用这条指令设置缓存时间。
-<header>X-Accel-Expires</header>响应头可以以秒为单位设置响应的缓存时间，如果值为0，表示禁止缓存响应，如果值以<literal>@</literal>开始，表示缓存响应知道公元后多少秒。
+<header>X-Accel-Expires</header>响应头可以以秒为单位设置响应的缓存时间，如果值为0，表示禁止缓存响应，如果值以<literal>@</literal>开始，表示自1970年1月1日以来的秒数，响应一直会被缓存到这个绝对时间点。
 如果不含<header>X-Accel-Expires</header>响应头，缓存参数仍可能被<header>Expires</header>或者<header>Cache-Control</header>响应头设置。
 如果响应头含有<header>Set-Cookie</header>，响应将不能被缓存。
-可以使用<link id="proxy_ignore_headers"/>指令屏蔽对其中一个或多个响应头的处理过程。
+这些头的处理过程可以使用指令<link id="proxy_ignore_headers"/>忽略。
 </para>
 
 </directive>
@@ -354,7 +354,7 @@ proxy_cache_valid any      1m;
 <appeared-in>1.1.15</appeared-in>
 
 <para>
-设置<header>Set-Cookie</header>响应头中的<literal>domain</literal>属性的变换文本。
+设置<header>Set-Cookie</header>响应头中的<literal>domain</literal>属性的替换文本。
 假设后端服务器返回的<header>Set-Cookie</header>响应头含有属性“<literal>domain=localhost</literal>”，那么指令
 <example>
 proxy_cookie_domain localhost example.org;
@@ -375,7 +375,7 @@ proxy_cookie_domain www.$host $host;
 </para>
 
 <para>
-这条指令同样可以使用正则表达式。如果使用，<value>domain</value>应以“<literal>~</literal>”标志开始，且可以使用命名匹配组和位置匹配组，而<value>replacement</value>可以引用这些匹配组：
+这条指令同样可以使用正则表达式。这时，<value>domain</value>应以“<literal>~</literal>”标志开始，且可以使用命名匹配组和位置匹配组，而<value>replacement</value>可以引用这些匹配组：
 <example>
 proxy_cookie_domain ~\.(?P&lt;sl_domain&gt;[-0-9a-z]+\.[a-z]+)$ $sl_domain;
 </example>
@@ -411,7 +411,7 @@ proxy_cookie_domain www.example.org example.org;
 <appeared-in>1.1.15</appeared-in>
 
 <para>
-设置<header>Set-Cookie</header>响应头中的<literal>path</literal>属性的变换文本。
+设置<header>Set-Cookie</header>响应头中的<literal>path</literal>属性的替换文本。
 假设后端服务器返回的<header>Set-Cookie</header>响应头含有属性“<literal>path=/two/some/uri/</literal>”，那么指令
 <example>
 proxy_cookie_path /two/ /;
@@ -782,7 +782,7 @@ proxy_pass $request;
 <context>location</context>
 
 <para>
-设置后端服务器<header>Location</header>响应头和<header>Refresh</header>响应头的变换文本。
+设置后端服务器<header>Location</header>响应头和<header>Refresh</header>响应头的替换文本。
 假设后端服务器返回的响应头是
 “<literal>Location: http://localhost:8000/two/some/uri/</literal>”，那么指令
 <example>
