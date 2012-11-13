@@ -7,9 +7,9 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_referer_module"
-        link="/en/docs/http/ngx_http_referer_module.html"
-        lang="en"
+<module name="ngx_http_referer_module模块"
+        link="/cn/docs/http/ngx_http_referer_module.html"
+        lang="cn"
         translator="nigelzeng"
         rev="1">
 
