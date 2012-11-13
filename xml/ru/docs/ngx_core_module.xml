@@ -10,7 +10,7 @@
 <module name="Основная функциональность"
         link="/ru/docs/ngx_core_module.html"
         lang="ru"
-        rev="4">
+        rev="5">
 
 <section id="example" name="Пример конфигурации">
 
@@ -580,7 +580,7 @@ worker_priority -10;
 автоматически).
 <note>
 Параметр <literal>auto</literal> поддерживается только начиная
-с версии 1.3.8.
+с версий 1.3.8 и 1.2.5.
 </note>
 </para>
 
