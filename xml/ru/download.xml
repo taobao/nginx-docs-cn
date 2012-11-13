@@ -193,6 +193,11 @@ deb-src http://nginx.org/packages/ubuntu/ <i>codename</i> nginx
 <td>precise</td>
 </tr>
 
+<tr>
+<td width="20%">12.10</td>
+<td>quantal</td>
+</tr>
+
 </table>
 </para>
 
