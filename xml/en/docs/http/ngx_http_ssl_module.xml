@@ -10,7 +10,7 @@
 <module name="Module ngx_http_ssl_module"
         link="/en/docs/http/ngx_http_ssl_module.html"
         lang="en"
-        rev="4">
+        rev="5">
 
 <section id="summary">
 
@@ -498,7 +498,8 @@ certificate, and if certificate was present, verifies it.
 </para>
 
 <para>
-The <literal>optional_no_ca</literal> parameter (1.3.8) requests the client
+The <literal>optional_no_ca</literal> parameter (1.3.8, 1.2.5)
+requests the client
 certificate but does not require it to be signed by a trusted CA certificate.
 This is intended for the use in cases where actual certificate verification
 is performed by a service that is external to nginx.

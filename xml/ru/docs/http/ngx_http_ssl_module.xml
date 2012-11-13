@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_ssl_module"
         link="/ru/docs/http/ngx_http_ssl_module.html"
         lang="ru"
-        rev="4">
+        rev="5">
 
 <section id="summary">
 
@@ -496,7 +496,8 @@ ssl_stapling_responder http://ocsp.example.com/;
 </para>
 
 <para>
-Параметр <literal>optional_no_ca</literal> (1.3.8) запрашивает сертификат
+Параметр <literal>optional_no_ca</literal> (1.3.8, 1.2.5)
+запрашивает сертификат
 клиента, но не требует, чтобы он был подписан доверенным сертификатом CA.
 Это предназначено для случаев, когда фактическая проверка сертификата
 осуществляется внешним по отношению к nginx’у сервисом.
