@@ -15,14 +15,13 @@
 <section id="summary">
 
 <para>
-The module <literal>ngx_http_empty_gif_module</literal> emits
-single-pixel transparent GIF.
+模块 <literal>ngx_http_empty_gif_module</literal> 只返回一个透明像素的GIF图片。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置范例">
 
 <para>
 <example>
@@ -35,7 +34,7 @@ location = /_.gif {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="empty_gif">
 <syntax/>
@@ -43,7 +42,7 @@ location = /_.gif {
 <context>location</context>
 
 <para>
-Turns on module processing in a surrounding location.
+在当前location里使用这个模块处理请求。
 </para>
 
 </directive>
