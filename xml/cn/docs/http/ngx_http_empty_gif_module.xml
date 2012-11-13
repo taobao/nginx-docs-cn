@@ -10,7 +10,7 @@
 <module name="ngx_http_empty_gif_module 模块"
         link="/cn/docs/http/ngx_http_empty_gif_module.html"
         lang="cn"
-	translator="yzprofile"	
+        translator="yzprofile"
         rev="1">
 
 
