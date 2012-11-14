@@ -813,7 +813,7 @@ location /one/ {
     proxy_pass     http://upstream:port/two/;
     proxy_redirect http://upstream:port/two/ /one/;
 </example>
-而且因为同样的原因，使用<literal>default</literal>参数时，不允许<link id="proxy_pass"/>指令使用变量。
+而且因为同样的原因，<link id="proxy_pass"/>指令使用变量时，不允许本指令使用<literal>default</literal>参数。
 </para>
 
 <para>
