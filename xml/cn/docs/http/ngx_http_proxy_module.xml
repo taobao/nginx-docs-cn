@@ -519,11 +519,11 @@ nginx默认不会将<header>Date</header>、<header>Server</header>、<header>X-
 </listitem>
 
 <listitem>
-<header>X-Accel-Redirect</header>执行到指令URI的<link doc="ngx_http_core_module.xml" id="internal">内部跳转</link>；
+<header>X-Accel-Redirect</header>执行到指定URI的<link doc="ngx_http_core_module.xml" id="internal">内部跳转</link>；
 </listitem>
 
 <listitem>
-<header>X-Accel-Limit-Rate</header>设置传输响应到客户端的<link doc="ngx_http_core_module.xml" id="limit_rate">速率限制</link>；
+<header>X-Accel-Limit-Rate</header>设置响应到客户端的传输<link doc="ngx_http_core_module.xml" id="limit_rate">速率限制</link>；
 </listitem>
 
 <listitem>
@@ -548,7 +548,7 @@ nginx默认不会将<header>Date</header>、<header>Server</header>、<header>X-
 <context>location</context>
 
 <para>
-决定当后端服务器的响应状态码大于等于400时，直接将响应发送给客户端，亦或将响应转发给nginx由<link doc="ngx_http_core_module.xml" id="error_page"/>指令来处理。
+当后端服务器的响应状态码大于等于400时，决定是否直接将响应发送给客户端，亦或将响应转发给nginx由<link doc="ngx_http_core_module.xml" id="error_page"/>指令来处理。
 </para>
 
 </directive>
@@ -625,7 +625,7 @@ nginx默认不会将<header>Date</header>、<header>Server</header>、<header>X-
 </para>
 
 <para>
-需要理解一点，将请求发送给下一台后端服务器仅仅在没有向客户端发送任何数据以前是可行的。也就是说，如果在传输响应到客户端时出现错误或者超时，这类错误是不可能恢复的。
+需要理解一点的是，只有在没有向客户端发送任何数据以前，将请求转给下一台后端服务器才是可行的。也就是说，如果在传输响应到客户端时出现错误或者超时，这类错误是不可能恢复的。
 </para>
 
 </directive>
@@ -678,7 +678,7 @@ proxy_pass http://unix:/tmp/backend.socket:/uri/;
 <list type="bullet" compact="no">
 
 <listitem>
-如果<literal>proxy_pass</literal>使用了URI，当传送请求到后端服务器时，<link doc="ngx_http_core_module.xml" id="location">正常化</link>以后的请求路径与配置中的路径的匹配部分将被替换为指令中定义的URI：
+如果<literal>proxy_pass</literal>使用了URI，当传送请求到后端服务器时，<link doc="ngx_http_core_module.xml" id="location">规范化</link>以后的请求路径与配置中的路径的匹配部分将被替换为指令中定义的URI：
 <example>
 location /name/ {
     proxy_pass http://127.0.0.1/remote/;
@@ -687,7 +687,7 @@ location /name/ {
 </listitem>
 
 <listitem>
-如果<literal>proxy_pass</literal>没有使用URI，传送到后端服务器的请求URI一般客户端发起的原始URI，如果nginx有改变请求URI，则传送的URI是nginx改变以后的正常化URI：
+如果<literal>proxy_pass</literal>没有使用URI，传送到后端服务器的请求URI一般客户端发起的原始URI，如果nginx改变了请求URI，则传送的URI是nginx改变以后完整的规范化URI：
 <example>
 location /some/path/ {
     proxy_pass http://127.0.0.1;
@@ -712,7 +712,7 @@ location /some/path/ {
 </listitem>
 
 <listitem>
-在需要被代理的路径中使用<link doc="ngx_http_rewrite_module.xml" id="rewrite"/>指令改变URI，但仍使用相同配置处理请求(<literal>break</literal>)：
+在需要代理的路径中，使用<link doc="ngx_http_rewrite_module.xml" id="rewrite"/>指令改变了URI，但仍使用相同配置处理请求(<literal>break</literal>)：
 <example>
 location /name/ {
     rewrite    /name/([^/]+) /users?name=$1 break;
@@ -797,7 +797,7 @@ proxy_redirect http://localhost:8000/two/ http://frontend/one/;
 <example>
 proxy_redirect http://localhost:8000/two/ /;
 </example>
-此时将使用代理服务器的主域名，以及端口号，如果端口异于80，来替换。
+此时将使用代理服务器的主域名和端口号来替换。如果端口是80，可以不加。
 </para>
 
 <para>
