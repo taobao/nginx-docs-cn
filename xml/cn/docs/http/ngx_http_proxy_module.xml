@@ -102,7 +102,7 @@ location / {
 <context>location</context>
 
 <para>
-当开启<link id="proxy_buffering">缓冲<link>响应的功能以后，在没有读到全部响应的情况下，写缓冲到达一定<value>大小</value>时，nginx一定会向客户端发送响应，直到缓冲小于此值。这条指令用来设置此值。
+当开启<link id="proxy_buffering">缓冲</link>响应的功能以后，在没有读到全部响应的情况下，写缓冲到达一定<value>大小</value>时，nginx一定会向客户端发送响应，直到缓冲小于此值。这条指令用来设置此值。
 同时，剩余的缓冲区可以用于接收响应，如果需要，一部分内容将缓冲到临时文件。该<value>大小</value>默认是<link id="proxy_buffer_size"/>和<link id="proxy_buffers"/>指令设置单块缓冲大小的两倍。
 </para>
 
