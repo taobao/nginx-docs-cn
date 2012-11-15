@@ -1044,13 +1044,9 @@ proxy_store_access group:rw all:r;
 <context>location</context>
 
 <para>
-Limits the <value>size</value> of data written to a temporary file
-at a time, when buffering of responses from the proxied server
-to temporary files is enabled.
-By default, <value>size</value> is limited by two buffers set by the
-<link id="proxy_buffer_size"/> and <link id="proxy_buffers"/> directives.
-The maximum size of a temporary file is set by the
-<link id="proxy_max_temp_file_size"/> directive.
+在开启缓冲后端服务器响应到临时文件的功能后，设置nginx每次写数据到临时文件的<value>size(大小)</value>限制。
+<value>size</value>的默认值是<link id="proxy_buffer_size"/>指令和<link id="proxy_buffers"/>指令定义的每块缓冲区大小的两倍，
+而临时文件最大容量由<link id="proxy_max_temp_file_size"/>指令设置。
 </para>
 
 </directive>
