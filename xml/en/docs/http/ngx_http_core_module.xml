@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="9">
+        rev="10">
 
 <section id="directives" name="Directives">
 
@@ -957,22 +957,19 @@ Please note that this will limit access to all methods
 <para>
 Rate limits the transmission of a response to a client.
 The <value>rate</value> is specified in bytes per second.
-Value 0 (the default) disables rate limiting.
+The value 0 disables rate limiting.
 <!--
 The smaller the rate, the more accurate will be the limitation.
 -->
-The limit is per connection, so if a single client opens 2 connections,
-an overall rate will be 2x more than specified by this directive.
+The limit is set per request, so if a client simultaneously opens
+two connections, an overall rate will be twice as much
+as the specified limit.
 </para>
 
 <para>
-This directive is not applicable if one wants to rate limit
-a group of clients on the
-<link id="server"/>
-level.
-If that is the case, the desired limit can be specified in the
-<var>$limit_rate</var>
-variable:
+Rate limit can also be set in the <var>$limit_rate</var> variable.
+It may be useful in cases where rate should be limited
+depending on a certain condition:
 <example>
 server {
 
@@ -987,7 +984,7 @@ server {
 
 <para>
 In addition, rate limit can also be set in the
-<header>X-Accel-Limit-Rate</header> response header field.
+<header>X-Accel-Limit-Rate</header> header field of a proxied server response.
 This ability can be disabled using the
 <link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>
 and
@@ -2770,7 +2767,8 @@ or an empty string otherwise
 
 <tag-name><var>$limit_rate</var></tag-name>
 <tag-desc>
-allows for connection rate limiting
+setting this variable allows for response rate limiting;
+see <link id="limit_rate"/>
 </tag-desc>
 
 <tag-name><var>$nginx_version</var></tag-name>
