@@ -8,24 +8,24 @@
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Module ngx_http_limit_req_module"
-        link="/en/docs/http/ngx_http_limit_req_module.html"
-        lang="en"
+        link="/cn/docs/http/ngx_http_limit_req_module.html"
+        lang="cn"
+        translator="Weibin Yao"
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_limit_req_module</literal> module (0.7.21) allows
-to limit the request processing rate per defined key,
-in particular, the processing rate of requests coming
-from a single IP address.
-The limitation is done using the “leaky bucket” method.
+<literal>ngx_http_limit_req_module</literal>模块(0.7.21)可以通过定义的
+键值来限制请求处理的频率。特别的，它可以限制从单个IP地址过来的请求处理频率。
+限制的方法是通过一种“漏桶”的方法，每秒处理的请求数固定，过多的请求会被延迟。
 </para>
+
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置示例">
 
 <para>
 <example>
@@ -47,7 +47,7 @@ http {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="limit_req">
 <syntax>
@@ -60,17 +60,13 @@ http {
 <context>location</context>
 
 <para>
-Sets a shared memory zone
-and the maximum allowed burst of requests.
-If the rate of requests exceeds the rate configured for a zone,
-request processing is delayed such as that they are processed
-at a defined rate.
-Excessive requests are delayed until their number exceeds the
-defined number of bursts.
-When exceeded, the request is terminated with an error
-<http-status code="503" text="Service Temporarily Unavailable"/>.
-By default, the number of bursts is equal to zero.
-For example, the directives
+设置对应的共享内存和允许被处理的最大请求数阈值。
+如果请求的频率超过了限制域配置的值，请求处理会被延迟，所以
+所有的请求都是以定义的频率被处理的。
+超过的请求会被延迟，直到请求数超过了定义的阈值。
+超过时，这个请求会直接返回一个<http-status code="503" text="Service Temporarily Unavailable"/>
+错误。这个阈值的默认值等于0。
+比如这些指令：
 <example>
 limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
@@ -79,13 +75,11 @@ server {
         limit_req zone=one burst=5;
     }
 </example>
-allow not more than 1 request per second at an average,
-with bursts not exceeding 5 requests.
+限制平均每秒不超过一个请求，同时处理的请求数最多不超过5个。
 </para>
 
 <para>
-If delaying of excessive requests while requests are being limited is not
-desired, the parameter <literal>nodelay</literal> should be used:
+如果多余请求不能被限制延迟，可以用<literal>nodelay</literal>参数：
 <example>
 limit_req zone=one burst=5 nodelay;
 </example>
@@ -107,13 +101,10 @@ limit_req zone=one burst=5 nodelay;
 <appeared-in>0.8.18</appeared-in>
 
 <para>
-Sets the desired logging level
-for cases when the server refuses to process requests
-due to rate being exceeded,
-or delays request processing.
-Delays are logged with the level one less than refusals; for example,
-if “<literal>limit_req_log_level notice</literal>” is specified,
-delays are logged with the <literal>info</literal> level.
+设置你所希望的日志级别，当服务器因为频率过高拒绝或者延迟处理请求时可以记下相应级别的日志。
+延迟记录的日志级别比拒绝的低一个级别；比如，
+如果是这样设置“<literal>limit_req_log_level notice</literal>”，
+延迟的日志就是<literal>info</literal>级别。
 </para>
 
 </directive>
@@ -128,39 +119,32 @@ delays are logged with the <literal>info</literal> level.
 <context>http</context>
 
 <para>
-Sets parameters of a shared memory zone
-that keeps states for various keys.
-The state stores the current number of excessive requests in particular.
-The key is any non-empty value of the specified variable
-(empty values are not accounted).
-Example usage:
+设置一块共享内存的参数，它可以用来保存键值的状态。
+它特别保存了当前请求超出的数量。
+键的值就是指定的变量（空值不会被计算）。
+示例用法：
 <example>
 limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 </example>
 </para>
 
 <para>
-Here, the states are kept in a 10 megabyte zone “one”, and an
-average request processing rate for this zone cannot exceed
-1 request per second.
+这里，记录被存在名为“one”最大10M字节的共享内存里面。对于这个限制域来说
+平均处理的请求频率不能超过每秒一次。
 </para>
 
 <para>
-An IP address of the client serves as a key.
-Note that instead of <var>$remote_addr</var>, the
-<var>$binary_remote_addr</var> variable is used here,
-allowing to lower the size of a state down to 64 bytes.
-One megabyte zone can keep about 16 thousand 64-byte states.
-If the storage for a zone is exhausted, the server will return error
-<http-status code="503" text="Service Temporarily Unavailable"/>
-to all further requests.
+键值是客户端的IP地址。
+不像<var>$remote_addr</var>变量，<var>$binary_remote_addr</var>变量
+在这里可以将每条记录的大小减少到64个字节。
+1M的内存可以保存大约1万6千个64字节的对象。
+如果存储的内存耗尽了，对于后续所有的请求服务器都会返回
+<http-status code="503" text="Service Temporarily Unavailable"/>错误。
 </para>
 
 <para>
-The rate is specified in requests per second (r/s).
-If a rate of less than one request per second is desired,
-it is specified in request per minute (r/m).
-For example, half-request per second is 30r/m.
+请求频率可以设置为每秒几次（r/s）。如果请求的频率不到每秒一次，
+你可以设置每分钟几次(r/m)。比如每秒半次就是30r/m。
 </para>
 
 </directive>
