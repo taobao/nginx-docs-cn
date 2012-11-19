@@ -10,7 +10,7 @@
 <module name="Module ngx_http_log_module"
         link="/en/docs/http/ngx_http_log_module.html"
         lang="en"
-        rev="3">
+        rev="4">
 
 <section id="summary">
 
@@ -136,27 +136,32 @@ The log format can contain common variables, and variables that
 exist only at the time of a log write:
 <list type="tag">
 
-<tag-name><var>$body_bytes_sent</var></tag-name>
-<tag-desc>
-the number of bytes sent to a client not counting the response header;
-this variable is compatible with the “<literal>%B</literal>” parameter of the
-<literal>mod_log_config</literal>
-Apache module
-</tag-desc>
-
 <tag-name><var>$bytes_sent</var></tag-name>
 <tag-desc>
 the number of bytes sent to a client
+<note>
+Since versions 1.3.8 and 1.2.5 there is a common variable with the
+<link doc="ngx_http_core_module.xml" id="var_bytes_sent">same name</link>.
+</note>
 </tag-desc>
 
 <tag-name><var>$connection</var></tag-name>
 <tag-desc>
 connection serial number
+<note>
+Since versions 1.3.8 and 1.2.5 there is a common variable with the
+<link doc="ngx_http_core_module.xml" id="var_connection">same name</link>.
+</note>
 </tag-desc>
 
 <tag-name><var>$connection_requests</var></tag-name>
 <tag-desc>
-the current number of requests made through a connection
+the current number of requests made through a connection (1.1.18)
+<note>
+Since versions 1.3.8 and 1.2.5 there is a common variable with the
+<link doc="ngx_http_core_module.xml" id="var_connection_requests">same
+name</link>.
+</note>
 </tag-desc>
 
 <tag-name><var>$msec</var></tag-name>
@@ -185,6 +190,10 @@ the log write after the last bytes were sent to the client
 <tag-name><var>$status</var></tag-name>
 <tag-desc>
 response status
+<note>
+Since versions 1.3.2 and 1.2.2 there is a common variable with the
+<link doc="ngx_http_core_module.xml" id="var_status">same name</link>.
+</note>
 </tag-desc>
 
 <tag-name><var>$time_iso8601</var></tag-name>

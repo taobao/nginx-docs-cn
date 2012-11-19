@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
         lang="ru"
-        rev="10">
+        rev="11">
 
 <section id="directives" name="Директивы">
 
@@ -2693,7 +2693,24 @@ location /download/ {
 
 <tag-name id="var_body_bytes_sent"><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
-число байт, переданное клиенту, без учёта заголовка ответа
+число байт, переданное клиенту, без учёта заголовка ответа;
+переменная совместима с параметром “<literal>%B</literal>” модуля Apache
+<literal>mod_log_config</literal>
+</tag-desc>
+
+<tag-name id="var_bytes_sent"><var>$bytes_sent</var></tag-name>
+<tag-desc>
+число байт, переданное клиенту (1.3.8, 1.2.5)
+</tag-desc>
+
+<tag-name id="var_connection"><var>$connection</var></tag-name>
+<tag-desc>
+порядковый номер соединения (1.3.8, 1.2.5)
+</tag-desc>
+
+<tag-name id="var_connection_requests"><var>$connection_requests</var></tag-name>
+<tag-desc>
+текущее число запросов в соединении (1.3.8, 1.2.5)
 </tag-desc>
 
 <tag-name id="var_content_length"><var>$content_length</var></tag-name>
@@ -2898,7 +2915,7 @@ fastcgi_pass_request_body off</link>
 
 <tag-name id="var_status"><var>$status</var></tag-name>
 <tag-desc>
-статус ответа
+статус ответа (1.3.2, 1.2.2)
 </tag-desc>
 
 <tag-name id="var_tcpinfo_">

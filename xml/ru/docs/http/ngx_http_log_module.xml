@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_log_module"
         link="/ru/docs/http/ngx_http_log_module.html"
         lang="ru"
-        rev="3">
+        rev="4">
 
 <section id="summary">
 
@@ -134,26 +134,34 @@ server {
 существующие только на момент записи в лог:
 <list type="tag">
 
-<tag-name><var>$body_bytes_sent</var></tag-name>
-<tag-desc>
-число байт, переданных клиенту, за вычетом заголовка ответа;
-переменная совместима с параметром “<literal>%B</literal>” модуля Apache
-<literal>mod_log_config</literal>
-</tag-desc>
-
 <tag-name><var>$bytes_sent</var></tag-name>
 <tag-desc>
-число байт, переданных клиенту
+число байт, переданное клиенту
+<note>
+Начиная с версий 1.3.8 и 1.2.5 существует общая переменная с
+<link doc="ngx_http_core_module.xml" id="var_bytes_sent">тем же
+именем</link>.
+</note>
 </tag-desc>
 
 <tag-name><var>$connection</var></tag-name>
 <tag-desc>
 порядковый номер соединения
+<note>
+Начиная с версий 1.3.8 и 1.2.5 существует общая переменная с
+<link doc="ngx_http_core_module.xml" id="var_connection">тем же
+именем</link>.
+</note>
 </tag-desc>
 
 <tag-name><var>$connection_requests</var></tag-name>
 <tag-desc>
-текущее число запросов в соединении
+текущее число запросов в соединении (1.1.18)
+<note>
+Начиная с версий 1.3.8 и 1.2.5 существует общая переменная с
+<link doc="ngx_http_core_module.xml" id="var_connection_requests">тем же
+именем</link>.
+</note>
 </tag-desc>
 
 <tag-name><var>$msec</var></tag-name>
@@ -181,6 +189,10 @@ server {
 <tag-name><var>$status</var></tag-name>
 <tag-desc>
 статус ответа
+<note>
+Начиная с версий 1.3.2 и 1.2.2 существует общая переменная с
+<link doc="ngx_http_core_module.xml" id="var_status">тем же именем</link>.
+</note>
 </tag-desc>
 
 <tag-name><var>$time_iso8601</var></tag-name>

@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="10">
+        rev="11">
 
 <section id="directives" name="Directives">
 
@@ -2705,7 +2705,25 @@ client address in a binary form, value’s length is always 4 bytes
 
 <tag-name id="var_body_bytes_sent"><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
-number of bytes sent to a client, not counting the response header
+number of bytes sent to a client, not counting the response header;
+this variable is compatible with the “<literal>%B</literal>” parameter of the
+<literal>mod_log_config</literal>
+Apache module
+</tag-desc>
+
+<tag-name id="var_bytes_sent"><var>$bytes_sent</var></tag-name>
+<tag-desc>
+number of bytes sent to a client (1.3.8, 1.2.5)
+</tag-desc>
+
+<tag-name id="var_connection"><var>$connection</var></tag-name>
+<tag-desc>
+connection serial number (1.3.8, 1.2.5)
+</tag-desc>
+
+<tag-name id="var_connection_requests"><var>$connection_requests</var></tag-name>
+<tag-desc>
+current number of requests made through a connection (1.3.8, 1.2.5)
 </tag-desc>
 
 <tag-name id="var_content_length"><var>$content_length</var></tag-name>
@@ -2912,7 +2930,7 @@ or
 
 <tag-name id="var_status"><var>$status</var></tag-name>
 <tag-desc>
-response status
+response status (1.3.2, 1.2.2)
 </tag-desc>
 
 <tag-name id="var_tcpinfo_">
