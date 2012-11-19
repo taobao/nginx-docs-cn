@@ -2676,105 +2676,105 @@ location /download/ {
 Кроме того, есть и другие переменные:
 <list type="tag">
 
-<tag-name><var>$arg_</var><value>имя</value></tag-name>
+<tag-name id="var_arg_"><var>$arg_</var><value>имя</value></tag-name>
 <tag-desc>
 аргумент <value>имя</value> в строке запроса
 </tag-desc>
 
-<tag-name><var>$args</var></tag-name>
+<tag-name id="var_args"><var>$args</var></tag-name>
 <tag-desc>
 аргументы в строке запроса
 </tag-desc>
 
-<tag-name><var>$binary_remote_addr</var></tag-name>
+<tag-name id="var_binary_remote_addr"><var>$binary_remote_addr</var></tag-name>
 <tag-desc>
 адрес клиента в бинарном виде, длина значения всегда 4 байта
 </tag-desc>
 
-<tag-name><var>$body_bytes_sent</var></tag-name>
+<tag-name id="var_body_bytes_sent"><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
 число байт, переданное клиенту, без учёта заголовка ответа
 </tag-desc>
 
-<tag-name><var>$content_length</var></tag-name>
+<tag-name id="var_content_length"><var>$content_length</var></tag-name>
 <tag-desc>
 поле <header>Content-Length</header> заголовка запроса
 </tag-desc>
 
-<tag-name><var>$content_type</var></tag-name>
+<tag-name id="var_content_type"><var>$content_type</var></tag-name>
 <tag-desc>
 поле <header>Content-Type</header> заголовка запроса
 </tag-desc>
 
-<tag-name><var>$cookie_</var><value>имя</value></tag-name>
+<tag-name id="var_cookie_"><var>$cookie_</var><value>имя</value></tag-name>
 <tag-desc>
 cookie <value>имя</value>
 </tag-desc>
 
-<tag-name><var>$document_root</var></tag-name>
+<tag-name id="var_document_root"><var>$document_root</var></tag-name>
 <tag-desc>
 значение директивы <link id="root"/> или <link id="alias"/>
 для текущего запроса
 </tag-desc>
 
-<tag-name><var>$document_uri</var></tag-name>
+<tag-name id="var_document_uri"><var>$document_uri</var></tag-name>
 <tag-desc>
 то же, что и <var>$uri</var>
 </tag-desc>
 
-<tag-name><var>$host</var></tag-name>
+<tag-name id="var_host"><var>$host</var></tag-name>
 <tag-desc>
 поле <header>Host</header> заголовка запроса,
 или имя сервера, соответствующего запросу, если этого поля нет
 </tag-desc>
 
-<tag-name><var>$hostname</var></tag-name>
+<tag-name id="var_hostname"><var>$hostname</var></tag-name>
 <tag-desc>
 имя хоста
 </tag-desc>
 
-<tag-name><var>$http_</var><value>имя</value></tag-name>
+<tag-name id="var_http_"><var>$http_</var><value>имя</value></tag-name>
 <tag-desc>
 произвольное поле заголовка запроса;
 последняя часть имени переменной соответствует имени поля, приведённому
 к нижнему регистру, с заменой символов тире на символы подчёркивания
 </tag-desc>
 
-<tag-name><var>$https</var></tag-name>
+<tag-name id="var_https"><var>$https</var></tag-name>
 <tag-desc>
 “<literal>on</literal>”
 если соединение работает в режиме SSL,
 либо пустая строка
 </tag-desc>
 
-<tag-name><var>$is_args</var></tag-name>
+<tag-name id="var_is_args"><var>$is_args</var></tag-name>
 <tag-desc>
 “<literal>?</literal>”, если в строке запроса есть аргументы,
 и пустая строка, если их нет
 </tag-desc>
 
-<tag-name><var>$limit_rate</var></tag-name>
+<tag-name id="var_limit_rate"><var>$limit_rate</var></tag-name>
 <tag-desc>
 установка этой переменной позволяет ограничивать скорость
 передачи ответа, см. <link id="limit_rate"/>
 </tag-desc>
 
-<tag-name><var>$nginx_version</var></tag-name>
+<tag-name id="var_nginx_version"><var>$nginx_version</var></tag-name>
 <tag-desc>
 версия nginx
 </tag-desc>
 
-<tag-name><var>$pid</var></tag-name>
+<tag-name id="var_pid"><var>$pid</var></tag-name>
 <tag-desc>
 номер (PID) рабочего процесса
 </tag-desc>
 
-<tag-name><var>$query_string</var></tag-name>
+<tag-name id="var_query_string"><var>$query_string</var></tag-name>
 <tag-desc>
 то же, что и <var>$args</var>
 </tag-desc>
 
-<tag-name><var>$realpath_root</var></tag-name>
+<tag-name id="var_realpath_root"><var>$realpath_root</var></tag-name>
 <tag-desc>
 абсолютный путь, соответствующий
 значению директивы <link id="root"/> или <link id="alias"/>
@@ -2782,27 +2782,27 @@ cookie <value>имя</value>
 в котором все символические ссылки преобразованы в реальные пути
 </tag-desc>
 
-<tag-name><var>$remote_addr</var></tag-name>
+<tag-name id="var_remote_addr"><var>$remote_addr</var></tag-name>
 <tag-desc>
 адрес клиента
 </tag-desc>
 
-<tag-name><var>$remote_port</var></tag-name>
+<tag-name id="var_remote_port"><var>$remote_port</var></tag-name>
 <tag-desc>
 порт клиента
 </tag-desc>
 
-<tag-name><var>$remote_user</var></tag-name>
+<tag-name id="var_remote_user"><var>$remote_user</var></tag-name>
 <tag-desc>
 имя пользователя, использованное в Basic аутентификации
 </tag-desc>
 
-<tag-name><var>$request</var></tag-name>
+<tag-name id="var_request"><var>$request</var></tag-name>
 <tag-desc>
 первоначальная строка запроса целиком
 </tag-desc>
 
-<tag-name><var>$request_body</var></tag-name>
+<tag-name id="var_request_body"><var>$request_body</var></tag-name>
 <tag-desc>
 тело запроса
 <para>
@@ -2814,7 +2814,7 @@ cookie <value>имя</value>
 </para>
 </tag-desc>
 
-<tag-name><var>$request_body_file</var></tag-name>
+<tag-name id="var_request_body_file"><var>$request_body_file</var></tag-name>
 <tag-desc>
 имя временного файла, в котором хранится тело запроса
 <para>
@@ -2833,42 +2833,42 @@ fastcgi_pass_request_body off</link>
 </para>
 </tag-desc>
 
-<tag-name><var>$request_completion</var></tag-name>
+<tag-name id="var_request_completion"><var>$request_completion</var></tag-name>
 <tag-desc>
 “<literal>OK</literal>” если запрос завершился,
 либо пустая строка
 </tag-desc>
 
-<tag-name><var>$request_filename</var></tag-name>
+<tag-name id="var_request_filename"><var>$request_filename</var></tag-name>
 <tag-desc>
 путь к файлу для текущего запроса, формируемый из директив
 <link id="root"/> или <link id="alias"/> и URI запроса
 </tag-desc>
 
-<tag-name><var>$request_method</var></tag-name>
+<tag-name id="var_request_method"><var>$request_method</var></tag-name>
 <tag-desc>
 метод запроса, обычно
 “<literal>GET</literal>” или “<literal>POST</literal>”
 </tag-desc>
 
-<tag-name><var>$request_uri</var></tag-name>
+<tag-name id="var_request_uri"><var>$request_uri</var></tag-name>
 <tag-desc>
 первоначальный URI запроса целиком (с аргументами)
 </tag-desc>
 
-<tag-name><var>$scheme</var></tag-name>
+<tag-name id="var_scheme"><var>$scheme</var></tag-name>
 <tag-desc>
 схема запроса, “<literal>http</literal>” или “<literal>https</literal>”
 </tag-desc>
 
-<tag-name><var>$sent_http_</var><value>имя</value></tag-name>
+<tag-name id="var_sent_http_"><var>$sent_http_</var><value>имя</value></tag-name>
 <tag-desc>
 произвольное поле заголовка ответа;
 последняя часть имени переменной соответствует имени поля, приведённому
 к нижнему регистру, с заменой символов тире на символы подчёркивания
 </tag-desc>
 
-<tag-name><var>$server_addr</var></tag-name>
+<tag-name id="var_server_addr"><var>$server_addr</var></tag-name>
 <tag-desc>
 адрес сервера, принявшего запрос
 <para>
@@ -2878,17 +2878,17 @@ fastcgi_pass_request_body off</link>
 </para>
 </tag-desc>
 
-<tag-name><var>$server_name</var></tag-name>
+<tag-name id="var_server_name"><var>$server_name</var></tag-name>
 <tag-desc>
 имя сервера, принявшего запрос
 </tag-desc>
 
-<tag-name><var>$server_port</var></tag-name>
+<tag-name id="var_server_port"><var>$server_port</var></tag-name>
 <tag-desc>
 порт сервера, принявшего запрос
 </tag-desc>
 
-<tag-name><var>$server_protocol</var></tag-name>
+<tag-name id="var_server_protocol"><var>$server_protocol</var></tag-name>
 <tag-desc>
 протокол сервера, обычно
 “<literal>HTTP/1.0</literal>”
@@ -2896,12 +2896,12 @@ fastcgi_pass_request_body off</link>
 “<literal>HTTP/1.1</literal>”
 </tag-desc>
 
-<tag-name><var>$status</var></tag-name>
+<tag-name id="var_status"><var>$status</var></tag-name>
 <tag-desc>
 статус ответа
 </tag-desc>
 
-<tag-name>
+<tag-name id="var_tcpinfo_">
 <var>$tcpinfo_rtt</var>,
 <var>$tcpinfo_rttvar</var>,
 <var>$tcpinfo_snd_cwnd</var>,
@@ -2912,7 +2912,7 @@ fastcgi_pass_request_body off</link>
 поддерживающих параметр сокета <c-def>TCP_INFO</c-def>
 </tag-desc>
 
-<tag-name><var>$uri</var></tag-name>
+<tag-name id="var_uri"><var>$uri</var></tag-name>
 <tag-desc>
 текущий URI запроса в <link id="location">нормализованном</link> виде
 <para>
