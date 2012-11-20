@@ -73,8 +73,8 @@ A value can contain variables.
 
 <para>
 Enables or disables adding or modifying the <header>Expires</header>
-and <header>Cache-Control</header> response header fields provided
-that the response code equals 200, 204, 206, 301, 302, 303, 304, or 307.
+and <header>Cache-Control</header> response header fields provided that
+the response code equals 200, 204, 206, 301, 302, 303, 304, or 307.
 A parameter can be a positive or negative
 <link doc="../syntax.xml">time</link>.
 </para>
