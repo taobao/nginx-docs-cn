@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="11">
+        rev="12">
 
 <section id="directives" name="Directives">
 
@@ -2789,6 +2789,11 @@ setting this variable allows for response rate limiting;
 see <link id="limit_rate"/>
 </tag-desc>
 
+<tag-name id="var_msec"><var>$msec</var></tag-name>
+<tag-desc>
+current time in seconds with a milliseconds resolution (1.3.9)
+</tag-desc>
+
 <tag-name id="var_nginx_version"><var>$nginx_version</var></tag-name>
 <tag-desc>
 nginx version
@@ -2881,6 +2886,12 @@ directives, and the request URI
 <tag-desc>
 request method, usually
 “<literal>GET</literal>” or “<literal>POST</literal>”
+</tag-desc>
+
+<tag-name id="var_request_time"><var>$request_time</var></tag-name>
+<tag-desc>
+request processing time in seconds with a milliseconds resolution (1.3.9);
+time elapsed since the first bytes were read from the client
 </tag-desc>
 
 <tag-name id="var_request_uri"><var>$request_uri</var></tag-name>

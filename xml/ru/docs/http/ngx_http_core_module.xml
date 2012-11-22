@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
         lang="ru"
-        rev="11">
+        rev="12">
 
 <section id="directives" name="Директивы">
 
@@ -2776,6 +2776,11 @@ cookie <value>имя</value>
 передачи ответа, см. <link id="limit_rate"/>
 </tag-desc>
 
+<tag-name id="var_msec"><var>$msec</var></tag-name>
+<tag-desc>
+текущее время в секундах с точностью до миллисекунд (1.3.9)
+</tag-desc>
+
 <tag-name id="var_nginx_version"><var>$nginx_version</var></tag-name>
 <tag-desc>
 версия nginx
@@ -2866,6 +2871,12 @@ fastcgi_pass_request_body off</link>
 <tag-desc>
 метод запроса, обычно
 “<literal>GET</literal>” или “<literal>POST</literal>”
+</tag-desc>
+
+<tag-name id="var_request_time"><var>$request_time</var></tag-name>
+<tag-desc>
+время обработки запроса в секундах с точностью до миллисекунд (1.3.9);
+время, прошедшее с момента чтения первых байт от клиента
 </tag-desc>
 
 <tag-name id="var_request_uri"><var>$request_uri</var></tag-name>
