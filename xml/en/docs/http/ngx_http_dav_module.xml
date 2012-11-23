@@ -10,12 +10,14 @@
 <module name="Module ngx_http_dav_module"
         link="/en/docs/http/ngx_http_dav_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_dav_module</literal> module processes HTTP and WebDAV
+The <literal>ngx_http_dav_module</literal> module is intended for file
+management automation via the WebDAV protocol.
+The module processes HTTP and WebDAV
 methods PUT, DELETE, MKCOL, COPY, and MOVE.
 </para>
 
@@ -23,6 +25,13 @@ methods PUT, DELETE, MKCOL, COPY, and MOVE.
 This module is not built by default, it should be enabled with the
 <literal>--with-http_dav_module</literal>
 configuration parameter.
+</para>
+
+<para>
+<note>
+WebDAV clients that require additional WebDAV methods to operate
+will not work with this module.
+</note>
 </para>
 
 </section>
@@ -82,10 +91,7 @@ dav_access group:rw all:r;
 
 <directive name="dav_methods">
 <syntax>
-    <literal>off</literal> | <literal>put</literal> |
-    <literal>delete</literal> | <literal>mkcol</literal> |
-    <literal>copy</literal> | <literal>move</literal>
-    ...</syntax>
+    <literal>off</literal> | <value>method</value> ...</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -94,7 +100,10 @@ dav_access group:rw all:r;
 <para>
 Allows the specified HTTP and WebDAV methods.
 The parameter <literal>off</literal> denies all methods processed
-by this module, ignoring other parameters;
+by this module.
+The following methods are supported:
+<literal>PUT</literal>, <literal>DELETE</literal>, <literal>MKCOL</literal>,
+<literal>COPY</literal>, and <literal>MOVE</literal>.
 </para>
 
 <para>
