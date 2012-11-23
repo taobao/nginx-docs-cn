@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_proxy_module"
         link="/ru/docs/http/ngx_http_proxy_module.html"
         lang="ru"
-        rev="2">
+        rev="3">
 
 <section id="summary">
 
@@ -1081,6 +1081,29 @@ proxy_redirect http://www.example.com/ /;
 <example>
 proxy_redirect / /;
 </example>
+</para>
+
+</directive>
+
+
+<directive name="proxy_send_lowat">
+<syntax><value>размер</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+При установке в ненулевое значение nginx будет пытаться минимизировать
+число операций отправки на исходящих соединениях с проксируемым сервером либо
+при помощи флага <c-def>NOTE_LOWAT</c-def> метода
+<link doc="../events.xml" id="kqueue"/>,
+либо при помощи параметра сокета <c-def>SO_SNDLOWAT</c-def>,
+с указанным <value>размером</value>.
+</para>
+
+<para>
+Эта директива игнорируется на Linux, Solaris и Windows.
 </para>
 
 </directive>

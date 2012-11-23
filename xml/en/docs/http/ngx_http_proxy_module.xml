@@ -10,7 +10,7 @@
 <module name="Module ngx_http_proxy_module"
         link="/en/docs/http/ngx_http_proxy_module.html"
         lang="en"
-        rev="2">
+        rev="3">
 
 <section id="summary">
 
@@ -1083,6 +1083,29 @@ redirects issued by a proxied server:
 <example>
 proxy_redirect / /;
 </example>
+</para>
+
+</directive>
+
+
+<directive name="proxy_send_lowat">
+<syntax><value>size</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+If set to a non-zero value, nginx will try to minimize the number
+of send operations on outgoing connections to a proxied server by using either
+<c-def>NOTE_LOWAT</c-def> flag of the
+<link doc="../events.xml" id="kqueue"/> method,
+or the <c-def>SO_SNDLOWAT</c-def> socket option,
+with the specified <value>size</value>.
+</para>
+
+<para>
+This directive is ignored on Linux, Solaris, and Windows.
 </para>
 
 </directive>
