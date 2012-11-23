@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_fastcgi_module"
         link="/ru/docs/http/ngx_http_fastcgi_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -43,6 +43,22 @@ location / {
 
 
 <section id="directives" name="Директивы">
+
+<directive name="fastcgi_bind">
+<syntax><value>адрес</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.8.22</appeared-in>
+
+<para>
+Задаёт локальный IP-<value>адрес</value>, который будет использоваться в
+исходящих соединениях с FastCGI-сервером.
+</para>
+
+</directive>
+
 
 <directive name="fastcgi_buffer_size">
 <syntax><value>размер</value></syntax>

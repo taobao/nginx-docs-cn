@@ -10,7 +10,7 @@
 <module name="Module ngx_http_proxy_module"
         link="/en/docs/http/ngx_http_proxy_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -38,6 +38,22 @@ location / {
 
 
 <section id="directives" name="Directives">
+
+<directive name="proxy_bind">
+<syntax><value>address</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.8.22</appeared-in>
+
+<para>
+Forces outgoing connections to a proxied server to originate
+from the specified local IP <value>address</value>.
+</para>
+
+</directive>
+
 
 <directive name="proxy_buffer_size">
 <syntax><value>size</value></syntax>

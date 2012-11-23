@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_memcached_module"
         link="/ru/docs/http/ngx_http_memcached_module.html"
         lang="ru"
-        rev="2">
+        rev="3">
 
 <section id="summary">
 
@@ -47,6 +47,22 @@ server {
 
 
 <section id="directives" name="Директивы">
+
+<directive name="memcached_bind">
+<syntax><value>адрес</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.8.22</appeared-in>
+
+<para>
+Задаёт локальный IP-<value>адрес</value>, который будет использоваться в
+исходящих соединениях с сервером memcached.
+</para>
+
+</directive>
+
 
 <directive name="memcached_buffer_size">
 <syntax><value>размер</value></syntax>
