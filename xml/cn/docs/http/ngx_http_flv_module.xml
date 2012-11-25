@@ -7,35 +7,35 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_flv_module"
+<module name="ngx_http_flv_module 模块"
         link="/en/docs/http/ngx_http_flv_module.html"
-        lang="en"
+        lang="cn"
+        translator="litianqing"
         rev="1">
 
 <section id="summary">
 
 <para>
-The module <literal>ngx_http_flv_module</literal> provides pseudo-streaming
-server-side support for Flash Video (FLV) files.
+模块<literal>ngx_http_flv_module </literal> 为Flash Video(FLV)文件
+提供服务端伪流媒体支持
 </para>
 
 <para>
-It handles requests with the <literal>start</literal> argument in
-the request URI’s query string specially, by sending back the contents
-of a file starting from the requested byte offset, and with the FLV
-header prepended.
+通过返回以请求偏移位置开始的文件内容，该模块专门处理
+在查询串中有<literal>start</literal>参数的请求,
+和有预先设置到FLV头部的请求。
 </para>
 
 <para>
-This module is not built by default, it should be enabled with the
+这个模块并不是默认构建的，必须通过配置参数
 <literal>--with-http_flv_module</literal>
-configuration parameter.
+来启动。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置范例">
 
 <para>
 <example>
@@ -48,15 +48,14 @@ location ~ \.flv$ {
 </section>
 
 
-<section id="directives" name="Directives">
-
+<section id="directives" name="指令">
 <directive name="flv">
 <syntax/>
 <default/>
 <context>location</context>
 
 <para>
-Turns on module processing in a surrounding location.
+在当前location里使用这个模块处理请求。
 </para>
 
 </directive>
