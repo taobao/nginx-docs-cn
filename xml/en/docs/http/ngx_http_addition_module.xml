@@ -10,7 +10,7 @@
 <module name="Module ngx_http_addition_module"
         link="/en/docs/http/ngx_http_addition_module.html"
         lang="en"
-        rev="3">
+        rev="4">
 
 <section id="summary">
 
@@ -51,8 +51,8 @@ location / {
 <para>
 Adds a text returned as a result of processing a given subrequest,
 before the response body.
-The <literal>""</literal> parameter disables addition inherited from
-the previous configuration level.
+An empty string (<literal>""</literal>) as a parameter cancels addition
+inherited from the previous configuration level.
 </para>
 
 </directive>
@@ -68,8 +68,8 @@ the previous configuration level.
 <para>
 Adds a text returned as a result of processing a given subrequest,
 after the response body.
-The <literal>""</literal> parameter disables addition inherited from
-the previous configuration level.
+An empty string (<literal>""</literal>) as a parameter cancels addition
+inherited from the previous configuration level.
 </para>
 
 </directive>
