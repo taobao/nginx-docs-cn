@@ -29,7 +29,7 @@
 <para>
 这个模块并不是默认构建的，必须通过配置参数
 <literal>--with-http_flv_module</literal>
-来启动。
+来启用。
 </para>
 
 </section>
