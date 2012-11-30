@@ -89,7 +89,7 @@ map $http_user_agent $mobile {
 </para>
 
 <para>
-这个指令也支持三个特殊变量。
+这个指令也支持三个特殊参数。
 <list type="tag">
 <tag-name><literal>default</literal> <value>value</value></tag-name>
 <tag-desc>
