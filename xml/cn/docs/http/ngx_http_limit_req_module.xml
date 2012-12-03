@@ -75,11 +75,11 @@ server {
         limit_req zone=one burst=5;
     }
 </example>
-限制平均每秒不超过一个请求，同时允许超过频率限制的请求数不多于5个。。
+限制平均每秒不超过一个请求，同时允许超过频率限制的请求数不多于5个。
 </para>
 
 <para>
-如果不希望多余请求不被延迟，可以用<literal>nodelay</literal>参数：
+如果不希望超过的请求被延迟，可以用<literal>nodelay</literal>参数：
 <example>
 limit_req zone=one burst=5 nodelay;
 </example>
@@ -129,16 +129,16 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 </para>
 
 <para>
-这里，状态被存在名为“one”最大10M字节的共享内存里面。对于这个限制域来说
+这里，状态被存在名为“one”，最大10M字节的共享内存里面。对于这个限制域来说
 平均处理的请求频率不能超过每秒一次。
 </para>
 
 <para>
 键值是客户端的IP地址。
-不像<var>$remote_addr</var>变量，<var>$binary_remote_addr</var>变量
+如果不使用<var>$remote_addr</var>变量，而用<var>$binary_remote_addr</var>变量，
 在这里可以将每条状态记录的大小减少到64个字节。
 1M的内存可以保存大约1万6千个64字节的记录。
-如果限制域的存储空间耗尽了，对于后续所有的请求，服务器都会返回
+如果限制域的存储空间耗尽了，对于后续所有请求，服务器都会返回
 <http-status code="503" text="Service Temporarily Unavailable"/>错误。
 </para>
 
