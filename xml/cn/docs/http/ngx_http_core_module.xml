@@ -7,12 +7,13 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_core_module"
-        link="/en/docs/http/ngx_http_core_module.html"
-        lang="en"
-        rev="5">
+<module name="ngx_http_core_module 模块"
+        link="/cn/docs/http/ngx_http_core_module.html"
+        lang="cn"
+        translator="cfsego"
+        rev="1">
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="aio">
 <syntax>
@@ -26,54 +27,36 @@
 <appeared-in>0.8.11</appeared-in>
 
 <para>
-Enables or disables the use of asynchronous file I/O (AIO)
-on FreeBSD and Linux.
+在FreeBSD和Linux操作系统上启用或者禁用异步文件I/O(AIO)。
 </para>
 
 <para>
+从FreeBSD 4.3版本开始，AIO可以使用。AIO既可以静态链接到内核中：
 On FreeBSD, AIO is usable starting from FreeBSD&nbsp;4.3.
-AIO can either be linked statically into a kernel:
 <example>
 options VFS_AIO
 </example>
-or loaded dynamically as a kernel loadable module:
+又可以作为内核模块动态加载：
 <example>
 kldload aio
 </example>
 </para>
 
 <para>
-In FreeBSD versions 5 and 6, enabling AIO statically, or dynamically
-when booting the kernel, will cause the entire networking subsystem
-to use the Giant lock that can impact overall performance negatively.
-This limitation has been removed in FreeBSD&nbsp;6.4-STABLE in 2009, and in
-FreeBSD&nbsp;7.
-However, starting from FreeBSD&nbsp;5.3 it is possible to enable AIO
-without the penalty of running the networking subsystem under a
-Giant lock&mdash;for this to work, the AIO module needs to be loaded
-after the kernel has booted.
-In this case, the following message will appear in
-<path>/var/log/messages</path>
+在FreeBSD第5版和第6版，静态启动AIO，或者在系统启动时动态加载AIO，都会使网络子系统使用一把大锁，进而对整个系统的性能造成负面影响。这个限制在2009年发布的FreeBSD 6.4稳定版和FreeBSD 7中被消除。虽然如此，仍有方法在5.3版本及以上版本的FreeBSD中开启AIO而不触发网络子系统的大锁，那就是在内核启动以后加载AIO模块。使用这种时，下面信息会出现在
+<path>/var/log/messages</path>中，
 <example>
 WARNING: Network stack Giant-free, but aio requires Giant.
 Consider adding 'options NET_WITH_GIANT' or setting debug.mpsafenet=0
 </example>
-and can safely be ignored.
+但可以安全的忽略它。
 <note>
-The requirement to use the Giant lock with AIO is related to the
-fact that FreeBSD supports asynchronous calls
-<c-func>aio_read</c-func>
-and
-<c-func>aio_write</c-func>
-when working with sockets.
-However, since nginx only uses AIO for disk I/O, no problems should arise.
+需要使用AIO中的大锁的是FreeBSD套接字上的<c-func>aio_read</c-func>和<c-func>aio_write</c-func>异步操作。但是nginx仅仅在磁盘I/O使用AIO，所以不会出现问题。
 </note>
 </para>
 
 <para>
-For AIO to work,
-<link id="sendfile"/>
-needs to be disabled:
+为了让AIO工总，需要关闭<link id="sendfile"/>：
 <example>
 location /video/ {
     sendfile       off;
@@ -84,8 +67,7 @@ location /video/ {
 </para>
 
 <para>
-In addition, starting from FreeBSD&nbsp;5.2.1 and nginx&nbsp;0.8.12, AIO can
-also be used to pre-load data for <c-func>sendfile</c-func>:
+不过，从FreeBSD 5.2.1版和nginx 0.8.12版开始，AIO也可以为<c-func>sendfile</c-func>预读数据：
 <example>
 location /video/ {
     sendfile       on;
@@ -93,24 +75,15 @@ location /video/ {
     aio            sendfile;
 }
 </example>
-In this configuration, <c-func>sendfile</c-func> is called with
-the <c-def>SF_NODISKIO</c-def> flag which causes it not to
-block on disk I/O and instead report back when the data are not in
-memory; nginx then initiates an asynchronous data load by reading
-one byte.
-The FreeBSD kernel then loads the first 128K bytes
-of a file into memory, however next reads will only load data
-in 16K chunks.
-This can be tuned using the
-<link id="read_ahead"/>
-directive.
+
+这个配置使nginx在调用<c-func>sendfile</c-func>时带<c-def>SF_NODISKIO</c-def>参数，
+那么<c-func>sendfile</c-func>在数据没有读入内存的时候，就不会阻塞在磁盘I/O上，而是直接返回报告；接着nginx就读这个一字节报告，然后初始化异步数据。
+FreeBSD内核接着会读取文件的开始128K字节到内存，而后续的读取只会以16K的单位来进行。
+这个性质可以使用<link id="read_ahead"/>指令来调节。
 </para>
 
 <para>
-On Linux, AIO is usable starting from kernel version 2.6.22;
-plus, it is also necessary to enable
-<link id="directio"/>,
-otherwise reading will be blocking:
+从Linux内核2.6.22版开始，AIO也可以使用。而且，必须同时开启<link id="directio"/>，否则读取将是阻塞的：
 <example>
 location /video/ {
     aio            on;
@@ -121,19 +94,10 @@ location /video/ {
 </para>
 
 <para>
-On Linux,
-<link id="directio"/>
-can only be used for reading blocks that are aligned on 512-byte
-boundaries (or 4K for XFS).
-Reading of unaligned file’s end is still made in blocking mode.
-The same holds true for byte range requests, and for FLV requests
-not from the beginning of a file: reading of unaligned data at the
-beginning and end of a file will be blocking.
-There is no need to turn off
-<link id="sendfile"/>
-explicitly as it is turned off automatically when
-<link id="directio"/>
-is used.
+在Linux上，<link id="directio"/>只在读取的块的边界对齐512字节（在XFS上是4K字节）时才有用。在读取文件尾部时，
+如果没有对齐，AIO读取还是阻塞的。同样的情况——如果数据的开始或者结尾未对齐时，读取是阻塞的，
+也发生在含有<header>byte range</header>头的请求中，或者发生在不是从头开始的FLV请求中。
+没有必要手动关闭<link id="sendfile"/>，因为如果使用了<link id="directio"/>，它就会自动关闭。
 </para>
 
 </directive>
@@ -145,29 +109,22 @@ is used.
 <context>location</context>
 
 <para>
-Defines a replacement for the specified location.
-For example, with the following configuration
+定义指定路径的替换路径。比如下面配置
 <example>
 location /i/ {
     alias /data/w3/images/;
 }
 </example>
-the request of
-“<literal>/i/top.gif</literal>” will be responded
-with the file
-<path>/data/w3/images/top.gif</path>.
+“<literal>/i/top.gif</literal>”将由<path>/data/w3/images/top.gif</path>文件来响应。
 </para>
 
 <para>
-The <value>path</value> value can contain variables
-except <var>$document_root</var> and <var>$realpath_root</var>.
+<value>path</value>的值可以包含变量，但不能使用<var>$document_root</var>和<var>$realpath_root</var>这两个变量。
 </para>
 
 <para>
-If <literal>alias</literal> is used inside a location defined
-with a regular expression then such regular expression should
-contain captures and <literal>alias</literal> should refer to
-these captures (0.7.40), for example:
+如果在在定义了正则表达式的路径中使用了<literal>alias</literal>，那么正则表达式中应该含有匹配组，
+并且<literal>alias</literal>应该引用这些匹配组(0.7.40版)来组成一个完整的文件路径，比如：
 <example>
 location ~ ^/users/(.+\.(?:gif|jpe?g|png))$ {
     alias /data/w3/images/$1;
@@ -176,15 +133,13 @@ location ~ ^/users/(.+\.(?:gif|jpe?g|png))$ {
 </para>
 
 <para>
-When location matches the last part of the directive’s value:
+如果路径对应指令<value>path</value>值的最后一部分：
 <example>
 location /images/ {
     alias /data/w3/images/;
 }
 </example>
-it is better to use the
-<link id="root"/>
-directive instead:
+最好换用<link id="root"/>指令：
 <example>
 location /images/ {
     root /data/w3;
@@ -203,9 +158,7 @@ location /images/ {
 <context>location</context>
 
 <para>
-Allows disabling chunked transfer encoding in HTTP/1.1.
-It may come in handy when using a software failing to support
-chunked encoding though the standard requires it.
+允许关闭HTTP/1.1中的分块传输编码。在客户端软件不支持分块传输编码的时候，这条指令才有用。
 </para>
 
 </directive>
@@ -220,13 +173,8 @@ chunked encoding though the standard requires it.
 <context>location</context>
 
 <para>
-Sets buffer size for reading client request body.
-In case request body is larger than the buffer,
-the whole body or only its part is written to a
-<link id="client_body_temp_path">temporary file</link>.
-By default, buffer size is equal to two memory pages.
-This is 8K on x86, other 32-bit platforms, and x86-64.
-It is usually 16K on other 64-bit platforms.
+设置读取客户端请求正文的缓冲容量。如果请求正文大于缓冲容量，整个正文或者正文的一部分将写入<link id="client_body_temp_path">临时文件</link>。
+缓冲大小默认等于两块内存页的大小，在x86平台、其他32位平台和x86-64平台，这个值是8K。在其他64位平台，这个值一般是16K。
 </para>
 
 </directive>
@@ -243,24 +191,17 @@ It is usually 16K on other 64-bit platforms.
 <context>location</context>
 
 <para>
-Determines whether nginx should save the entire client request body
-into a file.
-This directive can be used during debugging, or when using the
-<var>$request_body_file</var>
-variable, or the
-<link doc="ngx_http_perl_module.xml" id="methods">$r->request_body_file</link>
-method of the module
-<link doc="ngx_http_perl_module.xml">ngx_http_perl_module</link>.
+决定nginx是否将客户端请求正文整个写入文件。这条指令在调试时，或者使用<var>$request_body_file</var>变量时，
+或者使用<link doc="ngx_http_perl_module.xml">ngx_http_perl_module</link>模块的
+<link doc="ngx_http_perl_module.xml" id="methods">$r->request_body_file</link>方法时都可以使用。
 </para>
 
 <para>
-When set to the value <literal>on</literal>, temporary files are not
-removed after request processing.
+当指令值设置为<literal>on</literal>时，请求处理结束后不会删除临时文件。
 </para>
 
 <para>
-The value <literal>clean</literal> will cause the temporary files
-left after request processing to be removed.
+当指令值设置为<literal>clean</literal>时，请求处理结束后会删除临时文件。
 </para>
 
 </directive>
@@ -274,11 +215,8 @@ left after request processing to be removed.
 <context>location</context>
 
 <para>
-Determines whether nginx should save the entire client request body
-in a single buffer.
-The directive is recommended when using the
-<var>$request_body</var>
-variable, to save the number of copy operations involved.
+决定nginx将整个客户端请求正文保存在一块缓冲中。
+这条指令推荐在使用<var>$request_body</var>变量时使用，可以节省引入的拷贝操作。
 </para>
 
 </directive>
@@ -296,14 +234,12 @@ variable, to save the number of copy operations involved.
 <context>location</context>
 
 <para>
-Defines a directory for storing temporary files holding client request bodies.
-Up to three-level subdirectory hierarchy can be used underneath the specified
-directory.
-For example, in the following configuration
+定义存储客户端请求正文的临时文件的目录。
+支持在指定目录下多达3层的子目录结构。比如下面配置
 <example>
 client_body_temp_path /spool/nginx/client_temp 1 2;
 </example>
-a temporary file might look like this:
+存储临时文件的路径是
 <example>
 /spool/nginx/client_temp/7/45/00000123457
 </example>
@@ -320,13 +256,8 @@ a temporary file might look like this:
 <context>location</context>
 
 <para>
-Defines a timeout for reading client request body.
-A timeout is only set between two successive read operations,
-not for the transmission of the whole request body.
-If a client does not transmit anything within this time,
-the client error
-<http-status code="408" text="Request Time-out"/>
-is returned.
+定义读取客户端请求正文的超时。超时是指相邻两次读操作之间的最大时间间隔，而不是整个响应正文完成传输的最大时间。
+如果客户端在这段时间内没有传输任何数据，nginx将返回<http-status code="408" text="Request Time-out"/>错误到客户端。
 </para>
 
 </directive>
@@ -339,13 +270,11 @@ is returned.
 <context>server</context>
 
 <para>
-Sets buffer size for reading client request header.
-For most requests, a buffer of 1K bytes is enough.
-However, if a request includes long cookies, or comes from a WAP client,
-it may not fit into 1K.
-If a request line, or a request header field do not fit entirely into
-this buffer then larger buffers are allocated, configured by the
-<link id="large_client_header_buffers"/>
+设置读取客户端请求头部的缓冲容量。
+对于大多数请求，1K的缓冲足矣。
+但如果请求中含有的cookie很长，或者是来自WAP的客户端，可能不能放在1K的缓冲中。
+如果从请求行，或者某个请求头开始不能完整的放在这块空间中，那么nginx将按照
+<link id="large_client_header_buffers"/>指令的配置分配更多更大的缓冲来存放。
 directive.
 </para>
 
@@ -359,11 +288,8 @@ directive.
 <context>server</context>
 
 <para>
-Defines a timeout for reading client request header.
-If a client does not transmit the entire header within this time,
-the client error
-<http-status code="408" text="Request Time-out"/>
-is returned.
+定义读取客户端请求头部的超时。如果客户端在这段时间内没有传送完整的头部到nginx，
+nginx将返回错误<http-status code="408" text="Request Time-out"/>到客户端。
 </para>
 
 </directive>
@@ -377,18 +303,10 @@ is returned.
 <context>location</context>
 
 <para>
-Sets the maximum allowed size of the client request body,
-specified in the
-<header>Content-Length</header>
-request header field.
-If it exceeds the configured value, the client error
-<http-status code="413" text="Request Entity Too Large"/>
-is returned.
-Please be aware that
-<!--link doc="/web/upload.xml"-->browsers cannot correctly display
-this error<!--/link-->.
-Setting <value>size</value> to 0 disables client
-request body size checking.
+设置允许客户端请求正文的最大长度。这个长度在<header>Content-Length</header>请求头指定。
+如果超过这个长度，nginx将返回错误<http-status code="413" text="Request Entity Too Large"/>到客户端。
+请注意<!--link doc="/web/upload.xml"-->浏览器不能正确显示这个错误<!--/link-->。
+将<value>size</value>设置成0可以使nginx不检查客户度请求正文的长度。
 </para>
 
 </directive>
@@ -401,9 +319,7 @@ request body size checking.
 <context>server</context>
 
 <para>
-Allows to fine tune per-connection memory allocations.
-This directive has minimal impact on performance,
-and should not generally be used.
+允许微调为每个连接分配的内存。这条指令对nginx的性能影响非常小，一般不应该使用。
 </para>
 
 </directive>
@@ -417,9 +333,7 @@ and should not generally be used.
 <context>location</context>
 
 <para>
-Defines a default MIME-type of a response.
-Mapping of file name extensions to MIME types can be set
-with the <link id="types"/> directive.
+定义响应的默认MIME类型。详情参见<link id="types"/>指令。
 </para>
 
 </directive>
@@ -434,20 +348,16 @@ with the <link id="types"/> directive.
 <appeared-in>0.7.7</appeared-in>
 
 <para>
-Enables the use of
-the <c-def>O_DIRECT</c-def> flag (FreeBSD, Linux),
-the <c-def>F_NOCACHE</c-def> flag (Mac OS X),
-or the <c-func>directio</c-func> function (Solaris),
-when reading files that are larger than or equal to
-the specified <value>size</value>.
-It automatically disables (0.7.15) the use of
-<link id="sendfile"/>
-for a given request.
-It could be useful for serving large files:
+当读入长度大于等于指定<value>size</value>的文件时，
+在FreeBSD或Linux系统开启使用<c-def>O_DIRECT</c-def>标志，
+在Mac OS X系统开启使用<c-def>F_NOCACHE</c-def>标志，
+在Solaris系统开启使用<c-func>directio</c-func>功能。
+这条指令自动关闭<link id="sendfile"/>(0.7.15版)。
+它在处理大文件时
 <example>
 directio 4m;
 </example>
-or when using <link id="aio"/> on Linux.
+或者在Linux系统使用<link id="aio"/>时比较有用。
 </para>
 
 </directive>
@@ -462,10 +372,8 @@ or when using <link id="aio"/> on Linux.
 <appeared-in>0.8.11</appeared-in>
 
 <para>
-Sets an alignment for
-<link id="directio"/>.
-In most cases, a 512-byte alignment is enough, however, when
-using XFS under Linux, it needs to be increased to 4K.
+为<link id="directio"/>设置文件偏移量对齐。大多数情况下，按512字节对齐足矣，
+但在Linux系统下使用XFS，需要将值扩大到4K。
 </para>
 
 </directive>
@@ -484,78 +392,60 @@ using XFS under Linux, it needs to be increased to 4K.
 <appeared-in>1.1.15</appeared-in>
 
 <para>
-Determines how symbolic links should be treated when opening files:
+决定nginx打开文件时如何处理符号链接：
 <list type="tag">
 
 <tag-name><literal>off</literal></tag-name>
 <tag-desc>
-Symbolic links in the pathname are allowed and not checked.
-This is the default behavior.
+默认行为，允许路径中出现符号链接，不做检查。
 </tag-desc>
 
 <tag-name><literal>on</literal></tag-name>
 <tag-desc>
-If any component of the pathname is a symbolic link,
-access to a file is denied.
+如果文件路径中任何组成部分中含有符号链接，拒绝访问该文件。
 </tag-desc>
 
 <tag-name><literal>if_not_owner</literal></tag-name>
 <tag-desc>
-Access to a file is denied if any component of the pathname
-is a symbolic link, and the link and object that the link
-points to have different owners.
+如果文件路径中任何组成部分中含有符号链接，且符号链接和链接目标的所有者不同，拒绝访问该文件。
 </tag-desc>
 
 <tag-name><literal>from</literal>=<value>part</value></tag-name>
 <tag-desc>
-When checking symbolic links
-(parameters <literal>on</literal> and <literal>if_not_owner</literal>),
-all components of the pathname are normally checked.
-Checking of symbolic links in the initial part of the pathname
-may be avoided by also specifying the
-<literal>from</literal>=<value>part</value> parameter.
-In this case, symbolic links are checked only from
-the component of the pathname following the specified initial part.
-If a value is not an initial part of the checked pathname, the whole
-pathname is checked as if this parameter was not specified at all.
-If a value fully matches the file name,
-symbolic links are not checked.
-The parameter value can contain variables.
+当nginx进行符号链接检查时(参数<literal>on</literal>和参数<literal>if_not_owner</literal>)，按说路径中所有部分都会被检查。
+而使用<literal>from</literal>=<value>part</value>参数可以避免对路径开始部分进行符号链接检查，只检查后面的部分路径。
+如果某路径不是以指定值开始，整个路径将被检查，就如同没有指定这个参数一样。
+如果某路径与指定值完全匹配，将不做检查。
+这个参数的值可以包含变量。
 </tag-desc>
 
 </list>
 </para>
 
 <para>
-Example:
+比如：
 <example>
 disable_symlinks on from=$document_root;
 </example>
 </para>
 
 <para>
-This directive is only available on systems that have the
-<c-func>openat</c-func> and <c-func>fstatat</c-func> interfaces.
-This includes modern versions of FreeBSD, Linux, and Solaris.
+这条指令只在有<c-func>openat</c-func>和<c-func>fstatat</c-func>接口的系统上可用。
+当然，现在的FreeBSD、Linux和Solaris都支持这些接口。
 </para>
 
 <para>
-Parameters <literal>on</literal> and <literal>if_not_owner</literal>
-add a processing overhead.
+参数<literal>on</literal>和<literal>if_not_owner</literal>会带来处理开销。
 <note>
-On systems that do not support opening directories for search only,
-the use of these parameters requires that worker processes
-have read permissions for all checked directories.
+只在那些不支持打开目录查找文件的系统中，使用这些参数需要工作进程有这些被检查目录的读权限。
 </note>
 </para>
 
 <para>
 <note>
-The
-<link doc="ngx_http_autoindex_module.xml">ngx_http_autoindex_module</link>,
-<link doc="ngx_http_random_index_module.xml">ngx_http_random_index_module</link>,
-and <link doc="ngx_http_dav_module.xml">ngx_http_dav_module</link>
-modules currently ignore this directive.
+<link doc="ngx_http_autoindex_module.xml">ngx_http_autoindex_module</link>模块，
+<link doc="ngx_http_random_index_module.xml">ngx_http_random_index_module</link>模块
+和<link doc="ngx_http_dav_module.xml">ngx_http_dav_module</link>模块目前忽略这条指令。
 </note>
 </para>
 
@@ -574,54 +464,36 @@ modules currently ignore this directive.
 <context>if in location</context>
 
 <para>
-Defines the URI that will be shown for the specified errors.
-These directives are inherited from the previous level if and
-only if there are no
-<literal>error_page</literal>
-directives on
-the current level.
-A <literal>uri</literal> value can contain variables.
+为指令错误定义显示的URI。当前配置级别没有<literal>error_page</literal>指令时，将从上层配置继承。
+URI可以包含变量。
 </para>
 
 <para>
-Example:
+比如：
 <example>
-error_page   404              /404.html;
-error_page   500 502 503 504  /50x.html;
+error_page 404         /404.html;
+error_page 502 503 504 /50x.html;
+error_page 403         http://example.com/forbidden.html;
 </example>
 </para>
 
 <para>
-Furthermore, it is possible to change the response code to another
-using the “<literal>=code</literal>” syntax, for example:
+而且，这条指令可以修改响应状态码。比如：
 <example>
 error_page 404 =200 /empty.gif;
 </example>
 </para>
 
 <para>
-If an error response is processed by a proxied server, or a FastCGI server,
-and the server may return different response codes (e.g., 200, 302, 401
-or 404), it is possible to respond with a returned code:
+如果URI将被发送到一个被代理的服务器处理，或者发送到一个FastCGI服务器处理，
+这些后端服务器又返回了不同的响应状态码（比如200、302、401或404），那么这些返回的状态码也可以由本指令处理：
 <example>
 error_page 404 = /404.php;
 </example>
 </para>
 
 <para>
-It is also possible to use redirects for error processing:
-<example>
-error_page 403         http://example.com/forbidden.html;
-error_page 404 =301    http://example.com/notfound.html;
-</example>
-In this case, the response code 302 is returned to the client.
-It can only be changed to one of the redirect status
-codes (301, 302, 303 and 307).
-</para>
-
-<para>
-If there is no need to change URI during internal redirection it is
-possible to pass error processing into a named location:
+如果不想改变发到后端服务器的URI，可以指定URI为一个命名路径：
 <example>
 location / {
     error_page 404 = @fallback;
@@ -631,14 +503,6 @@ location @fallback {
     proxy_pass http://backend;
 }
 </example>
-</para>
-
-<para>
-<note>
-If the <literal>uri</literal> processing led to an error,
-the HTTP status code indicating last occurred problem
-will be returned.
-</note>
 </para>
 
 </directive>
@@ -653,21 +517,7 @@ will be returned.
 <appeared-in>1.3.3</appeared-in>
 
 <para>
-Enables or disables automatic generation of the <header>ETag</header>
-response header field for static resources.
-</para>
-
-</directive>
-
-
-<directive name="http">
-<syntax block="yes"/>
-<default/>
-<context>main</context>
-
-<para>
-Provides a configuration file context in which the HTTP server directives
-are specified.
+开启或关闭为静态文件自动计算<header>ETag</header>响应头。
 </para>
 
 </directive>
@@ -685,29 +535,23 @@ are specified.
 <appeared-in>0.7.24</appeared-in>
 
 <para>
-Specifies how to compare modification time of a response
-with the time in the
-<header>If-Modified-Since</header>
-request header field:
+指定响应的修改时间和<header>If-Modified-Since</header>请求头的比较方法：
 
 <list type="tag">
 
 <tag-name><literal>off</literal></tag-name>
 <tag-desc>
-the
-<header>If-Modified-Since</header> request header field is ignored (0.7.34);
+忽略<header>If-Modified-Since</header>请求头(0.7.34)；
 </tag-desc>
 
 <tag-name><literal>exact</literal></tag-name>
 <tag-desc>
-exact match;
+精确匹配；
 </tag-desc>
 
 <tag-name><literal>before</literal></tag-name>
 <tag-desc>
-modification time of a response is
-less than or equal to the time in the <header>If-Modified-Since</header>
-request header field.
+响应的修改时间小于等于<header>If-Modified-Since</header>请求头指定的时间。
 </tag-desc>
 
 </list>
@@ -723,17 +567,12 @@ request header field.
 <context>server</context>
 
 <para>
-Controls whether header fields with invalid names should be ignored.
-Valid names are composed of English letters, digits, hyphens, and possibly
-underscores (as controlled by the <link id="underscores_in_headers"/>
-directive).
+控制是否忽略非法的请求头字段名。
+合法的名字是由英文字母、数字、连字符组成，当然也可以包含下划线（由<link id="underscores_in_headers"/>指令控制）。
 </para>
 
 <para>
-A directive can be specified on the <link id="server"/> level
-in a default server.
-In this case, its value will cover all virtual servers
-listening on the same address and port.
+本指令可以在默认虚拟主机的<link id="server"/>配置层级中定义一次，那么这个值在监听在相同地址和端口的所有虚拟主机上都生效。
 </para>
 
 </directive>
@@ -745,47 +584,36 @@ listening on the same address and port.
 <context>location</context>
 
 <para>
-Specifies that a given location can only be used for internal requests.
-For external requests, the client error
-<http-status code="404" text="Not Found"/>
-is returned.
-Internal requests are the following:
+指定一个路径是否只能用于内部访问。如果是外部访问，客户端将收到<http-status code="404" text="Not Found"/>错误。
+下列请求是内部请求：
 
 <list type="bullet">
 
 <listitem>
-requests redirected by the
-<link id="error_page"/>,
-<link doc="ngx_http_index_module.xml" id="index"/>,
-<link doc="ngx_http_random_index_module.xml" id="random_index"/>, and
-<link id="try_files"/> directives;
+由<link id="error_page"/>指令、<link doc="ngx_http_index_module.xml" id="index"/>指令、
+<link doc="ngx_http_random_index_module.xml" id="random_index"/>指令
+和<link id="try_files"/>指令引起的重定向请求；
 </listitem>
 
 <listitem>
-requests redirected by the <header>X-Accel-Redirect</header>
-response header field from an upstream server;
+由后端服务器返回的<header>X-Accel-Redirect</header>响应头引起的重定向请求；
 </listitem>
 
 <listitem>
-subrequests formed by the
-“<command>include virtual</command>”
-command of the
-<link doc="ngx_http_ssi_module.xml">ngx_http_ssi_module</link>
-module and by the
-<link doc="ngx_http_addition_module.xml">ngx_http_addition_module</link>
-module directives;
+由<link doc="ngx_http_ssi_module.xml">ngx_http_ssi_module</link>模块
+和<link doc="ngx_http_addition_module.xml">ngx_http_addition_module</link>模块
+的“<command>include virtual</command>”指令产生的子请求；
 </listitem>
 
 <listitem>
-requests changed by the
-<link doc="ngx_http_rewrite_module.xml" id="rewrite"/> directive.
+用<link doc="ngx_http_rewrite_module.xml" id="rewrite"/>指令对请求进行修改。
 </listitem>
 
 </list>
 </para>
 
 <para>
-Example:
+举例：
 <example>
 error_page 404 /404.html;
 
@@ -793,14 +621,6 @@ location /404.html {
     internal;
 }
 </example>
-<note>
-There is a limit of 10 internal redirects per request to prevent
-request processing cycles that can occur in incorrect configurations.
-If this limit is reached, the error
-<http-status code="500" text="Internal Server Error"/> is returned.
-In such cases, the “rewrite or internal redirection cycle” message
-can be seen in the error log.
-</note>
 </para>
 
 </directive>
@@ -814,20 +634,13 @@ can be seen in the error log.
 <context>location</context>
 
 <para>
-Disables keep-alive connections with misbehaving browsers.
-The <value>browser</value> parameters specify which
-browsers will be affected.
-The value <literal>msie6</literal> disables keep-alive connections
-with old versions of MSIE, after seeing a POST request.
-The value <literal>safari</literal> disables keep-alive connections
-with Safari and Safari-like browsers on Mac OS X and Mac OS X-like
-operating systems.
-The value <literal>none</literal> enables keep-alive connections
-with all browsers.
+针对行为异常的浏览器关闭长连接功能。
+<value>browser</value>参数指定那些浏览器会受到影响。
+值为<literal>msie6</literal>表示在遇到POST请求时，关闭与老版MSIE浏览器建立长连接。
+值为<literal>safari</literal>表示在遇到Mac OS X和类Mac OS X操作系统下的Safari浏览器和类Safari浏览器时，不与浏览器建立长连接。
+值为<literal>none</literal>表示为所有浏览器开启长连接功能。
 <note>
-Prior to version 1.1.18, the value <literal>safari</literal> matched
-all Safari and Safari-like browsers on all operating systems, and
-keep-alive connections with them were disabled by default.
+在nginx 1.1.18版本及以前，<literal>safari</literal>将匹配所有操作系统上的Safari和类Safari浏览器，并默认不与这些浏览器建立长连接。
 </note>
 </para>
 
@@ -843,9 +656,8 @@ keep-alive connections with them were disabled by default.
 <appeared-in>0.8.0</appeared-in>
 
 <para>
-Sets the maximum number of requests that can be
-made through one keep-alive connection.
-After this many requests are made, the connection is closed.
+设置通过一个长连接可以处理的最大请求数。
+请求数超过此值，长连接将关闭。
 </para>
 
 </directive>
@@ -861,19 +673,14 @@ After this many requests are made, the connection is closed.
 <context>location</context>
 
 <para>
-The first parameter sets a timeout during which a keep-alive
-client connection will stay open on the server side.
-The optional second parameter sets a value in the
-<header>Keep-Alive: timeout=<value>time</value></header>
-response header field.
-Two parameters may differ.
+第一个参数设置客户端的长连接在服务器端保持的最长时间（在此时间客户端未发起新请求，则长连接关闭）。
+第二个参数为可选项，设置<header>Keep-Alive: timeout=<value>time</value></header>响应头的值。
+可以为这两个参数设置不同的值。
 </para>
 
 <para>
-The
-<header>Keep-Alive: timeout=<value>time</value></header>
-header field is understood by Mozilla and Konqueror.
-MSIE will close keep-alive connection in about 60 seconds.
+<header>Keep-Alive: timeout=<value>time</value></header>响应头可以被Mozilla和Konqueror浏览器识别和处理。
+MSIE浏览器在大约60秒后会关闭长连接。
 </para>
 
 </directive>
@@ -886,19 +693,11 @@ MSIE will close keep-alive connection in about 60 seconds.
 <context>server</context>
 
 <para>
-Sets the maximum <value>number</value> and <value>size</value> of
-buffers used when reading large client request header.
-A request line cannot exceed the size of one buffer, or the client error
-<http-status code="414" text="Request-URI Too Large"/>
-is returned.
-A request header field cannot exceed the size of one buffer as well, or the
-client error
-<http-status code="400" text="Bad Request"/>
-is returned.
-Buffers are allocated only on demand.
-By default, the buffer size is equal to 8K bytes.
-If after the end of request processing a connection is transitioned
-into the keep-alive state, these buffers are freed.
+设置读取客户端请求超大请求的缓冲最大<value>number（数量）</value>和每块缓冲的<value>size（容量）</value>。
+HTTP请求行的长度不能超过一块缓冲的容量，否则nginx返回错误<http-status code="414" text="Request-URI Too Large"/>到客户端。
+每个请求头的长度也不能超过一块缓冲的容量，否则nginx返回错误<http-status code="400" text="Bad Request"/>到客户端。
+缓冲仅在必需是才分配，默认每块的容量是8K字节。
+即使nginx处理完请求后与客户端保持入长连接，nginx也会释放这些缓冲。
 </para>
 
 </directive>
@@ -910,38 +709,32 @@ into the keep-alive state, these buffers are freed.
 <context>location</context>
 
 <para>
-Limits allowed HTTP methods inside a location.
-The <value>method</value> parameter can be one of the following:
-<literal>GET</literal>,
-<literal>HEAD</literal>,
-<literal>POST</literal>,
-<literal>PUT</literal>,
-<literal>DELETE</literal>,
-<literal>MKCOL</literal>,
-<literal>COPY</literal>,
-<literal>MOVE</literal>,
-<literal>OPTIONS</literal>,
-<literal>PROPFIND</literal>,
-<literal>PROPPATCH</literal>,
-<literal>LOCK</literal>,
-<literal>UNLOCK</literal>,
-or
-<literal>PATCH</literal>.
-Allowing the <literal>GET</literal> method also allows the
-<literal>HEAD</literal> method.
-Access to other methods can be limited using the
-<link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
-and
-<link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>
-modules directives:
+允许按请求的HTTP方法限制对某路径的请求。<value>method</value>用于指定不由这些限制条件进行过滤的HTTP方法，可选值有
+<literal>GET</literal>、
+<literal>HEAD</literal>、
+<literal>POST</literal>、
+<literal>PUT</literal>、
+<literal>DELETE</literal>、
+<literal>MKCOL</literal>、
+<literal>COPY</literal>、
+<literal>MOVE</literal>、
+<literal>OPTIONS</literal>、
+<literal>PROPFIND</literal>、
+<literal>PROPPATCH</literal>、
+<literal>LOCK</literal>、
+<literal>UNLOCK</literal>
+或者
+<literal>PATCH</literal>。
+指定<value>method</value>为<literal>GET</literal>方法的同时，nginx会自动添加<literal>HEAD</literal>方法。
+那么其他HTTP方法的请求就会由指令引导的配置块中的<link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
+模块和<link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>模块的指令来限制访问。如：
 <example>
 limit_except GET {
     allow 192.168.1.0/32;
     deny  all;
 }
 </example>
-Please note that this will limit access to all methods
-<emphasis>except</emphasis> GET and HEAD.
+请留意上面的例子将对<emphasis>除</emphasis>GET和HEAD方法以外的所有HTTP方法的请求进行访问限制。
 </para>
 
 </directive>
@@ -956,24 +749,16 @@ Please note that this will limit access to all methods
 <context>if in location</context>
 
 <para>
-Rate limits the transmission of a response to a client.
-The <value>rate</value> is specified in bytes per second.
-Value 0 (the default) disables rate limiting.
+限制向客户端传送响应的速率限制。参数<value>rate</value>的单位是字节/秒，设置为0（默认）将关闭限速。
 <!--
-The smaller the rate, the more accurate will be the limitation.
+速率越小，限速越精确。
 -->
-The limit is per connection, so if a single client opens 2 connections,
-an overall rate will be 2x more than specified by this directive.
+nginx按连接限速，所以如果某个客户端开启了两个连接，那么客户端的整体速率是这条指令设置值的2倍。
 </para>
 
 <para>
-This directive is not applicable if one wants to rate limit
-a group of clients on the
-<link id="server"/>
-level.
-If that is the case, the desired limit can be specified in the
-<var>$limit_rate</var>
-variable:
+如果想在<link id="server"/>级别限制满足某种条件的一组客户端的响应传输速率，是不能使用这条指令的。
+但可以设置<var>$limit_rate</var>变量来达成所希望的限制：
 <example>
 server {
 
@@ -987,13 +772,9 @@ server {
 </para>
 
 <para>
-In addition, rate limit can also be set in the
-<header>X-Accel-Limit-Rate</header> response header field.
-This ability can be disabled using the
-<link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>
-and
-<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_ignore_headers"/>
-directives.
+此外，也可以通过<header>X-Accel-Limit-Rate</header>响应头来完成速率限制。
+这种机制可以用<link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>指令和
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_ignore_headers"/>指令关闭。
 </para>
 
 </directive>
@@ -1009,12 +790,11 @@ directives.
 <appeared-in>0.8.0</appeared-in>
 
 <para>
-Sets the initial amount after which the further transmission
-of a response to a client will be rate limited.
+设置不限速传输的响应大小。当传输量大于此值时，超出部分将限速传送。
 </para>
 
 <para>
-Example:
+比如:
 <example>
 location /flv/ {
     flv;
@@ -1040,26 +820,21 @@ location /flv/ {
 <appeared-in>1.0.6</appeared-in>
 
 <para>
-Controls how nginx closes client connections.
+控制nginx如何关闭客户端连接。
 </para>
 
 <para>
-The default value “<literal>on</literal>” instructs nginx to
-<link id="lingering_timeout">wait for</link> and
-<link id="lingering_time">process</link> additional data from a client
-before fully closing a connection, but only
-if heuristics suggests that a client may be sending more data.
+默认值“<literal>on</literal>”指示nginx在完成关闭连接前<link id="lingering_timeout">等待</link>和
+<link id="lingering_time">处理</link>客户端发来的额外数据。但只有在预测客户端可能发送更多数据的情况才会做此处理。
 </para>
 
 <para>
-The value “<literal>always</literal>” will cause nginx to unconditionally
-wait for and process additional client data.
+“<literal>always</literal>”指示nginx无条件等待和处理客户端的额外数据。
 </para>
 
 <para>
-The value “<literal>off</literal>” tells nginx to never wait for
-more data and close the connection immediately.
-This breaks the protocol and should not be used under normal circumstances.
+“<literal>off</literal>”指示nginx立即关闭连接，而绝不等待客户端传送额外数据。
+这样做破坏了协议，所以正常条件下不应使用。
 </para>
 
 </directive>
@@ -1073,10 +848,8 @@ This breaks the protocol and should not be used under normal circumstances.
 <context>location</context>
 
 <para>
-When <link id="lingering_close"/> is in effect,
-this directive specifies a maximum time during which nginx
-will process (read and ignore) additional data coming from a client.
-After that, the connection is closed, even if there are more data.
+<link id="lingering_close"/>生效时，这条指令定义nginx处理(读取但忽略)客户端额外数据的最长时间。
+超过这段时间后，nginx将关闭连接，不论是否还有更多数据待处理。
 </para>
 
 </directive>
@@ -1090,12 +863,9 @@ After that, the connection is closed, even if there are more data.
 <context>location</context>
 
 <para>
-When <link id="lingering_close"/> is in effect, this directive specifies
-a maximum waiting time for more client data to arrive.
-If data are not received during this time, the connection is closed.
-Otherwise, data are read and ignored, then nginx waits again for more data.
-The “wait-read-ignore” cycle is repeated, but no longer than specified by the
-<link id="lingering_time"/> directive.
+<link id="lingering_close"/>生效时，这条指令定义nginx等待客户端更多数据到来的最长时间。
+如果在这段时间内，nginx没有接收到数据，nginx将关闭连接。否则，nginx将接收数据，忽略它，然后再等待更多数据。
+这个“等待——接收——忽略”的循环一直重复，但不会超过<link id="lingering_time"/>指令定义的时间。
 </para>
 
 </directive>
@@ -1143,12 +913,10 @@ The “wait-read-ignore” cycle is repeated, but no longer than specified by th
 <context>server</context>
 
 <para>
-Sets an <value>address</value> and a <value>port</value> for IP,
-or a <value>path</value> for a UNIX-domain socket, on which
-the server will accept requests.
-Only one of <value>address</value> or <value>port</value> may be
-specified.
-An <value>address</value> may also be a hostname, for example:
+设置nginx监听地址，nginx从这里接受请求。对于IP协议，这个地址就是<value>address</value>和<value>port</value>；对于UNIX域套接字协议，这个地址就是<value>path</value>。
+一条listen指令只能指定一个<value>address</value>或者<value>port</value>。
+<value>address</value>也可以是主机名。
+比如：
 <example>
 listen 127.0.0.1:8000;
 listen 127.0.0.1;
@@ -1156,51 +924,38 @@ listen 8000;
 listen *:8000;
 listen localhost:8000;
 </example>
-IPv6 addresses (0.7.36) are specified in square brackets:
+IPv6地址(0.7.36版)用方括号来表示：
 <example>
 listen [::]:8000;
 listen [fe80::1];
 </example>
-UNIX-domain sockets (0.8.21) are specified with the “<literal>unix:</literal>”
-prefix:
+UNIX域套接字(0.8.21版)则使用“<literal>unix:</literal>”前缀：
 <example>
 listen unix:/var/run/nginx.sock;
 </example>
 </para>
 
 <para>
-If only <value>address</value> is given, the port 80 is used.
+如果只定义了<value>address</value>，nginx将使用80端口。
 </para>
 
 <para>
-If directive is not present then either the <literal>*:80</literal> is used
-if nginx runs with superuser privileges, or <literal>*:8000</literal> otherwise.
+在没有定义listen指令的情况下，如果以超级用户权限运行nginx，它将监听<literal>*:80</literal>，否则他将监听<literal>*:8000</literal>。
 </para>
 
 <para>
-The <literal>default_server</literal> parameter, if present,
-will cause the server to become the default server for the specified
-<value>address</value>:<value>port</value> pair.
-If none of the directives have the <literal>default_server</literal>
-parameter then the first server with the
-<value>address</value>:<value>port</value> pair will be
-the default server for this pair.
+如果listen指令携带<literal>default_server</literal>参数，当前虚拟主机将成为指定<value>address</value>:<value>port</value>的默认虚拟主机。
+如果任何listen指令都没有携带<literal>default_server</literal>参数，那么第一个监听<value>address</value>:<value>port</value>的虚拟主机将被作为这个地址的默认虚拟主机。
 <note>
-In versions prior to 0.8.21 this parameter is named simply
-<literal>default</literal>.
+0.8.21版以前，这个参数的名称是<literal>default</literal>。
 </note>
 </para>
 
 <para>
-A <literal>listen</literal> directive
-can have several additional parameters specific to socket-related system calls.
-They can be specified in any
-<literal>listen</literal> directive, but only once for the given
-<value>address</value>:<value>port</value> pair.
+可以为一个<literal>listen</literal>指令定义若干额外的参数，这些参数可以被系统调用<c-func>listen</c-func>和<c-func>bind</c-func>使用。
+这些参数可以在任何<literal>listen</literal>指令中指定，但是对于每个<value>address</value>:<value>port</value>，只能定义一次。
 <note>
-In versions prior to 0.8.21, they could only be
-specified in the <literal>listen</literal> directive along with the
-<literal>default</literal> parameter.
+0.8.21版以前，只有为<literal>listen</literal>指令定义了<literal>default</literal>参数，才能定义这些额外的参数。
 </note>
 <list type="tag">
 
@@ -1208,148 +963,105 @@ specified in the <literal>listen</literal> directive along with the
 <literal>setfib</literal>=<value>number</value>
 </tag-name>
 <tag-desc>
-this parameter (0.8.44) sets an associated routing table, FIB
-(the <c-def>SO_SETFIB</c-def> option) for the listening socket.
-This currently works only on FreeBSD.
+这个参数(0.8.44版)为监听套接字设置相关FIB(路由表)。
+当前这个参数仅工作在FreeBSD上。
 </tag-desc>
 
 <tag-name>
 <literal>backlog</literal>=<value>number</value>
 </tag-name>
 <tag-desc>
-sets the <literal>backlog</literal> parameter in the
-<c-func>listen</c-func> call that limits
-the maximum length for the queue of pending connections.
-By default, <literal>backlog</literal> is set to -1 on FreeBSD,
-and to 511 on other platforms.
+为系统调用<c-func>listen</c-func>设置<literal>backlog</literal>参数。
+FreeBSD下，<literal>backlog</literal>的默认值是-1，在其他系统中，默认值是511。
 </tag-desc>
 
 <tag-name>
 <literal>rcvbuf</literal>=<value>size</value>
 </tag-name>
 <tag-desc>
-sets receive buffer size
-(the <c-def>SO_RCVBUF</c-def> option) for the listening socket.
+为监听套接字设置<c-def>SO_RCVBUF</c-def>参数。
 </tag-desc>
 
 <tag-name>
 <literal>sndbuf</literal>=<value>size</value>
 </tag-name>
 <tag-desc>
-sets send buffer size
-(the <c-def>SO_SNDBUF</c-def> option) for the listening socket.
+为监听套接字设置<c-def>SO_SNDBUF</c-def>参数。
 </tag-desc>
 
 <tag-name>
 <literal>accept_filter</literal>=<value>filter</value>
 </tag-name>
 <tag-desc>
-sets the name of accept filter
-(the <c-def>SO_ACCEPTFILTER</c-def> option) for the listening socket
-that filters incoming connections before presenting them to
-<c-func>accept</c-func>.
-This works only on FreeBSD and NetBSD 5.0+.
-Acceptable values are
-<link url="http://man.freebsd.org/accf_data">dataready</link>
-and
-<link url="http://man.freebsd.org/accf_http">httpready</link>.
+设置接收过滤器的名称。本特性仅工作在FreeBSD系统下，可接受的值为<literal>dataready</literal>和<literal>httpready</literal>。
+只有在最近的FreeBSD版本上（从6.0，5.4-STABLE和4.11-STABLE版本开始），接受过滤器在收到<c-def>SIGHUP</c-def>信号后可以更改。
 </tag-desc>
 
 <tag-name>
 <literal>deferred</literal>
 </tag-name>
 <tag-desc>
-instructs to use a deferred <c-func>accept</c-func>
-(the <c-def>TCP_DEFER_ACCEPT</c-def> socket option) on Linux.
+指示在Linux系统使用<c-def>TCP_DEFER_ACCEPT</c-def>选项开启使用延迟的<c-func>accept</c-func>。
 </tag-desc>
 
 <tag-name>
 <literal>bind</literal>
 </tag-name>
 <tag-desc>
-instructs to make a separate <c-func>bind</c-func> call for a given
-<value>address</value>:<value>port</value> pair.
-This is because nginx will <c-func>bind</c-func> only to
-<literal>*:</literal><value>port</value>
-if there are several <literal>listen</literal> directives with
-the same port but different addresses, and one of the
-<literal>listen</literal> directives listens on all addresses
-for the given port (<literal>*:</literal><value>port</value>).
-It should be noted that in this case a <c-func>getsockname</c-func>
-system call will be made to determine an address that accepted a
-connection.
-If parameters <literal>backlog</literal>, <literal>rcvbuf</literal>,
-<literal>sndbuf</literal>, <literal>accept_filter</literal>,
-<literal>deferred</literal>, or <literal>so_keepalive</literal>
-are used then for a given
-<value>address</value>:<value>port</value> pair
-a separate <c-func>bind</c-func> call will always be made.
+指示nginx为设置的<value>address</value>:<value>port</value>单独调用一次<c-func>bind</c-func>。
+这是因为当有多条<literal>listen</literal>指令监听不同地址下的相同端口，
+而其中一条<literal>listen</literal>指令监听了这个端口的所有地址(<literal>*:</literal><value>port</value>)时，
+nginx只会为<literal>*:</literal><value>port</value>调用一次<c-func>bind</c-func>绑定套接字。
+需要留意的是，这种情况下，nginx会调用<c-func>getsockname</c-func>系统调用来确定接受请求的套接字地址。
+如果为某个<value>address</value>:<value>port</value>定义了参数<literal>backlog</literal>、<literal>rcvbuf</literal>、
+<literal>sndbuf</literal>、<literal>accept_filter</literal>、<literal>deferred</literal>或者<literal>so_keepalive</literal>，
+nginx总会为这个地址单独调用一次<c-func>bind</c-func>绑定套接字。
 </tag-desc>
 
 <tag-name>
 <literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>
 </tag-name>
 <tag-desc>
-this parameter (0.7.42) determines
-(via the <c-def>IPV6_V6ONLY</c-def> socket option)
-whether IPv6 socket listening on a wildcard address <literal>[::]</literal>
-will accept only IPv6 connections, or both IPv6 and IPv4 connections.
-This parameter is turned on by default.
-It can only be set once on start.
-<note>
-Prior to version 1.3.4,
-if this parameter was omitted then the operating system’s settings were
-in effect for the socket.
-</note>
+这个参数(0.7.42版)为监听套接字设置<c-def>IPV6_V6ONLY</c-def>选项，并且只能在nginx启动时设置。
 </tag-desc>
 
 <tag-name>
 <literal>ssl</literal>
 </tag-name>
 <tag-desc>
-this parameter (0.7.14) does not relate to socket-related system calls,
-but allows to specify that all connections accepted on this port
-should work in SSL mode.
-This allows for a more compact <link doc="configuring_https_servers.xml"
-id="single_http_https_server">configuration</link> for the server that
-handles both HTTP and HTTPS requests.
+本参数(0.7.14版)与系统调用<c-func>listen</c-func>和<c-func>bind</c-func>无关，而是指定从这个端口接受的连接以SSL模式处理。
+本参数在某服务器同时以HTTP和HTTPS模式工作时，可以使配置更为紧凑。
+<example>
+listen 80;
+listen 443 ssl;
+</example>
 </tag-desc>
 
 <tag-name>
 <literal>so_keepalive</literal>=<literal>on</literal>|<literal>off</literal>|[<value>keepidle</value>]:[<value>keepintvl</value>]:[<value>keepcnt</value>]
 </tag-name>
 <tag-desc>
-this parameter (1.1.11) configures the “TCP keepalive” behavior
-for the listening socket.
-If this parameter is omitted then the operating system’s settings will be
-in effect for the socket.
-If set to the value “<literal>on</literal>”, the <c-def>SO_KEEPALIVE</c-def>
-socket option is turned on for the socket.
-If set to the value “<literal>off</literal>”, the <c-def>SO_KEEPALIVE</c-def>
-socket option is turned off for the socket.
-Some operating systems support tuning TCP keepalive parameters on a per-socket
-basis using the <c-def>TCP_KEEPIDLE</c-def>, <c-def>TCP_KEEPINTVL</c-def>,
-and <c-def>TCP_KEEPCNT</c-def> socket options.
-On such systems (currently, Linux 2.4+, NetBSD 5+, and
-FreeBSD 9.0-STABLE) they can be configured
-using the <value>keepidle</value>, <value>keepintvl</value>, and
-<value>keepcnt</value> parameters.
-One or two parameters may be omitted, in which case the system default setting
-for the corresponding socket option will be in effect.
-For example,
-<example>so_keepalive=30m::10</example>
-will set idle timeout (<c-def>TCP_KEEPIDLE</c-def>) to 30 minutes,
-leave probe interval (<c-def>TCP_KEEPINTVL</c-def>) at its system default,
-and set probes count (<c-def>TCP_KEEPCNT</c-def>) to 10 probes.
+这个参数(1.1.11)为监听套接字配置“TCP keepalive”行为。
+如果省略此参数，nginx将为监听套接字使用系统默认的设置。
+如果参数值设置为“<literal>on</literal>”，监听套接字的<c-def>SO_KEEPALIVE</c-def>属性将被开启。
+如果参数值设置为“<literal>off</literal>”，监听套接字的<c-def>SO_KEEPALIVE</c-def>属性将被关闭。
+有些操作系统支持为每个连接调整TCP长连接的参数。调整参数可以使用套接字选项<c-def>TCP_KEEPIDLE</c-def>，<c-def>TCP_KEEPINTVL</c-def>和<c-def>TCP_KEEPCNT</c-def>。
+在这些操作系统上(当前就是Linux 2.4+，嬀NetBSD 5+FreeBSD 9.0-STABLE)，可以使用<value>keepidle</value>，<value>keepintvl</value>和<value>keepcnt</value>参数来配置。
+省略一到两个参数的话，对应套接字属性的系统默认设置将生效。
+比如，
+<example>so_keepalive=30m::10</example>将
+设置空闲超时(<c-def>TCP_KEEPIDLE</c-def>)为30分钟，
+设置探测次数(<c-def>TCP_KEEPCNT</c-def>)为10次，
+保留探测时间间隔(<c-def>TCP_KEEPINTVL</c-def>)为系统默认值。
 </tag-desc>
 
 </list>
 </para>
 
 <para>
-Example:
+举例：
 <example>
-listen 127.0.0.1 default_server accept_filter=dataready backlog=1024;
+listen 127.0.0.1 default accept_filter=dataready backlog=1024;
 </example>
 </para>
 
@@ -1369,76 +1081,53 @@ listen 127.0.0.1 default_server accept_filter=dataready backlog=1024;
 <context>location</context>
 
 <para>
-Sets a configuration based on a request URI.
+为某个请求URI（路径）建立配置。
 </para>
 
 <para>
-The matching is performed against a normalized URI,
-after decoding a text encoded in the “<literal>%XX</literal>” form,
-resolving references to relative path components “<literal>.</literal>”
-and “<literal>..</literal>”, and possible
-<link id="merge_slashes">compression</link> of two or more
-adjacent slashes into a single slash.
+路径匹配在URI规范化以后进行。所谓规范化，就是先将URI中形如“<literal>%XX</literal>”的编码字符进行解码，
+再解析URI中的相对路径“<literal>.</literal>”和“<literal>..</literal>”部分，
+另外还可能会<link id="merge_slashes">压缩</link>相邻的两个或多个斜线成为一个斜线。
 </para>
 
 <para>
-A location can either be defined by a prefix string, or by a regular expression.
-Regular expressions are specified by prepending them with the
-“<literal>~*</literal>” prefix (for case-insensitive matching), or with the
-“<literal>~</literal>” prefix (for case-sensitive matching).
-To find a location matching a given request, nginx first checks
-locations defined using the prefix strings (prefix locations).
-Among them, the most specific one is searched.
-Then regular expressions are checked, in the order of their appearance
-in a configuration file.
-A search of regular expressions terminates on the first match,
-and the corresponding configuration is used.
-If no match with a regular expression is found then a
-configuration of the most specific prefix location is used.
+可以使用前缀字符串或者正则表达式定义路径。使用正则表达式需要在路径开始添加“<literal>~*</literal>”前缀
+(不区分大小写)，或者“<literal>~</literal>”前缀(区分大小写)。为了根据请求URI查找路径，nginx先检查前缀字符串定义的路径
+(前缀路径)，在这些路径中找到能最精确匹配请求URI的路径。然后nginx按在配置文件中的出现顺序检查正则表达式路径，
+匹配上某个路径后即停止匹配并使用该路径的配置，否则使用最大前缀匹配的路径的配置。
 </para>
 
 <para>
-Locations can be nested, with some exceptions mentioned below.
+路径可以嵌套，但有例外，后面将提到。
 </para>
 
 <para>
-For case-insensitive operating systems such as Mac OS X and Cygwin,
-matching with prefix strings ignores a case (0.7.7).
-However, comparison is limited to one-byte locales.
+在不区分大小写的操作系统（诸如Mac OS X和Cygwin）上，前缀匹配忽略大小写(0.7.7)。但是，比较仅限于单字节的区域。
 </para>
 
 <para>
-Regular expressions can contain captures (0.7.40) that can later
-be used in other directives.
+正则表达式中可以包含匹配组(0.7.40)，结果可以被后面的其他指令使用。
 </para>
 
 <para>
-If the most specific prefix location has the “<literal>^~</literal>” prefix
-then regular expressions are not checked.
+如果最大前缀匹配的路径以“<literal>^~</literal>”开始，那么nginx不再检查正则表达式。
 </para>
 
 <para>
-Also, using the “<literal>=</literal>” prefix it is possible to define
-an exact match of URI and location.
-If an exact match is found, the search terminates.
-For example, if a “<literal>/</literal>” request happens frequently,
-defining “<literal>location = /</literal>” will speed up the processing
-of these requests, as search terminates right after the first
-comparison.
-Such a location cannot obviously contain nested locations.
+而且，使用“<literal>=</literal>”前缀可以定义URI和路径的精确匹配。如果发现匹配，则终止路径查找。
+比如，如果请求“<literal>/</literal>”出现频繁，定义“<literal>location = /</literal>”可以提高这些请求的处理速度，
+因为查找过程在第一次比较以后即结束。这样的路径明显不可能包含嵌套路径。
 </para>
 
 <para>
 <note>
-In versions from 0.7.1 to 0.8.41, if a request matched the prefix
-location without the “<literal>=</literal>” and “<literal>^~</literal>”
-prefixes, the search also terminated and regular expressions were
-not checked.
+在0.7.1到0.8.41的所有nginx中，如果请求匹配的前缀字符串路径并没有“<literal>=</literal>”或“<literal>^~</literal>”前缀，
+路径查找过程仍然会停止，而不进行正则表达式匹配。
 </note>
 </para>
 
 <para>
-Let’s illustrate the above by example:
+让我们用一个例子解释上面的说法：
 <example>
 location = / {
     [ configuration A ]
@@ -1456,18 +1145,15 @@ location ~* \.(gif|jpg|jpeg)$ {
     [ configuration D ]
 }
 </example>
-The “<literal>/</literal>” request will match configuration A,
-the “<literal>/documents/document.html</literal>” request will match
-configuration B,
-the “<literal>/images/1.gif</literal>” request will match configuration C, and
-the “<literal>/documents/1.jpg</literal>” request will match configuration D.
+请求“<literal>/</literal>”匹配配置A，
+请求“<literal>/documents/document.html</literal>”匹配配置B，
+请求“<literal>/images/1.gif</literal>”匹配配置C，
+请求“<literal>/documents/1.jpg</literal>”匹配配置D。
 </para>
 
 <para>
-The “<literal>@</literal>” prefix defines a named location.
-Such a location is not used for a regular request processing, but instead
-used for request redirection.
-They cannot be nested, and cannot contain nested locations.
+前缀“<literal>@</literal>”定义了命名路径。这种路径不在一般的请求处理中使用，
+而是用在请求重定向中。这些路径不能嵌套，也不能包含嵌套路径。
 </para>
 
 <!--
@@ -1485,8 +1171,7 @@ They cannot be nested, and cannot contain nested locations.
 <context>location</context>
 
 <para>
-Enables or disables logging of errors about not found files into the
-<link doc="../ngx_core_module.xml" id="error_log"/>.
+开启或者关闭在<link doc="../ngx_core_module.xml" id="error_log"/>中记录文件不存在的错误。
 </para>
 
 </directive>
@@ -1500,8 +1185,7 @@ Enables or disables logging of errors about not found files into the
 <context>location</context>
 
 <para>
-Enables or disables logging of subrequests into the
-<link doc="ngx_http_log_module.xml" id="access_log"/>.
+开启或者关闭在<link doc="ngx_http_log_module.xml" id="access_log"/>中记录子请求的访问日志。
 </para>
 
 </directive>
@@ -1516,11 +1200,8 @@ Enables or disables logging of subrequests into the
 <appeared-in>1.1.2</appeared-in>
 
 <para>
-Limits the maximum allowed number of ranges in byte-range requests.
-Requests that exceed the limit are processed as if there were no
-byte ranges specified.
-By default, there is no limit.
-The value of zero disables the byte-range support completely.
+如果请求中含有字节范围的请求头，这条指令可以限制此范围允许的最大值。如果请求头的值超过此限制，将按请求未携带此请求头的情况处理。
+默认nginx对此不做限制。设置为0将使nginx完全不支持HTTP字节范围特性。
 </para>
 
 </directive>
@@ -1533,36 +1214,26 @@ The value of zero disables the byte-range support completely.
 <context>server</context>
 
 <para>
-Enables or disables compression of two or more adjacent slashes
-in a URI into a single slash.
+开启或者关闭将请求URI中相邻两个或更多斜线合并成一个的功能。
 </para>
 
 <para>
-Note that compression is essential for the correct prefix string
-and regular expressions location matching.
-Without it, the “<literal>//scripts/one.php</literal>” request would not match
+注意压缩URI对于前缀匹配和正则匹配的正确性是很重要的。没有开启这个功能时，请求“<literal>//scripts/one.php</literal>”将不能匹配
 <example>
 location /scripts/ {
     ...
 }
 </example>
-and might be processed as a static file,
-so it gets converted to “<literal>/scripts/one.php</literal>”.
+而被按静态文件的流程处理，所以将它变换成“<literal>/scripts/one.php</literal>”。
 </para>
 
 <para>
-Turning the compression <literal>off</literal> can become necessary if a URI
-contains base64-encoded names, since base64 uses the “<literal>/</literal>”
-character internally.
-However, for security considerations, it is better to avoid turning off
-the compression.
+如果URI中包含base64编码的内容，必须将斜线压缩调整成<literal>off</literal>，因为base64编码本身会使用“<literal>/</literal>”字符。
+然而。出于安全方面的考虑，最好还是不要关闭压缩。
 </para>
 
 <para>
-A directive can be specified on the <link id="server"/> level
-in a default server.
-In this case, its value will cover all virtual servers
-listening on the same address and port.
+这条指令可以指定在默认虚拟主机的<link id="server"/>配置级别。这样的话，这个配置可以覆盖监听同一地址和端口的所有虚拟主机。
 </para>
 
 </directive>
@@ -1576,8 +1247,8 @@ listening on the same address and port.
 <context>location</context>
 
 <para>
-Enables or disables adding of comments to responses with status
-greater than 400 for MSIE clients, to pad the response size to 512 bytes.
+在响应状态码大于等于400时，在响应正文中添加一段注释，使响应正文达到512字节。
+本指令可以为MSIE客户端开启或关闭这个功能。
 </para>
 
 </directive>
@@ -1591,7 +1262,7 @@ greater than 400 for MSIE clients, to pad the response size to 512 bytes.
 <context>location</context>
 
 <para>
-Enables or disables issuing refreshes instead of redirects, for MSIE clients.
+为MSIE客户端开启或者关闭用页面刷新取代页面重定向的功能。
 </para>
 
 </directive>
@@ -1608,24 +1279,21 @@ Enables or disables issuing refreshes instead of redirects, for MSIE clients.
 <context>location</context>
 
 <para>
-Configures a cache that can store:
+用于配置文件缓存，可缓存：
 <list type="bullet">
 
 <listitem>
-open file descriptors, their sizes and modification times;
+打开文件的描述符，大小和修改时间；
 </listitem>
 
 <listitem>
-directory lookups;
+目录查找结果；
 </listitem>
 
 <listitem>
-file lookup errors, such as “file not found”, “no read permission”,
-and so on.
+文件查找时的错误结果，诸如“file not found”(文件不存在)、“no read permission”(无读权限)等等。
 <note>
-Caching of errors should be enabled separately by the
-<link id="open_file_cache_errors"/>
-directive.
+应单独使用<link id="open_file_cache_errors"/>指令开启缓存错误结果的功能。
 </note>
 </listitem>
 
@@ -1633,38 +1301,36 @@ directive.
 </para>
 
 <para>
-The directive has the following parameters:
+指令有下列参数：
 <list type="tag">
 
 <tag-name>
 <literal>max</literal>
 </tag-name>
 <tag-desc>
-sets the maximum number of elements in the cache;
-on cache overflow the least recently used (LRU) elements get removed;
+设置缓存中元素的最大数量，当缓存溢出时，使用LRU(最近最少使用)算法删除缓存中的元素；
 </tag-desc>
 
 <tag-name>
 <literal>inactive</literal>
 </tag-name>
 <tag-desc>
-defines a time, after which an element gets removed from the cache
-if there were no accesses to it during this time;
-by default, it is 60 seconds;
+设置超时，在这段时间内缓存元素如果没有被访问，将从缓存中删除。
+默认超时是60秒；
 </tag-desc>
 
 <tag-name>
 <literal>off</literal>
 </tag-name>
 <tag-desc>
-disables the cache.
+关闭缓存。
 </tag-desc>
 
 </list>
 </para>
 
 <para>
-Example:
+举例：
 <example>
 open_file_cache          max=1000 inactive=20s;
 open_file_cache_valid    30s;
@@ -1686,8 +1352,7 @@ open_file_cache_events   on;
 <context>location</context>
 
 <para>
-Enables or disables caching of file lookup errors by
-<link id="open_file_cache"/>.
+开启或者关闭<link id="open_file_cache">缓存文件</link>查找的错误结果。
 </para>
 
 </directive>
@@ -1728,10 +1393,8 @@ file systems such as UFS or FFS.
 <context>location</context>
 
 <para>
-Sets the minimum <value>number</value> of file accesses during
-the period configured by the <literal>inactive</literal> parameter
-of the <link id="open_file_cache"/> directive,
-after which a file descriptor will remain open in the cache.
+设置在由<link id="open_file_cache"/>指令的<literal>inactive</literal>参数配置的超时时间内，
+文件应该被访问的最小<value>number(次数)</value>。如果访问次数大于等于此值，文件描述符会保留在缓存中，否则从缓存中删除。
 </para>
 
 </directive>
@@ -1745,9 +1408,7 @@ after which a file descriptor will remain open in the cache.
 <context>location</context>
 
 <para>
-Sets a time after which
-<link id="open_file_cache"/>
-elements should be validated.
+设置检查<link id="open_file_cache"/>缓存的元素的时间间隔。
 <!--
 When
 <link id="open_file_cache_events"/>
@@ -1766,8 +1427,7 @@ are checked only once, and then updated right after they get changed.
 <context>server</context>
 
 <para>
-This directive is made obsolete by the
-<link id="server_name_in_redirect"/> directive.
+这条指令已经被废弃，请使用<link id="server_name_in_redirect"/>指令。
 </para>
 
 <!--
@@ -1795,12 +1455,12 @@ optimization needs to be disabled.
 <context>location</context>
 
 <para>
-Enables or disables specifying the port in redirects issued by nginx.
+开启或关闭nginx发起重定向时指定端口。
 </para>
 
 <para>
-The use of a primary server name in redirects is controlled by
-the <link id="server_name_in_redirect"/> directive.
+
+另请参见<link id="server_name_in_redirect"/>指令。
 </para>
 
 </directive>
@@ -1814,9 +1474,8 @@ the <link id="server_name_in_redirect"/> directive.
 <context>location</context>
 
 <para>
-If possible, the output of client data will be postponed until
-nginx has at least <value>size</value> bytes of data to send.
-Value of zero disables postponing.
+如果可能，到客户端的数据将被推迟发送，直到nginx需要发送的数据至少有<value>size</value>字节。
+设置为0将关闭推迟发送的功能。
 </para>
 
 </directive>
@@ -1830,22 +1489,16 @@ Value of zero disables postponing.
 <context>location</context>
 
 <para>
-Sets the amount of pre-reading when working with files, in the kernel.
+设置内核参数，控制文件预读的数量。
 </para>
 
 <para>
-On Linux, the
-<literal>posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL)</literal>
-system call is used, so the <value>size</value> parameter is ignored.
+在Linux上，因为使用的是<literal>posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL)</literal>系统调用，所以<value>size</value>无用。
 </para>
 
 <para>
-On FreeBSD, the
-<literal>fcntl(O_READAHEAD,</literal>
-<value>size</value><literal>)</literal>
-system call is used, supported in FreeBSD&nbsp;9.0-CURRENT.
-FreeBSD&nbsp;7 needs to be
-<link url="http://sysoev.ru/freebsd/patch.readahead.txt">patched</link>.
+在FreeBSD上，访问的是<literal>fcntl(O_READAHEAD,</literal><value>size</value><literal>)</literal>系统调用。
+该系统调用在FreeBSD&nbsp;9.0-CURRENT才被支持，在FreeBSD&nbsp;7上则需要<link url="http://sysoev.ru/freebsd/patch.readahead.txt">打补丁</link>。
 </para>
 
 </directive>
@@ -1859,11 +1512,8 @@ FreeBSD&nbsp;7 needs to be
 <context>location</context>
 
 <para>
-Enables or disables doing several redirects using the
-<link id="error_page"/>
-directive.
-There is a <link doc="ngx_http_core_module.xml" id="internal">
-limit</link> on a number of such redirects.
+允许或禁止<link id="error_page"/>指令导致的多次重定向。禁止此功能时，
+当访问<link id="error_page"/>指令重定向的错误页面出现任何问题时，nginx将直接输出默认错误页面。
 </para>
 
 </directive>
@@ -1876,9 +1526,7 @@ limit</link> on a number of such redirects.
 <context>server</context>
 
 <para>
-Allows to fine tune per-request memory allocations.
-This directive has minimal impact on performance,
-and should not generally be used.
+允许对每个请求的内存分配进行细调。这条指令对性能影响很小，通常情况下不应使用。
 </para>
 
 </directive>
@@ -1892,19 +1540,13 @@ and should not generally be used.
 <context>location</context>
 
 <para>
-Enables or disables resetting of timed out connections.
-The reset is performed as follows: before closing a socket, the
-<c-def>SO_LINGER</c-def>
-option is set on it with a timeout value of 0.
-When the socket is closed, a client is sent TCP RST, and all memory
-occupied by this socket is freed.
-This avoids keeping of an already closed socket with filled buffers
-for a long time, in a FIN_WAIT1 state.
+开启或关闭重置超时连接的功能。重置连接是这样执行的：关闭套接字以前，设置<c-def>SO_LINGER</c-def>选项的超时值为0，
+那么当关闭套接字时，nginx向客户端发送TCP RST，并且释放此套接字占用的所有内存。
+这样可以避免某个已关闭的套接字长时间处于FIN_WAIT1状态，并占用内存缓冲区。
 </para>
 
 <para>
-It should be noted that timed out keep-alive connections are still
-closed normally.
+应该注意的事，超时的长连接仍然是正常关闭。
 </para>
 
 </directive>
@@ -1920,28 +1562,21 @@ closed normally.
 <context>location</context>
 
 <para>
-Configures name servers used to resolve names of upstream servers
-into addresses, for example:
+配置将后端服务器的名字解析成ip地址的名字服务器，比如：
 <example>
 resolver 127.0.0.1 [::1]:5353;
 </example>
-An address can be specified as a domain name or IP address,
-and an optional port (1.3.1, 1.2.2).
-If port is not specified, the port 53 is used.
-Name servers are queried in a round-robin fashion.
+这里地址可以只定位域名或者ip地址，可以带端口号(1.3.1，1.2.2)。如果未指定端口，nginx使用53端口。
+以轮询方式发送请求到多台名字服务器。
 <note>
-Before version 1.1.7, only a single name server could be configured.
-Specifying name servers using IPv6 addresses is supported
-starting from versions 1.3.1 and 1.2.2.
+在1.1.7版以前，只允许配置一个名字服务器。而支持使用IPv6地址定义名字服务器则是从1.3.1和1.2.2版本开始。
 </note>
-By default, nginx caches answers using the TTL value of a response.
-An optional <literal>valid</literal> parameter allows to override it:
+nginx会缓存名字解析的结果。默认情况下，缓存时间是名字解析响应中的TTL字段的值。也允许通过<literal>valid</literal>参数覆盖它：
 <example>
 resolver 127.0.0.1 [::1]:5353 valid=30s;
 </example>
 <note>
-Before version 1.1.9, tuning of caching time was not possible,
-and nginx always cached answers for the duration of 5 minutes.
+在1.1.9版以前，不可能调节缓存时间，nginx总会将响应缓存5分钟。
 </note>
 </para>
 
@@ -1956,7 +1591,7 @@ and nginx always cached answers for the duration of 5 minutes.
 <context>location</context>
 
 <para>
-Sets a timeout for name resolution, for example:
+为名字解析设置超时，比如：
 <example>
 resolver_timeout 5s;
 </example>
@@ -1974,28 +1609,21 @@ resolver_timeout 5s;
 <context>if in location</context>
 
 <para>
-Sets the root directory for requests.
-For example, with the following configuration
+为请求设置根目录。比如，如果配置如下
 <example>
 location /i/ {
     root /data/w3;
 }
 </example>
-“<literal>/i/top.gif</literal>” will be responded
-with the file
-<path>/data/w3/i/top.gif</path>.
+那么nginx将使用文件<path>/data/w3/i/top.gif</path>响应请求“<literal>/i/top.gif</literal>”。
 </para>
 
 <para>
-The <value>path</value> value can contain variables
-except <var>$document_root</var> and <var>$realpath_root</var>.
+<value>path</value>的值中可以包含除<var>$document_root</var>和<var>$realpath_root</var>以外的变量。
 </para>
 
 <para>
-A path to the file is constructed by merely adding a URI to the value
-of the <literal>root</literal> directive.
-If a URI need to be modified, the
-<link id="alias"/> directive should be used.
+文件路径的构造仅仅是将URI拼在<literal>root</literal>指令的值后面。如果需要修改URI，应该使用<link id="alias"/>指令。
 </para>
 
 </directive>
@@ -2009,14 +1637,14 @@ If a URI need to be modified, the
 <context>location</context>
 
 <para>
-Allows access if <literal>all</literal> or <literal>any</literal> of the
-<link doc="ngx_http_access_module.xml">ngx_http_access_module</link>
-or <link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>
-modules grant access.
+nginx进行访问限制的有<link doc="ngx_http_access_module.xml">ngx_http_access_module</link>模块和
+<link doc="ngx_http_auth_basic_module.xml">ngx_http_auth_basic_module</link>模块。
+本指令设置成<literal>all</literal>时，表示只有当两个模块的所有限制条件(写入配置的)都授权访问时，允许请求访问；
+设置成<literal>any</literal>时，表示如果当任意模块的任意限制条件授权访问时，允许请求访问。
 </para>
 
 <para>
-Example:
+举例：
 <example>
 location / {
     satisfy any;
@@ -2041,8 +1669,7 @@ location / {
 <context>location</context>
 
 <para>
-This directive has been replaced by the <literal>any</literal>
-parameter of the <link id="satisfy"/> directive.
+这条指令已被<link id="satisfy"/>指令的<literal>any</literal>参数取代。
 </para>
 
 </directive>
@@ -2056,16 +1683,13 @@ parameter of the <link id="satisfy"/> directive.
 <context>location</context>
 
 <para>
-If set to a non-zero value, nginx will try to minimize the number
-of send operations on client sockets by using either
-<c-def>NOTE_LOWAT</c-def> flag of the
-<link doc="../events.xml" id="kqueue"/> method,
-or the <c-def>SO_SNDLOWAT</c-def> socket option,
-with the specified <value>size</value>.
+如果设置成非0值，nginx将尝试最小化向客户端发送数据的次数。
+这是通过将<link doc="../events.xml" id="kqueue"/>方法的<c-def>NOTE_LOWAT</c-def>标志，
+或者将套接字的<c-def>SO_SNDLOWAT</c-def>属性设置成指定的<value>size</value>实现的。
 </para>
 
 <para>
-This directive is ignored on Linux, Solaris, and Windows.
+这条指令在Linux、Solaris和Windows操作系统无效。
 </para>
 
 </directive>
@@ -2079,11 +1703,8 @@ This directive is ignored on Linux, Solaris, and Windows.
 <context>location</context>
 
 <para>
-Sets a timeout for transmitting a response to the client.
-A timeout is only set between two successive write operations,
-not for the transmission of the whole response.
-If a client does not receive anything within this time,
-a connection is closed.
+设置向客户端传输响应的超时。超时仅指两次相邻写操作之间的时间间隔，而非整个响应的传输时间。
+如果客户端在这段时间中没有收到任何数据，连接将关闭。
 </para>
 
 </directive>
@@ -2099,8 +1720,7 @@ a connection is closed.
 <context>if in location</context>
 
 <para>
-Enables or disables the use of
-<c-func>sendfile</c-func>.
+开启或关闭使用<c-func>sendfile</c-func>调用。
 </para>
 
 </directive>
@@ -2115,9 +1735,8 @@ Enables or disables the use of
 <context>location</context>
 
 <para>
-When set to a non-zero value, limits the amount of data that can be
-transferred in a single <c-func>sendfile</c-func> call.
-Without the limit, one fast connection may seize the worker process.
+设置为非0值时，可以限制在一次<c-func>sendfile</c-func>调用时传输的数据量。
+如果不进行限制，一个快速的连接可能会霸占整个worker进程的所有资源。
 </para>
 
 </directive>
@@ -2129,15 +1748,10 @@ Without the limit, one fast connection may seize the worker process.
 <context>http</context>
 
 <para>
-Sets a configuration for the virtual server.
-There is no clean separation between IP-based (based on the IP address)
-and name-based (based on the <header>Host</header> request header field)
-virtual servers.
-Instead, the <link id="listen"/> directives describe all
-addresses and ports that should accept connections for a server, and the
-<link id="server_name"/> directive lists all server names.
-Example configurations are provided in the
-“<link doc="request_processing.xml"/>” document.
+表示开始设置虚拟主机的配置。
+nginx没有明显分隔IP-based(基于IP地址)和name-based(基于<header>Host</header>请求头)这两种类型的虚拟主机，
+而是用<link id="listen"/>指令描述虚拟主机接受连接的地址和端口，用<link id="server_name"/>指令列出虚拟主机的所有主机名。
+在文档“<link doc="request_processing.xml">Nginx如何处理一个请求</link>”中提供了示例配置。
 </para>
 
 </directive>
@@ -2149,7 +1763,7 @@ Example configurations are provided in the
 <context>server</context>
 
 <para>
-Sets names of the virtual server, for example:
+设置虚拟主机名，比如：
 <example>
 server {
     server_name example.com www.example.com;
@@ -2158,22 +1772,16 @@ server {
 </para>
 
 <para>
-The first name becomes the primary server name.
-</para>
-
-<para>
-Server names can include an asterisk (“<literal>*</literal>”)
-to replace the first or last part of a name:
+第一个名字成为虚拟主机的首要主机名。主机名中可以含有星号(“<literal>*</literal>”)，以替代名字的开始部分或结尾部分：
 <example>
 server {
     server_name example.com *.example.com www.example.*;
 }
 </example>
-Such names are called wildcard names.
 </para>
 
 <para>
-The first two of the above mentioned names can be combined:
+上面例子中的前两个名字可以组合成一个：
 <example>
 server {
     server_name .example.com;
@@ -2182,8 +1790,11 @@ server {
 </para>
 
 <para>
-It is also possible to use regular expressions in server names,
-prepending the name with a tilde (“<literal>~</literal>”):
+如果参数值等于“<var>$hostname</var>”(0.9.4)，将使用机器的hostname来替换。
+</para>
+
+<para>
+也可以在主机名中使用正则表达式，就是在名字前面补一个波浪线(“<literal>~</literal>”)：
 <example>
 server {
     server_name www.example.com ~^www\d+\.example\.com$;
@@ -2192,8 +1803,7 @@ server {
 </para>
 
 <para>
-Regular expressions can contain captures (0.7.40) that can later
-be used in other directives:
+可以在正则表达式中包含匹配组(0.7.40)，后续被其他指令使用：
 <example>
 server {
     server_name ~^(www\.)?(.+)$;
@@ -2214,8 +1824,8 @@ server {
 </para>
 
 <para>
-Named captures in regular expressions create variables (0.8.25)
-that can later be used in other directives:
+
+正则表达式中的命名匹配组可以创建变量(0.8.25)，后续被其他指令使用：
 <example>
 server {
     server_name ~^(www\.)?(?&lt;domain&gt;.+)$;
@@ -2236,57 +1846,41 @@ server {
 </para>
 
 <para>
-If the parameter equals “<var>$hostname</var>” (0.9.4), the
-machine’s hostname is substituted.
-</para>
-
-<para>
-It is also possible to specify an empty server name (0.7.11):
+也可以指定空主机名(0.7.11)：
 <example>
 server {
     server_name www.example.com "";
 }
 </example>
-It allows this server to process requests without the <header>Host</header>
-header field, instead of the default server for the given address:port pair.
-This is the default setting.
+这种主机名可以让虚拟主机处理没有<header>Host</header>请求头的请求，而不是让指定“地址:端口”的默认虚拟主机来处理。
+这是本指令的默认设置。
 <note>
-Before 0.8.48, the machine’s hostname was used by default.
+在0.8.48版以前，机器的hostname被用作默认设置。
 </note>
 </para>
 
 <para>
-When searching for a virtual server by name,
-if name matches more than one of the specified variants,
-e.g. both wildcard name and regular expression match, the first matching
-variant will be chosen, in the following order of precedence:
+通过名字查找虚拟主机时，如果一个名字可以匹配多个指定的配置，比如同时匹配上通配符和正则表达式，
+按下面优先级，使用先匹配上的虚拟主机：
 <list type="enum">
 
 <listitem>
-exact name
+确切的名字；
 </listitem>
 
 <listitem>
-longest wildcard name starting with an asterisk,
-e.g. “<literal>*.example.com</literal>”
+最长的以星号起始的通配符名字，比如“<literal>*.example.com</literal>”；
 </listitem>
 
 <listitem>
-longest wildcard name ending with an asterisk,
-e.g. “<literal>mail.*</literal>”
+最长的以星号结束的通配符名字，比如“<literal>mail.*</literal>”；
 </listitem>
 
 <listitem>
-first matching regular expression
-(in order of appearance in a configuration file)
+第一个匹配的正则表达式名字（按在配置文件中出现的顺序）。
 </listitem>
 
 </list>
-</para>
-
-<para>
-Detailed description of server names is provided in a separate
-<link doc="server_names.xml"/> document.
 </para>
 
 </directive>
@@ -2300,17 +1894,12 @@ Detailed description of server names is provided in a separate
 <context>location</context>
 
 <para>
-Enables or disables the use of the primary server name, specified by the
-<link id="server_name"/>
-directive, in redirects issued by nginx.
-When disabled, the name from the <header>Host</header> request header field
-is used.
-If this field is not present, an IP address of the server is used.
+开启或关闭nginx将<link id="server_name"/>指令指定的首要虚拟主机名用于发起的重定向的功能。
+关闭此功能时，nginx将使用<header>Host</header>请求头的中的名字，如果没有此请求头，nginx将使用虚拟主机所在的IP地址。
 </para>
 
 <para>
-The use of a port in redirects is controlled by
-the <link id="port_in_redirect"/> directive.
+另请参见<link id="port_in_redirect"/>指令。
 </para>
 
 </directive>
@@ -2322,10 +1911,8 @@ the <link id="port_in_redirect"/> directive.
 <context>http</context>
 
 <para>
-Sets the bucket size for the server names hash tables.
-Default value depends on the size of the processor’s cache line.
-Details of setting up hash tables are provided in a separate
-<link doc="../hash.xml">document</link>.
+设置主机名哈希表的表项长度，其默认值取决于处理器的缓存线长度。
+更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
 </para>
 
 </directive>
@@ -2337,9 +1924,8 @@ Details of setting up hash tables are provided in a separate
 <context>http</context>
 
 <para>
-Sets the maximum <value>size</value> of the server names hash tables.
-Details of setting up hash tables are provided in a separate
-<link doc="../hash.xml">document</link>.
+设置主机名哈希表的最大<value>size</value>(桶容量)。
+更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
 </para>
 
 </directive>
@@ -2353,8 +1939,7 @@ Details of setting up hash tables are provided in a separate
 <context>location</context>
 
 <para>
-Enables or disables emitting of nginx version in error messages and in the
-<header>Server</header> response header field.
+开启或关闭在错误信息的<header>Server</header>响应头中输出nginx版本号。
 </para>
 
 </directive>
@@ -2368,9 +1953,8 @@ Enables or disables emitting of nginx version in error messages and in the
 <context>location</context>
 
 <para>
-Enables or disables the use of the <c-def>TCP_NODELAY</c-def> option.
-The option is enabled only when a connection is transitioned into the
-keep-alive state.
+开启或关闭nginx使用<c-def>TCP_NODELAY</c-def>选项的功能。
+这个选项仅在将连接转变为长连接的时候才被启用。（译者注，在upstream发送响应到客户端时也会启用）。
 </para>
 
 </directive>
@@ -2384,20 +1968,18 @@ keep-alive state.
 <context>location</context>
 
 <para>
-Enables or disables the use of
-the <c-def>TCP_NOPUSH</c-def> socket option on FreeBSD
-or the <c-def>TCP_CORK</c-def> socket option on Linux.
-Options are enabled only when <link id="sendfile"/> is used.
-Enabling the option allows to
+开启或者关闭nginx在FreeBSD上使用<c-def>TCP_NOPUSH</c-def>套接字选项，
+在Linux上使用<c-def>TCP_CORK</c-def>套接字选项。
+选项仅在使用<link id="sendfile"/>的时候才开启。
+开启此选项允许
 <list type="bullet">
 
 <listitem>
-send the response header and the beginning of a file in one packet,
-on Linux and FreeBSD&nbsp;4.*;
+在Linux和FreeBSD&nbsp;4.*上将响应头和正文的开始部分一起发送；
 </listitem>
 
 <listitem>
-send a file in full packets.
+一次性发送整个文件。
 </listitem>
 
 </list>
@@ -2414,18 +1996,11 @@ send a file in full packets.
 <context>location</context>
 
 <para>
-Checks the existence of files in the specified order, and uses
-the first found file for request processing; the processing
-is performed in the current context.
-A path to the file is constructed from the
-<value>file</value> parameter
-according to the
-<link id="root"/> and <link id="alias"/> directives.
-It is possible to check the directory existence by specifying
-a slash at the end of a name, e.g. “<literal>$uri/</literal>”.
-If none of the files were found, an internal redirect to the
-<value>uri</value> specified by the last parameter is made.
-For example:
+按指定顺序检查文件是否存在，并且使用第一个找到的文件来处理请求，那么处理过程就是在当前上下文环境中进行的。
+文件路径是根据<link id="root"/>指令和<link id="alias"/>指令，将<value>file</value>参数拼接而成。
+可以在名字尾部添加斜线以检查目录是否存在，比如“<literal>$uri/</literal>”。
+如果找不到任何文件，将按最后一个参数指定的<value>uri</value>进行内部跳转。
+比如：
 <example>
 location /images/ {
     try_files $uri /images/default.gif;
@@ -2435,10 +2010,8 @@ location = /images/default.gif {
     expires 30s;
 }
 </example>
-The last parameter can also point to a named location,
-as shown in examples below.
-As of version 0.7.51, the last parameter can also be a
-<value>code</value>:
+最后一个参数也可以指向一个命名路径，请参看下面的例子。
+从0.7.51版开始，最后一个参数也可以是<value>code</value>：
 <example>
 location / {
     try_files $uri $uri/index.html $uri.html =404;
@@ -2447,7 +2020,7 @@ location / {
 </para>
 
 <para>
-Example when proxying Mongrel:
+下面是代理Mongrel的例子：
 <example>
 location / {
     try_files /system/maintenance.html
@@ -2462,7 +2035,7 @@ location @mongrel {
 </para>
 
 <para>
-Example for Drupal/FastCGI:
+下面是Drupal用FastCGI的例子：
 <example>
 location / {
     try_files $uri $uri/ @drupal;
@@ -2490,20 +2063,20 @@ location @drupal {
     ... other fastcgi_param's
 }
 </example>
-In the following example,
+而下面的例子中
 <example>
 location / {
     try_files $uri $uri/ @drupal;
 }
 </example>
-the <literal>try_files</literal> directive is equivalent to
+<literal>try_files</literal>指令等价于
 <example>
 location / {
     error_page 404 = @drupal;
     log_not_found off;
 }
 </example>
-And here,
+然后是这里，
 <example>
 location ~ \.php$ {
     try_files $uri @drupal;
@@ -2515,12 +2088,11 @@ location ~ \.php$ {
     ...
 }
 </example>
-<literal>try_files</literal> checks the existence of the PHP file
-before passing the request to the FastCGI server.
+<literal>try_files</literal>在将请求发送到FastCGI服务器以前检查PHP文件是否存在。
 </para>
 
 <para>
-Example for Wordpress and Joomla:
+下面是Wordpress和Joomla的例子：
 <example>
 location / {
     try_files $uri $uri/ @wordpress;
@@ -2559,9 +2131,8 @@ location @wordpress {
 <context>location</context>
 
 <para>
-Maps file name extensions to MIME types of responses.
-Extensions are case-insensitive.
-Several extensions can map to one type, for example:
+设置文件扩展名和响应的MIME类型的映射表。
+可以将多个扩展名映射到同一种类型，比如：
 <example>
 types {
     application/octet-stream bin exe dll;
@@ -2572,14 +2143,12 @@ types {
 </para>
 
 <para>
-A sufficiently full mapping table is distributed with nginx in the
-<path>conf/mime.types</path> file.
+随nginx发行的<path>conf/mime.types</path>文件中包含了足够全面的映射表。
 </para>
 
 <para>
-To make a particular location emit the
-“<literal>application/octet-stream</literal>”
-MIME type for all requests, try the following:
+为了是为某个路径的所有请求生成MIME类型“<literal>application/octet-stream</literal>”，
+可以使用下面配置：
 <example>
 location /download/ {
     types        { }
@@ -2599,10 +2168,8 @@ location /download/ {
 <context>location</context>
 
 <para>
-Sets the bucket size for the types hash tables.
-Default value depends on the size of the processor’s cache line.
-Details of setting up hash tables are provided in a separate
-<link doc="../hash.xml">document</link>.
+设置MIME类型哈希表的表项长度，其默认值取决于处理器的缓存线长度。
+更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
 </para>
 
 </directive>
@@ -2616,9 +2183,8 @@ Details of setting up hash tables are provided in a separate
 <context>location</context>
 
 <para>
-Sets the maximum <value>size</value> of the types hash tables.
-Details of setting up hash tables are provided in a separate
-<link doc="../hash.xml">document</link>.
+设置MIME类型哈希表的最大<value>size</value>(桶容量)。
+更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
 </para>
 
 </directive>
@@ -2631,17 +2197,12 @@ Details of setting up hash tables are provided in a separate
 <context>server</context>
 
 <para>
-Enables or disables the use of underscores in client request header fields.
-When disabled, request header fields whose names contain underscores are
-marked as invalid and are subject to the <link id="ignore_invalid_headers"/>
-directive.
+允许或禁止在客户端请求头中使用下划线。
+如果禁止，含有下划线的请求头将被标志为非法请求头并接受<link id="ignore_invalid_headers"/>指令的处理。
 </para>
 
 <para>
-A directive can be specified on the <link id="server"/> level
-in a default server.
-In this case, its value will cover all virtual servers
-listening on the same address and port.
+可以在默认主机的<link id="server"/>配置级别定义此命令。这样，指令设置将覆盖监听同一地址和端口的所有虚拟主机。
 </para>
 
 </directive>
@@ -2653,9 +2214,8 @@ listening on the same address and port.
 <context>http</context>
 
 <para>
-Sets the bucket size for the variables hash table.
-Details of setting up hash tables are provided in a separate
-<link doc="../hash.xml">document</link>.
+设置变量哈希表的表项长度，其默认值取决于处理器的缓存线长度。
+更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
 </para>
 
 </directive>
@@ -2667,9 +2227,8 @@ Details of setting up hash tables are provided in a separate
 <context>http</context>
 
 <para>
-Sets the maximum <value>size</value> of the variables hash table.
-Details of setting up hash tables are provided in a separate
-<link doc="../hash.xml">document</link>.
+设置变量哈希表的最大<value>size</value>(桶容量)。
+更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
 </para>
 
 </directive>
@@ -2677,241 +2236,210 @@ Details of setting up hash tables are provided in a separate
 </section>
 
 
-<section id="variables" name="Embedded Variables">
+<section id="variables" name="内嵌变量">
 
 <para>
-The module <literal>ngx_http_core_module</literal> supports embedded variables
-with names matching those of the Apache Server.
-First of all, these are variables representing client request header
-fields, such as <var>$http_user_agent</var>, <var>$http_cookie</var>,
-and so on.
-It also supports other variables:
+<literal>ngx_http_core_module</literal>模块支持内嵌变量，变量名与Apache服务器对应。
+首先，这些变量可以表示客户端的请求头字段，诸如<var>$http_user_agent</var>、<var>$http_cookie</var>等等。
+nginx也支持其他变量：
 <list type="tag">
 
 <tag-name><var>$arg_</var><value>name</value></tag-name>
 <tag-desc>
-argument <value>name</value> in the request line
+请求行中的<value>name</value>参数。
 </tag-desc>
 
 <tag-name><var>$args</var></tag-name>
 <tag-desc>
-arguments in the request line
+请求行中参数字符串。
 </tag-desc>
 
 <tag-name><var>$binary_remote_addr</var></tag-name>
 <tag-desc>
-client address in a binary form, value’s length is always 4 bytes
+客户端IP地址的二进制形式，值的长度总是4字节。
 </tag-desc>
 
 <tag-name><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
-number of bytes sent to a client, not counting the response header
+不含响应头，nginx返回给客户端的字节数。
 </tag-desc>
 
 <tag-name><var>$content_length</var></tag-name>
 <tag-desc>
-<header>Content-Length</header> request header field
+<header>Content-Length</header>请求头的值。
 </tag-desc>
 
 <tag-name><var>$content_type</var></tag-name>
 <tag-desc>
-<header>Content-Type</header> request header field
+<header>Content-Type</header>请求头的值。
 </tag-desc>
 
 <tag-name><var>$cookie_</var><value>name</value></tag-name>
 <tag-desc>
-the <value>name</value> cookie
+名为<value>name</value>的cookie。
 </tag-desc>
 
 <tag-name><var>$document_root</var></tag-name>
 <tag-desc>
-<link id="root"/> or <link id="alias"/> directive’s value
-for the current request
+当前请求的<link id="root"/>指令或<link id="alias"/>指令的配置值。
 </tag-desc>
 
 <tag-name><var>$document_uri</var></tag-name>
 <tag-desc>
-same as <var>$uri</var>
+与<var>$uri</var>相同。
 </tag-desc>
 
 <tag-name><var>$host</var></tag-name>
 <tag-desc>
-<header>Host</header> request header field,
-or the server name matching a request if this field is not present
+<header>Host</header>请求头的值，如果没有该请求头，则为与请求对应的虚拟主机的首要主机名。
 </tag-desc>
 
 <tag-name><var>$hostname</var></tag-name>
 <tag-desc>
-host name
+机器名称。
 </tag-desc>
 
 <tag-name><var>$http_</var><value>name</value></tag-name>
 <tag-desc>
-arbitrary request header field;
-the last part of a variable name is the field name converted
-to lower case with dashes replaced by underscores
+任意请求头的值；变量名的后半部为转化为小写并且用下划线替代横线后的请求头名称。
 </tag-desc>
 
 <tag-name><var>$https</var></tag-name>
 <tag-desc>
-“<literal>on</literal>”
-if connection operates in SSL mode,
-or an empty string otherwise
+如果连接是SSL模块，返回“<literal>on</literal>”，否则返回空字符串。
 </tag-desc>
 
 <tag-name><var>$is_args</var></tag-name>
 <tag-desc>
-“<literal>?</literal>” if a request line has arguments,
-or an empty string otherwise
+如果请求行带有参数，返回“<literal>?</literal>”，否则返回空字符串。
 </tag-desc>
 
 <tag-name><var>$limit_rate</var></tag-name>
 <tag-desc>
-allows for connection rate limiting
+允许设置此值来限制连接的传输速率。
 </tag-desc>
 
 <tag-name><var>$nginx_version</var></tag-name>
 <tag-desc>
-nginx version
+nginx版本号。
 </tag-desc>
 
 <tag-name><var>$pid</var></tag-name>
 <tag-desc>
-PID of the worker process
+worker进程的PID。
 </tag-desc>
 
 <tag-name><var>$query_string</var></tag-name>
 <tag-desc>
-same as <var>$args</var>
+与<var>$args</var>相同。
 </tag-desc>
 
 <tag-name><var>$realpath_root</var></tag-name>
 <tag-desc>
-an absolute pathname corresponding to the
-<link id="root"/> or <link id="alias"/> directive’s value
-for the current request,
-with all symbolic links resolved to real paths
+按<link id="root"/>指令或<link id="alias"/>指令算出的当前请求的绝对路径。其中的符号链接都会解析成真是文件路径。
 </tag-desc>
 
 <tag-name><var>$remote_addr</var></tag-name>
 <tag-desc>
-client address
+客户端IP地址。
 </tag-desc>
 
 <tag-name><var>$remote_port</var></tag-name>
 <tag-desc>
-client port
+客户端端口。
 </tag-desc>
 
 <tag-name><var>$remote_user</var></tag-name>
 <tag-desc>
-user name supplied with the Basic authentication
+为基本用户认证提供的用户名。
 </tag-desc>
 
 <tag-name><var>$request</var></tag-name>
 <tag-desc>
-full original request line
+完整的原始请求行。
 </tag-desc>
 
 <tag-name><var>$request_body</var></tag-name>
 <tag-desc>
-request body
+请求正文。
 <para>
-The variable’s value is made available in locations
-processed by the
-<link doc="ngx_http_proxy_module.xml" id="proxy_pass"/>
-and
-<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass"/>
-directives.
+在由<link doc="ngx_http_proxy_module.xml" id="proxy_pass"/>指令和
+<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass"/>指令处理的路径中，
+这个变量值可用。
 </para>
 </tag-desc>
 
 <tag-name><var>$request_body_file</var></tag-name>
 <tag-desc>
-name of a temporary file with the request body
+请求正文的临时文件名。
 <para>
-At the end of processing, the file needs to be removed.
-To always write a request body to a file,
-<link id="client_body_in_file_only"/> needs to be enabled.
-When passing the name of a temporary file in a proxied request,
-or in a request to a FastCGI server,
-passing of the request body should be disabled by the
-<link doc="ngx_http_proxy_module.xml" id="proxy_pass_request_body">
-proxy_pass_request_body off</link>
-and
-<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass_request_body">
-fastcgi_pass_request_body off</link>
-directives, respectively.
+处理完成时，临时文件将被删除。
+如果希望总是将请求正文写入文件，需要开启<link id="client_body_in_file_only"/>。
+如果在被代理的请求或FastCGI请求中传递临时文件名，就应该禁止传递请求正文本身。
+使用<link doc="ngx_http_proxy_module.xml" id="proxy_pass_request_body">proxy_pass_request_body off</link>指令
+和<link doc="ngx_http_fastcgi_module.xml" id="fastcgi_pass_request_body">fastcgi_pass_request_body off</link>指令
+分别禁止在代理和FastCGI中传递请求正文。
 </para>
 </tag-desc>
 
 <tag-name><var>$request_completion</var></tag-name>
 <tag-desc>
-“<literal>OK</literal>” if a request has completed,
-or an empty string otherwise
+请求完成时返回“<literal>OK</literal>”，否则返回空字符串。
 </tag-desc>
 
 <tag-name><var>$request_filename</var></tag-name>
 <tag-desc>
-file path for the current request, based on the
-<link id="root"/> or <link id="alias"/>
-directives, and the request URI
+基于<link id="root"/>指令或<link id="alias"/>指令，以及请求URI，得到的当前请求的文件路径。
 </tag-desc>
 
 <tag-name><var>$request_method</var></tag-name>
 <tag-desc>
-request method, usually
-“<literal>GET</literal>” or “<literal>POST</literal>”
+HTTP方法，通常为“<literal>GET</literal>”或者“<literal>POST</literal>”。
 </tag-desc>
 
 <tag-name><var>$request_uri</var></tag-name>
 <tag-desc>
-full original request URI (with arguments)
+完整的原始请求行（带参数）。
 </tag-desc>
 
 <tag-name><var>$scheme</var></tag-name>
 <tag-desc>
-request scheme, “<literal>http</literal>” or “<literal>https</literal>”
+请求协议类型，为“<literal>http</literal>”或“<literal>https</literal>”。
 </tag-desc>
 
 <tag-name><var>$sent_http_</var><value>name</value></tag-name>
 <tag-desc>
-arbitrary response header field;
-the last part of a variable name is the field name converted
-to lower case with dashes replaced by underscores
+任意的响应头字段的值。
+变量名的后半部为转化为小写并且用下划线替代横线后的响应头名称。
 </tag-desc>
 
 <tag-name><var>$server_addr</var></tag-name>
 <tag-desc>
-an address of the server which accepted a request
+接受请求的服务器地址。
 <para>
-Computing a value of this variable usually requires one system call.
-To avoid a system call, the <link id="listen"/> directives
-must specify addresses and use the <literal>bind</literal> parameter.
+为计算这个值，通常需要进行一次系统调用。为了避免系统调用，必须指定<link id="listen"/>指令
+的地址，并且使用<literal>bind</literal>参数。
 </para>
 </tag-desc>
 
 <tag-name><var>$server_name</var></tag-name>
 <tag-desc>
-name of the server which accepted a request
+接受请求的虚拟主机的首要主机名。
 </tag-desc>
 
 <tag-name><var>$server_port</var></tag-name>
 <tag-desc>
-port of the server which accepted a request
+接受请求的虚拟主机的端口。
 </tag-desc>
 
 <tag-name><var>$server_protocol</var></tag-name>
 <tag-desc>
-request protocol, usually
-“<literal>HTTP/1.0</literal>”
-or
-“<literal>HTTP/1.1</literal>”
+请求协议，通常为“<literal>HTTP/1.0</literal>”或“<literal>HTTP/1.1</literal>”。
 </tag-desc>
 
 <tag-name><var>$status</var></tag-name>
 <tag-desc>
-response status
+响应状态码。
 </tag-desc>
 
 <tag-name>
@@ -2921,16 +2449,13 @@ response status
 <var>$tcpinfo_rcv_space</var>
 </tag-name>
 <tag-desc>
-information about the client TCP connection; available on systems
-that support the <c-def>TCP_INFO</c-def> socket option
+客户端TCP连接的信息，在支持套接字选项<c-def>TCP_INFO</c-def>的系统中可用。
 </tag-desc>
 
 <tag-name><var>$uri</var></tag-name>
 <tag-desc>
-current URI in request, <link id="location">normalized</link>
-<para>
-The value of <var>$uri</var> may change during request processing,
-e.g. when doing internal redirects, or when using index files.
+当前请求<link id="location">规范化</link>以后的URI。变量<var>$uri</var>的值可能随请求的处理过程而改变。
+比如，当进行内部跳转时，或者使用默认页文件。
 </para>
 </tag-desc>
 
