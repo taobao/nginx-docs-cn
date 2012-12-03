@@ -16,8 +16,7 @@
 <section id="summary">
 
 <para>
-模块 <literal>ngx_http_map_module</literal> 可以创建一些和另外变量相关联的变量，
-这些变量的值取决于关联变量的值。
+模块 <literal>ngx_http_map_module</literal> 可以创建一些和另外变量相关联的变量。
 </para>
 
 </section>
