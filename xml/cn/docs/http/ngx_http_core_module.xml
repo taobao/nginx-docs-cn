@@ -11,7 +11,7 @@
         link="/cn/docs/http/ngx_http_core_module.html"
         lang="cn"
         translator="cfsego"
-        rev="1">
+        rev="5">
 
 <section id="directives" name="指令">
 
@@ -333,7 +333,7 @@ nginx将返回错误<http-status code="408" text="Request Time-out"/>到客户�
 <context>location</context>
 
 <para>
-定义响应的默认MIME类型。详情参见<link id="types"/>指令。
+定义响应的默认MIME类型。设置文件扩展名和响应的MIME类型的映射表则使用<link id="types"/>指令。
 </para>
 
 </directive>
@@ -465,20 +465,19 @@ disable_symlinks on from=$document_root;
 
 <para>
 为指令错误定义显示的URI。当前配置级别没有<literal>error_page</literal>指令时，将从上层配置继承。
-URI可以包含变量。
+<literal>uri</literal>可以包含变量。
 </para>
 
 <para>
 比如：
 <example>
-error_page 404         /404.html;
-error_page 502 503 504 /50x.html;
-error_page 403         http://example.com/forbidden.html;
+error_page   404              /404.html;
+error_page   500 502 503 504  /50x.html;
 </example>
 </para>
 
 <para>
-而且，这条指令可以修改响应状态码。比如：
+而且，可以使用“<literal>=code</literal>”语法改变响应状态码。比如：
 <example>
 error_page 404 =200 /empty.gif;
 </example>
@@ -493,7 +492,16 @@ error_page 404 = /404.php;
 </para>
 
 <para>
-如果不想改变发到后端服务器的URI，可以指定URI为一个命名路径：
+当然，也可以使用本指令对错误处理进行重定向：
+<example>
+error_page 403         http://example.com/forbidden.html;
+error_page 404 =301    http://example.com/notfound.html;
+</example>
+对于例子中的第一行，nginx将向客户端发送302响应状态码。这种用法能使用的状态码只有301、302、303和307。
+</para>
+
+<para>
+如果内部跳转时无需改变URI，可以将错误处理转到一个命名路径：
 <example>
 location / {
     error_page 404 = @fallback;
@@ -503,6 +511,12 @@ location @fallback {
     proxy_pass http://backend;
 }
 </example>
+</para>
+
+<para>
+<note>
+如果处理<literal>uri</literal>产生了新的错误，那么将返回给客户端指示最后一次出错的HTTP响应状态码。
+</note>
 </para>
 
 </directive>
@@ -520,6 +534,16 @@ location @fallback {
 开启或关闭为静态文件自动计算<header>ETag</header>响应头。
 </para>
 
+</directive>
+
+
+<directive name="http">
+<syntax block="yes"/>
+<default/>
+<context>main</context>
+<para>
+为HTTP服务器指定提供配置上下文。
+</para>
 </directive>
 
 
@@ -621,6 +645,11 @@ location /404.html {
     internal;
 }
 </example>
+<note>
+nginx限制每个请求只能最多进行10次内部重定向，以防配置错误引起请求处理出现问题。
+如果内部重定向次数已达到10次，nginx将返回<http-status code="500" text="Internal Server Error"/>错误。
+同时，错误日志中将有“rewrite or internal redirection cycle”的信息。
+</note>
 </para>
 
 </directive>
@@ -952,7 +981,7 @@ listen unix:/var/run/nginx.sock;
 </para>
 
 <para>
-可以为一个<literal>listen</literal>指令定义若干额外的参数，这些参数可以被系统调用<c-func>listen</c-func>和<c-func>bind</c-func>使用。
+可以为<literal>listen</literal>指令定义若干额外的参数，这些参数用于套接字相关的系统调用。
 这些参数可以在任何<literal>listen</literal>指令中指定，但是对于每个<value>address</value>:<value>port</value>，只能定义一次。
 <note>
 0.8.21版以前，只有为<literal>listen</literal>指令定义了<literal>default</literal>参数，才能定义这些额外的参数。
@@ -963,7 +992,7 @@ listen unix:/var/run/nginx.sock;
 <literal>setfib</literal>=<value>number</value>
 </tag-name>
 <tag-desc>
-这个参数(0.8.44版)为监听套接字设置相关FIB(路由表)。
+这个参数(0.8.44)为监听套接字设置关联路由表FIB(<c-def>SO_SETFIB</c-def>选项)。
 当前这个参数仅工作在FreeBSD上。
 </tag-desc>
 
@@ -971,37 +1000,43 @@ listen unix:/var/run/nginx.sock;
 <literal>backlog</literal>=<value>number</value>
 </tag-name>
 <tag-desc>
-为系统调用<c-func>listen</c-func>设置<literal>backlog</literal>参数。
+为系统调用<c-func>listen</c-func>设置<literal>backlog</literal>参数，用以限制未接受连接的列表的最大长度。
 FreeBSD下，<literal>backlog</literal>的默认值是-1，在其他系统中，默认值是511。
 </tag-desc>
+
 
 <tag-name>
 <literal>rcvbuf</literal>=<value>size</value>
 </tag-name>
 <tag-desc>
-为监听套接字设置<c-def>SO_RCVBUF</c-def>参数。
+为监听套接字设置接收缓冲区大小(<c-def>SO_RCVBUF</c-def>参数)。
 </tag-desc>
 
 <tag-name>
 <literal>sndbuf</literal>=<value>size</value>
 </tag-name>
 <tag-desc>
-为监听套接字设置<c-def>SO_SNDBUF</c-def>参数。
+为监听套接字设置发送缓冲区大小(<c-def>SO_SNDBUF</c-def>参数)。
 </tag-desc>
 
 <tag-name>
 <literal>accept_filter</literal>=<value>filter</value>
 </tag-name>
 <tag-desc>
-设置接收过滤器的名称。本特性仅工作在FreeBSD系统下，可接受的值为<literal>dataready</literal>和<literal>httpready</literal>。
-只有在最近的FreeBSD版本上（从6.0，5.4-STABLE和4.11-STABLE版本开始），接受过滤器在收到<c-def>SIGHUP</c-def>信号后可以更改。
+为监听套接字设置接受过滤器的名称(<c-def>SO_ACCEPTFILTER</c-def>选项)。
+对每个到来的连接，接受过滤器先进行过滤，然后才将它们呈现给<c-func>accept</c-func>。
+本特性仅工作在FreeBSD系统和NetBSD 5.0+系统下。
+可接受的值是
+<link url="http://man.freebsd.org/accf_data">dataready</link>
+和
+<link url="http://man.freebsd.org/accf_http">httpready</link>。
 </tag-desc>
 
 <tag-name>
 <literal>deferred</literal>
 </tag-name>
 <tag-desc>
-指示在Linux系统使用<c-def>TCP_DEFER_ACCEPT</c-def>选项开启使用延迟的<c-func>accept</c-func>。
+指示在Linux系统使用延迟的<c-func>accept</c-func>(<c-def>TCP_DEFER_ACCEPT</c-def>选项)。
 </tag-desc>
 
 <tag-name>
@@ -1022,15 +1057,19 @@ nginx总会为这个地址单独调用一次<c-func>bind</c-func>绑定套接字
 <literal>ipv6only</literal>=<literal>on</literal>|<literal>off</literal>
 </tag-name>
 <tag-desc>
-这个参数(0.7.42版)为监听套接字设置<c-def>IPV6_V6ONLY</c-def>选项，并且只能在nginx启动时设置。
+这个参数(0.7.42)(通过<c-def>IPV6_V6ONLY</c-def>选项)决定监听在通配地址<literal>[::]</literal>上的IPv6套接字是只支持IPv6连接，还是同时支持IPv6和IPv4连接。
+这个参数默认打开，并且只能在nginx启动时设置。
+<note>
+在1.3.4版以前，如果省略此参数，那么操作系统的套接字设置将生效。
+</note>
 </tag-desc>
 
 <tag-name>
 <literal>ssl</literal>
 </tag-name>
 <tag-desc>
-本参数(0.7.14版)与系统调用<c-func>listen</c-func>和<c-func>bind</c-func>无关，而是指定从这个端口接受的连接以SSL模式处理。
-本参数在某服务器同时以HTTP和HTTPS模式工作时，可以使配置更为紧凑。
+本参数(0.7.14)与套接字相关的系统调用无关，但是它可以指定从这个端口接受的连接应该以SSL模式工作。
+本参数在某服务器同时处理HTTP和HTTPS请求时，可以使<link doc="configuring_https_servers.xml" id="single_http_https_server">配置</link>更为紧凑。
 <example>
 listen 80;
 listen 443 ssl;
@@ -1042,11 +1081,11 @@ listen 443 ssl;
 </tag-name>
 <tag-desc>
 这个参数(1.1.11)为监听套接字配置“TCP keepalive”行为。
-如果省略此参数，nginx将为监听套接字使用系统默认的设置。
+如果省略此参数，操作系统默认的设置将对此端口生效。
 如果参数值设置为“<literal>on</literal>”，监听套接字的<c-def>SO_KEEPALIVE</c-def>属性将被开启。
 如果参数值设置为“<literal>off</literal>”，监听套接字的<c-def>SO_KEEPALIVE</c-def>属性将被关闭。
 有些操作系统支持为每个连接调整TCP长连接的参数。调整参数可以使用套接字选项<c-def>TCP_KEEPIDLE</c-def>，<c-def>TCP_KEEPINTVL</c-def>和<c-def>TCP_KEEPCNT</c-def>。
-在这些操作系统上(当前就是Linux 2.4+，嬀NetBSD 5+FreeBSD 9.0-STABLE)，可以使用<value>keepidle</value>，<value>keepintvl</value>和<value>keepcnt</value>参数来配置。
+在这些操作系统上(当前就是Linux 2.4+，嬀NetBSD 5+FreeBSD 9.0-STABLE)，可以使用<value>keepidle</value>，<value>keepintvl</value>和<value>keepcnt</value>参数来配置。
 省略一到两个参数的话，对应套接字属性的系统默认设置将生效。
 比如，
 <example>so_keepalive=30m::10</example>将
@@ -1061,7 +1100,7 @@ listen 443 ssl;
 <para>
 举例：
 <example>
-listen 127.0.0.1 default accept_filter=dataready backlog=1024;
+listen 127.0.0.1 default_server accept_filter=dataready backlog=1024;
 </example>
 </para>
 
@@ -1459,8 +1498,7 @@ optimization needs to be disabled.
 </para>
 
 <para>
-
-另请参见<link id="server_name_in_redirect"/>指令。
+重定向中首要主机名的使用由<link id="server_name_in_redirect"/>指令控制。
 </para>
 
 </directive>
@@ -1512,8 +1550,9 @@ optimization needs to be disabled.
 <context>location</context>
 
 <para>
-允许或禁止<link id="error_page"/>指令导致的多次重定向。禁止此功能时，
-当访问<link id="error_page"/>指令重定向的错误页面出现任何问题时，nginx将直接输出默认错误页面。
+允许或禁止<link id="error_page"/>指令进行多次重定向。
+允许的话，重定向次数也有<link doc="ngx_http_core_module.xml" id="internal">限制</link>。
+而禁止此功能时，当访问<link id="error_page"/>指令重定向的错误页面出现任何问题时，nginx将直接输出默认错误页面。
 </para>
 
 </directive>
@@ -1772,12 +1811,17 @@ server {
 </para>
 
 <para>
-第一个名字成为虚拟主机的首要主机名。主机名中可以含有星号(“<literal>*</literal>”)，以替代名字的开始部分或结尾部分：
+第一个名字成为虚拟主机的首要主机名。
+</para>
+
+<para>
+主机名中可以含有星号(“<literal>*</literal>”)，以替代名字的开始部分或结尾部分：
 <example>
 server {
     server_name example.com *.example.com www.example.*;
 }
 </example>
+上面这些名字成为通配符主机名。
 </para>
 
 <para>
@@ -1787,10 +1831,6 @@ server {
     server_name .example.com;
 }
 </example>
-</para>
-
-<para>
-如果参数值等于“<var>$hostname</var>”(0.9.4)，将使用机器的hostname来替换。
 </para>
 
 <para>
@@ -1846,7 +1886,11 @@ server {
 </para>
 
 <para>
-也可以指定空主机名(0.7.11)：
+如果参数值等于“<var>$hostname</var>”(0.9.4)，将使用机器的hostname来替换。
+</para>
+
+<para>
+nginx也允许定义空主机名(0.7.11)：
 <example>
 server {
     server_name www.example.com "";
@@ -1883,6 +1927,10 @@ server {
 </list>
 </para>
 
+<para>
+另一篇文档“<link doc="server_names.xml">虚拟主机名</link>”对虚拟主机名的有详细的描述。
+</para>
+
 </directive>
 
 
@@ -1899,7 +1947,7 @@ server {
 </para>
 
 <para>
-另请参见<link id="port_in_redirect"/>指令。
+重定向中端口的使用由<link id="port_in_redirect"/>指令控制。
 </para>
 
 </directive>
@@ -1912,7 +1960,7 @@ server {
 
 <para>
 设置主机名哈希表的表项长度，其默认值取决于处理器的缓存线长度。
-更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
+另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 
 </directive>
@@ -1925,7 +1973,7 @@ server {
 
 <para>
 设置主机名哈希表的最大<value>size</value>(桶容量)。
-更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
+另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 
 </directive>
@@ -2010,7 +2058,7 @@ location = /images/default.gif {
     expires 30s;
 }
 </example>
-最后一个参数也可以指向一个命名路径，请参看下面的例子。
+最后一个参数也可以指向一个命名路径，如下面的例子所示。
 从0.7.51版开始，最后一个参数也可以是<value>code</value>：
 <example>
 location / {
@@ -2169,7 +2217,7 @@ location /download/ {
 
 <para>
 设置MIME类型哈希表的表项长度，其默认值取决于处理器的缓存线长度。
-更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
+另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 
 </directive>
@@ -2184,7 +2232,7 @@ location /download/ {
 
 <para>
 设置MIME类型哈希表的最大<value>size</value>(桶容量)。
-更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
+另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 
 </directive>
@@ -2215,7 +2263,7 @@ location /download/ {
 
 <para>
 设置变量哈希表的表项长度，其默认值取决于处理器的缓存线长度。
-更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
+另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 
 </directive>
@@ -2228,7 +2276,7 @@ location /download/ {
 
 <para>
 设置变量哈希表的最大<value>size</value>(桶容量)。
-更多信息请参见<link doc="../hash.xml">设置哈希表</link>。
+另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 
 </directive>
