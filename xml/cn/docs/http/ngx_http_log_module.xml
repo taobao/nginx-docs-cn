@@ -95,7 +95,7 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 每次日志写入的操作都会检查请求的
 <link doc="ngx_http_core_module.xml" id="root">根目录</link>是否存在，
 如果不存在则日志不会被创建。
-因此在同一个上下文里同时指定<link doc="ngx_http_core_module.xml" id="root"/>
+因此在一个层级里同时指定<link doc="ngx_http_core_module.xml" id="root"/>
 和<literal>access_log</literal>是一个不错的想法：
 <example>
 server {
@@ -228,14 +228,14 @@ log_format combined '$remote_addr - $remote_user [$time_local] '
 
 <tag-name><literal>inactive</literal></tag-name>
 <tag-desc>
-设置被缓存描述符的关闭时间，如果此段时间内没有访问；
+设置在多长时间内没有访问就关闭缓存文件描述符；
 默认为10秒。
 </tag-desc>
 
 <tag-name><literal>min_uses</literal></tag-name>
 <tag-desc>
 设置在<literal>inactive</literal>参数指定的时间里，
-仍然保持打开的最小的文件描述符数量；默认为1。
+最少访问多少次才能使文件描述符保留在缓存中；默认为1。
 </tag-desc>
 
 <tag-name><literal>valid</literal></tag-name>
