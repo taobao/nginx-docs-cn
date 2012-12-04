@@ -1248,7 +1248,7 @@ sets the name of accept filter
 (the <c-def>SO_ACCEPTFILTER</c-def> option) for the listening socket
 that filters incoming connections before presenting them to
 <c-func>accept</c-func>.
-This works only on FreeBSD and NetBSD?5.0+.
+This works only on FreeBSD and NetBSD 5.0+.
 Acceptable values are
 <link url="http://man.freebsd.org/accf_data">dataready</link>
 and
@@ -1330,7 +1330,7 @@ socket option is turned off for the socket.
 Some operating systems support tuning TCP keepalive parameters on a per-socket
 basis using the <c-def>TCP_KEEPIDLE</c-def>, <c-def>TCP_KEEPINTVL</c-def>,
 and <c-def>TCP_KEEPCNT</c-def> socket options.
-On such systems (currently, Linux?2.4+, NetBSD?5+, and
+On such systems (currently, Linux 2.4+, NetBSD 5+, and
 FreeBSD?9.0-STABLE) they can be configured
 using the <value>keepidle</value>, <value>keepintvl</value>, and
 <value>keepcnt</value> parameters.
