@@ -16,13 +16,13 @@
 <section id="summary">
 
 <para>
-<literal>ngx_http_log_module</literal>模块按指定的格式写入请求日志。
+<literal>ngx_http_log_module</literal>模块按指定的格式写访问日志。
 </para>
 
 <para>
-一个上下文里的请求在处理结束的位置会被记录。
+请求在处理结束时，会按请求路径的配置上下文记访问日志。
 如果在请求处理期间产生了<link doc="ngx_http_core_module.xml" id="internal">内部跳转</link> ，
-请求结束时的位置可能不同于原始的请求位置。
+请求结束时的路径可能不同于原始的请求路径。
 </para>
 
 </section>
@@ -59,10 +59,10 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 <context>limit_except</context>
 
 <para>
-为缓冲日志的写操作设置路径，格式和缓冲区大小。
-在同一个上下文里可以指定多个日志。
-特定值<literal>off</literal>会取消当前作用域里的所有<literal>access_log</literal>指令。
-如果日志格式没有指定则会使用预定义的“<literal>combined</literal>”格式。
+为访问日志设置路径，格式和缓冲区大小（nginx访问日志支持缓存）。
+在同一个配置层级里可以指定多个日志。
+特定值<literal>off</literal>会取消当前配置层级里的所有<literal>access_log</literal>指令。
+如果没有指定日志格式则会使用预定义的“<literal>combined</literal>”格式。
 </para>
 
 <para>
@@ -77,11 +77,11 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 
 <listitem>
 工作进程使用的<link doc="../ngx_core_module.xml" id="user"/>
-需要拥有在目录里创建此类日志文件的权限；
+应拥有在目录里创建文件的权限；
 </listitem>
 
 <listitem>
-缓冲写入无效；
+写缓冲无效；
 </listitem>
 
 <listitem>
@@ -93,10 +93,10 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 
 <listitem>
 每次日志写入的操作都会检查请求的
-<link doc="ngx_http_core_module.xml" id="root">root directory</link>是否存在，
+<link doc="ngx_http_core_module.xml" id="root">根目录</link>是否存在，
 如果不存在则日志不会被创建。
-在同一个上下文里同时指定<link doc="ngx_http_core_module.xml" id="root"/>
-和<literal>access_log</literal>是一个不错的做法：
+因此在同一个上下文里同时指定<link doc="ngx_http_core_module.xml" id="root"/>
+和<literal>access_log</literal>是一个不错的想法：
 <example>
 server {
     root       /spool/vhost/data/$host;
@@ -123,14 +123,13 @@ server {
 </para>
 
 <para>
-日志格式允许包含通用变量。
-变量仅存在于日志写入的时刻：
+日志格式允许包含普通变量和只在日志写入时存在的变量：
 <list type="tag">
 
 <tag-name><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
 发送给客户端的字节数，响应头不计算在内；
-该变量与Apache模块<literal>mod_log_config</literal>里的“<literal>%B</literal>”参数一致。
+该变量与Apache模块<literal>mod_log_config</literal>里的“<literal>%B</literal>”参数兼容。
 </tag-desc>
 
 <tag-name><var>$bytes_sent</var></tag-name>
@@ -145,12 +144,12 @@ server {
 
 <tag-name><var>$connection_requests</var></tag-name>
 <tag-desc>
-由一个连接产生的当前请求数量。
+当前由一个连接产生的请求数量。
 </tag-desc>
 
 <tag-name><var>$msec</var></tag-name>
 <tag-desc>
-以毫秒为单位的日志写入时间。
+日志写入时间。单位为秒，精度是毫秒。
 </tag-desc>
 
 <tag-name><var>$pipe</var></tag-name>
@@ -160,13 +159,13 @@ server {
 
 <tag-name><var>$request_length</var></tag-name>
 <tag-desc>
-请求的长度（包括请求行，请求头和请求体）。
+请求的长度（包括请求行，请求头和请求正文）。
 </tag-desc>
 
 <tag-name><var>$request_time</var></tag-name>
 <tag-desc>
-请求处理时间，以毫秒为单位；
-从读入客户端的第一个字节开始，直到把最后一个字符发送给客户端后完成日志写入为止。
+请求处理时间，单位为秒，精度毫秒；
+从读入客户端的第一个字节开始，直到把最后一个字符发送给客户端后进行日志写入为止。
 </tag-desc>
 
 <tag-name><var>$status</var></tag-name>
@@ -193,7 +192,7 @@ ISO8601标准格式下的本地时间。
 </para>
 
 <para>
-以下配置包含了预先定义的“<literal>combined</literal>”日志格式：
+配置始终包含预先定义的“<literal>combined</literal>”日志格式：
 <example>
 log_format combined '$remote_addr - $remote_user [$time_local] '
                     '"$request" $status $body_bytes_sent '
@@ -218,7 +217,7 @@ log_format combined '$remote_addr - $remote_user [$time_local] '
 <context>location</context>
 
 <para>
-定义一个缓存，用来存储频繁使用的日志名里包含变量的文件描述符。
+定义一个缓存，用来存储频繁使用的文件名中包含变量的日志文件描述符。
 该指令包含以下参数：
 <list type="tag">
 
@@ -241,7 +240,7 @@ log_format combined '$remote_addr - $remote_user [$time_local] '
 
 <tag-name><literal>valid</literal></tag-name>
 <tag-desc>
-设置一段时间，用于检查超时后文件是否仍以同样名字存在；
+设置一段用于检查超时后文件是否仍以同样名字存在的时间；
 默认为60秒。
 </tag-desc>
 
