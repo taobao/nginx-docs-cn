@@ -8,7 +8,7 @@
 <article name="nginx"
          link="/en/"
          lang="en"
-         rev="3">
+         rev="4">
 
 
 <section>
@@ -24,8 +24,8 @@ on many heavily loaded Russian sites including
 <link url="http://vkontakte.ru">VKontakte</link>, and
 <link url="http://www.rambler.ru">Rambler</link>.
 According to Netcraft nginx served or proxied
-<link url="http://news.netcraft.com/archives/2012/08/02/august-2012-web-server-survey.html">11.48%
-busiest sites in August 2012</link>.
+<link url="http://news.netcraft.com/archives/2012/12/04/december-2012-web-server-survey.html">12.44%
+busiest sites in December 2012</link>.
 Here are some of the success stories:
 <link url="https://signup.netflix.com/openconnect/software">Netflix</link>,
 <link url="http://www.nginx.com/cs/nginx-automattic.html">Wordpress.com</link>,
