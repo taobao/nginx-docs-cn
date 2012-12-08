@@ -9,21 +9,21 @@
          link="/cn/docs/install.html"
          lang="cn"
          rev="1"
-         translator="JokerT">
+         translator="樵客">
 
 <section>
 
 <para>
-nginx通过<command>configure</command>命令来做编译配置。
-该命令定义了系统各方面功能，包括nginx允许使用的连接处理方式。
+<command>configure</command>命令用来配置nginx编译环境。
+该命令定义了系统各方面功能，包括允许nginx使用的连接处理方式。
 其执行结果是生成一个<path>Makefile</path>文件。 <command>configure</command>命令支持如下参数：
 
 <list type="bullet">
 <listitem>
 <para>
 <literal>--prefix=<value>path</value></literal>&mdash;
-定义服务器文件的存放地址，该地址同时也是<command>configure</command>命令设置的
-相对路径（除类库源文件外）以及<path>nginx.conf</path>文件定义的相对路径的父路径。其默认
+定义服务器文件的完整路径，该路径同时也是<command>configure</command>命令设置的
+相对路径（除类库源文件外）以及<path>nginx.conf</path>文件定义的相对路径的基准路径。其默认
 值是<path>/usr/local/nginx</path>。
 </para>
 </listitem>
@@ -31,55 +31,55 @@ nginx通过<command>configure</command>命令来做编译配置。
 <listitem>
 <para>
 <literal>--sbin-path=<value>path</value></literal>&mdash;
-设置nginx可执行文件的路径名，该路径名仅在安装期间使用，
-其默认名称为<path><value>prefix</value>/sbin/nginx</path>。
+设置nginx可执行文件的完整路径，该路径仅在安装期间使用，
+默认路径为<path><value>prefix</value>/sbin/nginx</path>。
 </para>
 </listitem>
 
 <listitem>
 <para>
 <literal>--conf-path=<value>path</value></literal>&mdash;
-设置配置文件<path>nginx.conf</path>的路径名。如有必要，可以
+设置配置文件<path>nginx.conf</path>的完整路径。如有必要，总是可以
 在nginx启动时通过命令行参数<nobr><literal>-c<value>file</value></literal></nobr>指定一个不同的配置文件路径。
-该路径名默认为<path><value>prefix</value>/conf/nginx.conf</path>。
+默认路径为<path><value>prefix</value>/conf/nginx.conf</path>。
 </para>
 </listitem>
 
 <listitem>
 <para>
 <literal>--pid-path=<value>path</value></literal>&mdash;
-设置nginx.pid文件的名称，该文件存储了主进程的进程ID。安装完成后，
-该文件名总是可以通过修改<path>nginx.conf</path>文件
-使用<link doc="ngx_core_module.xml" id="pid"/>指令来指定。
-其默认名称为<path><value>prefix</value>/logs/nginx.pid</path>。
+设置nginx.pid文件的完整路径，该文件存储了主进程的进程ID。安装完成后，
+该路径总是可以在<path>nginx.conf</path>文件中用
+<link doc="ngx_core_module.xml" id="pid"/>指令来修改。
+默认路径为<path><value>prefix</value>/logs/nginx.pid</path>。
 </para>
 </listitem>
 
 <listitem>
 <para>
 <literal>--error-log-path=<value>path</value></literal>&mdash;
-设置记录主要错误、警告以及调试信息日志的文件名。安装完成后，
-该文件名总是可以通过修改<path>nginx.conf</path>文件
-使用<link doc="ngx_core_module.xml" id="error_log"/> 指令来指定。
-其默认名称为<path><value>prefix</value>/logs/error.log</path>。
+设置记录主要错误、警告以及调试信息日志的完整路径。安装完成后，
+该路径总是可以在<path>nginx.conf</path>文件中用
+<link doc="ngx_core_module.xml" id="error_log"/> 指令来修改。
+默认路径为<path><value>prefix</value>/logs/error.log</path>。
 </para>
 </listitem>
 
 <listitem>
 <para>
 <literal>--http-log-path=<value>path</value></literal>&mdash;
-设置记录HTTP服务器主要请求日志的文件名。安装完成后，
-该文件名总是可以通过修改<path>nginx.conf</path>文件使用
-<link doc="http/ngx_http_log_module.xml" id="access_log"/> 指令来指定。
-其默认值为<path><value>prefix</value>/logs/access.log</path>
+设置记录HTTP服务器主要请求日志的完整路径。安装完成后，
+该路径总是可以在<path>nginx.conf</path>文件用
+<link doc="http/ngx_http_log_module.xml" id="access_log"/> 指令来修改。
+默认路径为<path><value>prefix</value>/logs/access.log</path>
 </para>
 </listitem>
 
 <listitem>
 <para>
 <literal>--user=<value>name</value></literal>&mdash;
-设置授权工作进程使用的非授权用户名称。安装完成后，该名称总是可以通过修改
-<path>nginx.conf</path>文件使用<link doc="ngx_core_module.xml" id="user"/>指令来指定。
+设置工作进程以某非特权用户的身份运行。安装完成后，该用户名总是可以在
+<path>nginx.conf</path>文件用<link doc="ngx_core_module.xml" id="user"/>指令来修改。
 其默认值为nobody。
 </para>
 </listitem>
@@ -87,8 +87,8 @@ nginx通过<command>configure</command>命令来做编译配置。
 <listitem>
 <para>
 <literal>--group=<value>name</value></literal>&mdash;
-设置授权工作进程使用的用户组名称。安装完成后，该名称总是可以通过修改
-<link doc="ngx_core_module.xml" id="user"/>使用<link doc="ngx_core_module.xml" id="user"/>指令来指定。
+设置工作进程以某非特权用户的身份运行。安装完成后，该用户名总是可以在
+<link doc="ngx_core_module.xml" id="user"/>用<link doc="ngx_core_module.xml" id="user"/>指令来修改。
 其默认名称与未授权用户名称相同。
 </para>
 </listitem>
@@ -97,7 +97,7 @@ nginx通过<command>configure</command>命令来做编译配置。
 <para>
 <literal>--with-select_module</literal><br/>
 <literal>--without-select_module</literal>&mdash;
-设置是否编译进<c-func>select</c-func>方法的模块。如果系统平台不支持kqueue，epoll，rtsig或/dev/poll等更合适的方法，
+设置是否将<c-func>select</c-func>方法模块编译进nginx中。如果系统平台不支持kqueue、epoll、rtsig或/dev/poll等更合适的方法，
 该模块会被自动编译。
 </para>
 </listitem>
@@ -106,7 +106,7 @@ nginx通过<command>configure</command>命令来做编译配置。
 <para>
 <literal>--with-poll_module</literal><br/>
 <literal>--without-poll_module</literal>&mdash;
-设置是否编译进<c-func>poll</c-func>方法的模块。如果系统平台不支持kqueue，epoll，rtsig或/dev/poll等更合适的方法，
+设置是否将<c-func>poll</c-func>方法模块编译进nginx中。如果系统平台不支持kqueue、epoll、rtsig或/dev/poll等更合适的方法，
 该模块会被自动编译。
 </para>
 </listitem>
@@ -114,15 +114,15 @@ nginx通过<command>configure</command>命令来做编译配置。
 <listitem>
 <para>
 <literal>--without-http_gzip_module</literal>&mdash;
-不编译<link doc="http/ngx_http_gzip_module.xml">http_gzip_module</link>模块，它可以压缩HTTP服务器的的回复。该模块需要zlib库才能编译和运行。
-
+默认不编译<link doc="http/ngx_http_gzip_module.xml">http_gzip_module</link>模块。该模块可以压缩HTTP服务器的响应，该模块需要zlib库才能编译和运行。
+ 
 </para>
 </listitem>
 
 <listitem>
 <para>
 <literal>--without-http_rewrite_module</literal>&mdash;
-不编译<link doc="http/ngx_http_rewrite_module.xml">http_rewrite_module</link>模块。该模块允许HTTP服务器重定向请求，改变请求的URI地址
+默认不编译<link doc="http/ngx_http_rewrite_module.xml">http_rewrite_module</link>模块。该模块允许HTTP服务器重定向请求，改变请求的URI地址
 。创建并运行该模块需要PCRE库支持,该模块尚处于试验阶段，其指令在未来可能会发生改变。
 
 </para>
@@ -131,7 +131,7 @@ nginx通过<command>configure</command>命令来做编译配置。
 <listitem>
 <para>
 <literal>--without-http_proxy_module</literal>&mdash;
-不编译HTTP服务器的<link doc="http/ngx_http_proxy_module.xml">代理模块</link>。
+默认不编译HTTP服务器的<link doc="http/ngx_http_proxy_module.xml">代理模块</link>。
 
 <!--
 The MD5 library is required to build and run this module.
@@ -213,3 +213,5 @@ The MD5 library is required to build and run this module.
 </section>
 
 </article>
+
+

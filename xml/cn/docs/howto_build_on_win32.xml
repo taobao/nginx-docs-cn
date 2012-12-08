@@ -6,28 +6,21 @@
 
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article name="如何在Win32平台上通过Visual C 编译nginx"
+<article name="如何在Win32平台上用Visual C编译nginx"
          link="/cn/docs/howto_build_on_win32.html"
          lang="cn"
          rev="1"
-         translator="JokerT"
+         translator="樵客"
          >
 
 <section name="准备条件">
 
 <para>
-
 为了在<registered>Microsoft Win32</registered>平台编译nginx，你需要做如下准备：	
-
-To build nginx on the <registered>Microsoft Win32</registered> platform you need:
-
 <list type="bullet">
 
 <listitem>
-Microsoft Visual C 编译器。<registered>Microsoft Visual Studio</registered>8和10是已知可用的。
-
-Microsoft Visual C compiler. <registered>Microsoft Visual Studio</registered>
-8 and 10 are known to work.
+Microsoft Visual C 编译器。已知<registered>Microsoft Visual Studio</registered>8和10是可用的。
 </listitem>
 
 <listitem>
@@ -35,27 +28,19 @@ Microsoft Visual C compiler. <registered>Microsoft Visual Studio</registered>
 </listitem>
 
 <listitem>
-如果想编译支持SSL的<registered>OpenSSL</registered>模块，需要安装Perl，比如<link url="http://www.activestate.com/activeperl">ActivePerl</link>或者<link url="http://strawberryperl.com">Strawberry Perl</link>
+如果想编译<registered>OpenSSL</registered>，以及为nginx添加SSL支持，需要安装Perl，比如<link url="http://www.activestate.com/activeperl">ActivePerl</link>或者<link url="http://strawberryperl.com">Strawberry Perl</link>
 
-Perl, if you want to build <registered>OpenSSL</registered> and nginx with SSL support.
-For example <link url="http://www.activestate.com/activeperl">ActivePerl</link>
-or <link url="http://strawberryperl.com">Strawberry Perl</link>.
 </listitem>
 
 <listitem>
 <registered>Subversion</registered> 客户端。可以从这个<link url="http://subversion.apache.org/packages.html#windows">列表
-</link>中选择一个。
-
-<registered>Subversion</registered> client. Choose any from the
-<link url="http://subversion.apache.org/packages.html#windows">list</link>
+</link>中任选一个。
 </listitem>
 
 <listitem>
 <link url="http://www.pcre.org">PCRE</link>, <link url="http://zlib.net">zlib</link>
-以及 <link url="http://www.openssl.org">OpenSSL</link> 库的原文件.
+以及 <link url="http://www.openssl.org">OpenSSL</link> 库的源文件.
 
-<link url="http://www.pcre.org">PCRE</link>, <link url="http://zlib.net">zlib</link>
-and <link url="http://www.openssl.org">OpenSSL</link> libraries sources.
 </listitem>
 </list>
 
@@ -67,25 +52,20 @@ and <link url="http://www.openssl.org">OpenSSL</link> libraries sources.
          name="编译步骤">
 
 <para>
-在开始编译之前，首先确保Perl的路径、Subversion以及MSYS的bin路径已经添加到系统环境变量。
-通过运行Visual C安装目录下的vcvarsall.bat脚本来设置Visual C环境。
+在开始编译之前，确保Perl的路径、Subversion以及MSYS的bin路径已经添加到系统环境变量PATH中。
+运行Visual C安装目录下的vcvarsall.bat脚本来设置Visual C环境。
 
-Ensure that paths to Perl, Subversion and MSYS bin directories are added to
-PATH environment variable before you start build. To set Visual C environment
-run vcvarsall.bat script from Visual C directory.
 </para>
 
 <para>
 
 nginx编译过程：
 
-To build nginx:
 <list type="bullet">
 
 <listitem>
 
 启动MSYS bash。	
-Start MSYS bash.
 </listitem>
 
 <listitem>
@@ -95,18 +75,12 @@ Start MSYS bash.
 svn co svn://svn.nginx.org/tags/release-1.1.6
 </programlisting>
 
-Check out nginx sources from the svn.nginx.org repository. For example:
-<programlisting>
-svn co svn://svn.nginx.org/tags/release-1.1.6
-</programlisting>
 </listitem>
 
 <listitem>
-##这个不太通顺##
-创建编译和lib目录，并解压缩zlib,PCRE以及OpenSSL库到lib目录下。
 
-Create a build and lib directories, and unpack zlib, PCRE and OpenSSL libraries
-sources into lib directory:
+为构建项目创建目录，然后创建lib目录，并将zlib、PCRE以及OpenSSL库的源代码解压到lib目录：
+
 <programlisting>
 mkdir objs
 mkdir objs/lib
@@ -119,8 +93,6 @@ tar -xzf ../../openssl-1.0.0e.tar.gz
 
 <listitem>
 运行配置脚本：
-
-Run configure script:
 <programlisting>
 auto/configure --with-cc=cl --builddir=objs --prefix= \
 --conf-path=conf/nginx.conf --pid-path=logs/nginx.pid \
@@ -136,8 +108,6 @@ auto/configure --with-cc=cl --builddir=objs --prefix= \
 
 <listitem>
 执行make命令：
-	
-Run make:
 <programlisting>
 nmake -f objs/Makefile
 </programlisting>
