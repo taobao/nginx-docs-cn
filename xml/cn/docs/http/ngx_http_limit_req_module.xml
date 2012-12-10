@@ -63,8 +63,8 @@ http {
 设置对应的共享内存限制域和允许被处理的最大请求数阈值。
 如果请求的频率超过了限制域配置的值，请求处理会被延迟，所以
 所有的请求都是以定义的频率被处理的。
-超过的请求会被延迟，直到请求数超过了定义的阈值。
-超过时，这个请求会被终止，并返回<http-status code="503" text="Service Temporarily Unavailable"/>
+超过频率限制的请求会被延迟，直到被延迟的请求数超过了定义的阈值
+这时，这个请求会被终止，并返回<http-status code="503" text="Service Temporarily Unavailable"/>
 错误。这个阈值的默认值等于0。
 比如这些指令：
 <example>
