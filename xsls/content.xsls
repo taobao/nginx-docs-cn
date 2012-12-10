@@ -122,7 +122,15 @@ X:stylesheet {
     X:template = "table[not(@note) and @width]" {
         <table width="{@width}"> !!; </table>
     }
-    X:template = "table" { <table width="100%"> !!; </table> }
+    X:template = "table" {
+        <table width="100%">
+        X:if "@class" {
+            X:attribute "class" { !{@class} }
+        }
+        !!;
+        </table>
+    }
+
     X:template = "tr" { <tr> !!; </tr> }
     X:template = "td[@width]" { <td width="{@width}"> !!; </td> }
     X:template = "td" { <td> !!; </td> }

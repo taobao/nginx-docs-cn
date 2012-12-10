@@ -30,11 +30,83 @@ Thank you!
 
 <section name="Donors list">
 
+<table class="donors">
+
+<tr>
+
+<td width="50%">
+
+<b>2012</b>
+<br/>
+<br/>
+
+<b>$1000+</b>
+
+<list type="bullet">
+
+<listitem>
+Sergey Korowkin
+</listitem>
+
+</list>
+
+<b>$500-999</b>
+
 <list type="bullet">
 
 <listitem>
 DistroWatch.com
 </listitem>
+
+<listitem>
+RedAccenir PortalProgramas
+</listitem>
+
+</list>
+
+<b>$100-499</b>
+
+<list type="bullet">
+
+<listitem>
+Kirill Filchenkov
+</listitem>
+
+<listitem>
+Jose Goncalo Peres
+</listitem>
+
+<listitem>
+Michel Machado
+</listitem>
+
+<listitem>
+PSW GROUP, http://www.psw.net
+</listitem>
+
+</list>
+
+<b>$50-99</b>
+
+<list type="bullet">
+
+<listitem>
+Dmitriy Zimin
+</listitem>
+
+<listitem>
+Vladimir Manov
+</listitem>
+
+<listitem>
+Nikita Kuznetsov
+</listitem>
+
+</list>
+
+<b>$0.01-49</b>
+
+<list type="bullet">
 
 <listitem>
 Rudy Rogers
@@ -61,23 +133,11 @@ Johnny Streeter
 </listitem>
 
 <listitem>
-PSW GROUP, http://www.psw.net
-</listitem>
-
-<listitem>
-Michel Machado
-</listitem>
-
-<listitem>
 Sergey Yarkin
 </listitem>
 
 <listitem>
 Phost.nl
-</listitem>
-
-<listitem>
-Sergey Korowkin
 </listitem>
 
 <listitem>
@@ -97,15 +157,7 @@ Alexander Irenkov
 </listitem>
 
 <listitem>
-Jose Goncalo Peres
-</listitem>
-
-<listitem>
 Will Mitayai Keeso Rowe
-</listitem>
-
-<listitem>
-Vladimir Manov
 </listitem>
 
 <listitem>
@@ -141,10 +193,6 @@ Grisha Kostyuk
 </listitem>
 
 <listitem>
-Kirill Filchenkov
-</listitem>
-
-<listitem>
 Dmitry Paskal
 </listitem>
 
@@ -153,15 +201,7 @@ Vladimir Chernyshev
 </listitem>
 
 <listitem>
-RedAccenir PortalProgramas
-</listitem>
-
-<listitem>
 Konstantin Kondakov
-</listitem>
-
-<listitem>
-Dmitriy Zimin
 </listitem>
 
 <listitem>
@@ -183,6 +223,17 @@ Luc Suryo
 <listitem>
 Svyatoslav Lempert
 </listitem>
+
+</list>
+</td>
+
+<td>
+
+<b>2004 - 2011</b>
+<br/>
+<br/>
+
+<list type="bullet">
 
 <listitem>
 MaxTorg.RU
@@ -855,8 +906,13 @@ Oleg S. Larin
 <listitem>
 Andrei Nigmatulin
 </listitem>
-
 </list>
+
+</td>
+
+</tr>
+
+</table>
 
 </section>
 

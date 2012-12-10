@@ -15,6 +15,8 @@ X:template style (lang) {
         table.news .date  { text-align:     right;
                             padding-right:  0.5em;
                             white-space:    nowrap; }
+        table.donors td   { vertical-align: baseline; }
+        table.donors li   { text-align:     left; }
         div.directive     { background:     #EEEEEE;
                             padding:        10pt 10pt 10pt 0; }
         div.directive td  { vertical-align: baseline; }

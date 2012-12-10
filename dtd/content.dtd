@@ -4,7 +4,7 @@
   -->
 
 <!ELEMENT  section      (para | list | book | download | security | note |
-                         programlisting | section)* >
+                         programlisting | table | section)* >
 <!ATTLIST  section
            id           ID #IMPLIED
            name         CDATA #IMPLIED
@@ -67,9 +67,10 @@
 <!ATTLIST  table
            note         CDATA #IMPLIED
            width        CDATA #IMPLIED
+           class        CDATA #IMPLIED
 >
 <!ELEMENT  tr           (td+) >
-<!ELEMENT  td           (#PCDATA | literal | i | link)* >
+<!ELEMENT  td           (#PCDATA | br | literal | b | i | link | list)* >
 <!ATTLIST  td
            width        CDATA #IMPLIED
 >

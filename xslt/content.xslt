@@ -293,9 +293,19 @@
       </table>
    </xsl:template>
 
-   <xsl:template match="table"> 
+   <xsl:template match="table">
+
       <table width="100%">
+
+         <xsl:if test="@class">
+
+            <xsl:attribute name="class">
+               <xsl:value-of select="@class"/>
+            </xsl:attribute>
+         </xsl:if>
+
          <xsl:apply-templates/>
+
       </table>
    </xsl:template>
 
