@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_auth_basic_module"
         link="/ru/docs/http/ngx_http_auth_basic_module.html"
         lang="ru"
-        rev="2">
+        rev="3">
 
 <section id="summary">
 
@@ -58,8 +58,10 @@ location / {
 Включает проверку имени и пароля пользователя по протоколу
 “HTTP Basic Authentication”.
 Заданный параметр используется в качестве <value>realm</value>.
-Параметр <literal>off</literal> позволяет отменить действие унаследованной
-с предыдущего уровня конфигурации директивы <literal>auth_basic</literal>.
+В значении параметра допустимо использование переменных (1.3.10).
+Специальное значение <literal>off</literal> позволяет отменить действие
+унаследованной с предыдущего уровня конфигурации
+директивы <literal>auth_basic</literal>.
 </para>
 
 </directive>
