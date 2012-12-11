@@ -17,7 +17,7 @@ X:template body (lang) {
 
     <body>
     <table width="100%">
-        <tr>
+    <tr>
         <td width="70%">
             <div id="banner">
                 X:if "@lang = 'he'" { X:attribute "class" { X:text{ltr} } }
@@ -45,10 +45,8 @@ X:template body (lang) {
                 <img src="http://nginx.org/nginx.gif" alt="nginx" border="0"/>
             </a>
         </td>
-        </tr>
-    </table>
+    </tr>
 
-    <table width="100%">
     <tr>
         <td width="70%"><center><h3>
             !{@name} X:if "$YEAR" { X:text{: } !{$YEAR} }
