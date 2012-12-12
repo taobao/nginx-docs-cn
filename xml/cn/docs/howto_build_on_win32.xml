@@ -29,7 +29,6 @@ Microsoft Visual C 编译器。已知<registered>Microsoft Visual Studio</regist
 
 <listitem>
 如果想编译<registered>OpenSSL</registered>，以及为nginx添加SSL支持，需要安装Perl，比如<link url="http://www.activestate.com/activeperl">ActivePerl</link>或者<link url="http://strawberryperl.com">Strawberry Perl</link>
-
 </listitem>
 
 <listitem>
@@ -39,9 +38,9 @@ Microsoft Visual C 编译器。已知<registered>Microsoft Visual Studio</regist
 
 <listitem>
 <link url="http://www.pcre.org">PCRE</link>, <link url="http://zlib.net">zlib</link>
-以及 <link url="http://www.openssl.org">OpenSSL</link> 库的源文件.
-
+以及 <link url="http://www.openssl.org">OpenSSL</link> 库的源文件。
 </listitem>
+
 </list>
 
 </para>
@@ -54,33 +53,25 @@ Microsoft Visual C 编译器。已知<registered>Microsoft Visual Studio</regist
 <para>
 在开始编译之前，确保Perl的路径、Subversion以及MSYS的bin路径已经添加到系统环境变量PATH中。
 运行Visual C安装目录下的vcvarsall.bat脚本来设置Visual C环境。
-
 </para>
 
 <para>
-
 nginx编译过程：
-
 <list type="bullet">
 
 <listitem>
-
 启动MSYS bash。	
 </listitem>
 
 <listitem>
-
 从svn.nvinx.org仓库检出nginx的源代码。例如：
 <programlisting>
 svn co svn://svn.nginx.org/tags/release-1.1.6
 </programlisting>
-
 </listitem>
 
 <listitem>
-
 为构建项目创建目录，然后创建lib目录，并将zlib、PCRE以及OpenSSL库的源代码解压到lib目录：
-
 <programlisting>
 mkdir objs
 mkdir objs/lib
@@ -113,26 +104,19 @@ nmake -f objs/Makefile
 </programlisting>
 </listitem>
 
-
 </list>
-
 </para>
 
 </section>
 
 <section id="see_also"
          name="参见">
-
 <para>
 <list type="bullet">
-
 <listitem>
 <link doc="windows.xml"/>
 </listitem>
-
 </list>
 </para>
-
 </section>
-
 </article>

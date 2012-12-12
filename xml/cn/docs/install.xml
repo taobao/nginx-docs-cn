@@ -115,7 +115,6 @@
 <para>
 <literal>--without-http_gzip_module</literal>&mdash;
 默认不编译<link doc="http/ngx_http_gzip_module.xml">http_gzip_module</link>模块。该模块可以压缩HTTP服务器的响应，该模块需要zlib库才能编译和运行。
- 
 </para>
 </listitem>
 
@@ -123,8 +122,7 @@
 <para>
 <literal>--without-http_rewrite_module</literal>&mdash;
 默认不编译<link doc="http/ngx_http_rewrite_module.xml">http_rewrite_module</link>模块。该模块允许HTTP服务器重定向请求，改变请求的URI地址
-。创建并运行该模块需要PCRE库支持,该模块尚处于试验阶段，其指令在未来可能会发生改变。
-
+。创建并运行该模块需要PCRE库支持。
 </para>
 </listitem>
 
@@ -132,10 +130,6 @@
 <para>
 <literal>--without-http_proxy_module</literal>&mdash;
 默认不编译HTTP服务器的<link doc="http/ngx_http_proxy_module.xml">代理模块</link>。
-
-<!--
-The MD5 library is required to build and run this module.
--->
 </para>
 </listitem>
 
@@ -143,7 +137,6 @@ The MD5 library is required to build and run this module.
 <para>
 <literal>--with-http_ssl_module</literal>&mdash;
 为HTTP服务器编译<link doc="http/ngx_http_ssl_module.xml">HTTPS协议支持的模块</link>。该模块不是默认编译的。它需要OpenSSL库才能编译和运行。
-
 </para>
 </listitem>
 
@@ -181,7 +174,6 @@ The MD5 library is required to build and run this module.
 <literal>--with-cc-opt="-I /usr/local/include"</literal>。
 如果需要增加<c-func>select</c-func>方法所支持的文件数量，也可以参照如下方式指定：
 <literal>--with-cc-opt="-D FD_SETSIZE=2048"</literal>。
-
 </para>
 </listitem>
 
