@@ -6,23 +6,24 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="模块ngx_http_mp4_module"
+<module name="ngx_http_mp4_module 模块"
         link="/en/docs/http/ngx_http_mp4_module.html"
         lang="cn"
+        translator="litianqing"
         rev="1">
 
 <section id="summary">
 
 <para>
-模块<literal>ngx_http_mp4_module</literal>向H.264/AAC文件,主要是以
-<path>.mp4</path>,<path>.m4v<path>,和<path>.m4a</path>为扩展名的文件，
+模块<literal>ngx_http_mp4_module</literal>为H.264/AAC文件,主要是以
+<path>.mp4</path>、<path>.m4v<path>、和<path>.m4a</path>为扩展名的文件，
 提供伪流媒体服务端支持。
 </para>
 
 <para>
 伪流媒体是与Flash播放器一起配合使用的。
 播放器向服务端发送HTTP请求，请求中的查询串是以开始时间为参数的(以
-<literal>start</literal>简单命名),而服务端以流响应，这样流的开始
+<literal>start</literal>简单命名)，而服务端以流响应，这样流的开始
 位置就能于请求中的时间相对应。
 
 
@@ -31,7 +32,7 @@
 <example>
 http://example.com/elephants_dream.mp4?start=238.88
 <example>
-这样就能够在任何时间随机访问，或者时间过半时开始回放。
+这样就允许随意拖放，或者从节目的中途开始回放。
 </para>
 
 <para>
@@ -62,18 +63,18 @@ url="http://flowplayer.org/plugins/streaming/pseudostreaming.html#prepare">
 <literal>start</literal>
 参数的请求，nginx从文件中读取元数据，从请求的偏移位置开始准备流数据
 发送给客户端。
-这将会有像上所述的开销。
+这与上面描述的情况有同样的开销。
 </para>
 
 <para>
 如果匹配的请求没有包含
 <literal>start</literal>
 参数，就不会有额外开销，而文件仅仅是以静态资源被发送。
-一些播放器也支持比特范围请求，所以就一点也不需要这个模块。
+一些播放器也支持字节范围请求，所以就根本不需要这个模块。
 </para>
 
 <para>
-这个模块不是默认安装的，需要通过
+这个模块默认是不安装的，需要通过
 <literal>--with-http_mp4_module</literal>
 来配置开启。
 
@@ -114,7 +115,7 @@ location /video/ {
 <context>location</context>
 
 <para>
-在当前模块中使用该模块处理。
+配置开启该模块处理当前路径。
 </para>
 
 </directive>
@@ -142,14 +143,14 @@ location /video/ {
 <context>location</context>
 
 <para>
-在处理元数据时，较大的缓存将变的必要。
-它的大小不能超过被<value>size</value>指定的值，
-否则nginx将会返回服务器错误,
-<http-status code="500" text="Internal Server Error"/>,
+在处理元数据时，可能必需较大的缓存。
+它的大小不能超过<value>size</value>指定的值，
+否则nginx将会返回服务器错误，
+<http-status code="500" text="Internal Server Error"/>，
 并记录如下日志：
 <example>
-"/some/movie/file.mp4" mp4 moov atom 太大：
-12583268, 你需要增加mp4_max_buffer_size的大小
+"/some/movie/file.mp4" mp4 moov atom is too large:
+12583268, you may want to increase mp4_max_buffer_size"
 </example>
 </para>
 
