@@ -21,7 +21,7 @@
 
 <para>
 请求在处理结束时，会按请求路径的配置上下文记访问日志。
-如果在请求处理期间产生了<link doc="ngx_http_core_module.xml" id="internal">内部跳转</link> ，
+如果在请求处理期间产生了<link doc="ngx_http_core_module.xml" id="internal">内部跳转</link>，
 请求结束时的路径可能不同于原始的请求路径。
 </para>
 
@@ -128,7 +128,7 @@ server {
 
 <tag-name><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
-发送给客户端的字节数，响应头不计算在内；
+发送给客户端的字节数，不包括响应头的大小；
 该变量与Apache模块<literal>mod_log_config</literal>里的“<literal>%B</literal>”参数兼容。
 </tag-desc>
 
@@ -144,7 +144,7 @@ server {
 
 <tag-name><var>$connection_requests</var></tag-name>
 <tag-desc>
-当前由一个连接产生的请求数量。
+当前通过一个连接获得的请求数量。
 </tag-desc>
 
 <tag-name><var>$msec</var></tag-name>
@@ -154,7 +154,7 @@ server {
 
 <tag-name><var>$pipe</var></tag-name>
 <tag-desc>
-如果请求是通过HTTP管线化发送，pipe值为“<literal>p</literal>”，否则为“<literal>.</literal>”。
+如果请求是通过HTTP流水线(pipelined)发送，pipe值为“<literal>p</literal>”，否则为“<literal>.</literal>”。
 </tag-desc>
 
 <tag-name><var>$request_length</var></tag-name>
@@ -223,12 +223,12 @@ log_format combined '$remote_addr - $remote_user [$time_local] '
 
 <tag-name><literal>max</literal></tag-name>
 <tag-desc>
-设置在缓存中的描述符最大数值；如果缓存被占满，最近最少使用（LRU）的描述符将被关闭。
+设置缓存中描述符的最大数量；如果缓存被占满，最近最少使用（LRU）的描述符将被关闭。
 </tag-desc>
 
 <tag-name><literal>inactive</literal></tag-name>
 <tag-desc>
-设置在多长时间内没有访问就关闭缓存文件描述符；
+设置缓存文件描述符在多长时间内没有被访问就关闭；
 默认为10秒。
 </tag-desc>
 
