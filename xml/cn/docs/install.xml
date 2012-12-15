@@ -88,7 +88,7 @@
 <para>
 <literal>--group=<value>name</value></literal>&mdash;
 设置工作进程以某非特权用户的身份运行。安装完成后，该用户名总是可以在
-<link doc="ngx_core_module.xml" id="user"/>用<link doc="ngx_core_module.xml" id="user"/>指令来修改。
+<path>nginx.conf</path>用<link doc="ngx_core_module.xml" id="user"/>指令来修改。
 其默认名称与未授权用户名称相同。
 </para>
 </listitem>
@@ -114,14 +114,14 @@
 <listitem>
 <para>
 <literal>--without-http_gzip_module</literal>&mdash;
-默认不编译<link doc="http/ngx_http_gzip_module.xml">http_gzip_module</link>模块。该模块可以压缩HTTP服务器的响应，该模块需要zlib库才能编译和运行。
+不编译<link doc="http/ngx_http_gzip_module.xml">http_gzip_module</link>模块。该模块可以压缩HTTP服务器的响应，该模块需要zlib库才能编译和运行。
 </para>
 </listitem>
 
 <listitem>
 <para>
 <literal>--without-http_rewrite_module</literal>&mdash;
-默认不编译<link doc="http/ngx_http_rewrite_module.xml">http_rewrite_module</link>模块。该模块允许HTTP服务器重定向请求，改变请求的URI地址
+不编译<link doc="http/ngx_http_rewrite_module.xml">http_rewrite_module</link>模块。该模块允许HTTP服务器重定向请求，改变请求的URI地址
 。创建并运行该模块需要PCRE库支持。
 </para>
 </listitem>
@@ -129,14 +129,14 @@
 <listitem>
 <para>
 <literal>--without-http_proxy_module</literal>&mdash;
-默认不编译HTTP服务器的<link doc="http/ngx_http_proxy_module.xml">代理模块</link>。
+不编译HTTP服务器的<link doc="http/ngx_http_proxy_module.xml">代理模块</link>。
 </para>
 </listitem>
 
 <listitem>
 <para>
 <literal>--with-http_ssl_module</literal>&mdash;
-为HTTP服务器编译<link doc="http/ngx_http_ssl_module.xml">HTTPS协议支持的模块</link>。该模块不是默认编译的。它需要OpenSSL库才能编译和运行。
+为HTTP服务器编译<link doc="http/ngx_http_ssl_module.xml">HTTPS协议支持的模块</link>。该模块默认是不编译的。它需要OpenSSL库才能编译和运行。
 </para>
 </listitem>
 
@@ -153,7 +153,7 @@
 <listitem>
 <para>
 <literal>--with-pcre-jit</literal>&mdash;
-编译PCRE库时增加“实时编译（<link doc="ngx_core_module.xml" id="pcre_jit"/>）”支持
+编译PCRE库时增加“实时编译（<link doc="ngx_core_module.xml" id="pcre_jit"/>）”支持。
 </para>
 </listitem>
 
