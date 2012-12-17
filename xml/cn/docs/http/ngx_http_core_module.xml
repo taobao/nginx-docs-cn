@@ -31,32 +31,33 @@
 </para>
 
 <para>
-从FreeBSD 4.3版本开始，AIO可以使用。AIO既可以静态链接到内核中：
-On FreeBSD, AIO is usable starting from FreeBSD&nbsp;4.3.
+从FreeBSD 4.3版本开始，可以使用AIO。AIO既可以静态链接到内核中：
 <example>
 options VFS_AIO
 </example>
 又可以作为内核模块动态加载：
 <example>
 kldload aio
-</example>
+</example>。
 </para>
 
 <para>
-在FreeBSD第5版和第6版，静态启动AIO，或者在系统启动时动态加载AIO，都会使网络子系统使用一把大锁，进而对整个系统的性能造成负面影响。这个限制在2009年发布的FreeBSD 6.4稳定版和FreeBSD 7中被消除。虽然如此，仍有方法在5.3版本及以上版本的FreeBSD中开启AIO而不触发网络子系统的大锁，那就是在内核启动以后加载AIO模块。使用这种时，下面信息会出现在
-<path>/var/log/messages</path>中，
+在FreeBSD第5版和第6版，静态启动AIO，或者在系统启动时动态加载AIO，都会触发网络子系统使用一把大锁，进而对整个系统的性能造成负面影响。
+这个限制在2009年发布的FreeBSD 6.4稳定版和FreeBSD 7中被消除。
+虽然如此，仍有方法在5.3及以上版本的FreeBSD中开启AIO而不触发网络子系统的大锁，那就是在内核启动以后加载AIO模块。
+使用这种时，<path>/var/log/messages</path>中会出现下面信息，
 <example>
 WARNING: Network stack Giant-free, but aio requires Giant.
 Consider adding 'options NET_WITH_GIANT' or setting debug.mpsafenet=0
 </example>
 但可以安全的忽略它。
 <note>
-需要使用AIO中的大锁的是FreeBSD套接字上的<c-func>aio_read</c-func>和<c-func>aio_write</c-func>异步操作。但是nginx仅仅在磁盘I/O使用AIO，所以不会出现问题。
+使用AIO大锁的是FreeBSD套接字上的<c-func>aio_read</c-func>和<c-func>aio_write</c-func>异步操作。但是nginx仅仅在磁盘I/O使用AIO，所以不会出现问题。
 </note>
 </para>
 
 <para>
-为了让AIO工总，需要关闭<link id="sendfile"/>：
+为了让AIO工作，需要关闭<link id="sendfile"/>：
 <example>
 location /video/ {
     sendfile       off;
@@ -83,7 +84,7 @@ FreeBSD内核接着会读取文件的开始128K字节到内存，而后续的读
 </para>
 
 <para>
-从Linux内核2.6.22版开始，AIO也可以使用。而且，必须同时开启<link id="directio"/>，否则读取将是阻塞的：
+从Linux内核2.6.22版开始，也可以使用AIO。但必须同时开启<link id="directio"/>，否则读取将是阻塞的：
 <example>
 location /video/ {
     aio            on;
@@ -95,7 +96,7 @@ location /video/ {
 
 <para>
 在Linux上，<link id="directio"/>只在读取的块的边界对齐512字节（在XFS上是4K字节）时才有用。在读取文件尾部时，
-如果没有对齐，AIO读取还是阻塞的。同样的情况——如果数据的开始或者结尾未对齐时，读取是阻塞的，
+如果没有对齐，AIO读取还是阻塞的。同样的情况(如果数据的开始或者结尾未对齐时，读取也是阻塞的)
 也发生在含有<header>byte range</header>头的请求中，或者发生在不是从头开始的FLV请求中。
 没有必要手动关闭<link id="sendfile"/>，因为如果使用了<link id="directio"/>，它就会自动关闭。
 </para>
@@ -123,7 +124,7 @@ location /i/ {
 </para>
 
 <para>
-如果在在定义了正则表达式的路径中使用了<literal>alias</literal>，那么正则表达式中应该含有匹配组，
+如果在定义了正则表达式的路径中使用了<literal>alias</literal>，那么正则表达式中应该含有匹配组，
 并且<literal>alias</literal>应该引用这些匹配组(0.7.40版)来组成一个完整的文件路径，比如：
 <example>
 location ~ ^/users/(.+\.(?:gif|jpe?g|png))$ {
@@ -256,7 +257,7 @@ client_body_temp_path /spool/nginx/client_temp 1 2;
 <context>location</context>
 
 <para>
-定义读取客户端请求正文的超时。超时是指相邻两次读操作之间的最大时间间隔，而不是整个响应正文完成传输的最大时间。
+定义读取客户端请求正文的超时。超时是指相邻两次读操作之间的最大时间间隔，而不是整个请求正文完成传输的最大时间。
 如果客户端在这段时间内没有传输任何数据，nginx将返回<http-status code="408" text="Request Time-out"/>错误到客户端。
 </para>
 
@@ -272,7 +273,7 @@ client_body_temp_path /spool/nginx/client_temp 1 2;
 <para>
 设置读取客户端请求头部的缓冲容量。
 对于大多数请求，1K的缓冲足矣。
-但如果请求中含有的cookie很长，或者是来自WAP的客户端，可能不能放在1K的缓冲中。
+但如果请求中含有的cookie很长，或者请求来自WAP的客户端，可能请求头不能放在1K的缓冲中。
 如果从请求行，或者某个请求头开始不能完整的放在这块空间中，那么nginx将按照
 <link id="large_client_header_buffers"/>指令的配置分配更多更大的缓冲来存放。
 directive.
@@ -303,10 +304,10 @@ nginx将返回错误<http-status code="408" text="Request Time-out"/>到客户�
 <context>location</context>
 
 <para>
-设置允许客户端请求正文的最大长度。这个长度在<header>Content-Length</header>请求头指定。
-如果超过这个长度，nginx将返回错误<http-status code="413" text="Request Entity Too Large"/>到客户端。
+设置允许客户端请求正文的最大长度。请求的长度由<header>Content-Length</header>请求头指定。
+如果请求的长度超过设定值，nginx将返回错误<http-status code="413" text="Request Entity Too Large"/>到客户端。
 请注意<!--link doc="/web/upload.xml"-->浏览器不能正确显示这个错误<!--/link-->。
-将<value>size</value>设置成0可以使nginx不检查客户度请求正文的长度。
+将<value>size</value>设置成0可以使nginx不检查客户端请求正文的长度。
 </para>
 
 </directive>
@@ -348,7 +349,8 @@ nginx将返回错误<http-status code="408" text="Request Time-out"/>到客户�
 <appeared-in>0.7.7</appeared-in>
 
 <para>
-当读入长度大于等于指定<value>size</value>的文件时，
+当读入长度大于等于指定<value>size</value>的文件时，开启DirectIO功能。
+具体的做法是，
 在FreeBSD或Linux系统开启使用<c-def>O_DIRECT</c-def>标志，
 在Mac OS X系统开启使用<c-def>F_NOCACHE</c-def>标志，
 在Solaris系统开启使用<c-func>directio</c-func>功能。
@@ -412,8 +414,8 @@ directio 4m;
 
 <tag-name><literal>from</literal>=<value>part</value></tag-name>
 <tag-desc>
-当nginx进行符号链接检查时(参数<literal>on</literal>和参数<literal>if_not_owner</literal>)，按说路径中所有部分都会被检查。
-而使用<literal>from</literal>=<value>part</value>参数可以避免对路径开始部分进行符号链接检查，只检查后面的部分路径。
+当nginx进行符号链接检查时(参数<literal>on</literal>和参数<literal>if_not_owner</literal>)，路径中所有部分默认都会被检查。
+而使用<literal>from</literal>=<value>part</value>参数可以避免对路径开始部分进行符号链接检查，而只检查后面的部分路径。
 如果某路径不是以指定值开始，整个路径将被检查，就如同没有指定这个参数一样。
 如果某路径与指定值完全匹配，将不做检查。
 这个参数的值可以包含变量。
@@ -542,7 +544,7 @@ location @fallback {
 <default/>
 <context>main</context>
 <para>
-为HTTP服务器指定提供配置上下文。
+为HTTP服务器提供配置上下文。
 </para>
 </directive>
 
@@ -592,7 +594,7 @@ location @fallback {
 
 <para>
 控制是否忽略非法的请求头字段名。
-合法的名字是由英文字母、数字、连字符组成，当然也可以包含下划线（由<link id="underscores_in_headers"/>指令控制）。
+合法的名字是由英文字母、数字和连字符组成，当然也可以包含下划线(由<link id="underscores_in_headers"/>指令控制)。
 </para>
 
 <para>
@@ -722,7 +724,7 @@ MSIE浏览器在大约60秒后会关闭长连接。
 <context>server</context>
 
 <para>
-设置读取客户端请求超大请求的缓冲最大<value>number（数量）</value>和每块缓冲的<value>size（容量）</value>。
+设置读取客户端请求超大请求的缓冲最大<value>number(数量)</value>和每块缓冲的<value>size(容量)</value>。
 HTTP请求行的长度不能超过一块缓冲的容量，否则nginx返回错误<http-status code="414" text="Request-URI Too Large"/>到客户端。
 每个请求头的长度也不能超过一块缓冲的容量，否则nginx返回错误<http-status code="400" text="Bad Request"/>到客户端。
 缓冲仅在必需是才分配，默认每块的容量是8K字节。
@@ -894,7 +896,7 @@ location /flv/ {
 <para>
 <link id="lingering_close"/>生效时，这条指令定义nginx等待客户端更多数据到来的最长时间。
 如果在这段时间内，nginx没有接收到数据，nginx将关闭连接。否则，nginx将接收数据，忽略它，然后再等待更多数据。
-这个“等待——接收——忽略”的循环一直重复，但不会超过<link id="lingering_time"/>指令定义的时间。
+这个“等待——接收——忽略”的循环一直重复，但总时间不会超过<link id="lingering_time"/>指令定义的时间。
 </para>
 
 </directive>
@@ -1000,7 +1002,7 @@ listen unix:/var/run/nginx.sock;
 <literal>backlog</literal>=<value>number</value>
 </tag-name>
 <tag-desc>
-为系统调用<c-func>listen</c-func>设置<literal>backlog</literal>参数，用以限制未接受连接的列表的最大长度。
+为系统调用<c-func>listen</c-func>设置<literal>backlog</literal>参数，用以限制未接受(Accept)连接的队列的最大长度。
 FreeBSD下，<literal>backlog</literal>的默认值是-1，在其他系统中，默认值是511。
 </tag-desc>
 
@@ -1141,7 +1143,7 @@ listen 127.0.0.1 default_server accept_filter=dataready backlog=1024;
 </para>
 
 <para>
-在不区分大小写的操作系统（诸如Mac OS X和Cygwin）上，前缀匹配忽略大小写(0.7.7)。但是，比较仅限于单字节的区域。
+在不区分大小写的操作系统（诸如Mac OS X和Cygwin）上，前缀匹配忽略大小写(0.7.7)。但是，比较仅限于单字节的编码区域(one-byte locale)。
 </para>
 
 <para>
@@ -1605,7 +1607,7 @@ optimization needs to be disabled.
 <example>
 resolver 127.0.0.1 [::1]:5353;
 </example>
-这里地址可以只定位域名或者ip地址，可以带端口号(1.3.1，1.2.2)。如果未指定端口，nginx使用53端口。
+这里地址可以指定域名或者ip地址，可以带端口号(1.3.1，1.2.2)。如果未指定端口，nginx使用53端口。
 以轮询方式发送请求到多台名字服务器。
 <note>
 在1.1.7版以前，只允许配置一个名字服务器。而支持使用IPv6地址定义名字服务器则是从1.3.1和1.2.2版本开始。
@@ -1821,7 +1823,7 @@ server {
     server_name example.com *.example.com www.example.*;
 }
 </example>
-上面这些名字成为通配符主机名。
+上面这些名字称为通配符主机名。
 </para>
 
 <para>
@@ -2309,7 +2311,7 @@ nginx也支持其他变量：
 
 <tag-name><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
-不含响应头，nginx返回给客户端的字节数。
+nginx返回给客户端的字节数，不含响应头。
 </tag-desc>
 
 <tag-name><var>$content_length</var></tag-name>
