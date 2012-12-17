@@ -7,29 +7,28 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_log_module"
-        link="/en/docs/http/ngx_http_log_module.html"
-        lang="en"
+<module name="ngx_http_log_module模块"
+        link="/cn/docs/http/ngx_http_log_module.html"
+        lang="cn"
+        translator="nigelzeng"
         rev="3">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_log_module</literal> module writes request logs
-in the specified format.
+<literal>ngx_http_log_module</literal>模块按指定的格式写访问日志。
 </para>
 
 <para>
-Requests are logged in a context of a location where processing ends.
-This may be different from the original location, if an
-<link doc="ngx_http_core_module.xml" id="internal">internal
-redirect</link> happens during request processing.
+请求在处理结束时，会按请求路径的配置上下文记访问日志。
+如果在请求处理期间产生了<link doc="ngx_http_core_module.xml" id="internal">内部跳转</link>，
+请求结束时的路径可能不同于原始的请求路径。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置实例">
 
 <para>
 <example>
@@ -44,7 +43,7 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="access_log">
 <syntax>
@@ -60,52 +59,44 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 <context>limit_except</context>
 
 <para>
-Sets the path, format, and buffer size for the buffered log writes.
-Several logs can be specified on the same level.
-The special value <literal>off</literal> cancels all
-<literal>access_log</literal> directives on the current level.
-If format is not specified then the predefined format
-“<literal>combined</literal>” is used.
+为访问日志设置路径，格式和缓冲区大小（nginx访问日志支持缓存）。
+在同一个配置层级里可以指定多个日志。
+特定值<literal>off</literal>会取消当前配置层级里的所有<literal>access_log</literal>指令。
+如果没有指定日志格式则会使用预定义的“<literal>combined</literal>”格式。
 </para>
 
 <para>
-The buffer size must not exceed the size of the atomic write to a disk file.
-For FreeBSD this size is unlimited.
+缓冲区的大小不能超过磁盘文件原子性写入的大小。
+对于FreeBSD来说缓冲区大小是无限制的。
 </para>
 
 <para>
-The file path can contain variables (0.7.6+),
-but such logs have some constraints:
+日志文件的路径可以包含变量（0.7.6+），
+但此类日志存在一些限制：
 <list type="bullet">
 
 <listitem>
-the <link doc="../ngx_core_module.xml" id="user"/>
-whose credentials are used by worker processes should
-have permissions to create files in a directory with
-such logs;
+工作进程使用的<link doc="../ngx_core_module.xml" id="user"/>
+应拥有在目录里创建文件的权限；
 </listitem>
 
 <listitem>
-buffered writes do not work;
+写缓冲无效；
 </listitem>
 
 <listitem>
-a file is opened and closed for each log write.
-However, since the descriptors of frequently used files can be stored
-in a <link id="open_log_file_cache">cache</link>, writes during the
-time specified by the <literal>valid</literal> parameter of the
-<link id="open_log_file_cache"/> directive can continue to be made
-to the old file.
+每条日志写入都会打开和关闭文件。然而，频繁使用的文件描述符可以存储在
+<link id="open_log_file_cache">缓存</link>中，
+在<link id="open_log_file_cache"/>指令的<literal>valid</literal>参数指定的时间里，
+写操作能持续写到旧文件。
 </listitem>
 
 <listitem>
-during each log write the existence of the request’s
-<link doc="ngx_http_core_module.xml" id="root">root directory</link>
-is checked, and if it does not exist the log is not
-created.
-It is thus a good idea to specify both
-<link doc="ngx_http_core_module.xml" id="root"/>
-and <literal>access_log</literal> on the same level:
+每次日志写入的操作都会检查请求的
+<link doc="ngx_http_core_module.xml" id="root">根目录</link>是否存在，
+如果不存在则日志不会被创建。
+因此在一个层级里同时指定<link doc="ngx_http_core_module.xml" id="root"/>
+和<literal>access_log</literal>是一个不错的想法：
 <example>
 server {
     root       /spool/vhost/data/$host;
@@ -128,87 +119,80 @@ server {
 <context>http</context>
 
 <para>
-Specifies format of a log.
+指定日志的格式。
 </para>
 
 <para>
-The log format can contain common variables, and variables that
-exist only at the time of a log write:
+日志格式允许包含普通变量和只在日志写入时存在的变量：
 <list type="tag">
 
 <tag-name><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
-the number of bytes sent to a client not counting the response header;
-this variable is compatible with the “<literal>%B</literal>” parameter of the
-<literal>mod_log_config</literal>
-Apache module
+发送给客户端的字节数，不包括响应头的大小；
+该变量与Apache模块<literal>mod_log_config</literal>里的“<literal>%B</literal>”参数兼容。
 </tag-desc>
 
 <tag-name><var>$bytes_sent</var></tag-name>
 <tag-desc>
-the number of bytes sent to a client
+发送给客户端的总字节数。
 </tag-desc>
 
 <tag-name><var>$connection</var></tag-name>
 <tag-desc>
-connection serial number
+连接的序列号。
 </tag-desc>
 
 <tag-name><var>$connection_requests</var></tag-name>
 <tag-desc>
-the current number of requests made through a connection
+当前通过一个连接获得的请求数量。
 </tag-desc>
 
 <tag-name><var>$msec</var></tag-name>
 <tag-desc>
-time in seconds with a milliseconds resolution at the time of log write
+日志写入时间。单位为秒，精度是毫秒。
 </tag-desc>
 
 <tag-name><var>$pipe</var></tag-name>
 <tag-desc>
-“<literal>p</literal>” if request was pipelined, “<literal>.</literal>”
-otherwise
+如果请求是通过HTTP流水线(pipelined)发送，pipe值为“<literal>p</literal>”，否则为“<literal>.</literal>”。
 </tag-desc>
 
 <tag-name><var>$request_length</var></tag-name>
 <tag-desc>
-request length (including request line, header, and request body)
+请求的长度（包括请求行，请求头和请求正文）。
 </tag-desc>
 
 <tag-name><var>$request_time</var></tag-name>
 <tag-desc>
-request processing time in seconds with a milliseconds resolution;
-time elapsed between the first bytes were read from the client and
-the log write after the last bytes were sent to the client
+请求处理时间，单位为秒，精度毫秒；
+从读入客户端的第一个字节开始，直到把最后一个字符发送给客户端后进行日志写入为止。
 </tag-desc>
 
 <tag-name><var>$status</var></tag-name>
 <tag-desc>
-response status
+响应状态。
 </tag-desc>
 
 <tag-name><var>$time_iso8601</var></tag-name>
 <tag-desc>
-local time in the ISO 8601 standard format
+ISO8601标准格式下的本地时间。
 </tag-desc>
 
 <tag-name><var>$time_local</var></tag-name>
 <tag-desc>
-local time in the Common Log Format
+通用日志格式下的本地时间。
 </tag-desc>
 
 </list>
 </para>
 
 <para>
-Header lines sent to a client have the prefix
-“<literal>sent_http_</literal>”, for example,
-<var>$sent_http_content_range</var>.
+发送给客户端的响应头拥有“<literal>sent_http_</literal>”前缀。
+比如<var>$sent_http_content_range</var>。
 </para>
 
 <para>
-The configuration always includes the predefined format
-“<literal>combined</literal>”:
+配置始终包含预先定义的“<literal>combined</literal>”日志格式：
 <example>
 log_format combined '$remote_addr - $remote_user [$time_local] '
                     '"$request" $status $body_bytes_sent '
@@ -233,49 +217,43 @@ log_format combined '$remote_addr - $remote_user [$time_local] '
 <context>location</context>
 
 <para>
-Defines a cache that stores file descriptors of frequently used logs
-whose names contain variables.
-The directive has the following parameters:
+定义一个缓存，用来存储频繁使用的文件名中包含变量的日志文件描述符。
+该指令包含以下参数：
 <list type="tag">
 
 <tag-name><literal>max</literal></tag-name>
 <tag-desc>
-sets a maximum number of descriptors in a cache;
-if cache becomes full the least recently used (LRU)
-descriptors are closed
+设置缓存中描述符的最大数量；如果缓存被占满，最近最少使用（LRU）的描述符将被关闭。
 </tag-desc>
 
 <tag-name><literal>inactive</literal></tag-name>
 <tag-desc>
-sets a time after which the cached descriptor is closed
-if there were no access during this time;
-by default, 10 seconds
+设置缓存文件描述符在多长时间内没有被访问就关闭；
+默认为10秒。
 </tag-desc>
 
 <tag-name><literal>min_uses</literal></tag-name>
 <tag-desc>
-sets a minimum number of file uses during the time
-defined by the <literal>inactive</literal> parameter
-after which the descriptor will stay open in a cache;
-by default, 1
+设置在<literal>inactive</literal>参数指定的时间里，
+最少访问多少次才能使文件描述符保留在缓存中；默认为1。
 </tag-desc>
 
 <tag-name><literal>valid</literal></tag-name>
 <tag-desc>
-sets a time after which it should be checked that the file
-still exists with the same name; by default, 60 seconds
+设置一段用于检查超时后文件是否仍以同样名字存在的时间；
+默认为60秒。
 </tag-desc>
 
 <tag-name><literal>off</literal></tag-name>
 <tag-desc>
-disables caching
+禁用缓存。
 </tag-desc>
 
 </list>
 </para>
 
 <para>
-Example usage:
+使用实例：
 <example>
 open_log_file_cache max=1000 inactive=20s valid=1m min_uses=2;
 </example>

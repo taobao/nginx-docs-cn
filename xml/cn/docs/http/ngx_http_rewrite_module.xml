@@ -99,7 +99,6 @@ if ($slow) {
 
 <listitem>
 使用“<literal>-d</literal>”和“<literal>!-d</literal>”运算符检查目录是否存在；
-checking a directory existence with the “<literal>-d</literal>” and
 </listitem>
 
 <listitem>
