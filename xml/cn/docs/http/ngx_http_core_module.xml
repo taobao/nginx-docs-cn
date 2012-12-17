@@ -38,7 +38,7 @@ options VFS_AIO
 又可以作为内核模块动态加载：
 <example>
 kldload aio
-</example>。
+</example>
 </para>
 
 <para>
