@@ -15,7 +15,7 @@
 <section id="summary">
 
 <para>
-模块<literal>ngx_http_mp4_module</literal>为H.264/AAC文件,主要是以
+模块<literal>ngx_http_mp4_module</literal>为H.264/AAC文件，主要是以
 <path>.mp4</path>、<path>.m4v<path>、和<path>.m4a</path>为扩展名的文件，
 提供伪流媒体服务端支持。
 </para>
@@ -44,12 +44,12 @@ http://example.com/elephants_dream.mp4?start=238.88
 为了开启回放，播放器首先需要读取元数据。
 这是通过发送一个特别的以<literal>start=0</literal>为
 参数请求来完成的。
-许多编码软件会将元数据插入到文件末尾。
+许多编码软件会将元数据插入到文件末尾，
 这样做对伪流媒体来说是不好的：
 元数据需要在文件开始时定位好，否则整个文件需要下载完才能开始播放。
-如果文件组织的很好（将元数据放到文件开头），那么nginx仅仅返回文件的内容。
-否则，nginx不得不读取文件并准备一个新的流，将元数据放在媒体数据前面。
-这将导致一些CPU，内存，磁盘I/O开销，
+如果文件组织的很好（将元数据放到文件开头），那么nginx仅仅返回文件的内容，
+否则，nginx不得不读取文件并准备一个新的流，将元数据放在媒体数据前面，
+这将导致一些CPU，内存，磁盘I/O开销。
 所以一个比较好的主意是
 
 <link
@@ -86,7 +86,7 @@ url="http://flowplayer.org/plugins/streaming/pseudostreaming.html#prepare">
 <para>
 一个简单的支持FLV文件的伪流媒体由模块
 <link doc="ngx_http_flv_module.xml">ngx_http_flv_module</link>.
-提供
+提供。
 </para>
 
 </section>
