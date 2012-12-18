@@ -85,7 +85,7 @@ url="http://flowplayer.org/plugins/streaming/pseudostreaming.html#prepare">
 
 <para>
 一个简单的支持FLV文件的伪流媒体由模块
-<link doc="ngx_http_flv_module.xml">ngx_http_flv_module</link>.
+<link doc="ngx_http_flv_module.xml">ngx_http_flv_module</link>
 提供。
 </para>
 
