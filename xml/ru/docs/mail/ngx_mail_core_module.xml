@@ -10,7 +10,7 @@
 <module name="Модуль ngx_mail_core_module"
         link="/ru/docs/mail/ngx_mail_core_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -115,8 +115,21 @@ listen unix:/var/run/nginx.sock;
 </para>
 
 <para>
-Разные виртуальные серверы должны слушать на разных парах
+Разные серверы должны слушать на разных парах
 <value>адрес</value>:<value>порт</value>.
+</para>
+
+</directive>
+
+
+<directive name="mail">
+<syntax block="yes"/>
+<default/>
+<context>main</context>
+
+<para>
+Предоставляет контекст конфигурационного файла, в котором указываются
+директивы почтового сервера.
 </para>
 
 </directive>
@@ -175,7 +188,7 @@ listen unix:/var/run/nginx.sock;
 <context>mail</context>
 
 <para>
-Задаёт конфигурацию для виртуального сервера.
+Задаёт конфигурацию для сервера.
 </para>
 
 </directive>

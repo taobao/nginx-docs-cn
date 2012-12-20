@@ -6,7 +6,7 @@
 
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article name="How to build nginx on the Win32 Platform with Visual C"
+<article name="Building nginx on the Win32 Platform with Visual C"
          link="/en/docs/howto_build_on_win32.html"
          lang="en"
          rev="1">

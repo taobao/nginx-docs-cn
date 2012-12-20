@@ -15,4 +15,5 @@
            href         CDATA #IMPLIED
            lang         CDATA #IMPLIED
            year         CDATA #IMPLIED
+           switchlang   CDATA #IMPLIED
 >

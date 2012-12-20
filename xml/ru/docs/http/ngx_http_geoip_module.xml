@@ -53,7 +53,7 @@ http {
 <section id="directives" name="Директивы">
 
 <directive name="geoip_country">
-<syntax><value>база</value></syntax>
+<syntax><value>файл</value></syntax>
 <default/>
 <context>http</context>
 
@@ -88,7 +88,7 @@ http {
 
 
 <directive name="geoip_city">
-<syntax><value>база</value></syntax>
+<syntax><value>файл</value></syntax>
 <default/>
 <context>http</context>
 
@@ -132,6 +132,29 @@ http {
 <tag-name><var>$geoip_postal_code</var></tag-name>
 <tag-desc>
 почтовый индекс.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="geoip_org">
+<syntax><value>файл</value></syntax>
+<default/>
+<context>http</context>
+<appeared-in>1.0.3</appeared-in>
+
+<para>
+Задаёт базу данных для определения названия организации
+в зависимости от значения IP-адреса клиента.
+При использовании этой базы данных доступна следующая переменная:
+<list type="tag">
+
+<tag-name><var>$geoip_org</var></tag-name>
+<tag-desc>
+название организации, например, “The University of Melbourne”.
 </tag-desc>
 
 </list>

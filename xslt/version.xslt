@@ -6,7 +6,7 @@
    <xsl:output method="text"/>
 
    <xsl:template match="/versions">
-      <xsl:value-of select=" normalize-space(*[local-name() = $VERSION])"/>
+      <xsl:apply-templates select="download[@tag=$VERSION][1]/item[1]/@ver"/>
    </xsl:template>
 
 </xsl:stylesheet>

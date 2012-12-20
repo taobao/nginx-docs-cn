@@ -11,6 +11,8 @@
 
    <xsl:param name="ORIGIN"/>
 
+   <xsl:param name="TRANS"/>
+
    <xsl:variable select="/article/@link | /module/@link" name="LINK"/>
 
    <xsl:variable select="/article/@lang | /module/@lang" name="LANG"/>
@@ -25,13 +27,19 @@
 
    <xsl:include href="menu.xslt"/>
 
-   <xsl:include href="donate.xslt"/>
-
-   <xsl:include href="directive.xslt"/>
+   <xsl:include href="ga.xslt"/>
 
    <xsl:include href="content.xslt"/>
 
-   <xsl:include href="ga.xslt"/>
+   <xsl:include href="books.xslt"/>
+
+   <xsl:include href="directive.xslt"/>
+
+   <xsl:include href="donate.xslt"/>
+
+   <xsl:include href="download.xslt"/>
+
+   <xsl:include href="security.xslt"/>
 
    <xsl:include href="versions.xslt"/>
 

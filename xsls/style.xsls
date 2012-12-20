@@ -15,6 +15,8 @@ X:template style (lang) {
         table.news .date  { text-align:     right;
                             padding-right:  0.5em;
                             white-space:    nowrap; }
+        table.donors td   { vertical-align: baseline; }
+        table.donors li   { text-align:     left; }
         div.directive     { background:     #EEEEEE;
                             padding:        10pt 10pt 10pt 0; }
         div.directive td  { vertical-align: baseline; }
@@ -22,6 +24,10 @@ X:template style (lang) {
                             margin:         0; }
         div.directive p   { margin:         5pt 0 0 0;
                             font-size:      80%; }
+        div#banner        { background:     #EEEEEE;
+                            padding:        10pt 10pt 10pt 0; }
+        a.notrans         { color:          gray;
+                            text-decoration:none; }
         span.initial      { font-size:      200%;
                             float:          left;
                             padding-right:  10pt;}

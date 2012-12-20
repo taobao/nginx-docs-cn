@@ -202,6 +202,12 @@
       </li>
    </xsl:template>
 
+   <xsl:template match="listitem[@id]"> 
+      <li id="{@id}">
+         <xsl:apply-templates/>
+      </li>
+   </xsl:template>
+
    <xsl:template match="list[@type='tag']">
       <xsl:choose>
 
@@ -250,6 +256,12 @@
       </dt>
    </xsl:template>
 
+   <xsl:template match="tag-name[@id]"> 
+      <dt id="{@id}">
+         <xsl:apply-templates/>
+      </dt>
+   </xsl:template>
+
    <xsl:template match="tag-desc"> 
       <dd>
          <xsl:apply-templates/>
@@ -281,9 +293,19 @@
       </table>
    </xsl:template>
 
-   <xsl:template match="table"> 
+   <xsl:template match="table">
+
       <table width="100%">
+
+         <xsl:if test="@class">
+
+            <xsl:attribute name="class">
+               <xsl:value-of select="@class"/>
+            </xsl:attribute>
+         </xsl:if>
+
          <xsl:apply-templates/>
+
       </table>
    </xsl:template>
 

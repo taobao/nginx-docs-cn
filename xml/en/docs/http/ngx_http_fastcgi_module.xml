@@ -10,7 +10,7 @@
 <module name="Module ngx_http_fastcgi_module"
         link="/en/docs/http/ngx_http_fastcgi_module.html"
         lang="en"
-        rev="1">
+        rev="3">
 
 <section id="summary">
 
@@ -43,6 +43,22 @@ location / {
 
 
 <section id="directives" name="Directives">
+
+<directive name="fastcgi_bind">
+<syntax><value>address</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.8.22</appeared-in>
+
+<para>
+Forces outgoing connections to a FastCGI server to originate
+from the specified local IP <value>address</value>.
+</para>
+
+</directive>
+
 
 <directive name="fastcgi_buffer_size">
 <syntax><value>size</value></syntax>
@@ -763,6 +779,29 @@ A timeout is only set between two successive read operations,
 not for the transmission of the whole response.
 If a FastCGI server does not transmit anything within this time,
 a connection is closed.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_send_lowat">
+<syntax><value>size</value></syntax>
+<default>0</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+If set to a non-zero value, nginx will try to minimize the number
+of send operations on outgoing connections to a FastCGI server by using either
+<c-def>NOTE_LOWAT</c-def> flag of the
+<link doc="../events.xml" id="kqueue"/> method,
+or the <c-def>SO_SNDLOWAT</c-def> socket option,
+with the specified <value>size</value>.
+</para>
+
+<para>
+This directive is ignored on Linux, Solaris, and Windows.
 </para>
 
 </directive>

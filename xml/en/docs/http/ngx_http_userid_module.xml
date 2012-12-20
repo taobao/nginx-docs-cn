@@ -10,7 +10,7 @@
 <module name="Module ngx_http_userid_module"
         link="/en/docs/http/ngx_http_userid_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -116,6 +116,24 @@ Sets a time during which a browser should keep the cookie.
 The parameter <literal>max</literal> sets the time to
 “<literal>31 Dec 2037 23:55:55 GMT</literal>”.
 This is the maximum time understood by old browsers.
+</para>
+
+</directive>
+
+
+<directive name="userid_mark">
+<syntax><value>off | letter | digit | =</value></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the first symbol of the cookie’s representation base64 tail
+(“<literal>==</literal>” by default) and resets all accepted cookies
+with another tail.
+It may be useful if it's required to add or change the P3P or the cookie expire
+time and leave the internally encoded value unchanged.
 </para>
 
 </directive>

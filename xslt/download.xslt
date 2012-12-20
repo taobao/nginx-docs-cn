@@ -1,61 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-   <xsl:output indent="no" version="4.0" encoding="utf-8" method="html"/>
+   <xsl:template match="download">
 
-   <xsl:strip-space elements="*"/>
+      <xsl:variable select="@last" name="last"/>
 
-   <xsl:param select="'../xml'" name="XML"/>
+      <xsl:for-each select="document(concat($XML, '/versions.xml'))                 /versions/download[@tag = current()/@tag]">
 
-   <xsl:param name="YEAR"/>
+         <table width="100%">
 
-   <xsl:variable select="/article/@link" name="LINK"/>
+            <xsl:apply-templates select="item[position() &lt;= $last]"/>
 
-   <xsl:include href="dirname.xslt"/>
-
-   <xsl:include href="link.xslt"/>
-
-   <xsl:include href="style.xslt"/>
-
-   <xsl:include href="body.xslt"/>
-
-   <xsl:include href="menu.xslt"/>
-
-   <xsl:include href="ga.xslt"/>
-
-   <xsl:include href="content.xslt"/>
-
-   <xsl:template match="/article">
-
-      <html>
-         <head>
-
-            <title>
-               <xsl:value-of select="@name"/>
-            </title>
-
-            <xsl:call-template name="style">
-               <xsl:with-param select="@lang" name="lang"/>
-            </xsl:call-template>
-
-            <xsl:call-template name="ga"/>
-
-         </head>
-
-         <xsl:call-template name="body">
-            <xsl:with-param select="@lang" name="lang"/>
-         </xsl:call-template>
-
-      </html>
+         </table>
+      </xsl:for-each>
    </xsl:template>
 
-   <xsl:template match="download"> 
-      <table width="100%">
-         <xsl:apply-templates select="item"/>
-      </table>
-   </xsl:template>
-
-   <xsl:template match="download/item[position() &lt;= ../@last]">
+   <xsl:template match="download/item">
 
       <tr>
 
@@ -66,13 +26,33 @@
                <a>
 
                   <xsl:attribute name="href">
+
                      <xsl:text>/</xsl:text>
-                     <xsl:value-of select="/article/@lang"/>
-                     <xsl:text>/</xsl:text>
-                     <xsl:value-of select="../@changes"/>
+                     <xsl:value-of select="$LANG"/>
+                     <xsl:text>/CHANGES</xsl:text>
+
+                     <xsl:if test="$LANG != 'en'">
+                        <xsl:text>.</xsl:text>
+                        <xsl:value-of select="$LANG"/>
+                     </xsl:if>
+
+                     <xsl:if test="../@changes != ''">
+                        <xsl:text>-</xsl:text>
+                        <xsl:value-of select="../@changes"/>
+                     </xsl:if>
                   </xsl:attribute>
 
-                  <xsl:value-of select="../@changes"/>
+                  <xsl:text>CHANGES</xsl:text>
+
+                  <xsl:if test="$LANG != 'en'">
+                     <xsl:text>.</xsl:text>
+                     <xsl:value-of select="$LANG"/>
+                  </xsl:if>
+
+                  <xsl:if test="../@changes != ''">
+                     <xsl:text>-</xsl:text>
+                     <xsl:value-of select="../@changes"/>
+                  </xsl:if>
 
                </a>
             </xsl:if>
@@ -156,7 +136,5 @@
 
       </tr>
    </xsl:template>
-
-   <xsl:template match="download/item[position() &gt; ../@last]"/>
 
 </xsl:stylesheet>

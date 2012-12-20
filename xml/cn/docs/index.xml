@@ -7,7 +7,7 @@
 
 <article name="Nginx文档"
          link="/cn/docs/"
-         lang="en"
+         lang="cn"
          rev="3"
          toc="no">
 
@@ -78,6 +78,10 @@
 
 <listitem>
 <link doc="howto_setup_development_environment_on_ec2.xml"/>
+</listitem>
+
+<listitem>
+<link doc="nginx_dtrace_pid_provider.xml"/>
 </listitem>
 
 </list>

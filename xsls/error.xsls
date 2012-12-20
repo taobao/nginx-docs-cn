@@ -5,8 +5,6 @@
 
 X:stylesheet {
 
-X:include href = "ga.xslt";
-
 X:output method="html" version="4.0" indent="no" encoding="utf-8";
 
 X:strip-space elements = "*";
@@ -16,6 +14,15 @@ X:strip-space elements = "*";
   -- but not where XSLT processor has been started to run the script
   -->
 X:param XML = "'../xml'";
+X:param YEAR;
+X:param TRANS;
+
+X:var LINK = "/error/@link";
+X:var LANG = "/error/@lang";
+
+X:include href = "dirname.xslt";
+X:include href = "menu.xslt";
+X:include href = "ga.xslt";
 
 
 X:template = "/error" {
@@ -47,16 +54,6 @@ X:template = "/error" {
     </table>
     </body>
     </html>
-}
-
-
-X:template = "menu/item" {
-    <a href="{@href}"> !{ normalize-space(text()) } </a> <br/>
-}
-
-
-X:template = "menu/item[not(@href)]" {
-    !{ normalize-space(text()) } <br/>
 }
 
 }

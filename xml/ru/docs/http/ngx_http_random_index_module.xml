@@ -10,12 +10,13 @@
 <module name="Модуль ngx_http_random_index_module"
         link="/ru/docs/http/ngx_http_random_index_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
 <para>
-Модуль <literal>ngx_http_random_index_module</literal> выдаёт случайный
+Модуль <literal>ngx_http_random_index_module</literal> обслуживает запросы,
+оканчивающиеся слэшом (‘<literal>/</literal>’), и выдаёт случайный
 файл в качестве индексного файла каталога.
 Модуль работает до модуля
 <link doc="ngx_http_index_module.xml">ngx_http_index_module</link>.

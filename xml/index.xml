@@ -7,6 +7,52 @@
 
 <news name="nginx news" link="/" lang="en">
 
+<event date="2012-12-11">
+<para>
+<link doc="en/download.xml">nginx-1.2.6</link>
+stable version has been released.
+</para>
+</event>
+
+<event date="2012-11-27">
+<para>
+<link doc="en/download.xml">nginx-1.3.9</link>
+development version has been released,
+with support for chunked transfer encoding
+while reading client request body.
+</para>
+</event>
+
+<event date="2012-11-13">
+<para>
+<link doc="en/download.xml">nginx-1.2.5</link>
+stable version has been released.
+</para>
+</event>
+
+<event date="2012-10-30">
+<para>
+<link doc="en/download.xml">nginx-1.3.8</link>
+development version has been released.
+</para>
+</event>
+
+<event date="2012-10-02">
+<para>
+<link doc="en/download.xml">nginx-1.3.7</link>
+development version has been released,
+with <link doc="en/docs/http/ngx_http_ssl_module.xml" id="ssl_stapling">OCSP
+stapling</link> support.
+</para>
+</event>
+
+<event date="2012-09-25">
+<para>
+<link doc="en/download.xml">nginx-1.2.4</link>
+stable version has been released.
+</para>
+</event>
+
 <event date="2012-09-12">
 <para>
 <link doc="en/download.xml">nginx-1.3.6</link>

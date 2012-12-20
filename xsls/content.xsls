@@ -89,6 +89,7 @@ X:stylesheet {
     }
 
     X:template = "listitem" { <li> !!; </li> }
+    X:template = "listitem[@id]" { <li id="{@id}"> !!; </li> }
     
     X:template = "list[@type='tag']" {
         X:if "@compact = 'yes'" {
@@ -108,6 +109,8 @@ X:stylesheet {
     }
 
     X:template = "tag-name" { <dt> !!; </dt> }
+    X:template = "tag-name[@id]" { <dt id="{@id}"> !!; </dt> }
+
     X:template = "tag-desc" { <dd> !!; </dd> }
 
     X:template = "table[@note and @width]" {
@@ -119,7 +122,15 @@ X:stylesheet {
     X:template = "table[not(@note) and @width]" {
         <table width="{@width}"> !!; </table>
     }
-    X:template = "table" { <table width="100%"> !!; </table> }
+    X:template = "table" {
+        <table width="100%">
+        X:if "@class" {
+            X:attribute "class" { !{@class} }
+        }
+        !!;
+        </table>
+    }
+
     X:template = "tr" { <tr> !!; </tr> }
     X:template = "td[@width]" { <td width="{@width}"> !!; </td> }
     X:template = "td" { <td> !!; </td> }

@@ -21,25 +21,51 @@ X:template = "menu/item" {
         }
 
     } else {
-        <a>
-        X:attribute "href" {
 
-            X:if "starts-with(@href, $DIRNAME)" {
-               X:if "substring-after(@href, $DIRNAME) = ''" {
-                  ./
+        <!--
+          -- If a menu item has the switchlang attribute, then it will point
+          -- to the same document in the specified language.
+          -->
+        X:if "$TRANS and @switchlang" {
 
-               } else {
-                  !{ substring-after(@href, $DIRNAME) }
-               }
+            <!--
+              -- Check if list of available translations ($TRANS) contains
+              -- the language we are going to generate link to.
+              -- If yes - generate link, otherwise just name the language.
+              -->
+            X:if "contains($TRANS, @switchlang)" {
+                <a>
+                X:attribute "href" {
+                    !{ concat($ROOT, '/', @switchlang, '/',
+                        substring-after($LINK, concat('/', $LANG, '/'))) }
+                }
+                !{ normalize-space(text()) }
+                </a>
 
             } else {
-               !{ concat($ROOT, @href) }
+                <a class="notrans"> !{ normalize-space(text()) } </a>
             }
-        }
-        !{ normalize-space(text()) }
-        </a>
+        } else {
 
-        X:if "@lang" { X:text { [} !{@lang} X:text {]}}
+            <a>
+            X:attribute "href" {
+
+                X:if "starts-with(@href, $DIRNAME)" {
+                    X:if "substring-after(@href, $DIRNAME) = ''" {
+                        ./
+                    } else {
+                        !{ substring-after(@href, $DIRNAME) }
+                    }
+
+                } else {
+                    !{ concat($ROOT, @href) }
+                }
+            }
+            !{ normalize-space(text()) }
+            </a>
+
+            X:if "@lang" { X:text { [} !{@lang} X:text {]}}
+        }
 
         <br/>
     }

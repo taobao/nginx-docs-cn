@@ -119,7 +119,7 @@ You may change them on the fly using the sysctls
 <path>net.inet.tcp.sendspace</path>.
 Of course the bigger buffer sizes may increase throughput,
 because connections may use bigger TCP sliding windows sizes.
-And on the Internet you may see recomendations to increase
+And on the Internet you may see recommendations to increase
 the buffer sizes to one or even several megabytes.
 However, such large buffer sizes are suitable for local networks
 or for networks under your control.
@@ -137,7 +137,7 @@ close the connection, and let the kernel to send the response to a slow client,
 while the server is ready to serve other requests.
 You should decide what is it better to bind to a client in your case:
 a tens megabytes Apache/mod_perl process
-or the hundreds kilbytes socket sending buffer.
+or the hundreds kilobytes socket sending buffer.
 Note that nginx uses non-blocking I/O system calls
 and devotes just tens kilobytes to connections,
 therefore it does not require the large buffer sizes.
@@ -219,7 +219,7 @@ And together they may take 845M.
 The page size jumbo clusters have been introduced in FreeBSD 7.0.
 In earlier versions you should tune only 2K mbuf clusters.
 Prior to FreeBSD 6.2, the <path>kern.ipc.nmbclusters</path> value can be
-set only on the boot time via loader tunnable.
+set only on the boot time via loader tunable.
 </note>
 </para>
 
@@ -228,7 +228,7 @@ On the amd64 architecture FreeBSD kernel can use for sockets buffers
 almost all physical memory,
 while on the i386 architecture no more than 2G memory can be used,
 regardless of the available physical memory.
-We will discuss the i386 specific tunning later.
+We will discuss the i386 specific tuning later.
 </para>
 
 <para>
@@ -356,7 +356,7 @@ net.inet.tcp.fast_finwait2_recycle=1
 </section>
 
 
-<section id="minor_optmizations"
+<section id="minor_optimizations"
         name="Minor optimizations">
 
 <para>
