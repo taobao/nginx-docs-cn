@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_gzip_module"
         link="/ru/docs/http/ngx_http_gzip_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -260,10 +260,10 @@ gzip_types      text/plain application/xml;
 
 <para>
 Разрешает или запрещает выдавать в ответе поле заголовка
-<header>Vary: Accept-Encoding</header>, если директивы
-<link id="gzip"/> или
-<link doc="ngx_http_gzip_static_module.xml" id="gzip_static"/>
-активны.
+<header>Vary: Accept-Encoding</header>, если активны директивы
+<link id="gzip"/>,
+<link doc="ngx_http_gzip_static_module.xml" id="gzip_static"/> или
+<link doc="ngx_http_gunzip_module.xml" id="gunzip"/>.
 </para>
 
 </directive>

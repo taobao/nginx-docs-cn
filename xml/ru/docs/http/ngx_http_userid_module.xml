@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_userid_module"
         link="/ru/docs/http/ngx_http_userid_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -115,6 +115,23 @@ userid_p3p     'policyref="/w3c/p3p.xml", CP="CUR ADM OUR NOR STA NID"';
 Задаёт время, в течение которого браузер должен хранить куку.
 Параметр <literal>max</literal> задаёт время 31 декабря 2037 года 23:55:55 GMT.
 Это максимальное время, которое понимают старые браузеры.
+</para>
+
+</directive>
+
+
+<directive name="userid_mark">
+<syntax><value>off | буква | цифра | =</value></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Задаёт первый символ хвоста base64 (по умолчанию “<literal>==</literal>”)
+представления куки и перевыдаёт все принятые куки, у которых этот хвост другой.
+Это полезно, если необходимо добавить или поменять P3P или время
+хранения куки, но при этом оставить неизменным закодированное внутри число.
 </para>
 
 </directive>

@@ -10,7 +10,7 @@
 <module name="Module ngx_http_ssl_module"
         link="/en/docs/http/ngx_http_ssl_module.html"
         lang="en"
-        rev="1">
+        rev="5">
 
 <section id="summary">
 
@@ -109,7 +109,7 @@ Enables the HTTPS protocol for the given virtual server.
 <context>server</context>
 
 <para>
-Specifies a file with a certificate in the PEM format
+Specifies a <value>file</value> with a certificate in the PEM format
 for the given virtual server.
 If intermediate certificates should be specified in addition
 to a primary certificate, they should be specified in the same file
@@ -152,7 +152,7 @@ will be issued for the second site.
 <context>server</context>
 
 <para>
-Specifies a file with a secret key in the PEM format
+Specifies a <value>file</value> with a secret key in the PEM format
 for the given virtual server.
 </para>
 
@@ -197,8 +197,15 @@ ciphers by default.
 <context>server</context>
 
 <para>
-Specifies a file with CA certificates in the PEM format
-used for client certificate verification.
+Specifies a <value>file</value> with trusted CA certificates in the PEM format
+used to verify client certificates and
+OCSP responses if <link id="ssl_stapling"/> is enabled.
+</para>
+
+<para>
+The list of certificates will be sent to clients.
+If this is not desired, the <link id="ssl_trusted_certificate"/>
+directive can be used.
 </para>
 
 </directive>
@@ -212,7 +219,7 @@ used for client certificate verification.
 <appeared-in>0.8.7</appeared-in>
 
 <para>
-Specifies a file with revoked certificates (CRL)
+Specifies a <value>file</value> with revoked certificates (CRL)
 in the PEM format, used to client certificate verification.
 </para>
 
@@ -227,7 +234,7 @@ in the PEM format, used to client certificate verification.
 <appeared-in>0.7.2</appeared-in>
 
 <para>
-Specifies a file with DH parameters for EDH ciphers.
+Specifies a <value>file</value> with DH parameters for EDH ciphers.
 </para>
 
 </directive>
@@ -348,20 +355,156 @@ session parameters stored in a cache.
 </directive>
 
 
+<directive name="ssl_stapling">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<appeared-in>1.3.7</appeared-in>
+
+<para>
+Enables or disables
+<link url="http://tools.ietf.org/html/rfc4366#section-3.6">stapling
+of OCSP responses</link> by the server.
+Example:
+<example>
+ssl_stapling on;
+resolver 192.0.2.1;
+</example>
+</para>
+
+<para>
+For the OCSP stapling to work, the certificate of the issuer of the server
+certificate should be known.
+If the <link id="ssl_certificate"/> file does
+not contain intermediate certificates,
+the certificate of the issuer of the server certificate should be
+present in the
+<link id="ssl_trusted_certificate"/> file.
+</para>
+
+<para>
+The <link doc="ngx_http_core_module.xml" id="resolver"/> directive
+should also be specified to allow for a resolution
+of an OCSP responder hostname.
+</para>
+
+</directive>
+
+
+<directive name="ssl_stapling_file">
+<syntax><value>file</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<appeared-in>1.3.7</appeared-in>
+
+<para>
+When set, the stapled OCSP response will be taken from the
+specified <value>file</value> instead of querying
+the OCSP responder specified in the server certificate.
+</para>
+
+<para>
+The file should be in the DER format as produced by the
+“<literal>openssl ocsp</literal>” command.
+</para>
+
+</directive>
+
+
+<directive name="ssl_stapling_responder">
+<syntax><value>url</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<appeared-in>1.3.7</appeared-in>
+
+<para>
+Overrides the URL of OCSP responder specified in the
+“<link url="http://tools.ietf.org/html/rfc5280#section-4.2.2.1">Authority
+Information Access</link>” certificate extension.
+</para>
+
+<para>
+Only “<literal>http://</literal>” OCSP responders are supported:
+<example>
+ssl_stapling_responder http://ocsp.example.com/;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="ssl_stapling_verify">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<appeared-in>1.3.7</appeared-in>
+
+<para>
+Enables or disables verification of OCSP responses by the server.
+</para>
+
+<para>
+For verification to work, the certificate of the issuer of the server
+certificate, the root certificate, and all intermediate certificates
+should be configured as trusted using the
+<link id="ssl_trusted_certificate"/> directive.
+</para>
+
+</directive>
+
+
+<directive name="ssl_trusted_certificate">
+<syntax><value>file</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<appeared-in>1.3.7</appeared-in>
+
+<para>
+Specifies a <value>file</value> with trusted CA certificates in the PEM format
+used to verify client certificates and
+OCSP responses if <link id="ssl_stapling"/> is enabled.
+</para>
+
+<para>
+In contrast to <link id="ssl_client_certificate"/>, the list of these
+certificates will not be sent to clients.
+</para>
+
+</directive>
+
+
 <directive name="ssl_verify_client">
 <syntax>
     <literal>on</literal> | <literal>off</literal> |
-    <literal>optional</literal></syntax>
+    <literal>optional</literal> | <literal>optional_no_ca</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
 
 <para>
-Enables the client certificate verification.
-The <literal>optional</literal> parameter (0.8.7+) requests the client
-certificate and verifies it if it was present.
+Enables verification of client certificates.
 The result of verification is stored in the
 <var>$ssl_client_verify</var> variable.
+</para>
+
+<para>
+The <literal>optional</literal> parameter (0.8.7+) requests the client
+certificate, and if certificate was present, verifies it.
+</para>
+
+<para>
+The <literal>optional_no_ca</literal> parameter (1.3.8, 1.2.5)
+requests the client
+certificate but does not require it to be signed by a trusted CA certificate.
+This is intended for the use in cases where actual certificate verification
+is performed by a service that is external to nginx.
+The contents of a certificate is made available through the
+<var>$ssl_client_cert</var> variable.
 </para>
 
 </directive>

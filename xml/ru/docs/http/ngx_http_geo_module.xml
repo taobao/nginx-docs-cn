@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_geo_module"
         link="/ru/docs/http/ngx_http_geo_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -55,6 +55,18 @@ geo $arg_remote_addr $geo {
     ...;
 }
 </example>
+</para>
+
+<para>
+<note>
+Поскольку переменные вычисляются только в момент использования,
+само по себе наличие даже большого числа объявлений переменных
+“<literal>geo</literal>” не влечёт за собой никаких дополнительных
+расходов на обработку запросов.
+</note>
+</para>
+
+<para>
 Если значение переменной не представляет из себя правильный IP-адрес,
 то используется адрес “<literal>255.255.255.255</literal>”.
 </para>

@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_addition_module"
         link="/ru/docs/http/ngx_http_addition_module.html"
         lang="ru"
-        rev="1">
+        rev="4">
 
 <section id="summary">
 
@@ -44,11 +44,15 @@ location / {
 <directive name="add_before_body">
 <syntax><value>uri</value></syntax>
 <default/>
+<context>http</context>
+<context>server</context>
 <context>location</context>
 
 <para>
 Добавляет перед телом ответа текст, выдаваемый в результате
 работы заданного подзапроса.
+Пустая строка (<literal>""</literal>) в качестве параметра отменяет добавление,
+унаследованное с предыдущего уровня конфигурации.
 </para>
 
 </directive>
@@ -57,11 +61,15 @@ location / {
 <directive name="add_after_body">
 <syntax><value>uri</value></syntax>
 <default/>
+<context>http</context>
+<context>server</context>
 <context>location</context>
 
 <para>
 Добавляет после тела ответа текст, выдаваемый в результате
 работы заданного подзапроса.
+Пустая строка (<literal>""</literal>) в качестве параметра отменяет добавление,
+унаследованное с предыдущего уровня конфигурации.
 </para>
 
 </directive>

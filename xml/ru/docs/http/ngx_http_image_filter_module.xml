@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_image_filter_module"
         link="/ru/docs/http/ngx_http_image_filter_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -72,7 +72,7 @@ location = /empty {
     <literal>crop</literal>
     <value>ширина</value>
     <value>высота</value></syntax>
-<default/>
+<default>off</default>
 <context>location</context>
 
 <para>

@@ -4,7 +4,7 @@
   -->
 
 <!ELEMENT  section      (para | list | book | download | security | note |
-                         programlisting | section)* >
+                         programlisting | table | section)* >
 <!ATTLIST  section
            id           ID #IMPLIED
            name         CDATA #IMPLIED
@@ -54,6 +54,9 @@
 <!ELEMENT  listitem     (#PCDATA | para | br | nobr | list | i | b |
                          path | literal | value | var | programlisting |
                          link | registered)* >
+<!ATTLIST  listitem
+           id           ID #IMPLIED
+>
 
 <!ELEMENT  note         (#PCDATA | para | br | list | i | b | link |
                          nobr | table | literal | command | path |
@@ -64,9 +67,10 @@
 <!ATTLIST  table
            note         CDATA #IMPLIED
            width        CDATA #IMPLIED
+           class        CDATA #IMPLIED
 >
 <!ELEMENT  tr           (td+) >
-<!ELEMENT  td           (#PCDATA | literal | i | link)* >
+<!ELEMENT  td           (#PCDATA | br | literal | b | i | link | list)* >
 <!ATTLIST  td
            width        CDATA #IMPLIED
 >
@@ -88,21 +92,15 @@
            translator   CDATA #IMPLIED
 >
 
-<!ELEMENT  download     (item+) >
+<!ELEMENT  download     EMPTY >
 <!ATTLIST  download
            last         CDATA #REQUIRED
-           changes      CDATA #REQUIRED
->
-
-<!ELEMENT  item         EMPTY >
-<!ATTLIST  item
-           ver          CDATA #IMPLIED
-           pgp          CDATA #IMPLIED
-           win          CDATA #IMPLIED
+           tag          (development | stable | legacy) #REQUIRED
 >
 
 <!ELEMENT  security     (item+) >
 
+<!ELEMENT  item         EMPTY >
 <!ATTLIST  item
            name         CDATA #IMPLIED
            severity     CDATA #IMPLIED

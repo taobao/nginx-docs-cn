@@ -6,7 +6,168 @@
 <!DOCTYPE versions SYSTEM "../dtd/versions.dtd">
 
 <versions>
-<development> 1.3.6 </development>
-<stable> 1.2.3 </stable>
-<legacy_stable> 1.0.15 </legacy_stable>
+
+<download tag="development" changes="">
+
+<item ver="1.3.9" />
+<item ver="1.3.8" />
+<item ver="1.3.7" />
+<item ver="1.3.6" />
+<item ver="1.3.5" />
+<item ver="1.3.4" />
+<item ver="1.3.3" />
+<item ver="1.3.2" />
+<item ver="1.3.1" />
+<item ver="1.3.0" />
+
+</download>
+
+
+<download tag="stable" changes="1.2">
+
+<item ver="1.2.6" />
+<item ver="1.2.5" />
+<item ver="1.2.4" />
+<item ver="1.2.3" />
+<item ver="1.2.2" />
+<item ver="1.2.1" />
+<item ver="1.2.0" />
+<item ver="1.1.19" />
+<item ver="1.1.18" />
+<item ver="1.1.17" />
+<item ver="1.1.16" />
+<item ver="1.1.15" />
+<item ver="1.1.14" />
+<item ver="1.1.13" />
+<item ver="1.1.12" />
+<item ver="1.1.11" />
+<item ver="1.1.10" />
+<item ver="1.1.9" />
+<item ver="1.1.8" />
+<item ver="1.1.7" />
+<item ver="1.1.6" />
+<item ver="1.1.5" />
+<item ver="1.1.4" />
+<item ver="1.1.3" />
+<item ver="1.1.2" />
+<item ver="1.1.1" />
+<item ver="1.1.0" />
+
+</download>
+
+
+<download tag="legacy" changes="1.0">
+
+<item ver="1.0.15" />
+<item ver="1.0.14" />
+<item ver="1.0.13" />
+<item ver="1.0.12" />
+<item ver="1.0.11" />
+<item ver="1.0.10" />
+<item ver="1.0.9" />
+<item ver="1.0.8" />
+<item ver="1.0.7" />
+<item ver="1.0.6" />
+<item ver="1.0.5" />
+<item ver="1.0.4" />
+<item ver="1.0.3" />
+<item ver="1.0.2" />
+<item ver="1.0.1" />
+<item ver="1.0.0" />
+<item ver="0.9.7" />
+<item ver="0.9.6" />
+<item ver="0.9.5" />
+<item ver="0.9.4" />
+<item ver="0.9.3" />
+<item ver="0.9.2" />
+<item ver="0.9.1" />
+<item ver="0.9.0" />
+
+</download>
+
+
+<download tag="legacy" changes="0.8">
+
+<item ver="0.8.55" />
+<item ver="0.8.54" />
+<item ver="0.8.53" />
+<item ver="0.8.52" />
+<item ver="0.8.51" />
+<item ver="0.8.50" />
+<item ver="0.8.49" />
+<item ver="0.8.48" />
+<item ver="0.8.47" />
+<item ver="0.8.46" />
+<item ver="0.8.45" />
+<item ver="0.8.44" />
+<item ver="0.8.43" />
+<item ver="0.8.42" />
+<item ver="0.8.41" />
+<item ver="0.8.40" />
+<item ver="0.8.39" />
+<item ver="0.8.38" />
+<item ver="0.8.37" />
+<item ver="0.8.36" />
+<item ver="0.8.35" />
+<item ver="0.8.34" />
+<item ver="0.8.33" />
+<item ver="0.8.32" />
+<item ver="0.8.31" />
+<item ver="0.8.30" />
+<item ver="0.8.29" />
+<item ver="0.8.28" />
+<item ver="0.8.27" pgp="no" />
+<item ver="0.8.26" pgp="no" win="no" />
+<item ver="0.8.24" pgp="no" />
+<item ver="0.8.22" pgp="no" />
+<item ver="0.8.21" pgp="no" />
+<item ver="0.8.20" pgp="no" />
+<item ver="0.8.19" pgp="no" />
+<item ver="0.8.17" pgp="no" />
+
+</download>
+
+
+<download tag="legacy" changes="0.7">
+
+<item ver="0.7.69" />
+<item ver="0.7.68" />
+<item ver="0.7.67" />
+<item ver="0.7.66" />
+<item ver="0.7.65" />
+<item ver="0.7.64" />
+<item ver="0.7.63" pgp="no" />
+<item ver="0.7.62" pgp="no" />
+<item ver="0.7.61" pgp="no" />
+<item ver="0.7.60" pgp="no" />
+<item ver="0.7.59" pgp="no" />
+<item ver="0.7.58" pgp="no" />
+<item ver="0.7.57" pgp="no" win="no" />
+<item ver="0.7.56" pgp="no" />
+<item ver="0.7.55" pgp="no" />
+
+</download>
+
+
+<download tag="legacy" changes="0.6">
+
+<item ver="0.6.39" win="no" />
+<item ver="0.6.38" pgp="no" win="no" />
+<item ver="0.6.37" pgp="no" win="no" />
+<item ver="0.6.36" pgp="no" win="no" />
+<item ver="0.6.35" pgp="no" win="no" />
+
+</download>
+
+
+<download tag="legacy" changes="0.5">
+
+<item ver="0.5.38" win="no" />
+<item ver="0.5.37" pgp="no" win="no" />
+<item ver="0.5.36" pgp="no" win="no" />
+<item ver="0.5.35" pgp="no" win="no" />
+<item ver="0.5.34" pgp="no" win="no" />
+
+</download>
+
 </versions>

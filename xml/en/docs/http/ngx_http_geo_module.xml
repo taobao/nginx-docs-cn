@@ -10,7 +10,7 @@
 <module name="Module ngx_http_geo_module"
         link="/en/docs/http/ngx_http_geo_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -55,6 +55,17 @@ geo $arg_remote_addr $geo {
     ...;
 }
 </example>
+</para>
+
+<para>
+<note>
+Since variables are evaluated only when used, the mere existence
+of even a large number of declared “<literal>geo</literal>” variables
+does not incur any extra costs for request processing.
+</note>
+</para>
+
+<para>
 If the value of a variable does not represent a valid IP address
 then the “<literal>255.255.255.255</literal>” address is used.
 </para>

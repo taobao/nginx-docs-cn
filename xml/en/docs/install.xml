@@ -8,7 +8,7 @@
 <article name="Installing nginx"
          link="/en/docs/install.html"
          lang="en"
-         rev="1">
+         rev="2">
 
 <section>
 
@@ -152,7 +152,6 @@ module that allows an HTTP server to
 <link doc="http/ngx_http_rewrite_module.xml">redirect requests and change URI
 of requests</link>.
 The PCRE library is required to build and run this module.
-The module is experimental&mdash;its directives may change in the future.
 </para>
 </listitem>
 

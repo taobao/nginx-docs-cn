@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_ssl_module"
         link="/ru/docs/http/ngx_http_ssl_module.html"
         lang="ru"
-        rev="1">
+        rev="5">
 
 <section id="summary">
 
@@ -109,10 +109,10 @@ http {
 <context>server</context>
 
 <para>
-Указывает файл с сертификатом в формате PEM
+Указывает <value>файл</value> с сертификатом в формате PEM
 для данного виртуального сервера.
 Если вместе с основным сертификатом нужно указать промежуточные,
-то они должны находиться в этом же файле в следующем порядке — сначала
+то они должны находиться в этом же файле в следующем порядке: сначала
 основной сертификат, а затем промежуточные.
 В этом же файле может находиться секретный ключ в формате PEM.
 </para>
@@ -150,7 +150,7 @@ server {
 <context>server</context>
 
 <para>
-Указывает файл с секретным ключом в формате PEM
+Указывает <value>файл</value> с секретным ключом в формате PEM
 для данного виртуального сервера.
 </para>
 
@@ -195,8 +195,15 @@ ssl_ciphers ALL:!aNULL:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
 <context>server</context>
 
 <para>
-Указывает файл с сертификатами CA в формате PEM, используемыми для
-для проверки клиентских сертификатов.
+Указывает <value>файл</value> с доверенными сертификатами CA в формате
+PEM, которые используются для проверки клиентских сертификатов и
+ответов OCSP, если включён <link id="ssl_stapling"/>.
+</para>
+
+<para>
+Список сертификатов будет отправляться клиентам.
+Если это нежелательно, можно воспользоваться директивой
+<link id="ssl_trusted_certificate"/>.
 </para>
 
 </directive>
@@ -210,7 +217,7 @@ ssl_ciphers ALL:!aNULL:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
 <appeared-in>0.8.7</appeared-in>
 
 <para>
-Указывает файл с отозванными сертификатами (CRL)
+Указывает <value>файл</value> с отозванными сертификатами (CRL)
 в формате PEM, используемыми для проверки клиентских сертификатов.
 </para>
 
@@ -225,7 +232,7 @@ ssl_ciphers ALL:!aNULL:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
 <appeared-in>0.7.2</appeared-in>
 
 <para>
-Указывает файл с параметрами для шифров с обменом EDH-ключами.
+Указывает <value>файл</value> с параметрами для шифров с обменом EDH-ключами.
 </para>
 
 </directive>
@@ -347,19 +354,155 @@ ssl_session_cache builtin:1000 shared:SSL:10m;
 </directive>
 
 
+<directive name="ssl_stapling">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<appeared-in>1.3.7</appeared-in>
+
+<para>
+Разрешает или запрещает
+<link url="http://tools.ietf.org/html/rfc4366#section-3.6">прикрепление
+OCSP-ответов</link> сервером.
+Пример:
+<example>
+ssl_stapling on;
+resolver 192.0.2.1;
+</example>
+</para>
+
+<para>
+Для работы OCSP stapling’а должен быть известен сертификат издателя
+сертификата сервера.
+Если в заданном директивой <link id="ssl_certificate"/>
+файле не содержится промежуточных сертификатов,
+то сертификат издателя сертификата сервера следует поместить в файл,
+заданный директивой <link id="ssl_trusted_certificate"/>.
+</para>
+
+<para>
+Для преобразования имени хоста OCSP responder’а в адрес необходимо
+дополнительно задать директиву
+<link doc="ngx_http_core_module.xml" id="resolver"/>.
+</para>
+
+</directive>
+
+
+<directive name="ssl_stapling_file">
+<syntax><value>файл</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<appeared-in>1.3.7</appeared-in>
+
+<para>
+Если задано, то вместо опроса OCSP responder’а,
+указанного в сертификате сервера,
+ответ берётся из указанного <value>файла</value>.
+</para>
+
+<para>
+Ответ должен быть в формате DER и может быть сгенерирован командой
+“<literal>openssl ocsp</literal>”.
+</para>
+
+</directive>
+
+
+<directive name="ssl_stapling_responder">
+<syntax><value>url</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<appeared-in>1.3.7</appeared-in>
+
+<para>
+Переопределяет URL OCSP responder’а, указанный в расширении сертификата
+“<link url="http://tools.ietf.org/html/rfc5280#section-4.2.2.1">Authority
+Information Access</link>”.
+</para>
+
+<para>
+Поддерживаются только “<literal>http://</literal>” OCSP responder’ы:
+<example>
+ssl_stapling_responder http://ocsp.example.com/;
+</example>
+</para>
+
+</directive>
+
+
+<directive name="ssl_stapling_verify">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>off</default>
+<context>http</context>
+<context>server</context>
+<appeared-in>1.3.7</appeared-in>
+
+<para>
+Разрешает или запрещает проверку сервером ответов OCSP.
+</para>
+
+<para>
+Для работоспособности проверки сертификат издателя сертификата сервера,
+корневой сертификат и все промежуточные сертификаты должны быть указаны
+как доверенные с помощью директивы
+<link id="ssl_trusted_certificate"/>.
+</para>
+
+</directive>
+
+
+<directive name="ssl_trusted_certificate">
+<syntax><value>файл</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<appeared-in>1.3.7</appeared-in>
+
+<para>
+Задаёт <value>файл</value> с доверенными сертификатами CA в формате PEM,
+которые используются для проверки клиентских сертификатов и ответов OCSP,
+если включён <link id="ssl_stapling"/>.
+</para>
+
+<para>
+В отличие от <link id="ssl_client_certificate"/>, список этих сертификатов
+не будет отправляться клиентам.
+</para>
+
+</directive>
+
+
 <directive name="ssl_verify_client">
 <syntax>
     <literal>on</literal> | <literal>off</literal> |
-    <literal>optional</literal></syntax>
+    <literal>optional</literal> | <literal>optional_no_ca</literal></syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
 
 <para>
 Разрешает проверку клиентских сертификатов.
-Параметр <literal>optional</literal> (0.8.7+) запрашивает сертификат клиента
-и проверяет его, если он предоставлен.
-Результат проверки можно узнать в переменной <var>$ssl_client_verify</var>.
+Результат проверки доступен через переменную
+<var>$ssl_client_verify</var>.
+</para>
+
+<para>
+Параметр <literal>optional</literal> (0.8.7+) запрашивает клиентский
+сертификат, и если сертификат был предоставлен, проверяет его.
+</para>
+
+<para>
+Параметр <literal>optional_no_ca</literal> (1.3.8, 1.2.5)
+запрашивает сертификат
+клиента, но не требует, чтобы он был подписан доверенным сертификатом CA.
+Это предназначено для случаев, когда фактическая проверка сертификата
+осуществляется внешним по отношению к nginx’у сервисом.
+Содержимое сертификата доступно через переменную
+<var>$ssl_client_cert</var>.
 </para>
 
 </directive>

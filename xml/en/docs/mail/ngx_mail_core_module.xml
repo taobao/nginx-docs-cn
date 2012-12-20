@@ -10,7 +10,7 @@
 <module name="Module ngx_mail_core_module"
         link="/en/docs/mail/ngx_mail_core_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -78,14 +78,14 @@ mail {
 <context>server</context>
 
 <para>
-Sets an <value>address</value> and a <value>port</value> for for a socket,
+Sets an <value>address</value> and a <value>port</value> for a socket,
 on which the server will accept requests.
 Only port may be specified.
 An address may also be a hostname, for example:
 <example>
 listen 127.0.0.1:110;
 listen *:110;
-listen 110;     # то же, что и *:110
+listen 110;     # same as *:110
 listen localhost:110;
 </example>
 IPv6 addresses (0.7.58) are specified in square brackets:
@@ -116,8 +116,21 @@ made in this case to determine an address that accepted a connection.
 </para>
 
 <para>
-Different virtual servers must listen on different
+Different servers must listen on different
 <value>address</value>:<value>port</value> pairs.
+</para>
+
+</directive>
+
+
+<directive name="mail">
+<syntax block="yes"/>
+<default/>
+<context>main</context>
+
+<para>
+Provides a configuration file context in which the mail server directives
+are specified.
 </para>
 
 </directive>
@@ -177,7 +190,7 @@ parameters <literal>--without-mail_imap_module</literal>,
 <context>mail</context>
 
 <para>
-Sets a configuration for the virtual server.
+Sets a configuration for the server.
 </para>
 
 </directive>
@@ -190,7 +203,7 @@ Sets a configuration for the virtual server.
 <context>server</context>
 
 <para>
-Sets a name of the virtual server, used:
+Sets a name of the server, used:
 
 <list type="bullet">
 

@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_perl_module"
         link="/ru/docs/http/ngx_http_perl_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -360,6 +360,18 @@ __END__
 <tag-desc>
 делает внутреннее перенаправление на указанный <value>uri</value>.
 Перенаправление происходит уже после завершения обработчика Perl.
+<note>
+На данный момент перенаправления в именованные location’ы не поддерживаются.
+</note>
+</tag-desc>
+
+<tag-name><literal>$r->log_error(<value>код_ошибки</value>,
+<value>сообщение</value>)</literal></tag-name>
+<tag-desc>
+записывает указанное <value>сообщение</value> в
+<link doc="../ngx_core_module.xml" id="error_log"/>.
+Если <value>код_ошибки</value> ненулевой, то к сообщению будет добавлен
+код ошибки и её описание.
 </tag-desc>
 
 <tag-name><literal>$r->print(<value>текст</value>, ...)</literal></tag-name>
@@ -413,14 +425,6 @@ __END__
 задают начальное смещение и длину передаваемых данных.
 Непосредственно передача данных происходит уже после завершения
 обработчика Perl.
-Необходимо учитывать, что при использовании
-этого метода в подзапросе и включённой директиве
-<link doc="ngx_http_core_module.xml" id="sendfile"/>
-содержимое файла не будет проходить через
-<link doc="ngx_http_gzip_module.xml">gzip</link>,
-<link doc="ngx_http_ssi_module.xml">SSI</link> и
-<link doc="ngx_http_charset_module.xml">charset</link>
-фильтры.
 </tag-desc>
 
 <tag-name>

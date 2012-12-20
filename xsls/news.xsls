@@ -15,9 +15,12 @@ X:strip-space elements = "*";
   -->
 X:param XML = "'../xml'";
 X:param YEAR;
+X:param ORIGIN;
+X:param TRANS;
 
 X:var SITE = "'http://nginx.org'";
 X:var LINK = "/news/@link";
+X:var LANG = "/news/@lang";
 
 X:include href = "dirname.xslt";
 X:include href = "link.xslt";

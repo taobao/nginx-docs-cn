@@ -72,7 +72,15 @@
 >
 
 <!ELEMENT   listitem    ANY >
+<!ATTLIST   listitem
+            id          ID #IMPLIED
+>
+
 <!ELEMENT   tag-name    ANY >
+<!ATTLIST   tag-name
+            id          ID #IMPLIED
+>
+
 <!ELEMENT   tag-desc    ANY >
 
 <!ELEMENT   literal     (#PCDATA | value)* >

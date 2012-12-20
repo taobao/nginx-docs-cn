@@ -10,13 +10,18 @@
 <module name="Module ngx_http_index_module"
         link="/en/docs/http/ngx_http_index_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
 <para>
 The module <literal>ngx_http_index_module</literal> processes requests
 ending with the slash character (‘<literal>/</literal>’).
+Such requests can also be processed by
+<link doc="ngx_http_autoindex_module.xml">ngx_http_autoindex_module</link>
+and
+<link doc="ngx_http_random_index_module.xml">ngx_http_random_index_module</link>
+modules.
 </para>
 
 </section>

@@ -10,7 +10,7 @@
 <module name="Module ngx_http_addition_module"
         link="/en/docs/http/ngx_http_addition_module.html"
         lang="en"
-        rev="1">
+        rev="4">
 
 <section id="summary">
 
@@ -44,11 +44,15 @@ location / {
 <directive name="add_before_body">
 <syntax><value>uri</value></syntax>
 <default/>
+<context>http</context>
+<context>server</context>
 <context>location</context>
 
 <para>
 Adds a text returned as a result of processing a given subrequest,
 before the response body.
+An empty string (<literal>""</literal>) as a parameter cancels addition
+inherited from the previous configuration level.
 </para>
 
 </directive>
@@ -57,11 +61,15 @@ before the response body.
 <directive name="add_after_body">
 <syntax><value>uri</value></syntax>
 <default/>
+<context>http</context>
+<context>server</context>
 <context>location</context>
 
 <para>
 Adds a text returned as a result of processing a given subrequest,
 after the response body.
+An empty string (<literal>""</literal>) as a parameter cancels addition
+inherited from the previous configuration level.
 </para>
 
 </directive>

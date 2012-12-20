@@ -8,21 +8,22 @@
 <article name="Configuration file measurement units"
          link="/en/docs/syntax.html"
          lang="en"
-         rev="2">
+         rev="3">
 
 <section>
 
 <para>
-Sizes can be specified in kilobytes (<literal>k</literal>,
-<literal>K</literal>) and megabytes (<literal>m</literal>,
-<literal>M</literal>), for example “<literal>8k</literal>”,
-“<literal>1m</literal>”.
-If the suffix is not specified, the value is bytes.
+Sizes can be specified in bytes, kilobytes
+(suffixes <literal>k</literal> and <literal>K</literal>) or megabytes
+(suffixes <literal>m</literal> and <literal>M</literal>), for example,
+“<literal>1024</literal>”, “<literal>8k</literal>”, “<literal>1m</literal>”.
 </para>
 
 <para>
-Time can be specified in minutes, hours, days and so on:
+Time intervals can be specified in milliseconds, seconds,
+minutes, hours, days and so on, using the following suffixes:
 <table width="30%">
+<tr><td width="20%">ms</td><td>milliseconds</td></tr>
 <tr><td width="20%">s</td><td>seconds</td></tr>
 <tr><td width="20%">m</td><td>minutes</td></tr>
 <tr><td width="20%">h</td><td>hours</td></tr>
@@ -34,10 +35,17 @@ Time can be specified in minutes, hours, days and so on:
 </para>
 
 <para>
-for example “<literal>1h 30m</literal>”, “<literal>1y 6M</literal>”.
-Additionally, it is possible to specify time with millisecond
-precision (<literal>ms</literal>) in some directives.
-If the suffix is not specified, the value is seconds.
+Multiple units can be combined in a single value
+by specifying them in the order from the most to the least significant,
+and optionally separated by whitespace.
+For example, “<literal>1h 30m</literal>” specifies the same time
+as “<literal>90m</literal>” or “<literal>5400s</literal>”.
+A value without a suffix means seconds.
+It is recommended to always specify a suffix.
+</para>
+
+<para>
+Some of the time intervals can be specified only with a seconds resolution.
 </para>
 
 </section>

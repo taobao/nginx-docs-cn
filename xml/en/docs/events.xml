@@ -8,7 +8,7 @@
 <article name="Connection processing methods"
          link="/en/docs/events.html"
          lang="en"
-         rev="1">
+         rev="2">
 
 <section>
 
@@ -26,7 +26,7 @@ explicitly with the
 The following connection processing methods are supported:
 <list type="bullet">
 
-<listitem>
+<listitem id="select">
 <para>
 <literal>select</literal>&mdash;standard method.
 The supporting module is built automatically on platforms that lack
@@ -37,7 +37,7 @@ can be used to forcibly enable or disable the build of this module.
 </para>
 </listitem>
 
-<listitem>
+<listitem id="poll">
 <para>
 <literal>poll</literal>&mdash;standard method.
 The supporting module is built automatically on platforms that lack
@@ -48,14 +48,14 @@ can be used to forcibly enable or disable the build of this module.
 </para>
 </listitem>
 
-<listitem>
+<listitem id="kqueue">
 <para>
 <literal>kqueue</literal>&mdash;efficient method used on
 FreeBSD 4.1+, OpenBSD 2.9+, NetBSD 2.0, and Mac OS X.
 </para>
 </listitem>
 
-<listitem>
+<listitem id="epoll">
 <para>
 <literal>epoll</literal>&mdash;efficient method used on
 Linux 2.6+.
@@ -66,7 +66,7 @@ that add epoll support to 2.4 kernels.
 </para>
 </listitem>
 
-<listitem>
+<listitem id="rtsig">
 <para>
 <literal>rtsig</literal>&mdash;real time signals, efficient method
 used on Linux 2.2.19+.
@@ -88,7 +88,7 @@ the situation gets back to normal.
 </para>
 </listitem>
 
-<listitem>
+<listitem id="devpoll">
 <para>
 <literal>/dev/poll</literal>&mdash;efficient method used on
 Solaris 7 11/99+, HP/UX 11.22+ (eventport), IRIX 6.5.15+,
@@ -96,7 +96,7 @@ and Tru64 UNIX 5.1A+.
 </para>
 </listitem>
 
-<listitem>
+<listitem id="eventport">
 <para>
 <literal>eventport</literal>&mdash;event ports, efficient method
 used on Solaris 10.

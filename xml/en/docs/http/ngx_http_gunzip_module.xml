@@ -10,17 +10,16 @@
 <module name="Module ngx_http_gunzip_module"
         link="/en/docs/http/ngx_http_gunzip_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
 <para>
 The <literal>ngx_http_gunzip_module</literal> module is a filter that
-decompresses responses returned with the
-“<literal>Content-Encoding: gzip</literal>” for clients that don’t support it.
-It may be useful if it is preferred to store the data compressed
-(to save space or disk/network IO), but it is undesirable
-to penalize clients without the gzip support.
+decompresses responses with “<literal>Content-Encoding: gzip</literal>”
+for clients that do not support “gzip” encoding method.
+The module will be useful when it is desirable to store
+data compressed, to save space and reduce I/O costs.
 </para>
 
 <para>
@@ -56,7 +55,14 @@ location /storage/ {
 <context>location</context>
 
 <para>
-Enables or disables decompression of gzipped responses.
+Enables or disables decompression of gzipped responses
+for clients that lack gzip support.
+If enabled, the following directives are also taken into account
+when determining if clients support gzip:
+<link doc="ngx_http_gzip_module.xml" id="gzip_http_version"/>,
+<link doc="ngx_http_gzip_module.xml" id="gzip_proxied"/>, and
+<link doc="ngx_http_gzip_module.xml" id="gzip_disable"/>.
+See also the <link doc="ngx_http_gzip_module.xml" id="gzip_vary"/> directive.
 </para>
 
 </directive>
@@ -70,7 +76,10 @@ Enables or disables decompression of gzipped responses.
 <context>location</context>
 
 <para>
-Specifies the number and size of buffers available for decompression.
+Sets the <value>number</value> and <value>size</value> of buffers
+used to decompress a response.
+By default, the buffer size is equal to one memory page.
+This is either 4K or 8K, depending on a platform.
 </para>
 
 </directive>

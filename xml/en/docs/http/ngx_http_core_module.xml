@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="5">
+        rev="13">
 
 <section id="directives" name="Directives">
 
@@ -586,14 +586,14 @@ A <literal>uri</literal> value can contain variables.
 <para>
 Example:
 <example>
-error_page   404              /404.html;
-error_page   500 502 503 504  /50x.html;
+error_page 404             /404.html;
+error_page 500 502 503 504 /50x.html;
 </example>
 </para>
 
 <para>
 Furthermore, it is possible to change the response code to another
-using the “<literal>=code</literal>” syntax, for example:
+using the “<literal>=</literal><value>response</value>” syntax, for example:
 <example>
 error_page 404 =200 /empty.gif;
 </example>
@@ -611,12 +611,12 @@ error_page 404 = /404.php;
 <para>
 It is also possible to use redirects for error processing:
 <example>
-error_page 403         http://example.com/forbidden.html;
-error_page 404 =301    http://example.com/notfound.html;
+error_page 403      http://example.com/forbidden.html;
+error_page 404 =301 http://example.com/notfound.html;
 </example>
 In this case, the response code 302 is returned to the client.
 It can only be changed to one of the redirect status
-codes (301, 302, 303 and 307).
+codes (301, 302, 303, and 307).
 </para>
 
 <para>
@@ -635,9 +635,8 @@ location @fallback {
 
 <para>
 <note>
-If the <literal>uri</literal> processing led to an error,
-the HTTP status code indicating last occurred problem
-will be returned.
+If <literal>uri</literal> processing leads to an error,
+the status code of the last occurred error is returned to the client.
 </note>
 </para>
 
@@ -958,22 +957,19 @@ Please note that this will limit access to all methods
 <para>
 Rate limits the transmission of a response to a client.
 The <value>rate</value> is specified in bytes per second.
-Value 0 (the default) disables rate limiting.
+The value 0 disables rate limiting.
 <!--
 The smaller the rate, the more accurate will be the limitation.
 -->
-The limit is per connection, so if a single client opens 2 connections,
-an overall rate will be 2x more than specified by this directive.
+The limit is set per request, so if a client simultaneously opens
+two connections, an overall rate will be twice as much
+as the specified limit.
 </para>
 
 <para>
-This directive is not applicable if one wants to rate limit
-a group of clients on the
-<link id="server"/>
-level.
-If that is the case, the desired limit can be specified in the
-<var>$limit_rate</var>
-variable:
+Rate limit can also be set in the <var>$limit_rate</var> variable.
+It may be useful in cases where rate should be limited
+depending on a certain condition:
 <example>
 server {
 
@@ -988,7 +984,7 @@ server {
 
 <para>
 In addition, rate limit can also be set in the
-<header>X-Accel-Limit-Rate</header> response header field.
+<header>X-Accel-Limit-Rate</header> header field of a proxied server response.
 This ability can be disabled using the
 <link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>
 and
@@ -1220,7 +1216,7 @@ This currently works only on FreeBSD.
 sets the <literal>backlog</literal> parameter in the
 <c-func>listen</c-func> call that limits
 the maximum length for the queue of pending connections.
-By default, <literal>backlog</literal> is set to -1 on FreeBSD,
+By default, <literal>backlog</literal> is set to -1 on FreeBSD and Mac OS X,
 and to 511 on other platforms.
 </tag-desc>
 
@@ -1448,19 +1444,24 @@ location / {
     [ configuration B ]
 }
 
-location ^~ /images/ {
+location /documents/ {
     [ configuration C ]
 }
 
-location ~* \.(gif|jpg|jpeg)$ {
+location ^~ /images/ {
     [ configuration D ]
+}
+
+location ~* \.(gif|jpg|jpeg)$ {
+    [ configuration E ]
 }
 </example>
 The “<literal>/</literal>” request will match configuration A,
+the “<literal>/index.html</literal>” request will match configuration B,
 the “<literal>/documents/document.html</literal>” request will match
-configuration B,
-the “<literal>/images/1.gif</literal>” request will match configuration C, and
-the “<literal>/documents/1.jpg</literal>” request will match configuration D.
+configuration C,
+the “<literal>/images/1.gif</literal>” request will match configuration D, and
+the “<literal>/documents/1.jpg</literal>” request will match configuration E.
 </para>
 
 <para>
@@ -1862,8 +1863,7 @@ FreeBSD&nbsp;7 needs to be
 Enables or disables doing several redirects using the
 <link id="error_page"/>
 directive.
-There is a <link doc="ngx_http_core_module.xml" id="internal">
-limit</link> on a number of such redirects.
+There is a <link id="internal">limit</link> on a number of such redirects.
 </para>
 
 </directive>
@@ -2688,104 +2688,128 @@ and so on.
 It also supports other variables:
 <list type="tag">
 
-<tag-name><var>$arg_</var><value>name</value></tag-name>
+<tag-name id="var_arg_"><var>$arg_</var><value>name</value></tag-name>
 <tag-desc>
 argument <value>name</value> in the request line
 </tag-desc>
 
-<tag-name><var>$args</var></tag-name>
+<tag-name id="var_args"><var>$args</var></tag-name>
 <tag-desc>
 arguments in the request line
 </tag-desc>
 
-<tag-name><var>$binary_remote_addr</var></tag-name>
+<tag-name id="var_binary_remote_addr"><var>$binary_remote_addr</var></tag-name>
 <tag-desc>
 client address in a binary form, value’s length is always 4 bytes
 </tag-desc>
 
-<tag-name><var>$body_bytes_sent</var></tag-name>
+<tag-name id="var_body_bytes_sent"><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
-number of bytes sent to a client, not counting the response header
+number of bytes sent to a client, not counting the response header;
+this variable is compatible with the “<literal>%B</literal>” parameter of the
+<literal>mod_log_config</literal>
+Apache module
 </tag-desc>
 
-<tag-name><var>$content_length</var></tag-name>
+<tag-name id="var_bytes_sent"><var>$bytes_sent</var></tag-name>
+<tag-desc>
+number of bytes sent to a client (1.3.8, 1.2.5)
+</tag-desc>
+
+<tag-name id="var_connection"><var>$connection</var></tag-name>
+<tag-desc>
+connection serial number (1.3.8, 1.2.5)
+</tag-desc>
+
+<tag-name id="var_connection_requests"><var>$connection_requests</var></tag-name>
+<tag-desc>
+current number of requests made through a connection (1.3.8, 1.2.5)
+</tag-desc>
+
+<tag-name id="var_content_length"><var>$content_length</var></tag-name>
 <tag-desc>
 <header>Content-Length</header> request header field
 </tag-desc>
 
-<tag-name><var>$content_type</var></tag-name>
+<tag-name id="var_content_type"><var>$content_type</var></tag-name>
 <tag-desc>
 <header>Content-Type</header> request header field
 </tag-desc>
 
-<tag-name><var>$cookie_</var><value>name</value></tag-name>
+<tag-name id="var_cookie_"><var>$cookie_</var><value>name</value></tag-name>
 <tag-desc>
 the <value>name</value> cookie
 </tag-desc>
 
-<tag-name><var>$document_root</var></tag-name>
+<tag-name id="var_document_root"><var>$document_root</var></tag-name>
 <tag-desc>
 <link id="root"/> or <link id="alias"/> directive’s value
 for the current request
 </tag-desc>
 
-<tag-name><var>$document_uri</var></tag-name>
+<tag-name id="var_document_uri"><var>$document_uri</var></tag-name>
 <tag-desc>
 same as <var>$uri</var>
 </tag-desc>
 
-<tag-name><var>$host</var></tag-name>
+<tag-name id="var_host"><var>$host</var></tag-name>
 <tag-desc>
 <header>Host</header> request header field,
 or the server name matching a request if this field is not present
 </tag-desc>
 
-<tag-name><var>$hostname</var></tag-name>
+<tag-name id="var_hostname"><var>$hostname</var></tag-name>
 <tag-desc>
 host name
 </tag-desc>
 
-<tag-name><var>$http_</var><value>name</value></tag-name>
+<tag-name id="var_http_"><var>$http_</var><value>name</value></tag-name>
 <tag-desc>
 arbitrary request header field;
 the last part of a variable name is the field name converted
 to lower case with dashes replaced by underscores
 </tag-desc>
 
-<tag-name><var>$https</var></tag-name>
+<tag-name id="var_https"><var>$https</var></tag-name>
 <tag-desc>
 “<literal>on</literal>”
 if connection operates in SSL mode,
 or an empty string otherwise
 </tag-desc>
 
-<tag-name><var>$is_args</var></tag-name>
+<tag-name id="var_is_args"><var>$is_args</var></tag-name>
 <tag-desc>
 “<literal>?</literal>” if a request line has arguments,
 or an empty string otherwise
 </tag-desc>
 
-<tag-name><var>$limit_rate</var></tag-name>
+<tag-name id="var_limit_rate"><var>$limit_rate</var></tag-name>
 <tag-desc>
-allows for connection rate limiting
+setting this variable allows for response rate limiting;
+see <link id="limit_rate"/>
 </tag-desc>
 
-<tag-name><var>$nginx_version</var></tag-name>
+<tag-name id="var_msec"><var>$msec</var></tag-name>
+<tag-desc>
+current time in seconds with a milliseconds resolution (1.3.9, 1.2.6)
+</tag-desc>
+
+<tag-name id="var_nginx_version"><var>$nginx_version</var></tag-name>
 <tag-desc>
 nginx version
 </tag-desc>
 
-<tag-name><var>$pid</var></tag-name>
+<tag-name id="var_pid"><var>$pid</var></tag-name>
 <tag-desc>
 PID of the worker process
 </tag-desc>
 
-<tag-name><var>$query_string</var></tag-name>
+<tag-name id="var_query_string"><var>$query_string</var></tag-name>
 <tag-desc>
 same as <var>$args</var>
 </tag-desc>
 
-<tag-name><var>$realpath_root</var></tag-name>
+<tag-name id="var_realpath_root"><var>$realpath_root</var></tag-name>
 <tag-desc>
 an absolute pathname corresponding to the
 <link id="root"/> or <link id="alias"/> directive’s value
@@ -2793,27 +2817,27 @@ for the current request,
 with all symbolic links resolved to real paths
 </tag-desc>
 
-<tag-name><var>$remote_addr</var></tag-name>
+<tag-name id="var_remote_addr"><var>$remote_addr</var></tag-name>
 <tag-desc>
 client address
 </tag-desc>
 
-<tag-name><var>$remote_port</var></tag-name>
+<tag-name id="var_remote_port"><var>$remote_port</var></tag-name>
 <tag-desc>
 client port
 </tag-desc>
 
-<tag-name><var>$remote_user</var></tag-name>
+<tag-name id="var_remote_user"><var>$remote_user</var></tag-name>
 <tag-desc>
 user name supplied with the Basic authentication
 </tag-desc>
 
-<tag-name><var>$request</var></tag-name>
+<tag-name id="var_request"><var>$request</var></tag-name>
 <tag-desc>
 full original request line
 </tag-desc>
 
-<tag-name><var>$request_body</var></tag-name>
+<tag-name id="var_request_body"><var>$request_body</var></tag-name>
 <tag-desc>
 request body
 <para>
@@ -2826,7 +2850,7 @@ directives.
 </para>
 </tag-desc>
 
-<tag-name><var>$request_body_file</var></tag-name>
+<tag-name id="var_request_body_file"><var>$request_body_file</var></tag-name>
 <tag-desc>
 name of a temporary file with the request body
 <para>
@@ -2845,43 +2869,50 @@ directives, respectively.
 </para>
 </tag-desc>
 
-<tag-name><var>$request_completion</var></tag-name>
+<tag-name id="var_request_completion"><var>$request_completion</var></tag-name>
 <tag-desc>
 “<literal>OK</literal>” if a request has completed,
 or an empty string otherwise
 </tag-desc>
 
-<tag-name><var>$request_filename</var></tag-name>
+<tag-name id="var_request_filename"><var>$request_filename</var></tag-name>
 <tag-desc>
 file path for the current request, based on the
 <link id="root"/> or <link id="alias"/>
 directives, and the request URI
 </tag-desc>
 
-<tag-name><var>$request_method</var></tag-name>
+<tag-name id="var_request_method"><var>$request_method</var></tag-name>
 <tag-desc>
 request method, usually
 “<literal>GET</literal>” or “<literal>POST</literal>”
 </tag-desc>
 
-<tag-name><var>$request_uri</var></tag-name>
+<tag-name id="var_request_time"><var>$request_time</var></tag-name>
+<tag-desc>
+request processing time in seconds with a milliseconds resolution
+(1.3.9, 1.2.6);
+time elapsed since the first bytes were read from the client
+</tag-desc>
+
+<tag-name id="var_request_uri"><var>$request_uri</var></tag-name>
 <tag-desc>
 full original request URI (with arguments)
 </tag-desc>
 
-<tag-name><var>$scheme</var></tag-name>
+<tag-name id="var_scheme"><var>$scheme</var></tag-name>
 <tag-desc>
 request scheme, “<literal>http</literal>” or “<literal>https</literal>”
 </tag-desc>
 
-<tag-name><var>$sent_http_</var><value>name</value></tag-name>
+<tag-name id="var_sent_http_"><var>$sent_http_</var><value>name</value></tag-name>
 <tag-desc>
 arbitrary response header field;
 the last part of a variable name is the field name converted
 to lower case with dashes replaced by underscores
 </tag-desc>
 
-<tag-name><var>$server_addr</var></tag-name>
+<tag-name id="var_server_addr"><var>$server_addr</var></tag-name>
 <tag-desc>
 an address of the server which accepted a request
 <para>
@@ -2891,17 +2922,17 @@ must specify addresses and use the <literal>bind</literal> parameter.
 </para>
 </tag-desc>
 
-<tag-name><var>$server_name</var></tag-name>
+<tag-name id="var_server_name"><var>$server_name</var></tag-name>
 <tag-desc>
 name of the server which accepted a request
 </tag-desc>
 
-<tag-name><var>$server_port</var></tag-name>
+<tag-name id="var_server_port"><var>$server_port</var></tag-name>
 <tag-desc>
 port of the server which accepted a request
 </tag-desc>
 
-<tag-name><var>$server_protocol</var></tag-name>
+<tag-name id="var_server_protocol"><var>$server_protocol</var></tag-name>
 <tag-desc>
 request protocol, usually
 “<literal>HTTP/1.0</literal>”
@@ -2909,12 +2940,12 @@ or
 “<literal>HTTP/1.1</literal>”
 </tag-desc>
 
-<tag-name><var>$status</var></tag-name>
+<tag-name id="var_status"><var>$status</var></tag-name>
 <tag-desc>
-response status
+response status (1.3.2, 1.2.2)
 </tag-desc>
 
-<tag-name>
+<tag-name id="var_tcpinfo_">
 <var>$tcpinfo_rtt</var>,
 <var>$tcpinfo_rttvar</var>,
 <var>$tcpinfo_snd_cwnd</var>,
@@ -2925,7 +2956,7 @@ information about the client TCP connection; available on systems
 that support the <c-def>TCP_INFO</c-def> socket option
 </tag-desc>
 
-<tag-name><var>$uri</var></tag-name>
+<tag-name id="var_uri"><var>$uri</var></tag-name>
 <tag-desc>
 current URI in request, <link id="location">normalized</link>
 <para>

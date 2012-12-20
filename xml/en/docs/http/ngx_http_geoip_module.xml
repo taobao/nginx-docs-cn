@@ -53,7 +53,7 @@ http {
 <section id="directives" name="Directives">
 
 <directive name="geoip_country">
-<syntax><value>database</value></syntax>
+<syntax><value>file</value></syntax>
 <default/>
 <context>http</context>
 
@@ -88,7 +88,7 @@ country name, for example,
 
 
 <directive name="geoip_city">
-<syntax><value>database</value></syntax>
+<syntax><value>file</value></syntax>
 <default/>
 <context>http</context>
 
@@ -132,6 +132,29 @@ city name, for example,
 <tag-name><var>$geoip_postal_code</var></tag-name>
 <tag-desc>
 postal code.
+</tag-desc>
+
+</list>
+</para>
+
+</directive>
+
+
+<directive name="geoip_org">
+<syntax><value>file</value></syntax>
+<default/>
+<context>http</context>
+<appeared-in>1.0.3</appeared-in>
+
+<para>
+Specifies a database used to determine an organization
+depending on the client IP address.
+The following variable is available when using this database:
+<list type="tag">
+
+<tag-name><var>$geoip_org</var></tag-name>
+<tag-desc>
+organization name, for example, “The University of Melbourne”.
 </tag-desc>
 
 </list>

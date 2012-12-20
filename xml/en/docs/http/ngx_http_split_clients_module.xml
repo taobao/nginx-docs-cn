@@ -10,7 +10,7 @@
 <module name="Module ngx_http_split_clients_module"
         link="/en/docs/http/ngx_http_split_clients_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -67,7 +67,7 @@ value <literal>".one"</literal>,
 hash values from 21474836 to 107374180 (2%) correspond to
 the value <literal>".two"</literal>,
 and hash values from 107374181 to 4294967295 correspond to
-the value <literal>""</literal>.
+the value <literal>""</literal> (an empty string).
 </para>
 
 </directive>

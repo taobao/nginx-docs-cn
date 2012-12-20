@@ -17,6 +17,35 @@ X:template body (lang) {
 
     <body>
     <table width="100%">
+    <tr>
+        <td width="70%">
+            <div id="banner">
+                X:if "@lang = 'he'" { X:attribute "class" { X:text{ltr} } }
+                <center>
+                <table>
+                    <tr>
+                        <td align="center">
+                            <a href="http://nginx.com/support.html">
+                                <strong>nginx professional services</strong>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <i>Prioritize. Save time. Stay focused.</i>
+                        </td>
+                    </tr>
+                </table>
+                </center>
+            </div>
+        </td>
+        <td align="right">
+            X:if "@lang = 'he'" { X:attribute "align" { X:text{left} } }
+            <a href="http://nginx.org">
+                <img src="http://nginx.org/nginx.gif" alt="nginx" border="0"/>
+            </a>
+        </td>
+    </tr>
 
     <tr>
         <td width="70%"><center><h3>
@@ -24,10 +53,6 @@ X:template body (lang) {
         </h3></center></td>
 
         <td rowspan="2" align="{$MENU_ALIGN}" valign="top">
-            <a href="http://nginx.org">
-            <img src="/nginx.gif" alt="nginx" border="0"/>
-            </a><br/>
-
             <br/>
 
             !! "document(concat($XML, '/menu.xml'))
