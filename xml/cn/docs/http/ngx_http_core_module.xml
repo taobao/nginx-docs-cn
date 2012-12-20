@@ -2504,7 +2504,9 @@ HTTP方法，通常为“<literal>GET</literal>”或者“<literal>POST</litera
 
 <tag-name><var>$uri</var></tag-name>
 <tag-desc>
-当前请求<link id="location">规范化</link>以后的URI。变量<var>$uri</var>的值可能随请求的处理过程而改变。
+当前请求<link id="location">规范化</link>以后的URI。
+<para>
+变量<var>$uri</var>的值可能随请求的处理过程而改变。
 比如，当进行内部跳转时，或者使用默认页文件。
 </para>
 </tag-desc>
