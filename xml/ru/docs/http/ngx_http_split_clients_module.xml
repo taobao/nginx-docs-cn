@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_split_clients_module"
         link="/ru/docs/http/ngx_http_split_clients_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -64,7 +64,8 @@ split_clients "${remote_addr}AAA" $variant {
 В приведённом примере при значениях хэша от 0 до 21474835 (0.5%)
 переменная <var>$variant</var> получит значение <literal>".one"</literal>.
 При значениях хэша от 21474836 до 107374180 (2%) — <literal>".two"</literal>.
-И при значениях хэша от 107374181 до 4294967295 — <literal>""</literal>.
+И при значениях хэша от 107374181 до 4294967295 — <literal>""</literal>
+(пустая строка).
 </para>
 
 </directive>

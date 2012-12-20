@@ -10,7 +10,7 @@
 <module name="Module ngx_http_auth_basic_module"
         link="/en/docs/http/ngx_http_auth_basic_module.html"
         lang="en"
-        rev="2">
+        rev="3">
 
 <section id="summary">
 
@@ -58,9 +58,10 @@ location / {
 Enables validation of user name and password using the
 “HTTP Basic Authentication” protocol.
 The specified parameter is used as a <value>realm</value>.
-The parameter <literal>off</literal> allows to cancel the effect of the
-<literal>auth_basic</literal> directive inherited from the previous
-configuration level.
+Value of the parameter can contain variables (1.3.10).
+The special value <literal>off</literal> allows to cancel the effect
+of the <literal>auth_basic</literal> directive
+inherited from the previous configuration level.
 </para>
 
 </directive>

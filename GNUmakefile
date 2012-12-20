@@ -23,8 +23,14 @@ endef
 define	XSLT
 	xmllint --noout --valid $2
 	xsltproc -o $3							\
-		$(shell f=`echo $2 | sed 's,^xml/,,;s,[^/]*/,en/,'`;	\
-		[ -f xml/$$f ] && echo --stringparam ORIGIN "$$f")	\
+		$(shell ff=`echo $2`; ff=$${ff#xml/};			\
+		f=$${ff#*/};						\
+		if [ "$$f" != "$$ff" ]; then				\
+		[ -f xml/en/$$f ] && echo --stringparam ORIGIN "en/$$f";\
+		t=; for l in $(LANGS); do				\
+		[ -f "xml/$$l/$$f" ] && t="$$t$$l "; done;		\
+		echo --stringparam TRANS "\"$$t\"";			\
+		fi)							\
 		$(shell p="$4"; [ -n "$$p" ] &&				\
 		echo --stringparam $${p%%=*} $${p#*=})			\
 		$1 $2
@@ -40,7 +46,6 @@ endef
 
 COMMON_DEPS =								\
 		xml/menu.xml						\
-		xml/versions.xml					\
 		xml/i18n.xml						\
 		dtd/content.dtd						\
 		xslt/dirname.xslt					\
@@ -53,32 +58,21 @@ COMMON_DEPS =								\
 
 ARTICLE_DEPS =								\
 		$(COMMON_DEPS)						\
+		xml/versions.xml					\
 		dtd/article.dtd						\
 		dtd/module.dtd						\
 		xslt/article.xslt					\
-		xslt/donate.xslt					\
+		xslt/books.xslt						\
 		xslt/directive.xslt					\
+		xslt/donate.xslt					\
+		xslt/download.xslt					\
+		xslt/security.xslt					\
 		xslt/versions.xslt					\
 
 NEWS_DEPS =								\
 		$(COMMON_DEPS)						\
 		dtd/news.dtd						\
 		xslt/news.xslt						\
-
-DOWNLOAD_DEPS =								\
-		$(COMMON_DEPS)						\
-		dtd/article.dtd						\
-		xslt/download.xslt					\
-
-SECURITY_DEPS =								\
-		$(COMMON_DEPS)						\
-		dtd/article.dtd						\
-		xslt/security.xslt					\
-
-BOOK_DEPS =								\
-		$(COMMON_DEPS)						\
-		dtd/article.dtd						\
-		xslt/books.xslt						\
 
 LANGS =		en ru cn he ja tr
 
@@ -89,8 +83,45 @@ arx:		$(OUT)/2011.html $(OUT)/2010.html $(OUT)/2009.html
 404:		$(OUT)/404.html
 
 
-include 	$(foreach lang, $(LANGS), xml/$(lang)/GNUmakefile)
+DIRIND_DEPS =
 
+define lang-specific
+
+TOP=
+DOCS=
+REFS=
+FAQ=
+include xml/$(lang)/GNUmakefile
+
+$(lang):								\
+		$$(foreach f,index $$(TOP),$(OUT)/$(lang)/$$(f).html)	\
+		$$(foreach f,index $$(DOCS) $$(REFS) $$(FAQ),		\
+		$(OUT)/$(lang)/docs/$$(f).html)
+
+$(OUT)/$(lang)/docs/index.html:						\
+		$$(foreach f,$$(DOCS) $$(REFS),				\
+		$(OUT)/$(lang)/docs/$$(f).html)
+
+$(OUT)/$(lang)/docs/faq.html:						\
+		$$(foreach f,$$(FAQ),$(OUT)/$(lang)/docs/$$(f).html)
+
+ifneq (,$$(filter dirindex,$$(DOCS)))
+DIRIND_DEPS +=	xml/$(lang)/docs/dirindex.xml
+xml/$(lang)/docs/dirindex.xml:						\
+		$$(foreach f,$$(REFS),xml/$(lang)/docs/$$(f).xml)	\
+		xslt/dirindex.xslt
+	echo "<modules>$$(patsubst %,					\
+	<module name=\"%\"/>, $$(filter %.xml,$$^))</modules>" |	\
+	xsltproc -o - --stringparam LANG $(lang)			\
+	xslt/dirindex.xslt - |						\
+	sed 's;xml/[^/]*/docs/;;g' > $$@
+endif
+
+endef
+
+$(foreach lang, $(LANGS), $(eval $(call lang-specific)))
+
+$(foreach lang, $(LANGS), $(OUT)/$(lang)/docs/dirindex.html): $(DIRIND_DEPS)
 
 $(OUT)/index.html:							\
 		xml/index.xml						\
@@ -114,10 +145,11 @@ $(OUT)/2009.html:							\
 $(OUT)/404.html:							\
 		xml/404.xml						\
 		xml/menu.xml						\
-		dtd/article.dtd						\
-		dtd/content.dtd						\
-		xslt/ga.xslt						\
-		xslt/error.xslt
+		dtd/error.dtd						\
+		xslt/error.xslt						\
+		xslt/dirname.xslt					\
+		xslt/menu.xslt						\
+		xslt/ga.xslt
 	$(call XSLT, xslt/error.xslt, $<, $@)
 
 $(OUT)/%.html:	xml/%.xml						\
@@ -168,7 +200,7 @@ rsync_gzip:
 do_gzip:	$(addsuffix .gz, $(wildcard $(ZIP)/*.html))		\
 		$(addsuffix .gz,					\
 			$(foreach lang, $(LANGS),			\
-			$(foreach dir, . docs docs/faq docs/http,	\
+			$(foreach dir, . docs docs/faq docs/http docs/mail, \
 			$(wildcard $(ZIP)/$(lang)/$(dir)/*.html))))	\
 		$(ZIP)/index.rss.gz					\
 		$(ZIP)/LICENSE.gz					\
@@ -211,7 +243,7 @@ stable:	NGINX:=$(shell xsltproc --stringparam VERSION stable		\
 	xslt/version.xslt xml/versions.xml)
 
 legacy:	xslt/version.xslt sign
-legacy:	NGINX:=$(shell xsltproc --stringparam VERSION legacy_stable	\
+legacy:	NGINX:=$(shell xsltproc --stringparam VERSION legacy		\
 	xslt/version.xslt xml/versions.xml)
 
 any:	sign
@@ -252,5 +284,8 @@ copy:	copy_dirmap
 copy_dirmap:
 	/usr/local/bin/copy_dirmap.sh dir.map
 endif
+
+clean:
+	rm -rf $(ZIP) $(OUT) xml/*/docs/dirindex.xml dir.map
 
 .DELETE_ON_ERROR:

@@ -5,4 +5,4 @@
 
 <!DOCTYPE error SYSTEM "../dtd/error.dtd">
 
-<error name="404: not found" link="/404.html" lang="en" />
+<error name="404: not found" link="404.html" lang="en" />

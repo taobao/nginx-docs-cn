@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_core_module"
         link="/ru/docs/http/ngx_http_core_module.html"
         lang="ru"
-        rev="5">
+        rev="13">
 
 <section id="directives" name="Директивы">
 
@@ -574,14 +574,14 @@ disable_symlinks on from=$document_root;
 <para>
 Пример:
 <example>
-error_page   404              /404.html;
-error_page   500 502 503 504  /50x.html;
+error_page 404             /404.html;
+error_page 500 502 503 504 /50x.html;
 </example>
 </para>
 
 <para>
 Кроме того, можно поменять код ответа на другой,
-используя синтаксис вида “<literal>=code</literal>”, например:
+используя синтаксис вида “<literal>=</literal><value>ответ</value>”, например:
 <example>
 error_page 404 =200 /empty.gif;
 </example>
@@ -600,12 +600,12 @@ error_page 404 = /404.php;
 Также существует возможность использовать перенаправления для обработки
 ошибок:
 <example>
-error_page 403         http://example.com/forbidden.html;
-error_page 404 =301    http://example.com/notfound.html;
+error_page 403      http://example.com/forbidden.html;
+error_page 404 =301 http://example.com/notfound.html;
 </example>
 В этому случае клиенту возвращается код ответа 302.
 Его можно изменить только на один из кодов статуса, относящихся к
-перенаправлениям (301, 302, 303 and 307).
+перенаправлениям (301, 302, 303 и 307).
 </para>
 
 <para>
@@ -624,9 +624,8 @@ location @fallback {
 
 <para>
 <note>
-В случае возникновения ошибки при обработке <literal>uri</literal>
-будет возвращен ответ с кодом HTTP статуса, отражающим последнюю
-возникшую проблему.
+Если при обработке <literal>uri</literal> происходит ошибка,
+клиенту возвращается ответ с кодом статуса последней случившейся ошибки.
 </note>
 </para>
 
@@ -943,21 +942,19 @@ limit_except GET {
 <para>
 Ограничивает скорость передачи ответа клиенту.
 Скорость задаётся в байтах в секунду.
-Значение 0 (установка по умолчанию) отключает ограничение скорости.
+Значение 0 отключает ограничение скорости.
 <!--
 Чем меньше скорость, тем более аккуратным будет ограничение.
 -->
-Ограничение срабатывает только для одного соединения, то есть если
-клиент откроет 2 соединения, то суммарная скорость будет в 2 раза
-выше заданного ограничения.
+Ограничение устанавливается на запрос, поэтому если клиент одновременно
+откроет два соединения, суммарная скорость будет вдвое выше
+заданного ограничения.
 </para>
 
 <para>
-Если необходимо ограничить скорость для части клиентов на уровне
-<link id="server">сервера</link>, то директива <literal>limit_rate</literal>
-для этого не подходит.
-Вместо этого следует задать желаемое ограничение скорости в переменной
-<var>$limit_rate</var>:
+Ограничение скорости можно также задать в переменной <var>$limit_rate</var>.
+Это может быть полезно в случаях, когда скорость нужно ограничивать
+в зависимости от какого-либо условия:
 <example>
 server {
 
@@ -972,7 +969,7 @@ server {
 
 <para>
 Кроме того, ограничение скорости может быть задано в поле
-<header>X-Accel-Limit-Rate</header> заголовка ответа.
+<header>X-Accel-Limit-Rate</header> заголовка ответа проксированного сервера.
 Эту возможность можно запретить с помощью директив
 <link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>
 и
@@ -1204,8 +1201,8 @@ listen unix:/var/run/nginx.sock;
 задаёт параметр <literal>backlog</literal> в вызове
 <c-func>listen</c-func>, который ограничивает
 максимальный размер очереди ожидающих приёма соединений.
-По умолчанию <literal>backlog</literal> устанавливается равным -1 для FreeBSD
-и 511 для других платформ.
+По умолчанию <literal>backlog</literal> устанавливается равным -1 для
+FreeBSD и Mac OS X, и 511 для других платформ.
 </tag-desc>
 
 <tag-name>
@@ -1435,18 +1432,23 @@ location / {
     [ конфигурация Б ]
 }
 
-location ^~ /images/ {
+location /documents/ {
     [ конфигурация В ]
 }
 
-location ~* \.(gif|jpg|jpeg)$ {
+location ^~ /images/ {
     [ конфигурация Г ]
+}
+
+location ~* \.(gif|jpg|jpeg)$ {
+    [ конфигурация Д ]
 }
 </example>
 Для запроса “<literal>/</literal>” будет выбрана конфигурация А,
-для запроса “<literal>/documents/document.html</literal>” — конфигурация Б,
-для запроса “<literal>/images/1.gif</literal>” — конфигурация В,
-а для запроса “<literal>/documents/1.jpg</literal>” — конфигурация Г.
+для запроса “<literal>/index.html</literal>” — конфигурация Б,
+для запроса “<literal>/documents/document.html</literal>” — конфигурация В,
+для запроса “<literal>/images/1.gif</literal>” — конфигурация Г,
+а для запроса “<literal>/documents/1.jpg</literal>” — конфигурация Д.
 </para>
 
 <para>
@@ -1848,8 +1850,7 @@ open_file_cache_events   on;
 <para>
 Разрешает или запрещает делать несколько перенаправлений через директиву
 <link id="error_page"/>.
-Количество таких перенаправлений
-<link doc="ngx_http_core_module.xml" id="internal">ограничено</link>.
+Число таких перенаправлений <link id="internal">ограничено</link>.
 </para>
 
 </directive>
@@ -2675,104 +2676,127 @@ location /download/ {
 Кроме того, есть и другие переменные:
 <list type="tag">
 
-<tag-name><var>$arg_</var><value>имя</value></tag-name>
+<tag-name id="var_arg_"><var>$arg_</var><value>имя</value></tag-name>
 <tag-desc>
 аргумент <value>имя</value> в строке запроса
 </tag-desc>
 
-<tag-name><var>$args</var></tag-name>
+<tag-name id="var_args"><var>$args</var></tag-name>
 <tag-desc>
 аргументы в строке запроса
 </tag-desc>
 
-<tag-name><var>$binary_remote_addr</var></tag-name>
+<tag-name id="var_binary_remote_addr"><var>$binary_remote_addr</var></tag-name>
 <tag-desc>
 адрес клиента в бинарном виде, длина значения всегда 4 байта
 </tag-desc>
 
-<tag-name><var>$body_bytes_sent</var></tag-name>
+<tag-name id="var_body_bytes_sent"><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
-число байт, переданное клиенту, без учёта заголовка ответа
+число байт, переданное клиенту, без учёта заголовка ответа;
+переменная совместима с параметром “<literal>%B</literal>” модуля Apache
+<literal>mod_log_config</literal>
 </tag-desc>
 
-<tag-name><var>$content_length</var></tag-name>
+<tag-name id="var_bytes_sent"><var>$bytes_sent</var></tag-name>
+<tag-desc>
+число байт, переданное клиенту (1.3.8, 1.2.5)
+</tag-desc>
+
+<tag-name id="var_connection"><var>$connection</var></tag-name>
+<tag-desc>
+порядковый номер соединения (1.3.8, 1.2.5)
+</tag-desc>
+
+<tag-name id="var_connection_requests"><var>$connection_requests</var></tag-name>
+<tag-desc>
+текущее число запросов в соединении (1.3.8, 1.2.5)
+</tag-desc>
+
+<tag-name id="var_content_length"><var>$content_length</var></tag-name>
 <tag-desc>
 поле <header>Content-Length</header> заголовка запроса
 </tag-desc>
 
-<tag-name><var>$content_type</var></tag-name>
+<tag-name id="var_content_type"><var>$content_type</var></tag-name>
 <tag-desc>
 поле <header>Content-Type</header> заголовка запроса
 </tag-desc>
 
-<tag-name><var>$cookie_</var><value>имя</value></tag-name>
+<tag-name id="var_cookie_"><var>$cookie_</var><value>имя</value></tag-name>
 <tag-desc>
 cookie <value>имя</value>
 </tag-desc>
 
-<tag-name><var>$document_root</var></tag-name>
+<tag-name id="var_document_root"><var>$document_root</var></tag-name>
 <tag-desc>
 значение директивы <link id="root"/> или <link id="alias"/>
 для текущего запроса
 </tag-desc>
 
-<tag-name><var>$document_uri</var></tag-name>
+<tag-name id="var_document_uri"><var>$document_uri</var></tag-name>
 <tag-desc>
 то же, что и <var>$uri</var>
 </tag-desc>
 
-<tag-name><var>$host</var></tag-name>
+<tag-name id="var_host"><var>$host</var></tag-name>
 <tag-desc>
 поле <header>Host</header> заголовка запроса,
 или имя сервера, соответствующего запросу, если этого поля нет
 </tag-desc>
 
-<tag-name><var>$hostname</var></tag-name>
+<tag-name id="var_hostname"><var>$hostname</var></tag-name>
 <tag-desc>
 имя хоста
 </tag-desc>
 
-<tag-name><var>$http_</var><value>имя</value></tag-name>
+<tag-name id="var_http_"><var>$http_</var><value>имя</value></tag-name>
 <tag-desc>
 произвольное поле заголовка запроса;
 последняя часть имени переменной соответствует имени поля, приведённому
 к нижнему регистру, с заменой символов тире на символы подчёркивания
 </tag-desc>
 
-<tag-name><var>$https</var></tag-name>
+<tag-name id="var_https"><var>$https</var></tag-name>
 <tag-desc>
 “<literal>on</literal>”
 если соединение работает в режиме SSL,
 либо пустая строка
 </tag-desc>
 
-<tag-name><var>$is_args</var></tag-name>
+<tag-name id="var_is_args"><var>$is_args</var></tag-name>
 <tag-desc>
 “<literal>?</literal>”, если в строке запроса есть аргументы,
 и пустая строка, если их нет
 </tag-desc>
 
-<tag-name><var>$limit_rate</var></tag-name>
+<tag-name id="var_limit_rate"><var>$limit_rate</var></tag-name>
 <tag-desc>
-позволяет ограничивать скорость соединения
+установка этой переменной позволяет ограничивать скорость
+передачи ответа, см. <link id="limit_rate"/>
 </tag-desc>
 
-<tag-name><var>$nginx_version</var></tag-name>
+<tag-name id="var_msec"><var>$msec</var></tag-name>
+<tag-desc>
+текущее время в секундах с точностью до миллисекунд (1.3.9, 1.2.6)
+</tag-desc>
+
+<tag-name id="var_nginx_version"><var>$nginx_version</var></tag-name>
 <tag-desc>
 версия nginx
 </tag-desc>
 
-<tag-name><var>$pid</var></tag-name>
+<tag-name id="var_pid"><var>$pid</var></tag-name>
 <tag-desc>
 номер (PID) рабочего процесса
 </tag-desc>
 
-<tag-name><var>$query_string</var></tag-name>
+<tag-name id="var_query_string"><var>$query_string</var></tag-name>
 <tag-desc>
 то же, что и <var>$args</var>
 </tag-desc>
 
-<tag-name><var>$realpath_root</var></tag-name>
+<tag-name id="var_realpath_root"><var>$realpath_root</var></tag-name>
 <tag-desc>
 абсолютный путь, соответствующий
 значению директивы <link id="root"/> или <link id="alias"/>
@@ -2780,27 +2804,27 @@ cookie <value>имя</value>
 в котором все символические ссылки преобразованы в реальные пути
 </tag-desc>
 
-<tag-name><var>$remote_addr</var></tag-name>
+<tag-name id="var_remote_addr"><var>$remote_addr</var></tag-name>
 <tag-desc>
 адрес клиента
 </tag-desc>
 
-<tag-name><var>$remote_port</var></tag-name>
+<tag-name id="var_remote_port"><var>$remote_port</var></tag-name>
 <tag-desc>
 порт клиента
 </tag-desc>
 
-<tag-name><var>$remote_user</var></tag-name>
+<tag-name id="var_remote_user"><var>$remote_user</var></tag-name>
 <tag-desc>
 имя пользователя, использованное в Basic аутентификации
 </tag-desc>
 
-<tag-name><var>$request</var></tag-name>
+<tag-name id="var_request"><var>$request</var></tag-name>
 <tag-desc>
 первоначальная строка запроса целиком
 </tag-desc>
 
-<tag-name><var>$request_body</var></tag-name>
+<tag-name id="var_request_body"><var>$request_body</var></tag-name>
 <tag-desc>
 тело запроса
 <para>
@@ -2812,7 +2836,7 @@ cookie <value>имя</value>
 </para>
 </tag-desc>
 
-<tag-name><var>$request_body_file</var></tag-name>
+<tag-name id="var_request_body_file"><var>$request_body_file</var></tag-name>
 <tag-desc>
 имя временного файла, в котором хранится тело запроса
 <para>
@@ -2831,42 +2855,49 @@ fastcgi_pass_request_body off</link>
 </para>
 </tag-desc>
 
-<tag-name><var>$request_completion</var></tag-name>
+<tag-name id="var_request_completion"><var>$request_completion</var></tag-name>
 <tag-desc>
 “<literal>OK</literal>” если запрос завершился,
 либо пустая строка
 </tag-desc>
 
-<tag-name><var>$request_filename</var></tag-name>
+<tag-name id="var_request_filename"><var>$request_filename</var></tag-name>
 <tag-desc>
 путь к файлу для текущего запроса, формируемый из директив
 <link id="root"/> или <link id="alias"/> и URI запроса
 </tag-desc>
 
-<tag-name><var>$request_method</var></tag-name>
+<tag-name id="var_request_method"><var>$request_method</var></tag-name>
 <tag-desc>
 метод запроса, обычно
 “<literal>GET</literal>” или “<literal>POST</literal>”
 </tag-desc>
 
-<tag-name><var>$request_uri</var></tag-name>
+<tag-name id="var_request_time"><var>$request_time</var></tag-name>
+<tag-desc>
+время обработки запроса в секундах с точностью до миллисекунд
+(1.3.9, 1.2.6);
+время, прошедшее с момента чтения первых байт от клиента
+</tag-desc>
+
+<tag-name id="var_request_uri"><var>$request_uri</var></tag-name>
 <tag-desc>
 первоначальный URI запроса целиком (с аргументами)
 </tag-desc>
 
-<tag-name><var>$scheme</var></tag-name>
+<tag-name id="var_scheme"><var>$scheme</var></tag-name>
 <tag-desc>
 схема запроса, “<literal>http</literal>” или “<literal>https</literal>”
 </tag-desc>
 
-<tag-name><var>$sent_http_</var><value>имя</value></tag-name>
+<tag-name id="var_sent_http_"><var>$sent_http_</var><value>имя</value></tag-name>
 <tag-desc>
 произвольное поле заголовка ответа;
 последняя часть имени переменной соответствует имени поля, приведённому
 к нижнему регистру, с заменой символов тире на символы подчёркивания
 </tag-desc>
 
-<tag-name><var>$server_addr</var></tag-name>
+<tag-name id="var_server_addr"><var>$server_addr</var></tag-name>
 <tag-desc>
 адрес сервера, принявшего запрос
 <para>
@@ -2876,17 +2907,17 @@ fastcgi_pass_request_body off</link>
 </para>
 </tag-desc>
 
-<tag-name><var>$server_name</var></tag-name>
+<tag-name id="var_server_name"><var>$server_name</var></tag-name>
 <tag-desc>
 имя сервера, принявшего запрос
 </tag-desc>
 
-<tag-name><var>$server_port</var></tag-name>
+<tag-name id="var_server_port"><var>$server_port</var></tag-name>
 <tag-desc>
 порт сервера, принявшего запрос
 </tag-desc>
 
-<tag-name><var>$server_protocol</var></tag-name>
+<tag-name id="var_server_protocol"><var>$server_protocol</var></tag-name>
 <tag-desc>
 протокол сервера, обычно
 “<literal>HTTP/1.0</literal>”
@@ -2894,12 +2925,12 @@ fastcgi_pass_request_body off</link>
 “<literal>HTTP/1.1</literal>”
 </tag-desc>
 
-<tag-name><var>$status</var></tag-name>
+<tag-name id="var_status"><var>$status</var></tag-name>
 <tag-desc>
-статус ответа
+статус ответа (1.3.2, 1.2.2)
 </tag-desc>
 
-<tag-name>
+<tag-name id="var_tcpinfo_">
 <var>$tcpinfo_rtt</var>,
 <var>$tcpinfo_rttvar</var>,
 <var>$tcpinfo_snd_cwnd</var>,
@@ -2910,7 +2941,7 @@ fastcgi_pass_request_body off</link>
 поддерживающих параметр сокета <c-def>TCP_INFO</c-def>
 </tag-desc>
 
-<tag-name><var>$uri</var></tag-name>
+<tag-name id="var_uri"><var>$uri</var></tag-name>
 <tag-desc>
 текущий URI запроса в <link id="location">нормализованном</link> виде
 <para>

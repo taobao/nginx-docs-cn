@@ -22,41 +22,72 @@
          </xsl:when>
 
          <xsl:otherwise>
+            <xsl:choose>
 
-            <a>
-
-               <xsl:attribute name="href">
+               <xsl:when test="$TRANS and @switchlang">
                   <xsl:choose>
 
-                     <xsl:when test="starts-with(@href, $DIRNAME)">
-                        <xsl:choose>
+                     <xsl:when test="contains($TRANS, @switchlang)">
 
-                           <xsl:when test="substring-after(@href, $DIRNAME) = ''">
-                  ./</xsl:when>
+                        <a>
 
-                           <xsl:otherwise>
+                           <xsl:attribute name="href">
 
-                              <xsl:value-of select=" substring-after(@href, $DIRNAME)"/>
-                           </xsl:otherwise>
-                        </xsl:choose>
+                              <xsl:value-of select=" concat($ROOT, '/', @switchlang, '/',                         substring-after($LINK, concat('/', $LANG, '/')))"/>
+                           </xsl:attribute>
+
+                           <xsl:value-of select=" normalize-space(text())"/>
+
+                        </a>
                      </xsl:when>
 
                      <xsl:otherwise>
 
-                        <xsl:value-of select=" concat($ROOT, @href)"/>
+                        <a class="notrans">
+                           <xsl:value-of select=" normalize-space(text())"/>
+                        </a>
                      </xsl:otherwise>
                   </xsl:choose>
-               </xsl:attribute>
+               </xsl:when>
 
-               <xsl:value-of select=" normalize-space(text())"/>
+               <xsl:otherwise>
 
-            </a>
+                  <a>
 
-            <xsl:if test="@lang">
-               <xsl:text> [</xsl:text>
-               <xsl:value-of select="@lang"/>
-               <xsl:text>]</xsl:text>
-            </xsl:if>
+                     <xsl:attribute name="href">
+                        <xsl:choose>
+
+                           <xsl:when test="starts-with(@href, $DIRNAME)">
+                              <xsl:choose>
+
+                                 <xsl:when test="substring-after(@href, $DIRNAME) = ''">
+                        ./</xsl:when>
+
+                                 <xsl:otherwise>
+
+                                    <xsl:value-of select=" substring-after(@href, $DIRNAME)"/>
+                                 </xsl:otherwise>
+                              </xsl:choose>
+                           </xsl:when>
+
+                           <xsl:otherwise>
+
+                              <xsl:value-of select=" concat($ROOT, @href)"/>
+                           </xsl:otherwise>
+                        </xsl:choose>
+                     </xsl:attribute>
+
+                     <xsl:value-of select=" normalize-space(text())"/>
+
+                  </a>
+
+                  <xsl:if test="@lang">
+                     <xsl:text> [</xsl:text>
+                     <xsl:value-of select="@lang"/>
+                     <xsl:text>]</xsl:text>
+                  </xsl:if>
+               </xsl:otherwise>
+            </xsl:choose>
 
             <br/>
          </xsl:otherwise>

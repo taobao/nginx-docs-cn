@@ -10,7 +10,7 @@
 <module name="Module ngx_http_gzip_module"
         link="/en/docs/http/ngx_http_gzip_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -261,8 +261,9 @@ Responses with the type “<literal>text/html</literal>” are always compressed
 <para>
 Enables or disables emitting the <header>Vary: Accept-Encoding</header>
 response header field if the directives
-<link id="gzip"/> or
-<link doc="ngx_http_gzip_static_module.xml" id="gzip_static"/>
+<link id="gzip"/>,
+<link doc="ngx_http_gzip_static_module.xml" id="gzip_static"/>, or
+<link doc="ngx_http_gunzip_module.xml" id="gunzip"/>
 are active.
 </para>
 

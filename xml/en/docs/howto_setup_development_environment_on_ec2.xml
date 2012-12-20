@@ -6,69 +6,178 @@
 
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article name="Setting up development environment with nginx on Amazon EC2"
+<article name="Setting up nginx environment on Amazon EC2"
          link="/en/docs/howto_setup_development_environment_on_ec2.html"
          lang="en"
-         rev="1">
+         rev="2">
 
-<section>
+<section name="Products available on Amazon EC2">
 
 <para>
-As an ISV participating in AWS Solution Providers Program, nginx is
-offering an automated install script for use with AWS EC2 instances.
-This helper script is targeted at the developers who have just
-started using nginx and EC2, and who would like to get things up quickly
-and efficiently. Please check the action list below in order to
-prepare your virtual machine and nginx configuration.
+As a Standard Technology Partner participating in AWS Partner Network,
+Nginx is offering the following products:
+
+<list type="bullet" compact="no">
+
+<listitem>
+<link url="https://aws.amazon.com/marketplace/pp/B00A04GAG4">
+NGINX AMI based on Amazon Linux AMI</link>
+</listitem>
+
+<listitem>
+Latest version of nginx optimized for use with AWS
+</listitem>
+
+<listitem>
+Install script for typical nginx configurations with AWS
+</listitem>
+
+</list>
+
 </para>
 
+</section>
+
+<section id="setting_up_nginx_environment_on_aws"
+         name="Step-by-step guide to start working with NGINX AMI">
+
 <para>
-To set up a development environment:
-<list type="bullet">
+To quickly set up nginx environment on AWS:
+<list type="bullet" compact="no">
 <listitem>
-Follow the
+Follow
 <link url="http://docs.amazonwebservices.com/AWSEC2/latest/GettingStartedGuide/Welcome.html">
-Get Started with EC2</link> guide to sign up to AWS and
-launch your EC2 instance. Only Amazon Linux is supported, so please
-choose either “Basic 32-bit Amazon Linux AMI” or
-“Basic 64-bit Amazon Linux AMI” for an AMI. When configuring
-the firewall rules, it is necessary to add a rule to accept web
-traffic on port 80.
+Getting Started with EC2</link> guide to sign up to AWS and
+get more information about EC2 itself.
+Then you can proceed to
+<link url="https://aws.amazon.com/marketplace/pp/B00A04GAG4">
+NGINX AMI product page on AWS Marketplace</link> and launch NGINX AMI.
+When configuring the firewall rules, it is necessary to add a rule
+to accept web traffic on TCP ports 80 and 443 (“1-click launch”
+will do that automatically).
 </listitem>
 
 <listitem>
-As soon as the new instance is launched, log in to it and
-download <literal>aws_nginx_setup.sh</literal> script with the
-following command:
+As soon as the new instance is launched, nginx will be automatically
+started and configured to serve default index.html page.
+You can check it by pointing your web browser to the public DNS
+name of your newborn EC2 instance.
+Also, you can log in to your instance and use
 <programlisting>
-wget http://nginx.org/download/aws_nginx_setup.sh
+/etc/init.d/nginx status
 </programlisting>
-then run the script with root privileges:
+to check the status of your nginx server.
+</listitem>
+
+<listitem>
+To configure nginx for use with different web frameworks
+quickly and efficiently, you can use a special helper script
+included in NGINX AMI.
+Log in to your EC2 instance and start:
+
 <programlisting>
-sudo sh ./aws_nginx_setup.sh
+nginx-setup
 </programlisting>
 </listitem>
 
 <listitem>
-You will be asked to select what components to install. Currently
-it is possible to choose Django, Pyramid, Ruby on Rails or PHP
-development environment. After you have selected the necessary
-component, the script will automatically prepare its configuration
-for use with nginx. There will be a separate user created too,
+You will be asked to select what components to install.
+Please check the next section in this document for
+list of available software components.
+After you have selected the necessary component, the script
+will automatically install all prerequisite packages
+and prepare the necessary configuration.
+There will be a separate user created too,
 and then a sample web application is started to ensure everything
 is working correctly.
 </listitem>
 
 <listitem>
 After the installation completes and the web application is installed
-in a subdirectory inside <path>/var/www</path>, the script will print how to
-start/stop sample application. For example, the Rails application will
-reside in <path>/var/www/rails</path>, and Rails specific part of nginx
-configuration will be in <path>/etc/nginx/conf.d/rails.conf</path>.
-Installed application and configuration files can be used as a basis for
-further development.
+in a subdirectory inside <path>/var/www</path>,
+additional instructions will be provided on how to start/stop sample
+application.
+For example, the Rails/Unicorn application will reside in
+<path>/var/www/rails/sample-unicorn</path>, and specific part of nginx
+configuration will be in <path>/etc/nginx/conf.d/rails-unicorn.conf</path>.
+Installed application and configuration files can be used as a basis
+for further development.
 </listitem>
 </list>
+</para>
+
+</section>
+
+<section id="available_software"
+         name="Software available for automatic configuration with NGINX AMI">
+
+<para>
+The following software is available for automatic installation
+and configuration using <literal>nginx-setup</literal> helper script:
+
+<list type="bullet" compact="no">
+
+<listitem>
+Generic
+<link url="http://php.net/manual/en/install.fpm.php">PHP-FPM</link>
+configuration.
+FPM (FastCGI Process Manager) is an alternative PHP FastCGI implementation
+with some additional features useful for heavy-loaded sites, such as
+dynamic/static child spawning, advanced process management,
+ability to start workers with different uid/gid/chroot environment.
+</listitem>
+
+<listitem>
+<link url="http://rubyonrails.org/">Ruby on Rails</link>,
+an open-source Ruby web framework that's optimized for programmer happiness
+and sustainable productivity.
+You can choose the application server to work with, currently
+Unicorn and Thin are available to configure.
+Also, during the installation process you can either enter the version of
+Rails manually, or use the default one.
+</listitem>
+
+<listitem>
+<link url="https://www.djangoproject.com/">Django</link>,
+a high-level Python web framework that encourages rapid development
+and clean, pragmatic design.
+It lets you build high-performing, elegant Web applications quickly.
+Django focuses on automating as much as possible and adhering to the DRY
+(Don't Repeat Yourself) principle.
+</listitem>
+
+<listitem>
+<link url="http://www.pylonsproject.org/">Pyramid</link>,
+a small, fast, down-to-earth, open source Python web development framework.
+It makes real-world web application development and deployment more fun,
+more predictable, and more productive.
+Pyramid is a Pylons Project, and is the successor to the Pylons web framework.
+There is an ability to enter desired version of Pyramid during the
+installation process.
+</listitem>
+
+</list>
+
+</para>
+
+</section>
+
+<section id="if_something_goes_wrong"
+         name="What if something goes wrong?">
+
+<para>
+In case you encounter any problems with nginx configuration,
+the documentation is available on
+<link url="http://nginx.org/en/docs/">http://nginx.org/en/docs/</link>.
+</para>
+
+<para>
+Customers purchased NGINX AMI at AWS Marketplace are eligible for assistance
+under AWS support plan by Nginx described here:
+<link url="http://nginx.com/support.html">http://nginx.com/support.html</link>.
+Please note that you will need your AWS Account Number in order to activate
+your support plan.
+In some cases we may also ask you to provide EC2 instance ID(s).
 </para>
 
 </section>

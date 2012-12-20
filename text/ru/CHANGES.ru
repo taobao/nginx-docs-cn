@@ -1,4 +1,51 @@
 
+Изменения в nginx 1.3.9                                           27.11.2012
+
+    *) Добавление: поддержка chunked transfer encoding при получении тела
+       запроса.
+
+    *) Добавление: переменные $request_time и $msec теперь можно
+       использовать не только в директиве log_format.
+
+    *) Исправление: cache manager и cache loader могли не запускаться, если
+       использовалось более 512 listen-сокетов.
+
+    *) Исправление: в модуле ngx_http_dav_module.
+
+
+Изменения в nginx 1.3.8                                           30.10.2012
+
+    *) Добавление: параметр optional_no_ca директивы ssl_verify_client.
+       Спасибо Михаилу Казанцеву и Eric O'Connor.
+
+    *) Добавление: переменные $bytes_sent, $connection и
+       $connection_requests теперь можно использовать не только в директиве
+       log_format.
+       Спасибо Benjamin Grössing.
+
+    *) Добавление: параметр auto директивы worker_processes.
+
+    *) Исправление: сообщения "cache file ... has md5 collision".
+
+    *) Исправление: в модуле ngx_http_gunzip_filter_module.
+
+    *) Исправление: в директиве ssl_stapling.
+
+
+Изменения в nginx 1.3.7                                           02.10.2012
+
+    *) Добавление: поддержка OCSP stapling.
+       Спасибо Comodo, DigiCert и GlobalSign за спонсирование разработки.
+
+    *) Добавление: директива ssl_trusted_certificate.
+
+    *) Добавление: теперь resolver случайным образом меняет порядок
+       возвращаемых закэшированных адресов.
+       Спасибо Антону Жулину.
+
+    *) Исправление: совместимость с OpenSSL 0.9.7.
+
+
 Изменения в nginx 1.3.6                                           12.09.2012
 
     *) Добавление: модуль ngx_http_gunzip_filter_module.

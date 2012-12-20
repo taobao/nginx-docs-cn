@@ -5,55 +5,32 @@
 
 X:stylesheet {
 
-X:output method="html" version="4.0" indent="no" encoding="utf-8";
+X:template = "download" {
+    X:var last="@last"
+    X:for-each "document(concat($XML, '/versions.xml'))
+                /versions/download[@tag = current()/@tag]" {
+        <table width="100%">
 
-X:strip-space elements = "*";
+        !! "item[position() &lt;= $last]";
 
-<!--
-  -- a current directory of a XSLT script is where the script is stored,
-  -- but not where XSLT processor has been started to run the script
-  -->
-X:param XML = "'../xml'";
-X:param YEAR;
-
-X:var LINK = "/article/@link";
-
-X:include href = "dirname.xslt";
-X:include href = "link.xslt";
-X:include href = "style.xslt";
-X:include href = "body.xslt";
-X:include href = "menu.xslt";
-X:include href = "ga.xslt";
-X:include href = "content.xslt";
-
-
-X:template = "/article" {
-    <html><head>
-
-    <title> !{@name} </title>
-
-    !style (lang="@lang")
-
-    !ga ()
-
-    </head>
-
-    !body (lang="@lang")
-
-    </html>
+        </table>
+    }
 }
 
 
-X:template = "download" { <table width="100%"> !! "item"; </table> }
-
-
-X:template = "download/item[position() &lt;= ../@last]" {
+X:template = "download/item" {
     <tr>
         <td width="20%">
         X:if "position() = 1" {
             <a>
-            X:attribute "href" { X:text{/} !{/article/@lang} X:text{/} !{../@changes} }
-            !{../@changes}
+            X:attribute "href" {
+                X:text{/} !{$LANG} X:text{/CHANGES}
+                X:if "$LANG != 'en'" { X:text{.} !{$LANG} }
+                X:if "../@changes != ''" { X:text{-} !{../@changes} }
+            }
+            X:text{CHANGES}
+            X:if "$LANG != 'en'" { X:text{.} !{$LANG} }
+            X:if "../@changes != ''" { X:text{-} !{../@changes} }
             </a>
         }
         </td>
@@ -100,8 +77,5 @@ X:template = "download/item[position() &lt;= ../@last]" {
 
     </tr>
 }
-
-
-X:template = "download/item[position() &gt; ../@last]" { }
 
 }

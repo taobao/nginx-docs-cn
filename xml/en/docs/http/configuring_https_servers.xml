@@ -8,7 +8,7 @@
 <article name="Configuring HTTPS servers"
          link="/en/docs/http/configuring_https_servers.html"
          lang="en"
-         rev="3"
+         rev="4"
          author="Igor Sysoev"
          editor="Brian Mercer">
 
@@ -313,8 +313,9 @@ server {
          name="An SSL certificate with several names">
 
 <para>
-There are other ways to share a single IP address between several
-HTTPS servers, however, all of them have drawbacks.
+There are other ways that allow to share a single IP address
+between several HTTPS servers.
+However, all of them have their drawbacks.
 One way is to use a certificate with several names in
 the SubjectAltName certificate field, for example,
 <literal>www.example.com</literal> and <literal>www.example.org</literal>.
@@ -324,6 +325,8 @@ However, the SubjectAltName field length is limited.
 <para>
 Another way is to use a certificate with a wildcard name, for example,
 <literal>*.example.org</literal>.
+A wildcard certificate secures all subdomains of the specified domain,
+but only on one level.
 This certificate matches <literal>www.example.org</literal>, but does not match
 <literal>example.org</literal> and <literal>www.sub.example.org</literal>.
 These two methods can also be combined.

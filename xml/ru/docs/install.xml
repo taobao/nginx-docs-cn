@@ -8,7 +8,7 @@
 <article name="Установка nginx"
          link="/ru/docs/install.html"
          lang="ru"
-         rev="1">
+         rev="2">
 
 <section>
 
@@ -146,7 +146,6 @@
 HTTP-сервера, позволяющего <link doc="http/ngx_http_rewrite_module.xml">делать
 перенаправления и менять URI запросов</link>.
 Для сборки и работы этого модуля нужна библиотека PCRE.
-Модуль экспериментальный&mdash;директивы модуля впоследствии могут измениться.
 </para>
 </listitem>
 

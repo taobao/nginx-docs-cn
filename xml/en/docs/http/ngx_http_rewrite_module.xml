@@ -10,7 +10,7 @@
 <module name="Module ngx_http_rewrite_module"
         link="/en/docs/http/ngx_http_rewrite_module.html"
         lang="en"
-        rev="2">
+        rev="3">
 
 <section id="summary">
 
@@ -336,7 +336,8 @@ in single or double quotes.
 
 <para>
 Enables or disables logging of <literal>ngx_http_rewrite_module</literal>
-module directives processing to the error log at
+module directives processing results
+into the <link doc="../ngx_core_module.xml" id="error_log"/> at
 the <literal>notice</literal> level.
 </para>
 

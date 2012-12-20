@@ -10,12 +10,14 @@
 <module name="Модуль ngx_http_dav_module"
         link="/ru/docs/http/ngx_http_dav_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
 <para>
-Модуль <literal>ngx_http_dav_module</literal> обрабатывает HTTP- и WebDAV-методы
+Модуль <literal>ngx_http_dav_module</literal> предназначен для автоматизации
+задач управления файлами на сервере по протоколу WebDAV.
+Модуль обрабатывает HTTP- и WebDAV-методы
 PUT, DELETE, MKCOL, COPY и MOVE.
 </para>
 
@@ -23,6 +25,13 @@ PUT, DELETE, MKCOL, COPY и MOVE.
 По умолчанию этот модуль не собирается, его сборку необходимо
 разрешить с помощью конфигурационного параметра
 <literal>--with-http_dav_module</literal>.
+</para>
+
+<para>
+<note>
+WebDAV-клиенты, которые требуют для работы дополнительных WebDAV-методов,
+не будут работать с этим модулем.
+</note>
 </para>
 
 </section>
@@ -84,10 +93,7 @@ dav_access group:rw all:r;
 
 <directive name="dav_methods">
 <syntax>
-    <literal>off</literal> | <literal>put</literal> |
-    <literal>delete</literal> | <literal>mkcol</literal> |
-    <literal>copy</literal> | <literal>move</literal>
-    ...</syntax>
+    <literal>off</literal> | <value>метод</value> ...</syntax>
 <default>off</default>
 <context>http</context>
 <context>server</context>
@@ -96,7 +102,10 @@ dav_access group:rw all:r;
 <para>
 Разрешает указанные HTTP- и WebDAV-методы.
 Параметр <literal>off</literal> запрещает все методы, обрабатываемые
-данным модулем, игнорируя остальные параметры;
+данным модулем.
+Поддерживаются следующие методы:
+<literal>PUT</literal>, <literal>DELETE</literal>, <literal>MKCOL</literal>,
+<literal>COPY</literal> и <literal>MOVE</literal>.
 </para>
 
 <para>
@@ -128,7 +137,7 @@ dav_access group:rw all:r;
 <context>location</context>
 
 <para>
-По спецификации WebDAV метод PUT может создавать файл только в
+По спецификации WebDAV-метод PUT может создавать файл только в
 уже существующем каталоге.
 Данная директива разрешает создавать все необходимые промежуточные каталоги.
 </para>

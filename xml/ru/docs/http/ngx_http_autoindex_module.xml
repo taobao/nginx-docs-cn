@@ -10,13 +10,13 @@
 <module name="Модуль ngx_http_autoindex_module"
         link="/ru/docs/http/ngx_http_autoindex_module.html"
         lang="ru"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
 <para>
-Модуль <literal>ngx_http_autoindex_module</literal> выдаёт
-листинг каталога.
+Модуль <literal>ngx_http_autoindex_module</literal> обслуживает запросы,
+оканчивающиеся слэшом (‘<literal>/</literal>’), и выдаёт листинг каталога.
 Обычно запрос попадает к модулю <literal>ngx_http_autoindex_module</literal>,
 когда модуль <link doc="ngx_http_index_module.xml">ngx_http_index_module</link>
 не нашёл индексный файл.

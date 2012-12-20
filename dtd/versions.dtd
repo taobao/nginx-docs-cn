@@ -2,8 +2,17 @@
   Copyright (C) Nginx, Inc.
   -->
 
-<!ELEMENT  versions     (development | stable | legacy_stable)* >
+<!ELEMENT  versions     (download+) >
 
-<!ELEMENT  development  (#PCDATA) >
-<!ELEMENT  stable       (#PCDATA) >
-<!ELEMENT  legacy_stable  (#PCDATA) >
+<!ELEMENT  download     (item+) >
+<!ATTLIST  download
+           tag          (development | stable | legacy) #REQUIRED
+           changes      CDATA #REQUIRED
+>
+
+<!ELEMENT  item         EMPTY >
+<!ATTLIST  item
+           ver          CDATA #REQUIRED
+           pgp          (yes | no) "yes"
+           win          (yes | no) "yes"
+>

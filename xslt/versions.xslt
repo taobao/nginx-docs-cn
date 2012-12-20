@@ -3,12 +3,12 @@
 
    <xsl:template match="development_version">
 
-      <xsl:value-of select=" normalize-space(document(concat($XML, '/versions.xml'))                       /versions/development)"/>
+      <xsl:apply-templates select="document(concat($XML, '/versions.xml'))                 /versions/download[@tag='development'][1]/item[1]/@ver"/>
    </xsl:template>
 
    <xsl:template match="stable_version">
 
-      <xsl:value-of select=" normalize-space(document(concat($XML, '/versions.xml'))                       /versions/stable)"/>
+      <xsl:apply-templates select="document(concat($XML, '/versions.xml'))                 /versions/download[@tag='stable'][1]/item[1]/@ver"/>
    </xsl:template>
 
 </xsl:stylesheet>
