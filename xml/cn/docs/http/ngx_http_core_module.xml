@@ -2298,79 +2298,94 @@ location /download/ {
 nginx也支持其他变量：
 <list type="tag">
 
-<tag-name><var>$arg_</var><value>name</value></tag-name>
+<tag-name id="var_arg_"><var>$arg_</var><value>name</value></tag-name>
 <tag-desc>
 请求行中的<value>name</value>参数。
 </tag-desc>
 
-<tag-name><var>$args</var></tag-name>
+<tag-name id="var_args"><var>$args</var></tag-name>
 <tag-desc>
 请求行中参数字符串。
 </tag-desc>
 
-<tag-name><var>$binary_remote_addr</var></tag-name>
+<tag-name id="var_binary_remote_addr"><var>$binary_remote_addr</var></tag-name>
 <tag-desc>
 客户端IP地址的二进制形式，值的长度总是4字节。
 </tag-desc>
 
-<tag-name><var>$body_bytes_sent</var></tag-name>
+<tag-name id="var_body_bytes_sent"><var>$body_bytes_sent</var></tag-name>
 <tag-desc>
 nginx返回给客户端的字节数，不含响应头。
 </tag-desc>
 
-<tag-name><var>$content_length</var></tag-name>
+<tag-name id="var_bytes_sent"><var>$bytes_sent</var></tag-name>
+<tag-desc>
+nginx返回给客户端的字节数(1.3.8, 1.2.5)。
+</tag-desc>
+
+<tag-name id="var_connection"><var>$connection</var></tag-name>
+<tag-desc>
+连接的序列号(1.3.8, 1.2.5)。
+</tag-desc>
+
+<tag-name id="var_content_length"><var>$content_length</var></tag-name>
 <tag-desc>
 <header>Content-Length</header>请求头的值。
 </tag-desc>
 
-<tag-name><var>$content_type</var></tag-name>
+<tag-name id="var_content_type"><var>$content_type</var></tag-name>
 <tag-desc>
 <header>Content-Type</header>请求头的值。
 </tag-desc>
 
-<tag-name><var>$cookie_</var><value>name</value></tag-name>
+<tag-name id="var_cookie"><var>$cookie_</var><value>name</value></tag-name>
 <tag-desc>
 名为<value>name</value>的cookie。
 </tag-desc>
 
-<tag-name><var>$document_root</var></tag-name>
+<tag-name id="var_document_root"><var>$document_root</var></tag-name>
 <tag-desc>
 当前请求的<link id="root"/>指令或<link id="alias"/>指令的配置值。
 </tag-desc>
 
-<tag-name><var>$document_uri</var></tag-name>
+<tag-name id="var_document_uri"><var>$document_uri</var></tag-name>
 <tag-desc>
 与<var>$uri</var>相同。
 </tag-desc>
 
-<tag-name><var>$host</var></tag-name>
+<tag-name id="var_host"><var>$host</var></tag-name>
 <tag-desc>
 <header>Host</header>请求头的值，如果没有该请求头，则为与请求对应的虚拟主机的首要主机名。
 </tag-desc>
 
-<tag-name><var>$hostname</var></tag-name>
+<tag-name id="var_hostname"><var>$hostname</var></tag-name>
 <tag-desc>
 机器名称。
 </tag-desc>
 
-<tag-name><var>$http_</var><value>name</value></tag-name>
+<tag-name id="var_http"><var>$http_</var><value>name</value></tag-name>
 <tag-desc>
 任意请求头的值；变量名的后半部为转化为小写并且用下划线替代横线后的请求头名称。
 </tag-desc>
 
-<tag-name><var>$https</var></tag-name>
+<tag-name id="var_https"><var>$https</var></tag-name>
 <tag-desc>
 如果连接是SSL模块，返回“<literal>on</literal>”，否则返回空字符串。
 </tag-desc>
 
-<tag-name><var>$is_args</var></tag-name>
+<tag-name id="var_is_args"><var>$is_args</var></tag-name>
 <tag-desc>
 如果请求行带有参数，返回“<literal>?</literal>”，否则返回空字符串。
 </tag-desc>
 
-<tag-name><var>$limit_rate</var></tag-name>
+<tag-name id="var_limit_rate"><var>$limit_rate</var></tag-name>
 <tag-desc>
 允许设置此值来限制连接的传输速率。
+</tag-desc>
+
+<tag-name id="var_msec"><var>$msec</var></tag-name>
+<tag-desc>
+当前时间，单位是秒，精度是毫秒。(1.3.9, 1.2.6)
 </tag-desc>
 
 <tag-name><var>$nginx_version</var></tag-name>
