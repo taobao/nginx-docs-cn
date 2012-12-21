@@ -11,7 +11,7 @@
         link="/cn/docs/http/ngx_http_core_module.html"
         lang="cn"
         translator="cfsego"
-        rev="5">
+        rev="13">
 
 <section id="directives" name="指令">
 
@@ -473,13 +473,13 @@ disable_symlinks on from=$document_root;
 <para>
 比如：
 <example>
-error_page   404              /404.html;
-error_page   500 502 503 504  /50x.html;
+error_page 404             /404.html;
+error_page 500 502 503 504 /50x.html;
 </example>
 </para>
 
 <para>
-而且，可以使用“<literal>=code</literal>”语法改变响应状态码。比如：
+而且，可以使用“<literal>=</literal><value>response</value>语法改变响应状态码。比如：
 <example>
 error_page 404 =200 /empty.gif;
 </example>
@@ -496,8 +496,8 @@ error_page 404 = /404.php;
 <para>
 当然，也可以使用本指令对错误处理进行重定向：
 <example>
-error_page 403         http://example.com/forbidden.html;
-error_page 404 =301    http://example.com/notfound.html;
+error_page 403      http://example.com/forbidden.html;
+error_page 404 =301 http://example.com/notfound.html;
 </example>
 对于例子中的第一行，nginx将向客户端发送302响应状态码。这种用法能使用的状态码只有301、302、303和307。
 </para>
@@ -517,7 +517,7 @@ location @fallback {
 
 <para>
 <note>
-如果处理<literal>uri</literal>产生了新的错误，那么将返回给客户端指示最后一次出错的HTTP响应状态码。
+如果处理<literal>uri</literal>产生了错误，那么nginx将最后一次出错的HTTP响应状态码返回给客户端。
 </note>
 </para>
 
@@ -780,16 +780,15 @@ limit_except GET {
 <context>if in location</context>
 
 <para>
-限制向客户端传送响应的速率限制。参数<value>rate</value>的单位是字节/秒，设置为0（默认）将关闭限速。
+限制向客户端传送响应的速率限制。参数<value>rate</value>的单位是字节/秒，设置为0将关闭限速。
 <!--
 速率越小，限速越精确。
 -->
-nginx按连接限速，所以如果某个客户端开启了两个连接，那么客户端的整体速率是这条指令设置值的2倍。
+nginx按连接限速，所以如果某个客户端同时开启了两个连接，那么客户端的整体速率是这条指令设置值的2倍。
 </para>
 
 <para>
-如果想在<link id="server"/>级别限制满足某种条件的一组客户端的响应传输速率，是不能使用这条指令的。
-但可以设置<var>$limit_rate</var>变量来达成所希望的限制：
+也可以利用<var>$limit_rate</var>变量设置流量限制。如果想在特定条件下限制响应传输速率，可以使用这个功能：
 <example>
 server {
 
@@ -1003,7 +1002,7 @@ listen unix:/var/run/nginx.sock;
 </tag-name>
 <tag-desc>
 为系统调用<c-func>listen</c-func>设置<literal>backlog</literal>参数，用以限制未接受(Accept)连接的队列的最大长度。
-FreeBSD下，<literal>backlog</literal>的默认值是-1，在其他系统中，默认值是511。
+FreeBSD和Mac OS X下，<literal>backlog</literal>的默认值是-1，在其他系统中，默认值是511。
 </tag-desc>
 
 
@@ -1178,18 +1177,23 @@ location / {
     [ configuration B ]
 }
 
-location ^~ /images/ {
+location /documents/ {
     [ configuration C ]
 }
 
-location ~* \.(gif|jpg|jpeg)$ {
+location ^~ /images/ {
     [ configuration D ]
 }
+
+location ~* \.(gif|jpg|jpeg)$ { 
+    [ configuration E ] 
+} 
 </example>
 请求“<literal>/</literal>”匹配配置A，
-请求“<literal>/documents/document.html</literal>”匹配配置B，
-请求“<literal>/images/1.gif</literal>”匹配配置C，
-请求“<literal>/documents/1.jpg</literal>”匹配配置D。
+请求“<literal>/index.html</literal>”匹配配置B，
+请求“<literal>/documents/document.html</literal>”匹配配置C，
+请求“<literal>/images/1.gif</literal>”匹配配置D，
+请求“<literal>/documents/1.jpg</literal>”匹配配置E。
 </para>
 
 <para>
@@ -1553,7 +1557,7 @@ optimization needs to be disabled.
 
 <para>
 允许或禁止<link id="error_page"/>指令进行多次重定向。
-允许的话，重定向次数也有<link doc="ngx_http_core_module.xml" id="internal">限制</link>。
+允许的话，重定向次数也有<link id="internal">限制</link>。
 而禁止此功能时，当访问<link id="error_page"/>指令重定向的错误页面出现任何问题时，nginx将直接输出默认错误页面。
 </para>
 
