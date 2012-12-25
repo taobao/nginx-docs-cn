@@ -5,234 +5,183 @@
 
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article name="Installing nginx"
-         link="/en/docs/install.html"
-         lang="en"
-         rev="1">
+<article name="安装nginx"
+         link="/cn/docs/install.html"
+         lang="cn"
+         rev="1"
+         translator="樵客">
 
 <section>
 
 <para>
-The build is configured using the <command>configure</command> command.
-It defines various aspects of the system, including the methods nginx
-is allowed to use for connection processing.
-At the end it creates a <path>Makefile</path>.
-The <command>configure</command> command supports the following parameters:
+<command>configure</command>命令用来配置nginx编译环境。
+该命令定义了系统各方面功能，包括允许nginx使用的连接处理方式。
+其执行结果是生成一个<path>Makefile</path>文件。 <command>configure</command>命令支持如下参数：
+
 <list type="bullet">
-
 <listitem>
 <para>
-<literal>--prefix=<value>path</value></literal>&mdash;defines
-a directory that will keep server files.
-This same directory will also be used for all relative paths set by
-<command>configure</command> (except for paths to libraries sources)
-and in the <path>nginx.conf</path> configuration file.
-It is set to the <path>/usr/local/nginx</path> directory by default.
+<literal>--prefix=<value>path</value></literal>&mdash;
+定义服务器文件的完整路径，该路径同时也是<command>configure</command>命令设置的
+相对路径（除类库源文件外）以及<path>nginx.conf</path>文件定义的相对路径的基准路径。其默认
+值是<path>/usr/local/nginx</path>。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--sbin-path=<value>path</value></literal>&mdash;sets
-the name of an nginx executable file.
-This name is used only during installation.
-By default the file is named
-<path><value>prefix</value>/sbin/nginx</path>.
+<literal>--sbin-path=<value>path</value></literal>&mdash;
+设置nginx可执行文件的完整路径，该路径仅在安装期间使用，
+默认路径为<path><value>prefix</value>/sbin/nginx</path>。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--conf-path=<value>path</value></literal>&mdash;sets
-the name of an <path>nginx.conf</path> configuration file.
-If needs be, nginx can always be started with a different configuration file,
-by specifying it in the command-line parameter
-<nobr><literal>-c <value>file</value></literal></nobr>.
-By default the file is named
-<path><value>prefix</value>/conf/nginx.conf</path>.
+<literal>--conf-path=<value>path</value></literal>&mdash;
+设置配置文件<path>nginx.conf</path>的完整路径。如有必要，总是可以
+在nginx启动时通过命令行参数<nobr><literal>-c<value>file</value></literal></nobr>指定一个不同的配置文件路径。
+默认路径为<path><value>prefix</value>/conf/nginx.conf</path>。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--pid-path=<value>path</value></literal>&mdash;sets
-the name of an nginx.pid file that will store the process ID
-of the main process.
-After installation, the file name can always be changed in the
-<path>nginx.conf</path> configuration file using the
-<link doc="ngx_core_module.xml" id="pid"/> directive.
-By default the file is named
-<path><value>prefix</value>/logs/nginx.pid</path>.
+<literal>--pid-path=<value>path</value></literal>&mdash;
+设置nginx.pid文件的完整路径，该文件存储了主进程的进程ID。安装完成后，
+该路径总是可以在<path>nginx.conf</path>文件中用
+<link doc="ngx_core_module.xml" id="pid"/>指令来修改。
+默认路径为<path><value>prefix</value>/logs/nginx.pid</path>。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--error-log-path=<value>path</value></literal>&mdash;sets
-the name of the primary error, warnings, and diagnostic file.
-After installation, the file name can always be changed in the
-<path>nginx.conf</path> configuration file using the
-<link doc="ngx_core_module.xml" id="error_log"/> directive.
-By default the file is named
-<path><value>prefix</value>/logs/error.log</path>.
+<literal>--error-log-path=<value>path</value></literal>&mdash;
+设置记录主要错误、警告以及调试信息日志的完整路径。安装完成后，
+该路径总是可以在<path>nginx.conf</path>文件中用
+<link doc="ngx_core_module.xml" id="error_log"/> 指令来修改。
+默认路径为<path><value>prefix</value>/logs/error.log</path>。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--http-log-path=<value>path</value></literal>&mdash;sets
-the name of the primary request log file of the HTTP server.
-After installation, the file name can always be changed in the
-<path>nginx.conf</path> configuration file using the
-<link doc="http/ngx_http_log_module.xml" id="access_log"/> directive.
-By default the file is named
-<path><value>prefix</value>/logs/access.log</path>.
+<literal>--http-log-path=<value>path</value></literal>&mdash;
+设置记录HTTP服务器主要请求日志的完整路径。安装完成后，
+该路径总是可以在<path>nginx.conf</path>文件用
+<link doc="http/ngx_http_log_module.xml" id="access_log"/> 指令来修改。
+默认路径为<path><value>prefix</value>/logs/access.log</path>
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--user=<value>name</value></literal>&mdash;sets
-the name of an unprivileged user whose credentials will be used
-by worker processes.
-After installation, the name can always be changed in the
-<path>nginx.conf</path> configuration file using the
-<link doc="ngx_core_module.xml" id="user"/> directive.
-The default user name is nobody.
+<literal>--user=<value>name</value></literal>&mdash;
+设置工作进程以某非特权用户的身份运行。安装完成后，该用户名总是可以在
+<path>nginx.conf</path>文件用<link doc="ngx_core_module.xml" id="user"/>指令来修改。
+其默认值为nobody。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--group=<value>name</value></literal>&mdash;sets
-the name of a group whose credentials will be used
-by worker processes.
-After installation, the name can always be changed in the
-<path>nginx.conf</path> configuration file using the
-<link doc="ngx_core_module.xml" id="user"/> directive.
-By default, a group name is set to the name of an unprivileged user.
+<literal>--group=<value>name</value></literal>&mdash;
+设置工作进程以某非特权用户的身份运行。安装完成后，该用户名总是可以在
+<path>nginx.conf</path>用<link doc="ngx_core_module.xml" id="user"/>指令来修改。
+其默认名称与未授权用户名称相同。
 </para>
 </listitem>
 
 <listitem>
 <para>
 <literal>--with-select_module</literal><br/>
-<literal>--without-select_module</literal>&mdash;enables or disables
-building a module that allows the server to work with the
-<c-func>select</c-func> method.
-This module is built automatically if the platform does not appear
-to support more appropriate methods such as kqueue, epoll, rtsig, or /dev/poll.
+<literal>--without-select_module</literal>&mdash;
+设置是否将<c-func>select</c-func>方法模块编译进nginx中。如果系统平台不支持kqueue、epoll、rtsig或/dev/poll等更合适的方法，
+该模块会被自动编译。
 </para>
 </listitem>
 
 <listitem>
 <para>
 <literal>--with-poll_module</literal><br/>
-<literal>--without-poll_module</literal>&mdash;enables or disables
-building a module that allows the server to work with the
-<c-func>poll</c-func> method.
-This module is built automatically if the platform does not appear
-to support more appropriate methods such as kqueue, epoll, rtsig, or /dev/poll.
+<literal>--without-poll_module</literal>&mdash;
+设置是否将<c-func>poll</c-func>方法模块编译进nginx中。如果系统平台不支持kqueue、epoll、rtsig或/dev/poll等更合适的方法，
+该模块会被自动编译。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--without-http_gzip_module</literal>&mdash;disables building a module
-that <link doc="http/ngx_http_gzip_module.xml">compresses responses</link>
-of an HTTP server.
-The zlib library is required to build and run this module.
+<literal>--without-http_gzip_module</literal>&mdash;
+不编译<link doc="http/ngx_http_gzip_module.xml">http_gzip_module</link>模块。该模块可以压缩HTTP服务器的响应，该模块需要zlib库才能编译和运行。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--without-http_rewrite_module</literal>&mdash;disables building a
-module that allows an HTTP server to
-<link doc="http/ngx_http_rewrite_module.xml">redirect requests and change URI
-of requests</link>.
-The PCRE library is required to build and run this module.
-The module is experimental&mdash;its directives may change in the future.
+<literal>--without-http_rewrite_module</literal>&mdash;
+不编译<link doc="http/ngx_http_rewrite_module.xml">http_rewrite_module</link>模块。该模块允许HTTP服务器重定向请求，改变请求的URI地址
+。创建并运行该模块需要PCRE库支持。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--without-http_proxy_module</literal>&mdash;disables building an
-HTTP server <link doc="http/ngx_http_proxy_module.xml">proxying module</link>.
-<!--
-The MD5 library is required to build and run this module.
--->
+<literal>--without-http_proxy_module</literal>&mdash;
+不编译HTTP服务器的<link doc="http/ngx_http_proxy_module.xml">代理模块</link>。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--with-http_ssl_module</literal>&mdash;enables building a module
-that adds the <link doc="http/ngx_http_ssl_module.xml">HTTPS protocol
-support</link> to an HTTP server.
-This module is not built by default.
-The OpenSSL library is required to build and run this module.
+<literal>--with-http_ssl_module</literal>&mdash;
+为HTTP服务器编译<link doc="http/ngx_http_ssl_module.xml">HTTPS协议支持的模块</link>。该模块默认是不编译的。它需要OpenSSL库才能编译和运行。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--with-pcre=<value>path</value></literal>&mdash;sets
-the path to the sources of the PCRE library.
-The library distribution (version
-4.4&mdash;8.30) needs to be downloaded from the
-<link url="http://www.pcre.org">PCRE</link> site and extracted.
-The rest is done by nginx's ./configure and make.
-The library is required for regular expressions support in the
-<link doc="http/ngx_http_core_module.xml" id="location"/> directive
-and for the
-<link doc="http/ngx_http_rewrite_module.xml">ngx_http_rewrite_module</link>
-module.
+<literal>--with-pcre=<value>path</value></literal>&mdash;
+设置PCRE库源文件的路径地址。PCRE库的发行版(version
+4.4&mdash;8.30)需要先从<link url="http://www.pcre.org">PCRE</link>站点下载并解压缩。
+剩下的安装工作由nginx的./configure和make命令来完成。该库应用于<link doc="http/ngx_http_core_module.xml" id="location"/>
+指令的正则表达式支持以及<link doc="http/ngx_http_rewrite_module.xml">ngx_http_rewrite_module</link>模块。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--with-pcre-jit</literal>&mdash;builds the PCRE library with
-“just-in-time compilation” support (1.1.12, see
-<link doc="ngx_core_module.xml" id="pcre_jit"/>).
+<literal>--with-pcre-jit</literal>&mdash;
+编译PCRE库时增加“实时编译（<link doc="ngx_core_module.xml" id="pcre_jit"/>）”支持。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--with-zlib=<value>path</value></literal>&mdash;sets
-the path to the sources of the zlib library.
-The library distribution (version
-1.1.3&mdash;1.2.5) needs to be downloaded from the
-<link url="http://www.gzip.org/zlib/">zlib</link> site and extracted.
-The rest is done by nginx's ./configure and make.
-The library is required for the
-<link doc="http/ngx_http_gzip_module.xml">ngx_http_gzip_module</link> module.
+<literal>--with-zlib=<value>path</value></literal>&mdash;
+设置zlib库源文件的路径地址。zlib库的发行版(version
+1.1.3&mdash;1.2.5)需要先从<link url="http://www.gzip.org/zlib/">zlib</link>站点下载并解压缩。
+剩下的安装工作由nginx的./configure和make命令来完成。该库应用于
+<link doc="http/ngx_http_gzip_module.xml">ngx_http_gzip_module</link>模块。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--with-cc-opt=<value>parameters</value></literal>&mdash;sets
-additional parameters that will be added to the CFLAGS variable.
-When using the system PCRE library under FreeBSD,
-<literal>--with-cc-opt="-I /usr/local/include"</literal>
-should be specified.
-If the number of files supported by <c-func>select</c-func> needs to be
-increased it can also be specified here such as this:
-<literal>--with-cc-opt="-D FD_SETSIZE=2048"</literal>.
+<literal>--with-cc-opt=<value>parameters</value></literal>&mdash;
+设置将会添加额外参数到CFLAGS变量中。当在FreeBSD使用系统PCRE库时，需要指定
+<literal>--with-cc-opt="-I /usr/local/include"</literal>。
+如果需要增加<c-func>select</c-func>方法所支持的文件数量，也可以参照如下方式指定：
+<literal>--with-cc-opt="-D FD_SETSIZE=2048"</literal>。
 </para>
 </listitem>
 
 <listitem>
 <para>
-<literal>--with-ld-opt=<value>parameters</value></literal>&mdash;sets
-additional parameters that will be used during linking.
-When using the system PCRE library under FreeBSD,
-<literal>--with-ld-opt="-L /usr/local/lib"</literal>
-should be specified.
+<literal>--with-ld-opt=<value>parameters</value></literal>&mdash;
+设置将会在链接（linking）过程中使用的额外参数。当在FreeBSD使用系统PCRE库时，需要指定
+<literal>--with-ld-opt="-L /usr/local/lib"</literal>。
 </para>
 </listitem>
 
@@ -241,7 +190,7 @@ should be specified.
 </para>
 
 <para>
-Example of parameters usage (all of this needs to be typed in one line):
+以下是参数使用示例（注意不应有换行）：
 <programlisting>
 ./configure
     --sbin-path=/usr/local/nginx/nginx
@@ -256,3 +205,5 @@ Example of parameters usage (all of this needs to be typed in one line):
 </section>
 
 </article>
+
+
