@@ -24,11 +24,11 @@ Microsoft Visual C 编译器。已知<registered>Microsoft Visual Studio</regist
 </listitem>
 
 <listitem>
-<link url="http://www.mingw.org/wiki/MSYS">MSYS</link>.
+<link url="http://www.mingw.org/wiki/MSYS">MSYS</link>。
 </listitem>
 
 <listitem>
-如果想编译<registered>OpenSSL</registered>，以及为nginx添加SSL支持，需要安装Perl，比如<link url="http://www.activestate.com/activeperl">ActivePerl</link>或者<link url="http://strawberryperl.com">Strawberry Perl</link>
+如果想编译<registered>OpenSSL</registered>，以及为nginx添加SSL支持，需要安装Perl，比如<link url="http://www.activestate.com/activeperl">ActivePerl</link>或者<link url="http://strawberryperl.com">Strawberry Perl</link>。
 </listitem>
 
 <listitem>
