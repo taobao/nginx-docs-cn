@@ -26,12 +26,10 @@
 <literal>start</literal>简单命名)，而服务端以流响应，这样流的开始
 位置就能于请求中的时间相对应。
 
-
-
 例如：
 <example>
 http://example.com/elephants_dream.mp4?start=238.88
-<example>
+</example>
 这样就允许随意拖放，或者从节目的中途开始回放。
 </para>
 
