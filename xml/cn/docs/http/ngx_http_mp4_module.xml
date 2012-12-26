@@ -6,95 +6,93 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_mp4_module"
+<module name="ngx_http_mp4_module 模块"
         link="/en/docs/http/ngx_http_mp4_module.html"
-        lang="en"
+        lang="cn"
+        translator="litianqing"
         rev="1">
 
 <section id="summary">
 
 <para>
-The module <literal>ngx_http_mp4_module</literal> provides pseudo-streaming
-server-side support for H.264/AAC files typically having filename extensions
-<path>.mp4</path>, <path>.m4v</path>, and <path>.m4a</path>.
+模块<literal>ngx_http_mp4_module</literal>为H.264/AAC文件，主要是以
+<path>.mp4</path>、<path>.m4v<path>、和<path>.m4a</path>为扩展名的文件，
+提供伪流媒体服务端支持。
 </para>
 
 <para>
-Pseudo-streaming works in alliance with conforming Flash players.
-A player sends an HTTP request to the server with a start time
-argument in the request URI’s query string (named simply
-<literal>start</literal>
-and specified in seconds), and the server responds with a stream
-so that its start position corresponds to the requested time,
-for example:
+伪流媒体是与Flash播放器一起配合使用的。
+播放器向服务端发送HTTP请求，请求中的查询串是以开始时间为参数的(以
+<literal>start</literal>简单命名)，而服务端以流响应，这样流的开始
+位置就能于请求中的时间相对应。
+
+
+
+例如：
 <example>
 http://example.com/elephants_dream.mp4?start=238.88
-</example>
-This allows for a random seeking at any time, or starting playback
-in the middle of a timeline.
+<example>
+这样就允许随意拖放，或者从节目的中途开始回放。
 </para>
 
 <para>
-To support seeking, H.264-based formats store the metadata
-in the so-called “moov atom.”
-It is a part of the file that holds the index information for the
-whole file.
+为了支持随机访问，H.264格式将元数据放到所谓的"moov atom"中。
+"moov atom"是文件的一部分，放有整个文件的索引信息。
 </para>
 
 <para>
-To start playback, a player first needs to read metadata.
-This is done by sending a special request with the
-<literal>start=0</literal>
-argument.  Many encoding software will insert the metadata at
-the end of the file.  This is bad for pseudo-streaming:
-the metadata needs to be located at the beginning of the file,
-or else the entire file will have to be downloaded before it
-starts playing.  If a file is well-formed (with metadata at the
-beginning of a file), nginx just sends back the contents of a file.
-Otherwise, it has to read the file and prepare a new stream so that
-metadata comes before media data.
-This involves some CPU, memory, and disk I/O overhead,
-so it is a good idea to
+为了开启回放，播放器首先需要读取元数据。
+这是通过发送一个特别的以<literal>start=0</literal>为
+参数请求来完成的。
+许多编码软件会将元数据插入到文件末尾，
+这样做对伪流媒体来说是不好的：
+元数据需要在文件开始时定位好，否则整个文件需要下载完才能开始播放。
+如果文件组织的很好（将元数据放到文件开头），那么nginx仅仅返回文件的内容，
+否则，nginx不得不读取文件并准备一个新的流，将元数据放在媒体数据前面，
+这将导致一些CPU，内存，磁盘I/O开销。
+所以一个比较好的主意是
+
 <link
 url="http://flowplayer.org/plugins/streaming/pseudostreaming.html#prepare">
-prepare an original file for pseudo-streaming</link>,
-rather than having nginx do this on every such request.
+为伪流媒体准备文件</link>，
+而不是让nginx处理请求时做。
 </para>
 
 <para>
-For a matching request with a non-zero
+对于匹配有非零
 <literal>start</literal>
-argument, nginx will read metadata from the file, prepare the
-stream starting from the requested offset, and send it to a client.
-This has the same overhead as described above.
+参数的请求，nginx从文件中读取元数据，从请求的偏移位置开始准备流数据
+发送给客户端。
+这与上面描述的情况有同样的开销。
 </para>
 
 <para>
-If a matching request does not include the
+如果匹配的请求没有包含
 <literal>start</literal>
-argument, there is no overhead, and the file is just sent as a static resource.
-Some players also support byte-range requests, and thus do not require
-this module at all.
+参数，就不会有额外开销，而文件仅仅是以静态资源被发送。
+一些播放器也支持字节范围请求，所以就根本不需要这个模块。
 </para>
 
 <para>
-This module is not built by default, it should be enabled with the
+这个模块默认是不安装的，需要通过
 <literal>--with-http_mp4_module</literal>
-configuration parameter.
+来配置开启。
+
 <note>
-If you were using the third-party mp4 module, be sure to disable it.
+假如你在使用第三方的mp4模块，一定要关闭该模块。
 </note>
 </para>
 
 <para>
-A similar pseudo-streaming support for FLV files is provided by the module
-<link doc="ngx_http_flv_module.xml">ngx_http_flv_module</link>.
+一个简单的支持FLV文件的伪流媒体由模块
+<link doc="ngx_http_flv_module.xml">ngx_http_flv_module</link>
+提供。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="示例配置">
 
 <para>
 <example>
@@ -109,7 +107,7 @@ location /video/ {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="mp4">
 <syntax/>
@@ -117,7 +115,7 @@ location /video/ {
 <context>location</context>
 
 <para>
-Turns on module processing in a surrounding location.
+配置开启该模块处理当前路径。
 </para>
 
 </directive>
@@ -131,7 +129,7 @@ Turns on module processing in a surrounding location.
 <context>location</context>
 
 <para>
-Sets the initial size of a memory buffer used to process MP4 files.
+设置处理MP4文件的初始内存大小。
 </para>
 
 </directive>
@@ -145,14 +143,14 @@ Sets the initial size of a memory buffer used to process MP4 files.
 <context>location</context>
 
 <para>
-During metadata processing, a larger buffer may become necessary.
-Its size cannot exceed the specified <value>size</value>,
-or else nginx will return the server error
-<http-status code="500" text="Internal Server Error"/>,
-and log the following:
+在处理元数据时，可能必需较大的缓存。
+它的大小不能超过<value>size</value>指定的值，
+否则nginx将会返回服务器错误，
+<http-status code="500" text="Internal Server Error"/>，
+并记录如下日志：
 <example>
 "/some/movie/file.mp4" mp4 moov atom is too large:
-12583268, you may want to increase mp4_max_buffer_size
+12583268, you may want to increase mp4_max_buffer_size"
 </example>
 </para>
 
