@@ -16,7 +16,7 @@
 
 <para>
 模块<literal>ngx_http_mp4_module</literal>为H.264/AAC文件，主要是以
-<path>.mp4</path>、<path>.m4v<path>、和<path>.m4a</path>为扩展名的文件，
+<path>.mp4</path>、<path>.m4v</path>、和<path>.m4a</path>为扩展名的文件，
 提供伪流媒体服务端支持。
 </para>
 
