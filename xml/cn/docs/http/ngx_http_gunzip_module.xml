@@ -8,7 +8,7 @@
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="ngx_http_gunzip_module模块"
-        link="/en/docs/http/ngx_http_gunzip_module.html"
+        link="/cn/docs/http/ngx_http_gunzip_module.html"
         lang="cn"
         translator="nigelzeng"
         rev="1">
