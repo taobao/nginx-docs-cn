@@ -5,43 +5,33 @@
 
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article name="Setting Up Hashes"
-         link="/en/docs/hash.html"
-         lang="en"
+<article name="设置哈希表"
+         link="/cn/docs/hash.html"
+         lang="cn"
+         translator="cfsego"
          rev="1">
 
 <section>
 
 <para>
-To quickly process static sets of data such as server names,
-<link doc="http/ngx_http_map_module.xml" id="map"/> directive's values,
-MIME types, names of request header strings,
-nginx uses hash tables.
-During the start and each re-configuration nginx selects the
-minimum possible sizes of hash tables such that the bucket size
-that stores keys with identical hash values does not exceed the
-configured parameter (hash bucket size).
-The size of a table is expressed in buckets.
-The adjustment is continued until the table size exceeds the
-hash max size parameter.
-Most hashes have the corresponding directives that allow to change
-these parameters, for example, for the server names hash they are
-<link doc="http/ngx_http_core_module.xml" id="server_names_hash_max_size"/>
-and <link doc="http/ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>.
+为了快速处理静态的数据集合，诸如虚拟主机名、
+<link doc="http/ngx_http_map_module.xml" id="map"/>指令的值、
+MIME类型和请求头的字段名，nginx使用了哈希表。
+在nginx启动和更新配置的过程中，它会尽可能为哈希表选择最小的容量，
+同时使每个哈希桶的长度不超过设置的配置参数。这些桶用于保存键和对应的哈希值。
+整个哈希表的容量以哈希桶的数量来定义。
+nginx不断调整哈希表直到哈希表容量超过配置的最大值。
+大部分哈希表都用对应的指令，允许修改这些配置参数。
+比如，针对虚拟主机名的哈希表，有<link doc="http/ngx_http_core_module.xml" id="server_names_hash_max_size"/>
+和<link doc="http/ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>两条指令。
 </para>
 
 <para>
-The hash bucket size parameter is aligned to the size that is a
-multiple of the processor's cache line size.  This speeds up
-key search in a hash on modern processors by reducing the number
-of memory accesses.
-If hash bucket size is equal to one processor's cache line size
-then the number of memory accesses during the key search will be
-two in the worst case&mdash;first to compute the bucket address,
-and second during the key search inside the bucket.
-Therefore, if nginx emits the message requesting to increase
-either hash max size or hash bucket size then the first parameter
-should first be increased.
+哈希桶大小的参数会对齐到处理器缓存线长度的整数倍。
+这将加速哈希表中的键查找，因为在现代的处理器上，这可以减少内存访问的次数。
+如果哈希桶大小等于处理器的缓存线长度，那么在最坏情况下，键查找时的内存访问次数是两次——
+第一次是计算哈希桶的地址，第二次是在哈希桶内进行键查找。
+因此，如果nginx提示需要增大哈希表容量或者哈希桶大小时，应优先增大前者。
 </para>
 
 </section>
