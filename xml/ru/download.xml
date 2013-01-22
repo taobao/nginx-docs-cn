@@ -42,8 +42,13 @@
 код: <literal>svn://svn.nginx.org/nginx</literal>
 </listitem>
 
+</list>
+
+Репозитории Mercurial, доступные только для чтения:
+<list type="bullet">
+	
 <listitem>
-сайт: <literal>svn://svn.nginx.org/nginx.org</literal>
+сайт: <literal>http://hg.nginx.org/nginx.org</literal>
 </listitem>
 
 </list>

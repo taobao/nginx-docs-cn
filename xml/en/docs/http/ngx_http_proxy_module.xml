@@ -10,7 +10,7 @@
 <module name="Module ngx_http_proxy_module"
         link="/en/docs/http/ngx_http_proxy_module.html"
         lang="en"
-        rev="3">
+        rev="8">
 
 <section id="summary">
 
@@ -40,7 +40,7 @@ location / {
 <section id="directives" name="Directives">
 
 <directive name="proxy_bind">
-<syntax><value>address</value></syntax>
+<syntax><value>address</value> | <literal>off</literal></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -50,6 +50,11 @@ location / {
 <para>
 Forces outgoing connections to a proxied server to originate
 from the specified local IP <value>address</value>.
+Value of the parameter can contain variables (1.3.12).
+The special value <literal>off</literal> (1.3.12) cancels the effect
+of the <literal>proxy_bind</literal> directive
+inherited from the previous configuration level, allowing the
+system to auto-assign local address.
 </para>
 
 </directive>
@@ -244,6 +249,29 @@ this element to be released, up to the time set by the
 
 <para>
 Sets a timeout for <link id="proxy_cache_lock"/>.
+</para>
+
+</directive>
+
+
+<directive name="proxy_cache_methods">
+<syntax>
+    <literal>GET</literal> |
+    <literal>HEAD</literal> |
+    <literal>POST</literal>
+    ...</syntax>
+<default>GET HEAD</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.7.59</appeared-in>
+
+<para>
+If the client request method is listed in this directive then
+the response will be cached.
+“<literal>GET</literal>” and “<literal>HEAD</literal>” methods are always
+added to the list, though it is recommended to specify them explicitly.
+See also the <link id="proxy_no_cache"/> directive.
 </para>
 
 </directive>
@@ -587,6 +615,42 @@ proxy_cookie_path ~*^/user/([^/]+) /u/$1;
 </directive>
 
 
+<directive name="proxy_headers_hash_bucket_size">
+<syntax><value>size</value></syntax>
+<default>64</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the bucket <value>size</value> for hash tables
+used by the <link id="proxy_hide_header"/> and <link id="proxy_set_header"/>
+directives.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
+</para>
+
+</directive>
+
+
+<directive name="proxy_headers_hash_max_size">
+<syntax><value>size</value></syntax>
+<default>512</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Sets the maximum <value>size</value> of hash tables
+used by the <link id="proxy_hide_header"/> and <link id="proxy_set_header"/>
+directives.
+Details of setting up hash tables are provided in a separate
+<link doc="../hash.xml">document</link>.
+</para>
+
+</directive>
+
+
 <directive name="proxy_hide_header">
 <syntax><value>field</value></syntax>
 <default/>
@@ -734,6 +798,21 @@ by the <link id="proxy_temp_file_write_size"/> directive.
 
 <para>
 Value of zero disables buffering of responses to temporary files.
+</para>
+
+</directive>
+
+
+<directive name="proxy_method">
+<syntax><value>method</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Specifies the HTTP <value>method</value> to use in requests forwarded
+to the proxied server instead of the method from the client request.
 </para>
 
 </directive>
@@ -976,6 +1055,58 @@ a connection is closed.
 </directive>
 
 
+<directive name="proxy_pass_request_body">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+If disabled, the original request body will not be passed
+to the proxied server.
+<example>
+location /x-accel-redirect-here/ {
+    proxy_method GET;
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+
+    proxy_pass ...
+}
+</example>
+See also the <link id="proxy_set_header"/> and
+<link id="proxy_pass_request_headers"/> directives.
+</para>
+
+</directive>
+
+
+<directive name="proxy_pass_request_headers">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+If disabled, header fields of the original request will not be passed to the
+proxied server.
+<example>
+location /x-accel-redirect-here/ {
+    proxy_method GET;
+    proxy_pass_request_headers off;
+    proxy_pass_request_body off;
+
+    proxy_pass ...
+}
+</example>
+See also the <link id="proxy_set_header"/> and
+<link id="proxy_pass_request_body"/> directives.
+</para>
+
+</directive>
+
+
 <directive name="proxy_redirect">
 <syntax><literal>default</literal></syntax>
 <syntax><literal>off</literal></syntax>
@@ -1129,6 +1260,21 @@ a connection is closed.
 </directive>
 
 
+<directive name="proxy_set_body">
+<syntax><value>value</value></syntax>
+<default/>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Allows to redefine request body passed to the proxied server.
+A <value>value</value> can contain text, variables, and their combination.
+</para>
+
+</directive>
+
+
 <directive name="proxy_set_header">
 <syntax><value>field</value> <value>value</value></syntax>
 <default>Host $proxy_host</default>
@@ -1139,7 +1285,7 @@ a connection is closed.
 
 <para>
 Allows to redefine or append fields to the request header
-passed to the proxied server.
+<link id="proxy_pass_request_headers">passed</link> to the proxied server.
 A <value>value</value> can contain text, variables, and their combination.
 These directives are inherited from the previous level if and
 only if there are no

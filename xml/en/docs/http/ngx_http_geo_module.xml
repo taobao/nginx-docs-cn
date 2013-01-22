@@ -10,7 +10,7 @@
 <module name="Module ngx_http_geo_module"
         link="/en/docs/http/ngx_http_geo_module.html"
         lang="en"
-        rev="2">
+        rev="4">
 
 <section id="summary">
 
@@ -28,9 +28,13 @@ whose values depend on the client IP address.
 <example>
 geo $geo {
     default        0;
-    127.0.0.1/32   2;
+
+    127.0.0.1      2;
     192.168.1.0/24 1;
     10.1.0.0/16    1;
+
+    ::1            2;
+    2001:0db8::/32 1;
 }
 </example>
 </para>
@@ -71,7 +75,14 @@ then the “<literal>255.255.255.255</literal>” address is used.
 </para>
 
 <para>
-Addresses are specified as CIDR or ranges (0.7.23).
+Addresses are specified either as prefixes in CIDR notation
+(including individual addresses) or as ranges (0.7.23).
+<note>
+IPv6 prefixes are supported starting from version 1.3.10.
+</note>
+</para>
+
+<para>
 The following special parameters are also supported:
 <list type="tag">
 
@@ -84,8 +95,11 @@ deletes the specified network (0.7.23).
 <tag-desc>
 a value of variable if the client address does not
 match any of the specified addresses.
-When CIDR is used, “<literal>0.0.0.0/0</literal>” can be written
-instead of <literal>default</literal>.
+When addresses are specified in CIDR notation,
+“<literal>0.0.0.0/0</literal>” and “<literal>::/0</literal>”
+can be used instead of <literal>default</literal>.
+When <literal>default</literal> is not specified, the default
+value will be an empty string.
 </tag-desc>
 
 <tag-name><literal>include</literal></tag-name>
@@ -103,7 +117,7 @@ header field will be used instead.
 In contrast to the regular addresses, trusted addresses are
 checked sequentially.
 <note>
-IPv6 addresses are supported starting from versions 1.3.0 and 1.2.1.
+Trusted IPv6 addresses are supported starting from versions 1.3.0 and 1.2.1.
 </note>
 </tag-desc>
 

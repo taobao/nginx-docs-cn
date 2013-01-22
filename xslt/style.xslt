@@ -14,7 +14,7 @@
 
          <xsl:if test="$lang = 'cn'">
 
-            <xsl:value-of select=" normalize-space('         body              { font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif; }         p                 { text-align:     left; }         li                { text-align:     left;                             padding-top:    0.5em; }         dd                { text-align:     left; }         td.list           { background:     #EEEEEE; }         blockquote.note   { text-align:     left;                             background:     #EEEEEE;                             border:         none;                             margin:         1em;                             padding:        0.5em; }         ')"/>
+            <xsl:value-of select=" normalize-space('         p                 { text-align:     left; }         li                { text-align:     left; }         dd                { text-align:     left; }         blockquote.note   { text-align:     left; }         ')"/>
          </xsl:if>
 
       </style>

@@ -10,7 +10,7 @@
 <module name="Core functionality"
         link="/en/docs/ngx_core_module.html"
         lang="en"
-        rev="5">
+        rev="6">
 
 <section id="example" name="Example Configuration">
 
@@ -195,23 +195,25 @@ be built with <literal>--with-debug</literal>.
 <context>main</context>
 
 <para>
-Allows to limit a set of environment variables, change their values,
-or create new environment variables, for the following cases:
+By default, nginx removes all environment variables inherited
+from its parent process except the TZ variable.
+This directive allows to preserve some of the inherited variables,
+change their values, or create new environment variables.
+These variables are then:
 <list type="bullet">
 
 <listitem>
-variable inheritance during a
-<link doc="control.xml" id="upgrade">live upgrade</link>
+inherited during a <link doc="control.xml" id="upgrade">live upgrade</link>
 of an executable file;
 </listitem>
 
 <listitem>
-use of variables by the module
+used by the module
 <link doc="http/ngx_http_perl_module.xml">ngx_http_perl_module</link>;
 </listitem>
 
 <listitem>
-use of variables by worker processes.
+used by worker processes.
 Please bear in mind that controlling system libraries in this way
 is not always possible as it is not uncommon for libraries to check
 variables only during initialization, well before they can be set

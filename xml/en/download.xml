@@ -42,8 +42,13 @@ Read-only Subversion repositories:
 code: <literal>svn://svn.nginx.org/nginx</literal>
 </listitem>
 
+</list>
+
+Read-only Mercurial repositories:
+<list type="bullet">
+
 <listitem>
-site: <literal>svn://svn.nginx.org/nginx.org</literal>
+site: <literal>http://hg.nginx.org/nginx.org</literal>
 </listitem>
 
 </list>

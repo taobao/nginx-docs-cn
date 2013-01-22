@@ -8,22 +8,24 @@
 <article name="Configuring HTTPS servers"
          link="/en/docs/http/configuring_https_servers.html"
          lang="en"
-         rev="4"
+         rev="5"
          author="Igor Sysoev"
          editor="Brian Mercer">
 
 <section>
 
 <para>
-To configure an HTTPS server, the SSL protocol must be enabled
-in the server block, and the locations of the server certificate
+To configure an HTTPS server, the <literal>ssl</literal> parameter
+must be enabled on
+<link doc="ngx_http_core_module.xml" id="listen">listening sockets</link>
+in the <link doc="ngx_http_core_module.xml" id="server"/> block,
+and the locations of the server certificate
 and private key files should be specified:
 
 <programlisting>
 server {
-    listen              443;
+    listen              443 <b>ssl</b>;
     server_name         www.example.com;
-    ssl                 <b>on</b>;
     ssl_certificate     <b>www.example.com.crt</b>;
     ssl_certificate_key <b>www.example.com.key</b>;
     ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
@@ -107,11 +109,10 @@ http {
     <b>ssl_session_timeout 10m</b>;
 
     server {
-        listen              443;
+        listen              443 ssl;
         server_name         www.example.com;
         <b>keepalive_timeout   70</b>;
 
-        ssl                 on;
         ssl_certificate     www.example.com.crt;
         ssl_certificate_key www.example.com.key;
         ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
@@ -147,9 +148,8 @@ The resulting file should be used in the
 
 <programlisting>
 server {
-    listen              443;
+    listen              443 ssl;
     server_name         www.example.com;
-    ssl                 on;
     ssl_certificate     www.example.com.chained.crt;
     ssl_certificate_key www.example.com.key;
     ...
@@ -223,10 +223,8 @@ will be shown.
 <section id="single_http_https_server" name="A single HTTP/HTTPS server">
 
 <para>
-If HTTP and HTTPS servers are equal,
-a single server that handles both HTTP and HTTPS requests may be configured
-by deleting the directive “<literal>ssl on</literal>”
-and adding the <literal>ssl</literal> parameter for *:443 port:
+It is possible to configure a single server that handles both HTTP
+and HTTPS requests:
 
 <programlisting>
 server {
@@ -240,11 +238,17 @@ server {
 </programlisting>
 
 <note>
-Prior to 0.8.21, nginx only allows the <literal>ssl</literal> parameter
-to be set on listen sockets with the <literal>default</literal> parameter:
-<programlisting>
-listen 443 default ssl;
-</programlisting>
+Prior to 0.7.14 SSL could not be enabled selectively for
+individual listening sockets, as shown above.
+SSL could only be enabled for the entire server using the
+<link doc="ngx_http_ssl_module.xml" id="ssl"/> directive,
+making it impossible to set up a single HTTP/HTTPS server.
+The <literal>ssl</literal> parameter of the
+<link doc="ngx_http_core_module.xml" id="listen"/> directive
+was added to solve this issue.
+The use of the
+<link doc="ngx_http_ssl_module.xml" id="ssl"/> directive
+in modern versions is thus discouraged.
 </note>
 </para>
 
@@ -259,17 +263,15 @@ listening on a single IP address:
 
 <programlisting>
 server {
-    listen          443;
+    listen          443 ssl;
     server_name     www.example.com;
-    ssl             on;
     ssl_certificate www.example.com.crt;
     ...
 }
 
 server {
-    listen          443;
+    listen          443 ssl;
     server_name     www.example.org;
-    ssl             on;
     ssl_certificate www.example.org.crt;
     ...
 }
@@ -289,24 +291,20 @@ is to assign a separate IP address for every HTTPS server:
 
 <programlisting>
 server {
-    listen          192.168.1.1:443;
+    listen          192.168.1.1:443 ssl;
     server_name     www.example.com;
-    ssl             on;
     ssl_certificate www.example.com.crt;
     ...
 }
 
 server {
-    listen          192.168.1.2:443;
+    listen          192.168.1.2:443 ssl;
     server_name     www.example.org;
-    ssl             on;
     ssl_certificate www.example.org.crt;
     ...
 }
 </programlisting>
 </para>
-
-</section>
 
 
 <section id="certificate_with_several_names"
@@ -345,16 +343,14 @@ ssl_certificate     common.crt;
 ssl_certificate_key common.key;
 
 server {
-    listen          443;
+    listen          443 ssl;
     server_name     www.example.com;
-    ssl             on;
     ...
 }
 
 server {
-    listen          443;
+    listen          443 ssl;
     server_name     www.example.org;
-    ssl             on;
     ...
 }
 </programlisting>
@@ -438,6 +434,8 @@ therefore SNI is not available
 
 </section>
 
+</section>
+
 
 <section id="compatibility" name="Compatibility">
 
@@ -453,6 +451,8 @@ since 0.8.21 and 0.7.62.
 The <literal>ssl</literal> parameter of the
 <link doc="ngx_http_core_module.xml" id="listen"/>
 directive has been supported since 0.7.14.
+Prior to 0.8.21 it could only be specified along with the
+<literal>default</literal> parameter.
 </listitem>
 
 <listitem>

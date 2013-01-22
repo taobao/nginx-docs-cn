@@ -10,7 +10,7 @@
 <module name="Module ngx_http_log_module"
         link="/en/docs/http/ngx_http_log_module.html"
         lang="en"
-        rev="6">
+        rev="7">
 
 <section id="summary">
 
@@ -33,11 +33,11 @@ redirect</link> happens during request processing.
 
 <para>
 <example>
-log_format gzip '$remote_addr - $remote_user [$time_local] '
-                '"$request" $status $bytes_sent '
-                '"$http_referer" "$http_user_agent" "$gzip_ratio"';
+log_format compression '$remote_addr - $remote_user [$time_local] '
+                       '"$request" $status $bytes_sent '
+                       '"$http_referer" "$http_user_agent" "$gzip_ratio"';
 
-access_log /spool/logs/nginx-access.log gzip buffer=32k;
+access_log /spool/logs/nginx-access.log compression buffer=32k;
 </example>
 </para>
 
@@ -50,7 +50,14 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 <syntax>
     <value>path</value>
     [<value>format</value>
-    [<literal>buffer</literal>=<value>size</value>]]</syntax>
+    [<literal>buffer</literal>=<value>size</value>
+    [<literal>flush</literal>=<value>time</value>]]]</syntax>
+<syntax>
+    <value>path</value>
+    <value>format</value>
+    <literal>gzip[=<value>level</value>]</literal>
+    [<literal>buffer</literal>=<value>size</value>]
+    [<literal>flush</literal>=<value>time</value>]</syntax>
 <syntax><literal>off</literal></syntax>
 <default>logs/access.log combined</default>
 <context>http</context>
@@ -60,7 +67,7 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 <context>limit_except</context>
 
 <para>
-Sets the path, format, and buffer size for the buffered log writes.
+Sets the path, format, and configuration of the buffered log writes.
 Several logs can be specified on the same level.
 The special value <literal>off</literal> cancels all
 <literal>access_log</literal> directives on the current level.
@@ -69,8 +76,57 @@ If format is not specified then the predefined format
 </para>
 
 <para>
+If either the <literal>buffer</literal> or <literal>gzip</literal> (1.3.10)
+parameter is used, writes to log will be buffered.
+<note>
 The buffer size must not exceed the size of the atomic write to a disk file.
 For FreeBSD this size is unlimited.
+</note>
+</para>
+
+<para>
+When buffering is enabled, the data will be written to the file:
+<list type="bullet">
+
+<listitem>
+if the next log line does not fit into the buffer;
+</listitem>
+
+<listitem>
+if the buffered data is older than specified by the <literal>flush</literal>
+parameter (1.3.10);
+</listitem>
+
+<listitem>
+when a worker process is <link doc="../control.xml">re-opening</link> log
+files or is shutting down.
+</listitem>
+
+</list>
+</para>
+
+<para>
+If the <literal>gzip</literal> parameter is used, then the buffered data will
+be compressed before writing to the file.
+The compression level can be set between 1 (fastest, less compression)
+and 9 (slowest, best compression).
+By default the buffer size is equal to 64K bytes, and the compression level 
+is set to 1.
+Since the data is compressed in atomic blocks, the log file can be decompressed
+or read by “<literal>zcat</literal>” at any time.
+</para>
+
+<para>
+Example:
+<example>
+access_log /path/to/log.gz combined gzip flush=5m;
+</example>
+</para>
+
+<para>
+<note>
+For gzip compression to work, nginx must be built with the zlib library.
+</note>
 </para>
 
 <para>

@@ -10,7 +10,7 @@
 <module name="Module ngx_http_limit_req_module"
         link="/en/docs/http/ngx_http_limit_req_module.html"
         lang="en"
-        rev="1">
+        rev="2">
 
 <section id="summary">
 
@@ -61,15 +61,15 @@ http {
 
 <para>
 Sets a shared memory zone
-and the maximum allowed burst of requests.
+and the maximum burst size of requests.
 If the rate of requests exceeds the rate configured for a zone,
-request processing is delayed such as that they are processed
+their processing is delayed such that requests are processed
 at a defined rate.
 Excessive requests are delayed until their number exceeds the
-defined number of bursts.
-When exceeded, the request is terminated with an error
+maximum burst size
+in which case the request is terminated with an error
 <http-status code="503" text="Service Temporarily Unavailable"/>.
-By default, the number of bursts is equal to zero.
+By default, the maximum burst size is equal to zero.
 For example, the directives
 <example>
 limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;

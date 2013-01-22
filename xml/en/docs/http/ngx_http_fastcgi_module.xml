@@ -10,7 +10,7 @@
 <module name="Module ngx_http_fastcgi_module"
         link="/en/docs/http/ngx_http_fastcgi_module.html"
         lang="en"
-        rev="3">
+        rev="5">
 
 <section id="summary">
 
@@ -45,7 +45,7 @@ location / {
 <section id="directives" name="Directives">
 
 <directive name="fastcgi_bind">
-<syntax><value>address</value></syntax>
+<syntax><value>address</value> | <literal>off</literal></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -55,6 +55,11 @@ location / {
 <para>
 Forces outgoing connections to a FastCGI server to originate
 from the specified local IP <value>address</value>.
+Value of the parameter can contain variables (1.3.12).
+The special value <literal>off</literal> (1.3.12) cancels the effect
+of the <literal>fastcgi_bind</literal> directive
+inherited from the previous configuration level, allowing the
+system to auto-assign local address.
 </para>
 
 </directive>
@@ -203,6 +208,29 @@ this element to be released, up to the time set by the
 
 <para>
 Sets a timeout for <link id="fastcgi_cache_lock"/>.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_cache_methods">
+<syntax>
+    <literal>GET</literal> |
+    <literal>HEAD</literal> |
+    <literal>POST</literal>
+    ...</syntax>
+<default>GET HEAD</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.7.59</appeared-in>
+
+<para>
+If the client request method is listed in this directive then
+the response will be cached.
+“<literal>GET</literal>” and “<literal>HEAD</literal>” methods are always
+added to the list, though it is recommended to specify them explicitly.
+See also the <link id="fastcgi_no_cache"/> directive.
 </para>
 
 </directive>
@@ -779,6 +807,38 @@ A timeout is only set between two successive read operations,
 not for the transmission of the whole response.
 If a FastCGI server does not transmit anything within this time,
 a connection is closed.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_pass_request_body">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+If disabled, the original request body will not be passed
+to the FastCGI server.
+See also the <link id="fastcgi_pass_request_headers"/> directive.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_pass_request_headers">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+If disabled, header fields of the original request will not be passed to the
+FastCGI server.
+See also the <link id="fastcgi_pass_request_body"/> directive.
 </para>
 
 </directive>

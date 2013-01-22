@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_fastcgi_module"
         link="/ru/docs/http/ngx_http_fastcgi_module.html"
         lang="ru"
-        rev="3">
+        rev="5">
 
 <section id="summary">
 
@@ -45,7 +45,7 @@ location / {
 <section id="directives" name="Директивы">
 
 <directive name="fastcgi_bind">
-<syntax><value>адрес</value></syntax>
+<syntax><value>адрес</value> | <literal>off</literal></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -55,6 +55,11 @@ location / {
 <para>
 Задаёт локальный IP-<value>адрес</value>, который будет использоваться в
 исходящих соединениях с FastCGI-сервером.
+В значении параметра допустимо использование переменных (1.3.12).
+Специальное значение <literal>off</literal> (1.3.12) отменяет действие
+унаследованной с предыдущего уровня конфигурации
+директивы <literal>fastcgi_bind</literal>, позволяя системе
+самостоятельно выбирать локальный адрес.
 </para>
 
 </directive>
@@ -202,6 +207,29 @@ fastcgi_cache_key localhost:9000$request_uri;
 
 <para>
 Задаёт таймаут для <link id="fastcgi_cache_lock"/>.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_cache_methods">
+<syntax>
+    <literal>GET</literal> |
+    <literal>HEAD</literal> |
+    <literal>POST</literal>
+    ...</syntax>
+<default>GET HEAD</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+<appeared-in>0.7.59</appeared-in>
+
+<para>
+Если метод запроса клиента указан в этой директиве,
+то ответ будет закэширован.
+Методы “<literal>GET</literal>” и “<literal>HEAD</literal>” всегда добавляются
+в список, но тем не менее рекомендуется перечислять их явно.
+См. также директиву <link id="fastcgi_no_cache"/>.
 </para>
 
 </directive>
@@ -773,6 +801,38 @@ fastcgi_pass unix:/tmp/fastcgi.socket;
 а только между двумя операциями чтения.
 Если по истечении этого времени FastCGI-сервер ничего не передаст,
 соединение закрывается.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_pass_request_body">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Если запрещено, то исходное тело запроса не будет передано
+на FastCGI-сервер.
+См. также директиву <link id="fastcgi_pass_request_headers"/>.
+</para>
+
+</directive>
+
+
+<directive name="fastcgi_pass_request_headers">
+<syntax><literal>on</literal> | <literal>off</literal></syntax>
+<default>on</default>
+<context>http</context>
+<context>server</context>
+<context>location</context>
+
+<para>
+Если запрещено, то поля заголовка исходного запроса не будут переданы на
+FastCGI-сервер.
+См. также директивы <link id="fastcgi_pass_request_body"/>.
 </para>
 
 </directive>
