@@ -10,7 +10,7 @@
 <module name="Module ngx_http_memcached_module"
         link="/en/docs/http/ngx_http_memcached_module.html"
         lang="en"
-        rev="3">
+        rev="5">
 
 <section id="summary">
 
@@ -49,7 +49,7 @@ server {
 <section id="directives" name="Directives">
 
 <directive name="memcached_bind">
-<syntax><value>address</value></syntax>
+<syntax><value>address</value> | <literal>off</literal></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -59,6 +59,11 @@ server {
 <para>
 Forces outgoing connections to a memcached server to originate
 from the specified local IP <value>address</value>.
+Value of the parameter can contain variables (1.3.12).
+The special value <literal>off</literal> (1.3.12) cancels the effect
+of the <literal>memcached_bind</literal> directive
+inherited from the previous configuration level, allowing the
+system to auto-assign local address.
 </para>
 
 </directive>
@@ -172,6 +177,10 @@ An address can be specified as a domain name or an address, and a port,
 for example,
 <example>
 memcached_pass localhost:11211;
+</example>
+or as a UNIX-domain socket path:
+<example>
+memcached_pass unix:/tmp/memcached.socket;
 </example>
 </para>
 

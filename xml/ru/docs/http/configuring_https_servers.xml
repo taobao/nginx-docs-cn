@@ -8,22 +8,24 @@
 <article name="Настройка HTTPS-серверов"
          link="/ru/docs/http/configuring_https_servers.html"
          lang="ru"
-         rev="4"
+         rev="5"
          author="Игорь Сысоев"
          editor="Brian Mercer">
 
 <section>
 
 <para>
-Чтобы настроить HTTPS-сервер, необходимо включить протокол SSL
-в блоке server, а также указать местоположение файлов с
+Чтобы настроить HTTPS-сервер, необходимо включить параметр
+<literal>ssl</literal> на
+<link doc="ngx_http_core_module.xml" id="listen">слушающих сокетах</link>
+в блоке <link doc="ngx_http_core_module.xml" id="server"/>,
+а также указать местоположение файлов с
 сертификатом сервера и секретным ключом:
 
 <programlisting>
 server {
-    listen              443;
+    listen              443 <b>ssl</b>;
     server_name         www.example.com;
-    ssl                 <b>on</b>;
     ssl_certificate     <b>www.example.com.crt</b>;
     ssl_certificate_key <b>www.example.com.key</b>;
     ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
@@ -107,11 +109,10 @@ http {
     <b>ssl_session_timeout 10m</b>;
 
     server {
-        listen              443;
+        listen              443 ssl;
         server_name         www.example.com;
         <b>keepalive_timeout   70</b>;
 
-        ssl                 on;
         ssl_certificate     www.example.com.crt;
         ssl_certificate_key www.example.com.key;
         ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
@@ -147,9 +148,8 @@ $ cat www.example.com.crt bundle.crt > www.example.com.chained.crt
 
 <programlisting>
 server {
-    listen              443;
+    listen              443 ssl;
     server_name         www.example.com;
-    ssl                 on;
     ssl_certificate     www.example.com.chained.crt;
     ssl_certificate_key www.example.com.key;
     ...
@@ -223,11 +223,8 @@ Certificate chain
 <section id="single_http_https_server" name="Единый HTTP/HTTPS сервер">
 
 <para>
-Если серверы HTTP и HTTPS идентичны,
-можно настроить единый сервер, который обслуживает как HTTP-,
-так и HTTPS-запросы.
-Для этого следует исключить директиву “<literal>ssl on</literal>”
-и добавить параметр <literal>ssl</literal> к порту *:443:
+Можно настроить единый сервер, который обслуживает как HTTP-,
+так и HTTPS-запросы:
 
 <programlisting>
 server {
@@ -241,11 +238,17 @@ server {
 </programlisting>
 
 <note>
-До версии 0.8.21 nginx допускал указание параметра <literal>ssl</literal>
-на слушающем сокете только совместно с параметром <literal>default</literal>:
-<programlisting>
-listen  443  default  ssl;
-</programlisting>
+До версии 0.7.14 SSL нельзя было включить выборочно для
+отдельных слущающих сокетов, как показано выше.
+SSL можно было включить только для всего сервера целиком,
+с помощью директивы <link doc="ngx_http_ssl_module.xml" id="ssl"/>,
+что не позволяло настроить единый HTTP/HTTPS сервер.
+Для решения этой задачи был добавлен
+параметр <literal>ssl</literal>
+директивы <link doc="ngx_http_core_module.xml" id="listen"/>.
+Поэтому использование
+директивы <link doc="ngx_http_ssl_module.xml" id="ssl"/>
+в современных версиях не рекомендуется.
 </note>
 </para>
 
@@ -260,17 +263,15 @@ listen  443  default  ssl;
 
 <programlisting>
 server {
-    listen          443;
+    listen          443 ssl;
     server_name     www.example.com;
-    ssl             on;
     ssl_certificate www.example.com.crt;
     ...
 }
 
 server {
-    listen          443;
+    listen          443 ssl;
     server_name     www.example.org;
-    ssl             on;
     ssl_certificate www.example.org.crt;
     ...
 }
@@ -290,24 +291,20 @@ SSL-соединение устанавливается до того, как б
 
 <programlisting>
 server {
-    listen          192.168.1.1:443;
+    listen          192.168.1.1:443 ssl;
     server_name     www.example.com;
-    ssl             on;
     ssl_certificate www.example.com.crt;
     ...
 }
 
 server {
-    listen          192.168.1.2:443;
+    listen          192.168.1.2:443 ssl;
     server_name     www.example.org;
-    ssl             on;
     ssl_certificate www.example.org.crt;
     ...
 }
 </programlisting>
 </para>
-
-</section>
 
 
 <section id="certificate_with_several_names"
@@ -346,16 +343,14 @@ ssl_certificate     common.crt;
 ssl_certificate_key common.key;
 
 server {
-    listen          443;
+    listen          443 ssl;
     server_name     www.example.com;
-    ssl             on;
     ...
 }
 
 server {
-    listen          443;
+    listen          443 ssl;
     server_name     www.example.org;
-    ssl             on;
     ...
 }
 </programlisting>
@@ -439,6 +434,8 @@ therefore SNI is not available
 
 </section>
 
+</section>
+
 
 <section id="compatibility" name="Совместимость">
 
@@ -454,6 +451,8 @@ therefore SNI is not available
 Параметр <literal>ssl</literal> директивы
 <link doc="ngx_http_core_module.xml" id="listen"/>
 поддерживается начиная с версии 0.7.14.
+До версии 0.8.21 его можно было указывать только совместно с
+параметром <literal>default</literal>.
 </listitem>
 
 <listitem>

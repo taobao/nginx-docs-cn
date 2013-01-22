@@ -53,6 +53,12 @@
             </xsl:attribute>
          </xsl:if>
 
+         <xsl:if test="@lang = 'cn'">
+            <xsl:attribute name="lang">
+               <xsl:text>zh-CN</xsl:text>
+            </xsl:attribute>
+         </xsl:if>
+
          <head>
 
             <title>

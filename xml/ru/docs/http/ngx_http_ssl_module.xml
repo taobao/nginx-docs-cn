@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_ssl_module"
         link="/ru/docs/http/ngx_http_ssl_module.html"
         lang="ru"
-        rev="5">
+        rev="6">
 
 <section id="summary">
 
@@ -68,10 +68,9 @@ http {
     ...
 
     server {
-        listen              443;
+        listen              443 ssl;
         <emphasis>keepalive_timeout   70;</emphasis>
 
-        ssl                 on;
         ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
         ssl_ciphers         AES128-SHA:AES256-SHA:RC4-SHA:DES-CBC3-SHA:RC4-MD5;
         ssl_certificate     /usr/local/nginx/conf/cert.pem;
@@ -96,7 +95,12 @@ http {
 <context>server</context>
 
 <para>
-Разрешает протокол HTTPS для данного виртуального сервера.
+Включает протокол HTTPS для данного виртуального сервера.
+<note>
+Вместо этой директивы рекомендуется использовать параметр
+<literal>ssl</literal> директивы
+<link doc="ngx_http_core_module.xml" id="listen"/>.
+</note>
 </para>
 
 </directive>

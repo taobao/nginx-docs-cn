@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_log_module"
         link="/ru/docs/http/ngx_http_log_module.html"
         lang="ru"
-        rev="6">
+        rev="7">
 
 <section id="summary">
 
@@ -34,11 +34,11 @@
 
 <para>
 <example>
-log_format gzip '$remote_addr - $remote_user [$time_local] '
-                '"$request" $status $bytes_sent '
-                '"$http_referer" "$http_user_agent" "$gzip_ratio"';
+log_format compression '$remote_addr - $remote_user [$time_local] '
+                       '"$request" $status $bytes_sent '
+                       '"$http_referer" "$http_user_agent" "$gzip_ratio"';
 
-access_log /spool/logs/nginx-access.log gzip buffer=32k;
+access_log /spool/logs/nginx-access.log compression buffer=32k;
 </example>
 </para>
 
@@ -51,7 +51,14 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 <syntax>
     <value>путь</value>
     [<value>формат</value>
-    [<literal>buffer</literal>=<value>размер</value>]]</syntax>
+    [<literal>buffer</literal>=<value>размер</value>
+    [<literal>flush</literal>=<value>время</value>]]]</syntax>
+<syntax>
+    <value>путь</value>
+    <value>формат</value>
+    <literal>gzip[=<value>степень</value>]</literal>
+    [<literal>buffer</literal>=<value>размер</value>]
+    [<literal>flush</literal>=<value>время</value>]</syntax>
 <syntax><literal>off</literal></syntax>
 <default>logs/access.log combined</default>
 <context>http</context>
@@ -61,7 +68,7 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 <context>limit_except</context>
 
 <para>
-Задаёт путь, формат и размер буфера для буферизованной записи в лог.
+Задаёт путь, формат и настройки буферизованной записи в лог.
 На одном уровне может использоваться несколько логов.
 Специальное значение <literal>off</literal> отменяет все директивы
 <literal>access_log</literal> для текущего уровня.
@@ -70,8 +77,57 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 </para>
 
 <para>
+Если задан размер буфера с помощью параметра <literal>buffer</literal> или
+указан параметр <literal>gzip</literal> (1.3.10), то запись будет
+буферизованной.
+<note>
 Размер буфера должен быть не больше размера атомарной записи в дисковый файл.
 Для FreeBSD этот размер неограничен.
+</note>
+</para>
+
+<para>
+При включённой буферизации данные записываются в файл:
+<list type="bullet">
+
+<listitem>
+если очередная строка лога не помещается в буфер;
+</listitem>
+
+<listitem>
+если данные в буфере находятся дольше интервала времени, заданного
+параметром <literal>flush</literal> (1.3.10);
+</listitem>
+
+<listitem>
+при <link doc="../control.xml">переоткрытии</link> лог-файла или
+завершении рабочего процесса.
+</listitem>
+
+</list>
+</para>
+
+<para>
+Если задан параметр <literal>gzip</literal>, то буфер будет сжиматься перед
+записью в файл.
+Степень сжатия может быть задана в диапазоне от 1 (быстрее, но хуже сжатие)
+до 9 (медленнее, но лучше сжатие).
+По умолчанию используется буфер размером 64К байт и степень сжатия 1.
+Данные сжимаются атомарными блоками, и в любой момент времени лог-файл может
+быть распакован или прочитан с помощью утилиты “<literal>zcat</literal>”.
+</para>
+
+<para>
+Пример:
+<example>
+access_log /path/to/log.gz combined gzip flush=5m;
+</example>
+</para>
+
+<para>
+<note>
+Для поддержки gzip-сжатия логов nginx должен быть собран с библиотекой zlib.
+</note>
 </para>
 
 <para>

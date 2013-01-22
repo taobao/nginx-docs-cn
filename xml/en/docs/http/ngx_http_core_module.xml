@@ -10,7 +10,7 @@
 <module name="Module ngx_http_core_module"
         link="/en/docs/http/ngx_http_core_module.html"
         lang="en"
-        rev="13">
+        rev="14">
 
 <section id="directives" name="Directives">
 
@@ -1380,8 +1380,8 @@ adjacent slashes into a single slash.
 <para>
 A location can either be defined by a prefix string, or by a regular expression.
 Regular expressions are specified by prepending them with the
-“<literal>~*</literal>” prefix (for case-insensitive matching), or with the
-“<literal>~</literal>” prefix (for case-sensitive matching).
+“<literal>~*</literal>” modifier (for case-insensitive matching), or with the
+“<literal>~</literal>” modifier (for case-sensitive matching).
 To find a location matching a given request, nginx first checks
 locations defined using the prefix strings (prefix locations).
 Among them, the most specific one is searched.
@@ -1409,12 +1409,12 @@ be used in other directives.
 </para>
 
 <para>
-If the most specific prefix location has the “<literal>^~</literal>” prefix
+If the most specific prefix location has the “<literal>^~</literal>” modifier
 then regular expressions are not checked.
 </para>
 
 <para>
-Also, using the “<literal>=</literal>” prefix it is possible to define
+Also, using the “<literal>=</literal>” modifier it is possible to define
 an exact match of URI and location.
 If an exact match is found, the search terminates.
 For example, if a “<literal>/</literal>” request happens frequently,
@@ -1428,7 +1428,7 @@ Such a location cannot obviously contain nested locations.
 <note>
 In versions from 0.7.1 to 0.8.41, if a request matched the prefix
 location without the “<literal>=</literal>” and “<literal>^~</literal>”
-prefixes, the search also terminated and regular expressions were
+modifiers, the search also terminated and regular expressions were
 not checked.
 </note>
 </para>

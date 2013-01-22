@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_memcached_module"
         link="/ru/docs/http/ngx_http_memcached_module.html"
         lang="ru"
-        rev="3">
+        rev="5">
 
 <section id="summary">
 
@@ -49,7 +49,7 @@ server {
 <section id="directives" name="Директивы">
 
 <directive name="memcached_bind">
-<syntax><value>адрес</value></syntax>
+<syntax><value>адрес</value> | <literal>off</literal></syntax>
 <default/>
 <context>http</context>
 <context>server</context>
@@ -59,6 +59,11 @@ server {
 <para>
 Задаёт локальный IP-<value>адрес</value>, который будет использоваться в
 исходящих соединениях с сервером memcached.
+В значении параметра допустимо использование переменных (1.3.12).
+Специальное значение <literal>off</literal> (1.3.12) отменяет действие
+унаследованной с предыдущего уровня конфигурации
+директивы <literal>memcached_bind</literal>, позволяя системе
+самостоятельно выбирать локальный адрес.
 </para>
 
 </directive>
@@ -170,6 +175,10 @@ server {
 Адрес может быть указан в виде доменного имени или адреса, и порта, например,
 <example>
 memcached_pass localhost:11211;
+</example>
+или в виде пути UNIX-сокета:
+<example>
+memcached_pass unix:/tmp/memcached.socket;
 </example>
 </para>
 

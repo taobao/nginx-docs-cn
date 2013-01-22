@@ -10,7 +10,7 @@
 <module name="Модуль ngx_http_geo_module"
         link="/ru/docs/http/ngx_http_geo_module.html"
         lang="ru"
-        rev="2">
+        rev="4">
 
 <section id="summary">
 
@@ -28,9 +28,13 @@
 <example>
 geo $geo {
     default        0;
-    127.0.0.1/32   2;
+
+    127.0.0.1      2;
     192.168.1.0/24 1;
     10.1.0.0/16    1;
+
+    ::1            2;
+    2001:0db8::/32 1;
 }
 </example>
 </para>
@@ -72,7 +76,14 @@ geo $arg_remote_addr $geo {
 </para>
 
 <para>
-Адреса задаются в виде CIDR или в виде диапазонов (0.7.23).
+Адреса задаются либо префиксами в формате CIDR
+(включая одиночные адреса), либо в виде диапазонов (0.7.23).
+<note>
+IPv6-префиксы поддерживаются начиная с версии 1.3.10.
+</note>
+</para>
+
+<para>
 Также поддерживаются следующие специальные параметры:
 <list type="tag">
 
@@ -84,9 +95,12 @@ geo $arg_remote_addr $geo {
 <tag-name><literal>default</literal></tag-name>
 <tag-desc>
 значение переменной, если адрес клиента не соответствует
-ни одному заданному адресу.
-При использовании CIDR вместо <literal>default</literal> можно
-также написать “<literal>0.0.0.0/0</literal>”.
+ни одному из заданных адресов.
+При задании адресов в формате CIDR
+вместо <literal>default</literal> можно использовать
+“<literal>0.0.0.0/0</literal>” и “<literal>::/0</literal>”.
+Если параметр <literal>default</literal> не указан, значением
+по умолчанию будет пустая строка.
 </tag-desc>
 
 <tag-name><literal>include</literal></tag-name>
@@ -103,7 +117,7 @@ geo $arg_remote_addr $geo {
 В отличие от обычных адресов, доверенные адреса проверяются
 последовательно.
 <note>
-IPv6-адреса поддерживаются начиная с версий 1.3.0 и 1.2.1.
+Доверенные IPv6-адреса поддерживаются начиная с версий 1.3.0 и 1.2.1.
 </note>
 </tag-desc>
 

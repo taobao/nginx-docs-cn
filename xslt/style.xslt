@@ -12,6 +12,11 @@
             <xsl:value-of select=" normalize-space('         pre               { text-align:     left;                             direction:      ltr; }         code              { direction:      ltr;                             unicode-bidi:   embed; }         .ltr              { direction:      ltr;                             unicode-bidi:   embed; }         ')"/>
          </xsl:if>
 
+         <xsl:if test="$lang = 'cn'">
+
+            <xsl:value-of select=" normalize-space('         p                 { text-align:     left; }         li                { text-align:     left; }         dd                { text-align:     left; }         blockquote.note   { text-align:     left; }         ')"/>
+         </xsl:if>
+
       </style>
    </xsl:template>
 

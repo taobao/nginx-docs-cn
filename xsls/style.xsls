@@ -65,6 +65,15 @@ X:template style (lang) {
         ') }
     }
 
+    X:if "$lang = 'cn'" {
+        !{ normalize-space('
+        p                 { text-align:     left; }
+        li                { text-align:     left; }
+        dd                { text-align:     left; }
+        blockquote.note   { text-align:     left; }
+        ') }
+    }
+
     </style>
 }
 

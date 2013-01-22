@@ -10,7 +10,7 @@
 <module name="Module ngx_http_ssl_module"
         link="/en/docs/http/ngx_http_ssl_module.html"
         lang="en"
-        rev="5">
+        rev="6">
 
 <section id="summary">
 
@@ -68,10 +68,9 @@ http {
     ...
 
     server {
-        listen              443;
+        listen              443 ssl;
         <emphasis>keepalive_timeout   70;</emphasis>
 
-        ssl                 on;
         ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
         ssl_ciphers         AES128-SHA:AES256-SHA:RC4-SHA:DES-CBC3-SHA:RC4-MD5;
         ssl_certificate     /usr/local/nginx/conf/cert.pem;
@@ -97,6 +96,11 @@ http {
 
 <para>
 Enables the HTTPS protocol for the given virtual server.
+<note>
+It is recommended to use the <literal>ssl</literal> parameter of the
+<link doc="ngx_http_core_module.xml" id="listen"/> directive instead
+of this directive.
+</note>
 </para>
 
 </directive>

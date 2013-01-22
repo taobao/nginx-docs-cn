@@ -76,10 +76,12 @@ NEWS_DEPS =								\
 
 LANGS =		en ru cn he ja tr
 
+YEARS =		2012 2011 2010 2009
+
 all:		news arx 404 $(LANGS)
 
 news:		$(OUT)/index.html $(OUT)/index.rss
-arx:		$(OUT)/2011.html $(OUT)/2010.html $(OUT)/2009.html
+arx:		$(foreach year,$(YEARS),$(OUT)/$(year).html)
 404:		$(OUT)/404.html
 
 
@@ -135,9 +137,7 @@ $(OUT)/index.rss:							\
 	$(call XSLT, xslt/rss.xslt, $<, $@)
 
 
-$(OUT)/2011.html							\
-$(OUT)/2010.html							\
-$(OUT)/2009.html:							\
+$(foreach year,$(YEARS),$(OUT)/$(year).html):				\
 		xml/index.xml						\
 		$(NEWS_DEPS)
 	$(call XSLT, xslt/news.xslt, $<, $@, YEAR=$(basename $(notdir $@)))
