@@ -7,22 +7,22 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_split_clients_module"
-        link="/en/docs/http/ngx_http_split_clients_module.html"
-        lang="en"
+<module name="ngx_http_split_clients_module模块"
+        link="/cn/docs/http/ngx_http_split_clients_module.html"
+        lang="cn"
+        translator="nigelzeng"
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_split_clients_module</literal> module creates
-variables suitable for A/B testing, also known as split testing.
+<literal>ngx_http_split_clients_module</literal>模块创建适合于A/B测试（也叫做分离测试）的变量。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置实例">
 
 <para>
 <example>
@@ -42,7 +42,7 @@ http {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="split_clients">
 <syntax block="yes">
@@ -60,14 +60,10 @@ split_clients "${remote_addr}AAA" $variant {
                *                  "";
 }
 </example>
-The value of the original string is hashed using MurmurHash2.
-In the example given, hash values from 0 to 21474835 (0.5%)
-correspond to the <var>$variant</var> variable taking the
-value <literal>".one"</literal>,
-hash values from 21474836 to 107374180 (2%) correspond to
-the value <literal>".two"</literal>,
-and hash values from 107374181 to 4294967295 correspond to
-the value <literal>""</literal>.
+原始字符串的值经过MurmurHash2算法进行了哈希。
+示例中，哈希值从0到21474835（0.5%）对应于变量<var>$variant</var>的<literal>".one"</literal>值，
+哈希值从21474836到107374180（2%）对应于值<literal>".two"</literal>，
+哈希值从107374181到4294967295对应于值<literal>""</literal>（一个空字符串）。
 </para>
 
 </directive>

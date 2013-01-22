@@ -85,8 +85,7 @@ access_log /spool/logs/nginx-access.log gzip buffer=32k;
 </listitem>
 
 <listitem>
-每条日志写入都会打开和关闭文件。然而，频繁使用的文件描述符可以存储在
-<link id="open_log_file_cache">缓存</link>中，
+每条日志写入都会打开和关闭文件。然而，频繁使用的文件描述符可以存储在<link id="open_log_file_cache">缓存</link>中，
 在<link id="open_log_file_cache"/>指令的<literal>valid</literal>参数指定的时间里，
 写操作能持续写到旧文件。
 </listitem>
