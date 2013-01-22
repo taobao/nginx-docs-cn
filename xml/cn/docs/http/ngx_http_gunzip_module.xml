@@ -18,7 +18,8 @@
 <para>
 <literal>ngx_http_gunzip_module</literal>模块是一个过滤器，
 它为不支持“gzip”编码方法的客户端解压具有“<literal>Content-Encoding: gzip</literal>”头的响应。
-当希望存储压缩后的数据，以节省空间和减少I/O开销时，此模块会派上用途。
+当希望存储压缩后的数据以节省空间和减少I/O开销，又不希望对那些不支持gzip压缩的客户端造成不利影响时，
+此模块会派上用途。
 </para>
 
 <para>
@@ -53,9 +54,9 @@ location /storage/ {
 
 <para>
 针对缺少gzip支持的客户端，启用或者禁用解压经过gzip压缩的响应。
-如果启用，确定客户端是否支持gzip的时候以下指令也需要考虑：
-<link doc="ngx_http_gzip_module.xml" id="gzip_http_version">gzip_http_version</link>
-<link doc="ngx_http_gzip_module.xml" id="gzip_proxied">gzip_proxied</link>
+如果启用，也需要考虑以下指令以确定客户端是否支持gzip：
+<link doc="ngx_http_gzip_module.xml" id="gzip_http_version">gzip_http_version</link>，
+<link doc="ngx_http_gzip_module.xml" id="gzip_proxied">gzip_proxied</link>，
 <link doc="ngx_http_gzip_module.xml" id="gzip_disable">gzip_disable</link>
 和
 <link doc="ngx_http_gzip_module.xml" id="gzip_vary">gzip_vary</link>指令。
