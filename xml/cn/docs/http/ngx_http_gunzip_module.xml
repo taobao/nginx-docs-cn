@@ -57,8 +57,8 @@ location /storage/ {
 如果启用，也需要考虑以下指令以确定客户端是否支持gzip：
 <link doc="ngx_http_gzip_module.xml" id="gzip_http_version">gzip_http_version</link>，
 <link doc="ngx_http_gzip_module.xml" id="gzip_proxied">gzip_proxied</link>，
-和<link doc="ngx_http_gzip_module.xml" id="gzip_disable">gzip_disable</link>。
-另外会添加Vary头，参见<link doc="ngx_http_gzip_module.xml" id="gzip_vary">gzip_vary</link>指令。
+和<link doc="ngx_http_gzip_module.xml" id="gzip_disable">gzip_disable</link>，
+另请参阅<link doc="ngx_http_gzip_module.xml" id="gzip_vary">gzip_vary</link>指令。
 </para>
 
 </directive>
