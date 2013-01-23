@@ -5,100 +5,80 @@
 
 <!DOCTYPE article SYSTEM "../../../dtd/article.dtd">
 
-<article name="Connection processing methods"
-         link="/en/docs/events.html"
-         lang="en"
-         rev="1">
+<article name="连接处理方法"
+         link="/cn/docs/events.html"
+         lang="cn"
+         translator="cfsego"
+         rev="2">
 
 <section>
 
 <para>
-nginx supports a variety of connection processing methods.
-The availability of a particular method depends on the platform used.
-On platforms that support several methods nginx will normally
-select the most efficient method automatically.
-However, if needed, a connection processing method can be selected
-explicitly with the
-<link doc="ngx_core_module.xml" id="use"/> directive.
+nginx支持多种连接处理方法，而哪些处理方法可用则取决于使用的平台。
+如果平台支持多种方法，那么nginx一般会自动选择最有效的方法。
+如果需要，也可以使用<link doc="ngx_core_module.xml" id="use"/>指令明确指定连接处理方法。
 </para>
 
 <para>
-The following connection processing methods are supported:
+nginx支持下列连接处理方法：
 <list type="bullet">
 
-<listitem>
+<listitem id="select">
 <para>
-<literal>select</literal>&mdash;standard method.
-The supporting module is built automatically on platforms that lack
-more efficient methods.
-The <literal>--with-select_module</literal> and
-<literal>--without-select_module</literal> configuration parameters
-can be used to forcibly enable or disable the build of this module.
+<literal>select</literal>&mdash;标准方法。
+在平台不支持更有效的方法时，nginx会自动编译此模块。
+可以使用<literal>--with-select_module</literal>和<literal>--without-select_module</literal>编译选项
+强行开启或禁止编译此模块。
 </para>
 </listitem>
 
-<listitem>
+<listitem id="poll">
 <para>
-<literal>poll</literal>&mdash;standard method.
-The supporting module is built automatically on platforms that lack
-more efficient methods.
-The <literal>--with-poll_module</literal> and
-<literal>--without-poll_module</literal> configuration parameters
-can be used to forcibly enable or disable the build of this module.
+<literal>poll</literal>&mdash;标准模块。
+在平台不支持更有效的方法时，nginx会自动编译此模块。
+可以使用<literal>--with-poll_module</literal>和<literal>--without-poll_module</literal>编译选项
+强行开启或禁止编译此模块。
 </para>
 </listitem>
 
-<listitem>
+<listitem id="kqueue">
 <para>
-<literal>kqueue</literal>&mdash;efficient method used on
-FreeBSD 4.1+, OpenBSD 2.9+, NetBSD 2.0, and Mac OS X.
+<literal>kqueue</literal>&mdash;FreeBSD 4.1+、OpenBSD 2.9+、NetBSD 2.0和Mac OS X的有效方法。
 </para>
 </listitem>
 
-<listitem>
+<listitem id="epoll">
 <para>
-<literal>epoll</literal>&mdash;efficient method used on
-Linux 2.6+.
+<literal>epoll</literal>&mdash;Linux 2.6+的有效方法。
 <note>
-Some older distributions like SuSE 8.2 provide patches
-that add epoll support to 2.4 kernels.
+一些旧的发行版，比如SuSE 8.2，提供了补丁，在2.4内核上支持了epoll方法。
 </note>
 </para>
 </listitem>
 
-<listitem>
+<listitem id="rtsig">
 <para>
-<literal>rtsig</literal>&mdash;real time signals, efficient method
-used on Linux 2.2.19+.
-By default,
-the system-wide event queue is limited by 1024 signals.
-On loaded servers it may become necessary to increase this limit
-by changing the <path>/proc/sys/kernel/rtsig-max</path> kernel parameter.
-However, in Linux 2.6.6-mm2 this parameter is gone, and each process
-now has its own event queue.
-The size of each queue is limited by <literal>RLIMIT_SIGPENDING</literal>
-(see also <link doc="ngx_core_module.xml" id="worker_rlimit_sigpending"/>).
+<literal>rtsig</literal>&mdash;实时信号，Linux 2.2.19+的有效方法。
+系统级的事件队列默认有1024个信号的限制。在高负载的服务器上，将此限制上调可能是必须的。
+调整的方法是改变<path>/proc/sys/kernel/rtsig-max</path>内核参数的值。
+在Linux 2.6.6-mm2上，这个参数不存在，而且每个进程拥有自己的事件队列。
+每个队列的长度由<literal>RLIMIT_SIGPENDING</literal>所限，并可使用<link doc="ngx_core_module.xml" id="worker_rlimit_sigpending"/>指令修改。
 </para>
 
 <para>
-On queue overflow, nginx discards the queue and falls back to
-<literal>poll</literal> connection processing method until
-the situation gets back to normal.
+队列溢出时，nginx丢弃这个队列，并回退到<literal>poll</literal>连接处理方法，直到情况恢复正常为止。
 </para>
 </listitem>
 
-<listitem>
+<listitem id="devpoll">
 <para>
-<literal>/dev/poll</literal>&mdash;efficient method used on
-Solaris 7 11/99+, HP/UX 11.22+ (eventport), IRIX 6.5.15+,
-and Tru64 UNIX 5.1A+.
+<literal>/dev/poll</literal>&mdash;Solaris 7 11/99+、HP/UX 11.22+ (eventport)、IRIX 6.5.15+和Tru64 UNIX 5.1A+的有效方法。
 </para>
 </listitem>
 
-<listitem>
+<listitem id="eventport">
 <para>
-<literal>eventport</literal>&mdash;event ports, efficient method
-used on Solaris 10.
+<literal>eventport</literal>&mdash;事件端口，Solaris 10的有效方法。
 </para>
 </listitem>
 
