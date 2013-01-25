@@ -21,7 +21,7 @@ MIME类型和请求头的字段名，nginx使用了哈希表。
 同时使每个哈希桶的长度不超过设置的配置参数。这些桶用于保存键和对应的哈希值。
 整个哈希表的容量以哈希桶的数量来定义。
 nginx不断调整哈希表直到哈希表容量超过配置的最大值。
-大部分哈希表都用对应的指令，允许修改这些配置参数。
+大部分哈希表都有对应的指令，允许修改这些配置参数。
 比如，针对虚拟主机名的哈希表，有<link doc="http/ngx_http_core_module.xml" id="server_names_hash_max_size"/>
 和<link doc="http/ngx_http_core_module.xml" id="server_names_hash_bucket_size"/>两条指令。
 </para>
