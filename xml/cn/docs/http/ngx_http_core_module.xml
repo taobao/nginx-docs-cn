@@ -1965,7 +1965,7 @@ server {
 <context>http</context>
 
 <para>
-设置主机名哈希表的表项长度，其默认值取决于处理器的缓存线长度。
+设置主机名哈希桶大小，其默认值取决于处理器的缓存线长度。
 另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 
@@ -1978,7 +1978,7 @@ server {
 <context>http</context>
 
 <para>
-设置主机名哈希表的最大<value>size</value>(桶容量)。
+设置主机名哈希表的最大<value>size</value>(容量)。
 另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 
@@ -2222,7 +2222,7 @@ location /download/ {
 <context>location</context>
 
 <para>
-设置MIME类型哈希表的表项长度，其默认值取决于处理器的缓存线长度。
+设置MIME类型哈希桶大小，其默认值取决于处理器的缓存线长度。
 另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 
@@ -2237,7 +2237,7 @@ location /download/ {
 <context>location</context>
 
 <para>
-设置MIME类型哈希表的最大<value>size</value>(桶容量)。
+设置MIME类型哈希表的最大<value>size</value>(容量)。
 另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 
@@ -2268,7 +2268,7 @@ location /download/ {
 <context>http</context>
 
 <para>
-设置变量哈希表的表项长度，其默认值取决于处理器的缓存线长度。
+设置变量哈希桶大小，其默认值取决于处理器的缓存线长度。
 另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 
@@ -2281,7 +2281,7 @@ location /download/ {
 <context>http</context>
 
 <para>
-设置变量哈希表的最大<value>size</value>(桶容量)。
+设置变量哈希表的最大<value>size</value>(容量)。
 另一篇文档“<link doc="../hash.xml">设置哈希表</link>”详细介绍了如何设置哈希表。
 </para>
 

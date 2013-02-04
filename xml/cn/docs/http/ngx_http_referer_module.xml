@@ -52,7 +52,7 @@ if ($invalid_referer) {
 <appeared-in>1.0.5</appeared-in>
 
 <para>
-设置用来存储有效referer的哈希表的表项长度。
+设置用来存储有效referer的哈希桶的大小。
 详细的情况参见<link doc="../hash.xml">哈希表设置</link>。
 </para>
 
@@ -67,7 +67,7 @@ if ($invalid_referer) {
 <appeared-in>1.0.5</appeared-in>
 
 <para>
-设置用来存储有效referer的哈希表最大<value>桶容量</value>。
+设置用来存储有效referer的哈希表最大<value>容量</value>。
 详细的情况参见<link doc="../hash.xml">哈希表设置</link>。
 </para>
 
