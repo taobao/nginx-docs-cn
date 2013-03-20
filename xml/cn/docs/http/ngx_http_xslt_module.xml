@@ -20,7 +20,7 @@
 </para>
 
 <para>
-此模块不是默认编译的，因此它需要指定
+此模块不是默认编译的，因此需要指定
 <literal>--with-http_xslt_module</literal>
 编译选项。
 <note>
@@ -58,10 +58,10 @@ location / {
 <context>location</context>
 
 <para>
-指定的DTD文件声明字符实体。
+指定DTD文件声明字符实体。
 此文件在配置阶段编译。
-由于技术原因，模块不能使用在处理XML阶段声明的外部子集，而是采用了一个专门定义文件。
-这个文件不能描述XML结构，它仅能描述需要的字符实体，比如：
+由于技术原因，模块不能使用处理的XML中声明的外部子集，因而他忽略这些子集并使用专门的文件来定义。
+这个文件仅能描述需要的字符实体，而不应该使用它来描述XML结构，比如：
 
 <example>
 &lt;!ENTITY nbsp "&amp;#xa0;"&gt;
@@ -87,10 +87,10 @@ location / {
 </para>
 
 <para>
-可能会有几个 <literal>xslt_param</literal> 指令。
-当且仅当没有定义在当前level的指令
+可以有多个 <literal>xslt_param</literal> 指令。
+当且仅当在当前块级别中没有定义
 <literal>xslt_param</literal> 和 <link id="xslt_string_param"/>
-，这些指令才能继承之前的level。
+指令，这些指令才能继承上层级别的设置。
 </para>
 
 </directive>
@@ -106,15 +106,15 @@ location / {
 
 <para>
 为XSLT样式表定义一个字符串参数。
-包含XPath 表达式的 <value>value</value> 值不做阐述。
+nginx不解析 <value>value</value> 中包含的XPath表达式。
  <value>value</value> 值可以包含变量。
 </para>
 
 <para>
-可能会有一些<literal>xslt_string_param</literal> 指令。
-当且仅当没有定义在当前level的指令
+可以有多个<literal>xslt_string_param</literal> 指令。
+当且仅当在当前块级别中没有定义
 <link id="xslt_param"/> 和 <literal>xslt_string_param</literal>
-，这些指令才能继承之前的level。
+指令，这些指令才能继承上层级别的设置。
 </para>
 
 </directive>
@@ -133,19 +133,19 @@ location / {
 </para>
 
 <para>
-参数既可以单独指定，也可以在一行中使用分隔符
- “<literal>:</literal>” 来分组。
+参数既可以单独指定，也可以写在一行，并使用分隔符
+ “<literal>:</literal>” 来分隔。
 如果一个参数包含了“<literal>:</literal>” 字符，
 它应该被转义为 “<literal>%3A</literal>”。
 并且<command>libxslt</command> 
-需要封装成参数，这个参数包含转换为单引号或者双引号的非字母字符。例如：
+需要将非阿拉伯字母的参数包括在单引号或双引号中。例如：
 <example>
 param1='http%3A//www.example.com':param2=value2
 </example>
 </para>
 
 <para>
-参数的描述可以包含变量，例如，整条线的参数可以取自一个单一变量：
+可以使用变量来描述参数，例如，可以用一个变量来指定整行参数。
 <example>
 location / {
     xslt_stylesheet /site/xslt/one.xslt
@@ -157,7 +157,7 @@ location / {
 </para>
 
 <para>
-可以指定几个样式表，它们可以按照指定的顺序来排序应用。
+可以指定多个样式表；在这种情况下，它们将按配置中指定的顺序来生效。
 </para>
 
 </directive>
@@ -173,7 +173,7 @@ location / {
 <para>
 除了“<literal>text/xml</literal>”类型，启用指定的MIME类型的转换相应。
 特别指定的值The special value “<literal>*</literal>”匹配任何MIME类型(0.8.29)。
-如果转换的结果是HTML相应，它的MIME类型就变为“<literal>text/html</literal>”.
+如果转换的结果是HTML响应，它的MIME类型就变为“<literal>text/html</literal>”.
 </para>
 
 </directive>
