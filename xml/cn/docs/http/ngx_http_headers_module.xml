@@ -9,15 +9,16 @@
 
 <module name="Module ngx_http_headers_module"
         link="/en/docs/http/ngx_http_headers_module.html"
-        lang="en"
+        lang="cn"
+        translator="allisstone"
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_headers_module</literal> module allows to emit
-the <header>Expires</header> and <header>Cache-Control</header> header
-fields, and to add arbitrary fields to a response header.
+<literal>ngx_http_headers_module</literal> 模块允许发出
+ <header>Expires</header> 和 <header>Cache-Control</header> 
+头域，并将任意域添加到响应头。
 </para>
 
 </section>
@@ -50,9 +51,8 @@ add_header Cache-Control private;
 <context>location</context>
 
 <para>
-Adds the specified field to a response header provided that
-the response code equals 200, 204, 206, 301, 302, 303, 304, or 307.
-A value can contain variables.
+假如响应代码等于200, 204, 206, 301, 302, 303, 304, 或者307，增加指定域到响应头。
+一个值可以包含变量。
 </para>
 
 </directive>
@@ -70,33 +70,33 @@ A value can contain variables.
 <context>location</context>
 
 <para>
-Enables or disables adding or modifying the <header>Expires</header>
-and <header>Cache-Control</header> response header fields.
-A parameter can be a positive or negative
+启用或禁用增加或者修改 <header>Expires</header>
+和 <header>Cache-Control</header> 响应头域。
+参数可以是正或者是负的。
 <link doc="../syntax.xml">time</link>.
 </para>
 
 <para>
-A time in the <header>Expires</header> field is computed as a sum of the
-current time and <value>time</value> specified in the directive.
-If the <literal>modified</literal> parameter is used (0.7.0, 0.6.32)
-then time is computed as a sum of the file’s modification time and
-<value>time</value> specified in the directive.
+<header>Expires</header> 域里的时间可以由当前时间
+<value>time</value> 和指令里指定的时间的和来算出。
+如果使用了 <literal>modified</literal> (参数0.7.0, 0.6.32)，
+那么时间由文件修改时间和
+<value>time</value> 指令里的特定时间来算出。
 </para>
 
 <para>
-In addition, it is possible to specify a time of the day using
-the “<literal>@</literal>” prefix (0.7.9, 0.6.34):
+除此之外，可以使用一个前缀(0.7.9, 0.6.34)
+the “<literal>@</literal>” :来指定一天的时间。
 <example>
 expires @15h30m;
 </example>
 </para>
 
 <para>
-The <literal>epoch</literal> parameter corresponds to the absolute time
+<literal>epoch</literal> 参数对应于绝对时间
 “<literal>Thu, 01 Jan 1970 00:00:01 GMT</literal>”.
-The contents of the <header>Cache-Control</header> field depends
-on the sign of the specified time:
+<header>Cache-Control</header> 
+域的内容取决于指定时间标志：
 <list type="bullet">
 
 <listitem>
@@ -104,24 +104,23 @@ time is negative — <header>Cache-Control: no-cache</header>.
 </listitem>
 
 <listitem>
-time is positive or zero —
+时间是正的或者是0-
 <header>Cache-Control: max-age=<value>t</value></header>,
-where <value>t</value> is a time specified in the directive, in seconds.
+ <value>t</value> 是在指令中很快指定的时间。
 </listitem>
 
 </list>
 </para>
 
 <para>
-The <literal>max</literal> parameter sets <header>Expires</header>
-to the value “<literal>Thu, 31 Dec 2037 23:55:55 GMT</literal>”,
-and <header>Cache-Control</header> to 10 years.
+<literal>max</literal>  参数设置 <header>Expires</header>
+值为 “<literal>Thu, 31 Dec 2037 23:55:55 GMT</literal>”,
+以及<header>Cache-Control</header> 设置为10年。
 </para>
 
 <para>
-The <literal>off</literal> parameter disables adding or modifying the
-<header>Expires</header> and <header>Cache-Control</header> response
-header fields.
+<literal>off</literal> 参数禁用增加或者修改
+<header>Expires</header> 和<header>Cache-Control</header> 响应头域。
 </para>
 
 </directive>

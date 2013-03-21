@@ -9,28 +9,28 @@
 
 <module name="Module ngx_http_charset_module"
         link="/en/docs/http/ngx_http_charset_module.html"
-        lang="en"
+        lang="cn"
+        translator="allisstone"
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_charset_module</literal> module adds the specified
-charset to the <header>Content-Type</header> response header field.
-In addition, the module can convert data from one charset to another,
-with some limitations:
+ <literal>ngx_http_charset_module</literal>模块为 
+<header>Content-Type</header> 响应头域添加了指定字符集。
+此外，模块可以将数据从一个字符集转换到另外一个，局限在于：
 <list type="bullet">
 
 <listitem>
-conversion is performed one way — from server to client,
+转换以从服务器到客户端的方式单向执行。
 </listitem>
 
 <listitem>
-only single-byte charsets can be converted
+只有单字节字符集可以转换。
 </listitem>
 
 <listitem>
-or single-byte charsets to/from UTF-8.
+或单字节字符集转化为或转化自UTF-8。
 </listitem>
 
 </list>
@@ -64,45 +64,42 @@ source_charset koi8-r;
 <context>if in location</context>
 
 <para>
-Adds the specified charset to the <header>Content-Type</header>
-response header field.
-If this charset is different from the charset specified
-in the <link id="source_charset"/> directive, a conversion is performed.
+为<header>Content-Type</header>
+响应头域增加指定字符集。如果这个字符集与在
+<link id="source_charset"/> 指令中指定的字符集不同，那么一个转化就被执行。
 </para>
 
 <para>
-The parameter <literal>off</literal> cancels the addition of charset
-to the <header>Content-Type</header> response header field.
+参数<literal>off</literal> 取消添加到
+<header>Content-Type</header> 响应头域的字符集。
 </para>
 
 <para>
-A charset can be defined with a variable:
+字符集可以用一个变量来定义：
 <example>
 charset $charset;
 </example>
-In such a case, all possible values of a variable need to be present
-in the configuration at least once in the form of the
-<link id="charset_map"/>, <link id="charset"/>, or
-<link id="source_charset"/> directives.
-For <literal>utf-8</literal>, <literal>windows-1251</literal>, and
-<literal>koi8-r</literal> charsets it is sufficient to include the files
-<path>conf/koi-win</path>, <path>conf/koi-utf</path>, and
-<path>conf/win-utf</path> into configuration.
-For other charsets, simply making a fictitious conversion table works,
-for example:
+在这样的情况下，一个变量的所有可能值都必须以
+<link id="charset_map"/>, <link id="charset"/>, 或
+<link id="source_charset"/> 指令的形式，至少在配置中出现一次。
+对于<literal>utf-8</literal>, <literal>windows-1251</literal>, 和
+<literal>koi8-r</literal> 字符集来说，足够将文件
+<path>conf/koi-win</path>, <path>conf/koi-utf</path>, 和
+<path>conf/win-utf</path> 导入到配置中。
+对于其它字符集来说，简单做一个虚转表就能运转。例如：
 <example>
 charset_map iso-8859-5 _ { }
 </example>
 </para>
 
 <para>
-In addition, charset can also be set in the
-<header>X-Accel-Charset</header> response header field.
-This ability can be disabled using the
+除此之外，字符集也可以在
+<header>X-Accel-Charset</header> 响应头域设置。
+可以使用
 <link doc="ngx_http_proxy_module.xml" id="proxy_ignore_headers"/>
-and
+和
 <link doc="ngx_http_fastcgi_module.xml" id="fastcgi_ignore_headers"/>
-directives.
+指令来禁用此功能。
 </para>
 
 </directive>
@@ -114,12 +111,12 @@ directives.
 <context>http</context>
 
 <para>
-Describes the conversion table from one charset to another.
-A reverse conversion table is built using the same data.
-Character codes are given in hexadecimal.
-Missing characters in the range 80-FF are replaced with “<literal>?</literal>”.
-When converting from UTF-8, characters missing in a one-byte charset
-are replaced with “<literal>&amp;#XXXX;</literal>”.
+描述了一个从一个到另一个字符集的转换表。
+反向转换表使用相同的数据建立。
+字符代码使用16进制显示。
+在范围80-FF之间缺少的字符用 “<literal>?</literal>”.来替换。
+从UTF-8转换的时候，在一个字节的字符集丢失的字符用
+“<literal>&amp;#XXXX;</literal>”.来代替。
 </para>
 
 <para>
@@ -136,8 +133,7 @@ charset_map koi8-r windows-1251 {
 </para>
 
 <para>
-When describing a conversion table to UTF-8, codes for the UTF-8 charset should
-be given in the second column, for example:
+当描述一个转换为UTF-8的转换表时，应当在第二列给出UTF-8的字符集的编码，例如：
 <example>
 charset_map koi8-r utf-8 {
     C0 D18E ; # small yu
@@ -150,11 +146,11 @@ charset_map koi8-r utf-8 {
 </para>
 
 <para>
-Full conversion tables from <literal>koi8-r</literal> to
-<literal>windows-1251</literal>, and from <literal>koi8-r</literal> and
-<literal>windows-1251</literal> to <literal>utf-8</literal>
-are provided in the distribution files <path>conf/koi-win</path>,
-<path>conf/koi-utf</path>, and <path>conf/win-utf</path>.
+从 <literal>koi8-r</literal> 到
+<literal>windows-1251</literal>, 和从 <literal>koi8-r</literal> 和
+<literal>windows-1251</literal> 到<literal>utf-8</literal>
+的全转换表由分发文件 <path>conf/koi-win</path>,
+<path>conf/koi-utf</path>, 和 <path>conf/win-utf</path>提供。
 </para>
 
 </directive>
@@ -170,9 +166,9 @@ application/x-javascript application/rss+xml</default>
 <appeared-in>0.7.9</appeared-in>
 
 <para>
-Enables module processing in responses with the specified MIME types
-in addition to “<literal>text/html</literal>”.
-The special value “<literal>*</literal>” matches any MIME type (0.8.29).
+使用除了
+“<literal>text/html</literal>”类型外的指定MIME类型来响应处理模块。
+指定值“<literal>*</literal>” 通配任意MIME类型(0.8.29)。
 </para>
 
 </directive>
@@ -187,17 +183,14 @@ The special value “<literal>*</literal>” matches any MIME type (0.8.29).
 <context>if in location</context>
 
 <para>
-Determines if a conversion should be performed for answers
-received from a proxied or FastCGI server,
-if the answers already carry a charset in the <header>Content-Type</header>
-response header field.
-If conversion is enabled, a charset specified in the received
-response is used as a source charset.
+对于收到来自代理服务器或者FastCGI服务器的应答是否转换，
+决定于应答是否在<header>Content-Type</header>
+响应头域携带了一个字符集。
+如果执行转换，一个指定在接收响应里的字符集应被当作源字符集。
 <note>
-It should be noted that if a response was received in a subrequest
-then conversion from the response charset to the main request charset
-is always performed regardless of the <literal>override_charset</literal>
-directive setting.
+需要注意的是，如果在子请求中收到响应，那么都应该执行从主请求字符集到响应字符集的转换，
+而不用理会<literal>override_charset</literal>
+的指令设置。
 </note>
 </para>
 
@@ -213,9 +206,10 @@ directive setting.
 <context>if in location</context>
 
 <para>
-Defines the source charset of a response.
-If this charset is different from the charset specified
-in the <link id="charset"/> directive, a conversion is performed.
+定义一个响应的源字符集。
+如果此字符集不同与
+<link id="charset"/> 
+指令的指定字符集，那么一个转换会被执行。
 </para>
 
 </directive>
