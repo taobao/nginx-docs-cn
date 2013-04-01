@@ -7,12 +7,13 @@
 
 <!DOCTYPE module SYSTEM "../../../dtd/module.dtd">
 
-<module name="Core functionality"
-        link="/en/docs/ngx_core_module.html"
-        lang="en"
-        rev="1">
+<module name="核心机能"
+        link="/cn/docs/ngx_core_module.html"
+        lang="cn"
+        translator="cfsego"
+        rev="6">
 
-<section id="example" name="Example Configuration">
+<section id="example" name="示例配置">
 
 <para>
 <example>
@@ -33,7 +34,7 @@ events {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="accept_mutex">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
@@ -41,15 +42,9 @@ events {
 <context>events</context>
 
 <para>
-If enabled,
-accepts of new connections by multiple worker processes will be serialized.
-Otherwise, all worker processes will be notified about new connections,
-and if volume of new connections is low, some of the worker processes
-may just waste system resources.
+如果使用，nginx的多个工作进程将以串行方式接入新连接。否则，新连接将通报给所有工作进程，而且如果新连接数量较少，某些工作进程可能只是在浪费系统资源。
 <note>
-The use of <link doc="events.xml" id="rtsig"/>
-connection processing method
-requires <literal>accept_mutex</literal> to be enabled.
+必须开启<literal>accept_mutex</literal>才能使用<link doc="events.xml" id="rtsig"/>连接处理方式。
 </note>
 </para>
 
@@ -62,10 +57,7 @@ requires <literal>accept_mutex</literal> to be enabled.
 <context>events</context>
 
 <para>
-If <link id="accept_mutex"/> is enabled, specifies the maximum time
-during which a worker process will try to restart accepting new
-connections if another worker process is already doing this
-currently.
+使用<link id="accept_mutex"/>时，可以指定某个工作进程检测到其它工作进程正在接入新连接时，自身等待直到重新开始尝试接入新连接的最大时间间隔。
 </para>
 
 </directive>
@@ -77,8 +69,7 @@ currently.
 <context>main</context>
 
 <para>
-Determines whether nginx should become a daemon.
-Mainly used during development.
+决定nginx是否应以守护进程的方式工作。主要用于开发。
 </para>
 
 </directive>
@@ -93,15 +84,10 @@ Mainly used during development.
 <context>events</context>
 
 <para>
-Enables debugging log for selected client connections.
-Other connections will use logging level set by the
-<link id="error_log"/> directive.
-Debugged connections are specified by IPv4 or IPv6 (1.3.0, 1.2.1)
-address or network.
-A connection may also be specified using a hostname, in which case the
-first IPv4 address corresponding to a name is used.
-For connections using UNIX-domain sockets (1.3.0, 1.2.1),
-debugging log is enabled by the “<literal>unix:</literal>” parameter.
+开启针对特定客户端连接的调试日志。除开这些连接，其它连接将使用<link id="error_log"/>指令设置的日志级别。
+被调试的连接可以使用IPv4或IPv6(1.3.0, 1.2.1)网络地址来指定，
+也可以使用主机名来设置连接。
+对于UNIX域套接字(1.3.0, 1.2.1)，使用“<literal>unix:</literal>”参数来启用调试日志。
 <example>
 events {
     debug_connection 127.0.0.1;
@@ -114,8 +100,7 @@ events {
 }
 </example>
 <note>
-For this directive to work, nginx needs to
-be built with <literal>--with-debug</literal>.
+只有在编译时设置<literal>--with-debug</literal>，上述指令才可以工作。
 </note>
 </para>
 
@@ -128,15 +113,12 @@ be built with <literal>--with-debug</literal>.
 <context>main</context>
 
 <para>
-This directive is used for debugging.
+这条指令用于调试。
 </para>
 
 <para>
-When internal error is detected, e.g. the leak of sockets on
-restart of working processes, enabling <literal>debug_points</literal>
-leads to a core file creation (<literal>abort</literal>)
-or stopping a process (<literal>stop</literal>) for further
-analysis using a system debugger.
+当nginx检测到内部错误，比如重启工作进程时出现套接字泄漏，开启<literal>debug_points</literal>将导致创建core文件(<literal>abort</literal>)，
+或者停止进程(<literal>stop</literal>)以便使用系统调试器进行进一步分析。
 </para>
 
 </directive>
@@ -160,30 +142,25 @@ analysis using a system debugger.
 <context>location</context>
 
 <para>
-Configures logging.
+配置日志。
 </para>
 
 <para>
-The first parameter defines a file that will store the log.
+第一个参数定义了存放日志的文件。
 <!--
 If filename is not absolute, it is prefixed with the prefix path.
 -->
-The special value <literal>stderr</literal> selects the standard error file.
+如果设置为特殊值<literal>stderr</literal>，nginx会将日志输出到标准错误输出。
 </para>
 
 <para>
-The second parameter determines the level of logging.
-Log levels above are listed in the order of increasing severity.
-Setting a certain log level will cause all messages of
-the specified and more severe log levels to be logged.
-For example, the default level <literal>error</literal> will
-cause <literal>error</literal>, <literal>crit</literal>,
-<literal>alert</literal>, and <literal>emerg</literal> messages
-to be logged.
-If this parameter is omitted then <literal>error</literal> is used.
+第二个参数定义日志级别。
+日志级别在上面已经按严重性由轻到重的顺序列出。
+设置为某个日志级别将会使指定级别和更高级别的日志都被记录下来。
+比如，默认级别<literal>error</literal>会使nginx记录所有<literal>error</literal>、<literal>crit</literal>、<literal>alert</literal>和<literal>emerg</literal>级别的消息。
+如果省略这个参数，nginx会使用<literal>error</literal>。
 <note>
-For <literal>debug</literal> logging to work, nginx needs to
-be built with <literal>--with-debug</literal>.
+为了使<literal>debug</literal>日志工作，需要添加<literal>--with-debug</literal>编译选项。
 </note>
 </para>
 
@@ -196,43 +173,35 @@ be built with <literal>--with-debug</literal>.
 <context>main</context>
 
 <para>
-Allows to limit a set of environment variables, change their values,
-or create new environment variables, for the following cases:
+nginx默认会删除从父进程继承的除TZ变量以外的所有环境变量。
+这条指令允许nginx保留某些继承的环境变量，改变它们的值，或者创建新的环境变量。
+这些变量将：
 <list type="bullet">
 
 <listitem>
-variable inheritance during a
-<link doc="control.xml" id="upgrade">live upgrade</link>
-of an executable file;
+在<link doc="control.xml" id="upgrade">热升级</link>nginx执行文件时被继承；
 </listitem>
 
 <listitem>
-use of variables by the module
-<link doc="http/ngx_http_perl_module.xml">ngx_http_perl_module</link>;
+被<link doc="http/ngx_http_perl_module.xml">ngx_http_perl_module</link>模块使用；
 </listitem>
 
 <listitem>
-use of variables by worker processes.
-Please bear in mind that controlling system libraries in this way
-is not always possible as it is not uncommon for libraries to check
-variables only during initialization, well before they can be set
-using this directive.
-An exception from this is an above mentioned
-<link doc="control.xml" id="upgrade">live upgrade</link>
-of an executable file.
+被工作进程使用。
+请大家牢记于心，使用这种方法控制系统库不总是可行的，因为在这条指令设置环境变量以前，系统库初始化时就已检查这些环境变量的情况也并非少见。
+但有一个例外，就是上面提到的<link doc="control.xml" id="upgrade">热升级</link>nginx执行文件。
 </listitem>
 
 </list>
 </para>
 
 <para>
-The TZ variable is always inherited and made available to the module
-<link doc="http/ngx_http_perl_module.xml">ngx_http_perl_module</link>,
-unless configured explicitly.
+TZ变量总是被继承，并且可被<link doc="http/ngx_http_perl_module.xml">ngx_http_perl_module</link>模块使用，
+除非明确配置不允许这样。
 </para>
 
 <para>
-Usage example:
+使用示例：
 <example>
 env MALLOC_OPTIONS;
 env PERL5LIB=/data/site/modules;
@@ -242,8 +211,7 @@ env OPENSSL_ALLOW_PROXY_CERTS=1;
 
 <para>
 <note>
-The NGINX environment variable is used internally by nginx
-and should not be set directly by the user.
+NGINX环境变量是由nginx内部设置和使用，用户不应直接设置它。
 </note>
 </para>
 
@@ -256,8 +224,7 @@ and should not be set directly by the user.
 <context>main</context>
 
 <para>
-Provides a configuration file context in which the directives that
-affect connection processing are specified.
+提供配置上下文，以解析那些影响连接处理的指令。
 </para>
 
 </directive>
@@ -269,14 +236,12 @@ affect connection processing are specified.
 <context/>
 
 <para>
-Includes another <value>file</value>, or files matching the
-specified <value>mask</value>, into configuration.
-Included files should consist of
-syntactically correct directives and blocks.
+将另一个<value>file</value>，或者匹配指定<value>mask</value>的文件，包含到配置中。
+被包含的文件应由语法正确的指令和块组成。
 </para>
 
 <para>
-Usage example:
+使用示例：
 <example>
 include mime.types;
 include vhosts/*.conf;
@@ -292,12 +257,9 @@ include vhosts/*.conf;
 <context>main</context>
 
 <para>
-nginx uses the locking mechanism to implement <link id="accept_mutex"/>
-and serialize accesses to shared memory.
-On most systems the locks are implemented using atomic operations,
-and this directive is ignored.
-On other systems the “lock file” mechanism is used.
-This directive specifies a prefix for the names of lock files.
+nginx使用锁机制来实现<link id="accept_mutex"/>，并将访问串行化到共享内存。
+绝大多数系统中，锁是由原子操作实现，那么可以忽略这条指令。
+另外一些系统使用“锁文件”的机制，那么这条指令将指定锁文件的前缀。
 </para>
 
 </directive>
@@ -309,8 +271,7 @@ This directive specifies a prefix for the names of lock files.
 <context>main</context>
 
 <para>
-Determines whether worker processes are started.
-This directive is intended for nginx developers.
+决定是否启动工作进程。这条指令是为nginx开发者设计的。
 </para>
 
 </directive>
@@ -322,19 +283,12 @@ This directive is intended for nginx developers.
 <context>events</context>
 
 <para>
-If disabled, a worker process
-will accept one new connection at a time.
-Otherwise, a worker process
-will accept all new connections at a time.
+关闭时，工作进程一次只会接入一个新连接。否则，工作进程一次会将所有新连接全部接入。
 <note>
-The directive is ignored if <link doc="events.xml" id="kqueue"/>
-connection processing method is used because it can report
-the number of new connections waiting to be accepted.
+使用<link doc="events.xml" id="kqueue"/>连接处理方式时，可忽略这条指令，因为kqueue可以报告有多少新连接等待接入。
 </note>
 <note>
-The use of <link doc="events.xml" id="rtsig"/>
-connection processing method
-automatically enables <literal>multi_accept</literal>.
+使用<link doc="events.xml" id="rtsig"/>连接处理方式将自动开启<literal>multi_accept</literal>。
 </note>
 </para>
 
@@ -348,18 +302,15 @@ automatically enables <literal>multi_accept</literal>.
 <appeared-in>1.1.12</appeared-in>
 
 <para>
-Enables or disables the use of “just-in-time compilation” (PCRE JIT)
-for regular expressions known at configuration parse time.
+开启或禁止在配置解析阶段为正则表达式使用“即时编译”(PCRE JIT)技术。
 </para>
 
 <para>
-PCRE JIT can speed up processing of regular expressions significantly.
+PCRE JIT可以显著提升处理正则表达式的速度。
 <note>
-The JIT is available in PCRE libraries starting from version 8.20
-built with the <literal>--enable-jit</literal> configuration parameter.
-When building the PCRE library with nginx (<literal>--with-pcre=</literal>),
-the JIT support should be enabled with the
-<literal>--with-pcre-jit</literal> configuration parameter.
+从PCRE 8.20版本开始，可用PCRE的<literal>--enable-jit</literal>编译选项打开JIT功能。
+当使用PCRE源码库编译nginx时(<literal>--with-pcre=</literal>)，
+应该使用nginx的<literal>--with-pcre-jit</literal>编译选项开启JIT支持。
 </note>
 </para>
 
@@ -372,7 +323,7 @@ the JIT support should be enabled with the
 <context>main</context>
 
 <para>
-Defines a <value>file</value> that will store the process ID of the main process.
+定义存储nginx主进程ID的<value>file</value>。
 </para>
 
 </directive>
@@ -384,7 +335,7 @@ Defines a <value>file</value> that will store the process ID of the main process
 <context>main</context>
 
 <para>
-Defines the name of the hardware SSL accelerator.
+定义SSL硬件加速器的名字。
 </para>
 
 </directive>
@@ -396,12 +347,9 @@ Defines the name of the hardware SSL accelerator.
 <context>main</context>
 
 <para>
-Reduces timer resolution in worker processes, thus reducing the
-number of <c-func>gettimeofday</c-func> system calls made.
-By default, <c-func>gettimeofday</c-func> is called each time
-on receiving a kernel event.
-With reduced resolution, <c-func>gettimeofday</c-func> is only
-called once per specified <value>interval</value>.
+在工作进程中降低定时器的精度，因此可以减少产生<c-func>gettimeofday</c-func>系统调用的次数。
+默认情况下，每收到一个内核事件，nginx都会调用<c-func>gettimeofday</c-func>。
+使用此指令后，nginx仅在每经过指定的<value>interval</value>时间间隔后调用一次<c-func>gettimeofday</c-func>。
 </para>
 
 <para>
@@ -412,19 +360,19 @@ timer_resolution 100ms;
 </para>
 
 <para>
-An internal implementation of interval depends on the method used:
+时间间隔的内部实现取决于使用的方法：
 <list type="bullet">
 
 <listitem>
-an <c-def>EVFILT_TIMER</c-def> filter if <literal>kqueue</literal> is used;
+使用<literal>kqueue</literal>时，会使用<c-def>EVFILT_TIMER</c-def>过滤器；
 </listitem>
 
 <listitem>
-<c-func>timer_create</c-func> if <literal>eventport</literal> is used;
+使用<literal>eventport</literal>时，会使用<c-func>timer_create</c-func>；
 </listitem>
 
 <listitem>
-<c-func>setitimer</c-func> otherwise.
+否则会使用<c-func>setitimer</c-func>。
 </listitem>
 
 </list>
@@ -439,10 +387,8 @@ an <c-def>EVFILT_TIMER</c-def> filter if <literal>kqueue</literal> is used;
 <context>events</context>
 
 <para>
-Specifies the <link doc="events.xml">connection processing</link>
-<value>method</value> to use.
-There is normally no need to specify it explicitly because nginx will
-by default use the most efficient method.
+指定使用的<link doc="events.xml">连接处理</link><value>method(方式)</value>。
+通常不需要明确设置，因为nginx默认会使用最高效的方法。
 </para>
 
 </directive>
@@ -454,10 +400,23 @@ by default use the most efficient method.
 <context>main</context>
 
 <para>
-Defines <value>user</value> and <value>group</value>
-credentials used by worker processes.
-If <value>group</value> is omitted, a group whose name equals
-that of <value>user</value> is used.
+定义工作进程使用的<value>user</value>和<value>group</value>身份。
+如果省略<value>group</value>，nginx会使用与<value>user</value>相同的组名。
+</para>
+
+</directive>
+
+
+<directive name="worker_aio_requests">
+<syntax><value>number</value></syntax>
+<default>32</default>
+<context>events</context>
+<appeared-in>1.1.4</appeared-in>
+<appeared-in>1.0.7</appeared-in>
+
+<para>
+在使用<link doc="../docs/events.xml" id="epoll"/>连接处理方式的情况下使用<link doc="http/ngx_http_core_module.xml" id="aio"/>时，
+可以设置单个工作进程未处理的异步I/O操作的最大<value>number(数量)</value>。
 </para>
 
 </directive>
@@ -469,18 +428,13 @@ that of <value>user</value> is used.
 <context>events</context>
 
 <para>
-Sets the maximum number of simultaneous connections that
-can be opened by a worker process.
+设置每个工作进程可以打开的最大并发连接数。
 </para>
 
 <para>
-It should be kept in mind that this number includes all connections
-(e.g. connections with proxied servers, among other things),
-not only connections with clients.
-Another consideration is that the actual number of simultaneous
-connections may not exceed the current limit on
-the maximum number of open files, see
-<link id="worker_rlimit_nofile"/>.
+需要记住，这个数量包含所有连接(比如，和后端服务器建立的连接，还有其他的），
+而不仅仅是和客户端的连接。
+另外需要考虑的是，实际的并发连接数是不能超过打开文件的最大数量限制的，这个限制可以用<link id="worker_rlimit_nofile"/>指令修改。
 </para>
 
 </directive>
@@ -492,31 +446,29 @@ the maximum number of open files, see
 <context>main</context>
 
 <para>
-Binds worker processes to the sets of CPUs.
-Each CPU set is represented by a bitmask of allowed to use CPUs.
-There should be a separate set defined for each of the worker processes.
-By default, worker processes are not bound to any specific CPUs.
+绑定工作进程到指定的CPU集合。每个CPU集合使用一个标记允许使用的CPU的位图来表示。
+需要为每个工作进程分别设置CPU集合。
+工作进程默认不会绑定到任何特定的CPU。
 </para>
 
 <para>
-For example,
+比如
 <example>
 worker_processes    4;
 worker_cpu_affinity 0001 0010 0100 1000;
 </example>
-binds each worker process to a separate CPU, while
+将每个工作进程分别绑定至不同的CPU，而
 <example>
 worker_processes    2;
 worker_cpu_affinity 0101 1010;
 </example>
-binds the first worker process to CPU0/CPU2,
-and the second worker process to CPU1/CPU3.
-The second example is suitable for hyper-threading.
+将第一个工作进程绑定至CPU0/CPU2，将第二个工作进程绑定至CPU1/CPU3。
+上面第二个例子适合于超线程的机器。
 </para>
 
 <para>
 <note>
-The directive is only available on FreeBSD and Linux.
+这条指令仅在FreeFSD和Linux系统有效。
 </note>
 </para>
 
@@ -529,15 +481,12 @@ The directive is only available on FreeBSD and Linux.
 <context>main</context>
 
 <para>
-Defines a scheduling priority for worker processes like is
-done by the <command>nice</command> command: a negative
-<value>number</value>
-means higher priority.
-Allowed range normally varies from -20 to 20.
+定义工作进程的调度优先级。这与<command>nice</command>命令行所做的相同：
+<value>number</value>为负数代表优先级更高。通常允许的范围是[-20, 20]。
 </para>
 
 <para>
-Example:
+举例：
 <example>
 worker_priority -10;
 </example>
@@ -547,20 +496,20 @@ worker_priority -10;
 
 
 <directive name="worker_processes">
-<syntax><value>number</value></syntax>
+<syntax><value>number</value> | <literal>auto</literal></syntax>
 <default>1</default>
 <context>main</context>
 
 <para>
-Defines the number of worker processes.
+定义工作进程的数量。
 </para>
 
 <para>
-The optimal value depends on many factors including (but not
-limited to) the number of CPU cores, the number of hard disk
-drives that store data, and load pattern.
-When in doubt, setting it to the number of available CPU cores
-would be a good start.
+关于这个值的优化依赖很多因素，其中包括（但不限于）CPU的核数，存储数据的硬盘数量和负载模式。
+如果感觉到迷惑，将它设置为等于可用的CPU核数是一个不错的开始（值为“<literal>auto</literal>”时，nginx会自动检测它）。
+<note>
+<literal>auto</literal>参数从版本1.3.8和1.2.5开始支持。
+</note>
 </para>
 
 </directive>
@@ -572,9 +521,7 @@ would be a good start.
 <context>main</context>
 
 <para>
-Changes the limit on the largest size of a core file
-(<c-def>RLIMIT_CORE</c-def>) for worker processes.
-Used to increase the limit without restarting the main process.
+修改工作进程的core文件尺寸的最大值限制(<c-def>RLIMIT_CORE</c-def>)，用于在不重启主进程的情况下增大该限制。
 </para>
 
 </directive>
@@ -586,9 +533,7 @@ Used to increase the limit without restarting the main process.
 <context>main</context>
 
 <para>
-Changes the limit on the maximum number of open files
-(<c-def>RLIMIT_NOFILE</c-def>) for worker processes.
-Used to increase the limit without restarting the main process.
+修改工作进程的打开文件数的最大值限制(<c-def>RLIMIT_NOFILE</c-def>)，用于在不重启主进程的情况下增大该限制。
 </para>
 
 </directive>
@@ -600,11 +545,7 @@ Used to increase the limit without restarting the main process.
 <context>main</context>
 
 <para>
-On systems that support <link doc="events.xml" id="rtsig"/>
-connection processing method,
-changes the limit on the number of signals that may be queued
-(<c-def>RLIMIT_SIGPENDING</c-def>) for worker processes.
-Used to increase the limit without restarting the main process.
+在支持<link doc="events.xml" id="rtsig"/>连接处理方式的系统中，修改工作进程的信号队列长度限制(<c-def>RLIMIT_SIGPENDING</c-def>)，用于在不重启主进程的情况下增大该限制。
 </para>
 
 </directive>
@@ -616,10 +557,8 @@ Used to increase the limit without restarting the main process.
 <context>main</context>
 
 <para>
-Defines a current working directory for a worker process.
-It is primarily used when writing a core-file, in which case
-a worker process should have write permission for the
-specified directory.
+定义工作进程的当前工作路径。
+主要用于设置core文件的目标地址。工作进程应当具有指定路径的写权限。
 </para>
 
 </directive>
