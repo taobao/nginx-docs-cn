@@ -138,7 +138,7 @@ nginx不解析 <value>value</value> 中包含的XPath表达式。
 如果一个参数包含了“<literal>:</literal>” 字符，
 它应该被转义为 “<literal>%3A</literal>”。
 并且<command>libxslt</command> 
-需要将非阿拉伯字母的参数包括在单引号或双引号中。例如：
+需要将非字母数字的参数包括在单引号或双引号中。例如：
 <example>
 param1='http%3A//www.example.com':param2=value2
 </example>
@@ -172,13 +172,8 @@ location / {
 
 <para>
 除了“<literal>text/xml</literal>”类型，启用指定的MIME类型的转换相应。
-<<<<<<< HEAD
-特别指定的值The special value “<literal>*</literal>”匹配任何MIME类型(0.8.29)。
-如果转换的结果是HTML响应，它的MIME类型就变为“<literal>text/html</literal>”.
-=======
 特别指定的值“<literal>*</literal>”匹配任何MIME类型(0.8.29)。
-如果转换的结果是HTML相应，它的MIME类型就变为“<literal>text/html</literal>”.
->>>>>>> 1c73c8119c44f42e3d9521c5fe033b1de1c18a08
+如果转换的结果是HTML相应，它的MIME类型就变为“<literal>text/html</literal>”
 </para>
 
 </directive>

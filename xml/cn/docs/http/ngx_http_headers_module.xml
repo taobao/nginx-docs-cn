@@ -51,7 +51,7 @@ add_header Cache-Control private;
 <context>location</context>
 
 <para>
-假如响应代码等于200, 204, 206, 301, 302, 303, 304, 或者307，增加指定域到响应头。
+当响应代码等于200, 204, 206, 301, 302, 303, 304, 或者307，增加指定域到响应头。
 一个值可以包含变量。
 </para>
 
@@ -100,7 +100,7 @@ expires @15h30m;
 <list type="bullet">
 
 <listitem>
-time is negative — <header>Cache-Control: no-cache</header>.
+时间是负的 — <header>Cache-Control: no-cache</header>.
 </listitem>
 
 <listitem>
@@ -119,7 +119,7 @@ time is negative — <header>Cache-Control: no-cache</header>.
 </para>
 
 <para>
-<literal>off</literal> 参数禁用增加或者修改
+<literal>off</literal> 参数禁止增加或者修改
 <header>Expires</header> 和<header>Cache-Control</header> 响应头域。
 </para>
 

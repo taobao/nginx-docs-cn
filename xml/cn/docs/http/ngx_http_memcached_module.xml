@@ -87,7 +87,7 @@ server {
 
 <para>
 为出现在memcatched服务器响应的<value>flag</value>标志位使能测试，
-如果标志位已经设定，那么就将请求头域
+如果标志位已经设定，那么就将响应头域
 “<literal>Content-Encoding</literal>” 设置为 “<literal>gzip</literal>”。
 </para>
 
@@ -112,10 +112,10 @@ server {
 <list type="tag">
 
 <tag-name><literal>error</literal></tag-name>
-<tag-desc>在与服务器建立连接时候发生的错误，它将传递一个请求或者读此响应头</tag-desc>
+<tag-desc>在建立连接、发送请求或者读取响应头时出现了错误；</tag-desc>
 
 <tag-name><literal>timeout</literal></tag-name>
-<tag-desc>在与服务器建立连接时候发生的超时，传递一个请求或者读此响应头</tag-desc>
+<tag-desc>在建立连接、发送请求或者读取响应头时出现了超时；</tag-desc>
 
 <tag-name><literal>invalid_response</literal></tag-name>
 <tag-desc>服务器返回一个空的或者无效的响应；</tag-desc>
@@ -124,13 +124,13 @@ server {
 <tag-desc>在服务器上未发现响应；</tag-desc>
 
 <tag-name><literal>off</literal></tag-name>
-<tag-desc>禁止将请求传递给下一个服务器</tag-desc>
+<tag-desc>禁止将请求传递给下一个服务器。</tag-desc>
 
 </list>
 </para>
 
 <para>
-应当认识到，仅当客户端什么没有发送什么的时候，才能将请求传送给下一个服务器。
+应当认识到，仅当客户端还没有收到任何响应数据的时候，才能将请求传送给下一个服务器。
 就是说，一旦在传输一个响应期间发生错误或者超时，问题就不可能解决的。
 </para>
 
@@ -169,8 +169,8 @@ memcached_pass localhost:11211;
 
 <para>
 定义从memcached服务器读取响应的超时时间。
-在整个响应传输期间不设置超时，而只在连续的读操作之间设置超时。
-如果memcached服务器在此期间不传输任何数据，那么连接应当关闭。
+这不是整个响应传输时间的超时，而只是两次读操作之间的超时。
+如果memcached服务器在此期间不传输任何数据，那么连接将会关闭。
 </para>
 
 </directive>
@@ -185,8 +185,8 @@ memcached_pass localhost:11211;
 
 <para>
 为传输一个请求到memcached服务器设置一个超时时间。
-在整个请求传输期间不设置超时，而只在连续的写操作之间设置超时。
-如果memcached服务器在此期间不传输任何数据，那么连接应当关闭。
+这不是整个请求传输时间的超时，而只是两次写操作之间的超时。
+如果memcached服务器在此期间不传输任何数据，那么连接将会关闭。
 </para>
 
 </directive>
