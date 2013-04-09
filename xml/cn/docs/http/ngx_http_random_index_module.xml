@@ -7,31 +7,31 @@
 
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
-<module name="Module ngx_http_random_index_module"
-        link="/en/docs/http/ngx_http_random_index_module.html"
-        lang="en"
+<module name="ngx_http_random_index_module模块"
+        link="/cn/docs/http/ngx_http_random_index_module.html"
+        lang="cn"
+        translator="WenMing"
         rev="1">
 
 <section id="summary">
 
 <para>
-The module <literal>ngx_http_random_index_module</literal> picks a random
-file in a directory as an index file.
-It works before the
+<literal>ngx_http_random_index_module</literal>模块在文件夹中随机选择一个文件作为默认页。
+使用此模块前要先配置
 <link doc="ngx_http_index_module.xml">ngx_http_index_module</link>
-module.
+模块。
 </para>
 
 <para>
-This module is not built by default, it should be enabled with the
+nginx默认不编译这个模块, 需要开启
 <literal>--with-http_random_index_module</literal>
-configuration parameter.
+编译选项。
 </para>
 
 </section>
 
 
-<section id="example" name="Example Configuration">
+<section id="example" name="配置示例">
 
 <para>
 <example>
@@ -44,7 +44,7 @@ location / {
 </section>
 
 
-<section id="directives" name="Directives">
+<section id="directives" name="指令">
 
 <directive name="random_index">
 <syntax><literal>on</literal> | <literal>off</literal></syntax>
@@ -52,7 +52,7 @@ location / {
 <context>location</context>
 
 <para>
-Enables or disables module processing in a surrounding location.
+在所在location启动或禁用模块处理。
 </para>
 
 </directive>
