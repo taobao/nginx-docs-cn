@@ -8,7 +8,7 @@
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Module ngx_http_xslt_module"
-        link="/en/docs/http/ngx_http_xslt_module.html"
+        link="/cn/docs/http/ngx_http_xslt_module.html"
         lang="cn"
         translator="allisstone"  
         rev="1">
@@ -60,7 +60,7 @@ location / {
 <para>
 指定DTD文件声明字符实体。
 此文件在配置阶段编译。
-由于技术原因，模块不能使用处理的XML中声明的外部子集，因而他忽略这些子集并使用专门的文件来定义。
+由于技术原因，模块不能使用处理的XML中声明的外部子集，因而它忽略这些子集并使用专门的文件来定义。
 这个文件仅能描述需要的字符实体，而不应该使用它来描述XML结构，比如：
 
 <example>
@@ -90,7 +90,7 @@ location / {
 可以有多个 <literal>xslt_param</literal> 指令。
 当且仅当在当前块级别中没有定义
 <literal>xslt_param</literal> 和 <link id="xslt_string_param"/>
-指令，这些指令才能继承上层级别的设置。
+指令时，才能继承上层级别的设置。
 </para>
 
 </directive>
@@ -114,7 +114,7 @@ nginx不解析 <value>value</value> 中包含的XPath表达式。
 可以有多个<literal>xslt_string_param</literal> 指令。
 当且仅当在当前块级别中没有定义
 <link id="xslt_param"/> 和 <literal>xslt_string_param</literal>
-指令，这些指令才能继承上层级别的设置。
+指令时，才能继承上层级别的设置。
 </para>
 
 </directive>
@@ -171,9 +171,9 @@ location / {
 <context>location</context>
 
 <para>
-除了“<literal>text/xml</literal>”类型，启用指定的MIME类型的转换相应。
-特别指定的值“<literal>*</literal>”匹配任何MIME类型(0.8.29)。
-如果转换的结果是HTML相应，它的MIME类型就变为“<literal>text/html</literal>”
+除了“<literal>text/xml</literal>”类型，启用指定的MIME类型的转换响应。
+特殊值“<literal>*</literal>”匹配任何MIME类型(0.8.29)。
+如果转换的结果是HTML响应，它的MIME类型就变为“<literal>text/html</literal>”
 </para>
 
 </directive>
