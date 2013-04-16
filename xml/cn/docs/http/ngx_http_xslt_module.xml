@@ -8,25 +8,25 @@
 <!DOCTYPE module SYSTEM "../../../../dtd/module.dtd">
 
 <module name="Module ngx_http_xslt_module"
-        link="/en/docs/http/ngx_http_xslt_module.html"
-        lang="en"
+        link="/cn/docs/http/ngx_http_xslt_module.html"
+        lang="cn"
+        translator="allisstone"  
         rev="1">
 
 <section id="summary">
 
 <para>
-The <literal>ngx_http_xslt_module</literal> (0.7.8+) is a filter
-that transforms XML responses using one or more XSLT stylesheets.
+<literal>ngx_http_xslt_module</literal> (0.7.8+) 是一个filter模块，它使用一个或多个XSLT样式表来转换XML响应。
 </para>
 
 <para>
-This module is not built by default, it should be enabled with the
+此模块不是默认编译的，因此需要指定
 <literal>--with-http_xslt_module</literal>
-configuration parameter.
+编译选项。
 <note>
-This module requires the
-<link url="http://xmlsoft.org">libxml2</link> and
-<link url="http://xmlsoft.org/XSLT/">libxslt</link> libraries.
+此模块需要
+<link url="http://xmlsoft.org">libxml2</link> 和
+<link url="http://xmlsoft.org/XSLT/">libxslt</link> 库。
 </note>
 </para>
 
@@ -58,13 +58,11 @@ location / {
 <context>location</context>
 
 <para>
-Specifies the DTD file that declares character entities.
-This file is compiled during the configuration stage.
-For technical reasons the module is unable to use the
-external subset declared in the processed XML, so it is
-ignored and instead a specially defined file is used.
-This file should not describe the XML structure, it is
-enough to only declare the required character entities, for example:
+指定DTD文件声明字符实体。
+此文件在配置阶段编译。
+由于技术原因，模块不能使用处理的XML中声明的外部子集，因而它忽略这些子集并使用专门的文件来定义。
+这个文件仅能描述需要的字符实体，而不应该使用它来描述XML结构，比如：
+
 <example>
 &lt;!ENTITY nbsp "&amp;#xa0;"&gt;
 </example>
@@ -82,19 +80,17 @@ enough to only declare the required character entities, for example:
 <appeared-in>1.1.18</appeared-in>
 
 <para>
-Defines parameters for XSLT stylesheets.
-The <value>value</value> is treated as an XPath expression.
-The <value>value</value> can contain variables.
-To pass a string value to a stylesheet,
-the <link id="xslt_string_param"/> directive can be used.
+定义一个XSLT样式表参数。
+<value>value</value> 值被视为一个XPath表达式。
+<value>value</value> 值可以包含变量。
+可以使用指令<link id="xslt_string_param"/> 来传递一个字符串值给样式表。
 </para>
 
 <para>
-There could be several <literal>xslt_param</literal> directives.
-These directives are inherited from the previous level if and
-only if there are no
-<literal>xslt_param</literal> and <link id="xslt_string_param"/>
-directives defined on the current level.
+可以有多个 <literal>xslt_param</literal> 指令。
+当且仅当在当前块级别中没有定义
+<literal>xslt_param</literal> 和 <link id="xslt_string_param"/>
+指令时，才能继承上层级别的设置。
 </para>
 
 </directive>
@@ -109,17 +105,16 @@ directives defined on the current level.
 <appeared-in>1.1.18</appeared-in>
 
 <para>
-Defines string parameters for XSLT stylesheets.
-XPath expressions in the <value>value</value> are not interpreted.
-The <value>value</value> can contain variables.
+为XSLT样式表定义一个字符串参数。
+nginx不解析 <value>value</value> 中包含的XPath表达式。
+ <value>value</value> 值可以包含变量。
 </para>
 
 <para>
-There could be several <literal>xslt_string_param</literal> directives.
-These directives are inherited from the previous level if and
-only if there are no
-<link id="xslt_param"/> and <literal>xslt_string_param</literal>
-directives defined on the current level.
+可以有多个<literal>xslt_string_param</literal> 指令。
+当且仅当在当前块级别中没有定义
+<link id="xslt_param"/> 和 <literal>xslt_string_param</literal>
+指令时，才能继承上层级别的设置。
 </para>
 
 </directive>
@@ -133,26 +128,24 @@ directives defined on the current level.
 <context>location</context>
 
 <para>
-Defines the XSLT stylesheet and its optional parameters.
-A stylesheet is compiled during the configuration stage.
+定义一个XSLT样式表和它的可选参数。
+样式表在配置阶段编译。
 </para>
 
 <para>
-Parameters can either be specified separately, or grouped in a
-single line using the “<literal>:</literal>” delimiter.
-If a parameter includes the “<literal>:</literal>” character,
-it should be escaped as “<literal>%3A</literal>”.
-Also, <command>libxslt</command> requires to enclose parameters
-that contain non-alphanumeric characters into single or double quotes,
-for example:
+参数既可以单独指定，也可以写在一行，并使用分隔符
+ “<literal>:</literal>” 来分隔。
+如果一个参数包含了“<literal>:</literal>” 字符，
+它应该被转义为 “<literal>%3A</literal>”。
+并且<command>libxslt</command> 
+需要将非字母数字的参数包括在单引号或双引号中。例如：
 <example>
 param1='http%3A//www.example.com':param2=value2
 </example>
 </para>
 
 <para>
-The description of parameters can contain variables, for example,
-the whole line of parameters can be taken from a single variable:
+可以使用变量来描述参数，例如，可以用一个变量来指定整行参数。
 <example>
 location / {
     xslt_stylesheet /site/xslt/one.xslt
@@ -164,8 +157,7 @@ location / {
 </para>
 
 <para>
-It is possible to specify several stylesheets; in this case they
-will be applied sequentially in the specified order.
+可以指定多个样式表；在这种情况下，它们将按配置中指定的顺序来生效。
 </para>
 
 </directive>
@@ -179,11 +171,9 @@ will be applied sequentially in the specified order.
 <context>location</context>
 
 <para>
-Enables transformations in responses with the specified MIME types
-in addition to “<literal>text/xml</literal>”.
-The special value “<literal>*</literal>” matches any MIME type (0.8.29).
-If the result of transformation is an HTML response, its MIME type
-is changes to “<literal>text/html</literal>”.
+除了“<literal>text/xml</literal>”类型，启用指定的MIME类型的转换响应。
+特殊值“<literal>*</literal>”匹配任何MIME类型(0.8.29)。
+如果转换的结果是HTML响应，它的MIME类型就变为“<literal>text/html</literal>”
 </para>
 
 </directive>
